@@ -13,23 +13,17 @@ Python implementations for the WPMW project.
 - `wigner_split_fourier.py` — reference solver: Strang-split spectral Fourier
   on the Wigner equation. Specialized to QHO; for general V the force-kick
   kernel must be replaced by the full Wigner–Moyal kernel.
-- `demo_qho_ground_state.py` — demonstration that exercises both solvers on
-  the QHO ground state and writes a comparison figure via `output_path()`.
-
-## Sign-convention finding (action item)
-
-The spec's verbatim Fourier-mode update (§3c) implements
-`dW/dt = -V'(x) dW/dp` in the continuum limit, which is the *opposite* sign
-from the spec's own stated QLE (`dW/dt = +V'(x) dW/dp`). Empirically this
-pushes a coherent state *toward* a potential hill instead of away from it.
-For rotationally symmetric states (e.g. the QHO ground state) the sign is
-irrelevant, but for general states it produces backward dynamics.
-
-`PhaseSpaceCrystalLattice.step_jump_fourier` exposes a `qle_sign` parameter
-to flip the sign back to the QLE convention. The differential form
-(`step_jump_differential`) always uses the QLE-consistent sign. The spec
-itself should be reviewed and corrected (or its sign convention for V or for
-the QLE more clearly justified).
+- `demo_qho_ground_state.py` — demo: QHO ground-state preservation; compares
+  the crystal-lattice solver and the split-Fourier reference. Insensitive to
+  the force-term sign because the ground state is rotationally symmetric.
+- `demo_coherent_state.py` — demo: cosine-potential dynamics for a coherent
+  Gaussian placed on the downhill slope. Sensitive to the sign convention;
+  reproduces the textbook Newtonian centroid trajectory.
+- `sign_convention_check.py` — regression test for the §6.3 sign correction
+  in `docs/supplement/phase_space_crystal_lattice_supplement.md`. Compares
+  three candidate discrete update rules (V2 general formula, V2 simplified /
+  Python, and original spec §3c) on a coherent state, confirming that only
+  the QLE-consistent form drives the centroid downhill.
 
 ## Output path convention
 

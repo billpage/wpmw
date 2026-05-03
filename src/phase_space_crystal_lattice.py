@@ -2,7 +2,10 @@
 Phase-Space Crystal-Lattice algorithm for Wigner distribution evolution.
 
 This module implements the algorithm specified in
-``docs/algorithm/phase_space_crystal_lattice_algorithm.md``.
+``docs/algorithm/phase_space_crystal_lattice_algorithm.md``. The
+QLE-consistent sign convention adopted in that spec (and in the redrafted
+V2 supplement at ``docs/supplement/phase_space_crystal_lattice_supplement.md``)
+is the only one used here.
 
 State representation
 --------------------
@@ -16,28 +19,13 @@ Two potential decompositions are supported
 1. **Fourier-mode form** (spec §3b/3c). The potential is decomposed as
    ``V(x) = V_0 + sum_q V_q cos(2 pi q x / L + phi_q)``. Each mode drives a
    discrete mediated jump of magnitude ``q`` momentum cells per spec, with the
-   natural choice ``dp = pi*hbar/L``.
+   natural choice ``dp = pi*hbar/L``. The continuum limit reproduces the QLE
+   force term ``+V'(x) dW/dp``.
 
 2. **Differential form** (spec §7b). For non-Fourier-decomposable smooth V,
-   apply the QLE jump term ``+V'(x)(dW/dp)`` via centered finite difference.
+   apply the QLE jump term ``+V'(x) dW/dp`` via centered finite difference.
    For purely quadratic V (e.g. quantum harmonic oscillator) this is exact in
    the continuum limit because the Moyal series truncates at this term.
-
-Sign convention note (important)
---------------------------------
-The spec's verbatim Fourier-mode update rule (§3c), in the small-dp
-continuum limit, gives ``dW/dt = -V'(x) dW/dp`` -- the *opposite* sign of the
-spec's own stated QLE force term ``+V'(x) dW/dp``. Empirically (see the
-sanity test in ``demo_qho_ground_state.py``), the spec-verbatim version pushes
-a coherent state *toward* a potential hill instead of away from it.
-
-This module exposes both conventions:
-- ``step_jump_fourier(..., qle_sign=False)`` follows the spec verbatim.
-- ``step_jump_fourier(..., qle_sign=True)`` flips the sign to match the QLE.
-- ``step_jump_differential(...)`` always uses the QLE-consistent ``+V' dW/dp``.
-
-For rotationally symmetric states (e.g. the QHO ground state), the sign is
-irrelevant. For non-symmetric states, the user must pick a convention.
 
 Conventions
 -----------
@@ -181,37 +169,25 @@ class PhaseSpaceCrystalLattice:
     # ------------------------------------------------------------------ #
     # Step 3b: potential-driven mediated jumps                           #
     # ------------------------------------------------------------------ #
-    def step_jump_fourier(
-        self,
-        modes: Iterable[FourierMode],
-        dt: float,
-        qle_sign: bool = False,
-    ) -> None:
-        """Mesh-density Fourier-mode update (spec §3c).
+    def step_jump_fourier(self, modes: Iterable[FourierMode], dt: float) -> None:
+        """Mesh-density Fourier-mode update (spec §3c, QLE-consistent sign).
 
-        Spec-verbatim form (``qle_sign=False``):
+        Per the corrected spec:
 
-            dW = dt * Gamma_q(x) * (W(p - q dp) - W(p + q dp))
+            dW = dt * Gamma_q(x) * (W(p + q dp) - W(p - q dp))
             Gamma_q(x) = -(V_q / hbar) * sin(2 pi q x / L + phi_q)
 
-        In the small-dp continuum limit this gives
-        ``dW/dt = -V'(x) dW/dp``, which is the *opposite* sign from the
-        spec's own stated QLE
-        ``dW/dt + (p/m) dW/dx - V'(x) dW/dp = 0  ==>
-          dW/dt = -(p/m) dW/dx + V'(x) dW/dp``.
-        Empirically, this drives a coherent state on a cosine hill *toward*
-        the hill instead of away from it. The spec is internally consistent
-        for rotationally symmetric states (where the sign is irrelevant) but
-        gives backward dynamics for general states.
-
-        Pass ``qle_sign=True`` to flip the sign so the update matches the
-        standard QLE force term.
+        In the small-dp continuum limit this reproduces the QLE force term
+        ``dW/dt = +V'(x) dW/dp``. See
+        ``docs/supplement/phase_space_crystal_lattice_supplement.md`` §6 for
+        the derivation, and ``sign_convention_check.py`` for a regression
+        test that exercises the difference against the (incorrect) sign that
+        appears in the V2 memo's simplified form.
         """
         if self.nu is not None:
             raise RuntimeError(
                 "Use step_jump_fourier_mc(...) for the Monte-Carlo particle form."
             )
-        sign = -1.0 if qle_sign else +1.0
         dW = np.zeros_like(self.W)
         for mode in modes:
             q, V_q, phi_q = mode.q, mode.V_q, mode.phi_q
@@ -220,8 +196,8 @@ class PhaseSpaceCrystalLattice:
             )
             W_lo = np.roll(self.W, +q, axis=0)   # W at p_{n-q}
             W_hi = np.roll(self.W, -q, axis=0)   # W at p_{n+q}
-            dW += Gamma * (W_lo - W_hi)
-        self.W = self.W + sign * dt * dW
+            dW += Gamma * (W_hi - W_lo)
+        self.W = self.W + dt * dW
 
     def step_jump_fourier_mc(
         self,
@@ -256,8 +232,10 @@ class PhaseSpaceCrystalLattice:
                 col = self.N_plus[:, m].copy()
                 events = rng.binomial(col, p_jump)
                 # Apply transfers; cap by source population to preserve N+ >= 0.
-                src_idx = (np.arange(N) - sign * q) % N
-                dst_idx = (np.arange(N) + sign * q) % N
+                # Direction is QLE-consistent (Gamma > 0 transfers (n+q) -> (n-q));
+                # see spec §3b and supplement §6.
+                src_idx = (np.arange(N) + sign * q) % N
+                dst_idx = (np.arange(N) - sign * q) % N
                 # Iterate in a fixed order so the source-cap is well-defined.
                 for n in range(N):
                     e = events[n]
@@ -282,13 +260,6 @@ class PhaseSpaceCrystalLattice:
         ``dW/dt + (p/m)dW/dx - V'(x) dW/dp = 0`` (Hamilton's equation
         ``dot p = -V'`` plus Liouville). For a strictly quadratic V the Moyal
         series truncates at this term so this is exact in the continuum limit.
-
-        Note: The Fourier-mode update in ``step_jump_fourier`` follows the
-        spec verbatim, which in the small-dp limit yields ``dW/dt = -V' dW/dp``
-        — the *opposite* sign to what is used here. This mismatch appears to
-        be a sign-convention issue inherited from the source notebook and is
-        documented in the README; for rotationally symmetric states (e.g. the
-        QHO ground state) the sign is irrelevant.
         """
         if self.nu is not None:
             raise NotImplementedError(
@@ -307,16 +278,11 @@ class PhaseSpaceCrystalLattice:
     # ------------------------------------------------------------------ #
     # Strang composite step                                              #
     # ------------------------------------------------------------------ #
-    def strang_step_fourier(
-        self,
-        modes: Iterable[FourierMode],
-        dt: float,
-        qle_sign: bool = False,
-    ) -> None:
+    def strang_step_fourier(self, modes: Iterable[FourierMode], dt: float) -> None:
         """Strang-split step: half advect, full Fourier jump, half advect."""
         modes_list = list(modes)
         self.step_advect(dt * 0.5)
-        self.step_jump_fourier(modes_list, dt, qle_sign=qle_sign)
+        self.step_jump_fourier(modes_list, dt)
         self.step_advect(dt * 0.5)
 
     def strang_step_differential(self, dVdx_arr: np.ndarray, dt: float) -> None:

@@ -8,6 +8,8 @@
 
 This document is a **synthesis** of `docs/analysis/phase_space_crystal_lattice_review.md` and the underlying source documents (`Extended_Fokker_Planck_Eq_and_the_QLE_V2.pdf`, `Wigner_Collisions_Diagram_sozi.pdf`). The source documents specify the underlying physics and the per-event rules but stop short of a fully written-out algorithm — V2 closes with *"With this solution in hand I am in a position to construct a software simulation…"* (future work).
 
+A redrafted, restructured version of the V2 memo focused on the crystal-lattice particle model and its stochastic microdynamics is at `docs/supplement/phase_space_crystal_lattice_supplement.md`. The sign convention used in §3 below is the QLE-consistent one; this differs from the simplified-form line on page 18 of the V2 memo (see supplement §6.3 for the algebraic step where the sign was lost).
+
 Items below marked **[choice]** are implementation decisions not directly fixed by the source documents; alternatives are noted.
 
 ---
@@ -73,8 +75,8 @@ For each mode $q$, define
 
 **The single rule.** A positon at cell $(m, n)$ acts as a *mediator*: with probability $|\Gamma_q(x_m)|\,\Delta t$ per particle per mode per timestep **[choice — Poisson rate is the rigorous form when this is not small]**, it induces a transfer of one particle:
 
-$$\text{if } \Gamma_q(x_m) > 0:\quad (m,\, n - q) \longrightarrow (m,\, n + q)$$
-$$\text{if } \Gamma_q(x_m) < 0:\quad (m,\, n + q) \longrightarrow (m,\, n - q)$$
+$$\text{if } \Gamma_q(x_m) > 0:\quad (m,\, n + q) \longrightarrow (m,\, n - q)$$
+$$\text{if } \Gamma_q(x_m) < 0:\quad (m,\, n - q) \longrightarrow (m,\, n + q)$$
 
 The mediator itself is unchanged. No new particles are created. This is the entire crystal-lattice rule.
 
@@ -82,16 +84,18 @@ The mediator itself is unchanged. No new particles are created. This is the enti
 
 When $\nu$ is large and we evolve $W$ directly rather than counting particles:
 
-$$W(x_m, p_n, t + \Delta t) = W(x_m, p_n, t) + \Delta t \sum_{q \ge 1} \Gamma_q(x_m)\bigl[W(x_m, p_{n-q}) - W(x_m, p_{n+q})\bigr]$$
+$$W(x_m, p_n, t + \Delta t) = W(x_m, p_n, t) + \Delta t \sum_{q \ge 1} \Gamma_q(x_m)\bigl[W(x_m, p_{n+q}) - W(x_m, p_{n-q})\bigr]$$
 
-For the canonical example with $V(x) = V_{\max}\cos(2\pi x/L)$ (only $q=1$, $\phi_1 = 0$), this becomes
+In the small-$\Delta p$ continuum limit this reproduces the QLE force term $\partial_t W = +\,V'(x)\,\partial_p W$. (See `docs/supplement/phase_space_crystal_lattice_supplement.md` §6 for the derivation; it corrects the sign that appears in the simplified form of the V2 memo.)
+
+In Python (`p_axis` is the momentum axis, with cell index increasing with $p$): `np.roll(W, +1, axis=p_axis)` brings $W(p - \Delta p)$ to the row at $p$. The full update for the $q=1$ canonical case is
 
 ```python
 W += (V_max / hbar) * dt * np.sin(2*np.pi*X/L) * (
         np.roll(W, +1, axis=p_axis) - np.roll(W, -1, axis=p_axis))
 ```
 
-(Sign convention for `np.roll` chosen so that the result equals $W(p-\Delta p) - W(p+\Delta p)$, matching the $-\sin$ folded into $\Gamma_1$.)
+To verify the sign: $\Gamma_1 = -(V_{\max}/\hbar)\sin\theta$ and the bracket is $W(p+\Delta p) - W(p-\Delta p)$, giving $\Delta W = -(V_{\max}/\hbar)\sin\theta\,[W_{\rm hi} - W_{\rm lo}]\,dt$, equivalently $+(V_{\max}/\hbar)\sin\theta\,[W_{\rm lo} - W_{\rm hi}]\,dt$, which the Python expresses with the order `roll(+1) - roll(-1)`.
 
 ---
 
@@ -161,7 +165,9 @@ for step in range(num_steps):
             N_plus[n, :] = np.roll(N_plus[n, :], shift)
 
     # ---- 3b. Mediated jumps -------------------------------------------
-    # Particle-resolved version (true Monte Carlo)
+    # Particle-resolved version (true Monte Carlo).
+    # Direction convention: when Gamma > 0, transfer is from (n+q) -> (n-q),
+    # which corresponds to the QLE force term +V'(x) dW/dp (see supplement).
     for q in range(1, Q+1):
         for m in range(M):
             rate_dt = Gamma[q, m] * dt          # signed
@@ -176,8 +182,8 @@ for step in range(num_steps):
                 # Number of mediator events in this cell this step
                 events = np.random.binomial(pop, min(mag, 1.0))
                 # Source / destination cells (periodic in p)
-                src = (n - sign * q) % N
-                dst = (n + sign * q) % N
+                src = (n + sign * q) % N
+                dst = (n - sign * q) % N
                 # Cannot transfer more than the source has
                 events = min(events, N_plus[src, m])
                 N_plus[src, m] -= events
@@ -224,4 +230,5 @@ For **unbounded** polynomial potentials (e.g. $V = x^3$), the source documents n
 
 - `Extended_Fokker_Planck_Eq_and_the_QLE_V2.pdf` — primary analytical source. Sections "Mapping the xFP model to the Split Fourier Algorithm", "Highly Simplified Model Examination", "Jump density-rate for sinusoidal potential".
 - `Wigner_Collisions_Diagram_sozi.pdf` — slides 10–15: Fourier-component spawning rule, photon-momentum identification, phase-space-crystal-lattice interpretation.
+- `docs/supplement/phase_space_crystal_lattice_supplement.md` — redrafted version of the V2 memo with the corrected sign convention.
 - `docs/analysis/phase_space_crystal_lattice_review.md` — companion review and equation reference.
