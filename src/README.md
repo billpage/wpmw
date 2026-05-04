@@ -19,6 +19,12 @@ Python implementations for the WPMW project.
 - `demo_coherent_state.py` — demo: cosine-potential dynamics for a coherent
   Gaussian placed on the downhill slope. Sensitive to the sign convention;
   reproduces the textbook Newtonian centroid trajectory.
+- `demo_cat_state.py` — demo: free-particle (V = 0) evolution of a
+  Schrödinger-cat state (two colliding Gaussian wave packets in
+  superposition).  Compares the PSC solver to the closed-form Wigner
+  function at four times and overlays sample classical trajectories from
+  interference-node seeds, illustrating that the cat state's nodes are
+  rigidly transported along free-particle characteristics.
 - `sign_convention_check.py` — regression test for the §6.3 sign correction
   in `docs/supplement/phase_space_crystal_lattice_supplement.md`. Compares
   three candidate discrete update rules (V2 general formula, V2 simplified /
