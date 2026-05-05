@@ -25,6 +25,17 @@ Python implementations for the WPMW project.
   function at four times and overlays sample classical trajectories from
   interference-node seeds, illustrating that the cat state's nodes are
   rigidly transported along free-particle characteristics.
+- `demo_cat_state_microdynamics.py` — companion demo: the same cat-state
+  problem, but as a Monte-Carlo crystal-lattice microdynamics
+  simulation.  Samples ~2×10⁷ positons from the shifted distribution
+  W' = W + 2/h (everywhere non-negative, since |W| ≤ 2/h for any pure
+  state), streams each one ballistically (V=0 means no mediated jumps),
+  and reconstructs W from the binned counts as ρ_emp − 2/h.
+  Demonstrates that the Wigner function — including its negative
+  interference fringes — is faithfully recovered from a strictly
+  non-negative ensemble, and that individual positon trajectories are
+  trivial classical horizontal lines regardless of whether their initial
+  conditions happen to coincide with Wigner-function nodes.
 - `sign_convention_check.py` — regression test for the §6.3 sign correction
   in `docs/supplement/phase_space_crystal_lattice_supplement.md`. Compares
   three candidate discrete update rules (V2 general formula, V2 simplified /
