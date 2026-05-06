@@ -69,11 +69,24 @@ import matplotlib.pyplot as plt
 
 sys.path.insert(0, os.path.dirname(__file__))
 
-from wpmw_utils import output_path
+from wpmw_utils import output_path, docs_path
 from demo_cat_state import (
     HBAR, MASS, X0, P0, SIGMA, T_C, L,
     W_cat_initial, W_cat_exact, sample_node_seeds,
 )
+
+
+def save_fig(fig, name: str, dpi: int = 130) -> None:
+    """Save figure to both ``output_path(name)`` (always) and
+    ``docs_path(name)`` (when ``WPMW_DOCS`` is set, so the figure also
+    lands in the ``output``-branch worktree for later commit)."""
+    sp = output_path(name)
+    fig.savefig(sp, dpi=dpi, bbox_inches="tight")
+    print(f"Figure saved -> {sp}")
+    dp = docs_path(name)
+    if dp:
+        fig.savefig(dp, dpi=dpi, bbox_inches="tight")
+        print(f"Figure saved -> {dp}")
 
 
 # --------------------------------------------------------------------- #
@@ -249,7 +262,7 @@ def trajectory_with_wraps(seed, t_arr):
 # --------------------------------------------------------------------- #
 # Plotting                                                              #
 # --------------------------------------------------------------------- #
-def plot_trajectory_portrait(near_node, non_node, savepath):
+def plot_trajectory_portrait(near_node, non_node, name):
     """Phase-space plot showing ONLY the test-particle trajectories, no W
     underneath.  Drives home the point that at the microdynamic level
     every positon is a trivial free-streaming classical particle: the
@@ -295,12 +308,11 @@ def plot_trajectory_portrait(near_node, non_node, savepath):
         fontsize=10,
     )
     fig.tight_layout()
-    fig.savefig(savepath, dpi=130, bbox_inches="tight")
+    save_fig(fig, name)
     plt.close(fig)
-    print(f"Figure saved -> {savepath}")
 
 
-def plot_evolution(snapshots, near_node, non_node, savepath):
+def plot_evolution(snapshots, near_node, non_node, name):
     times = sorted(snapshots.keys())
     nn_colors  = plt.cm.Reds(np.linspace(0.5, 0.85, len(near_node)))
     other_clrs = plt.cm.Blues(np.linspace(0.5, 0.85, len(non_node)))
@@ -376,12 +388,11 @@ def plot_evolution(snapshots, near_node, non_node, savepath):
     cax = fig.add_axes([0.95, 0.40, 0.012, 0.45])
     cbar = fig.colorbar(cf, cax=cax)
     cbar.set_label("W")
-    fig.savefig(savepath, dpi=130, bbox_inches="tight")
+    save_fig(fig, name)
     plt.close(fig)
-    print(f"\nFigure saved -> {savepath}")
 
 
-def plot_marginals(snapshots, savepath):
+def plot_marginals(snapshots, name):
     times = sorted(snapshots.keys())
     fig, axes = plt.subplots(1, len(times), figsize=(15, 3), sharey=True)
     for j, t in enumerate(times):
@@ -405,9 +416,8 @@ def plot_marginals(snapshots, savepath):
         fontsize=11, y=1.04,
     )
     fig.tight_layout()
-    fig.savefig(savepath, dpi=130, bbox_inches="tight")
+    save_fig(fig, name)
     plt.close(fig)
-    print(f"Figure saved -> {savepath}")
 
 
 # --------------------------------------------------------------------- #
@@ -463,11 +473,11 @@ def main():
                   f"   ({xw:+.3f}, {s[1]:+.3f})")
 
     plot_evolution(snapshots, near_node, non_node,
-                   output_path("cat_state_microdynamics_evolution.png"))
+                   "cat_state_microdynamics_evolution.png")
     plot_marginals(snapshots,
-                   output_path("cat_state_microdynamics_marginals.png"))
+                   "cat_state_microdynamics_marginals.png")
     plot_trajectory_portrait(near_node, non_node,
-                             output_path("cat_state_microdynamics_trajectories.png"))
+                             "cat_state_microdynamics_trajectories.png")
     print("\nDone.")
 
 

@@ -37,6 +37,30 @@ Python implementations for the WPMW project.
   non-negative ensemble, and that individual positon trajectories are
   trivial classical horizontal lines regardless of whether their initial
   conditions happen to coincide with Wigner-function nodes.
+
+  Sample output figures (committed on the `output` branch):
+
+  ![Cat-state microdynamics evolution](https://raw.githubusercontent.com/billpage/wpmw/output/figures/cat_state_microdynamics_evolution.png)
+
+  3×4 grid at default parameters (sampling grid 256², reconstruction grid
+  128², N = 2×10⁷): MC reconstruction (top), exact closed-form Wigner
+  (middle), and pointwise difference (bottom) at t = 0, t_c/2, t_c, 3 t_c/2.
+  L² deviation between MC and exact stays at ~0.38 across all times (peak
+  |W| ≈ 0.32), dominated by Poisson sampling of the 2/h background.
+
+  ![Cat-state microdynamics marginals](https://raw.githubusercontent.com/billpage/wpmw/output/figures/cat_state_microdynamics_marginals.png)
+
+  Position-space probability density |ψ(x, t)|² at the same times — the
+  textbook double-slit-like fringe pattern at t = t_c is recovered cleanly
+  from the all-positon ensemble.
+
+  ![Cat-state microdynamics trajectories](https://raw.githubusercontent.com/billpage/wpmw/output/figures/cat_state_microdynamics_trajectories.png)
+
+  Trajectory portrait of the six tagged test positons.  Three with t = 0
+  initial coordinates near interference-node lines (red), three at non-node
+  locations including the lobe centres (blue).  Every trajectory is a
+  horizontal line at constant p; "near-node" status leaves no microdynamic
+  signature.
 - `sign_convention_check.py` — regression test for the §6.3 sign correction
   in `docs/supplement/phase_space_crystal_lattice_supplement.md`. Compares
   three candidate discrete update rules (V2 general formula, V2 simplified /
