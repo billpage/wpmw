@@ -21,8 +21,11 @@ references/     bibliography.md (links to papers; PDFs are NOT committed)
 ## Output path convention
 
 All Python scripts in WPMW must write their outputs (PNGs, MP4s, CSVs, etc.)
-through the `output_path()` helper in `src/wpmw_utils.py`. Do not hardcode paths
-such as `/home/claude/`, `/mnt/user-data/outputs/`, or `/kaggle/working/`.
+through helpers in `src/wpmw_utils.py`. Do not hardcode paths such as
+`/home/claude/`, `/mnt/user-data/outputs/`, or `/kaggle/working/`.
+
+**`output_path(filename)`** — runtime scratch output (Claude container, Kaggle,
+local runs):
 
 ```python
 from wpmw_utils import output_path
@@ -30,13 +33,67 @@ from wpmw_utils import output_path
 fig.savefig(output_path("my_figure.png"), dpi=150, bbox_inches="tight")
 ```
 
-The output directory is controlled by the `WPMW_OUTPUT` environment variable.
-If unset, files go to `./output`. Do not use `shutil.copy2` to mirror outputs to
-a second location — write directly to `output_path(...)`.
+**`docs_path(filename)`** — figures destined for the `output` branch so they can
+be embedded in documentation and shared with collaborators (see below):
 
-When running scripts in the Claude container, set
-`WPMW_OUTPUT=/mnt/user-data/outputs` before execution. The Kaggle runner notebook
-sets `WPMW_OUTPUT=/kaggle/working` automatically.
+```python
+from wpmw_utils import output_path, docs_path
+
+fig.savefig(output_path("my_figure.png"), dpi=150, bbox_inches="tight")
+dp = docs_path("my_figure.png")
+if dp:
+    fig.savefig(dp, dpi=150, bbox_inches="tight")
+```
+
+Do not use `shutil.copy2` to mirror outputs to a second location — write
+directly to each helper.
+
+Environment variable summary:
+
+| Context | `WPMW_OUTPUT` | `WPMW_DOCS` |
+|---|---|---|
+| Claude container | `/mnt/user-data/outputs` | (unset) |
+| Kaggle | `/kaggle/working` | (unset) |
+| Local (post-patch) | (unset → `./output`) | `~/wpmw-output` (worktree) |
+
+## Sharing figures via the `output` branch
+
+Demo figures are stored on an orphan `output` branch — separate from the source
+history — and embedded in documentation via stable raw GitHub URLs. This keeps
+`main` free of binary blobs while making figures accessible to anyone with a link.
+
+**One-time worktree setup** (after the `output` branch exists on origin):
+
+```bash
+cd ~/wpmw
+git worktree add ../wpmw-output output
+```
+
+**Running a script locally to produce keeper figures:**
+
+```bash
+export WPMW_OUTPUT=./output
+export WPMW_DOCS=~/wpmw-output
+python src/my_script.py
+```
+
+**Committing the figures from the worktree:**
+
+```bash
+cd ~/wpmw-output
+git add figures/my_figure.png
+git commit -m "add my_figure output from my_script.py"
+git push origin output
+```
+
+**Embedding a figure in a markdown doc on `main`:**
+
+```markdown
+![My figure](https://raw.githubusercontent.com/billpage/wpmw/output/figures/my_figure.png)
+```
+
+The URL pattern is always:
+`https://raw.githubusercontent.com/billpage/wpmw/output/<subdir>/<filename>`
 
 ## Contributing changes
 

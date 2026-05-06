@@ -4,7 +4,8 @@ Python implementations for the WPMW project.
 
 ## Modules
 
-- `wpmw_utils.py` — shared helpers (currently the `output_path()` router).
+- `wpmw_utils.py` — shared helpers: `output_path()` (runtime scratch output)
+  and `docs_path()` (figures for the `output` branch, shareable via URL).
 - `phase_space_crystal_lattice.py` — implementation of the algorithm in
   `docs/algorithm/phase_space_crystal_lattice_algorithm.md`. Exposes both
   the deterministic mesh-density form (spec §3c) and the Monte-Carlo particle
@@ -44,8 +45,10 @@ Python implementations for the WPMW project.
 
 ## Output path convention
 
-All scripts in this directory must write files through `output_path()` from
-`wpmw_utils`, never via hardcoded absolute paths:
+All scripts in this directory must write files through helpers from
+`wpmw_utils`, never via hardcoded absolute paths.
+
+Use `output_path()` for all runtime scratch output:
 
 ```python
 from wpmw_utils import output_path
@@ -53,7 +56,20 @@ from wpmw_utils import output_path
 fig.savefig(output_path("my_figure.png"), dpi=150, bbox_inches="tight")
 ```
 
-The output directory is controlled by the `WPMW_OUTPUT` environment variable.
-If unset, files go to `./output`.
+Use `docs_path()` additionally for figures that should be committed to the
+`output` branch and embedded in documentation:
 
-See the top-level `README.md` for the full convention.
+```python
+from wpmw_utils import output_path, docs_path
+
+fig.savefig(output_path("my_figure.png"), dpi=150, bbox_inches="tight")
+dp = docs_path("my_figure.png")
+if dp:
+    fig.savefig(dp, dpi=150, bbox_inches="tight")
+```
+
+`docs_path()` returns `None` when `WPMW_DOCS` is unset (cloud environments),
+so the `if dp:` guard is always required.
+
+See the top-level `README.md` for the full convention including the `output`
+branch worktree setup and figure embedding instructions.
