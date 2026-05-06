@@ -7,6 +7,30 @@ interpretation of the Wigner equation, plus the underlying extended Fokker–Pla
 This repository is a working set of research notes and code. It is not a polished
 library and the algorithms here are still being explored. Conventions may change.
 
+## Getting started
+
+For most collaborators who want to read the documentation or run scripts,
+clone only the `main` branch:
+
+```bash
+git clone --single-branch --branch main https://github.com/billpage/wpmw.git
+cd wpmw
+```
+
+This skips the `output` branch, which stores demo figures as binary blobs and
+can grow over time. The figures are still viewable online — they are embedded
+in the documentation via raw GitHub URLs and render directly in the GitHub
+markdown viewer without cloning anything.
+
+If you also need to commit new figures to the `output` branch (see
+[Sharing figures](#sharing-figures-via-the-output-branch) below), add the
+worktree after cloning:
+
+```bash
+git fetch origin output
+git worktree add ../wpmw-output output
+```
+
 ## Repository layout
 
 ```
