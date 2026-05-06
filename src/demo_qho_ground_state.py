@@ -46,9 +46,9 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-from phase_space_crystal_lattice import PhaseSpaceCrystalLattice
-from wigner_split_fourier import WignerSplitFourier
-from wpmw_utils import output_path
+from wpmwlib.phase_space_crystal_lattice import PhaseSpaceCrystalLattice
+from wpmwlib.wigner_split_fourier import WignerSplitFourier
+from wpmwlib.wpmw_utils import output_path
 
 
 # --------------------------------------------------------------------- #

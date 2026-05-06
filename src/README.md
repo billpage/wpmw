@@ -2,18 +2,26 @@
 
 Python implementations for the WPMW project.
 
-## Modules
+The runnable demos and regression tests live directly in this directory.
+Shared library code lives in the `wpmwlib/` subpackage (see below) and is
+imported by the scripts here.
 
-- `wpmw_utils.py` — shared helpers: `output_path()` (runtime scratch output)
-  and `docs_path()` (figures for the `output` branch, shareable via URL).
-- `phase_space_crystal_lattice.py` — implementation of the algorithm in
-  `docs/algorithm/phase_space_crystal_lattice_algorithm.md`. Exposes both
+## Library modules (`wpmwlib/`)
+
+- `wpmwlib/wpmw_utils.py` — shared helpers: `output_path()` (runtime scratch
+  output) and `docs_path()` (figures for the `output` branch, shareable via
+  URL).
+- `wpmwlib/phase_space_crystal_lattice.py` — implementation of the algorithm
+  in `docs/algorithm/phase_space_crystal_lattice_algorithm.md`. Exposes both
   the deterministic mesh-density form (spec §3c) and the Monte-Carlo particle
   form (spec §6), and both the Fourier-mode (§3b) and differential (§7b) jump
   forms.
-- `wigner_split_fourier.py` — reference solver: Strang-split spectral Fourier
-  on the Wigner equation. Specialized to QHO; for general V the force-kick
-  kernel must be replaced by the full Wigner–Moyal kernel.
+- `wpmwlib/wigner_split_fourier.py` — reference solver: Strang-split spectral
+  Fourier on the Wigner equation. Specialized to QHO; for general V the
+  force-kick kernel must be replaced by the full Wigner–Moyal kernel.
+
+## Runnable scripts
+
 - `demo_qho_ground_state.py` — demo: QHO ground-state preservation; compares
   the crystal-lattice solver and the split-Fourier reference. Insensitive to
   the force-term sign because the ground state is rotationally symmetric.
@@ -25,7 +33,10 @@ Python implementations for the WPMW project.
   superposition).  Compares the PSC solver to the closed-form Wigner
   function at four times and overlays sample classical trajectories from
   interference-node seeds, illustrating that the cat state's nodes are
-  rigidly transported along free-particle characteristics.
+  rigidly transported along free-particle characteristics.  Also exposes
+  shared constants and helpers (`HBAR`, `MASS`, `X0`, `P0`, `SIGMA`, `T_C`,
+  `L`, `W_cat_initial`, `W_cat_exact`, `sample_node_seeds`) that
+  `demo_cat_state_microdynamics.py` reuses via a sibling import.
 - `demo_cat_state_microdynamics.py` — companion demo: the same cat-state
   problem, but as a Monte-Carlo crystal-lattice microdynamics
   simulation.  Samples ~2×10⁷ positons from the shifted distribution
@@ -70,12 +81,12 @@ Python implementations for the WPMW project.
 ## Output path convention
 
 All scripts in this directory must write files through helpers from
-`wpmw_utils`, never via hardcoded absolute paths.
+`wpmwlib.wpmw_utils`, never via hardcoded absolute paths.
 
 Use `output_path()` for all runtime scratch output:
 
 ```python
-from wpmw_utils import output_path
+from wpmwlib.wpmw_utils import output_path
 
 fig.savefig(output_path("my_figure.png"), dpi=150, bbox_inches="tight")
 ```
@@ -84,7 +95,7 @@ Use `docs_path()` additionally for figures that should be committed to the
 `output` branch and embedded in documentation:
 
 ```python
-from wpmw_utils import output_path, docs_path
+from wpmwlib.wpmw_utils import output_path, docs_path
 
 fig.savefig(output_path("my_figure.png"), dpi=150, bbox_inches="tight")
 dp = docs_path("my_figure.png")

@@ -46,8 +46,8 @@ import sys
 import numpy as np
 
 sys.path.insert(0, os.path.dirname(__file__))
-from wpmw_utils import output_path  # noqa: E402
-from phase_space_crystal_lattice import PhaseSpaceCrystalLattice, FourierMode  # noqa: E402
+from wpmwlib.wpmw_utils import output_path  # noqa: E402
+from wpmwlib.phase_space_crystal_lattice import PhaseSpaceCrystalLattice, FourierMode  # noqa: E402
 
 # ---------------- grid and initial state --------------------------------- #
 HBAR = 1.0

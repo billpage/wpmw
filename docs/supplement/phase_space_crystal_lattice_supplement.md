@@ -180,7 +180,7 @@ W += (np.roll(W, +1, axis=0) - np.roll(W, -1, axis=0)) * np.sin(np.pi*X/X_amplit
 
 (or equivalently, flip the sign of `dt * sheight`).
 
-The error is detectable only with **non-rotationally-symmetric** initial states. Because every Gaussian eigenstate of the harmonic oscillator is invariant under joint reflection in $x$ and $p$, and because the sign error reverses both, it is invisible there. For a coherent state placed off-axis, however, the wrong sign drives the centroid *towards* a potential hill instead of away from it — a textbook diagnostic. The regression test `src/sign_convention_check.py` verifies this. The corrected version of the algorithm is what is implemented in `docs/algorithm/phase_space_crystal_lattice_algorithm.md` and `src/phase_space_crystal_lattice.py`.
+The error is detectable only with **non-rotationally-symmetric** initial states. Because every Gaussian eigenstate of the harmonic oscillator is invariant under joint reflection in $x$ and $p$, and because the sign error reverses both, it is invisible there. For a coherent state placed off-axis, however, the wrong sign drives the centroid *towards* a potential hill instead of away from it — a textbook diagnostic. The regression test `src/sign_convention_check.py` verifies this. The corrected version of the algorithm is what is implemented in `docs/algorithm/phase_space_crystal_lattice_algorithm.md` and `src/wpmwlib/phase_space_crystal_lattice.py`.
 
 ---
 

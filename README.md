@@ -38,21 +38,22 @@ docs/
   algorithm/    Core algorithm specifications
   supplement/   Extended analysis and discussion
   analysis/     Mathematical derivations and review notes
-src/            Python implementations
+src/            Python implementations (runnable demos / scripts)
+  wpmwlib/      Shared library modules imported by the scripts
 references/     bibliography.md (links to papers; PDFs are NOT committed)
 ```
 
 ## Output path convention
 
 All Python scripts in WPMW must write their outputs (PNGs, MP4s, CSVs, etc.)
-through helpers in `src/wpmw_utils.py`. Do not hardcode paths such as
+through helpers in `src/wpmwlib/wpmw_utils.py`. Do not hardcode paths such as
 `/home/claude/`, `/mnt/user-data/outputs/`, or `/kaggle/working/`.
 
 **`output_path(filename)`** — runtime scratch output (Claude container, Kaggle,
 local runs):
 
 ```python
-from wpmw_utils import output_path
+from wpmwlib.wpmw_utils import output_path
 
 fig.savefig(output_path("my_figure.png"), dpi=150, bbox_inches="tight")
 ```
@@ -61,7 +62,7 @@ fig.savefig(output_path("my_figure.png"), dpi=150, bbox_inches="tight")
 be embedded in documentation and shared with collaborators (see below):
 
 ```python
-from wpmw_utils import output_path, docs_path
+from wpmwlib.wpmw_utils import output_path, docs_path
 
 fig.savefig(output_path("my_figure.png"), dpi=150, bbox_inches="tight")
 dp = docs_path("my_figure.png")

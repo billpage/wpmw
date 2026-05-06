@@ -59,8 +59,8 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-from phase_space_crystal_lattice import PhaseSpaceCrystalLattice
-from wpmw_utils import output_path
+from wpmwlib.phase_space_crystal_lattice import PhaseSpaceCrystalLattice
+from wpmwlib.wpmw_utils import output_path
 
 
 # --------------------------------------------------------------------- #

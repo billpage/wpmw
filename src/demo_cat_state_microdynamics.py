@@ -69,7 +69,7 @@ import matplotlib.pyplot as plt
 
 sys.path.insert(0, os.path.dirname(__file__))
 
-from wpmw_utils import output_path, docs_path
+from wpmwlib.wpmw_utils import output_path, docs_path
 from demo_cat_state import (
     HBAR, MASS, X0, P0, SIGMA, T_C, L,
     W_cat_initial, W_cat_exact, sample_node_seeds,

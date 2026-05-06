@@ -110,7 +110,7 @@ W += (np.roll(W, +1, axis=0) - np.roll(W, -1, axis=0)) \
 > formula one line above is correct — the sign is dropped only at the
 > $\cos(\theta + \pi/2) = -\sin\theta$ algebraic step. The corrected form
 > here is what the algorithm in `docs/algorithm/` and the implementation in
-> `src/phase_space_crystal_lattice.py` use; see
+> `src/wpmwlib/phase_space_crystal_lattice.py` use; see
 > `docs/supplement/phase_space_crystal_lattice_supplement.md` §6.3 for the
 > derivation and `src/sign_convention_check.py` for the regression test that
 > exercises the difference on a coherent state.
