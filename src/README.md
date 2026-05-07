@@ -72,6 +72,67 @@ imported by the scripts here.
   locations including the lobe centres (blue).  Every trajectory is a
   horizontal line at constant p; "near-node" status leaves no microdynamic
   signature.
+- `demo_cosine_well_microdynamics.py` — companion to the cat-state
+  microdynamics demo for a single-period **cosine well**
+  V(x) = -V_p cos(2πx/L) (minimum at x = 0).  Where the cat-state demo
+  runs at V = 0 (positon evolution is pure ballistic streaming and *is*
+  the full QLE), this demo compares two distinct evolutions on the same
+  grid:  (i) the full QLE on the PSC mesh via
+  `PhaseSpaceCrystalLattice.strang_step_fourier`, exact for a single-mode
+  cosine including all higher-derivative Moyal terms that produce
+  Wigner-function negative regions; and (ii) classical-positon Monte
+  Carlo — 5×10⁶ positons sampled from W' = W + 2/h at t = 0, evolved
+  under Hamilton's equations alone (no quantum jumps), binned, and
+  reconstructed as ρ_emp − 2/h.  This is exactly what the QLE would give
+  in the ℏ → 0 limit (the leading Liouville term).  Initial state is a
+  min-uncertainty squeezed-vacuum Gaussian at (0, 0) with
+  σ_x = 2 σ_{x,gs} (energy ≈ 1.06 ℏω in the harmonic approximation),
+  chosen so the well's quartic anharmonicity seeds visible Wigner
+  negativity within a few classical periods.  The MC ensemble is
+  integrated with a float32 in-place velocity-Verlet stepper that runs
+  ≈ 4× faster than the fp64 version at this size; cumulative drift over
+  800 steps is far below the binning resolution.
+
+  Sample output figures (committed on the `output` branch):
+
+  ![Cosine-well microdynamics evolution](https://raw.githubusercontent.com/billpage/wpmw/output/figures/cosine_well_microdynamics_evolution.png)
+
+  3×4 grid at default parameters (mesh 128², reconstruction grid 48²,
+  N = 5×10⁶, 800 steps over 4 T_period): full QLE on the mesh (top),
+  classical-positon MC (middle), and pointwise difference MC − QLE
+  (bottom) at t = 0, T_period, 2 T_period, 4 T_period.  The QLE row
+  develops visible negative regions on the wavepacket flanks; the
+  classical row stays strictly non-negative; the difference row evolves
+  from pure shot noise at t = 0 to a clearly structured pattern by
+  t = 4 T_period that marks where the QLE has put negative weight that
+  the classical evolution misses.  Six tagged classical Hamilton orbits
+  are overlaid on rows 1 and 2.
+
+  ![Cosine-well microdynamics negativity](https://raw.githubusercontent.com/billpage/wpmw/output/figures/cosine_well_microdynamics_negativity.png)
+
+  Wigner negativity ∫|min(W, 0)| dx dp over the run.  QLE accumulates
+  real negativity from 0 to ≈ 0.22 over four periods.  Classical MC sits
+  at a flat shot-noise floor of ≈ 1.5 (independent of t) — that floor is
+  fundamental for finite-N empirical reconstruction of W, not evidence
+  of physical negativity in the classical evolution.
+
+  ![Cosine-well microdynamics marginals](https://raw.githubusercontent.com/billpage/wpmw/output/figures/cosine_well_microdynamics_marginals.png)
+
+  Position-space probability density ρ(x) = ∫ W dp at the same four
+  times.  Integrating over momentum collapses the negative regions, so
+  QLE and MC agree well in the marginal even where they differ pointwise
+  in W.
+
+  ![Cosine-well microdynamics trajectories](https://raw.githubusercontent.com/billpage/wpmw/output/figures/cosine_well_microdynamics_trajectories.png)
+
+  Phase-space portrait of the six classical Hamilton orbits used as
+  overlays in the evolution figure.  Three "near-bottom" orbits inside
+  ~σ_{x,gs} of the well minimum (red) are nearly elliptical — the
+  harmonic regime.  Three "wider" orbits at amplitude ~ 2 σ_{x,gs}
+  (blue) show faint deformation from cosine anharmonicity but remain
+  well bound (turning points well below V_max = +V_p).  Tick marks at
+  t = T_period, 2 T_period, 3 T_period sit close together on each orbit,
+  confirming the period.
 - `sign_convention_check.py` — regression test for the §6.3 sign correction
   in `docs/supplement/phase_space_crystal_lattice_supplement.md`. Compares
   three candidate discrete update rules (V2 general formula, V2 simplified /
