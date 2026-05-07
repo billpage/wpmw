@@ -120,22 +120,7 @@ git push origin output
 The URL pattern is always:
 `https://raw.githubusercontent.com/billpage/wpmw/output/<subdir>/<filename>`
 
-## Contributing changes
-
-Bill Page is the gatekeeper for all commits to this repository. The standard flow
-for collaborator-proposed changes is:
-
-1. Clone the repository and make changes on a local branch.
-2. Generate a patch with `git format-patch` and share the resulting `.patch`
-   file(s).
-3. Bill applies the patch locally and pushes:
-   ```bash
-   cd ~/wpmw
-   git am ~/Downloads/NNNN-<patch-name>.patch
-   git push origin main
-   ```
-
-Notes on file conventions:
+## File conventions
 
 - Follow the existing directory structure for new files.
 - Drop version suffixes from filenames — git tracks revisions.
