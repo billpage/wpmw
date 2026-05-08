@@ -56,13 +56,7 @@ The interpretation rests on three claims (slides 14–15 of the Sozi presentatio
    Moyal series contains a derivative of $W$, so adding a constant background $W_0$ leaves the
    equation unchanged:
 
-   $$
-   \frac{\partial W}{\partial t}
-     + \frac{p}{m}\frac{\partial W}{\partial x}
-     - \frac{\partial V}{\partial x}\frac{\partial W}{\partial p}
-     + \frac{\hbar^2}{24}\frac{\partial^3 V}{\partial x^3}\frac{\partial^3 W}{\partial p^3}
-     - \cdots = 0
-   $$
+   $$\frac{\partial W}{\partial t} + \frac{p}{m}\frac{\partial W}{\partial x} - \frac{\partial V}{\partial x}\frac{\partial W}{\partial p} + \frac{\hbar^2}{24}\frac{\partial^3 V}{\partial x^3}\frac{\partial^3 W}{\partial p^3} - \cdots = 0$$
 
 3. **The shift can be chosen large enough to eliminate all negative regions.** Because any physical
    Wigner distribution satisfies $-2/h \le W(x,p) \le 2/h$, a shift of $W_0 = 2/h$ produces an

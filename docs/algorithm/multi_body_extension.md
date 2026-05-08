@@ -102,7 +102,7 @@ Continuum limit reproduces $\partial_t W = +\nabla_{\!\vec x} V(\vec x)\cdot\nab
 
 For $V(\vec r) = -e^2/r$ on a periodic box, direct Fourier expansion has $V_{\vec q} \sim 1/|\vec k_{\vec q}|^2$, with a divergent $\vec q = 0$ mode. The Ewald split
 
-$$\frac{1}{r} = \underbrace{\frac{\operatorname{erfc}(\alpha r)}{r}}_{\text{short-range}} + \underbrace{\frac{\operatorname{erf}(\alpha r)}{r}}_{\text{long-range}}$$
+$$\frac{1}{r} = \underbrace{\frac{\mathrm{erfc}(\alpha r)}{r}}_{\text{short-range}} + \underbrace{\frac{\mathrm{erf}(\alpha r)}{r}}_{\text{long-range}}$$
 
 yields:
 
@@ -338,13 +338,13 @@ The lower bound $W^{(N)} \ge -(2/h)^{dN}$ does not save one from the sign proble
 
 Apply the Ewald split per pair. For each $(i, j)$:
 
-- **Short-range piece** $V_2^{\text{short}}(r) = e^2 \operatorname{erfc}(\alpha r)/r$. Treat as a **deterministic momentum-conserving drift**:
+- **Short-range piece** $V_2^{\text{short}}(r) = e^2 \mathrm{erfc}(\alpha r)/r$. Treat as a **deterministic momentum-conserving drift**:
 
 $$\Delta \vec p_i^{(\alpha)} = -\Delta \vec p_j^{(\alpha)} = -\nabla_{\!\vec r}V_2^{\text{short}}(\vec r_{ij}^{(\alpha)})\,\Delta t.$$
 
   Linear-scaling in $N$ via cell lists at the cutoff radius (standard MD machinery). The $O(\hbar^2)$ Moyal corrections to this drift are negligible if $\alpha$ is chosen so that $V_2^{\text{short}}$ varies slowly on the de Broglie scale.
 
-- **Long-range piece** $V_2^{\text{long}}(r) = e^2 \operatorname{erf}(\alpha r)/r$. Apply the §6.3 stochastic-jump rule with Fourier coefficients
+- **Long-range piece** $V_2^{\text{long}}(r) = e^2 \mathrm{erf}(\alpha r)/r$. Apply the §6.3 stochastic-jump rule with Fourier coefficients
 
 $$\tilde V_{\vec k}^{\text{long}} \propto \frac{e^{-|\vec k|^2/4\alpha^2}}{|\vec k|^2}.$$
 
