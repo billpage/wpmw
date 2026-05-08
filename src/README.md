@@ -19,6 +19,8 @@ imported by the scripts here.
 - `wpmwlib/wigner_split_fourier.py` — reference solver: Strang-split spectral
   Fourier on the Wigner equation. Specialized to QHO; for general V the
   force-kick kernel must be replaced by the full Wigner–Moyal kernel.
+- `wpmwlib/check_md_math.py` — markdown LaTeX-math linter (see "Markdown
+  math linter" below).
 
 ## Runnable scripts
 
@@ -169,3 +171,60 @@ so the `if dp:` guard is always required.
 
 See the top-level `README.md` for the full convention including the `output`
 branch worktree setup and figure embedding instructions.
+
+## Markdown math linter
+
+`wpmwlib/check_md_math.py` lints the project's markdown files for math that
+will not render correctly on GitHub. It catches the two failure modes we have
+actually hit:
+
+- macros that vanilla LaTeX accepts but GitHub's MathJax config blocks —
+  notably `\operatorname`, `\bm`, `\href`, `\DeclareMathOperator`,
+  `\newcommand`, `\definecolor`, `\colorbox`, `\label` / `\ref` / `\eqref`,
+  `\tag`, `\intertext`, `\verb`, `\mathds`;
+- multi-line `$$...$$` display blocks placed inside a list item, which
+  GitHub silently re-parses as nested bullets.
+
+Optionally it also feeds every expression to KaTeX (strict mode) and to
+MathJax 3 to catch malformed LaTeX (mismatched delimiters, unknown macros,
+etc.). Those passes need `node` plus `katex` and `mathjax-full` from npm; if
+they are not available, the linter prints a notice and skips them, still
+running the static and structural passes.
+
+### Run locally
+
+From the repository root:
+
+```bash
+# fast, no Node needed — static + structural passes only:
+python -m wpmwlib.check_md_math --no-render
+
+# full check — first install the npm packages once:
+npm install --no-save katex mathjax-full
+python -m wpmwlib.check_md_math
+```
+
+The default scan targets are `docs/` and `README.md`. Pass any file or
+directory to override. Exit code is `0` on a clean scan, `1` if issues
+were reported.
+
+The same check runs in CI on every push and pull request via
+`.github/workflows/check_md_math.yml`.
+
+### Style guide for math in WPMW markdown
+
+A short cheat sheet for keeping new docs lint-clean:
+
+- For upright function names (erf, erfc, sgn, Tr, ...) use `\mathrm{...}`,
+  not `\operatorname{...}` — same glyph, math-mode spacing, universally
+  supported.
+- For prose-like content inside math (subscripts like `_{\text{short-range}}`,
+  unit labels, etc.) use `\text{...}`.
+- Keep `$$...$$` display blocks on a **single source line** when they appear
+  inside a numbered or bulleted list item. If you need visual line breaks,
+  use `$$\begin{aligned} ... \\ ... \end{aligned}$$` on one line.
+- Outside of list items, multi-line `$$...$$` is fine — preferred for long
+  derivations.
+- Bold math: `\boldsymbol{x}` or `\mathbf{x}`, not `\bm{x}`.
+- Inline math: write `$x$5` carefully — GitHub treats `$` adjacent to digits
+  inconsistently. A space (`$x$ 5`) avoids the problem entirely.

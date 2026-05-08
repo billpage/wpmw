@@ -1,0 +1,493 @@
+"""
+Markdown LaTeX-math linter for the WPMW project.
+
+Catches the rendering pitfalls we have actually hit on GitHub:
+
+1. **Static** — patterns GitHub's MathJax config rejects even though vanilla
+   MathJax/KaTeX would accept them (e.g. ``\\operatorname``, ``\\bm``,
+   ``\\href``). These cause a visible "macro is not allowed" error in the
+   rendered page.
+2. **Structural** — multi-line ``$$...$$`` blocks placed inside a list item.
+   GitHub's markdown preprocessor silently fails to recognise these as math,
+   then re-tokenises the indented ``+`` / ``-`` lines as nested bullet items.
+   No error message — just garbled output.
+3. **Render (KaTeX, optional)** — every ``$...$`` and ``$$...$$`` expression
+   is fed to KaTeX in strict mode. Catches malformed LaTeX (mismatched
+   delimiters, unknown macros, etc.).
+4. **Render (MathJax, optional)** — same expressions through MathJax 3, the
+   engine GitHub actually uses. A different set of edge cases than KaTeX.
+
+The two render passes need ``node`` plus the ``katex`` and ``mathjax-full``
+npm packages.  When those aren't available the passes are skipped with a
+warning; the static and structural passes always run.
+
+Run as a CLI from the repository root::
+
+    python -m wpmwlib.check_md_math docs/
+
+Exits 0 if clean, 1 if any issues found.
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+import os
+import re
+import shutil
+import subprocess
+import sys
+import tempfile
+from dataclasses import dataclass
+from pathlib import Path
+from typing import Iterable
+
+
+# --------------------------------------------------------------------------- #
+# 1. Strip code regions from markdown so $-signs in code don't false-match.   #
+# --------------------------------------------------------------------------- #
+
+_FENCED_CODE = re.compile(r"```.*?```|~~~.*?~~~", re.DOTALL)
+_INLINE_CODE = re.compile(r"`[^`\n]+`")
+_INDENTED_CODE_LINE = re.compile(r"^(?: {4}|\t).*$", re.MULTILINE)
+
+
+def _blank_keep_newlines(match: re.Match) -> str:
+    s = match.group(0)
+    return "".join("\n" if c == "\n" else " " for c in s)
+
+
+def strip_code(text: str) -> str:
+    """Replace code regions with whitespace, preserving line numbers."""
+    text = _FENCED_CODE.sub(_blank_keep_newlines, text)
+    text = _INLINE_CODE.sub(_blank_keep_newlines, text)
+    text = _INDENTED_CODE_LINE.sub(_blank_keep_newlines, text)
+    return text
+
+
+# --------------------------------------------------------------------------- #
+# 2. Extract math expressions from the (code-stripped) text.                  #
+# --------------------------------------------------------------------------- #
+
+_BLOCK_MATH = re.compile(r"\$\$(.+?)\$\$", re.DOTALL)
+_INLINE_MATH = re.compile(
+    r"(?<![\\$])"          # opening $ not after \ or another $
+    r"\$"
+    r"(?![ \t\n$])"        # not followed by whitespace or another $
+    r"([^\n$]+?)"          # body: no newlines, no $
+    r"(?<![ \t])"          # last char not whitespace
+    r"\$"
+    r"(?![0-9$])"          # not followed by a digit (e.g. $5) or another $
+)
+
+
+@dataclass
+class MathExpr:
+    mode: str          # "inline" or "display"
+    expr: str
+    line: int
+    start: int
+
+
+def _line_of(text: str, offset: int) -> int:
+    return text.count("\n", 0, offset) + 1
+
+
+def extract_math(stripped: str) -> list[MathExpr]:
+    """Return every math expression in the (already code-stripped) text."""
+    out: list[MathExpr] = []
+    masked = stripped
+    for m in _BLOCK_MATH.finditer(stripped):
+        out.append(MathExpr("display", m.group(1),
+                            _line_of(stripped, m.start()), m.start()))
+        s, e = m.span()
+        masked = masked[:s] + _blank_keep_newlines(m) + masked[e:]
+    for m in _INLINE_MATH.finditer(masked):
+        out.append(MathExpr("inline", m.group(1),
+                            _line_of(masked, m.start()), m.start()))
+    out.sort(key=lambda r: r.start)
+    return out
+
+
+# --------------------------------------------------------------------------- #
+# 3. Static scan: GitHub-specific blocked macros.                             #
+# --------------------------------------------------------------------------- #
+
+_STATIC_PATTERNS: list[tuple[re.Pattern, str]] = [
+    (re.compile(r"\\operatorname\b"),
+     r"\operatorname{...} — GitHub's MathJax config rejects this. "
+     r"Use \mathrm{...} (function names) or \text{...} (prose)."),
+    (re.compile(r"\\DeclareMathOperator\b"),
+     r"\DeclareMathOperator — not supported. Use \mathrm{...} inline."),
+    (re.compile(r"\\newcommand\b|\\renewcommand\b|\\def\b"),
+     r"\newcommand / \def — custom macros are not supported in GitHub math."),
+    (re.compile(r"\\begin\{equation\*?\}"),
+     r"\begin{equation} — wrap in $$...$$ instead; GitHub does not auto-number."),
+    (re.compile(r"\\href\b"),
+     r"\href{...} — disabled in GitHub's renderer."),
+    (re.compile(r"\\verb\b"),
+     r"\verb — not supported."),
+    (re.compile(r"\\label\b|\\ref\b|\\eqref\b"),
+     r"\label / \ref / \eqref — cross-references are not rendered."),
+    (re.compile(r"\\intertext\b"),
+     r"\intertext — not supported."),
+    (re.compile(r"\\tag\b"),
+     r"\tag — equation numbering is not supported."),
+    (re.compile(r"\\mathds\b"),
+     r"\mathds — dsfont package not available; use \mathbb."),
+    (re.compile(r"\\bm\b"),
+     r"\bm — bm package not loaded; use \boldsymbol or \mathbf."),
+    (re.compile(r"\\colorbox\b|\\fcolorbox\b"),
+     r"\colorbox / \fcolorbox — not supported."),
+    (re.compile(r"\\definecolor\b"),
+     r"\definecolor — not supported."),
+]
+
+
+def static_scan(expr: str) -> list[str]:
+    return [msg for pat, msg in _STATIC_PATTERNS if pat.search(expr)]
+
+
+# --------------------------------------------------------------------------- #
+# 4. Structural scan: block math placed inside a list item.                   #
+# --------------------------------------------------------------------------- #
+
+_LIST_ITEM_OPEN = re.compile(r"^(\s*)(?:[-+*]\s+|\d+[.)]\s+)")
+_BLANK_LINE = re.compile(r"^\s*$")
+_DOLLAR_DOLLAR_OPEN = re.compile(r"^(\s*)\$\$\s*$")
+_DOLLAR_DOLLAR_INLINE = re.compile(r"^\s*\$\$.+\$\$\s*$")
+
+
+def list_item_block_math(text: str) -> list[tuple[int, str, str]]:
+    """Find multi-line ``$$...$$`` blocks placed inside a list item.
+
+    Returns ``(line_no, message, snippet)`` for each occurrence.
+    """
+    lines = text.splitlines()
+    issues: list[tuple[int, str, str]] = []
+    in_list = False
+    list_indent = -1
+    in_fenced = False
+    for i, line in enumerate(lines, start=1):
+        stripped = line.strip()
+        if stripped.startswith("```") or stripped.startswith("~~~"):
+            in_fenced = not in_fenced
+            continue
+        if in_fenced:
+            continue
+        m = _LIST_ITEM_OPEN.match(line)
+        if m:
+            in_list = True
+            list_indent = len(m.group(1))
+            continue
+        if _BLANK_LINE.match(line):
+            continue
+        # Inside a list item if the current line is indented past list_indent.
+        if in_list and (len(line) - len(line.lstrip())) > list_indent:
+            md = _DOLLAR_DOLLAR_OPEN.match(line)
+            if md and not _DOLLAR_DOLLAR_INLINE.match(line):
+                # Look ahead for the closing $$ on a later line.
+                for j in range(i, min(i + 60, len(lines))):
+                    if _DOLLAR_DOLLAR_OPEN.match(lines[j]):
+                        snippet = "\n".join(lines[i - 1:j + 1])
+                        if len(snippet) > 200:
+                            snippet = snippet[:200] + "..."
+                        issues.append((
+                            i,
+                            "Multi-line $$...$$ block inside a list item — "
+                            "GitHub will not recognise it as math. Fix: "
+                            "collapse to a single line, or use "
+                            r"$$\begin{aligned}...\end{aligned}$$ on one line, "
+                            "or move the block out of the list.",
+                            snippet.replace("\n", " ↵ "),
+                        ))
+                        break
+            continue
+        in_list = False
+        list_indent = -1
+    return issues
+
+
+# --------------------------------------------------------------------------- #
+# 5. Optional render checks via node + katex / mathjax-full.                  #
+# --------------------------------------------------------------------------- #
+
+_KATEX_JS = r"""
+const katex = require('katex');
+const readline = require('readline');
+const rl = readline.createInterface({ input: process.stdin });
+rl.on('line', (line) => {
+    if (!line.trim()) return;
+    let item;
+    try { item = JSON.parse(line); }
+    catch (e) { return; }
+    const { id, expr, mode } = item;
+    try {
+        katex.renderToString(expr, {
+            displayMode: (mode === "display"),
+            throwOnError: true,
+            strict: "error",
+            trust: false,
+        });
+        process.stdout.write(JSON.stringify({id, ok: true}) + "\n");
+    } catch (e) {
+        process.stdout.write(JSON.stringify({
+            id, ok: false, error: String(e.message || e),
+        }) + "\n");
+    }
+});
+"""
+
+_MATHJAX_JS = r"""
+const { mathjax } = require('mathjax-full/js/mathjax.js');
+const { TeX } = require('mathjax-full/js/input/tex.js');
+const { SVG } = require('mathjax-full/js/output/svg.js');
+const { liteAdaptor } = require('mathjax-full/js/adaptors/liteAdaptor.js');
+const { RegisterHTMLHandler } = require('mathjax-full/js/handlers/html.js');
+const { AllPackages } = require('mathjax-full/js/input/tex/AllPackages.js');
+const adaptor = liteAdaptor();
+RegisterHTMLHandler(adaptor);
+const tex = new TeX({
+    packages: AllPackages.filter(p => p !== 'require' && p !== 'autoload'),
+});
+const svg = new SVG({ fontCache: 'none' });
+const html = mathjax.document('', { InputJax: tex, OutputJax: svg });
+const readline = require('readline');
+const rl = readline.createInterface({ input: process.stdin });
+rl.on('line', (line) => {
+    if (!line.trim()) return;
+    let item;
+    try { item = JSON.parse(line); } catch (e) { return; }
+    const { id, expr, mode } = item;
+    try {
+        const node = html.convert(expr, { display: (mode === 'display') });
+        const out = adaptor.outerHTML(node);
+        const errMatch = out.match(/data-mjx-error="([^"]+)"/);
+        if (errMatch) {
+            process.stdout.write(JSON.stringify({
+                id, ok: false,
+                error: errMatch[1].replace(/&quot;/g, '"'),
+            }) + "\n");
+        } else {
+            process.stdout.write(JSON.stringify({id, ok: true}) + "\n");
+        }
+    } catch (e) {
+        process.stdout.write(JSON.stringify({
+            id, ok: false, error: String(e.message || e),
+        }) + "\n");
+    }
+});
+"""
+
+
+def _node_available() -> bool:
+    return shutil.which("node") is not None
+
+
+def _run_engine(items: list[tuple[int, MathExpr]],
+                engine_js: str,
+                engine_name: str,
+                node_cwd: Path) -> dict[int, dict]:
+    """Run a list of expressions through a node-based engine.
+
+    ``items`` is a list of ``(id, MathExpr)`` pairs.  ``node_cwd`` is the
+    directory whose ``node_modules/`` provides the engine (``katex`` or
+    ``mathjax-full``).
+    """
+    if not items:
+        return {}
+    if not _node_available():
+        print(f"  (skipping {engine_name}: 'node' not found in PATH)",
+              file=sys.stderr)
+        return {}
+    if not (node_cwd / "node_modules").is_dir():
+        print(f"  (skipping {engine_name}: no node_modules in {node_cwd})",
+              file=sys.stderr)
+        return {}
+    with tempfile.NamedTemporaryFile("w", suffix=".js", delete=False,
+                                     dir=str(node_cwd)) as f:
+        f.write(engine_js)
+        script_path = f.name
+    try:
+        payload = "\n".join(
+            json.dumps({"id": iid, "expr": me.expr, "mode": me.mode})
+            for iid, me in items
+        )
+        try:
+            proc = subprocess.run(
+                ["node", script_path],
+                input=payload, capture_output=True, text=True,
+                cwd=str(node_cwd), timeout=180,
+            )
+        except subprocess.TimeoutExpired:
+            print(f"  ({engine_name} timed out)", file=sys.stderr)
+            return {}
+        results: dict[int, dict] = {}
+        for line in proc.stdout.splitlines():
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                r = json.loads(line)
+            except json.JSONDecodeError:
+                continue
+            if "id" in r:
+                results[r["id"]] = r
+        return results
+    finally:
+        try:
+            os.unlink(script_path)
+        except OSError:
+            pass
+
+
+# --------------------------------------------------------------------------- #
+# 6. Top-level scan driver.                                                   #
+# --------------------------------------------------------------------------- #
+
+@dataclass
+class Issue:
+    file: Path
+    line: int
+    severity: str         # STATIC, STRUCT, KATEX, MATHJX
+    mode: str             # inline, display, ""
+    expr: str
+    message: str
+
+
+def _walk_md(paths: Iterable[Path]) -> list[Path]:
+    out: list[Path] = []
+    for p in paths:
+        if p.is_file() and p.suffix == ".md":
+            out.append(p)
+        elif p.is_dir():
+            out.extend(sorted(q for q in p.rglob("*.md")
+                              if ".git" not in q.parts))
+    return sorted(set(out))
+
+
+def scan_paths(paths: Iterable[Path],
+               *,
+               run_katex: bool = True,
+               run_mathjax: bool = True,
+               node_cwd: Path | None = None) -> list[Issue]:
+    """Scan markdown files for math-rendering issues.
+
+    Returns a flat list of ``Issue`` records.  An empty list means clean.
+    """
+    md_files = _walk_md(paths)
+    all_items: list[tuple[int, MathExpr]] = []
+    by_id: dict[int, tuple[Path, MathExpr]] = {}
+    next_id = 0
+
+    issues: list[Issue] = []
+
+    for md in md_files:
+        text = md.read_text(encoding="utf-8")
+        # static + structural always run
+        for line, msg, snippet in list_item_block_math(text):
+            issues.append(Issue(md, line, "STRUCT", "display", snippet, msg))
+        stripped = strip_code(text)
+        for me in extract_math(stripped):
+            iid = next_id
+            next_id += 1
+            by_id[iid] = (md, me)
+            all_items.append((iid, me))
+            for hit in static_scan(me.expr):
+                issues.append(Issue(md, me.line, "STATIC", me.mode, me.expr, hit))
+
+    if (run_katex or run_mathjax) and node_cwd is None:
+        node_cwd = Path.cwd()
+
+    if run_katex:
+        kr = _run_engine(all_items, _KATEX_JS, "katex", node_cwd)
+        for iid, r in kr.items():
+            if not r.get("ok"):
+                md, me = by_id[iid]
+                err = str(r.get("error", "unknown")).split("\n", 1)[0]
+                issues.append(Issue(md, me.line, "KATEX ", me.mode, me.expr, err))
+
+    if run_mathjax:
+        mr = _run_engine(all_items, _MATHJAX_JS, "mathjax", node_cwd)
+        for iid, r in mr.items():
+            if not r.get("ok"):
+                md, me = by_id[iid]
+                err = str(r.get("error", "unknown")).split("\n", 1)[0]
+                issues.append(Issue(md, me.line, "MATHJX", me.mode, me.expr, err))
+
+    return issues
+
+
+# --------------------------------------------------------------------------- #
+# 7. CLI.                                                                     #
+# --------------------------------------------------------------------------- #
+
+def _format_report(issues: list[Issue], all_files: list[Path]) -> str:
+    lines: list[str] = []
+    by_file: dict[Path, list[Issue]] = {}
+    for it in issues:
+        by_file.setdefault(it.file, []).append(it)
+    for md in all_files:
+        rel = md
+        try:
+            rel = md.relative_to(Path.cwd())
+        except ValueError:
+            pass
+        if md not in by_file:
+            lines.append(f"OK   {rel}")
+            continue
+        lines.append(f"=== {rel} ({len(by_file[md])} issue(s)) ===")
+        for it in sorted(by_file[md], key=lambda i: (i.line, i.severity)):
+            preview = it.expr if len(it.expr) <= 90 else it.expr[:87] + "..."
+            preview = preview.replace("\n", " ↵ ")
+            lines.append(f"  L{it.line:4d} [{it.severity:6s}] [{it.mode:7s}] "
+                         f"{it.message}")
+            lines.append(f"            EXPR: {preview}")
+        lines.append("")
+    return "\n".join(lines)
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(
+        prog="python -m wpmwlib.check_md_math",
+        description="Lint WPMW markdown for GitHub math-rendering issues.",
+    )
+    parser.add_argument("paths", nargs="*", default=["docs/", "README.md"],
+                        help="Files or directories to scan "
+                             "(default: docs/ and README.md).")
+    parser.add_argument("--no-render", action="store_true",
+                        help="Skip the optional KaTeX and MathJax render "
+                             "passes (only run static + structural checks).")
+    parser.add_argument("--node-cwd", type=Path, default=None,
+                        help="Directory whose node_modules/ provides "
+                             "katex and mathjax-full (default: cwd).")
+    args = parser.parse_args(argv)
+
+    paths = [Path(p) for p in args.paths]
+    missing = [p for p in paths if not p.exists()]
+    if missing:
+        print(f"error: paths not found: {', '.join(map(str, missing))}",
+              file=sys.stderr)
+        return 2
+
+    issues = scan_paths(
+        paths,
+        run_katex=not args.no_render,
+        run_mathjax=not args.no_render,
+        node_cwd=args.node_cwd,
+    )
+    all_files = _walk_md(paths)
+    report = _format_report(issues, all_files)
+    if report:
+        print(report)
+    n_static = sum(1 for i in issues if i.severity == "STATIC")
+    n_struct = sum(1 for i in issues if i.severity == "STRUCT")
+    n_render = sum(1 for i in issues if i.severity in ("KATEX ", "MATHJX"))
+    print(f"Summary: {len(issues)} issue(s) "
+          f"({n_static} static, {n_struct} structural, {n_render} render) "
+          f"across {len(all_files)} file(s).")
+    return 0 if not issues else 1
+
+
+if __name__ == "__main__":
+    sys.exit(main())

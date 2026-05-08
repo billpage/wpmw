@@ -52,3 +52,7 @@ output/
 *.local
 .env
 .env.local
+
+# --- Node (markdown math linter only) ---
+node_modules/
+package-lock.json
