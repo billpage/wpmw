@@ -215,6 +215,24 @@ The same check runs in CI on every push and pull request via
 
 A short cheat sheet for keeping new docs lint-clean:
 
+- **Avoid backslash-escaped TeX shortcuts inside math.** GitHub's markdown
+  preprocessor strips the leading backslash from any ``\X`` where X is ASCII
+  punctuation, *even inside math blocks*, before MathJax sees the content.
+  This silently corrupts spacing and turns ``\bigl\{...\bigr\}`` into the
+  hard "Missing or unrecognized delimiter for \\bigl" error. Use the
+  letter-named equivalents instead:
+
+  | Don't write | Write instead |
+  | --- | --- |
+  | `\,` (thin space) | `\thinspace` |
+  | `\!` (negative thin space) | `\negthinspace` |
+  | `\;` (thick space) | `\thickspace` |
+  | `\:` (medium space, amsmath) | `\medspace` |
+  | `\{` (literal left brace) | `\lbrace` |
+  | `\}` (literal right brace) | `\rbrace` |
+
+  The linter's GFM pass enforces this rule.
+
 - For upright function names (erf, erfc, sgn, Tr, ...) use `\mathrm{...}`,
   not `\operatorname{...}` — same glyph, math-mode spacing, universally
   supported.

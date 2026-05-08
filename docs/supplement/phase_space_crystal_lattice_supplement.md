@@ -21,19 +21,19 @@ This redraft retains points (3) and (4) and treats (1)–(2) only briefly (see C
 
 Wiedemann (*Particle Accelerator Physics*, ch. 12) considers a 1+1-D phase-space density $\Psi(w, p_w, t)$ with deterministic-plus-stochastic dynamics
 
-$$\dot{w} = f_w(w, p_w, t) + \sum_i \xi_i\,\delta(t - t_i), \qquad \dot{p}_w = g_w(w, p_w, t) + \sum_i \pi_i\,\delta(t - t_i)$$
+$$\dot{w} = f_w(w, p_w, t) + \sum_i \xi_i\thinspace\delta(t - t_i), \qquad \dot{p}_w = g_w(w, p_w, t) + \sum_i \pi_i\thinspace\delta(t - t_i)$$
 
 where $\xi_i$ and $\pi_i$ are jump amplitudes whose probability densities $P_w(\xi)$ and $P_p(\pi)$ are normalised and centred. Probability mass conservation in the differential phase-space rectangle gives
 
-$$\Psi(w + f_w \Delta t,\ p_w + g_w \Delta t,\ t + \Delta t)\,\Delta A_Q = \Psi(w, p_w, t)\,\Delta A_P$$
+$$\Psi(w + f_w \Delta t,\ p_w + g_w \Delta t,\ t + \Delta t)\thinspace\Delta A_Q = \Psi(w, p_w, t)\thinspace\Delta A_P$$
 
 with the post-advection volume distortion factor
 
-$$\Delta A_Q = \Delta w\,\Delta p_w\bigl[1 + (\partial_w f_w + \partial_{p_w} g_w)\Delta t\bigr]$$
+$$\Delta A_Q = \Delta w\thinspace\Delta p_w\bigl[1 + (\partial_w f_w + \partial_{p_w} g_w)\Delta t\bigr]$$
 
 The post-jump density is obtained by convolving with the jump statistics:
 
-$$I = \Delta A_P \iint \Psi(w - \xi, p_w - \zeta, t)\,P_w(\xi)\,P_p(\zeta)\,d\xi\,d\zeta$$
+$$I = \Delta A_P \iint \Psi(w - \xi, p_w - \zeta, t)\thinspace P_w(\xi)\thinspace P_p(\zeta)\thinspace d\xi\thinspace d\zeta$$
 
 Wiedemann expands $\Psi(w-\xi, p_w-\zeta, t)$ to second order in $\xi, \zeta$, recovering the standard Fokker–Planck equation. Cyganski extends the expansion to **third order**:
 
@@ -41,7 +41,7 @@ $$\Psi(w-\xi, p_w-\zeta, t) \approx \Psi - \xi \partial_w \Psi - \zeta \partial_
 
 Following Wiedemann's procedure but adopting **rate-based** rather than per-event jump statistics (see Cyganski's annotations on Wiedemann §12.3 — Wiedemann's "every particle jumps" reading is repaired by introducing rates $\eta_\xi, \eta_\zeta$), and renaming $w \to x$ and $\Psi \to W$ for use as the Wigner distribution, the result is the **extended Fokker–Planck (xFP) equation**:
 
-$$\partial_t W + f\,\partial_x W + g\,\partial_p W \;=\; -W\bigl(\partial_x f + \partial_p g\bigr) + \tfrac{\eta_\xi}{2}\langle \xi^2\rangle\partial_x^2 W + \tfrac{\eta_\zeta}{2}\langle \zeta^2\rangle\partial_p^2 W - \tfrac{\eta_\xi}{6}\langle \xi^3\rangle\partial_x^3 W - \tfrac{\eta_\zeta}{6}\langle \zeta^3\rangle\partial_p^3 W$$
+$$\partial_t W + f\thinspace\partial_x W + g\thinspace\partial_p W \thickspace=\thickspace -W\bigl(\partial_x f + \partial_p g\bigr) + \tfrac{\eta_\xi}{2}\langle \xi^2\rangle\partial_x^2 W + \tfrac{\eta_\zeta}{2}\langle \zeta^2\rangle\partial_p^2 W - \tfrac{\eta_\xi}{6}\langle \xi^3\rangle\partial_x^3 W - \tfrac{\eta_\zeta}{6}\langle \zeta^3\rangle\partial_p^3 W$$
 
 ---
 
@@ -49,17 +49,17 @@ $$\partial_t W + f\,\partial_x W + g\,\partial_p W \;=\; -W\bigl(\partial_x f + 
 
 The QLE in 1+1D is
 
-$$\partial_t W + \frac{p}{m}\,\partial_x W \;-\; \frac{\partial V}{\partial x}\,\frac{\partial W}{\partial p} \;+\; \frac{\hbar^2}{24}\frac{\partial^3 V}{\partial x^3}\frac{\partial^3 W}{\partial p^3} \;-\; \cdots \;=\; 0$$
+$$\partial_t W + \frac{p}{m}\thinspace\partial_x W \thickspace-\thickspace \frac{\partial V}{\partial x}\thinspace\frac{\partial W}{\partial p} \thickspace+\thickspace \frac{\hbar^2}{24}\frac{\partial^3 V}{\partial x^3}\frac{\partial^3 W}{\partial p^3} \thickspace-\thickspace \cdots \thickspace=\thickspace 0$$
 
 Matching this term by term to the xFP equation gives:
 
 | xFP term | QLE counterpart | Required identification |
 |---|---|---|
-| $f\,\partial_x W$ | $(p/m)\,\partial_x W$ | $f(x,p,t) = p/m$ |
-| $g\,\partial_p W$ | $-\,V'(x)\,\partial_p W$ | $g(x,p,t) = -\,\partial V/\partial x$ |
-| $\langle\xi^k\rangle\,\partial_x^k W$ | (none) | $\xi$ has no nonzero moments (set $\xi \equiv 0$) |
-| $\tfrac{\eta_\zeta}{2}\langle\zeta^2\rangle\,\partial_p^2 W$ | (none) | $\langle\zeta^2\rangle = 0$ |
-| $-\tfrac{\eta_\zeta}{6}\langle\zeta^3\rangle\,\partial_p^3 W$ | $+\tfrac{\hbar^2}{24}V'''\,\partial_p^3 W$ | $\eta_\zeta\langle\zeta^3\rangle = -\tfrac{\hbar^2}{4}\,\partial_x^3 V$ |
+| $f\thinspace\partial_x W$ | $(p/m)\thinspace\partial_x W$ | $f(x,p,t) = p/m$ |
+| $g\thinspace\partial_p W$ | $-\thinspace V'(x)\thinspace\partial_p W$ | $g(x,p,t) = -\thinspace\partial V/\partial x$ |
+| $\langle\xi^k\rangle\thinspace\partial_x^k W$ | (none) | $\xi$ has no nonzero moments (set $\xi \equiv 0$) |
+| $\tfrac{\eta_\zeta}{2}\langle\zeta^2\rangle\thinspace\partial_p^2 W$ | (none) | $\langle\zeta^2\rangle = 0$ |
+| $-\tfrac{\eta_\zeta}{6}\langle\zeta^3\rangle\thinspace\partial_p^3 W$ | $+\tfrac{\hbar^2}{24}V'''\thinspace\partial_p^3 W$ | $\eta_\zeta\langle\zeta^3\rangle = -\tfrac{\hbar^2}{4}\thinspace\partial_x^3 V$ |
 
 Together with the remaining higher odd moments, this is the chain of moment conditions that the jump density $P_\zeta(\zeta)$ must satisfy.
 
@@ -105,11 +105,11 @@ Justification (slide 15): every term in the QLE Moyal series contains a derivati
 
 For a sinusoidal potential of period $L/n$,
 
-$$V(x) = V_p \cos\!\left(\frac{2\pi n x}{L} + \phi\right)$$
+$$V(x) = V_p \cos\negthinspace\left(\frac{2\pi n x}{L} + \phi\right)$$
 
 each spawning/jump event imparts to the two participating particles equal and opposite momentum kicks of magnitude $n\pi\hbar/L$, for a total spread of
 
-$$\Delta p \;=\; \frac{2 n \pi \hbar}{L} \;=\; \frac{n h}{L}$$
+$$\Delta p \thickspace=\thickspace \frac{2 n \pi \hbar}{L} \thickspace=\thickspace \frac{n h}{L}$$
 
 This is precisely Abraham's kinetic momentum for a photon of wavelength $L/n$, as Cyganski derives by examining the negaton in its comoving frame (slide 11, reproduced below).
 
@@ -125,29 +125,29 @@ This is the energetic justification for the discrete momentum-cell spacing $\Del
 
 For $V(x) = V_p \cos\theta$ with $\theta(x) \equiv 2\pi q x/L + \phi$,
 
-$$V'(x) \;=\; -\,V_p\,\frac{2\pi q}{L}\,\sin\theta$$
+$$V'(x) \thickspace=\thickspace -\thinspace V_p\thinspace\frac{2\pi q}{L}\thinspace\sin\theta$$
 
 The QLE force-term contribution to $\partial_t W$ is
 
-$$\partial_t W \;\supset\; +\,V'(x)\,\partial_p W$$
+$$\partial_t W \thickspace\supset\thickspace +\thinspace V'(x)\thinspace\partial_p W$$
 
-(from $\dot p = -V'$ feeding into the Liouville flow $\partial_t W + \dot p\,\partial_p W = 0$). Approximating $\partial_p W$ by a centred finite difference at the photon-momentum scale $\Delta p_q = q\pi\hbar/L$,
+(from $\dot p = -V'$ feeding into the Liouville flow $\partial_t W + \dot p\thinspace\partial_p W = 0$). Approximating $\partial_p W$ by a centred finite difference at the photon-momentum scale $\Delta p_q = q\pi\hbar/L$,
 
-$$\partial_p W \approx \frac{W(x,\,p + \Delta p_q) - W(x,\,p - \Delta p_q)}{2\,\Delta p_q} \;=\; \frac{L}{q\,h}\bigl[W_{\rm hi} - W_{\rm lo}\bigr]$$
+$$\partial_p W \approx \frac{W(x,\thinspace p + \Delta p_q) - W(x,\thinspace p - \Delta p_q)}{2\thinspace\Delta p_q} \thickspace=\thickspace \frac{L}{q\thinspace h}\bigl[W_{\rm hi} - W_{\rm lo}\bigr]$$
 
 and combining,
 
-$$\boxed{\;\frac{\Delta W}{\Delta t} \;=\; -\,\frac{V_p}{\hbar}\,\sin\theta\,\bigl[W_{\rm hi} - W_{\rm lo}\bigr]\;}$$
+$$\boxed{\thickspace\frac{\Delta W}{\Delta t} \thickspace=\thickspace -\thinspace\frac{V_p}{\hbar}\thinspace\sin\theta\thinspace\bigl[W_{\rm hi} - W_{\rm lo}\bigr]\thickspace}$$
 
 Equivalently, since $-\sin\theta = \cos(\theta + \pi/2)$,
 
-$$\frac{\Delta W}{\Delta t} \;=\; \frac{V_p}{\hbar}\,\cos\!\left(\theta + \tfrac{\pi}{2}\right)\bigl[W_{\rm hi} - W_{\rm lo}\bigr]$$
+$$\frac{\Delta W}{\Delta t} \thickspace=\thickspace \frac{V_p}{\hbar}\thinspace\cos\negthinspace\left(\theta + \tfrac{\pi}{2}\right)\bigl[W_{\rm hi} - W_{\rm lo}\bigr]$$
 
 This is the **general jump formula** of V2 page 18.
 
 ### 6.2 Specialised to a pure cosine ($\phi = 0$, $q = 1$, amplitude $V_{\max}$)
 
-$$W(x,\,p,\,t + dt) \;=\; W(x,\,p) \;-\; \frac{dt\,V_{\max}}{\hbar}\,\sin\!\left(\frac{2\pi x}{L}\right)\bigl[W(p + \tfrac{\pi\hbar}{L}) - W(p - \tfrac{\pi\hbar}{L})\bigr]$$
+$$W(x,\thinspace p,\thinspace t + dt) \thickspace=\thickspace W(x,\thinspace p) \thickspace-\thickspace \frac{dt\thinspace V_{\max}}{\hbar}\thinspace\sin\negthinspace\left(\frac{2\pi x}{L}\right)\bigl[W(p + \tfrac{\pi\hbar}{L}) - W(p - \tfrac{\pi\hbar}{L})\bigr]$$
 
 In Python, with the convention that axis 0 is the momentum axis and `np.roll(W, +1, axis=0)` brings $W(p - \Delta p)$ to position $p$ (and similarly `np.roll(W, -1, ..)` brings $W(p + \Delta p)$),
 
@@ -160,11 +160,11 @@ W += (V_max / hbar) * dt * np.sin(2 * np.pi * X / L) * (
 
 Cyganski's V2 memo writes the simplified-form line on page 18 as
 
-$$W(x,p,t+dt) = W(x,p) \;{-}\; \tfrac{dt\,V_{\max}}{\hbar}\,W(p - \tfrac{\pi\hbar}{L})\,\sin\!\left(\tfrac{2\pi x}{L}\right) \;{+}\; \tfrac{dt\,V_{\max}}{\hbar}\,W(p + \tfrac{\pi\hbar}{L})\,\sin\!\left(\tfrac{2\pi x}{L}\right)$$
+$$W(x,p,t+dt) = W(x,p) \thickspace{-}\thickspace \tfrac{dt\thinspace V_{\max}}{\hbar}\thinspace W(p - \tfrac{\pi\hbar}{L})\thinspace\sin\negthinspace\left(\tfrac{2\pi x}{L}\right) \thickspace{+}\thickspace \tfrac{dt\thinspace V_{\max}}{\hbar}\thinspace W(p + \tfrac{\pi\hbar}{L})\thinspace\sin\negthinspace\left(\tfrac{2\pi x}{L}\right)$$
 
 — equivalent to
 
-$$\Delta W \;=\; +\,\tfrac{dt\,V_{\max}}{\hbar}\,\sin\!\left(\tfrac{2\pi x}{L}\right)\bigl[W_{\rm hi} - W_{\rm lo}\bigr]$$
+$$\Delta W \thickspace=\thickspace +\thinspace\tfrac{dt\thinspace V_{\max}}{\hbar}\thinspace\sin\negthinspace\left(\tfrac{2\pi x}{L}\right)\bigl[W_{\rm hi} - W_{\rm lo}\bigr]$$
 
 This is **the wrong sign** relative to §6.1 above. The error occurs in the algebraic step from the (correct) general formula via $\cos(\theta + \pi/2) = -\sin\theta$: the simplified form drops the leading minus sign. The Python in the same memo,
 
@@ -188,10 +188,10 @@ The error is detectable only with **non-rotationally-symmetric** initial states.
 
 Discretise phase space with $\Delta p = \pi\hbar/L$. Represent the shifted distribution $W' = W + 2/h$ as integer per-cell positon counts $N_+$. Each timestep:
 
-1. **Free-stream**: shift row $n$ by $\mathrm{round}(p_n\,\Delta t / m\,\Delta x)$ position cells.
-2. **Mediated jumps**: for each Fourier mode $q$ of the potential, each positon at $(x_m, p_n)$ acts (with probability $|\Gamma_q(x_m)|\,\Delta t$) as a mediator that transfers one positon between $(x_m, p_{n-q})$ and $(x_m, p_{n+q})$, in the direction set by the sign of $\Gamma_q(x_m) = -\,(V_q/\hbar)\sin(2\pi q x_m/L + \phi_q)$.
+1. **Free-stream**: shift row $n$ by $\mathrm{round}(p_n\thinspace\Delta t / m\thinspace\Delta x)$ position cells.
+2. **Mediated jumps**: for each Fourier mode $q$ of the potential, each positon at $(x_m, p_n)$ acts (with probability $|\Gamma_q(x_m)|\thinspace\Delta t$) as a mediator that transfers one positon between $(x_m, p_{n-q})$ and $(x_m, p_{n+q})$, in the direction set by the sign of $\Gamma_q(x_m) = -\thinspace(V_q/\hbar)\sin(2\pi q x_m/L + \phi_q)$.
 
-No particles are created or destroyed; the negaton background is bookkeeping. Laboratory observables come from the *excess* population $W = N_+ /(\nu\,\Delta x\,\Delta p) - 2/h$.
+No particles are created or destroyed; the negaton background is bookkeeping. Laboratory observables come from the *excess* population $W = N_+ /(\nu\thinspace\Delta x\thinspace\Delta p) - 2/h$.
 
 ---
 

@@ -19,7 +19,7 @@ Items below marked **[choice]** are implementation decisions not directly fixed 
 1+1D phase space with periodic position domain $x \in [0, L]$ and momentum domain $p \in [-P_{\max}, +P_{\max}]$:
 
 - $M$ position bins: $x_m = m \Delta x,\ \Delta x = L/M,\ m = 0, \dots, M{-}1$
-- $N$ momentum bins: $p_n = (n - N/2)\,\Delta p,\ n = 0, \dots, N{-}1$
+- $N$ momentum bins: $p_n = (n - N/2)\thinspace\Delta p,\ n = 0, \dots, N{-}1$
 
 For potentials whose Fourier expansion has fundamental wavelength $L$, the natural momentum spacing is
 
@@ -33,11 +33,11 @@ $$\Delta p = \frac{\pi\hbar}{L}$$
 
 The crystal-lattice shift produces the strictly non-negative quantity
 
-$$W'(x, p) \;=\; W(x, p) + \frac{2}{h}, \qquad W' \in [0,\ 4/h]$$
+$$W'(x, p) \thickspace=\thickspace W(x, p) + \frac{2}{h}, \qquad W' \in [0,\ 4/h]$$
 
 This is represented as integer per-cell positon counts:
 
-$$N_+(m, n) \;=\; \nu \cdot W'(x_m, p_n) \cdot \Delta x \, \Delta p$$
+$$N_+(m, n) \thickspace=\thickspace \nu \cdot W'(x_m, p_n) \cdot \Delta x \thinspace \Delta p$$
 
 where $\nu$ is the chosen particle-per-unit-phase-space-volume scale. The negaton background lattice is implicit: every cell would notionally hold the same count corresponding to $W_0 = 2/h$, and is **never updated dynamically**. Only $N_+$ evolves.
 
@@ -55,7 +55,7 @@ QLE term: $-\dfrac{p}{m}\dfrac{\partial W}{\partial x}$.
 
 On the lattice, shift row $n$ by
 
-$$\Delta m_n = \mathrm{round}\!\left(\frac{p_n \Delta t}{m \Delta x}\right)$$
+$$\Delta m_n = \mathrm{round}\negthinspace\left(\frac{p_n \Delta t}{m \Delta x}\right)$$
 
 position cells (periodic). For zero advection error, pick $\Delta t$ so that the maximum shift is an exact integer:
 
@@ -65,18 +65,18 @@ $$\Delta t = \frac{m \Delta x}{|p_{\max}|} \cdot K, \quad K \in \mathbb{Z}_+$$
 
 Decompose the potential into Fourier components:
 
-$$V(x) = V_0 + \sum_{q \ge 1} V_q \cos\!\left(\frac{2\pi q x}{L} + \phi_q\right)$$
+$$V(x) = V_0 + \sum_{q \ge 1} V_q \cos\negthinspace\left(\frac{2\pi q x}{L} + \phi_q\right)$$
 
 For each mode $q$, define
 
-- **Local rate**: $\Gamma_q(x_m) = \dfrac{V_q}{\hbar}\cos\!\left(\dfrac{2\pi q x_m}{L} + \phi_q + \dfrac{\pi}{2}\right) = -\dfrac{V_q}{\hbar}\sin\!\left(\dfrac{2\pi q x_m}{L} + \phi_q\right)$
+- **Local rate**: $\Gamma_q(x_m) = \dfrac{V_q}{\hbar}\cos\negthinspace\left(\dfrac{2\pi q x_m}{L} + \phi_q + \dfrac{\pi}{2}\right) = -\dfrac{V_q}{\hbar}\sin\negthinspace\left(\dfrac{2\pi q x_m}{L} + \phi_q\right)$
 - **Half-jump in cells**: $\delta_q = q$ (with the natural $\Delta p = \pi\hbar/L$ choice)
 - **Total source-to-destination jump**: $2\delta_q$ cells, equal to $2q\pi\hbar/L = qh/L$ (the photon momentum quantum at wavelength $L/q$)
 
-**The single rule.** A positon at cell $(m, n)$ acts as a *mediator*: with probability $|\Gamma_q(x_m)|\,\Delta t$ per particle per mode per timestep **[choice — Poisson rate is the rigorous form when this is not small]**, it induces a transfer of one particle:
+**The single rule.** A positon at cell $(m, n)$ acts as a *mediator*: with probability $|\Gamma_q(x_m)|\thinspace\Delta t$ per particle per mode per timestep **[choice — Poisson rate is the rigorous form when this is not small]**, it induces a transfer of one particle:
 
-$$\text{if } \Gamma_q(x_m) > 0:\quad (m,\, n + q) \longrightarrow (m,\, n - q)$$
-$$\text{if } \Gamma_q(x_m) < 0:\quad (m,\, n - q) \longrightarrow (m,\, n + q)$$
+$$\text{if } \Gamma_q(x_m) > 0:\quad (m,\thinspace n + q) \longrightarrow (m,\thinspace n - q)$$
+$$\text{if } \Gamma_q(x_m) < 0:\quad (m,\thinspace n - q) \longrightarrow (m,\thinspace n + q)$$
 
 The mediator itself is unchanged. No new particles are created. This is the entire crystal-lattice rule.
 
@@ -86,7 +86,7 @@ When $\nu$ is large and we evolve $W$ directly rather than counting particles:
 
 $$W(x_m, p_n, t + \Delta t) = W(x_m, p_n, t) + \Delta t \sum_{q \ge 1} \Gamma_q(x_m)\bigl[W(x_m, p_{n+q}) - W(x_m, p_{n-q})\bigr]$$
 
-In the small-$\Delta p$ continuum limit this reproduces the QLE force term $\partial_t W = +\,V'(x)\,\partial_p W$. (See `docs/supplement/phase_space_crystal_lattice_supplement.md` §6 for the derivation; it corrects the sign that appears in the simplified form of the V2 memo.)
+In the small-$\Delta p$ continuum limit this reproduces the QLE force term $\partial_t W = +\thinspace V'(x)\thinspace\partial_p W$. (See `docs/supplement/phase_space_crystal_lattice_supplement.md` §6 for the derivation; it corrects the sign that appears in the simplified form of the V2 memo.)
 
 In Python (`p_axis` is the momentum axis, with cell index increasing with $p$): `np.roll(W, +1, axis=p_axis)` brings $W(p - \Delta p)$ to the row at $p$. The full update for the $q=1$ canonical case is
 
@@ -95,7 +95,7 @@ W += (V_max / hbar) * dt * np.sin(2*np.pi*X/L) * (
         np.roll(W, +1, axis=p_axis) - np.roll(W, -1, axis=p_axis))
 ```
 
-To verify the sign: $\Gamma_1 = -(V_{\max}/\hbar)\sin\theta$ and the bracket is $W(p+\Delta p) - W(p-\Delta p)$, giving $\Delta W = -(V_{\max}/\hbar)\sin\theta\,[W_{\rm hi} - W_{\rm lo}]\,dt$, equivalently $+(V_{\max}/\hbar)\sin\theta\,[W_{\rm lo} - W_{\rm hi}]\,dt$, which the Python expresses with the order `roll(+1) - roll(-1)`.
+To verify the sign: $\Gamma_1 = -(V_{\max}/\hbar)\sin\theta$ and the bracket is $W(p+\Delta p) - W(p-\Delta p)$, giving $\Delta W = -(V_{\max}/\hbar)\sin\theta\thinspace[W_{\rm hi} - W_{\rm lo}]\thinspace dt$, equivalently $+(V_{\max}/\hbar)\sin\theta\thinspace[W_{\rm lo} - W_{\rm hi}]\thinspace dt$, which the Python expresses with the order `roll(+1) - roll(-1)`.
 
 ---
 

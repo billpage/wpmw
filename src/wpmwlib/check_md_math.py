@@ -7,19 +7,25 @@ Catches the rendering pitfalls we have actually hit on GitHub:
    MathJax/KaTeX would accept them (e.g. ``\\operatorname``, ``\\bm``,
    ``\\href``). These cause a visible "macro is not allowed" error in the
    rendered page.
-2. **Structural** — multi-line ``$$...$$`` blocks placed inside a list item.
+2. **GFM** — backslash-escaped TeX shortcuts that GitHub's *markdown*
+   preprocessor strips before the math is handed to MathJax, because
+   CommonMark treats ``\\X`` (where X is ASCII punctuation) as an escape.
+   ``\\,`` becomes a literal comma, ``\\!`` a literal bang, ``\\bigl\\{``
+   becomes ``\\bigl{`` — the last produces a hard "Missing or unrecognized
+   delimiter for \\bigl" error; the others corrupt spacing silently.
+3. **Structural** — multi-line ``$$...$$`` blocks placed inside a list item.
    GitHub's markdown preprocessor silently fails to recognise these as math,
    then re-tokenises the indented ``+`` / ``-`` lines as nested bullet items.
    No error message — just garbled output.
-3. **Render (KaTeX, optional)** — every ``$...$`` and ``$$...$$`` expression
+4. **Render (KaTeX, optional)** — every ``$...$`` and ``$$...$$`` expression
    is fed to KaTeX in strict mode. Catches malformed LaTeX (mismatched
    delimiters, unknown macros, etc.).
-4. **Render (MathJax, optional)** — same expressions through MathJax 3, the
+5. **Render (MathJax, optional)** — same expressions through MathJax 3, the
    engine GitHub actually uses. A different set of edge cases than KaTeX.
 
 The two render passes need ``node`` plus the ``katex`` and ``mathjax-full``
 npm packages.  When those aren't available the passes are skipped with a
-warning; the static and structural passes always run.
+warning; the static, GFM, and structural passes always run.
 
 Run as a CLI from the repository root::
 
@@ -149,7 +155,39 @@ def static_scan(expr: str) -> list[str]:
 
 
 # --------------------------------------------------------------------------- #
-# 4. Structural scan: block math placed inside a list item.                   #
+# 4. GFM scan: backslash-escapes that GitHub's markdown preprocessor strips.  #
+# --------------------------------------------------------------------------- #
+# GitHub's markdown preprocessor applies CommonMark backslash-escape rules
+# *inside* math content, even though it shouldn't — any ``\X`` where X is an
+# ASCII-punctuation character is rewritten to literal ``X`` before the math
+# is handed to MathJax.  This corrupts the most common TeX shortcuts.
+
+_GFM_ESCAPES: list[tuple[str, str]] = [
+    (r"\,", r"\thinspace"),
+    (r"\!", r"\negthinspace"),
+    (r"\;", r"\thickspace"),
+    (r"\:", r"\medspace"),
+    (r"\{", r"\lbrace"),
+    (r"\}", r"\rbrace"),
+]
+
+
+def gfm_escape_scan(expr: str) -> list[tuple[str, str, int]]:
+    """Find TeX shortcuts that GitHub's CommonMark preprocessor will strip.
+
+    Returns a list of ``(pattern, suggested_replacement, count)`` per
+    pattern that occurs in ``expr``.
+    """
+    out: list[tuple[str, str, int]] = []
+    for pat, repl in _GFM_ESCAPES:
+        n = expr.count(pat)
+        if n > 0:
+            out.append((pat, repl, n))
+    return out
+
+
+# --------------------------------------------------------------------------- #
+# 5. Structural scan: block math placed inside a list item.                   #
 # --------------------------------------------------------------------------- #
 
 _LIST_ITEM_OPEN = re.compile(r"^(\s*)(?:[-+*]\s+|\d+[.)]\s+)")
@@ -209,7 +247,7 @@ def list_item_block_math(text: str) -> list[tuple[int, str, str]]:
 
 
 # --------------------------------------------------------------------------- #
-# 5. Optional render checks via node + katex / mathjax-full.                  #
+# 6. Optional render checks via node + katex / mathjax-full.                  #
 # --------------------------------------------------------------------------- #
 
 _KATEX_JS = r"""
@@ -342,7 +380,7 @@ def _run_engine(items: list[tuple[int, MathExpr]],
 
 
 # --------------------------------------------------------------------------- #
-# 6. Top-level scan driver.                                                   #
+# 7. Top-level scan driver.                                                   #
 # --------------------------------------------------------------------------- #
 
 @dataclass
@@ -384,7 +422,7 @@ def scan_paths(paths: Iterable[Path],
 
     for md in md_files:
         text = md.read_text(encoding="utf-8")
-        # static + structural always run
+        # static + GFM + structural always run
         for line, msg, snippet in list_item_block_math(text):
             issues.append(Issue(md, line, "STRUCT", "display", snippet, msg))
         stripped = strip_code(text)
@@ -395,6 +433,13 @@ def scan_paths(paths: Iterable[Path],
             all_items.append((iid, me))
             for hit in static_scan(me.expr):
                 issues.append(Issue(md, me.line, "STATIC", me.mode, me.expr, hit))
+            for pat, repl, n in gfm_escape_scan(me.expr):
+                qty = "" if n == 1 else f" (×{n})"
+                msg = (f"GitHub's CommonMark preprocessor strips the "
+                       f"backslash from `{pat}` inside math, leaving a "
+                       f"literal `{pat[1]}` for MathJax. "
+                       f"Replace with `{repl}`{qty}.")
+                issues.append(Issue(md, me.line, "GFM   ", me.mode, me.expr, msg))
 
     if (run_katex or run_mathjax) and node_cwd is None:
         node_cwd = Path.cwd()
@@ -419,7 +464,7 @@ def scan_paths(paths: Iterable[Path],
 
 
 # --------------------------------------------------------------------------- #
-# 7. CLI.                                                                     #
+# 8. CLI.                                                                     #
 # --------------------------------------------------------------------------- #
 
 def _format_report(issues: list[Issue], all_files: list[Path]) -> str:
@@ -481,11 +526,12 @@ def main(argv: list[str] | None = None) -> int:
     if report:
         print(report)
     n_static = sum(1 for i in issues if i.severity == "STATIC")
+    n_gfm = sum(1 for i in issues if i.severity == "GFM   ")
     n_struct = sum(1 for i in issues if i.severity == "STRUCT")
     n_render = sum(1 for i in issues if i.severity in ("KATEX ", "MATHJX"))
     print(f"Summary: {len(issues)} issue(s) "
-          f"({n_static} static, {n_struct} structural, {n_render} render) "
-          f"across {len(all_files)} file(s).")
+          f"({n_static} static, {n_gfm} gfm, {n_struct} structural, "
+          f"{n_render} render) across {len(all_files)} file(s).")
     return 0 if not issues else 1
 
 

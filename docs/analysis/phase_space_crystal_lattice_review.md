@@ -19,7 +19,7 @@
 - Matches xFP, term by term, to the Moyal series expansion of the QLE:
   - $f(x,p,t) = p/m$
   - $g(x,p,t) = \partial V/\partial x$
-  - $\eta_\zeta \int \zeta^3 P_\zeta(\zeta)\,d\zeta = \dfrac{\hbar^2}{4} \dfrac{\partial^3 V}{\partial x^3}$
+  - $\eta_\zeta \int \zeta^3 P_\zeta(\zeta)\thinspace d\zeta = \dfrac{\hbar^2}{4} \dfrac{\partial^3 V}{\partial x^3}$
 - Shows the match requires the $\zeta$ random variable to be a **quasi-density** (signed, odd about
   zero), which motivates the signed-particle / Dirac-sea construction.
 - Demonstrates the three equivalent readings of the cosine-potential update (pair spawning,
@@ -72,13 +72,13 @@ mediated by the local potential.
 
 ### Single Fourier component of the potential
 
-For $V(x) = V_p \cos\!\left(\dfrac{2\pi n x}{L} + \phi\right)$, the document derives the update rule
+For $V(x) = V_p \cos\negthinspace\left(\dfrac{2\pi n x}{L} + \phi\right)$, the document derives the update rule
 (section "Jump density-rate for sinusoidal potential"):
 
 $$
-\Delta W \;\propto\;
-  \frac{V_p}{\hbar}\cos\!\left(\frac{2\pi n x}{L} + \phi + \frac{\pi}{2}\right)
-  \left[\,W\!\left(x,\, k + \tfrac{n\pi}{L}\right) - W\!\left(x,\, k - \tfrac{n\pi}{L}\right)\right]
+\Delta W \thickspace\propto\thickspace
+  \frac{V_p}{\hbar}\cos\negthinspace\left(\frac{2\pi n x}{L} + \phi + \frac{\pi}{2}\right)
+  \left[\thinspace W\negthinspace\left(x,\thinspace k + \tfrac{n\pi}{L}\right) - W\negthinspace\left(x,\thinspace k - \tfrac{n\pi}{L}\right)\right]
 $$
 
 ### Pure cosinusoidal potential
@@ -86,9 +86,9 @@ $$
 For $\phi = 0$, fundamental component, amplitude $V_{\max}$, the update reduces to:
 
 $$
-W(x,p,t+dt) \;=\; W(x,p)
-  \;-\; \frac{dt\,V_{\max}}{\hbar}\,\sin\!\left(\frac{2\pi x}{L}\right)
-  \left[\,W\!\left(x,\,p+\tfrac{\pi\hbar}{L}\right) - W\!\left(x,\,p-\tfrac{\pi\hbar}{L}\right)\right]
+W(x,p,t+dt) \thickspace=\thickspace W(x,p)
+  \thickspace-\thickspace \frac{dt\thinspace V_{\max}}{\hbar}\thinspace\sin\negthinspace\left(\frac{2\pi x}{L}\right)
+  \left[\thinspace W\negthinspace\left(x,\thinspace p+\tfrac{\pi\hbar}{L}\right) - W\negthinspace\left(x,\thinspace p-\tfrac{\pi\hbar}{L}\right)\right]
 $$
 
 In discrete form, with one momentum cell equal to $\pi\hbar/L$:
@@ -115,25 +115,25 @@ Combined with the free-streaming term:
 
 $$
 \frac{\partial W}{\partial t}
-  \;=\; -\frac{p}{m}\frac{\partial W}{\partial x}
-  \;+\; \tilde V_W(x,p,t) \,\star_p\, W(x,p,t)
+  \thickspace=\thickspace -\frac{p}{m}\frac{\partial W}{\partial x}
+  \thickspace+\thickspace \tilde V_W(x,p,t) \thinspace\star_p\thinspace W(x,p,t)
 $$
 
-where $\tilde V_W = V_W - g(x)\,\delta'(p)$ is the Wigner potential with the local force term
+where $\tilde V_W = V_W - g(x)\thinspace\delta'(p)$ is the Wigner potential with the local force term
 subtracted, and $\star_p$ denotes convolution along $p$.
 
 ### How this becomes the crystal-lattice rule
 
 The convolution kernel $K$ for a sinusoidal component is odd-symmetric. In the simplified 7-element
 example,
-$$K = [0,\,-1/16,\,0,\,0,\,0,\,+1/16,\,0]$$
+$$K = [0,\thinspace-1/16,\thinspace0,\thinspace0,\thinspace0,\thinspace+1/16,\thinspace0]$$
 The action of $K \star W$ on a state with all population at $k = k_0$ is, after reinterpretation on
 the shifted distribution, equivalent to a single positive jump:
 
 > "1/16 of the particles at $k = 5$ **jumped** to $k = 9$, mediated by the particle at $k = 7$."
 
 That is the single rule of the crystal-lattice model: **a positon at $(x,p)$ mediates an upward
-(or downward) jump of another positon at $(x,\,p-\xi)$ to $(x,\,p+\xi)$**, with rate proportional
+(or downward) jump of another positon at $(x,\thinspace p-\xi)$ to $(x,\thinspace p+\xi)$**, with rate proportional
 to the Wigner potential coupling and the relevant Fourier amplitude. No new particles are created;
 the negaton lattice is never touched dynamically.
 
@@ -141,8 +141,8 @@ the negaton lattice is never touched dynamically.
 
 The same idea applies, but the jump density $\rho(\xi)$ must satisfy the moment problem
 $$
-\eta_\zeta \int \zeta^k\,\rho(\zeta)\,d\zeta
-  \;=\; \frac{\hbar^{k-1}}{2^{k-1}\,k!}\,\frac{\partial^k V}{\partial x^k}
+\eta_\zeta \int \zeta^k\thinspace\rho(\zeta)\thinspace d\zeta
+  \thickspace=\thickspace \frac{\hbar^{k-1}}{2^{k-1}\thinspace k!}\thinspace\frac{\partial^k V}{\partial x^k}
   \qquad (k\ \text{odd})
 $$
 with even moments zero. For unbounded potentials (e.g. $V = x^3$) the exact $\rho$ is impulsive
@@ -170,7 +170,7 @@ is well-behaved.
   > "Bare-particle momentum is not conserved; the missing momentum is supplied by a quantum of
   > the potential field."
 
-- **Worth checking the discrete implementation of $\tilde V_W = V_W - g(x)\,\delta'(p)$.** The
+- **Worth checking the discrete implementation of $\tilde V_W = V_W - g(x)\thinspace\delta'(p)$.** The
   $\delta'(p)$ term is the formal way to express "subtract the classical force term." On a
   discrete grid it becomes a centered finite difference $[-1, 0, +1]/(2\Delta p)$, and sign
   conventions are easy to get wrong. The Maple worksheet `xFPjumpdensityV2.mw` (eqs. 21–30) is

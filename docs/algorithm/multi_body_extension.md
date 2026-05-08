@@ -43,8 +43,8 @@ A periodic position box has side lengths $L_1, \dots, L_d$ (often equal). The na
 
 Phase space is $2d$-dimensional. With periodic position domain $\vec x \in \prod_a [0, L_a]$ and momentum domain $\vec p \in \prod_a [-P_a^{\max}, +P_a^{\max}]$:
 
-- Position lattice: $x_{m,a} = m_a \Delta x_a$, $\Delta x_a = L_a/M_x$, $m_a \in \{0, \dots, M_x{-}1\}$
-- Momentum lattice: $p_{n,a} = (n_a - M_p/2)\Delta p_a$, $n_a \in \{0, \dots, M_p{-}1\}$
+- Position lattice: $x_{m,a} = m_a \Delta x_a$, $\Delta x_a = L_a/M_x$, $m_a \in \lbrace0, \dots, M_x{-}1\rbrace$
+- Momentum lattice: $p_{n,a} = (n_a - M_p/2)\Delta p_a$, $n_a \in \lbrace0, \dots, M_p{-}1\rbrace$
 
 Cell volume: $\Delta\Omega = \prod_a \Delta x_a \Delta p_a$. Total cell count: $(M_x M_p)^d$.
 
@@ -58,19 +58,19 @@ The natural momentum spacing $\Delta p_a = \pi\hbar/L_a$ **[choice]** ensures th
 
 The Wigner-function bound in $d$ dimensions is $|W(\vec x, \vec p)| \le (1/\pi\hbar)^d = (2/h)^d$. The crystal-lattice shift becomes
 
-$$W'(\vec x, \vec p) \;=\; W(\vec x, \vec p) + \left(\tfrac{2}{h}\right)^d, \qquad W' \in \left[0,\ 2\!\left(\tfrac{2}{h}\right)^{\!d}\right].$$
+$$W'(\vec x, \vec p) \thickspace=\thickspace W(\vec x, \vec p) + \left(\tfrac{2}{h}\right)^d, \qquad W' \in \left[0,\ 2\negthinspace\left(\tfrac{2}{h}\right)^{\negthinspace d}\right].$$
 
 Per-cell positon counts:
 
-$$N_+(\vec m, \vec n) \;=\; \nu \cdot W'(\vec x_{\vec m}, \vec p_{\vec n}) \cdot \Delta\Omega.$$
+$$N_+(\vec m, \vec n) \thickspace=\thickspace \nu \cdot W'(\vec x_{\vec m}, \vec p_{\vec n}) \cdot \Delta\Omega.$$
 
 The negaton background lattice — every cell at notional count $\nu (2/h)^d \Delta\Omega$ — remains implicit and is never updated. Only $N_+$ evolves.
 
 ### 3.2 Free streaming (advection)
 
-QLE term: $-\sum_a (p_a/m)\,\partial_{x_a}W$. On the lattice, axis-by-axis row shift:
+QLE term: $-\sum_a (p_a/m)\thinspace\partial_{x_a}W$. On the lattice, axis-by-axis row shift:
 
-$$\Delta m_{\vec n, a} \;=\; \mathrm{round}\!\left(\frac{p_{\vec n, a}\,\Delta t}{m\,\Delta x_a}\right),$$
+$$\Delta m_{\vec n, a} \thickspace=\thickspace \mathrm{round}\negthinspace\left(\frac{p_{\vec n, a}\thinspace\Delta t}{m\thinspace\Delta x_a}\right),$$
 
 applied independently to each axis (the streaming sub-operators along different axes commute, since they involve different position coordinates). For zero advection error per axis, choose $\Delta t$ such that the maximum shift along the slowest-streaming axis is an exact integer.
 
@@ -78,15 +78,15 @@ applied independently to each axis (the streaming sub-operators along different 
 
 Decompose the potential into $d$-dimensional Fourier components on the periodic box:
 
-$$V(\vec x) = V_0 + \sum_{\vec q \neq 0} V_{\vec q}\,\cos(\vec k_{\vec q}\cdot \vec x + \phi_{\vec q}), \qquad \vec k_{\vec q,a} = \frac{2\pi q_a}{L_a}.$$
+$$V(\vec x) = V_0 + \sum_{\vec q \neq 0} V_{\vec q}\thinspace\cos(\vec k_{\vec q}\cdot \vec x + \phi_{\vec q}), \qquad \vec k_{\vec q,a} = \frac{2\pi q_a}{L_a}.$$
 
 For each mode $\vec q$, define the local rate
 
-$$\Gamma_{\vec q}(\vec x_{\vec m}) \;=\; -\frac{V_{\vec q}}{\hbar}\sin(\vec k_{\vec q}\cdot \vec x_{\vec m} + \phi_{\vec q}).$$
+$$\Gamma_{\vec q}(\vec x_{\vec m}) \thickspace=\thickspace -\frac{V_{\vec q}}{\hbar}\sin(\vec k_{\vec q}\cdot \vec x_{\vec m} + \phi_{\vec q}).$$
 
-**The single rule.** A positon at cell $(\vec m, \vec n)$ acts as a mediator: with probability $|\Gamma_{\vec q}(\vec x_{\vec m})|\,\Delta t$ per particle per mode per timestep **[choice — Poisson rate is the rigorous form]**, it induces
+**The single rule.** A positon at cell $(\vec m, \vec n)$ acts as a mediator: with probability $|\Gamma_{\vec q}(\vec x_{\vec m})|\thinspace\Delta t$ per particle per mode per timestep **[choice — Poisson rate is the rigorous form]**, it induces
 
-$$\Gamma_{\vec q}(\vec x_{\vec m}) > 0:\quad (\vec m,\, \vec n + \vec q) \longrightarrow (\vec m,\, \vec n - \vec q)$$
+$$\Gamma_{\vec q}(\vec x_{\vec m}) > 0:\quad (\vec m,\thinspace \vec n + \vec q) \longrightarrow (\vec m,\thinspace \vec n - \vec q)$$
 
 and the opposite when $\Gamma_{\vec q} < 0$. The mediator itself is unchanged. The displacement $2\vec q$ in momentum-cell units corresponds to a momentum kick of $\hbar \vec k_{\vec q}$, i.e., the photon momentum at wavevector $\vec k_{\vec q}$ — now with definite *direction* set by $\hat k_{\vec q}$.
 
@@ -96,7 +96,7 @@ For large $\nu$ or when evolving $W$ directly:
 
 $$W(\vec x_{\vec m}, \vec p_{\vec n}, t + \Delta t) = W(\vec x_{\vec m}, \vec p_{\vec n}, t) + \Delta t \sum_{\vec q \neq 0} \Gamma_{\vec q}(\vec x_{\vec m})\bigl[W(\vec x_{\vec m}, \vec p_{\vec n + \vec q}) - W(\vec x_{\vec m}, \vec p_{\vec n - \vec q})\bigr]$$
 
-Continuum limit reproduces $\partial_t W = +\nabla_{\!\vec x} V(\vec x)\cdot\nabla_{\!\vec p} W$, the multi-dimensional QLE force term.
+Continuum limit reproduces $\partial_t W = +\nabla_{\negthinspace\vec x} V(\vec x)\cdot\nabla_{\negthinspace\vec p} W$, the multi-dimensional QLE force term.
 
 ### 3.5 Coulomb / long-range potentials: Ewald split
 
@@ -106,7 +106,7 @@ $$\frac{1}{r} = \underbrace{\frac{\mathrm{erfc}(\alpha r)}{r}}_{\text{short-rang
 
 yields:
 
-- $V^{\text{short}}$: exponentially confined; handle as a real-space deterministic momentum drift $\Delta\vec p = -\nabla V^{\text{short}}(\vec x)\,\Delta t$ within a cutoff radius. The non-classical Moyal corrections to this drift are $O(\hbar^2 \alpha^2)$-small if $\alpha$ is chosen to keep $V^{\text{short}}$ smooth on the de Broglie scale.
+- $V^{\text{short}}$: exponentially confined; handle as a real-space deterministic momentum drift $\Delta\vec p = -\nabla V^{\text{short}}(\vec x)\thinspace\Delta t$ within a cutoff radius. The non-classical Moyal corrections to this drift are $O(\hbar^2 \alpha^2)$-small if $\alpha$ is chosen to keep $V^{\text{short}}$ smooth on the de Broglie scale.
 - $V^{\text{long}}$: smooth at the origin; its Fourier coefficients decay as $\exp(-|\vec k|^2/4\alpha^2)/|\vec k|^2$. A small finite set of Fourier modes suffices — apply the §3.3 rule to each.
 
 The neutralizing background ($\vec q = 0$ divergence) is absorbed by the requirement that the system carry zero total charge, exactly as in standard particle-mesh Ewald (PME).
@@ -176,7 +176,7 @@ for step in range(num_steps):
 
 For $N$ distinguishable particles in $d$ dimensions, the joint phase space is $2dN$-dimensional:
 
-$$\Omega^{(N)} = \bigl\{(\vec x_1, \vec p_1, \dots, \vec x_N, \vec p_N)\bigr\}.$$
+$$\Omega^{(N)} = \bigl\lbrace(\vec x_1, \vec p_1, \dots, \vec x_N, \vec p_N)\bigr\rbrace.$$
 
 The joint Wigner function $W^{(N)}$ is bounded by
 
@@ -184,7 +184,7 @@ $$|W^{(N)}(\vec x_1, \vec p_1, \dots, \vec x_N, \vec p_N)| \le \left(\tfrac{2}{h
 
 the natural $dN$-dimensional generalization of the Hudson-bound family. The crystal-lattice shift becomes
 
-$$W'^{(N)} \;=\; W^{(N)} + \left(\tfrac{2}{h}\right)^{dN}, \qquad W'^{(N)} \in \left[0,\ 2\!\left(\tfrac{2}{h}\right)^{\!dN}\right].$$
+$$W'^{(N)} \thickspace=\thickspace W^{(N)} + \left(\tfrac{2}{h}\right)^{dN}, \qquad W'^{(N)} \in \left[0,\ 2\negthinspace\left(\tfrac{2}{h}\right)^{\negthinspace dN}\right].$$
 
 A direct mesh representation requires $(M_x M_p)^{dN}$ cells. For the simulation parameters of `demo_cosine_well_microdynamics.py` ($M_x = 64, M_p = 64$, $d = 1$) extended to $d = 3, N = 10$, this is $4096^{30} \approx 10^{108}$ cells. The mesh form is unusable for $N \gtrsim 2$.
 
@@ -200,9 +200,9 @@ $$\omega^{(\alpha)} = \bigl(\vec x_1^{(\alpha)}, \vec p_1^{(\alpha)}, \dots, \ve
 
 A world is a complete instantaneous specification of the entire $N$-particle system: positions and momenta of all $N$ particles. The ensemble approximates the joint distribution as
 
-$$W'^{(N)}(\vec x_1, \dots, \vec p_N) \approx \frac{1}{\nu_{\!\mathcal{W}}} \sum_{\alpha=1}^{\mathcal{W}} \delta\bigl(\vec x_1 - \vec x_1^{(\alpha)}\bigr) \cdots \delta\bigl(\vec p_N - \vec p_N^{(\alpha)}\bigr),$$
+$$W'^{(N)}(\vec x_1, \dots, \vec p_N) \approx \frac{1}{\nu_{\negthinspace\mathcal{W}}} \sum_{\alpha=1}^{\mathcal{W}} \delta\bigl(\vec x_1 - \vec x_1^{(\alpha)}\bigr) \cdots \delta\bigl(\vec p_N - \vec p_N^{(\alpha)}\bigr),$$
 
-where $\nu_{\!\mathcal{W}}$ is the chosen worlds-per-unit-phase-space-volume scale (the multi-body analog of $\nu$ in the 1+1D spec).
+where $\nu_{\negthinspace\mathcal{W}}$ is the chosen worlds-per-unit-phase-space-volume scale (the multi-body analog of $\nu$ in the 1+1D spec).
 
 ### 5.2 Why this avoids the mesh blowup
 
@@ -214,7 +214,7 @@ The negaton background $W_0 = (2/h)^{dN}$ is implicit and fully shared across th
 
 The single-particle marginal Wigner function for particle $i$ is the integral over the other $N-1$ particles:
 
-$$w_i(\vec x, \vec p) = \int W^{(N)}\,\prod_{j \neq i} d\vec x_j\, d\vec p_j.$$
+$$w_i(\vec x, \vec p) = \int W^{(N)}\thinspace\prod_{j \neq i} d\vec x_j\thinspace d\vec p_j.$$
 
 In the world ensemble, this is the histogram of $(\vec x_i^{(\alpha)}, \vec p_i^{(\alpha)})$ over $\alpha$ — cheap, $\mathcal{O}(\mathcal{W})$. Two-body marginals $w_{ij}^{(2)}$ require histogramming pairs $(\vec x_i^{(\alpha)}, \vec p_i^{(\alpha)}, \vec x_j^{(\alpha)}, \vec p_j^{(\alpha)})$, similarly cheap. $k$-body correlations need at least $\mathcal{W} \gtrsim$ (fineness)$^{2dk}$ samples, so practical $k$ is bounded by available statistics.
 
@@ -228,7 +228,7 @@ Each timestep $\Delta t$ applies, for every world $\alpha$ in the ensemble, thre
 
 For each world $\alpha$ and each particle $i$:
 
-$$\vec x_i^{(\alpha)} \longrightarrow \vec x_i^{(\alpha)} + \frac{\vec p_i^{(\alpha)}}{m_i}\,\Delta t \quad (\bmod\ \vec L).$$
+$$\vec x_i^{(\alpha)} \longrightarrow \vec x_i^{(\alpha)} + \frac{\vec p_i^{(\alpha)}}{m_i}\thinspace\Delta t \quad (\bmod\ \vec L).$$
 
 Independent across particles and worlds; trivially parallel. In the world-ensemble representation there is no lattice-snap step — particle positions and momenta are continuous variables stored per world.
 
@@ -236,7 +236,7 @@ Independent across particles and worlds; trivially parallel. In the world-ensemb
 
 For an external potential $V_{\text{ext}}(\vec x)$ acting on each particle independently, decompose as in §3.3:
 
-$$V_{\text{ext}}(\vec x) = V_0 + \sum_{\vec q} V^{\text{ext}}_{\vec q}\,\cos(\vec k_{\vec q}\cdot \vec x + \phi^{\text{ext}}_{\vec q}).$$
+$$V_{\text{ext}}(\vec x) = V_0 + \sum_{\vec q} V^{\text{ext}}_{\vec q}\thinspace\cos(\vec k_{\vec q}\cdot \vec x + \phi^{\text{ext}}_{\vec q}).$$
 
 For each world $\alpha$, each particle $i$, each Fourier mode $\vec q$, with rate
 
@@ -246,7 +246,7 @@ trigger a momentum jump of particle $i$:
 
 $$\vec p_i^{(\alpha)} \longrightarrow \vec p_i^{(\alpha)} + \mathrm{sgn}(\Gamma^{\text{ext}}_{\vec q})\cdot\hbar\vec k_{\vec q}$$
 
-with probability $|\Gamma^{\text{ext}}_{\vec q}|\,\Delta t$ **[choice — Poisson rate is the rigorous form]**.
+with probability $|\Gamma^{\text{ext}}_{\vec q}|\thinspace\Delta t$ **[choice — Poisson rate is the rigorous form]**.
 
 Note: in the world-ensemble form, momentum kicks are by the *full* photon momentum $\hbar\vec k_{\vec q}$, not split into half-jumps. The half-jump structure of the 1+1D mesh form arose from the symmetric source-to-destination split $(n+q) \to (n-q)$ in cell coordinates; in the continuous-variable world ensemble there is no such artifact, and a single jump of size $2 \cdot \tfrac{1}{2}\hbar k = \hbar k$ is delivered per event. The factor of 2 in the rate convention is absorbed accordingly **[choice — see §11 for an alternative half-jump convention preserving the mediator-pair picture]**.
 
@@ -254,7 +254,7 @@ Note: in the world-ensemble form, momentum kicks are by the *full* photon moment
 
 For a pair potential $V_2(\vec r_{ij})$ depending on the relative coordinate $\vec r_{ij} = \vec x_i - \vec x_j$, decompose as a Fourier series on the periodic box:
 
-$$V_2(\vec r) = V_2^{(0)} + \sum_{\vec q} V^{(2)}_{\vec q}\,\cos(\vec k_{\vec q}\cdot \vec r + \phi^{(2)}_{\vec q}).$$
+$$V_2(\vec r) = V_2^{(0)} + \sum_{\vec q} V^{(2)}_{\vec q}\thinspace\cos(\vec k_{\vec q}\cdot \vec r + \phi^{(2)}_{\vec q}).$$
 
 Because $\cos(\vec k\cdot \vec r_{ij}) = \cos(\vec k\cdot \vec x_i - \vec k\cdot \vec x_j)$ couples *only* particles $i$ and $j$ (and only via the difference of their positions), the corresponding Moyal-bracket contribution to $\partial_t W^{(N)}$ acts as a **simultaneous, opposite-sign shift in $\vec p_i$ and $\vec p_j$** (derivation in §7).
 
@@ -264,9 +264,9 @@ $$\Gamma^{(2)}_{\vec q}(\vec r_{ij}^{(\alpha)}) = -\frac{V^{(2)}_{\vec q}}{\hbar
 
 trigger the correlated jump
 
-$$\bigl(\vec p_i^{(\alpha)},\, \vec p_j^{(\alpha)}\bigr) \longrightarrow \bigl(\vec p_i^{(\alpha)} + \mathrm{sgn}(\Gamma^{(2)}_{\vec q})\,\hbar\vec k_{\vec q},\ \vec p_j^{(\alpha)} - \mathrm{sgn}(\Gamma^{(2)}_{\vec q})\,\hbar\vec k_{\vec q}\bigr)$$
+$$\bigl(\vec p_i^{(\alpha)},\thinspace \vec p_j^{(\alpha)}\bigr) \longrightarrow \bigl(\vec p_i^{(\alpha)} + \mathrm{sgn}(\Gamma^{(2)}_{\vec q})\thinspace\hbar\vec k_{\vec q},\ \vec p_j^{(\alpha)} - \mathrm{sgn}(\Gamma^{(2)}_{\vec q})\thinspace\hbar\vec k_{\vec q}\bigr)$$
 
-with probability $|\Gamma^{(2)}_{\vec q}|\,\Delta t$. The total momentum $\vec p_i + \vec p_j$ is conserved exactly per event. This is the entire two-body crystal-lattice rule.
+with probability $|\Gamma^{(2)}_{\vec q}|\thinspace\Delta t$. The total momentum $\vec p_i + \vec p_j$ is conserved exactly per event. This is the entire two-body crystal-lattice rule.
 
 **Physical interpretation.** Each correlated jump is an exchange of a "virtual photon" of momentum $\hbar\vec k_{\vec q}$ between particles $i$ and $j$ at relative position $\vec r_{ij}$. The rate-amplitude $|V^{(2)}_{\vec q}|/\hbar$ is the coupling at that Fourier component of the interaction. This is structurally the leading Feynman-diagram element of QED at the non-relativistic-QLE level; the algorithm is a stochastic implementation of pair-wise quantum exchange.
 
@@ -280,13 +280,13 @@ For genuinely $k$-body potentials $V_k(\vec x_{i_1}, \dots, \vec x_{i_k})$ (rare
 
 The Moyal-bracket contribution of $V_2(\vec r_{ij})$ to the joint QLE is
 
-$$\partial_t W^{(N)} \supset \frac{2}{\hbar}\, V_2(\vec r_{ij})\,\sin\!\left(\frac{\hbar}{2}\bigl(\overleftarrow{\nabla}_{\!\vec x_i} - \overleftarrow{\nabla}_{\!\vec x_j}\bigr)\cdot\bigl(\overrightarrow{\nabla}_{\!\vec p_i} - \overrightarrow{\nabla}_{\!\vec p_j}\bigr)\right) W^{(N)}.$$
+$$\partial_t W^{(N)} \supset \frac{2}{\hbar}\thinspace V_2(\vec r_{ij})\thinspace\sin\negthinspace\left(\frac{\hbar}{2}\bigl(\overleftarrow{\nabla}_{\negthinspace\vec x_i} - \overleftarrow{\nabla}_{\negthinspace\vec x_j}\bigr)\cdot\bigl(\overrightarrow{\nabla}_{\negthinspace\vec p_i} - \overrightarrow{\nabla}_{\negthinspace\vec p_j}\bigr)\right) W^{(N)}.$$
 
 (Note the sign structure: only the *difference* of position-derivatives appears, because $V_2$ depends on $\vec r_{ij} = \vec x_i - \vec x_j$ alone, and only the *difference* of momentum-derivatives appears as the Moyal-conjugate.)
 
-Substituting a single Fourier mode $V_2(\vec r) = V^{(2)}_{\vec q}\,\cos(\vec k\cdot\vec r + \phi)$ with $\vec k = \vec k_{\vec q}$ and using
+Substituting a single Fourier mode $V_2(\vec r) = V^{(2)}_{\vec q}\thinspace\cos(\vec k\cdot\vec r + \phi)$ with $\vec k = \vec k_{\vec q}$ and using
 
-$$\bigl(\overleftarrow{\nabla}_{\!\vec x_i} - \overleftarrow{\nabla}_{\!\vec x_j}\bigr)\cos(\vec k\cdot\vec r_{ij} + \phi) = -\vec k\,\sin(\vec k\cdot\vec r_{ij} + \phi)\cdot 2,$$
+$$\bigl(\overleftarrow{\nabla}_{\negthinspace\vec x_i} - \overleftarrow{\nabla}_{\negthinspace\vec x_j}\bigr)\cos(\vec k\cdot\vec r_{ij} + \phi) = -\vec k\thinspace\sin(\vec k\cdot\vec r_{ij} + \phi)\cdot 2,$$
 
 (the factor 2 from differentiating $\vec r_{ij}$ once on each side, with opposite signs) one finds
 
@@ -312,7 +312,7 @@ The bound $|\Gamma^{(2)}_{\vec q}| \le |V^{(2)}_{\vec q}|/\hbar$ — independent
 
 ### 8.3 Bounding
 
-The bound $|W^{(N)}| \le (2/h)^{dN}$ bounds $W'^{(N)} \le 2(2/h)^{dN}$. For the world ensemble, this translates to a bound on local sample density: in any phase-space volume $V_{\text{loc}}$ of the joint $2dN$-dimensional space, the expected world count is $\le 2\nu_{\!\mathcal{W}}(2/h)^{dN}\cdot V_{\text{loc}}$. The crystal-lattice algorithm's freedom from explicit pair annihilation persists in the multi-body case.
+The bound $|W^{(N)}| \le (2/h)^{dN}$ bounds $W'^{(N)} \le 2(2/h)^{dN}$. For the world ensemble, this translates to a bound on local sample density: in any phase-space volume $V_{\text{loc}}$ of the joint $2dN$-dimensional space, the expected world count is $\le 2\nu_{\negthinspace\mathcal{W}}(2/h)^{dN}\cdot V_{\text{loc}}$. The crystal-lattice algorithm's freedom from explicit pair annihilation persists in the multi-body case.
 
 ---
 
@@ -340,7 +340,7 @@ Apply the Ewald split per pair. For each $(i, j)$:
 
 - **Short-range piece** $V_2^{\text{short}}(r) = e^2 \mathrm{erfc}(\alpha r)/r$. Treat as a **deterministic momentum-conserving drift**:
 
-$$\Delta \vec p_i^{(\alpha)} = -\Delta \vec p_j^{(\alpha)} = -\nabla_{\!\vec r}V_2^{\text{short}}(\vec r_{ij}^{(\alpha)})\,\Delta t.$$
+$$\Delta \vec p_i^{(\alpha)} = -\Delta \vec p_j^{(\alpha)} = -\nabla_{\negthinspace\vec r}V_2^{\text{short}}(\vec r_{ij}^{(\alpha)})\thinspace\Delta t.$$
 
   Linear-scaling in $N$ via cell lists at the cutoff radius (standard MD machinery). The $O(\hbar^2)$ Moyal corrections to this drift are negligible if $\alpha$ is chosen so that $V_2^{\text{short}}$ varies slowly on the de Broglie scale.
 
@@ -437,7 +437,7 @@ For statistics, accumulate one- and two-body marginals from `worlds_x, worlds_p`
 
 1. **Statistical convergence.** $\mathcal{W}$ scales empirically as $\mathcal{O}(\sigma_{\text{obs}}^{-2})$ for a given observable variance target. One-body marginals on smooth states tend to converge with $\mathcal{W} \sim 10^4$–$10^5$; two-body correlations and exchange-sensitive observables can require an order of magnitude more. No exponential-in-$N$ scaling for low-body observables.
 
-2. **Rate-budget regularization.** When $|V^{(2)}_{\vec q}|\,\Delta t/\hbar$ approaches 1 for any single mode, the per-step Bernoulli sampling is no longer a good approximation to the true Poisson process; switch to an exponential-time-to-event sampler **[choice]** or reduce $\Delta t$.
+2. **Rate-budget regularization.** When $|V^{(2)}_{\vec q}|\thinspace\Delta t/\hbar$ approaches 1 for any single mode, the per-step Bernoulli sampling is no longer a good approximation to the true Poisson process; switch to an exponential-time-to-event sampler **[choice]** or reduce $\Delta t$.
 
 3. **Mean-field reference (TDHF-Wigner).** Replace pair-wise correlated jumps by each particle seeing the time-dependent mean field of the others (the marginal $\rho^{(\text{mean})}(\vec x) = N^{-1}\sum_j \rho_j(\vec x)$ from the world ensemble). This recovers a TDHF / TDDFT-like dynamics at much lower statistical cost; useful as a reference and as a starting point for adding pair correlations perturbatively.
 
