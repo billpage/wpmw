@@ -33,11 +33,11 @@ $$\Delta p = \frac{\pi\hbar}{L}$$
 
 The crystal-lattice shift produces the strictly non-negative quantity
 
-$$W'(x, p) \thickspace=\thickspace W(x, p) + \frac{2}{h}, \qquad W' \in [0,\ 4/h]$$
+$$W'(x, p)  \; = \;  W(x, p) + \frac{2}{h}, \qquad W' \in [0,\ 4/h]$$
 
 This is represented as integer per-cell positon counts:
 
-$$N_+(m, n) \thickspace=\thickspace \nu \cdot W'(x_m, p_n) \cdot \Delta x \thinspace \Delta p$$
+$$N_+(m, n)  \; = \;  \nu \cdot W'(x_m, p_n) \cdot \Delta x \thinspace \Delta p$$
 
 where $\nu$ is the chosen particle-per-unit-phase-space-volume scale. The negaton background lattice is implicit: every cell would notionally hold the same count corresponding to $W_0 = 2/h$, and is **never updated dynamically**. Only $N_+$ evolves.
 
