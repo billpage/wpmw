@@ -41,7 +41,7 @@ $$\Psi(w-\xi, p_w-\zeta, t) \approx \Psi - \xi \partial_w \Psi - \zeta \partial_
 
 Following Wiedemann's procedure but adopting **rate-based** rather than per-event jump statistics (see Cyganski's annotations on Wiedemann §12.3 — Wiedemann's "every particle jumps" reading is repaired by introducing rates $\eta_\xi, \eta_\zeta$), and renaming $w \to x$ and $\Psi \to W$ for use as the Wigner distribution, the result is the **extended Fokker–Planck (xFP) equation**:
 
-$$\partial_t W + f\thinspace\partial_x W + g\thinspace\partial_p W \thickspace=\thickspace -W\bigl(\partial_x f + \partial_p g\bigr) + \tfrac{\eta_\xi}{2}\langle \xi^2\rangle\partial_x^2 W + \tfrac{\eta_\zeta}{2}\langle \zeta^2\rangle\partial_p^2 W - \tfrac{\eta_\xi}{6}\langle \xi^3\rangle\partial_x^3 W - \tfrac{\eta_\zeta}{6}\langle \zeta^3\rangle\partial_p^3 W$$
+$$\partial_t W + f\thinspace\partial_x W + g\thinspace\partial_p W  \; = \;  -W\bigl(\partial_x f + \partial_p g\bigr) + \tfrac{\eta_\xi}{2}\langle \xi^2\rangle\partial_x^2 W + \tfrac{\eta_\zeta}{2}\langle \zeta^2\rangle\partial_p^2 W - \tfrac{\eta_\xi}{6}\langle \xi^3\rangle\partial_x^3 W - \tfrac{\eta_\zeta}{6}\langle \zeta^3\rangle\partial_p^3 W$$
 
 ---
 
@@ -49,7 +49,7 @@ $$\partial_t W + f\thinspace\partial_x W + g\thinspace\partial_p W \thickspace=\
 
 The QLE in 1+1D is
 
-$$\partial_t W + \frac{p}{m}\thinspace\partial_x W \thickspace-\thickspace \frac{\partial V}{\partial x}\thinspace\frac{\partial W}{\partial p} \thickspace+\thickspace \frac{\hbar^2}{24}\frac{\partial^3 V}{\partial x^3}\frac{\partial^3 W}{\partial p^3} \thickspace-\thickspace \cdots \thickspace=\thickspace 0$$
+$$\partial_t W + \frac{p}{m}\thinspace\partial_x W  \; - \;  \frac{\partial V}{\partial x}\thinspace\frac{\partial W}{\partial p}  \; + \;  \frac{\hbar^2}{24}\frac{\partial^3 V}{\partial x^3}\frac{\partial^3 W}{\partial p^3}  \; - \;  \cdots  \; = \;  0$$
 
 Matching this term by term to the xFP equation gives:
 
@@ -109,7 +109,7 @@ $$V(x) = V_p \cos\negthinspace\left(\frac{2\pi n x}{L} + \phi\right)$$
 
 each spawning/jump event imparts to the two participating particles equal and opposite momentum kicks of magnitude $n\pi\hbar/L$, for a total spread of
 
-$$\Delta p \thickspace=\thickspace \frac{2 n \pi \hbar}{L} \thickspace=\thickspace \frac{n h}{L}$$
+$$\Delta p  \; = \;  \frac{2 n \pi \hbar}{L}  \; = \;  \frac{n h}{L}$$
 
 This is precisely Abraham's kinetic momentum for a photon of wavelength $L/n$, as Cyganski derives by examining the negaton in its comoving frame (slide 11, reproduced below).
 
@@ -125,29 +125,29 @@ This is the energetic justification for the discrete momentum-cell spacing $\Del
 
 For $V(x) = V_p \cos\theta$ with $\theta(x) \equiv 2\pi q x/L + \phi$,
 
-$$V'(x) \thickspace=\thickspace -\thinspace V_p\thinspace\frac{2\pi q}{L}\thinspace\sin\theta$$
+$$V'(x)  \; = \;  -\thinspace V_p\thinspace\frac{2\pi q}{L}\thinspace\sin\theta$$
 
 The QLE force-term contribution to $\partial_t W$ is
 
-$$\partial_t W \thickspace\supset\thickspace +\thinspace V'(x)\thinspace\partial_p W$$
+$$\partial_t W  \; \supset \;  +\thinspace V'(x)\thinspace\partial_p W$$
 
 (from $\dot p = -V'$ feeding into the Liouville flow $\partial_t W + \dot p\thinspace\partial_p W = 0$). Approximating $\partial_p W$ by a centred finite difference at the photon-momentum scale $\Delta p_q = q\pi\hbar/L$,
 
-$$\partial_p W \approx \frac{W(x,\thinspace p + \Delta p_q) - W(x,\thinspace p - \Delta p_q)}{2\thinspace\Delta p_q} \thickspace=\thickspace \frac{L}{q\thinspace h}\bigl[W_{\rm hi} - W_{\rm lo}\bigr]$$
+$$\partial_p W \approx \frac{W(x,\thinspace p + \Delta p_q) - W(x,\thinspace p - \Delta p_q)}{2\thinspace\Delta p_q}  \; = \;  \frac{L}{q\thinspace h}\bigl[W_{\rm hi} - W_{\rm lo}\bigr]$$
 
 and combining,
 
-$$\boxed{\thickspace\frac{\Delta W}{\Delta t} \thickspace=\thickspace -\thinspace\frac{V_p}{\hbar}\thinspace\sin\theta\thinspace\bigl[W_{\rm hi} - W_{\rm lo}\bigr]\thickspace}$$
+$$\boxed{ \; \frac{\Delta W}{\Delta t}  \; = \;  -\thinspace\frac{V_p}{\hbar}\thinspace\sin\theta\thinspace\bigl[W_{\rm hi} - W_{\rm lo}\bigr] \; }$$
 
 Equivalently, since $-\sin\theta = \cos(\theta + \pi/2)$,
 
-$$\frac{\Delta W}{\Delta t} \thickspace=\thickspace \frac{V_p}{\hbar}\thinspace\cos\negthinspace\left(\theta + \tfrac{\pi}{2}\right)\bigl[W_{\rm hi} - W_{\rm lo}\bigr]$$
+$$\frac{\Delta W}{\Delta t}  \; = \;  \frac{V_p}{\hbar}\thinspace\cos\negthinspace\left(\theta + \tfrac{\pi}{2}\right)\bigl[W_{\rm hi} - W_{\rm lo}\bigr]$$
 
 This is the **general jump formula** of V2 page 18.
 
 ### 6.2 Specialised to a pure cosine ($\phi = 0$, $q = 1$, amplitude $V_{\max}$)
 
-$$W(x,\thinspace p,\thinspace t + dt) \thickspace=\thickspace W(x,\thinspace p) \thickspace-\thickspace \frac{dt\thinspace V_{\max}}{\hbar}\thinspace\sin\negthinspace\left(\frac{2\pi x}{L}\right)\bigl[W(p + \tfrac{\pi\hbar}{L}) - W(p - \tfrac{\pi\hbar}{L})\bigr]$$
+$$W(x,\thinspace p,\thinspace t + dt)  \; = \;  W(x,\thinspace p)  \; - \;  \frac{dt\thinspace V_{\max}}{\hbar}\thinspace\sin\negthinspace\left(\frac{2\pi x}{L}\right)\bigl[W(p + \tfrac{\pi\hbar}{L}) - W(p - \tfrac{\pi\hbar}{L})\bigr]$$
 
 In Python, with the convention that axis 0 is the momentum axis and `np.roll(W, +1, axis=0)` brings $W(p - \Delta p)$ to position $p$ (and similarly `np.roll(W, -1, ..)` brings $W(p + \Delta p)$),
 
@@ -160,11 +160,11 @@ W += (V_max / hbar) * dt * np.sin(2 * np.pi * X / L) * (
 
 Cyganski's V2 memo writes the simplified-form line on page 18 as
 
-$$W(x,p,t+dt) = W(x,p) \thickspace{-}\thickspace \tfrac{dt\thinspace V_{\max}}{\hbar}\thinspace W(p - \tfrac{\pi\hbar}{L})\thinspace\sin\negthinspace\left(\tfrac{2\pi x}{L}\right) \thickspace{+}\thickspace \tfrac{dt\thinspace V_{\max}}{\hbar}\thinspace W(p + \tfrac{\pi\hbar}{L})\thinspace\sin\negthinspace\left(\tfrac{2\pi x}{L}\right)$$
+$$W(x,p,t+dt) = W(x,p)  \; {-} \;  \tfrac{dt\thinspace V_{\max}}{\hbar}\thinspace W(p - \tfrac{\pi\hbar}{L})\thinspace\sin\negthinspace\left(\tfrac{2\pi x}{L}\right)  \; {+} \;  \tfrac{dt\thinspace V_{\max}}{\hbar}\thinspace W(p + \tfrac{\pi\hbar}{L})\thinspace\sin\negthinspace\left(\tfrac{2\pi x}{L}\right)$$
 
 — equivalent to
 
-$$\Delta W \thickspace=\thickspace +\thinspace\tfrac{dt\thinspace V_{\max}}{\hbar}\thinspace\sin\negthinspace\left(\tfrac{2\pi x}{L}\right)\bigl[W_{\rm hi} - W_{\rm lo}\bigr]$$
+$$\Delta W  \; = \;  +\thinspace\tfrac{dt\thinspace V_{\max}}{\hbar}\thinspace\sin\negthinspace\left(\tfrac{2\pi x}{L}\right)\bigl[W_{\rm hi} - W_{\rm lo}\bigr]$$
 
 This is **the wrong sign** relative to §6.1 above. The error occurs in the algebraic step from the (correct) general formula via $\cos(\theta + \pi/2) = -\sin\theta$: the simplified form drops the leading minus sign. The Python in the same memo,
 
