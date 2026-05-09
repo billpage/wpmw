@@ -62,7 +62,7 @@ $$W'(\vec x, \vec p) \\; = \\; W(\vec x, \vec p) + \left(\tfrac{2}{h}\right)^d, 
 
 Per-cell positon counts:
 
-$$N_+(\vec m, \vec n) \thickspace=\thickspace \nu \cdot W'(\vec x_{\vec m}, \vec p_{\vec n}) \cdot \Delta\Omega.$$
+$$N_+(\vec m, \vec n) \\; =\\;  \nu \cdot W'(\vec x_{\vec m}, \vec p_{\vec n}) \cdot \Delta\Omega.$$
 
 The negaton background lattice — every cell at notional count $\nu (2/h)^d \Delta\Omega$ — remains implicit and is never updated. Only $N_+$ evolves.
 
@@ -70,7 +70,7 @@ The negaton background lattice — every cell at notional count $\nu (2/h)^d \De
 
 QLE term: $-\sum_a (p_a/m)\thinspace\partial_{x_a}W$. On the lattice, axis-by-axis row shift:
 
-$$\Delta m_{\vec n, a} \thickspace=\thickspace \mathrm{round}\negthinspace\left(\frac{p_{\vec n, a}\thinspace\Delta t}{m\thinspace\Delta x_a}\right),$$
+$$\Delta m_{\vec n, a}  \\; = \\;  \mathrm{round}\negthinspace\left(\frac{p_{\vec n, a}\thinspace\Delta t}{m\thinspace\Delta x_a}\right),$$
 
 applied independently to each axis (the streaming sub-operators along different axes commute, since they involve different position coordinates). For zero advection error per axis, choose $\Delta t$ such that the maximum shift along the slowest-streaming axis is an exact integer.
 
@@ -82,7 +82,7 @@ $$V(\vec x) = V_0 + \sum_{\vec q \neq 0} V_{\vec q}\thinspace\cos(\vec k_{\vec q
 
 For each mode $\vec q$, define the local rate
 
-$$\Gamma_{\vec q}(\vec x_{\vec m}) \thickspace=\thickspace -\frac{V_{\vec q}}{\hbar}\sin(\vec k_{\vec q}\cdot \vec x_{\vec m} + \phi_{\vec q}).$$
+$$\Gamma_{\vec q}(\vec x_{\vec m})  \\; = \\;  -\frac{V_{\vec q}}{\hbar}\sin(\vec k_{\vec q}\cdot \vec x_{\vec m} + \phi_{\vec q}).$$
 
 **The single rule.** A positon at cell $(\vec m, \vec n)$ acts as a mediator: with probability $|\Gamma_{\vec q}(\vec x_{\vec m})|\thinspace\Delta t$ per particle per mode per timestep **[choice — Poisson rate is the rigorous form]**, it induces
 
@@ -184,7 +184,7 @@ $$|W^{(N)}(\vec x_1, \vec p_1, \dots, \vec x_N, \vec p_N)| \le \left(\tfrac{2}{h
 
 the natural $dN$-dimensional generalization of the Hudson-bound family. The crystal-lattice shift becomes
 
-$$W'^{(N)} \thickspace=\thickspace W^{(N)} + \left(\tfrac{2}{h}\right)^{dN}, \qquad W'^{(N)} \in \left[0,\ 2\negthinspace\left(\tfrac{2}{h}\right)^{\negthinspace dN}\right].$$
+$$W'^{(N)}  \\; = \\;  W^{(N)} + \left(\tfrac{2}{h}\right)^{dN}, \qquad W'^{(N)} \in \left[0,\ 2\negthinspace\left(\tfrac{2}{h}\right)^{\negthinspace dN}\right].$$
 
 A direct mesh representation requires $(M_x M_p)^{dN}$ cells. For the simulation parameters of `demo_cosine_well_microdynamics.py` ($M_x = 64, M_p = 64$, $d = 1$) extended to $d = 3, N = 10$, this is $4096^{30} \approx 10^{108}$ cells. The mesh form is unusable for $N \gtrsim 2$.
 
