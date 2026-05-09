@@ -58,7 +58,7 @@ The natural momentum spacing $\Delta p_a = \pi\hbar/L_a$ **[choice]** ensures th
 
 The Wigner-function bound in $d$ dimensions is $|W(\vec x, \vec p)| \le (1/\pi\hbar)^d = (2/h)^d$. The crystal-lattice shift becomes
 
-$$W'(\vec x, \vec p) \thickspace=\thickspace W(\vec x, \vec p) + \left(\tfrac{2}{h}\right)^d, \qquad W' \in \left[0,\ 2\negthinspace\left(\tfrac{2}{h}\right)^{\negthinspace d}\right].$$
+$$W'(\vec x, \vec p) \; = \; W(\vec x, \vec p) + \left(\tfrac{2}{h}\right)^d, \qquad W' \in \left[0,\ 2\negthinspace\left(\tfrac{2}{h}\right)^{\negthinspace d}\right].$$
 
 Per-cell positon counts:
 
