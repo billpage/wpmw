@@ -246,9 +246,33 @@ A short cheat sheet for keeping new docs lint-clean:
   unit labels, etc.) use `\text{...}`.
 - Keep `$$...$$` display blocks on a **single source line** when they appear
   inside a numbered or bulleted list item. If you need visual line breaks,
-  use `$$\begin{aligned} ... \\ ... \end{aligned}$$` on one line.
+  either use `$$\begin{aligned} ... \\ ... \end{aligned}$$` on one line, or
+  switch the block to a ```` ```math ```` fenced code block (see below) —
+  fenced code blocks are recognised inside list items even when split over
+  multiple lines.
 - Outside of list items, multi-line `$$...$$` is fine — preferred for long
   derivations.
+- **Alternative display syntax: ```` ```math ```` fenced blocks.**
+  GitHub also accepts a fenced-code form for display math:
+
+  ````
+  ```math
+  \frac{\partial W}{\partial t} + \frac{p}{m}\frac{\partial W}{\partial x} = 0
+  ```
+  ````
+
+  This is equivalent to `$$...$$` for display math, but more robust in
+  awkward contexts: it survives list-item nesting, blockquote nesting, and
+  the inside of `<details>` blocks better than `$$...$$`. The trade-off is
+  the extra syntax and the loss of inline placement (it's display-only).
+  Use it as the fix when the structural pass complains about a multi-line
+  `$$...$$` block in a list item.
+
+  *Caveat:* it is not documented whether ```` ```math ```` blocks are
+  exempt from GitHub's CommonMark backslash-strip pipeline (the bug above).
+  Until verified empirically, follow the same rules inside ```` ```math ````
+  as inside `$$...$$` (use `\thinspace` / `\\;` / `\lbrace` etc.). The
+  linter does check these blocks and will flag any violations.
 - Bold math: `\boldsymbol{x}` or `\mathbf{x}`, not `\bm{x}`.
 - Inline math: write `$x$5` carefully — GitHub treats `$` adjacent to digits
   inconsistently. A space (`$x$ 5`) avoids the problem entirely.

@@ -34,6 +34,9 @@ Run as a CLI from the repository root::
 
     python -m wpmwlib.check_md_math docs/
 
+Math expressions are extracted from ``$...$`` inline math, ``$$...$$``
+display math, and ``\\`\\`\\`math``-fenced display math.
+
 Exits 0 if clean, 1 if any issues found.
 """
 
@@ -54,9 +57,15 @@ from typing import Iterable
 
 # --------------------------------------------------------------------------- #
 # 1. Strip code regions from markdown so $-signs in code don't false-match.   #
+#    Special case: ```math fenced blocks are rewritten to $$...$$ form so     #
+#    extract_math() picks them up alongside ordinary block math.              #
 # --------------------------------------------------------------------------- #
 
-_FENCED_CODE = re.compile(r"```.*?```|~~~.*?~~~", re.DOTALL)
+_FENCED_BLOCK = re.compile(
+    r"^[ \t]*(?P<fence>`{3,}|~{3,})(?P<info>[^\n]*)\n"
+    r"(?P<content>.*?)\n[ \t]*(?P=fence)[ \t]*$",
+    re.MULTILINE | re.DOTALL,
+)
 _INLINE_CODE = re.compile(r"`[^`\n]+`")
 _INDENTED_CODE_LINE = re.compile(r"^(?: {4}|\t).*$", re.MULTILINE)
 
@@ -66,9 +75,29 @@ def _blank_keep_newlines(match: re.Match) -> str:
     return "".join("\n" if c == "\n" else " " for c in s)
 
 
+def _process_fenced_block(m: re.Match) -> str:
+    """If the fenced block is ```math, rewrite to $$...$$ for extraction.
+    Otherwise blank it out, preserving newlines so line numbers don't shift.
+    """
+    fence = m.group("fence")
+    info = m.group("info").strip()
+    content = m.group("content")
+    if fence.startswith("`") and (info == "math" or info.startswith("math ")):
+        # Equivalent display-math form. The number of newlines in the match
+        # is preserved (one between opener and content, one between content
+        # and closer), so subsequent line_of() calls remain accurate.
+        return "$$\n" + content + "\n$$"
+    return _blank_keep_newlines(m)
+
+
 def strip_code(text: str) -> str:
-    """Replace code regions with whitespace, preserving line numbers."""
-    text = _FENCED_CODE.sub(_blank_keep_newlines, text)
+    """Replace code regions with whitespace, preserving line numbers.
+
+    ``\\`\\`\\`math`` fenced blocks are rewritten to ``$$...$$`` form so
+    that :func:`extract_math` finds their contents alongside ordinary
+    block math.
+    """
+    text = _FENCED_BLOCK.sub(_process_fenced_block, text)
     text = _INLINE_CODE.sub(_blank_keep_newlines, text)
     text = _INDENTED_CODE_LINE.sub(_blank_keep_newlines, text)
     return text
@@ -271,8 +300,10 @@ def list_item_block_math(text: str) -> list[tuple[int, str, str]]:
                             i,
                             "Multi-line $$...$$ block inside a list item — "
                             "GitHub will not recognise it as math. Fix: "
-                            "collapse to a single line, or use "
-                            r"$$\begin{aligned}...\end{aligned}$$ on one line, "
+                            "collapse to a single line, "
+                            r"or use $$\begin{aligned}...\end{aligned}$$ on one line, "
+                            "or rewrite as a ```math fenced code block "
+                            "(which is recognised inside list items), "
                             "or move the block out of the list.",
                             snippet.replace("\n", " ↵ "),
                         ))
