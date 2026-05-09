@@ -219,17 +219,23 @@ A short cheat sheet for keeping new docs lint-clean:
   preprocessor strips the leading backslash from any ``\X`` where X is ASCII
   punctuation, *even inside math blocks*, before MathJax sees the content.
   This silently corrupts spacing and turns ``\bigl\{...\bigr\}`` into the
-  hard "Missing or unrecognized delimiter for \\bigl" error. Use the
-  letter-named equivalents instead:
+  hard "Missing or unrecognized delimiter for \\bigl" error. Replace with
+  one of the safe forms below:
 
   | Don't write | Write instead |
   | --- | --- |
-  | `\,` (thin space) | `\thinspace` |
-  | `\!` (negative thin space) | `\negthinspace` |
-  | `\;` (thick space) | `\thickspace` |
-  | `\:` (medium space, amsmath) | `\medspace` |
-  | `\{` (literal left brace) | `\lbrace` |
-  | `\}` (literal right brace) | `\rbrace` |
+  | `\,` (thin space) | `\thinspace` (preferred) or `\\,` |
+  | `\!` (negative thin space) | `\negthinspace` (preferred) or `\\!` |
+  | `\;` (thick space) | `\\;` (no working letter-named form) |
+  | `\:` (medium space) | `\\:` (no working letter-named form) |
+  | `\{` (literal left brace) | `\lbrace` (preferred) or `\\{` |
+  | `\}` (literal right brace) | `\rbrace` (preferred) or `\\}` |
+
+  Note: `\thickspace` and `\medspace` look like the natural letter-named
+  alternatives for `\;` and `\:`, but they are *not* defined in MathJax 3
+  with only `base` and `ams` packages — GitHub's actual config — so on
+  GitHub they render as raw text instead of math spacing. Use doubled
+  backslash (`\\;` / `\\:`) for thick and medium spaces.
 
   The linter's GFM pass enforces this rule.
 

@@ -17,11 +17,14 @@ Catches the rendering pitfalls we have actually hit on GitHub:
    GitHub's markdown preprocessor silently fails to recognise these as math,
    then re-tokenises the indented ``+`` / ``-`` lines as nested bullet items.
    No error message — just garbled output.
-4. **Render (KaTeX, optional)** — every ``$...$`` and ``$$...$$`` expression
-   is fed to KaTeX in strict mode. Catches malformed LaTeX (mismatched
-   delimiters, unknown macros, etc.).
-5. **Render (MathJax, optional)** — same expressions through MathJax 3, the
-   engine GitHub actually uses. A different set of edge cases than KaTeX.
+4. **Render (KaTeX, optional)** — every expression is fed to KaTeX in strict
+   mode *after* applying GitHub's CommonMark backslash-strip transformation,
+   so the engine sees what GitHub actually feeds the renderer rather than
+   the raw source. Catches malformed LaTeX surviving the strip.
+5. **Render (MathJax, optional)** — same expressions through MathJax 3 with
+   only the ``base`` and ``ams`` packages loaded, matching GitHub's actual
+   config. Catches undefined macros (``\\thickspace``, ``\\medspace``, ...)
+   that MathJax with the AllPackages set would silently render as raw text.
 
 The two render passes need ``node`` plus the ``katex`` and ``mathjax-full``
 npm packages.  When those aren't available the passes are skipped with a
@@ -161,29 +164,63 @@ def static_scan(expr: str) -> list[str]:
 # *inside* math content, even though it shouldn't — any ``\X`` where X is an
 # ASCII-punctuation character is rewritten to literal ``X`` before the math
 # is handed to MathJax.  This corrupts the most common TeX shortcuts.
+#
+# Two safe replacement strategies:
+#   * **Letter-named macro** — works only when the macro is defined in
+#     MathJax's base+ams package set, which is what GitHub uses. ``\,``,
+#     ``\!``, ``\{``, ``\}`` have working letter-named alternatives;
+#     ``\;`` (thick space) and ``\:`` (medium space) DO NOT — their
+#     letter-named forms ``\thickspace`` and ``\medspace`` are not defined
+#     in MathJax 3 base+ams and render as raw text on GitHub.
+#   * **Doubled backslash** — universal: ``\\;`` is parsed by CommonMark
+#     as escaped-backslash (``\``) followed by literal ``;``, leaving
+#     ``\;`` for MathJax. Works for every short form because the underlying
+#     short forms are all in MathJax's base package.
+#
+# The recommendations below pick the simpler form when it's known to work,
+# and fall back to doubled-backslash when there's no working letter-named
+# alternative.
 
-_GFM_ESCAPES: list[tuple[str, str]] = [
-    (r"\,", r"\thinspace"),
-    (r"\!", r"\negthinspace"),
-    (r"\;", r"\thickspace"),
-    (r"\:", r"\medspace"),
-    (r"\{", r"\lbrace"),
-    (r"\}", r"\rbrace"),
+_GFM_TARGETS = [
+    # (single-bs pattern, recommended replacement, fallback, description)
+    ("\\,", r"\thinspace",    r"\\,", "thin space"),
+    ("\\!", r"\negthinspace", r"\\!", "negative thin space"),
+    ("\\;", r"\\;",           r"\\;", "thick space (no working letter-named form)"),
+    ("\\:", r"\\:",           r"\\:", "medium space (no working letter-named form)"),
+    ("\\{", r"\lbrace",       r"\\{", "literal left brace (CRITICAL with \\bigl etc.)"),
+    ("\\}", r"\rbrace",       r"\\}", "literal right brace (CRITICAL with \\bigr etc.)"),
 ]
+# Compile a regex per target with a negative lookbehind so we skip
+# occurrences already preceded by a backslash (i.e. already doubled).
+_GFM_RE = {
+    pat: re.compile(r"(?<!\\)" + re.escape(pat))
+    for pat, _, _, _ in _GFM_TARGETS
+}
 
 
-def gfm_escape_scan(expr: str) -> list[tuple[str, str, int]]:
+def gfm_escape_scan(expr: str) -> list[tuple[str, str, str, str, int]]:
     """Find TeX shortcuts that GitHub's CommonMark preprocessor will strip.
 
-    Returns a list of ``(pattern, suggested_replacement, count)`` per
-    pattern that occurs in ``expr``.
+    Returns a list of ``(pattern, recommended, fallback, description, count)``
+    per pattern that occurs in ``expr`` not already doubled.
     """
-    out: list[tuple[str, str, int]] = []
-    for pat, repl in _GFM_ESCAPES:
-        n = expr.count(pat)
+    out: list[tuple[str, str, str, str, int]] = []
+    for pat, repl, fallback, desc in _GFM_TARGETS:
+        n = len(_GFM_RE[pat].findall(expr))
         if n > 0:
-            out.append((pat, repl, n))
+            out.append((pat, repl, fallback, desc, n))
     return out
+
+
+def commonmark_strip(s: str) -> str:
+    """Apply GitHub's (mis-applied) CommonMark backslash-escape rule
+    inside math content: ``\\X`` -> ``X`` for any ASCII punctuation X.
+
+    Used to render expressions through KaTeX/MathJax the way GitHub's
+    pipeline actually feeds them, so the render passes catch real failures
+    rather than rejecting valid post-strip forms.
+    """
+    return re.sub(r"\\([!\"#$%&'()*+,\-./:;<=>?@\[\]^_`{|}~])", r"\1", s)
 
 
 # --------------------------------------------------------------------------- #
@@ -282,12 +319,15 @@ const { TeX } = require('mathjax-full/js/input/tex.js');
 const { SVG } = require('mathjax-full/js/output/svg.js');
 const { liteAdaptor } = require('mathjax-full/js/adaptors/liteAdaptor.js');
 const { RegisterHTMLHandler } = require('mathjax-full/js/handlers/html.js');
-const { AllPackages } = require('mathjax-full/js/input/tex/AllPackages.js');
+require('mathjax-full/js/input/tex/base/BaseConfiguration.js');
+require('mathjax-full/js/input/tex/ams/AmsConfiguration.js');
 const adaptor = liteAdaptor();
 RegisterHTMLHandler(adaptor);
-const tex = new TeX({
-    packages: AllPackages.filter(p => p !== 'require' && p !== 'autoload'),
-});
+// GitHub renders math via MathJax 3 with (effectively) only the base and
+// ams TeX packages. Use that minimal set here so undefined commands like
+// \thickspace and \medspace throw, instead of being silently rendered as
+// raw <mtext> by the noundefined fallback that AllPackages would supply.
+const tex = new TeX({ packages: ['base', 'ams'] });
 const svg = new SVG({ fontCache: 'none' });
 const html = mathjax.document('', { InputJax: tex, OutputJax: svg });
 const readline = require('readline');
@@ -420,6 +460,11 @@ def scan_paths(paths: Iterable[Path],
 
     issues: list[Issue] = []
 
+    # Map id -> the post-CommonMark-strip expression we will actually
+    # send to KaTeX and MathJax. Render the form GitHub will receive,
+    # not the source-as-written.
+    items_for_render: list[tuple[int, MathExpr]] = []
+
     for md in md_files:
         text = md.read_text(encoding="utf-8")
         # static + GFM + structural always run
@@ -431,21 +476,33 @@ def scan_paths(paths: Iterable[Path],
             next_id += 1
             by_id[iid] = (md, me)
             all_items.append((iid, me))
+            # Build the post-CommonMark-strip form for rendering.
+            stripped_me = MathExpr(
+                mode=me.mode,
+                expr=commonmark_strip(me.expr),
+                line=me.line,
+                start=me.start,
+            )
+            items_for_render.append((iid, stripped_me))
             for hit in static_scan(me.expr):
                 issues.append(Issue(md, me.line, "STATIC", me.mode, me.expr, hit))
-            for pat, repl, n in gfm_escape_scan(me.expr):
+            for pat, repl, fallback, desc, n in gfm_escape_scan(me.expr):
                 qty = "" if n == 1 else f" (×{n})"
+                if repl == fallback:
+                    suggestion = f"`{repl}`"
+                else:
+                    suggestion = f"`{repl}` (or `{fallback}`)"
                 msg = (f"GitHub's CommonMark preprocessor strips the "
-                       f"backslash from `{pat}` inside math, leaving a "
-                       f"literal `{pat[1]}` for MathJax. "
-                       f"Replace with `{repl}`{qty}.")
+                       f"backslash from `{pat}` ({desc}) inside math, "
+                       f"leaving a literal `{pat[1]}` for MathJax. "
+                       f"Replace with {suggestion}{qty}.")
                 issues.append(Issue(md, me.line, "GFM   ", me.mode, me.expr, msg))
 
     if (run_katex or run_mathjax) and node_cwd is None:
         node_cwd = Path.cwd()
 
     if run_katex:
-        kr = _run_engine(all_items, _KATEX_JS, "katex", node_cwd)
+        kr = _run_engine(items_for_render, _KATEX_JS, "katex", node_cwd)
         for iid, r in kr.items():
             if not r.get("ok"):
                 md, me = by_id[iid]
@@ -453,7 +510,7 @@ def scan_paths(paths: Iterable[Path],
                 issues.append(Issue(md, me.line, "KATEX ", me.mode, me.expr, err))
 
     if run_mathjax:
-        mr = _run_engine(all_items, _MATHJAX_JS, "mathjax", node_cwd)
+        mr = _run_engine(items_for_render, _MATHJAX_JS, "mathjax", node_cwd)
         for iid, r in mr.items():
             if not r.get("ok"):
                 md, me = by_id[iid]

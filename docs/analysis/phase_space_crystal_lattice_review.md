@@ -76,7 +76,7 @@ For $V(x) = V_p \cos\negthinspace\left(\dfrac{2\pi n x}{L} + \phi\right)$, the d
 (section "Jump density-rate for sinusoidal potential"):
 
 $$
-\Delta W  \; \propto \; 
+\Delta W  \\; \propto \\; 
   \frac{V_p}{\hbar}\cos\negthinspace\left(\frac{2\pi n x}{L} + \phi + \frac{\pi}{2}\right)
   \left[\thinspace W\negthinspace\left(x,\thinspace k + \tfrac{n\pi}{L}\right) - W\negthinspace\left(x,\thinspace k - \tfrac{n\pi}{L}\right)\right]
 $$
@@ -86,8 +86,8 @@ $$
 For $\phi = 0$, fundamental component, amplitude $V_{\max}$, the update reduces to:
 
 $$
-W(x,p,t+dt)  \; = \;  W(x,p)
-   \; - \;  \frac{dt\thinspace V_{\max}}{\hbar}\thinspace\sin\negthinspace\left(\frac{2\pi x}{L}\right)
+W(x,p,t+dt)  \\; = \\;  W(x,p)
+   \\; - \\;  \frac{dt\thinspace V_{\max}}{\hbar}\thinspace\sin\negthinspace\left(\frac{2\pi x}{L}\right)
   \left[\thinspace W\negthinspace\left(x,\thinspace p+\tfrac{\pi\hbar}{L}\right) - W\negthinspace\left(x,\thinspace p-\tfrac{\pi\hbar}{L}\right)\right]
 $$
 
@@ -115,8 +115,8 @@ Combined with the free-streaming term:
 
 $$
 \frac{\partial W}{\partial t}
-   \; = \;  -\frac{p}{m}\frac{\partial W}{\partial x}
-   \; + \;  \tilde V_W(x,p,t) \thinspace\star_p\thinspace W(x,p,t)
+   \\; = \\;  -\frac{p}{m}\frac{\partial W}{\partial x}
+   \\; + \\;  \tilde V_W(x,p,t) \thinspace\star_p\thinspace W(x,p,t)
 $$
 
 where $\tilde V_W = V_W - g(x)\thinspace\delta'(p)$ is the Wigner potential with the local force term
@@ -142,7 +142,7 @@ the negaton lattice is never touched dynamically.
 The same idea applies, but the jump density $\rho(\xi)$ must satisfy the moment problem
 $$
 \eta_\zeta \int \zeta^k\thinspace\rho(\zeta)\thinspace d\zeta
-   \; = \;  \frac{\hbar^{k-1}}{2^{k-1}\thinspace k!}\thinspace\frac{\partial^k V}{\partial x^k}
+   \\; = \\;  \frac{\hbar^{k-1}}{2^{k-1}\thinspace k!}\thinspace\frac{\partial^k V}{\partial x^k}
   \qquad (k\ \text{odd})
 $$
 with even moments zero. For unbounded potentials (e.g. $V = x^3$) the exact $\rho$ is impulsive
