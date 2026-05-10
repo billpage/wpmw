@@ -216,7 +216,7 @@ The single-particle marginal Wigner function for particle $i$ is the integral ov
 
 $$w_i(\vec x, \vec p) = \int W^{(N)}\thinspace\prod_{j \neq i} d\vec x_j\thinspace d\vec p_j.$$
 
-In the world ensemble, this is the histogram of $(\vec x_i^{(\alpha)}, \vec p_i^{(\alpha)})$ over $\alpha$ — cheap, $\mathcal{O}(\mathcal{W})$. Two-body marginals $w_{ij}^{(2)}$ require histogramming pairs $(\vec x_i^{(\alpha)}, \vec p_i^{(\alpha)}, \vec x_j^{(\alpha)}, \vec p_j^{(\alpha)})$, similarly cheap. $k$-body correlations need at least $\mathcal{W} \gtrsim$ (fineness)$^{2dk}$ samples, so practical $k$ is bounded by available statistics.
+In the world ensemble, this is the histogram of $(\vec x_i^{(\alpha)}, \vec p_i^{(\alpha)})$ over $\alpha$ — cheap, $\mathcal{O}(\mathcal{W})$. Two-body marginals $w_{ij}^{(2)}$ require histogramming pairs $(\vec x_i^{(\alpha)}, \vec p_i^{(\alpha)}, \vec x_j^{(\alpha)}, \vec p_j^{(\alpha)})$, similarly cheap. $k$-body correlations need at least $\mathcal{W} \gtrsim$ $\text{(fineness)}^{2dk}$ samples, so practical $k$ is bounded by available statistics.
 
 ---
 
