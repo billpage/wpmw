@@ -294,7 +294,7 @@ $$\partial_t W^{(N)} \supset -\frac{V^{(2)}_{\vec q}}{\hbar}\sin(\vec k\cdot \ve
 
 which is exactly a finite-difference operator implementing the rule of §6.3 (with the source-to-destination convention absorbing the overall factor of 2). Total momentum $\vec p_i + \vec p_j$ is unaffected by the shifts, so it is conserved exactly per event.
 
-The bound $|\Gamma^{(2)}_{\vec q}| \le |V^{(2)}_{\vec q}|/\hbar$ — independent of $\vec r_{ij}$ — gives a uniform per-mode rate cap, useful for $\Delta t$ selection.
+The bound $\vert\Gamma^{(2)}_{\vec q}\vert \le \vert V^{(2)}_{\vec q}\vert/\hbar$ — independent of $\vec r_{ij}$ — gives a uniform per-mode rate cap, useful for $\Delta t$ selection.
 
 ---
 
