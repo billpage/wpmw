@@ -261,18 +261,30 @@ A short cheat sheet for keeping new docs lint-clean:
   ```
   ````
 
-  This is equivalent to `$$...$$` for display math, but more robust in
-  awkward contexts: it survives list-item nesting, blockquote nesting, and
-  the inside of `<details>` blocks better than `$$...$$`. The trade-off is
-  the extra syntax and the loss of inline placement (it's display-only).
-  Use it as the fix when the structural pass complains about a multi-line
-  `$$...$$` block in a list item.
+  This is equivalent to `$$...$$` for display math, but is **exempt from
+  the CommonMark backslash-strip pipeline** (verified empirically: see
+  the experiment branch). Inside a fenced math block you can write
+  `\,`, `\;`, `\!`, `\bigl\{`, `\bigr\}` directly — the backslashes
+  reach MathJax intact.
 
-  *Caveat:* it is not documented whether ```` ```math ```` blocks are
-  exempt from GitHub's CommonMark backslash-strip pipeline (the bug above).
-  Until verified empirically, follow the same rules inside ```` ```math ````
-  as inside `$$...$$` (use `\thinspace` / `\\;` / `\lbrace` etc.). The
-  linter does check these blocks and will flag any violations.
+  Two reasons to prefer the fenced form:
+
+  1. *Heavy use of backslash-escapes* — equations with lots of TeX
+     spacing or sized-delimiter braces are clearer with `\,` `\;`
+     `\bigl\{` than with `\thinspace` `\\;` `\bigl\\{`. Switch to a
+     fenced block and write the natural TeX.
+  2. *Awkward markdown context* — fenced blocks survive list-item
+     nesting, blockquote nesting, and `<details>` better than `$$...$$`.
+     The structural pass already suggests this as one fix when a
+     multi-line `$$` block is inside a list item.
+
+  Trade-offs: extra surrounding syntax, no inline use (display-only),
+  and visual diff churn if you switch a long-established `$$...$$`
+  block.
+
+  The linter applies the static pass (forbidden macros) and both
+  render passes to fenced content, but skips the GFM pass — fenced
+  math is exempt by design.
 - Bold math: `\boldsymbol{x}` or `\mathbf{x}`, not `\bm{x}`.
 - Inline math: write `$x$5` carefully — GitHub treats `$` adjacent to digits
   inconsistently. A space (`$x$ 5`) avoids the problem entirely.

@@ -13,6 +13,11 @@ Catches the rendering pitfalls we have actually hit on GitHub:
    ``\\,`` becomes a literal comma, ``\\!`` a literal bang, ``\\bigl\\{``
    becomes ``\\bigl{`` — the last produces a hard "Missing or unrecognized
    delimiter for \\bigl" error; the others corrupt spacing silently.
+
+   Fenced ``\\`\\`\\`math`` blocks are **exempt** from this strip (verified
+   empirically), so the GFM pass is only applied to ``$...$`` and
+   ``$$...$$`` expressions. The render passes likewise feed fenced content
+   to the engines verbatim, while dollar-delimited content is stripped first.
 3. **Structural** — multi-line ``$$...$$`` blocks placed inside a list item.
    GitHub's markdown preprocessor silently fails to recognise these as math,
    then re-tokenises the indented ``+`` / ``-`` lines as nested bullet items.
@@ -57,8 +62,8 @@ from typing import Iterable
 
 # --------------------------------------------------------------------------- #
 # 1. Strip code regions from markdown so $-signs in code don't false-match.   #
-#    Special case: ```math fenced blocks are rewritten to $$...$$ form so     #
-#    extract_math() picks them up alongside ordinary block math.              #
+#    All fenced blocks (including ```math) are blanked here; ```math is       #
+#    re-found by :func:`extract_fenced_math` so its source can be tracked.    #
 # --------------------------------------------------------------------------- #
 
 _FENCED_BLOCK = re.compile(
@@ -75,29 +80,19 @@ def _blank_keep_newlines(match: re.Match) -> str:
     return "".join("\n" if c == "\n" else " " for c in s)
 
 
-def _process_fenced_block(m: re.Match) -> str:
-    """If the fenced block is ```math, rewrite to $$...$$ for extraction.
-    Otherwise blank it out, preserving newlines so line numbers don't shift.
-    """
-    fence = m.group("fence")
-    info = m.group("info").strip()
-    content = m.group("content")
-    if fence.startswith("`") and (info == "math" or info.startswith("math ")):
-        # Equivalent display-math form. The number of newlines in the match
-        # is preserved (one between opener and content, one between content
-        # and closer), so subsequent line_of() calls remain accurate.
-        return "$$\n" + content + "\n$$"
-    return _blank_keep_newlines(m)
-
-
 def strip_code(text: str) -> str:
     """Replace code regions with whitespace, preserving line numbers.
 
-    ``\\`\\`\\`math`` fenced blocks are rewritten to ``$$...$$`` form so
-    that :func:`extract_math` finds their contents alongside ordinary
-    block math.
+    All fenced code blocks are blanked, including ``\\`\\`\\`math``; the
+    fenced-math contents are re-found by :func:`extract_fenced_math` so
+    that the linter can track which math expressions came from a fenced
+    block (exempt from GitHub's CommonMark backslash-strip — verified
+    empirically) versus from ``$...$`` / ``$$...$$`` (subject to it).
     """
-    text = _FENCED_BLOCK.sub(_process_fenced_block, text)
+    text = _FENCED_BLOCK.sub(_blank_keep_newlines, text)
+    text = _INLINE_CODE.sub(_blank_keep_newlines, text)
+    text = _INDENTED_CODE_LINE.sub(_blank_keep_newlines, text)
+    return text
     text = _INLINE_CODE.sub(_blank_keep_newlines, text)
     text = _INDENTED_CODE_LINE.sub(_blank_keep_newlines, text)
     return text
@@ -125,6 +120,7 @@ class MathExpr:
     expr: str
     line: int
     start: int
+    source: str = "dollar"   # "dollar" ($... / $$...) or "fenced" (```math)
 
 
 def _line_of(text: str, offset: int) -> int:
@@ -132,18 +128,59 @@ def _line_of(text: str, offset: int) -> int:
 
 
 def extract_math(stripped: str) -> list[MathExpr]:
-    """Return every math expression in the (already code-stripped) text."""
+    """Return every $-delimited math expression in the (code-stripped) text.
+
+    Both ``$...$`` and ``$$...$$`` are tagged with ``source="dollar"`` —
+    these forms are subject to GitHub's CommonMark backslash-strip.
+    """
     out: list[MathExpr] = []
     masked = stripped
     for m in _BLOCK_MATH.finditer(stripped):
         out.append(MathExpr("display", m.group(1),
-                            _line_of(stripped, m.start()), m.start()))
+                            _line_of(stripped, m.start()), m.start(),
+                            source="dollar"))
         s, e = m.span()
         masked = masked[:s] + _blank_keep_newlines(m) + masked[e:]
     for m in _INLINE_MATH.finditer(masked):
         out.append(MathExpr("inline", m.group(1),
-                            _line_of(masked, m.start()), m.start()))
+                            _line_of(masked, m.start()), m.start(),
+                            source="dollar"))
     out.sort(key=lambda r: r.start)
+    return out
+
+
+# Re-find ```math blocks in the *raw* text so we can tag them as fenced.
+_FENCED_MATH = re.compile(
+    r"^[ \t]*(?P<fence>`{3,})(?P<info>math[^\n]*)\n"
+    r"(?P<content>.*?)\n[ \t]*(?P=fence)[ \t]*$",
+    re.MULTILINE | re.DOTALL,
+)
+
+
+def extract_fenced_math(text: str) -> list[MathExpr]:
+    """Return every ``\\`\\`\\`math`` fenced block as a display-math
+    expression tagged ``source="fenced"``.
+
+    Operates on the *raw* text (not the code-stripped form), since
+    :func:`strip_code` blanks every fenced block and the contents would
+    otherwise be lost. Fenced math is exempt from GitHub's CommonMark
+    backslash-strip (verified empirically), so the linter applies a
+    different set of checks to expressions tagged ``"fenced"``.
+    """
+    out: list[MathExpr] = []
+    for m in _FENCED_MATH.finditer(text):
+        # Tighten the info-string check: we only want exactly "math"
+        # (possibly followed by whitespace) — not "mathematica" etc.
+        info = m.group("info")
+        if info != "math" and not info.startswith("math "):
+            continue
+        out.append(MathExpr(
+            mode="display",
+            expr=m.group("content"),
+            line=_line_of(text, m.start()) + 1,  # +1 to land on the content
+            start=m.start(),
+            source="fenced",
+        ))
     return out
 
 
@@ -498,36 +535,55 @@ def scan_paths(paths: Iterable[Path],
 
     for md in md_files:
         text = md.read_text(encoding="utf-8")
-        # static + GFM + structural always run
+        # structural pass works on the raw text
         for line, msg, snippet in list_item_block_math(text):
             issues.append(Issue(md, line, "STRUCT", "display", snippet, msg))
         stripped = strip_code(text)
-        for me in extract_math(stripped):
+
+        # Gather every math expression: $-delimited and ```math fenced.
+        # Each is tagged with `source` so the GFM and render passes can
+        # treat them differently — fenced math is exempt from GitHub's
+        # CommonMark backslash-strip.
+        all_exprs = list(extract_math(stripped)) + list(extract_fenced_math(text))
+
+        for me in all_exprs:
             iid = next_id
             next_id += 1
             by_id[iid] = (md, me)
             all_items.append((iid, me))
-            # Build the post-CommonMark-strip form for rendering.
+            # For render, dollar-source content is fed through CommonMark
+            # strip first (matching what GitHub feeds MathJax). Fenced
+            # content is exempt and goes to the engines verbatim.
+            if me.source == "fenced":
+                render_expr = me.expr
+            else:
+                render_expr = commonmark_strip(me.expr)
             stripped_me = MathExpr(
                 mode=me.mode,
-                expr=commonmark_strip(me.expr),
+                expr=render_expr,
                 line=me.line,
                 start=me.start,
+                source=me.source,
             )
             items_for_render.append((iid, stripped_me))
+            # Static pass applies regardless of source: GitHub's MathJax
+            # config blocks the same set of macros either way.
             for hit in static_scan(me.expr):
                 issues.append(Issue(md, me.line, "STATIC", me.mode, me.expr, hit))
-            for pat, repl, fallback, desc, n in gfm_escape_scan(me.expr):
-                qty = "" if n == 1 else f" (×{n})"
-                if repl == fallback:
-                    suggestion = f"`{repl}`"
-                else:
-                    suggestion = f"`{repl}` (or `{fallback}`)"
-                msg = (f"GitHub's CommonMark preprocessor strips the "
-                       f"backslash from `{pat}` ({desc}) inside math, "
-                       f"leaving a literal `{pat[1]}` for MathJax. "
-                       f"Replace with {suggestion}{qty}.")
-                issues.append(Issue(md, me.line, "GFM   ", me.mode, me.expr, msg))
+            # GFM pass applies *only* to dollar-delimited math. Fenced
+            # blocks are not subject to CommonMark backslash-strip.
+            if me.source != "fenced":
+                for pat, repl, fallback, desc, n in gfm_escape_scan(me.expr):
+                    qty = "" if n == 1 else f" (×{n})"
+                    if repl == fallback:
+                        suggestion = f"`{repl}`"
+                    else:
+                        suggestion = f"`{repl}` (or `{fallback}`)"
+                    msg = (f"GitHub's CommonMark preprocessor strips the "
+                           f"backslash from `{pat}` ({desc}) inside math, "
+                           f"leaving a literal `{pat[1]}` for MathJax. "
+                           f"Replace with {suggestion}{qty}.")
+                    issues.append(Issue(md, me.line, "GFM   ", me.mode, me.expr, msg))
 
     if (run_katex or run_mathjax) and node_cwd is None:
         node_cwd = Path.cwd()
