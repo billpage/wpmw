@@ -288,3 +288,27 @@ A short cheat sheet for keeping new docs lint-clean:
 - Bold math: `\boldsymbol{x}` or `\mathbf{x}`, not `\bm{x}`.
 - Inline math: write `$x$5` carefully — GitHub treats `$` adjacent to digits
   inconsistently. A space (`$x$ 5`) avoids the problem entirely.
+- **Inline math with `}_{` (subscript right after a brace): wrap in
+  backtick-dollar.** GitHub's markdown preprocessor treats a `_`
+  preceded by `}` as the start of an italic span and eats the
+  underscore before MathJax sees the math. So `$V^{(2)}_{\vec q}$`
+  inside flowing prose renders as the literal string
+  `$V^{(2)}{\vec q}$` (underscore gone, dollar signs visible).
+  This is community-discussion
+  [#65772](https://github.com/orgs/community/discussions/65772).
+
+  The fix is GitHub's documented alternative inline-math syntax,
+  `$`...`$` (backtick-dollar): the backticks make the content a code
+  span as far as markdown is concerned, so the inline emphasis rule
+  is skipped entirely. Rewrite:
+
+  | Don't write | Write instead |
+  | --- | --- |
+  | `$V^{(2)}_{\vec q}$` | `` $`V^{(2)}_{\vec q}`$ `` |
+  | `$\|\Gamma^{(2)}_{\vec q}\|/\hbar$` | `` $`\|\Gamma^{(2)}_{\vec q}\|/\hbar`$ `` |
+
+  Inline math without the `}_{` pattern (e.g. `$\vec r_{ij}$`,
+  `$V_2$`) is fine as plain `$...$`. Display math `$$...$$` is also
+  not affected by this rule.
+
+  The linter's GFM pass enforces this.

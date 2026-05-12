@@ -246,7 +246,7 @@ trigger a momentum jump of particle $i$:
 
 $$\vec p_i^{(\alpha)} \longrightarrow \vec p_i^{(\alpha)} + \mathrm{sgn}(\Gamma^{\text{ext}}_{\vec q})\cdot\hbar\vec k_{\vec q}$$
 
-with probability $|\Gamma^{\text{ext}}_{\vec q}|\thinspace\Delta t$ **[choice — Poisson rate is the rigorous form]**.
+with probability $`|\Gamma^{\text{ext}}_{\vec q}|\thinspace\Delta t`$ **[choice — Poisson rate is the rigorous form]**.
 
 Note: in the world-ensemble form, momentum kicks are by the *full* photon momentum $\hbar\vec k_{\vec q}$, not split into half-jumps. The half-jump structure of the 1+1D mesh form arose from the symmetric source-to-destination split $(n+q) \to (n-q)$ in cell coordinates; in the continuous-variable world ensemble there is no such artifact, and a single jump of size $2 \cdot \tfrac{1}{2}\hbar k = \hbar k$ is delivered per event. The factor of 2 in the rate convention is absorbed accordingly **[choice — see §11 for an alternative half-jump convention preserving the mediator-pair picture]**.
 
@@ -266,9 +266,9 @@ trigger the correlated jump
 
 $$\bigl(\vec p_i^{(\alpha)},\thinspace \vec p_j^{(\alpha)}\bigr) \longrightarrow \bigl(\vec p_i^{(\alpha)} + \mathrm{sgn}(\Gamma^{(2)}_{\vec q})\thinspace\hbar\vec k_{\vec q},\ \vec p_j^{(\alpha)} - \mathrm{sgn}(\Gamma^{(2)}_{\vec q})\thinspace\hbar\vec k_{\vec q}\bigr)$$
 
-with probability $|\Gamma^{(2)}_{\vec q}|\thinspace\Delta t$. The total momentum $\vec p_i + \vec p_j$ is conserved exactly per event. This is the entire two-body crystal-lattice rule.
+with probability $`|\Gamma^{(2)}_{\vec q}|\thinspace\Delta t`$. The total momentum $\vec p_i + \vec p_j$ is conserved exactly per event. This is the entire two-body crystal-lattice rule.
 
-**Physical interpretation.** Each correlated jump is an exchange of a "virtual photon" of momentum $\hbar\vec k_{\vec q}$ between particles $i$ and $j$ at relative position $\vec r_{ij}$. The rate-amplitude $|V^{(2)}_{\vec q}|/\hbar$ is the coupling at that Fourier component of the interaction. This is structurally the leading Feynman-diagram element of QED at the non-relativistic-QLE level; the algorithm is a stochastic implementation of pair-wise quantum exchange.
+**Physical interpretation.** Each correlated jump is an exchange of a "virtual photon" of momentum $\hbar\vec k_{\vec q}$ between particles $i$ and $j$ at relative position $\vec r_{ij}$. The rate-amplitude $`|V^{(2)}_{\vec q}|/\hbar`$ is the coupling at that Fourier component of the interaction. This is structurally the leading Feynman-diagram element of QED at the non-relativistic-QLE level; the algorithm is a stochastic implementation of pair-wise quantum exchange.
 
 ### 6.4 Higher-body interactions
 
@@ -284,7 +284,7 @@ $$\partial_t W^{(N)} \supset \frac{2}{\hbar}\thinspace V_2(\vec r_{ij})\thinspac
 
 (Note the sign structure: only the *difference* of position-derivatives appears, because $V_2$ depends on $\vec r_{ij} = \vec x_i - \vec x_j$ alone, and only the *difference* of momentum-derivatives appears as the Moyal-conjugate.)
 
-Substituting a single Fourier mode $V_2(\vec r) = V^{(2)}_{\vec q}\thinspace\cos(\vec k\cdot\vec r + \phi)$ with $\vec k = \vec k_{\vec q}$ and using
+Substituting a single Fourier mode $`V_2(\vec r) = V^{(2)}_{\vec q}\thinspace\cos(\vec k\cdot\vec r + \phi)`$ with $\vec k = \vec k_{\vec q}$ and using
 
 $$\bigl(\overleftarrow{\nabla}_{\negthinspace\vec x_i} - \overleftarrow{\nabla}_{\negthinspace\vec x_j}\bigr)\cos(\vec k\cdot\vec r_{ij} + \phi) = -\vec k\thinspace\sin(\vec k\cdot\vec r_{ij} + \phi)\cdot 2,$$
 
@@ -294,7 +294,7 @@ $$\partial_t W^{(N)} \supset -\frac{V^{(2)}_{\vec q}}{\hbar}\sin(\vec k\cdot \ve
 
 which is exactly a finite-difference operator implementing the rule of §6.3 (with the source-to-destination convention absorbing the overall factor of 2). Total momentum $\vec p_i + \vec p_j$ is unaffected by the shifts, so it is conserved exactly per event.
 
-The bound $|\Gamma^{(2)}_{\vec q}| \le |V^{(2)}_{\vec q}|/\hbar$ — independent of $\vec r_{ij}$ — gives a uniform per-mode rate cap, useful for $\Delta t$ selection.
+The bound $`|\Gamma^{(2)}_{\vec q}| \le |V^{(2)}_{\vec q}|/\hbar`$ — independent of $\vec r_{ij}$ — gives a uniform per-mode rate cap, useful for $\Delta t$ selection.
 
 ---
 
@@ -437,7 +437,7 @@ For statistics, accumulate one- and two-body marginals from `worlds_x, worlds_p`
 
 1. **Statistical convergence.** $\mathcal{W}$ scales empirically as $\mathcal{O}(\sigma_{\text{obs}}^{-2})$ for a given observable variance target. One-body marginals on smooth states tend to converge with $\mathcal{W} \sim 10^4$–$10^5$; two-body correlations and exchange-sensitive observables can require an order of magnitude more. No exponential-in-$N$ scaling for low-body observables.
 
-2. **Rate-budget regularization.** When $|V^{(2)}_{\vec q}|\thinspace\Delta t/\hbar$ approaches 1 for any single mode, the per-step Bernoulli sampling is no longer a good approximation to the true Poisson process; switch to an exponential-time-to-event sampler **[choice]** or reduce $\Delta t$.
+2. **Rate-budget regularization.** When $`|V^{(2)}_{\vec q}|\thinspace\Delta t/\hbar`$ approaches 1 for any single mode, the per-step Bernoulli sampling is no longer a good approximation to the true Poisson process; switch to an exponential-time-to-event sampler **[choice]** or reduce $\Delta t$.
 
 3. **Mean-field reference (TDHF-Wigner).** Replace pair-wise correlated jumps by each particle seeing the time-dependent mean field of the others (the marginal $\rho^{(\text{mean})}(\vec x) = N^{-1}\sum_j \rho_j(\vec x)$ from the world ensemble). This recovers a TDHF / TDDFT-like dynamics at much lower statistical cost; useful as a reference and as a starting point for adding pair correlations perturbatively.
 
