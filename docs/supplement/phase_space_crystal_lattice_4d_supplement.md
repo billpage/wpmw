@@ -17,9 +17,9 @@
 
 The 1+1-D supplement derived a single jump rule:
 
-$$\Delta W \\\;=\\\; -\thinspace\frac{V_p}{\hbar}\thinspace\Delta t\thinspace\sin\negthinspace\theta\thinspace
+$$\Delta W \\\;=\\\; -\\, \frac{V_p}{\hbar}\\, \Delta t\\, \sin\negthinspace\theta\\, 
 \bigl[W(p+\tfrac{\pi\hbar}{L}) - W(p-\tfrac{\pi\hbar}{L})\bigr],
-\qquad \theta \equiv \tfrac{2\pi q\thinspace x}{L} + \phi_q .$$
+\qquad \theta \equiv \tfrac{2\pi q\\,  x}{L} + \phi_q .$$
 
 driving discrete momentum jumps of magnitude $\hbar k_q$ at rate
 $|\Gamma_q(x)| = |V_q/\hbar||\sin\theta|$. Two systems exist whose joint phase
@@ -71,15 +71,15 @@ in the potential-driven sub-step.
 For the rest of this document, the "atomic" jump element is the contribution
 of a single Fourier mode of the potential to the QLE:
 
-$$V_q\thinspace\cos(k\thinspacex + \phi)
+$$V_q\\, \cos(k\\, x + \phi)
 \\\;\longrightarrow\\\;
-\Gamma_q(x) = -\frac{V_q}{\hbar}\thinspace\sin(k\thinspacex + \phi), \qquad k = \tfrac{2\pi q}{L}.$$
+\Gamma_q(x) = -\frac{V_q}{\hbar}\\, \sin(k\\, x + \phi), \qquad k = \tfrac{2\pi q}{L}.$$
 
 The rule reads:
 
-> For each positon at $(x, p)$, with probability $|\Gamma_q(x)|\thinspace\Delta t$
+> For each positon at $(x, p)$, with probability $|\Gamma_q(x)|\\, \Delta t$
 > per timestep, transfer one positon between cells $(x, p-\hbar k)$ and
-> $(x, p+\hbar k)$ in the direction set by $\mathrm{sgn}\thinspace\Gamma_q(x)$. The
+> $(x, p+\hbar k)$ in the direction set by $\mathrm{sgn}\\, \Gamma_q(x)$. The
 > mediator at $(x, p)$ is unchanged.
 
 (See §6 of the 1+1-D supplement for the derivation and §6.3 for the
@@ -96,8 +96,8 @@ affected by the resulting jump.
 The 2-D external potential admits a 2-D Fourier expansion on the periodic box
 $[0, L_x] \times [0, L_y]$:
 
-$$V(x, y) \\\;=\\\; V_0 \\\;+\\\; \sum_{\vec q \neq 0}\\\; V_{\vec q}\thinspace\cos(\vec k_{\vec q}\negthinspace\cdot\negthinspace\vec x + \phi_{\vec q}),
-\qquad \vec k_{\vec q} = \Bigl(\tfrac{2\pi q_x}{L_x},\thinspace\tfrac{2\pi q_y}{L_y}\Bigr),
+$$V(x, y) \\\;=\\\; V_0 \\\;+\\\; \sum_{\vec q \neq 0}\\\; V_{\vec q}\\, \cos(\vec k_{\vec q}\negthinspace\cdot\negthinspace\vec x + \phi_{\vec q}),
+\qquad \vec k_{\vec q} = \Bigl(\tfrac{2\pi q_x}{L_x},\\, \tfrac{2\pi q_y}{L_y}\Bigr),
 \quad \vec q \in \mathbb{Z}^2.$$
 
 Each mode $\vec q$ is now indexed by an integer vector, and its wavevector
@@ -107,15 +107,15 @@ $\vec k_{\vec q}$ has an arbitrary direction in the $(q_x, q_y)$ lattice.
 
 The local rate amplitude is the direct vectorial analog of the 1+1-D form:
 
-$$\Gamma_{\vec q}(x, y) \\\;=\\\; -\thinspace\frac{V_{\vec q}}{\hbar}\thinspace\sin(\vec k_{\vec q}\negthinspace\cdot\negthinspace\vec x + \phi_{\vec q}).$$
+$$\Gamma_{\vec q}(x, y) \\\;=\\\; -\\, \frac{V_{\vec q}}{\hbar}\\, \sin(\vec k_{\vec q}\negthinspace\cdot\negthinspace\vec x + \phi_{\vec q}).$$
 
 The jump rule, in the world-ensemble (continuous-momentum) representation,
 is the obvious vectorial lift:
 
 > For each positon at $(\vec x, \vec p)$ in each world, with probability
-> $|\Gamma_{\vec q}(\vec x)|\thinspace\Delta t$ per mode per step,
+> $|\Gamma_{\vec q}(\vec x)|\\, \Delta t$ per mode per step,
 >
-> $$\vec p \\\;\longrightarrow\\\; \vec p \\\;+\\\; \mathrm{sgn}\bigl(\Gamma_{\vec q}(\vec x)\bigr)\thinspace\hbar\thinspace\vec k_{\vec q}.$$
+> $$\vec p \\\;\longrightarrow\\\; \vec p \\\;+\\\; \mathrm{sgn}\bigl(\Gamma_{\vec q}(\vec x)\bigr)\\, \hbar\\, \vec k_{\vec q}.$$
 
 Both components of $\vec p$ shift in the same event — the kick is genuinely
 vectorial. No part of $\vec p$ is conserved by the rule (momentum is
@@ -135,7 +135,7 @@ $$\partial_t W \\\;\supset\\\; +\nabla_{\negthinspace\vec x}V(\vec x)\cdot\nabla
 
 For the single Fourier mode $V_{\vec q}\cos(\vec k_{\vec q}\negthinspace\cdot\negthinspace\vec x + \phi_{\vec q})$,
 
-$$\nabla_{\negthinspace\vec x}V = -V_{\vec q}\thinspace\vec k_{\vec q}\thinspace\sin(\vec k_{\vec q}\negthinspace\cdot\negthinspace\vec x + \phi_{\vec q})$$
+$$\nabla_{\negthinspace\vec x}V = -V_{\vec q}\\, \vec k_{\vec q}\\, \sin(\vec k_{\vec q}\negthinspace\cdot\negthinspace\vec x + \phi_{\vec q})$$
 
 and the directional derivative
 $\vec k_{\vec q}\cdot\nabla_{\negthinspace\vec p}W$ is approximated by the symmetric
@@ -156,12 +156,12 @@ $\hat k_{\vec q}$). Combining gives the §4.2 update directly.
 A pair potential depending only on the relative coordinate $r = x_1 - x_2$
 expands as
 
-$$V_2(r) \\\;=\\\; V_2^{(0)} \\\;+\\\; \sum_{q\neq 0}\\\; V^{(2)}_q\thinspace\cos(k_q\thinspacer + \phi^{(2)}_q),
+$$V_2(r) \\\;=\\\; V_2^{(0)} \\\;+\\\; \sum_{q\neq 0}\\\; V^{(2)}_q\\, \cos(k_q\\, r + \phi^{(2)}_q),
 \qquad k_q = \tfrac{2\pi q}{L}.$$
 
 In the joint configuration space $(x_1, x_2)$ this is
 
-$$V_2(x_1 - x_2) \\\;=\\\; V_2^{(0)} \\\;+\\\; \sum_{q\neq 0}\\\; V^{(2)}_q\thinspace\cos(q\thinspacek_1\thinspacex_1 \\\;-\\\; q\thinspacek_1\thinspacex_2 + \phi^{(2)}_q),$$
+$$V_2(x_1 - x_2) \\\;=\\\; V_2^{(0)} \\\;+\\\; \sum_{q\neq 0}\\\; V^{(2)}_q\\, \cos(q\\, k_1\\, x_1 \\\;-\\\; q\\, k_1\\, x_2 + \phi^{(2)}_q),$$
 
 with $k_1 = 2\pi/L$. As a joint 2-D Fourier series, $V_2$ has support **only
 on the anti-diagonal** $q_1 = -q_2$ — a 1-D subset of the 2-D wavevector
@@ -176,18 +176,18 @@ centre-of-mass / relative-coordinate separation, examined in §7 below.
 
 The local rate amplitude depends on the relative coordinate only:
 
-$$\Gamma^{(2)}_q(r_{12}) \\\;=\\\; -\thinspace\frac{V^{(2)}_q}{\hbar}\thinspace\sin(k_q\thinspacer_{12} + \phi^{(2)}_q),
+$$\Gamma^{(2)}_q(r_{12}) \\\;=\\\; -\\, \frac{V^{(2)}_q}{\hbar}\\, \sin(k_q\\, r_{12} + \phi^{(2)}_q),
 \qquad r_{12} = x_1 - x_2.$$
 
 The jump rule is **correlated**: both particles' momenta change in the same
 event, with equal and opposite kicks:
 
 > For each world, each Fourier mode $q$ of $V_2$, with probability
-> $|\Gamma^{(2)}_q(r_{12})|\thinspace\Delta t$:
+> $|\Gamma^{(2)}_q(r_{12})|\\, \Delta t$:
 >
-> $$(p_1,\thinspacep_2) \\\;\longrightarrow\\\;
->   \bigl(p_1 + \mathrm{sgn}(\Gamma^{(2)}_q)\thinspace\hbar k_q,\\\;
->         p_2 - \mathrm{sgn}(\Gamma^{(2)}_q)\thinspace\hbar k_q\bigr).$$
+> $$(p_1,\\, p_2) \\\;\longrightarrow\\\;
+>   \bigl(p_1 + \mathrm{sgn}(\Gamma^{(2)}_q)\\, \hbar k_q,\\\;
+>         p_2 - \mathrm{sgn}(\Gamma^{(2)}_q)\\, \hbar k_q\bigr).$$
 
 The total momentum $P = p_1 + p_2$ is exactly conserved per event. In
 $(p_1, p_2)$ phase-space coordinates, every jump is a displacement along the
@@ -200,7 +200,7 @@ In mesh-density form (when a joint $(x_1, p_1, x_2, p_2)$ grid is available),
 the equivalent update is the joint finite difference
 
 $$\partial_t W^{(2)} \\\;\supset\\\; \sum_{q\neq 0} \Gamma^{(2)}_q(r_{12})
-\bigl[\thinspaceW^{(2)}(\dots, p_1+\hbar k_q,\thinspace p_2-\hbar k_q,\dots) - W^{(2)}(\dots, p_1-\hbar k_q,\thinspace p_2+\hbar k_q,\dots)\thinspace\bigr].$$
+\bigl[\\, W^{(2)}(\dots, p_1+\hbar k_q,\\,  p_2-\hbar k_q,\dots) - W^{(2)}(\dots, p_1-\hbar k_q,\\,  p_2+\hbar k_q,\dots)\\, \bigr].$$
 
 ### 5.3 Derivation
 
@@ -208,12 +208,12 @@ The joint QLE for two particles with pair potential $V_2(x_1-x_2)$ contains
 the Moyal-bracket contribution
 
 $$\partial_t W^{(2)} \\\;\supset\\\;
-\frac{2}{\hbar}\thinspaceV_2(r_{12})\thinspace
-\sin\negthinspace\Bigl(\tfrac{\hbar}{2}\bigl(\overleftarrow\partial_{x_1} - \overleftarrow\partial_{x_2}\bigr)\bigl(\overrightarrow\partial_{p_1} - \overrightarrow\partial_{p_2}\bigr)\Bigr)\thinspaceW^{(2)},$$
+\frac{2}{\hbar}\\, V_2(r_{12})\\, 
+\sin\negthinspace\Bigl(\tfrac{\hbar}{2}\bigl(\overleftarrow\partial_{x_1} - \overleftarrow\partial_{x_2}\bigr)\bigl(\overrightarrow\partial_{p_1} - \overrightarrow\partial_{p_2}\bigr)\Bigr)\\, W^{(2)},$$
 
 where only the *difference* of position-derivatives appears (because $V_2$
 depends only on the difference $r_{12}$). For a single Fourier mode
-$V^{(2)}_q\cos(k_q\thinspacer_{12} + \phi^{(2)}_q)$, the factor
+$V^{(2)}_q\cos(k_q\\, r_{12} + \phi^{(2)}_q)$, the factor
 $\overleftarrow\partial_{x_1} - \overleftarrow\partial_{x_2}$ acting on the
 cosine produces $-2k_q\sin(\dots)$ (one $-k_q$ from each derivative), and the
 remaining $\sin$ of the Moyal bracket becomes a finite-difference operator
