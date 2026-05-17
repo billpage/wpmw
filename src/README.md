@@ -288,26 +288,33 @@ A short cheat sheet for keeping new docs lint-clean:
 - Bold math: `\boldsymbol{x}` or `\mathbf{x}`, not `\bm{x}`.
 - Inline math: write `$x$5` carefully — GitHub treats `$` adjacent to digits
   inconsistently. A space (`$x$ 5`) avoids the problem entirely.
-- **Inline math with `}_{` (subscript right after a brace): wrap in
-  backtick-dollar.** GitHub's markdown preprocessor treats a `_`
-  preceded by `}` as the start of an italic span and eats the
-  underscore before MathJax sees the math. So `$V^{(2)}_{\vec q}$`
-  inside flowing prose renders as the literal string
-  `$V^{(2)}{\vec q}$` (underscore gone, dollar signs visible).
-  This is community-discussion
+- **Inline math with `}_` (subscript right after a brace): wrap in
+  backtick-dollar.** GitHub's markdown preprocessor treats any `_`
+  preceded by `}` as the start of an italic span — regardless of what
+  follows the `_`. All of `}_q` (letter), `}_0` (digit), `}_{`
+  (brace), and `}_\vec` (command) trigger the trap. The underscore is
+  eaten, the whole `$...$` fails to render, and other inline math
+  later in the same paragraph often cascades and breaks too.
+  Reference: community discussion
   [#65772](https://github.com/orgs/community/discussions/65772).
 
   The fix is GitHub's documented alternative inline-math syntax,
-  `$`...`$` (backtick-dollar): the backticks make the content a code
-  span as far as markdown is concerned, so the inline emphasis rule
-  is skipped entirely. Rewrite:
+  `$`...`$` (backtick-dollar). The backticks make the content a
+  code span as far as markdown is concerned, so the inline emphasis
+  rule is skipped entirely.
 
   | Don't write | Write instead |
   | --- | --- |
   | `$V^{(2)}_{\vec q}$` | `` $`V^{(2)}_{\vec q}`$ `` |
-  | `$\|\Gamma^{(2)}_{\vec q}\|/\hbar$` | `` $`\|\Gamma^{(2)}_{\vec q}\|/\hbar`$ `` |
+  | `$\|\Gamma^{(2)}_q(r)\|$` | `` $`\|\Gamma^{(2)}_q(r)\|`$ `` |
+  | `$W^{(2)}_0(x, p)$` | `` $`W^{(2)}_0(x, p)`$ `` |
 
-  Inline math without the `}_{` pattern (e.g. `$\vec r_{ij}$`,
+  **Important:** any doubled-backslash spacing such as `\\,` or `\\;`
+  inside the expression must be simplified to `\,` / `\;` inside the
+  backtick-dollar form, because the backticks bypass CommonMark's
+  processing — the extra backslash is no longer needed.
+
+  Inline math without the `}_` pattern (e.g. `$\vec r_{ij}$`,
   `$V_2$`) is fine as plain `$...$`. Display math `$$...$$` is also
   not affected by this rule.
 

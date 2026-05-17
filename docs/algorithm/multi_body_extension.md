@@ -445,7 +445,7 @@ For statistics, accumulate one- and two-body marginals from `worlds_x, worlds_p`
 
 5. **Symmetry preservation.** Periodic resymmetrization of the world ensemble for identical-particle systems — *how often* and *how* — is implementation-dependent and likely problem-dependent.
 
-6. **Initialization from a realistic state.** Sampling from a known $W^{(N)}_0$ is straightforward only for product states (each particle drawn independently from its own $w_i$). For correlated initial states (Slater determinants, Bose-condensed product states with correlations), this is itself a sampling problem — possibly one solvable by short imaginary-time evolution from a tractable trial state.
+6. **Initialization from a realistic state.** Sampling from a known $`W^{(N)}_0`$ is straightforward only for product states (each particle drawn independently from its own $w_i$). For correlated initial states (Slater determinants, Bose-condensed product states with correlations), this is itself a sampling problem — possibly one solvable by short imaginary-time evolution from a tractable trial state.
 
 7. **Mediator interpretation in $N$-body.** The single-particle "positons mediate jumps in other positons" picture does not carry over literally to the multi-body case: different worlds in the ensemble are independent samples and do not interact. The clean reinterpretation is **per-world pair-wise virtual-quantum exchange**: within each world, every pair exchanges momentum quanta whose direction and magnitude are set by the Fourier modes of $V_2$. The mediator role is now played by the *gauge boson* (photon for Coulomb), making the algorithm structurally closer to a stochastic implementation of QED than to single-particle Wigner dynamics.
 

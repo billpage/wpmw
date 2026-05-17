@@ -183,7 +183,7 @@ The jump rule is **correlated**: both particles' momenta change in the same
 event, with equal and opposite kicks:
 
 > For each world, each Fourier mode $q$ of $V_2$, with probability
-> $|\Gamma^{(2)}_q(r_{12})|\\, \Delta t$:
+> $`|\Gamma^{(2)}_q(r_{12})|\, \Delta t`$:
 >
 > $$(p_1,\\, p_2) \\\;\longrightarrow\\\;
 >   \bigl(p_1 + \mathrm{sgn}(\Gamma^{(2)}_q)\\, \hbar k_q,\\\;
@@ -213,7 +213,7 @@ $$\partial_t W^{(2)} \\\;\supset\\\;
 
 where only the *difference* of position-derivatives appears (because $V_2$
 depends only on the difference $r_{12}$). For a single Fourier mode
-$V^{(2)}_q\cos(k_q\\, r_{12} + \phi^{(2)}_q)$, the factor
+$`V^{(2)}_q\cos(k_q\, r_{12} + \phi^{(2)}_q)`$, the factor
 $\overleftarrow\partial_{x_1} - \overleftarrow\partial_{x_2}$ acting on the
 cosine produces $-2k_q\sin(\dots)$ (one $-k_q$ from each derivative), and the
 remaining $\sin$ of the Moyal bracket becomes a finite-difference operator
@@ -386,7 +386,7 @@ to within Monte-Carlo noise on every marginal.
 
 A regression test specific to the correlated rule (the 2p/1D analog of
 `src/sign_convention_check.py`) is to confirm that an asymmetric initial
-state $W^{(2)}_0(x_1, p_1, x_2, p_2)$ with non-zero initial $P$ keeps
+state $`W^{(2)}_0(x_1, p_1, x_2, p_2)`$ with non-zero initial $P$ keeps
 $P$ exactly constant under every event, while $p_{\mathrm{rel}}$ varies
 in the way the 1+1-D rule predicts for the equivalent reduced-mass
 problem in $r$.
