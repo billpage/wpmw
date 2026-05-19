@@ -288,13 +288,14 @@ A short cheat sheet for keeping new docs lint-clean:
 - Bold math: `\boldsymbol{x}` or `\mathbf{x}`, not `\bm{x}`.
 - Inline math: write `$x$5` carefully — GitHub treats `$` adjacent to digits
   inconsistently. A space (`$x$ 5`) avoids the problem entirely.
-- **Inline math with `}_` (subscript right after a brace): wrap in
+- **Inline math with `}_` or `'_` (subscript right after a brace or prime): wrap in
   backtick-dollar.** GitHub's markdown preprocessor treats any `_`
-  preceded by `}` as the start of an italic span — regardless of what
+  preceded by punctuation as the start of an italic span — regardless of what
   follows the `_`. All of `}_q` (letter), `}_0` (digit), `}_{`
-  (brace), and `}_\vec` (command) trigger the trap. The underscore is
-  eaten, the whole `$...$` fails to render, and other inline math
-  later in the same paragraph often cascades and breaks too.
+  (brace), `}_\vec` (command), and `'_i` (prime) trigger the trap.
+  The underscore is eaten, the whole `$...$` fails to render, and
+  other inline math later in the same paragraph often cascades and
+  breaks too.
   Reference: community discussion
   [#65772](https://github.com/orgs/community/discussions/65772).
 
@@ -308,14 +309,24 @@ A short cheat sheet for keeping new docs lint-clean:
   | `$V^{(2)}_{\vec q}$` | `` $`V^{(2)}_{\vec q}`$ `` |
   | `$\|\Gamma^{(2)}_q(r)\|$` | `` $`\|\Gamma^{(2)}_q(r)\|`$ `` |
   | `$W^{(2)}_0(x, p)$` | `` $`W^{(2)}_0(x, p)`$ `` |
+  | `$(X_i, X'_i)$` | `` $`(X_i, X'_i)`$ `` |
 
   **Important:** any doubled-backslash spacing such as `\\,` or `\\;`
   inside the expression must be simplified to `\,` / `\;` inside the
   backtick-dollar form, because the backticks bypass CommonMark's
   processing — the extra backslash is no longer needed.
 
-  Inline math without the `}_` pattern (e.g. `$\vec r_{ij}$`,
-  `$V_2$`) is fine as plain `$...$`. Display math `$$...$$` is also
-  not affected by this rule.
+  Inline math without a punctuation-then-underscore pattern (e.g.
+  `$\vec r_{ij}$`, `$V_2$`) is fine as plain `$...$`. Display
+  math `$$...$$` is also not affected by this rule.
 
   The linter's GFM pass enforces this.
+
+- **Inline math with two `^*` (complex conjugate) in the same paragraph.**
+  The `*` after `^` is left-flanking per CommonMark and can open
+  emphasis. If TWO `^*` expressions appear in the same paragraph,
+  the first opens an italic span and the second closes it, eating
+  both `$...$` regions between them. The fix is the same:
+  `$`...`$` for any expression containing `^*` when another
+  such expression is nearby. The linter does not yet detect this
+  automatically — watch for it manually.

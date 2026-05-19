@@ -15,7 +15,7 @@ What is original to this specification, relative to that literature, is (i) the 
 **An important structural caveat.** The Wigner equation can be cast as a real-valued Liouville-plus-jumps process on real phase space; the von Neumann equation in position representation **cannot** be cast as a closed real-valued Itô SDE on $(X, X') \in \mathbb{R}^2$ with real drift and real noise alone. The kinetic operator $-i\hbar(\partial_x^2 - \partial_{x'}^2)/2m$ has an imaginary coefficient, which a real-drift real-noise SDE on pair coordinates cannot reproduce by itself. The two ways the existing literature handles this are:
 
 - **(a) Pair-Bohm flow with phase-accumulating weights** (this document, §3–§4). Trajectories are real and deterministic, given by the pair-Bohm flow; complex weights along trajectories carry the imaginary content via a phase that accumulates the kinetic action, the potential difference, and the bilocal quantum potential.
-- **(b) Stochastic state vectors rather than positions** (Stockburger–Grabert). Each "sample" is a pair of stochastic wave functions $(|\psi_m\rangle, |\phi_m\rangle)$ evolving by unitary Schrödinger; position pairs $(X_m, X'_m)$ are extracted from these wave functions only at observation time.
+- **(b) Stochastic state vectors rather than positions** (Stockburger–Grabert). Each "sample" is a pair of stochastic wave functions $(|\psi_m\rangle, |\phi_m\rangle)$ evolving by unitary Schrödinger; position pairs $`(X_m, X'_m)`$ are extracted from these wave functions only at observation time.
 
 Adding real Nelson-style noise on top of route (a) is possible but requires additional weight-evolution terms that I have not derived in closed form here; see §8 for the open derivation.
 
@@ -66,7 +66,7 @@ The state is represented by an ensemble of $N_w$ **world-particle pairs**:
 
 $$\mathcal{E}(t) \\; = \\; \bigl\\{ (X_i(t),\ X'_i(t),\ w_i(t)) \bigr\\}_{i = 1}^{N_w}$$
 
-where $X_i, X'_i \in [0, L]$ are continuous-valued positions (periodic) and $w_i \in \mathbb{C}$ is a complex weight. The empirical density matrix is
+where $`X_i, X'_i \in [0, L]`$ are continuous-valued positions (periodic) and $w_i \in \mathbb{C}$ is a complex weight. The empirical density matrix is
 
 $$\rho_{\rm emp}(x, x', t) \\; = \\; \sum_{i = 1}^{N_w} w_i(t)\thinspace\delta\bigl(x - X_i(t)\bigr)\thinspace\delta\bigl(x' - X'_i(t)\bigr)$$
 
@@ -78,9 +78,9 @@ For the deterministic pair-Bohm flow of §4 the expectation is trivial (a single
 
 ### 2.2 Why complex weights are forced
 
-In the Wigner-side algorithm, signed (real) weights suffice because $W$ is real. The density matrix is complex, with the Hermiticity constraint $\rho(x', x) = \rho^*(x, x')$, so the weights must be complex in general. The four-element discrete group $\\{+1, -1, +i, -i\\}$ (a `$\mathbb{Z}_4$` charge) suffices for a particle-counting implementation analogous to positon/negaton; for the mesh-density form (§4.5) the weights live in $\mathbb{C}$.
+In the Wigner-side algorithm, signed (real) weights suffice because $W$ is real. The density matrix is complex, with the Hermiticity constraint $\rho(x', x) = \rho^*(x, x')$, so the weights must be complex in general. The four-element discrete group $\\{+1, -1, +i, -i\\}$ (a $`\mathbb{Z}_4`$ charge) suffices for a particle-counting implementation analogous to positon/negaton; for the mesh-density form (§4.5) the weights live in $\mathbb{C}$.
 
-For Hermiticity preservation by construction one can enforce a **pair-twin symmetry**: every world-pair $(X, X', w)$ is generated together with its complex-conjugate partner $(X', X, w^*)$. With this symmetry, $\rho_{\rm emp}(x, x') = \rho_{\rm emp}^*(x', x)$ holds at the sample level, not just in expectation. **[choice]** — the asymmetric form is also valid; Hermiticity then holds only in expectation, as in Stockburger–Grabert.
+For Hermiticity preservation by construction one can enforce a **pair-twin symmetry**: every world-pair $(X, X', w)$ is generated together with its complex-conjugate partner $`(X', X, w^*)`$. With this symmetry, $`\rho_{\rm emp}(x, x') = \rho_{\rm emp}^*(x', x)`$ holds at the sample level, not just in expectation. **[choice]** — the asymmetric form is also valid; Hermiticity then holds only in expectation, as in Stockburger–Grabert.
 
 ### 2.3 Boundedness — and the missing "negaton crystal" analog
 
@@ -182,11 +182,13 @@ using the identity $\partial^2 R / R = \partial(\partial R/R) + (\partial R/R)^2
 
 ### 3.6 Extracting the velocity field and weight phase from the ensemble
 
-Given the ensemble $\mathcal{E}(t) = \\{(X_i, X'_i, w_i)\\}$, the procedure each timestep is:
+Given the ensemble $`\mathcal{E}(t) = \{(X_i, X'_i, w_i)\}`$, the procedure each timestep is:
 
 1. **Bin** the weighted pairs onto the $M \times M$ position-pair grid:
 
-   $$\rho_{\rm bin}(x_m, x'_{m'}) \\; = \\; \frac{1}{\Delta x^2}\negthinspace\sum_{i \in \mathrm{bin}(m, m')}\negthinspace w_i.$$
+   ```math
+   \rho_{\rm bin}(x_m, x'_{m'}) \; = \; \frac{1}{\Delta x^2}\negthinspace\sum_{i \in \mathrm{bin}(m, m')}\negthinspace w_i.
+   ```
 
 2. **Smooth** $\rho_{\rm bin}$ with a 2D Gaussian kernel of width $\sigma_s \sim 2\thinspace\Delta x$. Necessary because the empirical $\rho$ is a sum of delta functions and (3.8)–(3.10) take derivatives of $\rho$. **[choice]**
 
@@ -196,7 +198,7 @@ Given the ensemble $\mathcal{E}(t) = \\{(X_i, X'_i, w_i)\\}$, the procedure each
 
 5. **Build $Q$** on the grid from (3.11) by a second pass of finite differencing.
 
-6. **Interpolate** $v_+, v_-, Q$ from the grid to each pair's location $(X_i, X'_i)$ by bilinear interpolation. **[choice]**
+6. **Interpolate** $v_+, v_-, Q$ from the grid to each pair's location $`(X_i, X'_i)`$ by bilinear interpolation. **[choice]**
 
 The cost is $\mathcal{O}(N_w + M^2 \log M)$ per timestep.
 
@@ -222,7 +224,7 @@ For each pair $i$:
 
 $$w_i(t + \Delta t) \\; = \\; w_i(t) \cdot \exp\negthinspace\Biggl[\thinspace\frac{i\thinspace\Delta t}{\hbar}\negthinspace\biggl(\thinspace\frac{m}{2}\bigl(v_+^2 - v_-^2\bigr) \\; - \\; \bigl(V(X_i) - V(X'_i)\bigr) \\; + \\; Q(X_i, X'_i)\thinspace\biggr)\thinspace\Biggr]$$
 
-evaluated at the pair's position $(X_i, X'_i)$ at time $t$ (or, for higher accuracy, the time-average over the timestep). The three contributions are exactly the three terms of (3.7).
+evaluated at the pair's position $`(X_i, X'_i)`$ at time $t$ (or, for higher accuracy, the time-average over the timestep). The three contributions are exactly the three terms of (3.7).
 
 For comparison and as a sanity check: if one omitted the kinetic-action and quantum-potential terms, keeping only the potential phase
 
@@ -434,7 +436,7 @@ The two algorithms are Fourier duals of each other in the $p \leftrightarrow s =
 | Reality | $W \in \mathbb{R}$ | $\rho \in \mathbb{C}$, Hermitian |
 | Bound | $\lvert W\rvert \le 2/h$ uniform | $\lvert\rho(x, x')\rvert \le \sqrt{\rho(x,x)\rho(x',x')}$, no uniform bound |
 | Particles | Single particles at $(x, p)$ | Pair-particles at $(x, x')$ |
-| Charges | Sign $\\{+1, -1\\}$ (positon / negaton) | Complex weight $w \in \mathbb{C}$, or discrete `$\mathbb{Z}_4$` |
+| Charges | Sign $\\{+1, -1\\}$ (positon / negaton) | Complex weight $w \in \mathbb{C}$, or discrete $`\mathbb{Z}_4`$ |
 | Position update | First-order advection: $x \to x + (p/m)\thinspace\Delta t$ | Pair-Bohm flow: $X \to X + v_+\Delta t$, $X' \to X' + v_-\Delta t$ |
 | Position-update stochasticity | None (deterministic streaming, given the ensemble) | None (deterministic Bohm flow, given the ensemble) |
 | Velocity comes from | Each particle's own $p$ coordinate (local, single-particle) | Phase gradient of empirical $\rho$ (non-local, mean-field) |
@@ -469,7 +471,9 @@ Several asymmetries remain:
 4. **Resampling / population control.** Over time, the weight distribution $\\{|w_i|\\}$ broadens — a small number of pairs end up dominating, others having near-zero weight. Periodic resampling (duplicate high-weight, merge low-weight) is the standard fix. The Schmitz–Stockburger (2019) convex-optimisation variance-reduction approach is more principled.
 
 5. **Adding Nelson noise.** Replacing the deterministic flow (4.1)–(4.2) with a Nelson-style real Itô SDE
-$$dX = b_+\thinspace dt + \sqrt{\hbar/m}\thinspace dW_X, \qquad dX' = b_-\thinspace dt + \sqrt{\hbar/m}\thinspace dW_{X'},$$
+```math
+dX = b_+\thinspace dt + \sqrt{\hbar/m}\thinspace dW_X, \qquad dX' = b_-\thinspace dt + \sqrt{\hbar/m}\thinspace dW_{X'},
+```
 with $b_\pm = v_\pm + u_\pm$ (current plus osmotic) and $u_\pm = \pm(\hbar/m)(\partial_{x,x'} R/R)$, requires additional terms in the weight phase to compensate the diffusion. Derivation of those compensating terms is **[open]**. The expected form is $\Delta\phi \supset -i(\sigma^2/2)[\partial_x^2 R/R - \partial_{x'}^2 R/R]\thinspace\Delta t$ or similar — closely related to $Q$. The motivation for adding noise is multi-worlds interpretability (each Wiener realisation = one world) and ergodicity across nodal lines.
 
 6. **Negaton-background analog.** Whether there is some position-space analog of the static-Dirac-sea trick that uses the structure of $\rho$ to make all weights have a fixed sign or phase is an open question. The reference-state-subtraction route of §2.3(b) is one direction; another is to work with $\rho - \rho_\beta$ where $\rho_\beta$ is the thermal density matrix at some inverse temperature $\beta$. **[open]**
