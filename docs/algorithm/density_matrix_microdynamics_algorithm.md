@@ -478,7 +478,7 @@ with $b_\pm = v_\pm + u_\pm$ (current plus osmotic) and $u_\pm = \pm(\hbar/m)(\p
 
 6. **Negaton-background analog.** Whether there is some position-space analog of the static-Dirac-sea trick that uses the structure of $\rho$ to make all weights have a fixed sign or phase is an open question. The reference-state-subtraction route of §2.3(b) is one direction; another is to work with $\rho - \rho_\beta$ where $\rho_\beta$ is the thermal density matrix at some inverse temperature $\beta$. **[open]**
 
-7. **Validation against the phase-space crystal-lattice algorithm.** A clean numerical test: take the cosine-well demo (`demo_cosine_well_microdynamics.py`), run both algorithms from the same initial pure-state Gaussian, and check that the reconstructed Wigner functions (from binning + Fourier-in-$s$ on this side; from direct $W$ on the Wigner side) agree to within Monte-Carlo noise. This is the recommended first validation; see `demo_density_matrix_microdynamics.py` (forthcoming).
+7. **Validation against the phase-space crystal-lattice algorithm.** A clean numerical test: take the cosine-well demo (`demo_cosine_well_microdynamics.py`), run both algorithms from the same initial pure-state Gaussian, and check that the reconstructed Wigner functions (from binning + Fourier-in-$`s`$ on this side; from direct $W$ on the Wigner side) agree to within Monte-Carlo noise. This is the recommended first validation; see `demo_density_matrix_microdynamics.py` (forthcoming).
 
 ---
 

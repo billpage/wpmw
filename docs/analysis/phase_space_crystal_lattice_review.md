@@ -176,7 +176,7 @@ is well-behaved.
   conventions are easy to get wrong. The Maple worksheet `xFPjumpdensityV2.mw` (eqs. 21–30) is
   cited as the source — worth confirming the Python implementation matches.
 
-- **The QLE → xFP match strictly requires a quasi-density.** Matching the second-$p$-derivative
+- **The QLE → xFP match strictly requires a quasi-density.** Matching the second-$`p`$-derivative
   term to *zero* (the QLE has no $\partial^2 W/\partial p^2$) requires $\langle\zeta^2\rangle = 0$
   while $\langle\zeta^3\rangle \ne 0$, which is not achievable with any positive probability
   density. Either signed (quasi-) density or imaginary-axis support is required. This is the

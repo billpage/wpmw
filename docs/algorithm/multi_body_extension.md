@@ -435,7 +435,7 @@ For statistics, accumulate one- and two-body marginals from `worlds_x, worlds_p`
 
 ## 12. Open implementation questions
 
-1. **Statistical convergence.** $\mathcal{W}$ scales empirically as $\mathcal{O}(\sigma_{\text{obs}}^{-2})$ for a given observable variance target. One-body marginals on smooth states tend to converge with $\mathcal{W} \sim 10^4$–$10^5$; two-body correlations and exchange-sensitive observables can require an order of magnitude more. No exponential-in-$N$ scaling for low-body observables.
+1. **Statistical convergence.** $\mathcal{W}$ scales empirically as $\mathcal{O}(\sigma_{\text{obs}}^{-2})$ for a given observable variance target. One-body marginals on smooth states tend to converge with $\mathcal{W} \sim 10^4$–$10^5$; two-body correlations and exchange-sensitive observables can require an order of magnitude more. No exponential-in-$`N`$ scaling for low-body observables.
 
 2. **Rate-budget regularization.** When $`|V^{(2)}_{\vec q}|\thinspace\Delta t/\hbar`$ approaches 1 for any single mode, the per-step Bernoulli sampling is no longer a good approximation to the true Poisson process; switch to an exponential-time-to-event sampler **[choice]** or reduce $\Delta t$.
 

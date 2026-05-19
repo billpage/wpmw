@@ -86,7 +86,7 @@ When $\nu$ is large and we evolve $W$ directly rather than counting particles:
 
 $$W(x_m, p_n, t + \Delta t) = W(x_m, p_n, t) + \Delta t \sum_{q \ge 1} \Gamma_q(x_m)\bigl[W(x_m, p_{n+q}) - W(x_m, p_{n-q})\bigr]$$
 
-In the small-$\Delta p$ continuum limit this reproduces the QLE force term $\partial_t W = +\thinspace V'(x)\thinspace\partial_p W$. (See `docs/supplement/phase_space_crystal_lattice_supplement.md` §6 for the derivation; it corrects the sign that appears in the simplified form of the V2 memo.)
+In the small-$`\Delta p`$ continuum limit this reproduces the QLE force term $\partial_t W = +\thinspace V'(x)\thinspace\partial_p W$. (See `docs/supplement/phase_space_crystal_lattice_supplement.md` §6 for the derivation; it corrects the sign that appears in the simplified form of the V2 memo.)
 
 In Python (`p_axis` is the momentum axis, with cell index increasing with $p$): `np.roll(W, +1, axis=p_axis)` brings $W(p - \Delta p)$ to the row at $p$. The full update for the $q=1$ canonical case is
 
