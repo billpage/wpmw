@@ -15,7 +15,10 @@ imported by the scripts here.
   in `docs/algorithm/phase_space_crystal_lattice_algorithm.md`. Exposes both
   the deterministic mesh-density form (spec §3c) and the Monte-Carlo particle
   form (spec §6), and both the Fourier-mode (§3b) and differential (§7b) jump
-  forms.
+  forms.  Also implements the four-rule (Focus/Defocus/Right-Hop/Left-Hop)
+  jump forms — `step_jump_four_rule` (mesh) and `step_jump_four_rule_mc`
+  (particle MC) — specified in
+  `docs/analysis/four_rule_microdynamics_equivalence.md`.
 - `wpmwlib/wigner_split_fourier.py` — reference solver: Strang-split spectral
   Fourier on the Wigner equation. Specialized to QHO; for general V the
   force-kick kernel must be replaced by the full Wigner–Moyal kernel.
@@ -135,6 +138,34 @@ imported by the scripts here.
   well bound (turning points well below V_max = +V_p).  Tick marks at
   t = T_period, 2 T_period, 3 T_period sit close together on each orbit,
   confirming the period.
+- `demo_four_rule_equivalence.py` — verification companion to
+  `docs/analysis/four_rule_microdynamics_equivalence.md`, which analyses the
+  proposal (D. Cyganski, 2026) to replace the single mediated-jump rule with
+  four two-body rules (Focus, Defocus, Right-Hop, Left-Hop) carrying signed,
+  occupancy-dependent bias rates.  Part A checks the generator identity: on
+  random mesh fields and for mode sets q = 1, 2, {1,2,3}, one Euler step of
+  the independently-assembled four-rule mesh form agrees with the original
+  single-rule stencil to machine precision (worst deviation ~1e-16).  Part B
+  evolves a squeezed Gaussian in the cosine well three ways on the same
+  64² lattice with an identical splitting sequence — deterministic mesh QLE,
+  single-rule MC, four-rule MC (ν = 1.6×10⁶, two classical periods) — showing
+  both MC runs track the mesh at their shot-noise floors, with the four-rule
+  floor ≈ 5.6× lower at equal ν because its bias rates are built from
+  background-subtracted excess counts.
+
+  Sample output figures (committed on the `output` branch):
+
+  ![Four-rule equivalence evolution](https://raw.githubusercontent.com/billpage/wpmw/output/figures/four_rule_equivalence_evolution.png)
+
+  4×4 grid: mesh QLE, single-rule MC, four-rule MC, and pointwise
+  (four-rule − mesh) at t = 0, T/2, T, 2T.  The single-rule row carries
+  uniform background shot noise (its mediator count includes the 2/h
+  background); the four-rule row is visibly cleaner.
+
+  ![Four-rule equivalence metrics](https://raw.githubusercontent.com/billpage/wpmw/output/figures/four_rule_equivalence_metrics.png)
+
+  Relative L² deviation from the mesh for both MC runs (left) and Wigner
+  negativity for all three evolutions (right).
 - `sign_convention_check.py` — regression test for the §6.3 sign correction
   in `docs/supplement/phase_space_crystal_lattice_supplement.md`. Compares
   three candidate discrete update rules (V2 general formula, V2 simplified /

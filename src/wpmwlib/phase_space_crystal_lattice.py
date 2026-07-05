@@ -250,6 +250,125 @@ class PhaseSpaceCrystalLattice:
                     col[dst] += e
                 self.N_plus[:, m] = col
 
+    # ------------------------------------------------------------------ #
+    # Step 3b': four-rule two-body jump form (Cyganski, 2026)             #
+    # ------------------------------------------------------------------ #
+    def step_jump_four_rule(self, modes: Iterable[FourierMode], dt: float) -> None:
+        """Mesh-density form of the four-rule (focus/defocus/hop) scheme.
+
+        Implements the *symmetric member* of the exact-rate family derived in
+        ``docs/analysis/four_rule_microdynamics_equivalence.md``. Per mode q,
+        with Gamma_q(x) = -(V_q/hbar) sin(2 pi q x / L + phi_q):
+
+            focus/defocus channel, signed net rate at center n:
+                f_n = (Gamma/2) * (W_{n+q} - W_{n-q})
+            hop channel, signed net right-hop rate across n (n-q -> n+q):
+                h_n = -(Gamma/2) * (W_{n+q} + W_{n-q})
+
+        Channel effects (per unit net rate):
+            focus at n:  W_n += 2,  W_{n-q} -= 1,  W_{n+q} -= 1
+            hop across n:  W_{n-q} -= 1,  W_{n+q} += 1
+
+        The channels are assembled *independently* here, precisely so that
+        this method is a nontrivial numerical check of the algebraic identity
+        (four-rule generator == single-rule generator == QLE stencil). It must
+        agree with ``step_jump_fourier`` to machine precision for any W.
+        """
+        if self.nu is not None:
+            raise RuntimeError(
+                "Use step_jump_four_rule_mc(...) for the Monte-Carlo particle form."
+            )
+        dW = np.zeros_like(self.W)
+        for mode in modes:
+            q, V_q, phi_q = mode.q, mode.V_q, mode.phi_q
+            Gamma = -(V_q / self.hbar) * np.sin(
+                2.0 * np.pi * q * self.X / self.L + phi_q
+            )
+            W_hi = np.roll(self.W, -q, axis=0)   # W at p_{n+q}
+            W_lo = np.roll(self.W, +q, axis=0)   # W at p_{n-q}
+            f = 0.5 * Gamma * (W_hi - W_lo)      # focus/defocus net rate
+            h = -0.5 * Gamma * (W_hi + W_lo)     # right-hop net rate
+            # Focus channel: center gains 2 f_n; site n is drained as the
+            # lower satellite of center n+q and the upper satellite of n-q.
+            dW += 2.0 * f
+            dW -= np.roll(f, -q, axis=0)         # f_{n+q} drains site n
+            dW -= np.roll(f, +q, axis=0)         # f_{n-q} drains site n
+            # Hop channel: arrivals from hops across n-q, departures via n+q.
+            dW += np.roll(h, +q, axis=0)         # h_{n-q}
+            dW -= np.roll(h, -q, axis=0)         # h_{n+q}
+        self.W = self.W + dt * dW
+
+    def step_jump_four_rule_mc(
+        self,
+        modes: Iterable[FourierMode],
+        dt: float,
+        rng: Optional[np.random.Generator] = None,
+    ) -> None:
+        """Monte-Carlo particle form of the four-rule scheme.
+
+        Tau-leaping on the integer positon field: per position column, per
+        mode, per momentum center n, the signed net channel rates are
+        computed from the *excess* counts (background subtracted; the
+        background cancels identically in the focus rate and contributes
+        only a null uniform bias to the hop rate), and the net number of
+        events in [t, t+dt] is drawn as sign(rate) * Poisson(|rate| dt).
+
+        Event application (net event count e, signed):
+            focus at n  (e > 0):   N_{n-q} -= e, N_{n+q} -= e, N_n += 2e
+            defocus at n (e < 0):  reverse
+            right-hop across n (e > 0):  N_{n-q} -= e, N_{n+q} += e
+            left-hop (e < 0):            reverse
+        Transfers are capped by source populations so N_plus stays >= 0,
+        mirroring ``step_jump_fourier_mc``.
+        """
+        if self.nu is None:
+            raise RuntimeError("Particle MC requires nu to be set at construction.")
+        if rng is None:
+            rng = np.random.default_rng()
+        N = self.N
+        bg = int(round(self.W_bg * self.nu * self.dx * self.dp))
+        for mode in modes:
+            q = mode.q
+            Gamma_x = -(mode.V_q / self.hbar) * np.sin(
+                2.0 * np.pi * q * self.x / self.L + mode.phi_q
+            )
+            for m in range(self.M):
+                g = Gamma_x[m]
+                if g == 0.0:
+                    continue
+                col = self.N_plus[:, m].astype(np.int64)
+                excess = col - bg
+                ex_hi = np.roll(excess, -q)      # excess at n+q
+                ex_lo = np.roll(excess, +q)      # excess at n-q
+                F = 0.5 * g * (ex_hi - ex_lo)    # net focus rate at center n
+                H = -0.5 * g * (ex_hi + ex_lo)   # net right-hop rate across n
+                eF = np.sign(F) * rng.poisson(np.abs(F) * dt)
+                eH = np.sign(H) * rng.poisson(np.abs(H) * dt)
+                for n in range(N):
+                    lo = (n - q) % N
+                    hi = (n + q) % N
+                    e = int(eF[n])
+                    if e > 0:                    # focus: satellites -> center
+                        e = min(e, int(col[lo]), int(col[hi]))
+                        col[lo] -= e
+                        col[hi] -= e
+                        col[n] += 2 * e
+                    elif e < 0:                  # defocus: center pair splits
+                        e = min(-e, int(col[n]) // 2)
+                        col[n] -= 2 * e
+                        col[lo] += e
+                        col[hi] += e
+                    e = int(eH[n])
+                    if e > 0:                    # right-hop: n-q -> n+q
+                        e = min(e, int(col[lo]))
+                        col[lo] -= e
+                        col[hi] += e
+                    elif e < 0:                  # left-hop: n+q -> n-q
+                        e = min(-e, int(col[hi]))
+                        col[hi] -= e
+                        col[lo] += e
+                self.N_plus[:, m] = col
+
     def step_jump_differential(self, dVdx_arr: np.ndarray, dt: float) -> None:
         """Spec §7b: QLE differential form for the jump term.
 
