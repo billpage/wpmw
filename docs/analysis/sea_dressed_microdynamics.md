@@ -443,6 +443,14 @@ Not achieved, and stated plainly:
 
 ## 12. Open items
 
+*Update (July 2026):*
+[`phase_resonance_microdynamics.md`](phase_resonance_microdynamics.md)
+advances items 1, 3 and 5 below: it derives the identity of the excitation
+quanta (relational pair beats), the coherence and quadrature of the
+polarization, and the K3/K4 rate law from world-particle phases, refining
+the excitation ledger of item 3 to a row-resolved form and superseding this
+note's superelastic reading of the hop channels.
+
 1. **Level 3 (self-consistent sea).** Let the sources of $V(x)$ imprint the
    polarization dynamically — a wave equation or relaxation dynamics on the
    sea's excitation populations, with $\Gamma_q(x)$ emerging as its steady
