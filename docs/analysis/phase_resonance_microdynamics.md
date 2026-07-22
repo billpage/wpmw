@@ -408,6 +408,7 @@ interference term in a vertex probability. Whether P5 can be reduced
 further is open (item 1 below); until then, the honest statement is:
 **the ontology is complete modulo P5, and P5 is now the sharpest available
 statement of where quantum mechanics enters the model.**
+*(Update: §13 carries out the reduction; the residue is restated there.)*
 
 **Scope.** These results cover the single-particle sector with an external
 potential. The self-consistent N-body case inherits the usual
@@ -417,12 +418,14 @@ Nothing in the present sector is affected.
 
 ## 11. Open items
 
-1. **Reduce P5.** Candidate routes: detailed balance between K3 and K4 as
-   time-reverses; consistency of phase transactions at vertices; the
-   suspicion that $w = \tfrac{1}{2}(1 + C\cos\delta)$ is the unique
-   probability law that is unbiased over an incoherent sea and linear in
-   contrast. Any success would move the last quantum postulate one level
-   down.
+1. **Reduce P5.** *Resolved in §13:* the affine form is forced by gauge
+   invariance, linear response and mode additivity; a unitary contact
+   vertex then derives the offset, detailed balance and saturation, and
+   relocates the residue to the Born resolution of a single binary
+   contact event. (The original suspicion that unbiasedness selects
+   $w_0 = 1/2$ was wrong; $w_0$ is gauge.) Remaining sub-item: whether
+   the Born resolution itself can emerge from sub-vertex phase
+   statistics without circularity.
 2. **Steady state (L3 proper).** Continuous pump, K3-drain/K4-pump
    traffic, gray-pair production by potential differences (Lemma 1), and
    recombination: show the pinned $\Gamma_q(x)$ is the fixed point, and
@@ -456,3 +459,142 @@ checkerboard. What is genuinely new, as far as we know, is the
 **two-species destructive-interference sea as the carrier of mediation**:
 darkness by interference, excitations as relational beats, and a collision
 term derived from vertex phase statistics rather than postulated.
+
+## 13. Reduction of P5: the contact-vertex representation
+
+*(Added after the July 2026 reduction session; resolves open item 1.)*
+P5 was stated as a bare probability rule. This section shows that its
+model-specific content is fully derivable, and that what remains is generic
+quantum probability applied to a single binary contact event. Companion
+code: `src/demo_contact_vertex_reduction.py`.
+
+### 13.1 Representation theorem: the affine form is forced
+
+Assume only: **(V1)** worldline definiteness — every vertex resolves to
+definite out-legs, with genuine probabilities; **(V2)** relational gauge
+invariance — outcome probabilities depend only on gauge-invariant vertex
+data, the encountered beat's contrast $C$ and pattern phase $\delta$;
+**(V3)** linear response — the mean generator is linear in the pump (the
+QLE target; by Theorem 2 this already forces phase sensitivity);
+**(V4)** mode additivity — for a multi-mode pump the generator is a sum
+over modes, so the first-order response is additive over the beats
+present. Then
+
+```math
+w \;=\; w_0 \;+\; \kappa\thinspace C\cos(\delta - \delta_0) \;+\; O(C^2),
+\qquad 0 < w_0 < 1,\quad \kappa C \le \min(w_0,\thinspace 1 - w_0).
+```
+
+P5's *shape* is therefore a theorem. Three constants survive: $w_0$ is
+pure gauge (the $G$-freedom — the earlier "unbiased $1/2$" was a
+convention, and the suspicion that unbiasedness might select it was
+wrong); $\kappa$ is absorbed into the calibration; but $\delta_0$ must
+vanish to produce the quadrature, and nothing in V1–V4 fixes it.
+
+### 13.2 The contact vertex: one Hermitian coupling
+
+The deeper model: during an encounter's overlap window $\tau_e$, the
+particle's momentum state is a two-level system $|hi\rangle$,
+$|lo\rangle = |hi - 2q \cdot dp\rangle$, coupled by a single Hermitian
+matrix element with a *bare* and a *beat-stimulated* contribution:
+
+```math
+h \;=\; g_0 \;+\; g_1\thinspace C\thinspace e^{i\delta},
+\qquad
+U = e^{-iH\tau_e},
+\qquad
+P_{flip} \;=\; \sin^2\big(\lvert h\rvert\thinspace\tau_e\big).
+```
+
+The bare exchange $g_0$ is always available — with a dark pair it is
+emission (K4); a beating pair adds its local pattern amplitude, the only
+door through which phase enters. Expanding,
+
+```math
+P_{flip} \;=\; \sin^2(g_0\tau_e)
+\;+\; \frac{\tau_e \sin(2 g_0 \tau_e)}{2 g_0}\;
+2 g_0 g_1 C \cos\delta \;+\; O(C^2),
+```
+
+which derives everything §13.1 left free: **the offset** $\delta_0 = 0$,
+because both pathways carry the same unitarity factor $-i$, so the cross
+term is a pure cosine of the pattern phase (the offset previously fixed
+by matching the stencil is a consequence of hermiticity); **detailed
+balance** K3 $\leftrightarrow$ K4, because the reverse vertex is
+$U^\dagger$; **saturation and positivity**, inherited from $\sin^2$
+rather than imposed. Which matrix element exists at all is the Bragg
+statement: only the exchange of the pair's quantum $2q \cdot dp$ has a
+phase-matched overlap across the cell. During $\tau_e$ the pattern phase
+winds at the detuning between beat drift and transition midpoint, so the
+rotation accumulates only for co-moving beats — Proposition 2 recovered a
+third time, now as Rabi accumulation versus detuning.
+
+![Contact vertex: anatomy, phasor sum, emerging rate law, consequences](https://raw.githubusercontent.com/billpage/wpmw/output/figures/contact_vertex_concept.png)
+
+*The contact vertex and its consequence chain: one Hermitian coupling (a),
+whose phasor structure (b) yields linear response with no phase offset,
+whose direction-resolved probabilities reproduce the rate field (c), and
+whose downstream consequences (d) recover the QLE.*
+
+**The interference-licensing subtlety.** Adding the bare and stimulated
+amplitudes requires their final states to interfere — yet absorption
+leaves the pair dark while bare exchange leaves it beating, orthogonal
+states for one isolated pair (for which the response would be quadratic
+in $C$). What licenses the addition is Lemma 2: the pumped sea is
+coherent across $\sim B$ pairs, and a coherent reservoir is negligibly
+disturbed by a one-quantum change. The four-rule note's reservoir
+loophole, Theorem 2's phase requirement, and the phasor addition are one
+condition at the rate, kinematic, and amplitude levels — and the model
+predicts a **linear-to-quadratic response crossover as the sea decoheres
+or depletes**, a physical signature the live-ledger code can eventually
+probe.
+
+### 13.3 No noise, no force
+
+The response coefficient is proportional to $\sin(2 g_0 \tau_e)\thinspace g_1$
+and vanishes as $g_0 \to 0$: the beat never causes the hop, it *biases an
+exchange that is already happening*. The phase-blind gross traffic —
+removable $G$-freedom at the occupancy level — is the carrier of the
+quantum force, with a floor of order $\gamma / (2C)$ on gross exchange
+rate for a given net rate. The moral is Nelson-flavored: quantum dynamics
+in this ontology is biased spontaneous exchange with a coherent sea, and
+noise is constitutive.
+
+### 13.4 A discriminating prediction
+
+The unitary vertex and the bare affine rule differ at $O(C^2)$: with two
+pumped modes $q$, $q'$, the gross rate acquires a spatial modulation
+$2 g_1^2 C_q C_{q'} \cos(\delta_q - \delta_{q'})$ at the difference
+wavevector $2\pi(q - q')/L$, absent if P5 is fundamental. The reduction
+is therefore falsifiable within the model.
+
+### 13.5 Numerical verification
+
+`src/demo_contact_vertex_reduction.py` (container run, July 2026), with
+no fitted offset anywhere: **R1** the rate law re-emerges with the
+analytically predicted coefficient $\tau_e \sin(2 g_0 \tau_e)\thinspace g_1 C$
+and correct quadrature sign; **R2** the residual is $O(C^3)$
+(residual$/C^3 = 0.077$ constant over two decades — the $O(C^2)$ term of
+$\lvert h \rvert^2$ is direction-symmetric and cancels in the net);
+**R3** the coefficient tracks $\sin(2 g_0 \tau_e)$ exactly, vanishing at
+$g_0 = 0$; **R4** the two-mode gross-rate modulation appears at the
+difference wavevector with amplitude within 9% of
+$2 g_1^2 C_2 C_3 \times$ Jacobian (finite projection window), where the
+affine rule predicts zero.
+
+### 13.6 The residue after reduction
+
+Three statements remain, none specific to this model: (i) vertex
+pathways are described by amplitudes that superpose; (ii) outcomes follow
+$\lvert A \rvert^2$; (iii) worldlines resolve definitely at each vertex.
+The model-specific content of P5 — the cosine, the offset, the affine
+form, positivity, detailed balance, saturation — is now fully derived
+from *two species, a phase that winds, and one Hermitian contact*. The
+question "is the ontology complete?" has become "can the Born resolution
+of a single binary contact event be derived from sub-vertex phase
+statistics?" — the standard hard problem, in about the simplest
+instantiation it can take, cleanly quarantined from all lattice
+structure. Whether that final step is attempted (the direction of
+checkerboard and zitterbewegung-clock constructions) or accepted as the
+model's one quantum axiom, the strain no longer lives anywhere in the
+collision term.
