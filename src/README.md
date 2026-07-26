@@ -206,9 +206,13 @@ branch worktree setup and figure embedding instructions.
 ## Markdown math linter
 
 `wpmwlib/check_md_math.py` lints the project's markdown files for math that
-will not render correctly on GitHub. It catches the two failure modes we have
+will not render correctly on GitHub. It catches the failure modes we have
 actually hit:
 
+- inline `$...$` math that GitHub's preprocessor will not recognise as math
+  at all: math inside a `*...*` emphasis span, and math whose opening `$` is
+  glued to a hyphen or a quotation mark (`-$x$`, `"$x$`). In every such case
+  the dollar signs survive to the rendered page;
 - macros that vanilla LaTeX accepts but GitHub's MathJax config blocks —
   notably `\operatorname`, `\bm`, `\href`, `\DeclareMathOperator`,
   `\newcommand`, `\definecolor`, `\colorbox`, `\label` / `\ref` / `\eqref`,
@@ -352,6 +356,28 @@ A short cheat sheet for keeping new docs lint-clean:
   math `$$...$$` is also not affected by this rule.
 
   The linter's GFM pass enforces this.
+
+- **Never put `$...$` inside a `*...*` or `_..._` emphasis span.** GitHub
+  renders the markdown to HTML *first* and only then scans for `$...$`
+  pairs to hand to MathJax. Math that has ended up inside the resulting
+  `<em>` is not picked up, and the dollar signs are left on the page
+  verbatim — in italics, which makes it look almost deliberate.
+
+  | Don't write | Write instead |
+  | --- | --- |
+  | `*carries the same $\mu$.*` | `` *carries the same $`\mu`$.* `` |
+  | `*linear in $N$*` | `` *linear in $`N`$* `` |
+
+  This bites hardest in **figure captions**, which are italicised by
+  house style and often mention symbols; one caption with three `$\mu$`
+  in it produces six stray dollar signs.
+
+  Doubled delimiters (`**strong**`, `__strong__`) are *not* known to have
+  this problem — the repository has long-standing `**...$x$...**` run-in
+  headers that render correctly — so the linter does not flag them. If a
+  counterexample ever turns up, widen `_EMPH_SPAN` in the linter.
+
+  The linter's emphasis-span pass enforces this.
 
 - **Inline math with two `^*` (complex conjugate) in the same paragraph.**
   The `*` after `^` is left-flanking per CommonMark and can open

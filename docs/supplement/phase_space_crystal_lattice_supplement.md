@@ -63,7 +63,7 @@ Matching this term by term to the xFP equation gives:
 
 Together with the remaining higher odd moments, this is the chain of moment conditions that the jump density $P_\zeta(\zeta)$ must satisfy.
 
-> **Note (sign of $g$).** Cyganski's V2 memo writes "$g = +\partial V/\partial x$" at this matching step. From Hamilton's equation $\dot p = -V'$ and the structure $\dot p_w = g_w$ in (12.87), the correct identification is $g = -V'$. The same correction is implicit in the (correct) general jump formula on V2 page 18 (§6 below), so this is a transcription slip rather than a propagated downstream error in *that* particular derivation. We use $g = -V'$ throughout.
+> **Note (sign of $g$).** Cyganski's V2 memo writes "$`g = +\partial V/\partial x`$" at this matching step. From Hamilton's equation $\dot p = -V'$ and the structure $\dot p_w = g_w$ in (12.87), the correct identification is $g = -V'$. The same correction is implicit in the (correct) general jump formula on V2 page 18 (§6 below), so this is a transcription slip rather than a propagated downstream error in *that* particular derivation. We use $g = -V'$ throughout.
 
 The match imposes a strong constraint: the variance of $\zeta$ must vanish while the third moment is nonzero. **No non-negative probability density satisfies this.** Either $P_\zeta$ is a *quasi-density* (signed; odd about $\zeta = 0$ is sufficient), or $\zeta$ takes values on the imaginary axis. Cyganski takes the quasi-density route, which leads directly to the signed-particle picture.
 
@@ -115,7 +115,7 @@ This is precisely Abraham's kinetic momentum for a photon of wavelength $L/n$, a
 
 ![Photon-momentum identification: in the rest frame of the (pre-jump) negaton, the sinusoidal potential acts as a moving field with frequency $f = v/L$ in an effective medium of index $n_i = v/c$. The Abraham photon momentum is $hfn_i/c = h/L = 2n\pi\hbar/L = \Delta p$.](figures/sozi_11_photon_momentum.jpg)
 
-This is the energetic justification for the discrete momentum-cell spacing $\Delta p = \pi\hbar/L$ adopted in the crystal-lattice algorithm: at this resolution, mode $q$ drives a jump of *exactly $q$ momentum cells* per particle.
+This is the energetic justification for the discrete momentum-cell spacing $\Delta p = \pi\hbar/L$ adopted in the crystal-lattice algorithm: at this resolution, mode $q$ drives a jump of *exactly $`q`$ momentum cells* per particle.
 
 ---
 

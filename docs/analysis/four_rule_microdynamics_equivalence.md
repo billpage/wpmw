@@ -93,7 +93,7 @@ Every member of family (4) reproduces the QLE stencil (1) **exactly** — not pe
 
 $$f_n = 0, \qquad h_n = -\Gamma\thinspace W_n .$$
 
-Substituting into (2): $\dot W_n = -\Gamma W_{n-q} + \Gamma W_{n+q}$, which is (1). **This is the original single mediated-jump rule.** The spec's rule — mediator at $n$, transfer $n+q \to n-q$ at per-mediator rate $\Gamma$ — is precisely a *left-hop across $n$ at net rate proportional to the occupancy of the cell being hopped over*. The mediator count in the spec is the full shifted population $W' = W + 2/h$; the background part is a null bias $H_0$ (it cancels in $h_{n-q} - h_{n+q}$), so spec and pure-hop member have identical mean-field generators. The original "single rule" is therefore not an alternative to the four-rule scheme: it is the $G = 0$ member of the same family, with the focus channel switched off.
+Substituting into (2): $\dot W_n = -\Gamma W_{n-q} + \Gamma W_{n+q}$, which is (1). **This is the original single mediated-jump rule.** The spec's rule — mediator at $n$, transfer $n+q \to n-q$ at per-mediator rate $\Gamma$ — is precisely a *left-hop across $`n`$ at net rate proportional to the occupancy of the cell being hopped over*. The mediator count in the spec is the full shifted population $W' = W + 2/h$; the background part is a null bias $H_0$ (it cancels in $h_{n-q} - h_{n+q}$), so spec and pure-hop member have identical mean-field generators. The original "single rule" is therefore not an alternative to the four-rule scheme: it is the $G = 0$ member of the same family, with the focus channel switched off.
 
 **(b) Symmetric member** ($G = \tfrac{\Gamma}{2}\thinspace\mathrm{I}$):
 

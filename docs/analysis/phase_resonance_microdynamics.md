@@ -361,7 +361,7 @@ balance under continuous driving (§11, item 2).
 ![Derived rate law and row selection](https://raw.githubusercontent.com/billpage/wpmw/output/figures/phase_resonance_rate_law.png)
 
 *Left: channel rates computed from P5 co-location statistics against the
-target $\tau_p\Gamma_q(x)/2$. Right: time-averaged channel amplitude by sea
+target $`\tau_p\Gamma_q(x)/2`$. Right: time-averaged channel amplitude by sea
 row; only the particle's own row survives.*
 
 ## 9. Numerical verification

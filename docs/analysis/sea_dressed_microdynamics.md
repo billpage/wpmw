@@ -42,7 +42,7 @@ alone. Schematically:
 ```
 
 The loophole is standard chemical kinetics: a bilinear rate $k \cdot B \cdot N$
-is *linear in $N$* if the partner species $B$ is pinned at constant density
+is *linear in $`N`$* if the partner species $B$ is pinned at constant density
 (a buffered reagent, a photon bath, a catalyst). The crystal lattice already
 owns a canonical pinned density: the background $2/h$, which the algorithm
 spec introduces as a passive shift. The move made here is to promote it to

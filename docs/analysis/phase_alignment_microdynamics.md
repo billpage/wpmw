@@ -78,7 +78,7 @@ law.
 
 The predecessor's Lemma 2 said the pump writes the same pattern phase on
 every pair regardless of location. In the present variables that reads:
-*every pair sitting at the same place carries the same $\mu$.* This is
+*every pair sitting at the same place carries the same $`\mu`$.* This is
 the entire content of the "coherent grating." An arriving particle reads
 one number off whichever pair it meets, and never needs to know which
 pair that was or where the absent partner is. Locality of the vertex is
@@ -99,8 +99,8 @@ swap is a permutation of momenta among worldlines.
 
 ![The contact interaction in world-particle terms](https://raw.githubusercontent.com/billpage/wpmw/output/figures/phase_alignment_contact.png)
 
-*(a) transporting two clocks to a common point defines $\mu$. (b) the
-three states of a pair. (c) the pump makes $\mu$ a function of place.
+*(a) transporting two clocks to a common point defines $`\mu`$. (b) the
+three states of a pair. (c) the pump makes $`\mu`$ a function of place.
 (d) the vertex as a momentum swap. (e) the stationarity condition.
 (f) the ensemble limit.*
 
@@ -187,7 +187,7 @@ $\mu$ is displaced from zero by $O(V_p\tau_p/\hbar)$. Only the latter is
 what the pump makes and what P5 couples to. In the $\mu$ language they
 are simply different values of one variable, and the ambiguity cannot
 arise. Second, the phrase "the beat ceases to exist" at a K3 vertex
-becomes "$\mu$ returns to zero," which requires no reconciliation with
+becomes "$`\mu`$ returns to zero," which requires no reconciliation with
 worldline continuity.
 
 ## 4. The exchange theorem
