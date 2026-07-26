@@ -32,6 +32,13 @@ Derivation and implementation were developed jointly with Claude
 (Anthropic), July 2026. Companion code: `src/demo_phase_resonance_rates.py`.
 All numerical claims in §10 are outputs of that demo.
 
+*Sequel:* [`phase_alignment_microdynamics.md`](phase_alignment_microdynamics.md)
+recasts this note in a single relational variable — the misalignment of a
+pair's two transported clock phases — which retires the beat, the grating
+and the resonance condition, and strengthens Proposition 2 into an
+exchange theorem with energy conservation as a corollary. It changes no
+physics; §9 of that note catalogues what survives unchanged.
+
 ## 1. Tutorial: the phase picture in five steps
 
 This section is deliberately informal; everything asserted here is stated
@@ -381,7 +388,7 @@ All claims are exercised by `src/demo_phase_resonance_rates.py`
   sampled position; pattern-phase spread across 60,000 pairs pumped at
   random locations is $10^{-15}$ (Lemma 2); time-averaging along the
   transition worldline leaves only row $\bar n = n_{hi}$ at full
-  amplitude, all other rows below $1.4\%$ (Proposition 2).
+  amplitude, all other rows below 1.4% (Proposition 2).
 
 ## 10. What has and has not been achieved
 
