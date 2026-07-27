@@ -86,12 +86,13 @@ The state is an ensemble of world-particles, each
 \theta_j \in [0, 2\pi).
 ```
 
-Three populations:
+Two populations:
 
 - **excess particles** — the positons sampled from the shifted Wigner
   function $W' = W + 2/h$, as in the existing microdynamics demos;
-- **sea partners** — positon/negaton pairs, $B$ pairs per cell;
-- there is no third population. Nothing else is stored.
+- **sea partners** — positon/negaton pairs, $B$ pairs per cell.
+
+There is no third population, and nothing else is stored per particle.
 
 ### 2.2 Pairing
 
