@@ -83,6 +83,92 @@ Cells for encounter detection: $M$ bins of width $\Delta x = L/M$. The
 cell width is a numerical parameter and must be checked for convergence;
 it sets the encounter rate and hence enters the calibration of §8.
 
+### 1.1 Row-index convention
+
+Two different rows get called $`"n"`$ in the literature of this project,
+and conflating them is a live source of error. This specification keeps
+them apart by name:
+
+- **$r$ — a particle's own row.** $p = r \cdot dp$ with $r$ **even**, by
+  Theorem 1. Every worldline in the ensemble carries an $r$.
+- **$n$ — a vertex midpoint row.** The label of a $q$-mode transition,
+  not of any particle. Its parity is the parity of $q$, so for odd $q$ no
+  particle ever sits on it.
+
+The dictionary between them: a $q$-mode vertex acting on a particle at
+row $r$ in direction $s = \pm 1$ has midpoint
+
+```math
+n \;=\; r + sq,
+```
+
+carries the particle to row $r + 2sq$, and is mediated by the two sea
+rows $n - q = r$ and $n + q = r + 2sq$ — the particle's own in-row and
+out-row, both even, straddling the empty midpoint.
+
+`phase_space_crystal_lattice_algorithm.md` writes its stencil as
+$\Gamma_q(x)\thinspace(W_{n+q} - W_{n-q})$ and transfers
+$(m, n+q) \to (m, n-q)$: that $n$ is the **midpoint** in the sense above.
+Any expression mixing the two conventions in one formula is wrong; when
+in doubt, write the algorithm in $r$ and $s$, and translate to $n$ only
+where the mesh stencil is being quoted.
+
+### 1.2 What a cell is, and what a row is
+
+The two labels are not the same kind of object, and the difference
+matters for Postulate (S) of §2.2.
+
+A **momentum row is exact.** $dp = \pi\hbar/L$ is fixed by the ring
+circumference, not by the mesh: a wavefunction on a ring of circumference
+$L$ carries momentum in multiples of $2\pi\hbar/L$, and $W$, being
+bilinear, carries it on the half-grid. There is no tolerance to tighten
+and no limit to take. "Sharing a row" is an equality test on an integer,
+not a proximity test. For the cosine-well parameters
+($L = 8$, $\hbar = 1$) adjacent particle rows are separated by
+$2\thinspace dp = 0.785398$, which is exactly $\hbar K_1$.
+
+A **cell is a quadrature bin.** $\Delta x = L/M$ is a free numerical
+parameter, swept in §10 rung 7. It is *not* a scattering cross-section:
+the model contains no cross-section, the mediating mode has wavelength
+$L/q$ spanning the whole ring at $q = 1$, and a genuine cross-section
+would have to survive the $\Delta x \to 0$ limit whereas this must
+vanish from it. The phase-space cell is
+$\Delta x \cdot dp = 0.0245$ against $h = 6.2832$, about $1/256$ of a
+Planck cell, so it is not uncertainty-limited either. Its only job is to
+say which particles enter which order-parameter sum.
+
+Nor does the cell width blur the phase. $\Phi$ is a field on spacetime,
+so for two same-row legs evaluated at a common event the evaluation point
+cancels identically:
+
+```math
+\Phi_i - \Phi_j \;=\; \Big(\theta_i - \frac{p\thinspace x_i}{\hbar}\Big)
+- \Big(\theta_j - \frac{p\thinspace x_j}{\hbar}\Big),
+```
+
+which is Lemma 1's gauge-invariant combination and contains no $x$ of the
+evaluation point. Legs scattered across a cell contribute
+$\lvert\hat Z_r\rvert = 1$ to machine precision. Postulate (S) is
+therefore a condition on worldline data, not on proximity.
+
+The one place $\Delta x$ does enter is the pump, which samples $V$ at each
+particle's own position, spreading phases within a cell by a fraction
+$K_q \Delta x = 2\pi q / M$ of the signal — 4.9% at $M = 128$, $q = 1$.
+This does not accumulate: same-row legs share a velocity, so each samples
+the same $V$ over a ring transit, and the measured
+$\lvert\hat Z_r\rvert$ stays within $4 \times 10^{-4}$ of unity over a
+full cosine-well run without drift. Whether the same holds once vertices
+move legs between rows is open item 3 of the analysis note.
+
+![Cells and rows](https://raw.githubusercontent.com/billpage/wpmw/output/figures/lattice_cells_and_rows.png)
+
+*(a) exact momentum rows against sweepable spatial cells; solid rows
+carry particles at even $`r`$, the dashed midpoint is empty for odd
+$`q`$, and the highlighted cell shows a vertex carrying an excess
+particle from row $`r`$ to row $`r + 2q`$. (b) intra-cell pump spread
+over a full run: bounded, not secular. Part H of
+`src/demo_relational_pairing.py`.*
+
 ---
 
 ## 2. State representation
@@ -116,9 +202,11 @@ $\mu_{ij} + \mu_{jk} = \mu_{ik}$, at every event. By Proposition R1 of
 [`../analysis/relational_pairing_and_carrier_lock.md`](../analysis/relational_pairing_and_carrier_lock.md)
 a stored index could therefore carry no state; it could only select. The
 selection is recovered from kinematics: an ordered pair $(a, b)$ mediates
-a $q$-mode vertex for an excess particle at row $n$ iff both legs occupy
-the encounter cell, $a$ sits on row $n + q$, and $b$ sits on row $n - q$
-(Corollary 4.3, with §1's momentum quantum $2q \cdot dp$).
+a $q$-mode vertex in direction $s$ for an excess particle at row $r$ iff
+both legs occupy the encounter cell, $b$ sits on the particle's in-row
+$r$, and $a$ sits on its out-row $r + 2sq$ (Corollary 4.3, with §1's
+momentum quantum $2q \cdot dp$; in midpoint labels these are $n \mp q$
+with $n = r + sq$).
 
 **Postulate (S) — sea carrier lock.** *Sea particles sharing a cell and a
 momentum row share a transported phase, up to the pumped misalignment.*
@@ -131,7 +219,7 @@ literal content of *phase-space **crystal** lattice*, and it is the
 condition under which Lemma 5 holds: it is the sea-wide strengthening of
 Lemma 1's per-pair darkness. It is testable and not a convention — see
 rung 3a of §10 — and an implementation must instrument
-$\lvert\hat Z_n(x)\rvert$ of §2.5 at runtime rather than assume it.
+$\lvert\hat Z_r(x)\rvert$ of §2.5 at runtime rather than assume it.
 
 ### 2.3 The derived quantity
 
@@ -157,20 +245,20 @@ converge in $B$ are not results.
 
 ### 2.5 The order parameter
 
-Per cell $x_m$ and momentum row $n$, define
+Per cell $x_m$ and particle row $r$, define
 
 ```math
-Z_n(x_m, t) \;=\; \sum_{j \thinspace\in\thinspace (x_m,\thinspace n)} e^{i\Phi_j(x_m,t)},
+Z_r(x_m, t) \;=\; \sum_{j \thinspace\in\thinspace (x_m,\thinspace r)} e^{i\Phi_j(x_m,t)},
 \qquad
-\hat Z_n \;=\; \frac{Z_n}{N_n},
+\hat Z_r \;=\; \frac{Z_r}{N_r},
 ```
 
-the sum running over sea particles in that cell and row, with $N_n$ their
-count. By Theorem R4 of the analysis note this is the *only* sea datum a
-vertex needs. It is rebuilt from the $\Phi_j$ once per step and never
-carried across steps, and $\lvert\hat Z_n\rvert$ is the runtime
-diagnostic for (S): it equals $1$ under carrier lock and falls to
-$O(N_n^{-1/2})$ for an incoherent sea.
+the sum running over sea particles in that cell and row, with $N_r$ their
+count. Only even $r$ is ever populated (§1.1). By Theorem R4 of the
+analysis note this is the *only* sea datum a vertex needs. It is rebuilt
+from the $\Phi_j$ once per step and never carried across steps, and
+$\lvert\hat Z_r\rvert$ is the runtime diagnostic for (S): it equals $1$
+under carrier lock and falls to $O(N_r^{-1/2})$ for an incoherent sea.
 
 ---
 
@@ -201,26 +289,27 @@ integral is then analytic on each leg.
 
 ## 4. Encounter detection
 
-An **encounter** is the presence of an excess particle in a cell whose
-sea rows $n \pm q$ are occupied, over a window $\tau_e$. There is no
+An **encounter** is the presence of an excess particle at row $r$ in a
+cell whose sea rows $r$ and $r + 2sq$ are occupied, over a window
+$\tau_e$. There is no
 pairwise loop: by Theorem R4 of the analysis note the sum over all
 admissible mediating pairs factorises through the order parameter of
 §2.5,
 
 ```math
 \sum_{a,\thinspace b} \big[\thinspace w_0 + \kappa\thinspace\cos\mu_{ab}\thinspace\big]
-\;=\; w_0\thinspace N_{n+q}\thinspace N_{n-q}
-\;+\; \kappa\thinspace\mathrm{Re}\big(Z_{n+q}\thinspace\overline{Z_{n-q}}\big),
+\;=\; w_0\thinspace N_{r+2sq}\thinspace N_{r}
+\;+\; \kappa\thinspace\mathrm{Re}\big(Z_{r+2sq}\thinspace\overline{Z_{r}}\big),
 ```
 
 exactly and not as an approximation. The loop is therefore
 
 ```
 for each cell:
-    build Z_n, N_n for every occupied row      # one pass over the sea
-    for each excess particle c in cell at row n:
+    build Z_r, N_r for every occupied row      # one pass over the sea
+    for each excess particle c in cell at row r:
         for s in (+1, -1):
-            read Zhat_{n+sq}, Zhat_{n-sq}      # two numbers
+            read Zhat_{r+2sq}, Zhat_{r}        # two numbers
             propose an exchange with window tau_e
 ```
 
@@ -236,8 +325,8 @@ product with the coupling; see §8.
 ## 5. The vertex
 
 This is the core of the specification. For an excess particle $c$ at
-momentum $p_c = p_n$ in a cell, mediated by the sea rows $n + q$ and
-$n - q$ of that cell:
+momentum $p_c = p_r$ in a cell, mediated by the sea rows $r$ and
+$r + 2sq$ of that cell:
 
 ### 5.1 Candidate exchange
 
@@ -247,23 +336,23 @@ partner's. With partnership removed this becomes a **row condition**. A
 candidate exchange in direction $s = \pm 1$ is admissible iff both
 
 ```math
-N_{n+sq} \;>\; 0
+N_{r} \;>\; 0
 \qquad\text{and}\qquad
-N_{n-sq} \;>\; 0
+N_{r + 2sq} \;>\; 0
 ```
 
 in the cell, in which case the out-state is
 
 ```math
-p_c \;\mapsto\; p_{n + 2sq},
+p_c \;\mapsto\; p_{r + 2sq},
 ```
 
-with one sea particle moved from row $n + sq$ to row $n - sq$ — the swap
-of Theorem 4, read as a transfer of occupancy between the two mediating
-rows. The excess particle's incoming row $n$ is the transition midpoint,
-whose parity equals the parity of $q$ (Theorem 1); both mediating rows
-and both particle rows remain even, so §1's invariant is preserved
-automatically.
+with one sea particle moved from row $r + 2sq$ to row $r$ — the swap of
+Theorem 4, read as a transfer of occupancy between the two mediating
+rows. Every row involved is one of the two even rows $r$ and $r + 2sq$,
+so §1's even-site invariant is preserved automatically; the transition
+midpoint $n = r + sq$ carries no particle at any stage and appears only
+as a label (§1.1).
 
 Implementations may either (i) test the condition and reject
 non-matching encounters, or (ii) allow all exchanges and weight them by
@@ -285,7 +374,7 @@ traffic is genuinely negligible at the chosen $\tau_e$.
 Evaluate the order parameters of §2.5 at the encounter event
 $(x^{*}, t^{*})$ from the current leg data of the sea particles in the
 cell. Under (S) the argument of
-$\hat Z_{n+sq}\thinspace\overline{\hat Z_{n-sq}}$ *is* the misalignment
+$\hat Z_{r+2sq}\thinspace\overline{\hat Z_{r}}$ *is* the misalignment
 $\mu$ of the predecessor note, and its modulus is $1$; departures of the
 modulus from $1$ measure failure of (S) and must be logged, not clipped.
 No search for any mate is required, and no particle refers to any other
@@ -296,7 +385,7 @@ particle by index.
 Draw $u \sim \mathrm{Uniform}(0,1)$ and exchange if $u < P$, with either
 
 ```math
-P \;=\; w_0 \;+\; \kappa\thinspace\mathrm{Re}\big(\hat Z_{n+sq}\thinspace\overline{\hat Z_{n-sq}}\big)
+P \;=\; w_0 \;+\; \kappa\thinspace\mathrm{Re}\big(\hat Z_{r+2sq}\thinspace\overline{\hat Z_{r}}\big)
 \qquad\text{(affine form)}
 ```
 
@@ -315,7 +404,7 @@ Clamp: the affine form requires $\kappa \le \min(w_0, 1 - w_0)$. An
 implementation must assert this rather than clipping silently, since a
 clipped probability breaks the linear response the whole construction
 exists to reproduce. The clamp is now the only condition needed, since
-$\lvert\hat Z_{n+sq}\thinspace\overline{\hat Z_{n-sq}}\rvert \le 1$
+$\lvert\hat Z_{r+2sq}\thinspace\overline{\hat Z_{r}}\rvert \le 1$
 holds identically (Corollary R4.1) and the rule is independent of the sea
 depth $B$.
 
@@ -325,11 +414,11 @@ On firing, **phase is continuous through the vertex for both legs**; only
 momenta change.
 
 - **Excess particle** — $\theta_c$ carries through. Its leg reference
-  data are reset to $(x^{*}, p_{n+2sq}, \theta_c)$ at $t^{*}$.
+  data are reset to $(x^{*}, p_{r+2sq}, \theta_c)$ at $t^{*}$.
 - **Struck sea particle** — one particle is drawn uniformly from row
-  $n + sq$ in the cell and moved to row $n - sq$, carrying its $\theta$
+  $r + 2sq$ in the cell and moved to row $r$, carrying its $\theta$
   through unchanged. Its contribution therefore migrates from
-  $Z_{n+sq}$ to $Z_{n-sq}$: the vertex is a **transfer of coherence
+  $Z_{r+2sq}$ to $Z_{r}$: the vertex is a **transfer of coherence
   between rows**, which is the index-free reading of Corollary 4.2's
   "the pair exits aligned".
 - There is no mate to leave untouched.
@@ -352,7 +441,7 @@ Every vertex must preserve, exactly and in floating point to rounding:
    violation indicates a coding error, not a physics choice);
 3. worldline count and species count;
 4. the even-site invariant of §1 for every single leg;
-5. $N_{n+sq} + N_{n-sq}$ in the cell, the occupancy transferred between
+5. $N_{r} + N_{r+2sq}$ in the cell, the occupancy transferred between
    the mediating rows summing to zero.
 
 There is no partnership invariant, because there are no partnerships.
@@ -389,12 +478,12 @@ exploit and test:
   is unchanged by the pump to $O(V_p)$; if it is not, the pump has been
   implemented as a force rather than a phase.
 - **$\mu$ becomes place-valued** (Lemma 5). Assert that
-  $\lvert\hat Z_n(x)\rvert$ of §2.5 is $1$ to rounding immediately after
+  $\lvert\hat Z_r(x)\rvert$ of §2.5 is $1$ to rounding immediately after
   a pump, in every occupied row of every cell. Under (S) this is the
   runtime form of the spread test of Part D of `demo_phase_alignment.py`,
   and it is strictly stronger: a spread test over stored pairs passes
   even when the pairs are mutually randomised, whereas
-  $\lvert\hat Z_n\rvert$ does not (§7 of the analysis note, Model II).
+  $\lvert\hat Z_r\rvert$ does not (§7 of the analysis note, Model II).
 
 **[open]** The steady state. Under continuous pumping, vertices drain
 coherence — each firing migrates one sea particle between the mediating
@@ -428,9 +517,9 @@ W(x_m, p_n) \;=\; \rho_{\mathrm{emp}}(x_m, p_n) \;-\; \frac{2}{h}.
 
 Sea particles are **not** binned into $W$: they are the medium, not the
 state. The diagnostics worth accumulating separately are the per-cell,
-per-row order parameter $\hat Z_n(x)$ of §2.5 — its modulus tracking (S)
+per-row order parameter $\hat Z_r(x)$ of §2.5 — its modulus tracking (S)
 and its argument the misalignment — and the quadrature
-$\mathrm{Re}(\hat Z_{n+q}\thinspace\overline{\hat Z_{n-q}})$, whose
+$\mathrm{Re}(\hat Z_{r+2q}\thinspace\overline{\hat Z_{r}})$, whose
 profile should reproduce $-V'(x)$ up to the calibration. This replaces
 the misalignment distribution $f(x, \bar p, \Delta p, \mu)$ of the
 analysis note's open item 2 with a two-index array of complex numbers,
@@ -447,6 +536,10 @@ The mean generator must reproduce
 \;+\; \Gamma_q(x)\,\big(W_{n+q} - W_{n-q}\big).
 ```
 
+The $n$ of this stencil is the **midpoint** label of §1.1, not a particle
+row; in the $r$ of §§4–5 the same transfer reads
+$r = n - q \longrightarrow r + 2q = n + q$.
+
 The advection term is exact by construction (§3). The collision term
 carries one overall constant, the product of the encounter frequency,
 the pump duty cycle and the vertex coupling. Fix it by requiring L1
@@ -457,7 +550,7 @@ with the corrected sign of
 
 The gross traffic is pure noise: the $w_0$ part of §5.3 produces
 equal-and-opposite exchanges that cancel in the mean, and by Theorem R4
-it enters only as $w_0 N_{n+q}N_{n-q}$, so it costs nothing to evaluate. This is the
+it enters only as $w_0 N_{r+2sq}N_{r}$, so it costs nothing to evaluate. This is the
 $G$-freedom of `docs/analysis/four_rule_microdynamics_equivalence.md`,
 and it means variance can be reduced by lowering $w_0$ without changing
 any mean. **[choice]** — the smallest $w_0$ consistent with the clamp of
@@ -475,21 +568,21 @@ initialise:
 for each step:
     pump:      theta_j -= V(x_j) * tau_p / hbar     for every sea particle
     stream:    advance x_j, theta_j on every leg    (p_j constant)
-    assemble:  Z[m][n] <- sum exp(i Phi_j(x_m, t))  (one pass over the sea)
-               N[m][n] <- count
-               assert |Z[m][n]| / N[m][n] == 1      (postulate (S))
-    encounter: for each excess particle c in cell m at row n:
+    assemble:  Z[m][r] <- sum exp(i Phi_j(x_m, t))  (one pass over the sea)
+               N[m][r] <- count                     (even r only)
+               assert |Z[m][r]| / N[m][r] == 1      (postulate (S))
+    encounter: for each excess particle c in cell m at row r:
                    for s in (+1, -1):
-                       if N[m][n+s*q] == 0 or N[m][n-s*q] == 0:  skip
-                       zz <- (Z/N)[m][n+s*q] * conj((Z/N)[m][n-s*q])
+                       if N[m][r] == 0 or N[m][r+2*s*q] == 0:  skip
+                       zz <- (Z/N)[m][r+2*s*q] * conj((Z/N)[m][r])
                        P  <- w0 + kappa * Re(zz)    (or the contact form)
                        if uniform() < P:
                            p_c <- p_c + 2*s*q*dp    (theta_c continuous)
                            move one sea particle    (theta continuous)
-                               from row n+s*q to row n-s*q in cell m
+                               from row r+2*s*q to row r in cell m
                            assert momentum and energy unchanged
     diagnose:  bin excess particles -> W
-               per-cell Re(Zhat[n+q] conj(Zhat[n-q])) -> compare with -V'(x)
+               per-cell Re(Zhat[r+2q] conj(Zhat[r])) -> compare with -V'(x)
 ```
 
 ---
@@ -507,7 +600,7 @@ In order; each rung is a regression test, and none should be skipped.
 3a. **Postulate (S), the deciding experiment.** Parts B–C and F of
    `demo_relational_pairing.py`. Build a sea whose pairs are individually
    aligned but mutually randomised and confirm that
-   $\lvert\hat Z_n\rvert$ collapses to $O(N^{-1/2})$ while a
+   $\lvert\hat Z_r\rvert$ collapses to $O(N^{-1/2})$ while a
    partnered spread test still passes. This is the one rung that
    distinguishes (S) from the previous revision's convention, and it must
    be run before rung 4 is believed. Also confirm Theorem R4's
@@ -536,27 +629,29 @@ In order; each rung is a regression test, and none should be skipped.
 
 - **Steady state** (§6, **[open]**) — the calibration is fitted, not
   derived.
-- **Row-index convention** — the analysis note's open item 1. The
-  specification above is written entirely in momenta precisely to avoid
-  depending on the unresolved convention; any translation to row indices
-  must be checked first.
+- **Row-index convention** — *closed* by §1.1, which separates the
+  particle row $r$ (even) from the vertex midpoint $n$ (parity of $q$)
+  and gives the dictionary $n = r + sq$. The algorithm of §§4–5 is
+  written in $r$; the mesh stencil quoted in §8 is written in $n$. An
+  earlier revision of this document mixed the two in one expression and
+  thereby placed the mediating sea legs on odd rows, violating §1.
 - **Multi-mode potentials** — §1 admits a Fourier sum, but first-order
   additivity of the mode contributions to $\mu$ is assumed and not
   verified.
 - **Uniformly offset pairs** — a struck sea particle is generally
   separated from the others on its new row, so a nonuniform potential
   dephases it at rate $[V(x_a) - V(x_b)]/\hbar$ and degrades
-  $\lvert\hat Z_n\rvert$. The specification does not model this drift;
+  $\lvert\hat Z_r\rvert$. The specification does not model this drift;
   whether it matters over a run has not been estimated. In the present
   variables it is the question of whether (S) is dynamically preserved —
-  open item 3 of the analysis note — and $\lvert\hat Z_n(x)\rvert$ is
+  open item 3 of the analysis note — and $\lvert\hat Z_r(x)\rvert$ is
   the instrument.
 - **Phase continuity at the vertex** — §5.4's rule that both legs carry
   phase through the vertex replaces the previous revision's
   exit-alignment condition. Under (S) the two agree in the mean
   generator, but this is argued and not proved. Analysis note, open
   item 2.
-- **Species bookkeeping** — §2.5 writes $Z_n$ without the factor
+- **Species bookkeeping** — §2.5 writes $Z_r$ without the factor
   $\varepsilon_j$. This is correct when $\varepsilon$ is constant within a
   row, which holds for the pumped sea, but the general bilinear form has
   not been fixed. Analysis note, open item 1.

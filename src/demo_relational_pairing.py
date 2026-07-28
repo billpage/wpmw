@@ -52,6 +52,15 @@ Parts:
      they differ in the mean, the indexed form reporting full response where
      the relational form reports none.
 
+  H  Cells and rows.  The two labels in postulate (S) are not the same
+     kind of thing: a momentum row is an exact lattice site, a spatial
+     cell is a sweepable quadrature bin.  Part H verifies that same-row
+     particles contribute identical transported phase regardless of
+     their positions within the cell, and that the one place cell width
+     does enter -- the pump, which samples V at each particle's own
+     position -- produces a bounded rather than secular loss of carrier
+     lock under free streaming.
+
   G  Sea consumption.  Corollaries 4.2/4.3 leave a struck pair with
      Delta p = 0 and hence permanently inert, so an indexed sea is a
      consumable resource with no replenishment in §6.  Part G sizes the
@@ -394,6 +403,101 @@ def part_G():
 # --------------------------------------------------------------------- #
 # Figure                                                                #
 # --------------------------------------------------------------------- #
+def part_H(rng, M=128, B=400):
+    banner("Part H -- cells are swept, rows are exact")
+
+    dx = L / M
+    print(f"  L = {L}, M = {M}, dx = {dx:.6f}, dp = pi*hbar/L = {DP:.6f}")
+    print(f"  particle row spacing 2*dp   = {2 * DP:.6f}")
+    print(f"  mode-1 quantum hbar*K_1     = {HBAR * K_MODE:.6f}   (identical)")
+    print(f"  phase-space cell dx*dp      = {dx * DP:.6f}")
+    print(f"  Planck cell h               = {2 * np.pi * HBAR:.6f}"
+          f"   ratio = {dx * DP / (2 * np.pi * HBAR):.5f}")
+
+    # (i) same row, different x within the cell: phases coincide exactly.
+    xc = 3.0 + dx / 2.0
+    r = 4                                              # even row
+    p_r = r * DP
+    xj = xc + rng.uniform(-dx / 2.0, dx / 2.0, 5)
+    theta = p_r * xj / HBAR                            # common gauge invariant
+    Phi = transported_phase(xj, p_r, theta, xc, 0.0)
+    print(f"  five particles on row {r}, spread across one cell:")
+    print(f"    max spread of Phi(x_cell) = {np.ptp(Phi):.3e}")
+    print(f"    |Zhat|                    = "
+          f"{abs(np.exp(1j * Phi).mean()):.15f}")
+    print("  -> intra-cell separation contributes nothing: Phi is a field,")
+    print("     and same-row legs share p, hence share E.")
+
+    # (ii) the one place dx enters: the pump samples V at each own x.
+    tau_p, T = 0.02, 26.13
+    nsteps = int(T / tau_p)
+    xj = xc + rng.uniform(-dx / 2.0, dx / 2.0, B)
+    th = np.zeros(B)
+    ts, mods = [], []
+    for k in range(nsteps):
+        th -= V_P * np.cos(K_MODE * xj) * tau_p / HBAR
+        xj = (xj + p_r / MASS * tau_p) % L
+        if k % 10 == 0:
+            ts.append(k * tau_p)
+            mods.append(abs(np.exp(1j * (th - th.mean())).mean()))
+    ts, mods = np.array(ts), np.array(mods)
+    half = len(mods) // 2
+    print(f"  predicted per-pump spread ~ mu1*K*dx = "
+          f"{V_P * tau_p / HBAR * K_MODE * dx:.3e} rad")
+    print(f"  |Zhat| over {nsteps} pumps: min = {mods.min():.6f}, "
+          f"max = {mods.max():.6f}")
+    print(f"  first-half mean {mods[:half].mean():.6f}, "
+          f"second-half mean {mods[half:].mean():.6f}")
+    print("  -> bounded and oscillatory, not secular: same-row legs share a")
+    print("     velocity, so each samples the same V over a ring transit.")
+    return ts, mods, dx
+
+
+def draw_lattice(ax, q=1):
+    """Schematic of the (x, p) lattice: exact rows, sweepable cells."""
+    ncell, nrow = 10, 7
+    for k in range(ncell + 1):
+        ax.axvline(k, color="0.75", lw=0.6, ls=":", zorder=0)
+    ax.axvspan(3, 4, color="C1", alpha=0.12, zorder=0)
+
+    rows = np.arange(nrow) - nrow // 2          # offsets from midpoint n
+    for j in rows:
+        even = (j - q) % 2 == 0                 # particle rows: n +- odd q
+        if j in (-q, q):
+            ax.axhline(j, color="C1", lw=2.0, zorder=1)
+        elif even:
+            ax.axhline(j, color="0.45", lw=1.1, zorder=1)
+        else:
+            ax.axhline(j, color="0.72", lw=0.8, ls=(0, (5, 4)), zorder=1)
+
+    xs = np.array([3.15, 3.32, 3.68, 3.85])
+    for y in (-q, q):
+        ax.plot(xs, np.full_like(xs, y), "o", ms=6, color="C1",
+                mec="0.25", mew=0.6, zorder=3)
+    ax.plot([3.5], [-q], "o", ms=11, color="C0", mec="0.15", mew=0.9,
+            zorder=4)
+    ax.annotate("", xy=(3.5, q - 0.12), xytext=(3.5, -q + 0.12),
+                arrowprops=dict(arrowstyle="-|>", color="C0", lw=1.8))
+
+    ax.text(10.25, q, "$r + 2q$   out row", va="center", fontsize=9)
+    ax.text(10.25, 0, "$n = r + q$   beat, empty", va="center", fontsize=9)
+    ax.text(10.25, -q, "$r$   in row", va="center", fontsize=9)
+    ax.annotate("", xy=(4, -3.55), xytext=(3, -3.55),
+                arrowprops=dict(arrowstyle="<->", color="0.35", lw=1.0))
+    ax.text(3.5, -3.95, r"$\Delta x = L/M$  (swept)", ha="center",
+            fontsize=9, color="0.25")
+    ax.set_xlim(-0.2, 10.2)
+    ax.set_ylim(-4.4, 3.6)
+    ax.set_xlabel("$x$   (cells: quadrature bins, refinable)")
+    ax.set_ylabel(r"$p = n\,dp$,   $dp = \pi\hbar/L$   (exact)")
+    ax.set_xticks([])
+    ax.set_yticks([])
+    for sp in ("top", "right", "bottom", "left"):
+        ax.spines[sp].set_visible(False)
+    ax.set_title("(a) rows are exact lattice sites; cells are swept",
+                 fontsize=10)
+
+
 def make_figure(dB, dE, dF):
     x_cells, net, gamma_exact, rel = dE
     Ns, rms_p, rms_r, ep, er, _, _ = dF
@@ -452,6 +556,32 @@ def make_figure(dB, dE, dF):
     print(f"  figure -> {output_path('relational_pairing.png')}")
 
 
+def make_lattice_figure(dH):
+    ts, mods, dx = dH
+    fig, axes = plt.subplots(1, 2, figsize=(12.5, 4.4),
+                             gridspec_kw=dict(width_ratios=[1.35, 1.0]))
+    draw_lattice(axes[0])
+
+    ax = axes[1]
+    ax.plot(ts, mods, "-", lw=1.0, color="C3")
+    ax.axhline(1.0, color="0.6", lw=1.0, ls="--")
+    ax.set_xlabel("$t$")
+    ax.set_ylabel(r"$|\hat{Z}_r(x)|$")
+    ax.set_title("(b) the one effect of cell width: intra-cell pump\n"
+                 "spread is bounded, not secular", fontsize=10)
+    ax.grid(alpha=0.3)
+
+    fig.suptitle("Cells and rows in postulate (S)", fontsize=12)
+    fig.tight_layout()
+    fig.savefig(output_path("lattice_cells_and_rows.png"), dpi=150,
+                bbox_inches="tight")
+    d = docs_path("figures/lattice_cells_and_rows.png")
+    if d:
+        fig.savefig(d, dpi=150, bbox_inches="tight")
+    plt.close(fig)
+    print(f"  figure -> {output_path('lattice_cells_and_rows.png')}")
+
+
 def main():
     rng = np.random.default_rng(SEED)
     print("Relational (all-pairs) misalignment -- verification")
@@ -465,7 +595,9 @@ def main():
     dE = part_E(rng)
     dF = part_F(rng)
     part_G()
+    dH = part_H(rng)
     make_figure(dB, dE, dF)
+    make_lattice_figure(dH)
     print()
     print("done.")
 

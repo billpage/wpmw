@@ -23,6 +23,16 @@ of the analysis: under permanent partnership the sea is a *consumable*
 resource with no replenishment, short by roughly three orders of
 magnitude for the parameters of `demo_cosine_well_microdynamics.py`.
 
+**Correction, July 2026.** The first revision of this note and of the
+specification wrote the mediating rows as $n \pm q$ while calling the
+excess particle's own row $n$, mixing the mesh's midpoint labelling with
+the particle labelling in a single expression and thereby placing the
+sea legs on odd rows, in violation of Theorem 1. §1 now fixes the two
+indices apart. Only index arithmetic was affected: the legs are split by
+$2q \cdot dp$ and the excess particle hops by $2q \cdot dp$ in both
+readings, no numerical result changes, and the demo never used row
+indices.
+
 Nothing in
 [`phase_alignment_microdynamics.md`](phase_alignment_microdynamics.md)
 is retracted. Lemma 4, Proposition 3, Theorem 4 and its corollaries are
@@ -38,13 +48,19 @@ of that demo.
 ## 1. Notation
 
 Ring $x \in [0, L)$, half-grid $dp = \pi\hbar/L$, mode $q$ with
-$K_q = 2\pi q / L$ and momentum quantum $2q \cdot dp = \hbar K_q$. Rows
-are indexed as in
-[`phase_space_crystal_lattice_algorithm.md`](../algorithm/phase_space_crystal_lattice_algorithm.md):
-a $q$-mode vertex moves an excess particle between rows $n - q$ and
-$n + q$, so the mediating pair's legs sit on those two rows and the
-transition midpoint is row $n$, whose parity equals the parity of $q$
-(Theorem 1 of the phase-resonance note).
+$K_q = 2\pi q / L$ and momentum quantum $2q \cdot dp = \hbar K_q$.
+
+Two row indices are needed and must not be conflated, as §1.1 of the
+specification sets out. **$r$** is a *particle's own* row, always even by
+Theorem 1 of the phase-resonance note. **$n$** is a *vertex midpoint*
+label, of the same parity as $q$, carrying no particle when $q$ is odd.
+The dictionary is $n = r + sq$ for direction $s = \pm 1$: the vertex
+carries the particle from row $r$ to row $r + 2sq$, and its two mediating
+sea legs sit on those same two rows, $n - q$ and $n + q$, straddling the
+empty midpoint. The mesh stencil of
+[`phase_space_crystal_lattice_algorithm.md`](../algorithm/phase_space_crystal_lattice_algorithm.md)
+is written in $n$; the algorithm of §§4–5 of the specification is written
+in $r$.
 
 Transported phase and misalignment are as in §2 of the predecessor,
 
@@ -158,32 +174,33 @@ hold.
 
 ## 5. The factorisation theorem
 
-Define, for each cell $x_m$ and momentum row $n$, the **local coherence
+Define, for each cell $x_m$ and particle row $r$, the **local coherence
 order parameter** and its normalised form
 
 ```math
-Z_n(x_m, t) \;=\; \sum_{j \in (x_m, \thinspace n)} e^{i\Phi_j(x_m, t)},
+Z_r(x_m, t) \;=\; \sum_{j \in (x_m, \thinspace r)} e^{i\Phi_j(x_m, t)},
 \qquad
-\hat Z_n \;=\; \frac{Z_n}{N_n},
+\hat Z_r \;=\; \frac{Z_r}{N_r},
 \qquad
-N_n = \#\lbrace j \in (x_m, n)\rbrace,
+N_r = \#\lbrace j \in (x_m, r)\rbrace,
 ```
 
-the sum running over sea particles in that cell and row. Note
-$\lvert \hat Z_n \rvert \le 1$, with equality exactly under (S).
+the sum running over sea particles in that cell and row, only even $r$
+being populated. Note $\lvert \hat Z_r \rvert \le 1$, with equality
+exactly under (S).
 
-**Theorem R4 (factorisation).** For an excess particle at row $n$ in
-cell $x_m$, the total affine vertex weight summed over all admissible
-mediating pairs is
+**Theorem R4 (factorisation).** For an excess particle at row $r$ in
+cell $x_m$ and a vertex in direction $s$, the total affine weight summed
+over all admissible mediating pairs is
 
 ```math
 \sum_{a,\thinspace b} \big[\thinspace w_0 + \kappa\thinspace\cos\mu_{ab}\thinspace\big]
-\;=\; w_0\thinspace N_{n+q}\thinspace N_{n-q}
-\;+\; \kappa\thinspace\mathrm{Re}\big(Z_{n+q}\thinspace\overline{Z_{n-q}}\big),
+\;=\; w_0\thinspace N_{r+2sq}\thinspace N_{r}
+\;+\; \kappa\thinspace\mathrm{Re}\big(Z_{r+2sq}\thinspace\overline{Z_{r}}\big),
 ```
 
-exactly, with $a$ ranging over row $n + q$ and $b$ over row $n - q$ in
-the cell.
+exactly, with $a$ ranging over the out-row $r + 2sq$ and $b$ over the
+in-row $r$ in the cell.
 
 *Proof.* $\cos\mu_{ab} = \mathrm{Re}\thinspace e^{i(\Phi_a - \Phi_b)}$,
 and the double sum of a product of a function of $a$ with the conjugate
@@ -192,7 +209,7 @@ of a function of $b$ factorises. $\square$
 **Corollary R4.1 (the vertex rule).** The firing probability is
 
 ```math
-P \;=\; w_0 \;+\; \kappa\thinspace\mathrm{Re}\big(\hat Z_{n+q}\thinspace\overline{\hat Z_{n-q}}\big),
+P \;=\; w_0 \;+\; \kappa\thinspace\mathrm{Re}\big(\hat Z_{r+2sq}\thinspace\overline{\hat Z_{r}}\big),
 ```
 
 manifestly independent of the sea depth $B$ and automatically inside
@@ -203,15 +220,15 @@ reduces to $w_0 + \kappa\cos\mu$.
 **Corollary R4.2 (cost).** The encounter loop of §4 of the specification
 costs $O(N_{\mathrm{exc}} \cdot B)$ because each excess particle is
 paired against every sea partner in its cell. Under Theorem R4 the sea
-enters only through $\lbrace Z_n, N_n \rbrace$, which are assembled in
+enters only through $\lbrace Z_r, N_r \rbrace$, which are assembled in
 one pass, so the cost falls to
 $O(N_{\mathrm{exc}} + N_{\mathrm{sea}})$. The sea-subsampling workaround
 of §4 becomes unnecessary, and the last entry of §11's known gaps is
 closed.
 
 **Corollary R4.3 (darkness is derived).** A sea with random phases has
-$\lvert \hat Z_n \rvert = O(N_n^{-1/2})$, hence
-$\lvert \mathrm{Re}(\hat Z_{n+q}\overline{\hat Z_{n-q}}) \rvert
+$\lvert \hat Z_r \rvert = O(N_r^{-1/2})$, hence
+$\lvert \mathrm{Re}(\hat Z_{r+2sq}\overline{\hat Z_{r}}) \rvert
 = O(N^{-1})$: an incoherent sea is dark without a separate postulate,
 and the ensemble scaling of open item 4 of the predecessor is read off
 $\lvert \hat Z \rvert$ directly.
@@ -221,7 +238,7 @@ $\lvert \hat Z \rvert$ directly.
 The pump writes onto each family $s = \pm 1$ the misalignment of Lemma 5,
 $\mu^{s}(x, t) = s(K_q x + \phi_q) + \pi/2 - sK_q\bar v^{s} t$, with
 contrast $\mu_1 = V_q \tau_p / \hbar$. Under (S) each family contributes
-$\mathrm{Re}(\hat Z_{n+q}\overline{\hat Z_{n-q}}) = \cos\mu^{s}
+$\mathrm{Re}(\hat Z_{r+2sq}\overline{\hat Z_{r}}) = \cos\mu^{s}
 = -\thinspace s \sin(K_q x + \phi_q)$, and with the equal split of the
 real pump into two conjugate families the net signed rate is
 
@@ -349,6 +366,23 @@ run, July 2026), $\hbar = m = 1$, $L = 8$, $q = 1$, $\phi_q = 0.7$.
   (relational); Model II readings $+0.764842$ and $+0.000302$.
 - **Part G (§8).** The consumption arithmetic above, reproduced from the
   cosine-well parameters.
+- **Part H (§1, and §1.2 of the specification).** Five same-row legs
+  spread across a cell agree in transported phase to
+  $8.9 \times 10^{-16}$, giving $\lvert\hat Z_r\rvert = 1$; the
+  intra-cell pump spread predicted at $\mu_1 K_q \Delta x
+  = 1.5 \times 10^{-3}$ rad per pump stays bounded over $1306$ pumps
+  ($\lvert\hat Z_r\rvert \ge 0.9996$, first-half mean $0.999878$
+  against second-half $0.999855$), so it is oscillatory rather than
+  secular.
+
+![Cells and rows](https://raw.githubusercontent.com/billpage/wpmw/output/figures/lattice_cells_and_rows.png)
+
+*(a) exact momentum rows against sweepable spatial cells: solid rows
+carry particles at even $`r`$, the dashed midpoint is empty for odd
+$`q`$, and the highlighted cell shows a vertex carrying an excess
+particle from row $`r`$ to row $`r + 2q`$ under the mediation of those
+two rows. (b) the one effect of cell width, the intra-cell pump spread,
+over a full cosine-well run.*
 
 ![Relational pairing and the carrier-lock condition](https://raw.githubusercontent.com/billpage/wpmw/output/figures/relational_pairing.png)
 
@@ -360,10 +394,14 @@ half-power of $`N`$ in the variance.*
 
 ## 10. What changes in the specification
 
+- **§1.1** — new: the row-index convention, separating the particle row
+  $r$ from the vertex midpoint $n$ with the dictionary $n = r + sq$.
+- **§1.2** — new: what a cell is and what a row is, with the figure of
+  §9 below.
 - **§2.2** — replaced: no partnership stored; admissibility re-derived
   from cell and row; Postulate (S) stated with its justification and its
   testability.
-- **§4** — rewritten around $Z_n$; the subsampling workaround removed.
+- **§4** — rewritten around $Z_r$; the subsampling workaround removed.
 - **§5.1, §5.3** — the admissibility test becomes a row condition; the
   affine weight becomes Corollary R4.1.
 - **§5.4** — the struck partner's exit phase is no longer solved from a
@@ -382,7 +420,7 @@ half-power of $`N`$ in the variance.*
    legs sit on different rows, $\varepsilon$ is constant within a row and
    factors out as a sign; but the general bilinear form
    $\sum_{\sigma\sigma'} c_{\sigma\sigma'}
-   \mathrm{Re}(Z^{\sigma}_{n+q}\overline{Z^{\sigma'}_{n-q}})$ has not
+   \mathrm{Re}(Z^{\sigma}_{r+2sq}\overline{Z^{\sigma'}_{r}})$ has not
    been fixed from first principles, only specialised to the case where
    it reduces to the above.
 2. **Phase continuity at the vertex.** §10 above proposes that both legs
@@ -394,7 +432,7 @@ half-power of $`N`$ in the variance.*
    it is preserved by the dynamics — whether vertices and streaming
    degrade $\lvert\hat Z\rvert$ over a run, and at what rate — is not
    known. This is the sharpened form of open item 4 of the predecessor,
-   and $\lvert\hat Z_n(x)\rvert$ is the observable to instrument.
+   and $\lvert\hat Z_r(x)\rvert$ is the observable to instrument.
 4. **Multi-mode potentials.** Each mode $q$ supplies its own row pairing
    $(n - q, n + q)$, so a multi-mode potential requires one order
    parameter per row and a sum over $q$. First-order additivity is
