@@ -33,6 +33,12 @@ Derivation and implementation were developed jointly with Claude
 (Anthropic), July 2026. Companion code: `src/demo_phase_alignment.py`.
 All numerical claims in §8 are outputs of that demo.
 
+**Sequel.** [`relational_pairing_and_carrier_lock.md`](relational_pairing_and_carrier_lock.md)
+removes stored partnership from the algorithm specification, at the cost
+of one postulate, and corrects an accounting defect in the sea's
+lifetime. Nothing in the present note is retracted there; open items 2,
+4 and 5 below are revised by it.
+
 ## 1. Tutorial: the interaction in five steps
 
 Informal; everything asserted here is stated and proved in §§2–6.
@@ -440,7 +446,11 @@ formulation remains the implementable one.
    code.
 2. **Misalignment ledger.** Recast open item 3 of the predecessor as a
    distribution over $(x, \bar p, \Delta p, \mu)$ and re-derive the
-   steady state under continuous pumping in those variables.
+   steady state under continuous pumping in those variables. *Revised by
+   the sequel*: under the carrier-lock postulate the ledger reduces to
+   the per-cell, per-row order parameter
+   $Z_n(x) = \sum_j e^{i\Phi_j}$, which by the sequel's Theorem R4 is
+   sufficient. The steady state remains open.
 3. **Multi-mode superposition.** In the $\mu$ language a multi-mode pump
    gives each pair a misalignment that is a sum of mode contributions;
    verify first-order additivity and locate the cross-mode terms
@@ -451,13 +461,21 @@ formulation remains the implementable one.
    correlated signatures — loss of locality of $\mu$, a linear-to-
    quadratic crossover in the response, and a change from $N$ to
    $\sqrt N$ in the ensemble scaling. Testing whether they arrive
-   together is a sharper probe than any one alone.
+   together is a sharper probe than any one alone. *Revised by the
+   sequel*: all three are readings of $\lvert\hat Z_n(x)\rvert$, and the
+   question sharpens to whether the dynamics preserves the carrier lock.
 5. **Uniformly offset pairs.** The dynamics of the middle row of the
    table remains open, as in the predecessor's item 6. Note that
    Corollary 4.2 leaves a post-vertex pair with $\Delta p = 0$ but
    generally separated, so a nonuniform potential will drive it into the
    uniformly-offset state at rate
-   $[V(x_a) - V(x_b)]/\hbar$.
+   $[V(x_a) - V(x_b)]/\hbar$. *Corrected by the sequel*: a pair at
+   $\Delta p = 0$ has transfer size $\lvert\Delta p\rvert = 0$ by
+   Corollary 4.3 and can never mediate again, so under permanent
+   partnership the sea is a consumable resource with no source
+   (Proposition R5 of the sequel). This is a defect of the bookkeeping,
+   not of Theorem 4, and it does not arise once partnership is
+   removed.
 
 ## 12. Relation to existing formalisms
 
