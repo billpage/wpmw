@@ -19,6 +19,18 @@ imported by the scripts here.
   jump forms — `step_jump_four_rule` (mesh) and `step_jump_four_rule_mc`
   (particle MC) — specified in
   `docs/analysis/four_rule_microdynamics_equivalence.md`.
+- `wpmwlib/sea_dressed_lattice.py` — `SeaDressedLattice`, a subclass of
+  `PhaseSpaceCrystalLattice` implementing the sixteen-channel two-body
+  microdynamics of `docs/analysis/sea_dressed_microdynamics.md`. Carries three
+  integer fields per cell — unpaired positons `U+`, unpaired negatons `U-`,
+  and ground-state neutral pairs `S` — with the observable excess
+  `E = U+ - U-` and sea background `S_bar = B`, the integer image of the
+  crystal shift 2/h. Exposes the Monte-Carlo channel step
+  (`step_jump_sea_mc`), the mesh-form channel generator
+  (`channel_generator_mesh`) used for the exactness check, a recombination
+  step (`step_recombine`, which leaves `E` invariant and so lives entirely
+  outside the QLE generator), and the diagnostics `sea_min_fraction`,
+  `unpaired_total` and `worldline_invariants`.
 - `wpmwlib/wigner_split_fourier.py` — reference solver: Strang-split spectral
   Fourier on the Wigner equation. Specialized to QHO; for general V the
   force-kick kernel must be replaced by the full Wigner–Moyal kernel.
@@ -26,6 +38,10 @@ imported by the scripts here.
   math linter" below).
 
 ## Runnable scripts
+
+Grouped by role. Within each group the order is the order to read them in.
+
+### Solver demos
 
 - `demo_qho_ground_state.py` — demo: QHO ground-state preservation; compares
   the crystal-lattice solver and the split-Fourier reference. Insensitive to
@@ -138,6 +154,11 @@ imported by the scripts here.
   well bound (turning points well below V_max = +V_p).  Tick marks at
   t = T_period, 2 T_period, 3 T_period sit close together on each orbit,
   confirming the period.
+### Microdynamics ladder
+
+Each demo verifies one rung of the derivation ladder in `docs/analysis/`;
+see that directory's README for the ladder itself.
+
 - `demo_four_rule_equivalence.py` — verification companion to
   `docs/analysis/four_rule_microdynamics_equivalence.md`, which analyses the
   proposal (D. Cyganski, 2026) to replace the single mediated-jump rule with
@@ -166,6 +187,243 @@ imported by the scripts here.
 
   Relative L² deviation from the mesh for both MC runs (left) and Wigner
   negativity for all three evolutions (right).
+- `demo_sea_dressed_dynamics.py` — verification companion to
+  `docs/analysis/sea_dressed_microdynamics.md`, which takes the step left
+  open by the four-rule note's no-go lemma: the occupancy stencils are
+  realised as sixteen local, momentum-conserving, two-body collision
+  channels between world-particles, with a Dirac sea of positon–negaton
+  pairs supplying the pinned-density reservoir that linearity requires.
+  Part A assembles the sixteen-channel mean-field generator channel by
+  channel — crossing conjugates included — on *independent* random `U+` and
+  `U-` fields and compares it against the original single-rule stencil
+  acting on `E = U+ - U-`; agreement to machine precision verifies the
+  channel table's bookkeeping.  Part B evolves the same squeezed Gaussian in
+  the cosine well as the four-rule demo six ways: deterministic mesh QLE,
+  four-rule MC as the noise-floor reference, sea-dressed MC against a pinned
+  sea, and sea-dressed MC with a live ledger at three recombination rates
+  κ_rec.  With κ_rec = 0 the sea drains and the orphan load inflates —
+  every capture, split and emission event orphans a partner — and increasing
+  κ_rec converges the live run onto the pinned one.  The worldline
+  invariants (`U+ + S` and `U- + S` totals) are asserted constant across
+  every jump and recombination event.
+
+  Sample output figures (committed on the `output` branch):
+
+  ![Sea-dressed evolution](https://raw.githubusercontent.com/billpage/wpmw/output/figures/sea_dressed_evolution.png)
+
+  4×4 grid at four snapshot times: mesh QLE, sea-dressed MC against a pinned
+  sea, and live-sea MC at the smallest and largest κ_rec.  The suptitle
+  carries the Part A generator-identity error alongside ν.
+
+  ![Sea-dressed metrics](https://raw.githubusercontent.com/billpage/wpmw/output/figures/sea_dressed_metrics.png)
+
+  Three panels over the run: relative L² deviation from the mesh (fidelity),
+  worst-cell sea depletion min S/B, and the unpaired population `U+ + U-`.
+  Read together they show the failure mode of an unreplenished sea and its
+  repair by recombination.
+- `demo_phase_resonance_rates.py` — verification companion to
+  `docs/analysis/phase_resonance_microdynamics.md`, which derives the sea's
+  polarisation instead of postulating it by giving world-particles a de
+  Broglie phase (P0–P3).  Part A checks the beat kinematics: two legs split
+  by 2q·dp beat as a full-contrast grating at exactly the mode-q wavelength,
+  drifting at the mean velocity p̄/m (Proposition 1).  Part B checks Bragg
+  selection: one split-operator kick of a plane wave scatters to exactly
+  p₀ ± 2q·dp with amplitude i·V_p·dt/(2ħ) per sideband — the full quantum,
+  linear in V_p, with the refractive factor i.  Part C checks the midpoint
+  identity: the exact first-order Wigner change of the kicked plane wave
+  equals the single-cosine QLE stencil at the midpoint sites n₀ ± q, so the
+  stencil's half-quantum offsets are the interference midpoints of a
+  full-quantum transfer.  Part D is a rate-table toy in which sea pairs carry
+  particle-level data only, verifying that the per-channel rate, its
+  quadrature, the factor γ/2 and the direction field σ are all *derived*
+  (Theorem 3); that the pattern-phase spread across pairs pumped at random
+  locations is zero to machine precision (Lemma 2 — coherence for free); and
+  that time-averaging along the transition worldline dephases every row
+  except the resonant one.
+
+  Sample output figures (committed on the `output` branch):
+
+  ![Phase grating of the sea](https://raw.githubusercontent.com/billpage/wpmw/output/figures/phase_grating_sea.png)
+
+  One pair's beat, the coherence of the grating across pairs, and the
+  quadrature relation to V(x).
+
+  ![Phase grating in space-time](https://raw.githubusercontent.com/billpage/wpmw/output/figures/phase_grating_spacetime.png)
+
+  Beat crests in the (x, t) plane and the refraction of a worldline crossing
+  them.
+
+  ![Phase-resonance rate law](https://raw.githubusercontent.com/billpage/wpmw/output/figures/phase_resonance_rate_law.png)
+
+  The derived rate law and the row-selection rule.
+- `demo_contact_vertex_reduction.py` — companion to §13 of
+  `docs/analysis/phase_resonance_microdynamics.md`, which replaces the P5
+  weight by a two-level unitary contact interaction
+  `h = g0 + g1·C·exp(i δ)`, `P_flip = sin²(|h| τ_e)`, with δ the struck
+  beat's pattern phase at the vertex.  No phase offset is fitted anywhere.
+  R1: the note's rate law re-emerges with the analytically predicted
+  coefficient and the correct quadrature sign, δ₀ = 0 being *derived* from
+  hermiticity rather than matched.  R2: the residual scales as O(C³),
+  because the O(C²) term of |h|² is direction-symmetric and cancels in the
+  net, so linear response is exact at first order.  R3: g0 → 0 kills the
+  response — "no noise, no force" — since the coefficient tracks
+  sin(2 g0 τ_e), making the bare phase-blind exchange traffic the carrier of
+  the quantum force rather than removable noise.  R4: with two pumped modes
+  the gross rate acquires an O(C²) spatial modulation at the difference
+  wavevector, which is the signature that discriminates the amplitude vertex
+  from the bare affine P5 (which predicts exactly zero).
+
+  Sample output figure (committed on the `output` branch):
+
+  ![Contact-vertex concept](https://raw.githubusercontent.com/billpage/wpmw/output/figures/contact_vertex_concept.png)
+
+  Anatomy of the contact, the phasor sum, the emerging rate law, and the
+  consequence tree.
+- `demo_phase_alignment.py` — verification companion to
+  `docs/analysis/phase_alignment_microdynamics.md` and
+  `docs/algorithm/phase_alignment_microdynamics_algorithm.md`.  The note
+  eliminates the beat, the grating and the resonance condition in favour of
+  one scalar carried by a pair, the misalignment μ of two transported clock
+  phases; this demo checks that the replacement loses nothing.  Part A
+  (Lemma 4): μ is invariant under a global phase shift and under
+  re-referencing either worldline, and the pair amplitude depends on the
+  partners only through μ.  Part B (Proposition 3): μ winds in space at
+  ∂μ/∂x = Δp/ħ and along a path of velocity v at
+  μ̇ = (Δp/ħ)(v − v̄_pair), so "beating" is nothing but Δp ≠ 0 and no
+  propagating object is involved.  Part C is the exchange theorem —
+  requiring μ to be stationary along the transition path, together with
+  momentum conservation, forces the vertex to be a momentum *swap*, after
+  which energy conservation is automatic rather than imposed.  Parts D–E
+  check the locality of μ under the pump and the quadrature and linearity of
+  the vertex bias; Part F checks that the resulting stencil preserves L¹ on
+  the ring.
+
+  Sample output figure (committed on the `output` branch):
+
+  ![Phase-alignment contact interaction](https://raw.githubusercontent.com/billpage/wpmw/output/figures/phase_alignment_contact.png)
+
+  Six panels: transporting two clocks to a common point to define μ; the
+  three states of a pair; the pump making μ a function of place; the vertex
+  as a momentum swap; the stationarity condition; and the ensemble limit.
+- `demo_relational_pairing.py` — verification companion to
+  `docs/analysis/relational_pairing_and_carrier_lock.md`, which removes the
+  stored partner index of §2.2 of the phase-alignment specification in
+  favour of a misalignment defined over *every* ordered pair of
+  world-particle indices.  Part A shows μ_ij is antisymmetric and satisfies
+  the cocycle identity exactly, so the two-index family is the coboundary of
+  the one-index field Φ and a stored index carries no relational state.
+  Part B exhibits the obstruction: a free per-pair carrier phase suppresses
+  the all-pairs average by 1/B while leaving the partnered average
+  untouched.  Part C imposes the carrier-lock postulate (S) — a common
+  transported phase per (cell, row), the literal reading of "phase-space
+  *crystal* lattice" — and recovers exact equivalence.  Part D is the
+  factorisation: under (S) the double sum collapses onto a per-cell,
+  per-row order parameter Z, turning the O(N_exc · B) vertex loop into
+  O(N_exc + N_sea) with a measured speedup of ≈6850× at N = 8192.  Part E
+  reassembles Γ_q(x) from Z alone with the carrier cancelling identically.
+  Part F is the deciding experiment: under per-particle noise the two forms
+  agree in the mean and differ by √N in variance, while under
+  pair-correlated noise they differ *in the mean*.  Part G sizes the
+  consumable-sea deficit for the cosine-well parameters, and Part H
+  separates the two labels in (S) — an exact momentum row against a
+  sweepable spatial cell.
+
+  Sample output figures (committed on the `output` branch):
+
+  ![Relational pairing](https://raw.githubusercontent.com/billpage/wpmw/output/figures/relational_pairing.png)
+
+  The obstruction of Part B, the stencil rate assembled from Z alone against
+  the analytic Γ_q(x), and the variance separation of Part F.
+
+  ![Lattice cells and rows](https://raw.githubusercontent.com/billpage/wpmw/output/figures/lattice_cells_and_rows.png)
+
+  Exact momentum rows against sweepable spatial cells, and the intra-cell
+  pump spread over a full cosine-well run.
+### Figure generators and regression tests
+
+- `gen_microdynamics_4d_figures.py` — generates the five schematic
+  (blackboard-style) figures for
+  `docs/supplement/phase_space_crystal_lattice_4d_supplement.md`, in the
+  visual idiom of the Sozi slides reproduced in the crystal-lattice
+  supplement: red positons, green negatons, blue mediator.  Contrasts two
+  particles in 1 spatial dimension against one particle in 2 spatial
+  dimensions, which share a 4-dimensional joint phase space but slice it
+  differently.  No physics is computed here — the script draws, it does not
+  verify.
+
+  Output figures (committed on the `output` branch):
+
+  ![4D layouts](https://raw.githubusercontent.com/billpage/wpmw/output/figures/microdynamics_4d_layouts.png)
+
+  The two natural slicings of the shared 4-dimensional joint phase space.
+
+  ![4D Fourier modes](https://raw.githubusercontent.com/billpage/wpmw/output/figures/microdynamics_4d_fourier_modes.png)
+
+  Mode support: the 2p/1D pair potential lives on a 1-D line in joint
+  wavevector space, while 1p/2D modes can fill all of Z².
+
+  ![4D jumps](https://raw.githubusercontent.com/billpage/wpmw/output/figures/microdynamics_4d_jumps.png)
+
+  Per-event momentum-space displacement: 2p/1D jumps are confined to the
+  anti-diagonal; 1p/2D jumps point in arbitrary directions.
+
+  ![4D centre-of-mass and relative coordinates](https://raw.githubusercontent.com/billpage/wpmw/output/figures/microdynamics_4d_com_relative.png)
+
+  The same jump rule in the original (p₁, p₂) basis and in the rotated
+  (P, p_rel) basis, where the separation is manifest — the algebraic shadow
+  of "2p/1D is hidden 1+1-D".
+
+  ![4D starburst](https://raw.githubusercontent.com/billpage/wpmw/output/figures/microdynamics_4d_starburst.png)
+
+  Crystal-lattice mediator picture: a virtual quantum exchanged between the
+  two particles in 2p/1D, against a single particle absorbing a vectorial
+  kick in 1p/2D.
+- `gen_phase_alignment_interaction_diagrams.py` — companion to
+  `docs/supplement/phase_alignment_interaction_diagrams.md`.  Draws every
+  elementary process of the phase-alignment layer twice, in the format of §4
+  of the crystal-lattice supplement: once as a lattice picture in the (x, p)
+  plane and once as trajectories in the (x, t) plane.  Three checks run
+  before anything is drawn.  Part A confirms the vertex is a swap: the
+  two-condition system returns p_in = p_b and p_out = p_a at zero residual,
+  Σp and Σp² are conserved without either being imposed, and the union of
+  the two worldlines is *identical* to two straight lines crossing — the
+  exchange permutes labels, not trajectories.  Part B confirms the sinc
+  dephasing envelope for off-stationary candidates against direct numerical
+  averaging.  Part C builds a sea row as a ring amplitude and reads the
+  misalignment off the Kapitza–Dirac sidebands, whose relative amplitude
+  comes out at μ₁/2 as predicted; this is the check that exposes the sign
+  discrepancy recorded in §7 of the document, where the kick sign of §6 of
+  the algorithm specification reproduces −Γ_q(x) while the opposite sign
+  reproduces +Γ_q(x) and Lemma 5 as printed.
+
+  Output figures (committed on the `output` branch), one per process, each
+  with a space–momentum panel and a space–time panel:
+
+  ![Free leg](https://raw.githubusercontent.com/billpage/wpmw/output/figures/pa_int_0_free_leg.png)
+
+  Process 0, the free leg: momentum is constant and only the carried clock
+  advances, so the worldline is straight through any potential whatever.
+
+  ![The pump](https://raw.githubusercontent.com/billpage/wpmw/output/figures/pa_int_1_pump.png)
+
+  Process 1, the pump: the only place the potential touches a
+  world-particle, and it touches phase alone.  Nothing moves in the (x, p)
+  panel; the clock kick differs from place to place because V does.
+
+  ![Exchange, s = +1](https://raw.githubusercontent.com/billpage/wpmw/output/figures/pa_int_2_exchange_up.png)
+
+  Process 2, the exchange at s = +1: the excess particle hops up by 2q·dp
+  and one sea leg hops the other way.
+
+  ![Exchange, s = −1](https://raw.githubusercontent.com/billpage/wpmw/output/figures/pa_int_3_exchange_down.png)
+
+  Process 3, the same vertex run downward, drawn with p_out = 0 so that the
+  label-permutation reading is hard to miss.
+
+  ![Suppressed channels](https://raw.githubusercontent.com/billpage/wpmw/output/figures/pa_int_4_suppressed.png)
+
+  Process 4, the suppressed channels: nothing is forbidden, and misaligned
+  traffic simply averages away.
 - `sign_convention_check.py` — regression test for the §6.3 sign correction
   in `docs/supplement/phase_space_crystal_lattice_supplement.md`. Compares
   three candidate discrete update rules (V2 general formula, V2 simplified /
