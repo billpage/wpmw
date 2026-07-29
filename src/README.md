@@ -484,6 +484,24 @@ etc.). Those passes need `node` plus `katex` and `mathjax-full` from npm; if
 they are not available, the linter prints a notice and skips them, still
 running the static and structural passes.
 
+The module is kept in lockstep with the standalone version at
+[billpage/GitHubLinter](https://github.com/billpage/GitHubLinter), which
+carries the same checks without the WPMW packaging. Fixes flow in both
+directions; when they diverge, diff the two files before adding a check to
+either.
+
+**One negative result worth recording.** An earlier revision flagged
+`` `$...$` `` — backtick *outside* the dollar signs — as broken, on the
+theory that GitHub's math pipeline runs before inline-code processing and
+would reinterpret the content as math anyway. It does not. Tested upstream
+against GitHub's own renderer (`POST https://api.github.com/markdown`,
+`mode=gfm`), every such instance came back as a plain `<code>` element with
+no `<math-renderer>` wrapper, while the bare form without backticks did
+produce one. A code span that forms at all removes its content from
+consideration entirely, as CommonMark requires. The check is gone; writing
+`` `$...$` `` in prose to *talk about* dollar-math is safe, which is what
+the style guide below does throughout.
+
 ### Run locally
 
 From the repository root:
