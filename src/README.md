@@ -520,7 +520,11 @@ directory to override. Exit code is `0` on a clean scan, `1` if issues
 were reported.
 
 The same check runs in CI on every push and pull request via
-`.github/workflows/check_md_math.yml`.
+`.github/workflows/check_md_math.yml`, which passes `src/README.md`
+explicitly in addition to the defaults — this file documents the math
+syntax rules and quotes the broken forms as examples, so it is worth
+keeping under the linter's eye. The module's own defaults are left
+matching upstream `GitHubLinter` rather than being changed here.
 
 ### Style guide for math in WPMW markdown
 
