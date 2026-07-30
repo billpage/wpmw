@@ -339,6 +339,29 @@ see that directory's README for the ladder itself.
 
   Exact momentum rows against sweepable spatial cells, and the intra-cell
   pump spread over a full cosine-well run.
+- `demo_pairing_resource_arithmetic.py` — verification companion to
+  `docs/analysis/permanent_pairing_density_matrix.md`, which revisits
+  permanent positon–negaton pairing under the density-matrix reading (pair =
+  sampled element of ρ; positon = ket leg, negaton = bra leg).  Runs the
+  exact split-operator Schrödinger arm on the canonical cosine well and
+  compares two accountings of the sea's aligned-pair budget.  Check 1: the
+  local load factor |W|·(h/2) never exceeds 1 — Wigner's bound, the same
+  inequality that makes W' = W + 2/h non-negative — with a narrow-packet
+  control saturating it to 6 digits.  Check 2: the global off-diagonal mass
+  C(t) of ρ(P,P') stays bounded (peak 10.3) against one state-mass unit of
+  aligned stock per momentum row, with half the coherence within 4 one-leg
+  hops of the diagonal.  Check 3: the consumable model of the relational
+  note's §8 exhausts the busiest cell at t* ≈ T/76 on accepted events alone,
+  reproducing the ≈770× shortfall ν-independently.  Check 4: flow
+  feasibility is the triangle inequality on W' ≥ 0.
+
+  Sample output figure (committed on the `output` branch):
+
+  ![Pairing resource arithmetic](https://raw.githubusercontent.com/billpage/wpmw/output/figures/pairing_resource_arithmetic.png)
+
+  The load-factor map capped by the Wigner bound, bounded storage demand
+  against linearly growing consumable demand, and the off-diagonal
+  density-matrix mass the split pairs must carry.
 ### Figure generators and regression tests
 
 - `gen_microdynamics_4d_figures.py` — generates the five schematic

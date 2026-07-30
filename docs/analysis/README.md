@@ -56,13 +56,26 @@ retracts.
    formulation concealed — under permanent partnership the sea is a
    consumable resource with no source, short by ≈770× for the cosine-well
    parameters.
+7. **`permanent_pairing_density_matrix.md`** — Reinstates permanent pairing
+   under a density-matrix reading: a pair is a sampled element of ρ (positon =
+   ket leg, negaton = bra leg, μ = arg ρ), an excess particle a diagonal
+   sample. Retracts two *inferences* of its predecessor while keeping its
+   calculations: pairing adds nothing to the one-particle marginal but is the
+   entire content of the two-point function; and the pump — whose sidebands
+   *are* split-pair amplitudes — is the source Corollary R5.1 declared
+   absent. Derives the stencil and the mediated counting from one-leg hops of
+   bound pairs, shows storage feasibility is exactly the Wigner bound
+   |W| ≤ 2/h (the same inequality as W' ≥ 0), makes postulate (S)
+   unnecessary, and leaves one load-bearing theorem: split pairs mediate with
+   the same vertex constant as pump-excited pairs.
 
 ## Companion code
 
 Every note lists its verifying script in §0 and its numerical results in a
 late section. In ladder order: `src/demo_four_rule_equivalence.py`,
 `src/demo_sea_dressed_dynamics.py`, `src/demo_phase_resonance_rates.py`,
-`src/demo_phase_alignment.py`, `src/demo_relational_pairing.py`. All
+`src/demo_phase_alignment.py`, `src/demo_relational_pairing.py`,
+`src/demo_pairing_resource_arithmetic.py`. All
 non-trivial claims in these notes are verified numerically before inclusion.
 
 ## Related
