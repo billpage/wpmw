@@ -42,11 +42,18 @@ extended derivations belong in `docs/supplement/` and `docs/analysis/`.
   Deliberately more expensive and less accurate than the mesh algorithm for
   any problem the mesh algorithm can solve; its purpose is to make the
   ontology executable, so that claims about what the model *is* can be tested
-  rather than asserted. §6 (the steady state under continuous pumping) is
-  **[open]**, and §2.2 is revised by
-  `../analysis/relational_pairing_and_carrier_lock.md`, which removes stored
-  partnership. Companion code `src/demo_phase_alignment.py` verifies §§2–5 in
-  isolation; a full live-sea integrator is not yet in `wpmwlib`.
+  rather than asserted. Revised twice in July 2026: first to a relational
+  formulation under postulate (S)
+  (`../analysis/relational_pairing_and_carrier_lock.md`), then to **permanent
+  pairing** under the density-matrix reading
+  (`../analysis/permanent_pairing_density_matrix.md`), which withdraws (S),
+  splits the vertex into write and erase channels, and predicts — rather than
+  codes — the mediated QLE generator. §6 (the steady state under continuous
+  pumping) remains **[open]**. Companion code `src/demo_phase_alignment.py`
+  verifies §§2–5 in isolation and
+  `src/demo_pairing_resource_arithmetic.py` the storage-capacity arithmetic;
+  a full live-sea integrator is not yet in `wpmwlib`, and §10 rungs 5–6
+  define the decisive test it must pass.
 
 ## Reading order
 
