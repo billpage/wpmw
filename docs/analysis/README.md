@@ -68,6 +68,17 @@ retracts.
    |W| ≤ 2/h (the same inequality as W' ≥ 0), makes postulate (S)
    unnecessary, and leaves one load-bearing theorem: split pairs mediate with
    the same vertex constant as pump-excited pairs.
+8. **`coherence_ladder.md`** — Indexes ρ by splitting rung and derives the
+   complete first-order channel table of the pairing vertex from
+   stationarity: exact (K3), leg-local ladder, and compound classes. Proves
+   the ladder theorem — four leg-local channels (struck leg ket/bra ×
+   direction), sea strikers for interior edges, phase continuity, conjugate
+   bra factors and one constant reproduce the commutator elementwise at
+   machine precision, freezing exactly at V = 0. Corrects five earlier
+   statements, including the spec's "sea–sea optional" (the sea is the
+   interior engine) and its erase amplitude (all transfers carry μ₁, by the
+   licensing argument). Leaves open: striker back-reaction neutrality and
+   compound-channel cancellation.
 
 ## Companion code
 
@@ -75,7 +86,8 @@ Every note lists its verifying script in §0 and its numerical results in a
 late section. In ladder order: `src/demo_four_rule_equivalence.py`,
 `src/demo_sea_dressed_dynamics.py`, `src/demo_phase_resonance_rates.py`,
 `src/demo_phase_alignment.py`, `src/demo_relational_pairing.py`,
-`src/demo_pairing_resource_arithmetic.py`. All
+`src/demo_pairing_resource_arithmetic.py`,
+`src/demo_coherence_ladder.py`. All
 non-trivial claims in these notes are verified numerically before inclusion.
 
 ## Related

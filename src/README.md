@@ -362,6 +362,28 @@ see that directory's README for the ladder itself.
   The load-factor map capped by the Wigner bound, bounded storage demand
   against linearly growing consumable demand, and the off-diagonal
   density-matrix mass the split pairs must carry.
+
+- `demo_coherence_ladder.py` — verification companion to
+  `docs/analysis/coherence_ladder.md`, which indexes ρ(P,P') by splitting
+  rung k = (P−P')/(2q·dp) and derives the vertex channel table from
+  stationarity.  Part A confirms the table: the exact channel (own winding,
+  sinc = 1 at p_in = mate's row) plus the leg-local ladder and compound
+  sideband channels, and nothing else.  Part B assembles the four
+  leg-local channels — struck leg ket/bra × direction, sea strikers, phase
+  continuity, refractive −i·e^{±iφ} with conjugate bra factors, one shared
+  constant c = V_q/2ħ — and matches the exact commutator −(i/ħ)[V,ρ] on a
+  random mixed state to 1.7×10⁻¹⁶ relative, Hermitian to 1.4×10⁻¹⁷, trace
+  drift 2.4×10⁻¹⁸, with the exact V = 0 freeze and zero diagonal flux on a
+  coherence-free state (Lemma 3 at the ladder level).  Part C draws the
+  ladder diagram.
+
+  Sample output figure (committed on the `output` branch):
+
+  ![Coherence ladder](https://raw.githubusercontent.com/billpage/wpmw/output/figures/coherence_ladder.png)
+
+  The density matrix as a ladder of splitting rungs with the four one-leg
+  hops, and the striker roles: excess for the population boundary, the
+  background sea for interior rungs.
 ### Figure generators and regression tests
 
 - `gen_microdynamics_4d_figures.py` — generates the five schematic

@@ -29,7 +29,17 @@ asserted. Anyone wanting Wigner dynamics should use
   of a relational misalignment over all ordered pairs, at the price of
   postulate (S), the sea carrier lock, following
   `docs/analysis/relational_pairing_and_carrier_lock.md`.
-- *July 2026 (this revision).* Permanent pairing is **reinstated** under
+- *July 2026 (ladder addendum).* Following
+  `docs/analysis/coherence_ladder.md`: interior ladder edges
+  ($k \to k \pm 1$ between stored rungs) are struck by the **background
+  sea**, not the excess — the sea-striker channel is structural, not
+  optional; the erase bias is corrected to the licensed bilinear form
+  (all transfers carry $\mu_1$ and freeze at $V = 0$); the §7 parity
+  remark is scoped to rung 1; and Corollary 4.2's exit state is scoped
+  to the exact channel. The four leg-local ladder channels reproduce the
+  commutator elementwise at machine precision
+  (`src/demo_coherence_ladder.py`).
+- *July 2026 (second revision).* Permanent pairing is **reinstated** under
   the density-matrix reading of
   `docs/analysis/permanent_pairing_density_matrix.md`: a pair is one
   sample of $\rho(X, X')$ — positon the ket leg, negaton the bra leg,
@@ -406,6 +416,15 @@ $\lvert \mathrm{sinc}(\tfrac{1}{2}\dot\mu\thinspace\tau_e)\rvert$ instead;
 **[choice]** — start with hard buckets, use the soft form to confirm the
 neglected traffic is negligible at the chosen $\tau_e$.
 
+**Sea strikers.** Encounters are not excess-only. A leg of a background
+pair co-located with a leg of a *split* pair proposes the ladder
+channels of §5.6, and this is structural: every interior ladder edge
+must be linear in the stored-pair count alone, which only a
+state-independent striker density provides
+(`../analysis/coherence_ladder.md` §4). Excess strikers carry exactly
+the population-boundary fluxes, whose rates are proportional to the
+populations that move.
+
 ---
 
 ## 5. The vertex
@@ -474,10 +493,16 @@ h \;=\; g_0 \;+\; g_1\thinspace A_k\thinspace e^{i s \mu_k},
 ```
 
 where $\mu_k$ is the misalignment of the participating pair read at the
-encounter event (§2.3) and $A_k$ its excitation amplitude: the pump
-sideband weight $\mu_1 = V_q\tau_p/\hbar$ for an aligned pair (write),
-unity for a split pair (erase), with the direction label $s$ orienting
-the ordered element as in §5 of the alignment note. The **same
+encounter event (§2.3) and $A_k$ its excitation amplitude — the pump
+sideband weight $\mu_1 = V_q\tau_p/\hbar$ in **every** channel, with
+the direction label $s$ orienting the ordered element as in §5 of the
+alignment note. For the erase, the pump path and the stored path reach
+the same final state and interfere, so the biased rate is the bilinear
+cross term $\propto \mu_1 \cos(\mu - \Lambda)$ — licensed with no
+reservoir, pump-proportional, frozen at $V = 0$. The earlier reading
+"amplitude unity for a split pair" is withdrawn: an isolated pair's
+linear-in-stored-contrast response is unlicensed
+(`../analysis/coherence_ladder.md` §5). The **same
 $g_0, g_1$ serve both channels** — this is the same-constant property,
 the one load-bearing assumption left (§0), asserted here and tested at
 §10 rung 6.
@@ -527,6 +552,21 @@ The species of the struck leg (ket or bra) is not constrained by the
 swap; the ordered element a split pair stores is read from its
 (ket row, bra row) in §7, and both orientations of the same element are
 admissible samples.
+
+### 5.6 Ladder channels
+
+A split pair's legs are struck too. The struck leg's **own** pump
+sideband supplies a co-moving pattern for the exchange
+$p_{\mathrm{in}} = P_{\mathrm{struck}} \pm 2q\thinspace dp$, stepping
+the pair's rung $k \to k \pm 1$ with the striker drawn from the
+background sea (§4) and the mate never queried. The four channels —
+struck leg ket or bra, direction $\pm$ — with phase continuity, the
+refractive $-i\thinspace e^{\pm i\phi_q}$ on ket strikes and its
+conjugate on bra strikes, and the same constant as §5.3, reproduce the
+von Neumann commutator elementwise at machine precision
+(`../analysis/coherence_ladder.md` §3, `src/demo_coherence_ladder.py`).
+The mate-sideband (compound) channels are expected neutral and are
+omitted from the reference loop **[open]** (ladder note §6).
 
 ---
 
@@ -586,10 +626,12 @@ W_{\mathrm{est}}(x_m, p_n) \;=\;
 
 the second sum over split pairs whose midpoint row is $n$ and whose legs
 bracket the cell; each contributes the interference fringe of its stored
-element read at the cell centre. For a single odd mode ($q = 1$, the
-cosine well) the two terms occupy disjoint rows — populations even,
-coherences odd — and the estimator is clean; for even $q$ they overlap
-on even rows (see §11).
+element read at the cell centre. Rung-1 pairs have midpoint parity of
+$q$, so for odd $q$ the rung-1 term and the populations occupy disjoint
+rows; **even rungs sit on even midpoint rows** and their contribution
+adds to the population term there, as do uniformly offset (gray) pairs,
+whose $\cos\mu \ne 1$ carries signed even-row content — the dual
+sampling of the ladder note §7.
 
 Aligned sea pairs are **not** binned: they are the medium. The uniform
 $2/h$ of the mesh representation is the aligned sea itself, and it
@@ -663,6 +705,10 @@ for each step:
                            mu <- stored pair misalignment at (x_m, t)
                            P  <- sin^2(|g0 + g1*exp(i*s*mu)| tau_e)
                            if uniform() < P:  swap; pair now aligned # 5.2
+                       # ladder: sea leg strikes a split pair's leg (5.6)
+               for each split pair with a leg in cell m:
+                   propose the four leg-local channels against the
+                   background-sea bucket at the leg's sideband rows
     assert:    invariants of 5.5
     diagnose:  W_est per section 7;  split census S_n;  load factor;
                |Z_r| and quadrature per section 2.5
@@ -689,6 +735,12 @@ In order; each rung is a regression test, and none should be skipped.
    random $W_0 \ge 0$, compared with one Euler step of the mesh form in
    `wpmwlib/phase_space_crystal_lattice.py`. Agreement at the shot-noise
    floor, improving as $N^{-1/2}$.
+4a. **Ladder generator.** The four leg-local channels of §5.6 against
+   the exact commutator, elementwise, on random states — already
+   machine-verified at expectation level by `demo_coherence_ladder.py`
+   (Part B: $1.7 \times 10^{-16}$ relative, exact $V = 0$ freeze); the
+   integrator must reproduce it stochastically, with rung census and
+   the $V = 0$ freeze as sub-diagnostics.
 5. **The no-go control.** Run the cosine well with the **erase channel
    disabled**. The prediction from the no-go lemma of the pairing note
    is *failure*: spurious momentum diffusion of order
@@ -731,19 +783,21 @@ In order; each rung is a regression test, and none should be skipped.
 - **Steady state** (§6, **[open]**) — the calibration is fitted, not
   derived; the pump/erase balance that should fix it now has both terms
   present but no derivation.
-- **Even-$`q`$ modes** — for even $q$ the transition midpoint is a
-  populated row, so the mediating content includes excess populations,
-  which are unpaired and have no defined role as partners. Candidate
-  resolutions: treat co-row excess particles as degenerate aligned pairs
-  for mediation; or decompose general potentials on a doubled ring where
-  all modes are odd; or a pure-pair representation in which populations
-  are also carried by aligned state-owned pairs. Unresolved; the cosine
+- **Even-$`q`$ modes** — narrowed by the ladder note §7: interior
+  mediation is sea-struck at any midpoint parity, so what remains open
+  for even $q$ is the population-boundary bookkeeping only. The cosine
   well ($q = 1$) does not touch it.
-- **Sea–sea channel** — swaps between legs of two sea pairs are defined
-  by the same vertex algebra, create pair–pair correlated coherence, and
-  are predicted neutral for the one-body sector at first order. The
-  reference loop of §9 omits them **[choice]**; the omission has not
-  been quantified.
+- **Striker back-reaction** — the sea-striker channel is structural
+  (§4, §5.6), and each interior-edge event displaces a background leg,
+  leaving the striker's own pair split by one quantum. This churn must
+  be neutral in expectation for the one-body sector; detailed balance
+  and family pairing make it plausible, and the integrator must
+  instrument it (ladder note §4). The former "sea–sea optional" entry is
+  superseded.
+- **Compound channels** — mate-sideband strikes execute two ladder edges
+  at once at first order; Theorem C2 achieves exactness without them, so
+  their net must cancel. Conjectured mechanism: direction-symmetric
+  cancellation as in the contact-vertex demo's R2 (ladder note §6).
 - **Initial coherences** — §2.1 assumes $W_0 \ge 0$; general initial
   states need initial split pairs sampling $\rho_0$ off-diagonals.
   Straightforward in principle, unspecified in detail.
