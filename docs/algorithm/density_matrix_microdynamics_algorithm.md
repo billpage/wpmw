@@ -19,6 +19,17 @@ What is original to this specification, relative to that literature, is (i) the 
 
 Adding real Nelson-style noise on top of route (a) is possible but requires additional weight-evolution terms that I have not derived in closed form here; see §8 for the open derivation.
 
+**Superseded in part.** [`../analysis/position_pair_ladder.md`](../analysis/position_pair_ladder.md)
+(ladder step 9) develops the same representation on the crystal lattice rather
+than in the continuum, and corrects four statements of this specification: the
+missing uniform bound of §2.3 is a continuum artefact and is restored on the
+lattice; the mean-field pair-Bohm machinery of §3–§4 is unnecessary, since the
+lattice form is exactly linear in $\rho$ with no velocity extraction, no
+bilocal quantum potential and no $1/\rho$; the sign problem of §7.1 item 4 is
+irremovable rather than merely severe; and the obstruction flagged in the
+caveat above is given in provable form. Read that note before implementing
+anything here.
+
 Items below marked **[choice]** are implementation decisions not directly fixed by the underlying physics; alternatives are noted. Items marked **[open]** are derivations or claims that need further work.
 
 ---

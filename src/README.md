@@ -384,6 +384,36 @@ see that directory's README for the ladder itself.
   The density matrix as a ladder of splitting rungs with the four one-leg
   hops, and the striker roles: excess for the population boundary, the
   background sea for interior rungs.
+
+- `demo_position_pair_ladder.py` — verification companion to
+  `docs/analysis/position_pair_ladder.md`, the same construction in the
+  position representation ρ(X,X') on a periodic lattice of M sites.  Part A
+  checks Theorem P1: the von Neumann generator is exactly four one-leg hops
+  of amplitude ±iJ/ħ (sign by species) plus a diagonal pump −i·ΔV/ħ, matching
+  the commutator to 1.8×10⁻¹⁶ relative, exactly Hermitian and traceless, with
+  every modulus and population exactly frozen at J = 0.  Part B checks
+  Theorem P2 — momentum is the misalignment of a rung-1 pair, p̄ = ħμ/a, with
+  j = (ħ/ma)|ρ₁|sin μ and exact lattice continuity to 1.1×10⁻¹⁶.  Part C
+  recovers the Euler force term from the pump alone, second order in a over
+  six refinements.  Part D exhibits the two obstructions: a diagonal state has
+  exactly zero population flux, free spreading is ballistic
+  (dlog⟨x²⟩/dlog t = 2.000), hop probability is O(δt²), and local gauge
+  sweeps arg ρ uniformly around the circle.  Part E measures the ℓ¹ resource
+  arithmetic against its bounds and tabulates the channel rate Λ = 4J/ħ
+  against the lattice-independent momentum-side amplitude.  Part F runs the
+  complex-weight pair ensemble: unbiased, 1/√N, noise amplified by exactly
+  e^{Λt}.  Part G runs 200,000 self-conjugate walkers guided by sin μ, which
+  track the exact probability density to the shot-noise floor.
+
+  Sample output figure (committed on the `output` branch):
+
+  ![Position-space coherence ladder](https://raw.githubusercontent.com/billpage/wpmw/output/figures/position_pair_ladder.png)
+
+  Eight panels: the pair board, momentum from misalignment, the Euler force
+  term, the amplitude-versus-probability obstruction, the gauge circle, the
+  resource arithmetic, the pair-ensemble Monte Carlo, and the guided
+  self-conjugate walkers.
+
 ### Figure generators and regression tests
 
 - `gen_microdynamics_4d_figures.py` — generates the five schematic

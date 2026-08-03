@@ -79,6 +79,20 @@ retracts.
    interior engine) and its erase amplitude (all transfers carry μ₁, by the
    licensing argument). Leaves open: striker back-reaction neutrality and
    compound-channel cancellation.
+9. **`position_pair_ladder.md`** — The same construction in the *position*
+   representation, ρ(X, X'), where each leg carries a place and a clock and
+   nothing else. The potential and the kinetic operator swap jobs: the
+   potential only winds μ, and all motion is four one-leg hops of amplitude
+   ±iJ/ħ. Momentum turns out not to be carried at all — it is the
+   misalignment of a nearest-neighbour conjugate pair, p̄ = ħμ/a — and the
+   Euler force term follows from the pump alone. Corrects four statements of
+   the density-matrix algorithm specification, in particular that the
+   continuum's missing uniform bound is restored on the lattice, and that the
+   spec's mean-field pair-Bohm machinery is unnecessary. Ends on two
+   obstructions: hop *probability* is second order in δt, and local gauge
+   sweeps arg ρ around the whole circle, so no positon-only sea exists here.
+   The observable sector survives as a genuine positive-rate particle process
+   guided by sin μ; the coherence sector does not.
 
 ## Companion code
 
@@ -87,7 +101,8 @@ late section. In ladder order: `src/demo_four_rule_equivalence.py`,
 `src/demo_sea_dressed_dynamics.py`, `src/demo_phase_resonance_rates.py`,
 `src/demo_phase_alignment.py`, `src/demo_relational_pairing.py`,
 `src/demo_pairing_resource_arithmetic.py`,
-`src/demo_coherence_ladder.py`. All
+`src/demo_coherence_ladder.py`,
+`src/demo_position_pair_ladder.py`. All
 non-trivial claims in these notes are verified numerically before inclusion.
 
 ## Related
