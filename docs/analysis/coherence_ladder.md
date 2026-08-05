@@ -159,7 +159,7 @@ the state's own coherence, not only the sea's.
 ## 6. The compound channel [open]
 
 Mate-sideband strikes execute two edges at once (erase $(P_a, P_b)$,
-write $(P_b \pm 2q\thinspace dp, P_b)$) at order $\mu_1 \times$ stored.
+write $`(P_b \pm 2q\thinspace dp, P_b)`$) at order $\mu_1 \times$ stored.
 Theorem C2 achieves exactness without them, so their net contribution
 must vanish. The conjectured mechanism is the direction-symmetric
 cancellation already verified for the $O(C^2)$ class in the contact-vertex

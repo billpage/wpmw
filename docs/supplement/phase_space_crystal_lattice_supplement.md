@@ -149,7 +149,7 @@ This is the **general jump formula** of V2 page 18.
 
 $$W(x,\thinspace p,\thinspace t + dt)  \\; = \\;  W(x,\thinspace p)  \\; - \\;  \frac{dt\thinspace V_{\max}}{\hbar}\thinspace\sin\negthinspace\left(\frac{2\pi x}{L}\right)\bigl[W(p + \tfrac{\pi\hbar}{L}) - W(p - \tfrac{\pi\hbar}{L})\bigr]$$
 
-In Python, with the convention that axis 0 is the momentum axis and `np.roll(W, +1, axis=0)` brings $W(p - \Delta p)$ to position $p$ (and similarly `np.roll(W, -1, ..)` brings $W(p + \Delta p)$),
+In Python, with the convention that axis 0 is the momentum axis and `np.roll(W, +1, axis=0)` brings $W(p - \Delta p)$ to position $p$ (and similarly `np.roll(W, -1, ..)` brings $`W(p + \Delta p)`$),
 
 ```python
 W += (V_max / hbar) * dt * np.sin(2 * np.pi * X / L) * (
@@ -198,7 +198,7 @@ No particles are created or destroyed; the negaton background is bookkeeping. La
 ## 8. Limitations and open work
 
 - **Quasi-density requirement.** As noted in §3, matching xFP to the QLE requires a signed (or imaginary-supported) $\zeta$. The single-sign positon model recovers this in expectation through the rule that $\Gamma_q$ can be of either sign, but the underlying microdynamics is therefore not a classical Markov process in the usual sense.
-- **General potentials.** For polynomial potentials the moment problem for $P_\zeta$ has impulsive (Dirac-delta-derivative) solutions, unsuitable for direct Monte-Carlo. Bounded smooth potentials behave well. Unbounded potentials must be either soft-confined (multiplied by a smooth cutoff $\chi(x)$) or handled via the QLE differential form directly on the discretised grid.
+- **General potentials.** For polynomial potentials the moment problem for $P_\zeta$ has impulsive (Dirac-delta-derivative) solutions, unsuitable for direct Monte-Carlo. Bounded smooth potentials behave well. Unbounded potentials must be either soft-confined (multiplied by a smooth cutoff $`\chi(x)`$) or handled via the QLE differential form directly on the discretised grid.
 - **Higher Moyal terms for non-quadratic $V$.** For $V$ beyond quadratic, the third- and higher-order Moyal terms are nonzero and must be included; the Fourier-mode structure of the rule recovers them automatically as higher-order Taylor terms of each $\sin\theta$ contribution.
 
 For the full hierarchical kinetic-theory discussion (BBGKY, Boltzmann, Vlasov, the Perepelkin reinterpretation) and the connection to Smolin/Jaynes/Kac/Ord/McKeon on stochastic substrates and time-reversal interpretations, see the original V2 memo.

@@ -81,7 +81,7 @@ decomposes into an antisymmetric part (the drift) and a symmetric part
 
 whose coefficient obeys $(a+b)/2 \ge \lvert\Gamma_q\rvert/2$: irreducible
 spurious momentum diffusion. The QLE generator for a cosine mode is purely
-antisymmetric (per-column eigenvalues $2i\Gamma_q\sin(2\pi k_p q/N)$), so no
+antisymmetric (per-column eigenvalues $`2i\Gamma_q\sin(2\pi k_p q/N)`$), so no
 such process reproduces it. $\square$
 
 Permanent pairing evades the lemma in the only way possible. In the momentum

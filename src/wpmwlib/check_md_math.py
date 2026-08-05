@@ -449,6 +449,58 @@ hyphen_dollar_scan = adjacent_dollar_scan
 
 
 # --------------------------------------------------------------------------- #
+# 4f. Trailing-paren scan: `)$)` in raw markdown text.                        #
+# --------------------------------------------------------------------------- #
+# GitHub's math-recognition step fails to treat a closing `$` as a math
+# delimiter when the character immediately *before* it is a round
+# close-parenthesis *and* the character immediately *after* it is also a
+# round close-parenthesis -- the literal three-character sequence `)$)`.
+# The dollar signs are then left literal on the rendered page.
+#
+# Confirmed empirically (August 2026) against the live rendered page for
+# every `)$)` occurrence then present in this repository (7 instances
+# across 5 files): each one left `$...$` unrendered. Expressions ending in
+# `)` but followed by anything else (`;`, `,`, `.`, a space, end of line)
+# rendered correctly, as did `)$)`-shaped sequences where the character
+# before the `$` was a different closing bracket (`]$)`, `}$)`) rather than
+# a round parenthesis. The bug appears specific to round parentheses on
+# both sides of the delimiter, not to closing brackets generally.
+#
+# Example (observed on a rendered page, August 2026):
+#     (writing $\Gamma$ for $\Gamma_q(x)$) — is
+# leaves the literal text `$\Gamma_q(x)$` on the rendered page; the same
+# expression not immediately followed by `)` (e.g. `$\Gamma_q(x)$,`)
+# renders fine.
+#
+# Fix: use the backtick-dollar form ``$`...`$`` (see the emphasis-trap
+# note above). Confirmed empirically to render correctly immediately
+# followed by `)`, and with round parentheses inside the content.
+
+_TRAILING_PAREN_DOLLAR = re.compile(
+    r"(?<![\\$])\$(?![\s$`])"   # opening $ (standard opening condition)
+    r"([^\n$]*\))"              # content, ending in a literal )
+    r"\$"                       # closing $
+    r"\)"                       # immediately followed by another )
+)
+
+
+def trailing_paren_scan(text: str) -> list[tuple[int, str]]:
+    """Scan raw markdown text for inline ``$...$`` math whose content ends
+    in ``)`` and whose closing ``$`` is immediately followed by another
+    ``)`` -- the literal sequence ``)$)`` -- returning
+    ``(line_number, context)`` tuples.
+
+    GitHub's math-recognition step does not treat the ``$`` as a closing
+    math delimiter in this position.
+    """
+    results = []
+    for m in _TRAILING_PAREN_DOLLAR.finditer(text):
+        ln = text.count("\n", 0, m.start()) + 1
+        results.append((ln, m.group()))
+    return results
+
+
+# --------------------------------------------------------------------------- #
 # Inline math inside an emphasis span.
 #
 # GitHub renders the markdown to HTML first and only then looks for `$...$`
@@ -807,6 +859,19 @@ def scan_paths(paths: Iterable[Path],
                 f"Fix: use the backtick-dollar form: "
                 f"`{lead}$`{inner}`$` — the backtick-dollar construct "
                 "is recognised regardless of the preceding character."
+            )
+            issues.append(Issue(md, line, "STATIC", "inline", expr.strip(), msg))
+        for line, expr in trailing_paren_scan(strip_code(text)):
+            inner = expr[1:-2]  # drop opening $ and trailing $)
+            msg = (
+                f"Inline math `{expr}` has its closing `$` sandwiched "
+                "between two `)` characters (the sequence `)$)`). GitHub's "
+                "math parser does not recognise the closing `$` as a math "
+                "delimiter in this position, so the dollar signs are left "
+                "on the rendered page verbatim. "
+                f"Fix: use the backtick-dollar form: "
+                f"$`{inner}`$) — the backtick-dollar construct is "
+                "recognised even immediately followed by `)`."
             )
             issues.append(Issue(md, line, "STATIC", "inline", expr.strip(), msg))
         for line, span, math in emphasis_span_math_scan(strip_code(text)):

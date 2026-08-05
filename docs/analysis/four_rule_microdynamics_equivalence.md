@@ -43,7 +43,7 @@ We work per position column $x_m$ and per Fourier mode $q$ of the potential, exa
 
 $$\Gamma_q(x) = -\frac{V_q}{\hbar}\sin\left(\frac{2\pi q x}{L} + \phi_q\right)$$
 
-and the target — the exact single-cosine QLE stencil of spec §3c, per mode, at fixed $x$ (writing $\Gamma$ for $\Gamma_q(x)$) — is
+and the target — the exact single-cosine QLE stencil of spec §3c, per mode, at fixed $x$ (writing $\Gamma$ for $`\Gamma_q(x)`$) — is
 
 ```math
 \dot W_n \;=\; \Gamma\,\bigl(W_{n+q} - W_{n-q}\bigr). \qquad \text{(1)}
@@ -154,7 +154,7 @@ This is not a defect — the original single rule has exactly the same character
 
 1. **Background noise.** The single rule as specified counts the uniform $2/h$ background among the mediators, so it fires events at rate $\propto |\Gamma| \thinspace W'$ everywhere $\Gamma \ne 0$, including cells of zero excess — pure noise with zero mean. The four-rule bias rates, being differences and sums of *excess* occupancies (the background cancels identically in the focus rate and is a null bias in the hop rate), fire only where excess structure exists. At equal $\nu$ the four-rule process is empirically \~5–6× quieter (§9). The comparison is not entirely fair to the original — nothing prevents restricting its mediator count to the excess as well, which is a null-bias change — but the four-rule formulation makes the quiet choice automatically.
 2. **Momentum-noise character.** Single-rule events displace one quantum by $2q$ cells; focus/defocus events displace two quanta by $q$ cells each in opposite directions. Per unit of generated mean drift the injected momentum-space variance differs, and the family parameter $G$ in (4) is precisely a **variance-shaping gauge freedom**: all members share the mean, none share the noise. Choosing $G$ to minimize variance for a given state is an open optimization (§10).
-3. **Boundedness.** Both schemes cap transfers by source occupancy to keep $N_+ \ge 0$; the caps bind on different events, producing (rare, $O(1/\nu)$) different boundary behavior.
+3. **Boundedness.** Both schemes cap transfers by source occupancy to keep $N_+ \ge 0$; the caps bind on different events, producing (rare, $`O(1/\nu)`$) different boundary behavior.
 
 ---
 

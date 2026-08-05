@@ -233,7 +233,7 @@ in-leg ($p_{hi}$) meets the *excited* partner of a phase-matched beating
 pair. Out-state: particle out-leg at $p_{lo} = p_{hi} - \sigma\thinspace 2q \cdot dp$;
 struck partner at its mate's momentum with gauge-matched phase. The pair
 exits **dark**; the beat ceases to exist. "Absorb" is the particle's ledger
-(it takes $(\Delta p, \Delta E)$); "consume" is the sea's ledger (the beat
+(it takes $`(\Delta p, \Delta E)`$); "consume" is the sea's ledger (the beat
 population decrements). **Emission (K4)** is the time-reverse: the particle
 strikes one leg of a dark pair, recoils, and leaves the pair beating.
 Striking the *unexcited* partner would produce a $2q$-mode beat, which a
