@@ -187,6 +187,24 @@ see that directory's README for the ladder itself.
 
   Relative L² deviation from the mesh for both MC runs (left) and Wigner
   negativity for all three evolutions (right).
+- `demo_four_action_foundations.py` — verification companion to
+  `docs/supplement/four_action_foundations.md`, which audits the claim
+  (D. Cyganski, 3 August 2026) that momentum and energy balance determine the
+  four-action rates.  Six parts.  A: every member of the exact rate family
+  conserves number, momentum and energy (worst residual 2.5e-14), so
+  conservation is implied by exactness and cannot select a member.  B: on the
+  conserving line b = -1/2 the QLE residual is 0, 1.04, 3.11 for a = 1/2, 0, 2
+  while every conservation residual stays at machine epsilon — a = 0 is a
+  fully conserving, Ehrenfest-exact model that is not the QLE.  C: the focus
+  gain is invisible to moments 0-2 (1e-16) and appears at moment 3 (8e-4).
+  D: with a free momentum grid step the model is exactly Moyal evolution at
+  hbar_eff = 2*delta/k, matching to 1e-14 across a factor of 40 in delta and
+  equalling the true QLE only at delta = hbar*k/2.  E: only G = Gamma/2 leaves
+  both rates supported on the endpoint cells.  F: a two-body mass-action rate
+  linearised about a uniform sea is endpoint-symmetric with exactly zero
+  antisymmetric part, so it cannot produce the focus rate.  Figures:
+  `four_action_uniqueness_map.png`, `four_action_hbar_effective.png`.
+
 - `demo_sea_dressed_dynamics.py` — verification companion to
   `docs/analysis/sea_dressed_microdynamics.md`, which takes the step left
   open by the four-rule note's no-go lemma: the occupancy stencils are

@@ -12,7 +12,9 @@ $$r_k = \frac{\kappa}{2}\left(W_{k+1} - W_{k-1}\right)$$
 
 attached to the pair reaction $(k,\ k+2) \leftrightarrow (k+1,\ k+1)$.
 
-This note therefore **reconstructs** the complete rate assignment from first principles rather than transcribing it. The reconstruction is not guesswork: §4 derives the *complete family* of rate assignments that reproduce the QLE stencil exactly, proves the family is exhaustive within its natural class, and shows that the visible slide rate selects a member of it. The full deck (page 4 in particular) is needed to confirm which member David intends; see §10.
+This note therefore **reconstructs** the complete rate assignment from first principles rather than transcribing it. The reconstruction is not guesswork: §4 derives the *complete family* of rate assignments that reproduce the QLE stencil exactly, proves the family is exhaustive within its natural class, and shows that the visible slide rate selects a member of it.
+
+**Update (August 2026).** The full slide arrived as page 4 of Cyganski's note *A journey from Bohm trajectory theory, through Nelson's SDEs and Wigner Particles to the Closed Four Action Model* (3 August 2026). The reconstruction is confirmed on every point, including the centre-indexing convention §5 had to guess: the second bias rate is $\lambda_k = -\tfrac{\kappa}{2}(W_{k-1} + W_{k+1})$, exactly the symmetric member (5). Open item 1 is closed and the slide-indexed member §4(c) is not what was intended. See [`../supplement/four_action_foundations.md`](../supplement/four_action_foundations.md) §1, which also audits the note's claim that momentum and energy balance determine the rates.
 
 Companion code: `src/demo_four_rule_equivalence.py`, plus the new library methods `step_jump_four_rule` and `step_jump_four_rule_mc` in `src/wpmwlib/phase_space_crystal_lattice.py`.
 
@@ -204,7 +206,7 @@ Both MC deviations behave as shot noise: rerunning at $\nu = 6.4\times 10^4$ (25
 
 ## 10. Open items
 
-1. **Page 4 of the slide deck.** Confirm the second signed bias rate and the intended indexing of $r_k$ (§5). The prediction from the theorem: the hop-channel bias is $-\tfrac{\kappa}{2}(W_{k+1} + W_{k-1})$ under the center-indexed reading.
+1. ~~**Page 4 of the slide deck.** Confirm the second signed bias rate and the intended indexing of $r_k$ (§5). The prediction from the theorem: the hop-channel bias is $-\tfrac{\kappa}{2}(W_{k+1} + W_{k-1})$ under the center-indexed reading.~~ **Resolved, August 2026** — confirmed verbatim, along with the center-indexed reading; see §0 and [`../supplement/four_action_foundations.md`](../supplement/four_action_foundations.md) §1. A further result recorded there bears on item 2: conservation laws are satisfied by *every* member of family (4), so the $G$-freedom is not constrained by them, and what selects the symmetric member is endpoint locality — no rate may reference the centre cell.
 2. **Variance-optimal member.** The gauge freedom $G$ in (4) shapes the injected noise at fixed mean. Minimizing MC variance over $G$ (state-dependently, or for a worst case) is a well-posed and likely fruitful optimization; the excess-vs-full-population choice for the original rule is the zeroth-order instance.
 3. **Self-consistent N-body case.** This analysis, like the original spec, treats the external fixed-cosine potential. Whether the focus channel's momentum-conserving two-body structure survives — or helps — when the potential is generated self-consistently by the world-particle ensemble connects directly to the open mode-reduction question from the deterministic-microdynamics work.
 4. **Fermionic/multi-DOF extension.** The channel split (particle–particle vs. particle–field) may interact nontrivially with the sign conventions of `multi_body_extension.md` §12.

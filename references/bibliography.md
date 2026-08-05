@@ -32,6 +32,23 @@ source (DOI, arXiv, publisher page). Do **not** commit PDFs to this repository.
 - Rajput, B. S. — "Quantum equations from Brownian motion." *Can. J. Phys.*,
   Jan 2011. https://doi.org/10.1139/P10-111
 
+## Quantum hydrodynamics and the moment closure of the Wigner equation
+
+Background for the claim (Cyganski, August 2026) that Bohm's quantum potential
+is an artifact of projecting phase space onto its position and momentum
+marginals; see `docs/supplement/four_action_foundations.md` §2.
+
+- Takabayasi, T. — "On the Formulation of Quantum Mechanics associated with
+  Classical Pictures." *Prog. Theor. Phys.* **8**, 143 (1952).
+  https://doi.org/10.1143/ptp/8.2.143
+- Takabayasi, T. — "Remarks on the Formulation of Quantum Mechanics with
+  Classical Pictures and on Relations between Linear Scalar Fields and
+  Hydrodynamical Fields." *Prog. Theor. Phys.* **9**, 187 (1953).
+  https://doi.org/10.1143/ptp/9.3.187
+- Wyatt, R. E. — *Quantum Dynamics with Trajectories: Introduction to Quantum
+  Hydrodynamics.* Springer (2005). Ch. 15 treats the Wigner-moment route to
+  the quantum stress tensor.
+
 ## de Broglie: phase harmony, phase waves, double solution
 
 - de Broglie, L. — *Recherches sur la théorie des quanta.* PhD thesis,
