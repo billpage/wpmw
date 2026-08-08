@@ -35,6 +35,8 @@ is David's own original design principle — that no rate may be weighted by the
 intermediate-state density — and that principle does the whole job by itself
 (§6). Finally, the residual quantum input is isolated to a single number: the
 momentum grid step must equal half the photon momentum of the field mode (§8).
+§2.1 was added after review, to state correctly what distinguishes the
+world-particle ensemble from the many-interacting-worlds models.
 
 ---
 
@@ -98,9 +100,11 @@ and for a pure state the residual stress $\Pi$ satisfies
 $\partial_x \Pi = \rho\thinspace\partial_x Q$ identically, with $Q$ Bohm's quantum
 potential. The quantum potential *is* the closure term of the moment hierarchy,
 in exactly the way the pressure tensor is the closure term of the
-Chapman–Enskog hierarchy for a gas. This is Takabayasi's 1954 result; a modern
-treatment is Wyatt, *Quantum Dynamics with Trajectories* (Springer 2005), ch. 15.
-Both should go in `references/bibliography.md`.
+Chapman–Enskog hierarchy for a gas. This is Takabayasi's 1954 result — his
+abstract states the aim as exhibiting the correspondence between the
+phase-space formulation and the quantum-potential formulation — and a modern
+treatment is Wyatt, *Quantum Dynamics with Trajectories* (Springer 2005),
+ch. 15. Both are in `references/bibliography.md`.
 
 Two riders are worth attaching to the claim:
 
@@ -112,7 +116,104 @@ Two riders are worth attaching to the claim:
 - The analogy has real predictive content: it explains David's own observation
   on p. 3 that in the world-particle models *"any dependence on local density
   derivatives has disappeared"*. Density derivatives are moment-closure
-  artifacts. A model that never takes the moments never generates them.
+  artifacts, and a model that never takes the moments never generates them.
+  **But the antecedent has to be stated carefully** — §2.1 does that, because
+  the obvious reading of it is false.
+
+### 2.1 Many-Interacting-Worlds is the test case, and it fails the naive reading
+
+*(This subsection answers an objection raised by Bill Page: the
+many-interacting-worlds models of Hall–Deckert–Wiseman and of Poirier look like
+counterexamples to the bullet above.)*
+
+They are counterexamples to the naive reading, and the naive reading is that
+the relevant contrast is **continuum versus discrete** — that a hydrodynamic
+description carries density derivatives because it is a continuum, and a
+particle description escapes them because it is granular. That reading is
+wrong, and MIW is exactly the case that shows it.
+
+Hall, Deckert and Wiseman replace the single Bohmian trajectory with $N$
+interacting world-particles carrying independent positions and momenta. It is
+granular by construction. Yet the density derivatives are not gone; they have
+been re-expressed as a finite difference over the ensemble. Their interworld
+potential is
+
+```math
+U_N(X) \;=\; \frac{\hbar^2}{8m}\sum_n\left(\frac{1}{x_{n+1}-x_n} - \frac{1}{x_n - x_{n-1}}\right)^{\negthinspace 2},
+```
+
+whose bracket is a nearest-neighbour estimate of
+$`\partial_x \rho / \rho`$ obtained from the ansatz
+$`\rho(x_n) \approx [N(x_n - x_{n-1})]^{-1}`$ — the density read off from
+inter-world spacings. HDW say so themselves: the quantity being squared
+approximates **Nelson's osmotic momentum**, the same $u$ that appears on p. 1
+of David's note, and their appendix A shows the resulting force converges to
+$`-\nabla Q`$. The three-body potential yields a *five*-body force. Poirier and
+Schiff–Poirier are the same structure with the granularity removed: a continuum
+of trajectories labelled by a parameter, with the quantum force built from
+derivatives with respect to that label, which is the density in Lagrangian
+coordinates. HDW describe their own approach as a discretisation of
+Holland–Poirier, and note that Schiff and Poirier have *"a continuum of
+trajectories (i.e. flow lines), not a discrete set of worlds"*.
+
+**The axis that actually matters is what the ensemble samples.** MIW worlds
+sample $\rho(x)$: their initial velocities are set from the single-valued
+Bohmian field $`p = \partial_x S`$, and the ordering $x_1 < \dots < x_N$ is
+preserved, so at any instant the ensemble is a set of points on a **graph over
+configuration space** — a Lagrangian submanifold of phase space, sampled $N$
+times. A WPMW ensemble samples $W(x,p)$: many world-particles sit at the same
+$x$ with different $p$, filling a two-dimensional region. Discretising a
+streamline description does not convert it into a kinetic one, in the same way
+that tracking $N$ tagged fluid parcels does not turn hydrodynamics into
+Boltzmann.
+
+The sharpest test is the oscillator ground state, whose wavefunction is real,
+so $S$ is constant and **every MIW world momentum is exactly zero**. The
+ensemble reproduces $\mathrm{Var}(x)$ but has $\mathrm{Var}(p) = 0$, against
+the quantum value $\hbar m\omega/2$. HDW have to recover the momentum spread
+from a separately constructed *nonclassical momentum*
+
+```math
+p^{\rm nc}_n \;=\; \frac{\hbar}{2}\left(\frac{1}{x_{n+1}-x_n} - \frac{1}{x_n - x_{n-1}}\right),
+```
+
+which is the osmotic momentum again, and their uncertainty relation is between
+$\Delta x$ and $`\Delta p^{\rm nc}`$ — not between $\Delta x$ and $\Delta p$.
+The information a world-particle carries as a **coordinate**, an MIW world has
+to **reconstruct from its neighbours' spacings**. That is the whole
+distinction, and §11 Part G verifies it numerically.
+
+![MIW worlds on a Lagrangian graph versus a WPMW sample of the Wigner function](https://raw.githubusercontent.com/billpage/wpmw/output/figures/miw_vs_wpmw_ensembles.png)
+
+*Left: the exact 41-world MIW oscillator ground state, on the line
+$`p = 0`$, over contours of the Wigner function it is supposed to represent.
+Centre: a WPMW ensemble sampling the same state over phase space. Right:
+momentum marginals — the MIW worlds contribute a spike at the origin, and the
+quantum spread is recovered only through the reconstructed
+$`p^{\rm nc}`$.*
+
+Two corollaries, each an independent fingerprint of the same distinction and
+each worth knowing when the models are compared:
+
+- **Where the nonlocality goes.** MIW pays for eliminating the wavefunction
+  with nonlocality in *position*: a world must consult its neighbours in
+  configuration space, and HDW describe the result as a
+  *"super-nonlocality"*. The four actions are strictly local in $x$ and pay in
+  *momentum* instead — finite jumps of $\hbar k_q/2$, never a gradient. The
+  trade is not incidental; it is the same trade in a different coordinate.
+  It is also why §7's postulate is about a momentum grid step: that is where
+  this model's nonlocality is kept.
+- **Sign.** An MIW ensemble is positive by construction, because it samples a
+  probability density. WPMW requires positons *and* negatons because $W$ goes
+  negative. An ensemble that must carry signed weight cannot be a sampling of
+  $\rho$, so the negaton is not an awkward extra: it is the marker that the
+  ensemble is kinetic rather than hydrodynamic.
+
+The amended claim, then, is not that granularity removes density derivatives.
+It is that **an ensemble whose members carry independent momenta — one that
+samples $W(x,p)$ rather than $\rho(x)$ — never generates them**. MIW and
+Poirier satisfy the negation of that antecedent and duly generate them, which
+makes them confirmations rather than counterexamples.
 
 ---
 
@@ -599,6 +700,30 @@ $\lbrace n-1,\thinspace n+1 \rbrace$; $G = 0$ puts $H$ entirely on the centre ce
 **Part F — mass-action linearization (§9.1).** With $B = 10^3$, $c^+ = 0.9$,
 $c^- = 1.4$: symmetric part $9.0\times10^{2}$, antisymmetric part exactly $0$.
 
+**Part G — MIW as a test case (§2.1).** The exact MIW oscillator ground state is
+obtained by solving HDW's recurrence
+$`\xi_{n+1} = \xi_n - (\xi_1 + \dots + \xi_n)^{-1}`$, shooting on $\xi_1$ for
+antisymmetry. Reproduces HDW's analytic $N = 3$ and $N = 4$ configurations to
+$1.1\times10^{-15}$; their two constraints $\sum_n \xi_n = 0$ and
+$`\sum_n \xi_n^2 = N-1`$ then hold to machine precision without being imposed.
+For $N \in \lbrace 11,\thinspace 41,\thinspace 161,\thinspace 641 \rbrace$ (units
+$\hbar = m = \omega = 1$):
+
+| $N$ | $\mathrm{Var}(x)$ | exact $\tfrac{N-1}{N}\tfrac{\hbar}{2m\omega}$ | $\mathrm{Var}(p)$, worlds | $`\mathrm{Var}(p^{\rm nc})`$ | quantum $\mathrm{Var}(p)$ |
+| --- | --- | --- | --- | --- | --- |
+| 11 | 0.454545 | 0.454545 | **0** | 0.454545 | 0.5 |
+| 41 | 0.487805 | 0.487805 | **0** | 0.487805 | 0.5 |
+| 161 | 0.496894 | 0.496894 | **0** | 0.496894 | 0.5 |
+| 641 | 0.499220 | 0.499220 | **0** | 0.499220 | 0.5 |
+
+The world momenta contribute nothing at any $N$. The reconstructed
+$`p^{\rm nc}`$ agrees with the exact osmotic momentum
+$`(\hbar/2)\,\partial_x \ln\rho`$ on the interior worlds to
+$3.0\times10^{-12}$, and its variance equals $\mathrm{Var}(x)$ identically —
+so $`\Delta x\thinspace\Delta p^{\rm nc} = (1 - 1/N)\hbar/2`$, saturating HDW's
+bound. A WPMW sample of $W(x,p)$ at $N = 4\times10^{5}$ returns
+$\mathrm{Var}(x) = 0.5007$ and $\mathrm{Var}(p) = 0.4988$, both correct.
+
 ---
 
 ## 11. Summary
@@ -627,6 +752,12 @@ $c^- = 1.4$: symmetric part $9.0\times10^{2}$, antisymmetric part exactly $0$.
    step is half the photon momentum of the mode (Proposition F4). Below that
    the model is classical Liouville; away from it, Moyal at the wrong $\hbar$.
    The same postulate also closes the action set at four (§8).
-8. Open: the FWM rate law needs SD's broken detailed balance, not a large
+8. The moment-closure reading survives the MIW/Poirier objection, but only in
+   its corrected form (§2.1): granularity is not what removes density
+   derivatives — carrying independent momenta is. MIW discretises the
+   streamlines, so its ensemble lies on a Lagrangian graph, its world momenta
+   vanish identically for a real ground state, and the density derivatives
+   reappear as an osmotic momentum reconstructed from neighbour spacings.
+9. Open: the FWM rate law needs SD's broken detailed balance, not a large
    background (§9.1); uniqueness is of the generator only (§9.2); multi-mode
    cross-channels (§9.3); the fluctuation size of the energy ledger (§9.4).

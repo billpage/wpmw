@@ -35,6 +35,13 @@ F. The four-wave-mixing reading: linearising a two-body mass-action rate about
    a uniform sea yields an endpoint-*symmetric* rate, never the
    endpoint-antisymmetric focus rate.
 
+G. Many-Interacting-Worlds as a test case for the moment-closure reading of
+   §2.  MIW discretises the *streamlines*, not phase space: its worlds sample
+   rho(x) on a Lagrangian graph, so their momentum spread is zero for a real
+   ground state, and the missing momentum information has to be rebuilt from
+   nearest-neighbour spacings as Nelson's osmotic momentum.  A WPMW ensemble
+   samples W(x, p) over an area and carries it as a coordinate.
+
 Run:  WPMW_OUTPUT=... python src/demo_four_action_foundations.py
 """
 
@@ -422,6 +429,135 @@ def part_f():
 
 
 # ---------------------------------------------------------------------------
+# Part G — MIW / Poirier as a test case for the moment-closure reading
+# ---------------------------------------------------------------------------
+
+# Units for this part only: hbar = m = omega = 1, so the oscillator ground
+# state has Var(x) = Var(p) = 1/2.
+OSC_VARX = 0.5
+OSC_VARP = 0.5
+
+
+def _miw_run(xi1, n):
+    """Iterate Hall-Deckert-Wiseman recurrence (C7): xi_{k+1} = xi_k - 1/S_k."""
+    xi = np.empty(n)
+    xi[0] = xi1
+    total = xi1
+    for k in range(1, n):
+        if abs(total) < 1e-300 or not np.isfinite(total):
+            return None
+        xi[k] = xi[k - 1] - 1.0 / total
+        total += xi[k]
+    return xi if np.all(np.isfinite(xi)) else None
+
+
+def miw_ground_state(n):
+    """Exact MIW oscillator ground-state configuration for n worlds.
+
+    Hall, Deckert & Wiseman, Phys. Rev. X 4, 041013 (2014), App. C.  The
+    recurrence is solved by shooting on xi_1 for the antisymmetry
+    xi_n = -xi_1; the constraints sum(xi) = 0 and sum(xi^2) = n - 1 are then
+    satisfied automatically, which is the check in G0.  Returns positions in
+    physical units, x = xi / sqrt(2) for hbar = m = omega = 1.
+    """
+    def residual(xi1):
+        r = _miw_run(xi1, n)
+        return None if r is None else r[-1] + r[0]
+
+    prev_x = prev_f = None
+    for xi1 in np.linspace(-6.0, -0.05, 40000):
+        f = residual(xi1)
+        if f is None:
+            continue
+        if prev_f is not None and prev_f < 0.0 <= f:
+            lo, hi = prev_x, xi1
+            for _ in range(200):
+                mid = 0.5 * (lo + hi)
+                fm = residual(mid)
+                if fm is None or fm > 0:
+                    hi = mid
+                else:
+                    lo = mid
+            return _miw_run(0.5 * (lo + hi), n) / np.sqrt(2.0)
+        prev_x, prev_f = xi1, f
+    raise RuntimeError(f"MIW ground state not bracketed for n = {n}")
+
+
+def miw_nonclassical_momentum(x):
+    """HDW Eq. (38): p_nc = (hbar/2)(1/(x_{k+1}-x_k) - 1/(x_k-x_{k-1})).
+
+    With x_0 = -inf and x_{n+1} = +inf, so the outer reciprocals vanish.
+    This is a finite-difference estimate of the osmotic momentum
+    (hbar/2) d(ln rho)/dx built from the ensemble's own spacings.
+    """
+    gap = np.diff(x)
+    fwd = np.concatenate([1.0 / gap, [0.0]])
+    bwd = np.concatenate([[0.0], 1.0 / gap])
+    return 0.5 * (fwd - bwd)
+
+
+def part_g():
+    print("=" * 74)
+    print("PART G  MIW samples rho(x); WPMW samples W(x, p)")
+    print("=" * 74)
+
+    # G0 — reproduce HDW's analytic small-N configurations.
+    xi3 = miw_ground_state(3) * np.sqrt(2.0)
+    xi4 = miw_ground_state(4) * np.sqrt(2.0)
+    a4 = -np.sqrt(7 + np.sqrt(17)) / (2 * np.sqrt(2))
+    b4 = a4 + 0.5 * np.sqrt(7 - np.sqrt(17))
+    e3 = np.max(np.abs(xi3 - np.array([-1.0, 0.0, 1.0])))
+    e4 = np.max(np.abs(xi4 - np.array([a4, b4, -b4, -a4])))
+    print(f"G0  solver vs HDW App. C analytics:  n=3 {e3:.2e}   n=4 {e4:.2e}")
+
+    # G1-G3 — the marginals, as a function of the number of worlds.
+    print("\nG1  the MIW ensemble's own moments (hbar = m = omega = 1)")
+    print(f"{'N worlds':>9} {'Var(x)':>10} {'exact':>10} "
+          f"{'Var(p) worlds':>15} {'Var(p_nc)':>11} {'QM Var(p)':>10}")
+    rows = []
+    for n in (11, 41, 161, 641):
+        x = miw_ground_state(n)
+        varx = float(np.var(x))
+        # A real ground-state wavefunction has S = const, so every dBB/MIW
+        # world velocity is identically zero.
+        p_world = np.zeros(n)
+        p_nc = miw_nonclassical_momentum(x)
+        rows.append((n, x, p_world, p_nc))
+        print(f"{n:9d} {varx:10.6f} {OSC_VARX * (n - 1) / n:10.6f} "
+              f"{float(np.var(p_world)):15.6f} {float(np.var(p_nc)):11.6f} "
+              f"{OSC_VARP:10.6f}")
+
+    print("\n  Var(x) tracks the exact MIW value (N-1)/N * hbar/(2 m omega).")
+    print("  Var(p) over the worlds themselves is identically ZERO: the")
+    print("  ensemble lies on the Lagrangian graph p = dS/dx, which for a real")
+    print("  ground state is the line p = 0.  It is not a phase-space sample.")
+    print("  The quantum momentum spread is recovered only by HDW's")
+    print("  nonclassical momentum, a finite-difference osmotic momentum built")
+    print("  from the ensemble's own nearest-neighbour spacings.")
+
+    # G4 — p_nc really is the osmotic momentum (hbar/2) d ln rho / dx.
+    n, x, _, p_nc = rows[-1]
+    osmotic = -x / (2.0 * OSC_VARX)  # (hbar/2) d(ln rho)/dx for the Gaussian
+    interior = slice(1, n - 1)
+    rel = (np.max(np.abs(p_nc[interior] - osmotic[interior]))
+           / np.max(np.abs(osmotic)))
+    print(f"\nG4  p_nc vs the exact osmotic momentum (interior, N={n}): "
+          f"{rel:.3e}")
+
+    # G5 — a WPMW ensemble sampling W(x, p) gets both marginals right.
+    nsamp = 400000
+    xs = rng.normal(0.0, np.sqrt(OSC_VARX), nsamp)
+    ps = rng.normal(0.0, np.sqrt(OSC_VARP), nsamp)
+    print(f"G5  WPMW sample of W(x,p), N={nsamp}: "
+          f"Var(x) = {np.var(xs):.6f}, Var(p) = {np.var(ps):.6f} "
+          f"(both {OSC_VARX})")
+    print("\n  The distinction is what the ensemble samples, not how many")
+    print("  members it has.  Discretising streamlines does not make a")
+    print("  kinetic model.\n")
+    return rows
+
+
+# ---------------------------------------------------------------------------
 # Figures
 # ---------------------------------------------------------------------------
 
@@ -568,6 +704,68 @@ def figure_hbar_eff(moment_rows):
     plt.close(fig)
 
 
+def figure_miw_vs_wpmw(rows):
+    """MIW worlds on a Lagrangian graph vs a WPMW sample of W(x, p)."""
+    n, x, p_world, _ = rows[1]             # N = 41, for the phase-space panels
+    n_big, _, _, p_nc = rows[-1]           # N = 641, for the marginal histogram
+    lim = 2.6
+    gx, gp = np.meshgrid(np.linspace(-lim, lim, 240),
+                         np.linspace(-lim, lim, 240))
+    wig = np.exp(-(gx**2) / (2 * OSC_VARX) - (gp**2) / (2 * OSC_VARP))
+
+    fig, axes = plt.subplots(1, 3, figsize=(14.0, 4.4))
+
+    ax = axes[0]
+    ax.contourf(gx, gp, wig, levels=12, cmap="Blues", alpha=0.55)
+    ax.plot(x, p_world, "o", ms=6, color="crimson", mec="k", mew=0.5, zorder=3)
+    ax.axhline(0.0, color="crimson", lw=1.2, ls="--", zorder=2)
+    ax.set_xlim(-lim, lim)
+    ax.set_ylim(-lim, lim)
+    ax.set_xlabel("$x$")
+    ax.set_ylabel("$p$")
+    ax.set_title(f"MIW / dBB: {n} worlds on the graph "
+                 r"$p=\partial_x S$", fontsize=10.5)
+    ax.annotate("every world has $p = 0$", (0.0, 0.12), ha="center",
+                fontsize=9, color="crimson")
+
+    ax = axes[1]
+    ax.contourf(gx, gp, wig, levels=12, cmap="Blues", alpha=0.55)
+    xs = rng.normal(0.0, np.sqrt(OSC_VARX), 500)
+    ps = rng.normal(0.0, np.sqrt(OSC_VARP), 500)
+    ax.plot(xs, ps, ".", ms=3.5, color="darkgreen", alpha=0.75, zorder=3)
+    ax.set_xlim(-lim, lim)
+    ax.set_ylim(-lim, lim)
+    ax.set_xlabel("$x$")
+    ax.set_ylabel("$p$")
+    ax.set_title(r"WPMW: world-particles sampling $W(x,p)$", fontsize=10.5)
+
+    ax = axes[2]
+    pg = np.linspace(-lim, lim, 400)
+    ax.plot(pg, np.exp(-pg**2 / (2 * OSC_VARP)) / np.sqrt(2 * np.pi * OSC_VARP),
+            lw=2.2, color="k", label=r"quantum $|\tilde\Psi(p)|^2$")
+    ax.hist(ps, bins=34, density=True, alpha=0.45, color="darkgreen",
+            label="WPMW sample")
+    ax.hist(p_nc, bins=40, density=True, histtype="step", lw=2.0,
+            color="tab:orange",
+            label=rf"MIW nonclassical $p^{{\rm nc}}$ ($N={n_big}$)")
+    ax.axvline(0.0, color="crimson", lw=2.4,
+               label="MIW world momenta (all zero)")
+    ax.set_xlabel("$p$")
+    ax.set_ylabel("density")
+    ax.set_title("Momentum marginals", fontsize=10.5)
+    ax.legend(fontsize=7.5, loc="upper right")
+    ax.grid(alpha=0.3)
+
+    fig.suptitle("Discretising streamlines is not a kinetic model: "
+                 "what the ensemble samples is what matters", fontsize=12)
+    fig.tight_layout()
+    for pth in (output_path("miw_vs_wpmw_ensembles.png"),
+                docs_path("miw_vs_wpmw_ensembles.png")):
+        if pth:
+            fig.savefig(pth, dpi=150, bbox_inches="tight")
+    plt.close(fig)
+
+
 def main():
     part_a()
     part_b()
@@ -575,8 +773,10 @@ def main():
     part_d()
     part_e()
     part_f()
+    grows = part_g()
     figure_uniqueness_map()
     figure_hbar_eff(rows)
+    figure_miw_vs_wpmw(grows)
     print("figures written to", output_path(""))
 
 

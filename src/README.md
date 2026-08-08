@@ -202,8 +202,14 @@ see that directory's README for the ladder itself.
   equalling the true QLE only at delta = hbar*k/2.  E: only G = Gamma/2 leaves
   both rates supported on the endpoint cells.  F: a two-body mass-action rate
   linearised about a uniform sea is endpoint-symmetric with exactly zero
-  antisymmetric part, so it cannot produce the focus rate.  Figures:
-  `four_action_uniqueness_map.png`, `four_action_hbar_effective.png`.
+  antisymmetric part, so it cannot produce the focus rate.  G: solves the
+  Hall-Deckert-Wiseman many-interacting-worlds oscillator ground state
+  (reproducing their analytic N = 3, 4 configurations to 1e-15) and shows the
+  world momenta are identically zero at every N while Var(x) is correct, so
+  the MIW ensemble samples rho(x) on a Lagrangian graph rather than W(x, p);
+  their nonclassical momentum matches the exact osmotic momentum to 3e-12.
+  Figures: `four_action_uniqueness_map.png`,
+  `four_action_hbar_effective.png`, `miw_vs_wpmw_ensembles.png`.
 
 - `demo_sea_dressed_dynamics.py` — verification companion to
   `docs/analysis/sea_dressed_microdynamics.md`, which takes the step left

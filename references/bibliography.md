@@ -45,9 +45,43 @@ marginals; see `docs/supplement/four_action_foundations.md` §2.
   Classical Pictures and on Relations between Linear Scalar Fields and
   Hydrodynamical Fields." *Prog. Theor. Phys.* **9**, 187 (1953).
   https://doi.org/10.1143/ptp/9.3.187
+- Takabayasi, T. — "The Formulation of Quantum Mechanics in terms of Ensemble
+  in Phase Space." *Prog. Theor. Phys.* **11**, 341–373 (1954).
+  https://doi.org/10.1143/PTP.11.341 — **the primary citation** for §2: its
+  stated aim is to exhibit the correspondence between the phase-space
+  formulation and the earlier quantum-potential formulation. The 1952 and 1953
+  papers above are the hydrodynamic precursors.
 - Wyatt, R. E. — *Quantum Dynamics with Trajectories: Introduction to Quantum
   Hydrodynamics.* Springer (2005). Ch. 15 treats the Wigner-moment route to
   the quantum stress tensor.
+
+### Trajectory ensembles that sample rho(x) rather than W(x, p)
+
+The many-interacting-worlds and Holland–Poirier models are the test case for
+the moment-closure reading; see `docs/supplement/four_action_foundations.md`
+§2.1. Both discretise or parametrise the *streamlines*, so density derivatives
+survive as inter-trajectory differences rather than disappearing.
+
+- Hall, M. J. W.; Deckert, D.-A.; Wiseman, H. M. — "Quantum Phenomena Modeled
+  by Interactions between Many Classical Worlds." *Phys. Rev. X* **4**, 041013
+  (2014). https://doi.org/10.1103/PhysRevX.4.041013 (arXiv:1402.6144). Eq. (23)
+  gives the interworld potential; Eq. (20) identifies its gradient with
+  Nelson's osmotic momentum; Eq. (38) defines the nonclassical momentum;
+  App. A shows convergence to the Bohmian force; App. C gives the exact
+  oscillator ground-state recurrence used in Part G of
+  `src/demo_four_action_foundations.py`. §I A anticipates the gas-versus-worlds
+  objection directly.
+- Poirier, B. — "Bohmian Mechanics without Pilot Waves." *Chem. Phys.* **370**,
+  4–14 (2010). https://doi.org/10.1016/j.chemphys.2009.12.024
+- Schiff, J.; Poirier, B. — "Communication: Quantum Mechanics without
+  Wavefunctions." *J. Chem. Phys.* **136**, 031102 (2012).
+  https://doi.org/10.1063/1.3680558
+- Holland, P. — "Computing the Wavefunction from Trajectories: Particle and
+  Wave Pictures in Quantum Mechanics and Their Relation." *Ann. Phys.* **315**,
+  505–531 (2005). https://doi.org/10.1016/j.aop.2004.09.008
+- Sebens, C. T. — "Quantum Mechanics as Classical Physics." *Philos. Sci.*
+  **82**, 266–291 (2015). https://doi.org/10.1086/680190 (arXiv:1403.0014). An
+  independent proposal of the same kind, without an explicit model.
 
 ## de Broglie: phase harmony, phase waves, double solution
 
