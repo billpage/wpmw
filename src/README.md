@@ -433,6 +433,63 @@ see that directory's README for the ladder itself.
 
   ![Position-space coherence ladder](https://raw.githubusercontent.com/billpage/wpmw/output/figures/position_pair_ladder.png)
 
+- `demo_fourd_microdynamics.py` — verification companion to
+  `docs/analysis/fourd_microdynamics.md`, the ladder in four-dimensional
+  phase space.  Part A lifts the four-rule exactness theorem to a joint 2-D
+  momentum lattice, with the shift operator replaced by shift-by-`q` for a
+  vector wavevector: the symmetric member and the pure-hop member both
+  reproduce the joint QLE stencil to 1.8×10⁻¹⁵ across five mode geometries
+  (external on one particle, external on both, anti-diagonal pair modes,
+  oblique 1p/2D modes, mixed).  Part B checks the leak law — Focus and
+  Defocus never change any linear momentum functional, a hop changes it by
+  exactly 2(u·q)Δp — which makes conservation a property of mode geometry
+  rather than of particle count.  Part C tabulates the orbits of the
+  shift-by-`q` map (different modes fibre the same lattice along different
+  directions) and confirms that the 2p/1D and 1p/2D generators for the same
+  pair potential are the identical array.  Part D checks the joint sea
+  arithmetic: the background factorises but the crystal shift does not commute
+  with products, the residual of that identity being 1.1×10⁻¹⁶; peak |W| in
+  units of (2/h)^d is the state purity; and excess–excess co-location becomes
+  impossible beyond dN = 1.  Part E is the sharpest result — in d ≥ 2 the
+  exchange theorem's conditions have rank d+1 in 2d unknowns, leaving a
+  (d−1)-parameter family in which momentum, energy and stationarity of μ all
+  hold to ~10⁻¹⁵ and only the permutation test singles out the swap.  Part F
+  measures what a harmonic potential costs: the ring residual against
+  classical drift as a function of Δp/σ_p, the mode-independent noise constant
+  2mω²ℏ to 1.1×10⁻¹⁶, the τ-leap variance rate growing linearly in the mode
+  cutoff, and seeded runs showing that relL2(W) saturates while the momentum
+  moments do not.  Part G reproduces the two-oscillator normal modes, the
+  exact stationarity of the joint ground state under the *classical* flow
+  (2.2×10⁻¹⁶), and the entanglement entropy against its closed form.  Part H
+  shows that the explicit Euler jump substep amplifies as exp(λ²δt·T/2) —
+  which had been inflating negativity by 40% per period — and that with the
+  substep integrated exactly by FFT (the generator's momentum-Fourier symbol
+  is purely imaginary, so all modes commute and exp(δt·L) is a phase
+  multiplier) a harmonic potential transports Wigner negativity to 2×10⁻⁴
+  over a full period without creating any.
+
+  Output figures (committed on the `output` branch):
+
+  ![Mode geometry](https://raw.githubusercontent.com/billpage/wpmw/output/figures/fourd_microdynamics_mode_geometry.png)
+
+  Four-action stencils on the joint momentum lattice, for an external mode,
+  a pair mode and an oblique mode.
+
+  ![Vertex family](https://raw.githubusercontent.com/billpage/wpmw/output/figures/fourd_microdynamics_vertex_family.png)
+
+  The exchange vertex in two dimensions: a one-parameter family, with
+  momentum, energy and stationarity blind to the transverse parameter.
+
+  ![Harmonic cost](https://raw.githubusercontent.com/billpage/wpmw/output/figures/fourd_microdynamics_harmonic_cost.png)
+
+  A harmonic potential is exactly classical in the mean and maximally noisy
+  in the microdynamics.
+
+  ![Two-particle harmonic](https://raw.githubusercontent.com/billpage/wpmw/output/figures/fourd_microdynamics_two_particle_harmonic.png)
+
+  Two coupled oscillators: entanglement as excess-to-background loss, and
+  rigid rotation of a cat state without creation of negativity.
+
   Eight panels: the pair board, momentum from misalignment, the Euler force
   term, the amplitude-versus-probability obstruction, the gauge circle, the
   resource arithmetic, the pair-ensemble Monte Carlo, and the guided
