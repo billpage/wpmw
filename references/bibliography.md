@@ -50,7 +50,10 @@ marginals; see `docs/supplement/four_action_foundations.md` §2.
   https://doi.org/10.1143/PTP.11.341 — **the primary citation** for §2: its
   stated aim is to exhibit the correspondence between the phase-space
   formulation and the earlier quantum-potential formulation. The 1952 and 1953
-  papers above are the hydrodynamic precursors.
+  papers above are the hydrodynamic precursors. §3 of the same paper is the
+  earliest statement of the four-action model's target generator as a
+  stochastic momentum-jump process, and of the objection to reading it as one;
+  see `docs/supplement/takabayasi_1954_stochastic_picture.md`.
 - Wyatt, R. E. — *Quantum Dynamics with Trajectories: Introduction to Quantum
   Hydrodynamics.* Springer (2005). Ch. 15 treats the Wigner-moment route to
   the quantum stress tensor.

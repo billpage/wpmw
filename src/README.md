@@ -438,6 +438,42 @@ see that directory's README for the ladder itself.
   resource arithmetic, the pair-ensemble Monte Carlo, and the guided
   self-conjugate walkers.
 
+- `demo_takabayasi_stochastic_picture.py` — verification companion to
+  `docs/supplement/takabayasi_1954_stochastic_picture.md`, which reads §3 of
+  Takabayasi (1954) against the derivation ladder.  Eight parts.  A: direct
+  quadrature of his kernel definition (3.7) against the closed form (3.8),
+  worst deviation 2.3e-11, and the undamped x-sinusoid of his feature (iv)
+  matched to 6.9e-15 (the printed wavelength there should be h/2p, not
+  hbar/2p, and the prefactor is 2^(d+1)/hbar, not universally 2^4).  B: his
+  collision operator against the exact Wigner collision term (9.4e-12) and
+  against the Moyal series to 25 terms (4.6e-12).  C: for a three-mode
+  periodic potential the four-action stencil equals the Moyal series to
+  1.8e-8, with hbar*k_q/2 = q*delta exactly for delta = pi*hbar/L.  D: his
+  transition moments (3.17) verified to 1.1e-16 — even moments identically
+  zero, so Kramers-Moyal truncated at order 2 is *exactly* classical Liouville
+  with no diffusion term at all.  E: with a free jump size the moments
+  reproduce (3.17) at hbar_eff = 2*delta/k to 5e-14 across a factor of 100,
+  which is Proposition F4 of the four-action supplement in his own language.
+  F: the QLE generator has zero diagonal and a negative off-diagonal, so it is
+  not a Markov generator; against 25 000 sea pairs per cell the eight
+  sea-dressed channel rates total 4.6e4 while the net signed rates total 27.3,
+  a bias of 6e-4.  G: on a five-dimensional discrete Wigner space (Wootters
+  phase-point operators) the finite-time kernel has column sums 1 and satisfies
+  T^T T = I to 3.6e-15 while its most negative entry is -0.43 — negativity is
+  forced, since column l1 and l2 norms both equal 1 and a non-negative such
+  vector must be a basis vector.  H: the Wigner function of a period-L state is
+  supported on the same lattice the jumps use (5.6e-15).
+
+  Sample output figure (committed on the `output` branch):
+
+  ![Takabayasi's kernel and the momentum lattice](https://raw.githubusercontent.com/billpage/wpmw/output/figures/takabayasi_stochastic_picture.png)
+
+  Left: J(x, p) for a localised well — an undamped grating in x of wavelength
+  h/2p.  Centre: for a periodic potential the same kernel is a comb on the
+  momentum lattice pi*hbar/L.  Right: the same stencil read as one particle
+  jumping half a photon against the four actions' whole-photon hop and
+  zero-photon two-body focus.
+
 ### Figure generators and regression tests
 
 - `gen_microdynamics_4d_figures.py` — generates the five schematic
