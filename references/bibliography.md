@@ -168,6 +168,30 @@ survive as inter-trajectory differences rather than disappearing.
   phase of the WPMW sea does neither.
   https://doi.org/10.1146/annurev-fluid-010814-014506
 
+## Semi-discrete Wigner transport and signed-particle Monte Carlo
+
+Background for `docs/analysis/open_position_space.md`: the standard route to
+a discrete momentum space is a finite *coherence length* bounding the ket–bra
+separation, which is the same slot the ring circumference occupies in this
+project.
+
+- Jacoboni, C.; Bordone, P. — "Wigner transport equation with finite
+  coherence length." *J. Comput. Electron.* **13**, 257 (2014). The
+  finite-coherence-length transport equation.
+  https://doi.org/10.1007/s10825-013-0510-7
+- Ellinghaus, P.; Nedjalkov, M.; Selberherr, S. — "Implications of the
+  coherence length on the discrete Wigner potential." *SISPAD* (2014).
+  https://doi.org/10.1109/SISPAD.2014.6931614
+- Sellier, J. M.; Nedjalkov, M.; Dimov, I.; Selberherr, S. — "A benchmark
+  study of the Wigner Monte Carlo method." *Monte Carlo Methods Appl.*
+  **20**, 43 (2014). The semi-discrete phase space with continuous x and
+  discrete k = n Δk, Δk = π/L_C.
+  https://doi.org/10.1515/mcma-2013-0018
+- Sellier, J. M.; Dimov, I. — "A sensitivity study of the Wigner Monte Carlo
+  method." *J. Comput. Appl. Math.* **277**, 87 (2015). Variance-based
+  sensitivity of the results to the coherence length.
+  https://doi.org/10.1016/j.cam.2014.09.008
+
 ## Forward–backward / objective QFT
 
 - Reid, M. D.; Drummond, P. D. — *Objective QFT* programme; parametric

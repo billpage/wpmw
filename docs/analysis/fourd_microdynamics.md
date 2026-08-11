@@ -167,6 +167,14 @@ functional $u\cdot\mathbf{P}$.
 $`u \perp \vec q`$ for every active mode; the conserved subspace is the
 orthogonal complement of the span of the active wavevectors.*
 
+*Along the directions this theorem excludes, a weaker invariant survives:
+if the potential is periodic along $`u`$ with period $`a`$, then
+$`u\cdot\mathbf{P}`$ is conserved **modulo** $`\pi\hbar/a`$, on all of
+$`\mathbb{R}^d`$ and with no box. Theorem A3 is the continuum part of the
+invariant and Theorem O5 of
+[`open_position_space.md`](open_position_space.md) §4.2 is its modular
+companion; neither implies the other.*
+
 *Proof.* Focus removes one quantum from each of $\vec n \pm \vec q$ and
 deposits two at $\vec n$: the displacement sums to
 $(\vec n - \vec n - \vec q) + (\vec n - \vec n + \vec q) = 0$ identically.

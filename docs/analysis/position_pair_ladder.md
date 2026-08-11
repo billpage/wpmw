@@ -64,6 +64,13 @@ $\rho_{mn} = \rho(x_m, x_n)$. Index each square by its
 Rung 0 is the diagonal: the observable probability density. Rung
 $\lvert k\rvert \ge 1$ is coherence between two places $ka$ apart.
 
+The rung index is also the variable that decides whether the model needs a
+box. A bound on $`\lvert k\rvert`$ — a *coherence horizon* — is what
+discretises momentum, the ring circumference being merely the largest
+separation a ring makes available; imposing the bound directly frees the
+position domain entirely. See
+[`open_position_space.md`](open_position_space.md) §1 and §3.
+
 **The draughts analogy, transposed.** The momentum-basis ladder of
 [coherence_ladder.md](coherence_ladder.md) had the potential as the only
 player, moving one diagonal step at a time on the $\rho(P, P')$ board. Here

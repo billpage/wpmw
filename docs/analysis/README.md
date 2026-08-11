@@ -116,6 +116,23 @@ retracts.
     microdynamics' worst case, since the per-mode injected momentum variance
     is 2mω²ℏ independent of q and the total therefore grows linearly in the
     mode cutoff.
+11. **`open_position_space.md`** — What happens when position space is not
+    closed. Separates the two jobs the periodic box has been doing: fixing
+    the momentum quantum, and keeping worlds in view. Only the first is real,
+    and it has three independent sources — ring circumference, coherence
+    horizon, and periodicity of `V` — of which the last works on all of ℝ.
+    Theorem O1: the Wigner kernel's modulus is independent of position for
+    *every* potential, so a world far from a localised scatterer is struck at
+    full rate and its free behaviour is a cancellation whose fringe frequency
+    grows as 2x/ℏ; the escape problem is therefore not a boundary problem and
+    no absorber can fix it. Theorem O5: for an `a`-periodic potential every
+    world's `p mod (πℏ/a)` is exactly conserved with no box at all, so an
+    L = na ring is not an approximation to open space but exactly `n` of its
+    sectors — the modular companion to Theorem A3. Corrects the algorithm
+    specifications on both points, retracts open item 4 of the inverted-pair
+    supplement, and records that the sea-dressed layer does *not* generalise
+    naively, its constant background having infinite total on non-compact
+    phase space.
 
 ## Companion code
 
@@ -126,7 +143,8 @@ late section. In ladder order: `src/demo_four_rule_equivalence.py`,
 `src/demo_pairing_resource_arithmetic.py`,
 `src/demo_coherence_ladder.py`,
 `src/demo_position_pair_ladder.py`,
-`src/demo_fourd_microdynamics.py`. All
+`src/demo_fourd_microdynamics.py`,
+`src/demo_open_position_space.py`. All
 non-trivial claims in these notes are verified numerically before inclusion.
 
 ## Related

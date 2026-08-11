@@ -359,12 +359,27 @@ $T = 0.49980392$).
    loses $`\det\Sigma_1`$ to float64; extended precision or a direct
    two-particle Schrödinger solve would be needed to push the entanglement
    benchmark further.
-4. **Absorbing or matched boundaries.** The escape problem of §4.2 is the
-   first time the periodic box has been a real obstruction rather than a
-   convenience. Whether an absorbing layer can be given a microdynamic
-   reading — worlds leaving the box, rather than a numerical sponge — is
-   unexplored, and it is a prerequisite for any genuine scattering
-   calculation in this formalism.
+4. **Absorbing or matched boundaries.** *Answered, and the question was
+   wrongly put; see
+   [`../analysis/open_position_space.md`](../analysis/open_position_space.md).*
+   There is no layer, because there is no boundary: both substeps of the
+   microdynamics are pointwise in $`x`$, so worlds need no boundary
+   condition and the escape problem of §4.2 is an artefact of the mesh.
+   What the box was hiding is a different pathology — the Wigner kernel's
+   modulus is independent of position for *every* potential (Theorem O1
+   there), so a world far downstream is struck at full rate and its
+   correct free behaviour is a cancellation whose fringe frequency grows
+   as $`2x/\hbar`$. No absorber helps with that, because nothing is
+   misbehaving; it is the estimator that degrades. The usable device is a
+   **coherence horizon**: a bound $`L_c`$ on the ket–bra separation, which
+   confines all vertex activity to within $`L_c/2`$ of the support of
+   $`V`$, conserves signed number exactly, and costs essentially nothing
+   once it clears that support. A complex absorbing potential is available
+   and needs no new stencil geometry — the commutator takes the difference
+   of the two offset rows, the anticommutator their sum — but is strictly
+   worse on three counts (§7 there). The periodic-potential route of §4
+   there does **not** apply to this test case: $`-\tfrac{\mu}{2}\Omega^2 r^2`$
+   has no period.
 
 ---
 

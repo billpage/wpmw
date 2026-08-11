@@ -163,7 +163,18 @@ A **momentum row is exact.** $dp = \pi\hbar/L$ is fixed by the ring
 circumference, not by the mesh: a wavefunction on a ring of circumference
 $L$ carries momentum in multiples of $2\pi\hbar/L$, and $W$, being
 bilinear, carries it on the half-grid. There is no tolerance to tighten
-and no limit to take. "Sharing a row" is an equality test on an integer,
+and no limit to take.
+
+*Qualification.* "Fixed by the ring circumference" is true here but is
+not the general statement. What discretises momentum is boundedness of
+the **ket–bra separation**, and on a ring the circumference is simply the
+largest separation available; a coherence horizon $`L_c`$ imposed by fiat
+gives $`dp = \pi\hbar/L_c`$ with no box at all. Separately, a periodic
+potential discretises the momentum *jumps* on the whole of $`\mathbb{R}`$
+without discretising $`p`$ itself. See
+[`../analysis/open_position_space.md`](../analysis/open_position_space.md)
+§1 for the three mechanisms and §4 for the conserved coset label they
+imply. "Sharing a row" is an equality test on an integer,
 not a proximity test. For the cosine-well parameters
 ($L = 8$, $\hbar = 1$) adjacent particle rows are separated by
 $2\thinspace dp = 0.785398$, which is exactly $\hbar K_1$.

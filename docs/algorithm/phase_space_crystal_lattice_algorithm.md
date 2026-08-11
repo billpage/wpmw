@@ -27,6 +27,12 @@ $$\Delta p = \frac{\pi\hbar}{L}$$
 
 **[choice]** — but justified by the source documents' identification of $n\pi\hbar/L$ as the "photon" momentum quantum associated with the $n$-th Fourier mode of $V$. With this choice, mode $q$ drives jumps of exactly $\pm q$ momentum cells. Finer momentum resolution is obtained with $\Delta p = \pi\hbar/(K L)$ for integer $K$; jumps then span $Kq$ cells.
 
+**Two qualifications** (see [`../analysis/open_position_space.md`](../analysis/open_position_space.md) §1 and §4.5).
+
+First, the box is not the only thing that can fix $`\Delta p`$. There are three independent mechanisms: the ring circumference $`L`$; a *coherence horizon*, a bound $`L_c`$ on the ket–bra separation, giving $`\Delta p = \pi\hbar/L_c`$ with no box at all; and periodicity of $`V`$ itself, which discretises the momentum *jumps* rather than the momentum *argument* and therefore works on all of $`\mathbb{R}`$. The wording above conflates the first with the third, which coincide only when $`V`$ has fundamental wavelength $`L`$.
+
+Second, the $`K`$-refinement is not a refinement. Since every jump then spans a multiple of $`K`$ cells, the momentum lattice splits into $`K`$ sub-lattices that never exchange anything (Theorem O5 there, leak $`0.0`$ exactly for $`K = 1,2,3,4`$). If the initial state lives on one of them, the other $`K-1`$ stay identically zero for all time. The resolution available *within* a sector is fixed by the potential, not by the grid.
+
 ---
 
 ## 2. State representation: the crystal lattice

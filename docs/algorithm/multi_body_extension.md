@@ -50,6 +50,8 @@ Cell volume: $\Delta\Omega = \prod_a \Delta x_a \Delta p_a$. Total cell count: $
 
 The natural momentum spacing $\Delta p_a = \pi\hbar/L_a$ **[choice]** ensures that a Fourier mode of $V$ with index $\vec q$ produces an exact integer-cell jump of $q_a$ cells along axis $a$ (in each dimension independently).
 
+The periodic box is a convenience here, not a requirement: the microdynamics is pointwise in position, so worlds need no boundary condition and the same lattice is available on open space whenever $`V`$ is periodic along the axis in question. See [`../analysis/open_position_space.md`](../analysis/open_position_space.md) §4, whose Theorem O5 (per-axis coset invariance) is the modular companion to Theorem A3 of [`../analysis/fourd_microdynamics.md`](../analysis/fourd_microdynamics.md), and §9 open item 3, which is the same half-jump/full-jump convention left open in §12 below.
+
 ---
 
 ## 3. Single particle: state representation and time evolution

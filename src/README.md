@@ -527,6 +527,43 @@ see that directory's README for the ladder itself.
   resource arithmetic, the pair-ensemble Monte Carlo, and the guided
   self-conjugate walkers.
 
+- `demo_open_position_space.py` — verification companion to
+  `docs/analysis/open_position_space.md`, on what the periodic box was
+  hiding.  Part A confirms Theorem O1: the Wigner kernel's modulus is
+  independent of position, rising from 0.418 to 0.794 as x runs 0.5 → 8
+  while V itself falls through 10⁻²²³, with fringe spacing matching πℏ/2x
+  to 2×10⁻⁵ and the saturated rate matching the closed form 4V(0)/πℏ
+  (1.273066 vs 1.273240).  Part B measures signal against noise: the first
+  moment of the kernel is −V'(x) to 10⁻⁹ while the rate and the
+  variance-injection stay flat, so the signal-to-noise ratio of any signed
+  estimator decays as fast as V' itself.  Part C imposes a coherence
+  horizon L_c on the ket–bra separation, showing activity confined to
+  within L_c/2 of supp V, a norm defect of 10⁻¹⁷ (truncation conserves
+  signed number exactly — it is not absorption), a cost that tracks V at
+  the window edge, and the failure mode for a non-decaying potential,
+  where the budget reaches 2.13× the exact value and climbs
+  logarithmically.  Part D verifies Theorem O5 three ways: a free world on
+  the open line holds p mod (πℏ/a) to 1.1×10⁻¹⁶ over 2000 vertices, the
+  four momentum residue classes on an L = 4a ring leak exactly 0.0 into
+  each other, and the sum of the four sector runs equals the direct run to
+  0.0 relative.  Part E shows the spec's Δp = πℏ/(KL) refinement splits
+  the lattice into K non-interacting sub-lattices (leak 0.0 for
+  K = 1..4).  Part F tracks the crystal → quasicrystal → continuum
+  transition through the smallest gap in the reachable momentum set.  Part
+  G verifies that a complex absorbing potential needs no new stencil
+  geometry: the commutator takes the difference of the two offset rows and
+  the anticommutator their sum, both to 10⁻¹⁵.
+
+  ![Kernel diagnostics](https://raw.githubusercontent.com/billpage/wpmw/output/figures/open_position_space_kernel.png)
+
+  The kernel's flat envelope and finer fringes, signal against noise, the
+  horizon's localisation of the activity, and what it costs.
+
+  ![Sectors](https://raw.githubusercontent.com/billpage/wpmw/output/figures/open_position_space_sectors.png)
+
+  One momentum lattice per coset for a periodic potential, and the melting
+  of the crystal as incommensurate modes are added.
+
 - `demo_takabayasi_stochastic_picture.py` — verification companion to
   `docs/supplement/takabayasi_1954_stochastic_picture.md`, which reads §3 of
   Takabayasi (1954) against the derivation ladder.  Eight parts.  A: direct
