@@ -490,6 +490,38 @@ see that directory's README for the ladder itself.
   Two coupled oscillators: entanglement as excess-to-background loss, and
   rigid rotation of a cat state without creation of negativity.
 
+- `demo_inverted_pair_barrier.py` — verification companion to
+  `docs/supplement/inverted_pair_barrier.md`, two particles with an inverted
+  harmonic pair interaction treated as a two-body scattering problem.  Part A
+  confirms the classical flow spectrum {−Ω, 0, 0, +Ω} to 4.4×10⁻¹⁶, the zeros
+  being the free centre of mass.  Part B shows u = r + p_r/(μΩ) is an
+  eigenvector with eigenvalue e^(Ωt) to 1.8×10⁻¹⁵, so the half-plane u > 0 is
+  exactly invariant and the transmission is a constant of the motion.  Part C
+  checks the closed form T = Φ(ū/σ_u) against an independent split-operator
+  Schrödinger solve, whose residual falls as e^(−Ωt), and shows the
+  transmission window has width √(ħ/μΩ) — as ħ → 0 it becomes a step
+  function, so the whole of the tunnelling is the quantum width of W carried
+  by an exactly classical flow.  Part D verifies that Var(p₁+p₂) is untouched
+  (the pair mode is anti-diagonal, so Theorem A3 applies to all four actions)
+  and measures the entanglement generated from a product state against the
+  asymptotic law dS/dt → Ω + 1/t.  Part E establishes that the per-mode noise
+  constant is identical to the confining trap's, tracks the conserved
+  transmission functional on a 512×512 crystal lattice to a drift of
+  1.6×10⁻³ with no systematic trend, and tabulates the escape problem —
+  window logarithmic in the grid, N ~ ε⁻² for literal propagation.
+
+  Output figures (committed on the `output` branch):
+
+  ![Inverted pair barrier phase space](https://raw.githubusercontent.com/billpage/wpmw/output/figures/inverted_pair_barrier_phase_space.png)
+
+  The relative phase plane: the packet is sheared along the hyperbolas, and
+  the fraction above the separatrix u = 0 never changes.
+
+  ![Inverted pair barrier diagnostics](https://raw.githubusercontent.com/billpage/wpmw/output/figures/inverted_pair_barrier_diagnostics.png)
+
+  The closed form checked against Schrödinger, the conserved functional on
+  the lattice, entanglement growth, and the cost of literal escape.
+
   Eight panels: the pair board, momentum from misalignment, the Euler force
   term, the amplitude-versus-probability obstruction, the gauge circle, the
   resource arithmetic, the pair-ensemble Monte Carlo, and the guided
