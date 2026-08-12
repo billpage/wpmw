@@ -673,7 +673,7 @@ substitution (Part H2):
 | 16 | $128\times128$ | 48 | 800 | 1.000207 | $3.7\times10^{-5}$ |
 | 24 | $192\times192$ | 72 | 800 | 1.000231 | $3.7\times10^{-5}$ |
 
-At $L = 8$ the cat's tail sits on the seam and the $7\%$ error is the ring
+At $L = 8$ the cat's tail sits on the seam and the $`7\%`$ error is the ring
 artefact of §5.4. At $L = 16$ the harmonic ring rotates the state rigidly and
 negativity is preserved to $2\times10^{-4}$ — all of it Strang splitting error,
 converging as the step is refined. **A harmonic potential neither creates nor

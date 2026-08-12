@@ -13,6 +13,11 @@ Catches the rendering pitfalls we have actually hit on GitHub:
    ``\\,`` becomes a literal comma, ``\\!`` a literal bang, ``\\bigl\\{``
    becomes ``\\bigl{`` — the last produces a hard "Missing or unrecognized
    delimiter for \\bigl" error; the others corrupt spacing silently.
+   ``\\%`` is the sharpest case: it becomes a literal ``%``, which opens a
+   LaTeX comment running to end of line and silently truncates the rest
+   of the expression, including the closing ``$`` — this produced a hard
+   "comment has no terminating newline" error in practice
+   (``docs/analysis/fourd_microdynamics.md``, 2026-08).
 
    Fenced ``\\`\\`\\`math`` blocks are **exempt** from this strip (verified
    empirically), so the GFM pass is only applied to ``$...$`` and
@@ -279,6 +284,10 @@ _GFM_TARGETS = [
     ("\\:", r"\\:",           r"\\:", "medium space (no working letter-named form)"),
     ("\\{", r"\lbrace",       r"\\{", "literal left brace (CRITICAL with \\bigl etc.)"),
     ("\\}", r"\rbrace",       r"\\}", "literal right brace (CRITICAL with \\bigr etc.)"),
+    ("\\%", r"\\%",           r"\\%", "literal percent sign (CRITICAL: the stripped "
+                                      "`%` opens a LaTeX comment running to end of "
+                                      "line, silently eating the closing `$` and "
+                                      "everything meant to follow it)"),
 ]
 # Compile a regex per target with a negative lookbehind so we skip
 # occurrences already preceded by a backslash (i.e. already doubled).
