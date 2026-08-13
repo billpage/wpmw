@@ -134,6 +134,34 @@ retracts.
     naively, its constant background having infinite total on non-compact
     phase space.
 
+12. **`interworld_coupling.md`** — Why four rules, and why not more. Reads
+    the potential as a coupling between the two legs of a position pair,
+    `U = V(x₁) − V(x₂)`, in midpoint and *full* separation coordinates
+    `X = (x₁+x₂)/2`, `Y = x₁−x₂`. Proposition I1: the coupling vanishes at
+    coincidence, is antisymmetric under leg exchange, and vanishes
+    identically for a free particle — the last being the sharpest available
+    test of any proposed interworld force law, and the point of difference
+    from many-interacting-worlds models, whose interworld potential is what
+    makes a free packet spread. Proposition I2: for one cosine mode the
+    coupling factorises into a midpoint amplitude (the classical force) and a
+    separation grating of *twice* the potential's period, because each leg
+    moves only `Y/2` — which derives the half-quantum offset that the
+    sea-dressed note postulates. Theorem I3: the available momentum channels
+    are exactly the Fourier spectrum of the coupling in `Y`, so they are
+    discrete iff the coupling is periodic; hence `M` modes give `2M` shifts
+    and `4M` rules, and a one-mode potential has exactly four. Theorem I4:
+    the Moyal series *is* the odd-power expansion in `Y`, so a coupling
+    linear in the separation is exactly classical — which is why the harmonic
+    and inverted harmonic alike have no jump channel, and why the inverted
+    pair barrier cannot test the four rules. Theorem I5: the coupling exerts
+    no force and does no work; it is the winding rate of the misalignment,
+    `dμ/dt = −U/ℏ`. Contradicts the hypothesis that prompted it — the four
+    rules need no non-linear interworld force, the apparent four-wave mixing
+    being the bilinearity of `ρ` rather than a `χ⁽³⁾` medium — and states
+    plainly which of its claims are theorems, which are Fourier-dual
+    restatements, and which is the interpretive postulate that reading `Y` as
+    a physical separation requires.
+
 ## Companion code
 
 Every note lists its verifying script in §0 and its numerical results in a
@@ -144,7 +172,8 @@ late section. In ladder order: `src/demo_four_rule_equivalence.py`,
 `src/demo_coherence_ladder.py`,
 `src/demo_position_pair_ladder.py`,
 `src/demo_fourd_microdynamics.py`,
-`src/demo_open_position_space.py`. All
+`src/demo_open_position_space.py`,
+`src/demo_interworld_coupling.py`. All
 non-trivial claims in these notes are verified numerically before inclusion.
 
 ## Related

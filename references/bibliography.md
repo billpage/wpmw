@@ -197,3 +197,44 @@ project.
 - Reid, M. D.; Drummond, P. D. — *Objective QFT* programme; parametric
   amplification as canonical measurement basis. *(TODO: add specific
   references.)*
+
+## Interworld couplings and mechanical readings of the four rules
+
+Background for `docs/analysis/interworld_coupling.md`.  The first two are the
+existing published attempts to derive quantum behaviour from an interaction
+among ensemble members; the third is the closest existing signed-particle
+ontology; the last two are the classical kinetic and nonlinear-optical
+structures the four-wave-mixing analogy appeals to.
+
+- Hall, M. J. W.; Deckert, D.-A.; Wiseman, H. M. — see the
+  many-interacting-worlds entry above.  Note the contrast established in
+  `interworld_coupling.md` §1: their interworld potential is present for a
+  free particle and is what produces wavepacket spreading, whereas the
+  coupling `V(x₁) − V(x₂)` vanishes identically at `V = 0` and free spreading
+  is exact classical shearing of `W`.
+- Sellier, J. M. — "A signed particle formulation of non-relativistic quantum
+  mechanics." *J. Comput. Phys.* **297**, 254 (2015).  Ensembles of
+  field-less Newtonian particles carrying a sign, interacting with an external
+  potential only through creation and annihilation events.  The closest
+  published relative of the positon/negaton ontology, and the source of the
+  same-cell annihilation technique this project does not yet use.
+  https://doi.org/10.1016/j.jcp.2015.05.036
+- Nedjalkov, M.; Kosina, H.; Selberherr, S.; Ringhofer, C.; Ferry, D. K. —
+  "Unified particle approach to Wigner–Boltzmann transport in small
+  semiconductor devices." *Phys. Rev. B* **70**, 115319 (2004).  Carries a
+  positive Boltzmann collision kernel and the signed Wigner potential term in
+  the same equation — the template for what it costs to keep both.
+  https://doi.org/10.1103/PhysRevB.70.115319
+- Landau, L. D. — "Die kinetische Gleichung für den Fall Coulombscher
+  Wechselwirkung." *Phys. Z. Sowjetunion* **10**, 154 (1936).  The classical
+  kinetic theory built on a smooth momentum-space pair coupling rather than
+  discrete collisions: quadratic in `f`, second order in `p`, positive
+  semidefinite.  The structural contrast with the four-action term (linear in
+  `W`, odd finite difference, signed) is the subject of §5.
+- Deng, L.; Hagley, E. W.; Wen, J.; Trippenbach, M.; Band, Y.; Julienne,
+  P. S.; Simsarian, J. E.; Helmerson, K.; Rolston, S. L.; Phillips, W. D. —
+  "Four-wave mixing with matter waves." *Nature* **398**, 218 (1999).  Real
+  matter-wave four-wave mixing, where the nonlinearity is the genuine
+  interatomic scattering length.  The contrast case: the four rules need no
+  such nonlinearity.
+  https://doi.org/10.1038/18395

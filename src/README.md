@@ -564,6 +564,34 @@ see that directory's README for the ladder itself.
   One momentum lattice per coset for a periodic potential, and the melting
   of the crystal as incommensurate modes are added.
 
+- `demo_interworld_coupling.py` — verification companion to
+  `docs/analysis/interworld_coupling.md`, which asks why there are four rules
+  and answers by reading the potential as a coupling between the two legs of
+  a position pair.  Five parts.  A: the coupling `U = V(x₁) − V(x₂)` vanishes
+  at coincidence, is antisymmetric under leg exchange, and vanishes
+  identically at `V = 0`, all exactly 0.0 over 4×10⁴ random leg pairs — and
+  an antisymmetrised Gaussian control shares the first two, so they do not
+  discriminate.  B: the midpoint/separation factorisation
+  `U = 2V_p sin(kX) sin(kY/2)` to 1.2×10⁻¹⁴, the period in `Y` measured from
+  zero crossings at 15.9998 against λ = 8 (ratio 1.99998), and the midpoint
+  amplitude equal to −F/ℏk to 2.2×10⁻¹⁶.  C: Theorem I3 — two spectral lines
+  at exactly ±ℏk/2 (discrepancy 0.0), a window-scaling test separating
+  discrete from continuous (the cosine line narrows as 1/Y_max, 0.063 →
+  0.016, while the Gaussian control saturates at 1.41), and the two-line
+  stencil matched against the full Wigner operator at all Moyal orders to
+  1.7×10⁻¹⁵ for one mode and 4.9×10⁻¹⁵ for three.  D: Theorem I4 — the Moyal
+  series as the odd-power `Y`-expansion, with linear and both signs of
+  quadratic exactly classical (2.4×10⁻¹⁶) and cubic exact after one
+  correction (3.1×10⁻¹⁶).  E: Theorem I5 — under the potential term alone
+  |ρ| moves by 8.4×10⁻¹⁴ while arg ρ advances at −U/ℏ to 2.9×10⁻¹⁵, plus rule
+  counting: one mode → 4 rules, three modes → 12, Gaussian → continuum.
+
+  ![Interworld coupling](https://raw.githubusercontent.com/billpage/wpmw/output/figures/interworld_coupling.png)
+
+  A pair straddling the potential, the separation grating and its doubled
+  period, the two-line spectrum against a continuum control, and the
+  `U(X, Y)` landscape.
+
 - `demo_takabayasi_stochastic_picture.py` — verification companion to
   `docs/supplement/takabayasi_1954_stochastic_picture.md`, which reads §3 of
   Takabayasi (1954) against the derivation ladder.  Eight parts.  A: direct
