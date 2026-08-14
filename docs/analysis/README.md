@@ -15,12 +15,12 @@ and each ending with the open items that motivate the next.
 Read in this order. Each note states in its §0 what it inherits and what it
 retracts.
 
-1. **`phase_space_crystal_lattice_review.md`** — Review of the two source
+1. **[`phase_space_crystal_lattice_review.md`](phase_space_crystal_lattice_review.md)** — Review of the two source
    documents (Cyganski's *Extended Fokker–Planck Eq. and the QLE V2* memo and
    the *Wigner Collisions Diagram* Sozi deck), cross-referenced at the
    equation-and-page level. The entry point for anyone tracing a claim back to
    its origin.
-2. **`four_rule_microdynamics_equivalence.md`** — Analysis of Cyganski's
+2. **[`four_rule_microdynamics_equivalence.md`](four_rule_microdynamics_equivalence.md)** — Analysis of Cyganski's
    proposal (Zoom, 2026) to replace the single mediated-jump rule with four
    two-body rules (Focus, Defocus, Right-Hop, Left-Hop). Proves exact
    equivalence at any particle number `ν`, shows the four-rule form is ≈5.6×
@@ -29,25 +29,25 @@ retracts.
    lemma: pairwise mass action among tracked particles is quadratic in
    occupancy while the QLE generator is linear, so a fully collision-based
    microdynamics needs a species whose density is *pinned*.
-3. **`sea_dressed_microdynamics.md`** — Takes the step that lemma leaves open.
+3. **[`sea_dressed_microdynamics.md`](sea_dressed_microdynamics.md)** — Takes the step that lemma leaves open.
    Realises the collision term as sixteen local, two-body,
    momentum-conserving channels against a pinned Dirac sea of positon–negaton
    pairs, exact at pinned sea. Postulates the sea's polarisation: the rate
    field `Γ_q(x)`, its sign structure, and the half-quantum stencil offsets
    all enter as assumptions.
-4. **`phase_resonance_microdynamics.md`** — Derives that polarisation rather
+4. **[`phase_resonance_microdynamics.md`](phase_resonance_microdynamics.md)** — Derives that polarisation rather
    than postulating it, by making phase a particle-level property (P0–P5,
    Theorems 1–3). Contains the parity result (fundamental particles occupy
    even momentum sites), the rate-table no-go (Theorem 2: phase-blind
    transition rules cannot reproduce linear rates), and the dark-sea lemma.
-5. **`phase_alignment_microdynamics.md`** — A change of variables on the
+5. **[`phase_alignment_microdynamics.md`](phase_alignment_microdynamics.md)** — A change of variables on the
    predecessor: the beat, the grating and the resonance condition are replaced
    by a single scalar, the misalignment `μ` of two transported clock phases.
    No new postulates and no different predictions, but Theorem 4 is stronger
    than what it replaces: requiring `μ` to hold still through a vertex forces
    the vertex to be a **momentum swap**, from which energy conservation and
    the selection rule follow rather than being imposed.
-6. **`relational_pairing_and_carrier_lock.md`** — Removes stored partnership
+6. **[`relational_pairing_and_carrier_lock.md`](relational_pairing_and_carrier_lock.md)** — Removes stored partnership
    from the algorithm specification (§2.2), at the cost of one postulate (S),
    the sea carrier lock. Proposition R1 shows a partner index carries no
    relational state; Theorem R4 factorises the vertex weight through a
@@ -56,7 +56,7 @@ retracts.
    formulation concealed — under permanent partnership the sea is a
    consumable resource with no source, short by ≈770× for the cosine-well
    parameters.
-7. **`permanent_pairing_density_matrix.md`** — Reinstates permanent pairing
+7. **[`permanent_pairing_density_matrix.md`](permanent_pairing_density_matrix.md)** — Reinstates permanent pairing
    under a density-matrix reading: a pair is a sampled element of ρ (positon =
    ket leg, negaton = bra leg, μ = arg ρ), an excess particle a diagonal
    sample. Retracts two *inferences* of its predecessor while keeping its
@@ -68,7 +68,7 @@ retracts.
    |W| ≤ 2/h (the same inequality as W' ≥ 0), makes postulate (S)
    unnecessary, and leaves one load-bearing theorem: split pairs mediate with
    the same vertex constant as pump-excited pairs.
-8. **`coherence_ladder.md`** — Indexes ρ by splitting rung and derives the
+8. **[`coherence_ladder.md`](coherence_ladder.md)** — Indexes ρ by splitting rung and derives the
    complete first-order channel table of the pairing vertex from
    stationarity: exact (K3), leg-local ladder, and compound classes. Proves
    the ladder theorem — four leg-local channels (struck leg ket/bra ×
@@ -79,7 +79,7 @@ retracts.
    interior engine) and its erase amplitude (all transfers carry μ₁, by the
    licensing argument). Leaves open: striker back-reaction neutrality and
    compound-channel cancellation.
-9. **`position_pair_ladder.md`** — The same construction in the *position*
+9. **[`position_pair_ladder.md`](position_pair_ladder.md)** — The same construction in the *position*
    representation, ρ(X, X'), where each leg carries a place and a clock and
    nothing else. The potential and the kinetic operator swap jobs: the
    potential only winds μ, and all motion is four one-leg hops of amplitude
@@ -93,7 +93,7 @@ retracts.
    sweeps arg ρ around the whole circle, so no positon-only sea exists here.
    The observable sector survives as a genuine positive-rate particle process
    guided by sin μ; the coherence sector does not.
-10. **`fourd_microdynamics.md`** — The ladder pushed into four-dimensional
+10. **[`fourd_microdynamics.md`](fourd_microdynamics.md)** — The ladder pushed into four-dimensional
     phase space: two particles on a line, and one particle in the plane.
     Everything above generalises under one substitution — the shift operator
     becomes shift-by-`q` for a *vector* wavevector — so the exactness family,
@@ -116,7 +116,7 @@ retracts.
     microdynamics' worst case, since the per-mode injected momentum variance
     is 2mω²ℏ independent of q and the total therefore grows linearly in the
     mode cutoff.
-11. **`open_position_space.md`** — What happens when position space is not
+11. **[`open_position_space.md`](open_position_space.md)** — What happens when position space is not
     closed. Separates the two jobs the periodic box has been doing: fixing
     the momentum quantum, and keeping worlds in view. Only the first is real,
     and it has three independent sources — ring circumference, coherence
@@ -134,7 +134,7 @@ retracts.
     naively, its constant background having infinite total on non-compact
     phase space.
 
-12. **`interworld_coupling.md`** — Why four rules, and why not more. Reads
+12. **[`interworld_coupling.md`](interworld_coupling.md)** — Why four rules, and why not more. Reads
     the potential as a coupling between the two legs of a position pair,
     `U = V(x₁) − V(x₂)`, in midpoint and *full* separation coordinates
     `X = (x₁+x₂)/2`, `Y = x₁−x₂`. Proposition I1: the coupling vanishes at
@@ -179,5 +179,5 @@ non-trivial claims in these notes are verified numerically before inclusion.
 ## Related
 
 Drawings of the elementary processes of the phase-alignment layer are in
-`../supplement/phase_alignment_interaction_diagrams.md`; the simulation
-counterparts of the ladder are in `../algorithm/`.
+[`../supplement/phase_alignment_interaction_diagrams.md`](../supplement/phase_alignment_interaction_diagrams.md); the simulation
+counterparts of the ladder are in [`../algorithm/`](../algorithm/README.md).
