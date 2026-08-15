@@ -628,6 +628,40 @@ see that directory's README for the ladder itself.
   jumping half a photon against the four actions' whole-photon hop and
   zero-photon two-body focus.
 
+- `demo_representation_cost.py` — verification companion to
+  `docs/supplement/representation_cost_and_annihilation.md`.  A: the closed-form
+  cat-state Wigner function checked against an independent FFT evaluation of the
+  defining integral (1.7e-16 against a peak |W| of 0.318), then ||W||_1 tabulated
+  against separation — it saturates at 1 + 2/pi = 1.63662, so interference costs
+  a bounded factor 2.679 in samples however large the cat, and the interference
+  lobe carries (2/pi)/(1 + 2/pi) = 38.90% of that mass at a position where
+  rho(0) < 1e-14.  B: fringe visibility of a bin-averaged reconstruction —
+  coarsening dx by 16x costs a factor 1.6 (envelope averaging), coarsening dp to
+  the fringe period 2*pi*hbar/d costs a factor 70; interference consumes
+  momentum resolution, not position density.  C: signed vs sea-shifted sampling
+  of the same target, with ||W + 2/h||_1 = 1 + 2A/h and the state-independent
+  per-cell rule sqrt(N_cells/N) confirmed to within 2% at N = 1e5..1e7; the sea
+  ensemble's standard deviation runs 16.5–20.9x the signed one.  D: pair-(x, mu)
+  cost Z = (sum |psi_i|)^2 growing exactly as 1/dx over five halvings, against a
+  fixed ||W||_1 = 1.59, and capped by a coherence cutoff.  E: ||W||_1 = 1.000000
+  for coherent, squeezed, displaced and thermal states, and multiplicativity
+  under tensor product to zero residual — entanglement is free, non-Gaussianity
+  is not.  F: exact QLE evolution of a cat in the one-mode cosine well
+  (norm conserved to 2.2e-16) showing ||W(t)||_1 bounded in [1.115, 2.100] while
+  a non-annihilating unraveling's pathwise L1 bound e^(4 V_q t / pi hbar) reaches
+  2.1e3 at t = 4; also the two disagreeing density criteria for the annihilating
+  regime, occupancy (script_N >= M) and partner separation
+  (t_sep = m L^2 / (2 pi hbar q M)).
+
+  Sample output figure (committed on the `output` branch):
+
+  ![The annihilation burden](https://raw.githubusercontent.com/billpage/wpmw/output/figures/annihilation_burden.png)
+
+  Left: the state's own L1 mass under exact QLE evolution is bounded and
+  oscillates with the recurrence of the well.  Right: the same curve against the
+  two pathwise growth bounds on a log scale.  The gap between them is the L1
+  mass that garbage collection has to remove per unit time.
+
 ### Figure generators and regression tests
 
 - `gen_microdynamics_4d_figures.py` — generates the five schematic

@@ -217,6 +217,23 @@ makes them confirmations rather than counterexamples.
 
 ---
 
+**The quantitative companion.** §2.1 settles the kinematics but says nothing
+about *cost*, which is what the sparse-ontology literature is actually about.
+[`representation_cost_and_annihilation.md`](representation_cost_and_annihilation.md)
+supplies that half: the sampling cost of any world-particle representation is
+$`N/\|\mu\|_1^2`$, a cat state costs a bounded factor $`2.679`$ however large
+the cat, interference consumes momentum resolution rather than position
+density, entanglement is free and only non-Gaussianity is charged for, and the
+interference lobe — which carries $`38.9\%`$ of the ensemble at zero
+probability density — is precisely the region MIW leaves empty. It also prices
+the two representations this note does not use: the pair $`(x,\mu)`$ ensemble
+costs a factor that diverges as the position lattice is refined, and the
+positon/negaton sea costs $`1 + 2A/h`$, which for the specification's grid is
+exactly the number of momentum cells. Its §9 answers Hackebill and Poirier
+directly, and its §7 measures the annihilation burden that the answer leaves
+behind.
+
+
 ## 3. What conservation buys
 
 Write the endpoint-local ansatz with two free gains, which is the note's step 3:
@@ -758,6 +775,18 @@ $\mathrm{Var}(x) = 0.5007$ and $\mathrm{Var}(p) = 0.4988$, both correct.
    streamlines, so its ensemble lies on a Lagrangian graph, its world momenta
    vanish identically for a real ground state, and the density derivatives
    reappear as an osmotic momentum reconstructed from neighbour spacings.
-9. Open: the FWM rate law needs SD's broken detailed balance, not a large
+9. The *quantitative* form of the same objection — Hackebill and Poirier's
+   sparse ontology — is answered separately in
+   [`representation_cost_and_annihilation.md`](representation_cost_and_annihilation.md):
+   it does not transfer, because the four-action rates are functions of the
+   external potential alone (Theorem F3's endpoint locality), so thinning the
+   ensemble degrades the estimate and never the law. What does transfer is a
+   threshold in the *unraveling* — the density at which pairwise annihilation
+   can still hold the pathwise $`L^1`$ growth $`4V_q/\pi\hbar`$ — and that
+   density is currently unmeasured.
+10. Open: the FWM rate law needs SD's broken detailed balance, not a large
    background (§9.1); uniqueness is of the generator only (§9.2); multi-mode
    cross-channels (§9.3); the fluctuation size of the energy ledger (§9.4).
+   Also open, and inherited from item 9: the immunity argument holds for rates
+   that read only the potential, and has *not* been checked for any rate that
+   reads a collective order parameter.

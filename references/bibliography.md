@@ -74,6 +74,15 @@ survive as inter-trajectory differences rather than disappearing.
   oscillator ground-state recurrence used in Part G of
   `src/demo_four_action_foundations.py`. §I A anticipates the gas-versus-worlds
   objection directly.
+- Hackebill, A.; Poirier, B. — "On Hydrodynamic Formulations of Quantum
+  Mechanics and the Problem of Sparse Ontology." arXiv:2602.21106 (2026).
+  Argues that branching under decoherence repeatedly partitions a discrete
+  hydrodynamic ensemble until it is too sparse to sustain quantum dynamics, and
+  concludes that hydrodynamic completions plausibly need a continuous ontology.
+  Answered in `docs/supplement/representation_cost_and_annihilation.md` §9: the
+  mechanism requires a dynamics nonlinear in the ensemble density, which the
+  Wigner/kinetic formulation does not have.
+  https://arxiv.org/abs/2602.21106
 - Poirier, B. — "Bohmian Mechanics without Pilot Waves." *Chem. Phys.* **370**,
   4–14 (2010). https://doi.org/10.1016/j.chemphys.2009.12.024
 - Schiff, J.; Poirier, B. — "Communication: Quantum Mechanics without
@@ -212,6 +221,35 @@ structures the four-wave-mixing analogy appeals to.
   free particle and is what produces wavepacket spreading, whereas the
   coupling `V(x₁) − V(x₂)` vanishes identically at `V = 0` and free spreading
   is exact classical shearing of `W`.
+- Spencer, J. S.; Blunt, N. S.; Foulkes, W. M. C. — "The sign problem and
+  population dynamics in the full configuration interaction quantum Monte Carlo
+  method." *J. Chem. Phys.* **136**, 054110 (2012).  The plateau: a critical
+  walker number below which same-determinant annihilation cannot stabilise the
+  sign structure, and above which it can.  The closest existing analogue of a
+  density threshold in a signed particle method, and the model for the
+  measurement proposed as item N2 of
+  `docs/supplement/representation_cost_and_annihilation.md`.
+  https://doi.org/10.1063/1.3681396
+- Hudson, R. L. — "When is the Wigner quasi-probability density
+  non-negative?" *Rep. Math. Phys.* **6**, 249 (1974).  The pure states with
+  a non-negative Wigner function are exactly the Gaussians.  Why arbitrary
+  Gaussian entanglement costs a world-particle ensemble nothing at all, and
+  why non-Gaussianity rather than entanglement is the driver of representation
+  cost.
+  https://doi.org/10.1016/0034-4877(74)90007-X
+- Mari, A.; Eisert, J. — "Positive Wigner functions render classical
+  simulation of quantum computation efficient." *Phys. Rev. Lett.* **109**,
+  230503 (2012).  Together with Veitch *et al.*, *New J. Phys.* **14**, 113011
+  (2012), the statement that negativity in the state or in the measurement is
+  the resource separating a phase-space model from efficient classical
+  simulation.  The upper bound on how cheap a world-particle ontology can be.
+  https://doi.org/10.1103/PhysRevLett.109.230503
+- Ferrie, C.; Emerson, J. — "Frame representations of quantum mechanics and
+  the necessity of negativity in quasi-probability representations."
+  *J. Phys. A* **41**, 352001 (2008).  No quasi-probability representation of
+  quantum mechanics is non-negative for both states and measurements.  The
+  representation-theoretic sibling of Theorem T5 of the Takabayasi note.
+  https://doi.org/10.1088/1751-8113/41/35/352001
 - Sellier, J. M. — "A signed particle formulation of non-relativistic quantum
   mechanics." *J. Comput. Phys.* **297**, 254 (2015).  Ensembles of
   field-less Newtonian particles carrying a sign, interacting with an external
