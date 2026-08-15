@@ -43,6 +43,9 @@ src/            Python implementations (runnable demos / scripts)
 references/     bibliography.md (links to papers; PDFs are NOT committed)
 ```
 
+See [`docs/README.md`](docs/README.md) for a guide to what's in each
+documentation subdirectory and where to start reading.
+
 ## Output path convention
 
 All Python scripts in WPMW must write their outputs (PNGs, MP4s, CSVs, etc.)
