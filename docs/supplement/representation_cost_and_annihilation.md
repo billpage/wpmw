@@ -480,6 +480,19 @@ doing all the work in that sentence, and no one has measured it.
 
 ## 8. Where to go
 
+*Update (August 2026):*
+[`../analysis/species_phase_duality.md`](../analysis/species_phase_duality.md)
+settles N1 negatively as a theorem (no unraveling linear in the ensemble is
+$L^1$-stationary; the governing exponent is $`\rho(|L|) = 2.341`$, not
+$`\gamma_{\max}`$ or $`\gamma_{\rm avg}`$), prices the soft-blob option of N3 as
+an exactly imposed coherence length $`\hbar/\sigma_p`$, answers N2 over three
+decades with no plateau above occupancy 1, and corrects §7.4 below: its
+criterion (ii) assumed the original partner had to be found, which Corollary
+D5.1 shows is unnecessary. It also corrects two things in N1 as written — the
+outward action $`(n,n) \to (n-q, n+q)`$ is *defocus*, not focus, and the
+boundedness of $`\|W(t)\|_1`$ does not by itself establish that creation and
+recombination balance.
+
 Five items, in the order they should be taken.
 
 **(N1) Ask whether the four-action set is $L^1$-stationary in its own right.**

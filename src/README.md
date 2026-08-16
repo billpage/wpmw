@@ -592,6 +592,38 @@ see that directory's README for the ladder itself.
   period, the two-line spectrum against a continuum control, and the
   `U(X, Y)` landscape.
 
+- `demo_species_phase_duality.py` — verification companion to
+  `docs/analysis/species_phase_duality.md`, which asks how world-particle
+  species relates to world-particle phase, and what an annihilation process
+  would cost.  Seven parts plus figures.  A: the Wigner quadrature validated
+  against the published table of the representation-cost supplement
+  (‖W‖₁ = 1.0027 / 1.2082 / 1.5848 against 1.0027 / 1.2082 / 1.5875), then
+  Theorem D1 — the cat at rest has `cos μ < 0` on exactly 0.0000 of its pairs
+  and negativity 0.2924, and under a boost `μ = kY` to 3.1×10⁻¹⁵.  B: Theorem
+  D2 — the Weyl symbol of `2·1` is constant at 0.31830989 = 2/h for every
+  background coherence length, and `[H, 1] = 0` to 1.3×10⁻¹⁴ for a random
+  Hermitian `H` on 129 sites.  C: Theorem D3 to 3.7×10⁻¹⁵ (one mode) and
+  8.0×10⁻¹⁵ (three modes), and Proposition D4 — the activity of a background
+  of coherence length `ε` is linear in `ε`, ratio to prediction 0.9998.
+  D: Theorem D5 — the sign of `W` settles at a leg reach of `d + 4σ` with no
+  dependence on `Δx`.  E: Theorem D6 — a momentum blob of width `σ_p` against
+  a separation window of length `ħ/σ_p`, agreeing to 1.1×10⁻¹⁶.  F: the Perron
+  root `ρ(|L|) = 2.340863`, between `γ_avg = 1.9099` and `γ_max = 3.0000`.
+  G: the annihilation substep — the ledger grows 9.97×10² without it and 1.32
+  with it over the same interval, at a wall-clock overhead of 0.32 per cent of
+  the jump pass, and an ensemble sweep over three decades shows `ν^{-1/2}`
+  convergence with no plateau above occupancy 1.
+
+  ![Species and phase](https://raw.githubusercontent.com/billpage/wpmw/output/figures/species_phase_duality.png)
+
+  ![The sea is the identity](https://raw.githubusercontent.com/billpage/wpmw/output/figures/sea_identity_darkness.png)
+
+  ![Annihilation cost and benefit](https://raw.githubusercontent.com/billpage/wpmw/output/figures/annihilation_cost_benefit.png)
+
+  The sign structure of `W` beside a pair kernel with no phase in it; the
+  background flattening to `2/h` as its coherence length goes to zero; and the
+  ledger with and without the substep.
+
 - `demo_takabayasi_stochastic_picture.py` — verification companion to
   `docs/supplement/takabayasi_1954_stochastic_picture.md`, which reads §3 of
   Takabayasi (1954) against the derivation ladder.  Eight parts.  A: direct

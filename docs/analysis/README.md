@@ -162,6 +162,36 @@ retracts.
     restatements, and which is the interpretive postulate that reading `Y` as
     a physical separation requires.
 
+13. **[`species_phase_duality.md`](species_phase_duality.md)** — What the
+    relationship is between world-particle *species* (positon/negaton) and
+    world-particle *phase*, and what it costs to add an annihilation process.
+    Theorem D1: species and phase are one degree of freedom in conjugate
+    bases — phase is a coordinate on the leg separation `Y`, sign is a value
+    on the momentum `p` — so no carrier holds both sharply, and the sign is a
+    functional of a whole `Y`-fibre rather than an attribute of a pair. The
+    decisive case is the cat at rest, whose pair phase is identically zero
+    everywhere and whose Wigner negativity is 0.29. Theorem D2: the crystal
+    shift is the *identity operator*, `ρ → ρ + 2·1`, dark because `[H,1] = 0`
+    for every Hamiltonian in every dimension — not because anything cancels;
+    in the pair basis it is `δ(Y)`, so the sea sits at exactly zero leg
+    separation, which is why its darkness depends only on relative position.
+    Theorem D3 extends I2/I5 to arbitrarily many modes,
+    `dμ/dt = −2 Σ_q Γ_q(X) sin(k_q Y/2)`, whose maximum is the `γ_max` of the
+    annihilation burden — so the pathwise `L¹` growth rate is a phase
+    precession rate — and Corollary D4.1 thereby *derives* the sea
+    polarisation the sea-dressed note postulates. Theorem D5: annihilation
+    exact in `(X, p)` is non-local over the *coherence length* in the leg
+    positions and independent of `Δx`, and Corollary D5.1 licenses anonymous
+    annihilation for all future time, correcting §7.4 of the representation-
+    cost supplement. Theorem D6 prices the soft blob: a momentum kernel of
+    width `σ_p` is exactly an imposed coherence length `ħ/σ_p`. §7 records
+    that no unraveling linear in the ensemble is `L¹`-stationary (Proposition
+    U1) and that the governing exponent is `ρ(|L|) = 2.341`, settling N1
+    negatively. §8 specifies the annihilation substep for the algorithm notes
+    and §9 measures it: 0.32 per cent wall-clock overhead against a benefit of
+    `exp(2ρt)` in particle count, exactly unbiased in every moment, with no
+    plateau over three decades of ensemble size.
+
 ## Companion code
 
 Every note lists its verifying script in §0 and its numerical results in a
@@ -173,7 +203,8 @@ late section. In ladder order: `src/demo_four_rule_equivalence.py`,
 `src/demo_position_pair_ladder.py`,
 `src/demo_fourd_microdynamics.py`,
 `src/demo_open_position_space.py`,
-`src/demo_interworld_coupling.py`. All
+`src/demo_interworld_coupling.py`,
+`src/demo_species_phase_duality.py`. All
 non-trivial claims in these notes are verified numerically before inclusion.
 
 ## Related
