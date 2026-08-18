@@ -162,35 +162,39 @@ retracts.
     restatements, and which is the interpretive postulate that reading `Y` as
     a physical separation requires.
 
-13. **[`species_phase_duality.md`](species_phase_duality.md)** — What the
-    relationship is between world-particle *species* (positon/negaton) and
-    world-particle *phase*, and what it costs to add an annihilation process.
-    Theorem D1: species and phase are one degree of freedom in conjugate
-    bases — phase is a coordinate on the leg separation `Y`, sign is a value
-    on the momentum `p` — so no carrier holds both sharply, and the sign is a
-    functional of a whole `Y`-fibre rather than an attribute of a pair. The
-    decisive case is the cat at rest, whose pair phase is identically zero
-    everywhere and whose Wigner negativity is 0.29. Theorem D2: the crystal
-    shift is the *identity operator*, `ρ → ρ + 2·1`, dark because `[H,1] = 0`
-    for every Hamiltonian in every dimension — not because anything cancels;
-    in the pair basis it is `δ(Y)`, so the sea sits at exactly zero leg
-    separation, which is why its darkness depends only on relative position.
-    Theorem D3 extends I2/I5 to arbitrarily many modes,
-    `dμ/dt = −2 Σ_q Γ_q(X) sin(k_q Y/2)`, whose maximum is the `γ_max` of the
-    annihilation burden — so the pathwise `L¹` growth rate is a phase
-    precession rate — and Corollary D4.1 thereby *derives* the sea
-    polarisation the sea-dressed note postulates. Theorem D5: annihilation
-    exact in `(X, p)` is non-local over the *coherence length* in the leg
-    positions and independent of `Δx`, and Corollary D5.1 licenses anonymous
-    annihilation for all future time, correcting §7.4 of the representation-
-    cost supplement. Theorem D6 prices the soft blob: a momentum kernel of
-    width `σ_p` is exactly an imposed coherence length `ħ/σ_p`. §7 records
-    that no unraveling linear in the ensemble is `L¹`-stationary (Proposition
-    U1) and that the governing exponent is `ρ(|L|) = 2.341`, settling N1
-    negatively. §8 specifies the annihilation substep for the algorithm notes
-    and §9 measures it: 0.32 per cent wall-clock overhead against a benefit of
-    `exp(2ρt)` in particle count, exactly unbiased in every moment, with no
-    plateau over three decades of ensemble size.
+13. **[`species_sectors_and_annihilation.md`](species_sectors_and_annihilation.md)**
+    — What world-particle *species* is, what sectors the excess population
+    divides into, and what it takes to add an annihilation process. Two
+    ensembles are separated first and must not be conflated: E1 draws carriers
+    from the quasi-density `W(x, p)` with species the sign of `W` and structure
+    group `Z2`, while E2 draws from the density matrix with positon and negaton
+    naming the ket and bra legs and structure group `U(1)`. Theorem D0 shows
+    the Weyl transform relates the represented objects but *not* the ensembles
+    — the species censuses are anti-correlated, so no carrier-level map exists
+    and "positon" in the two layers is a homonym. Theorem D1: species and phase
+    are one degree of freedom in conjugate bases, the decisive case being the
+    cat at rest whose pair phase is identically zero everywhere and whose
+    negativity is 0.29. Theorem D2.1: an operator is dark under every
+    Hamiltonian iff it is `c·1`, so the neutral sea (`c = 0`, invisible in the
+    observable but live in the dynamics) and the crystal shift (`c = 2`,
+    visible and provably inert) differ only in `c` — and since `2·1` commutes
+    with everything it cannot be the pumped medium the sea-dressed layer needs.
+    Theorem D3 extends I2/I5 to arbitrarily many modes. Theorems D8–D10 split
+    the excess into an unpaired sector carrying the Born density (the diagonal
+    of `rho`, never negative in any position column) and a column-balanced
+    sector carrying all the coherence (the off-diagonal), and show the jump
+    substep conserves every column sum while streaming conserves every row sum
+    — `2(M + N)` free invariants. Theorem D15: the four actions *split and
+    combine* bound sea pairs rather than creating them, so positon and negaton
+    number are each exactly conserved. Theorem D16 gives the sizing floor in
+    units of the Wigner capacity, and Theorem D17 an adaptive per-cell
+    allocation that reproduces the accuracy at 0.7 to 1.8 per cent of the
+    world-particle count. Section 10 specifies the annihilation substep for the
+    algorithm notes, including the orphans-only requirement whose violation
+    drives the sea negative while leaving the observable exactly right.
+
+    *This note replaces an earlier step 13, `species_phase_duality.md`; its
+    §0.3 records what changed.*
 
 ## Companion code
 
@@ -204,7 +208,7 @@ late section. In ladder order: `src/demo_four_rule_equivalence.py`,
 `src/demo_fourd_microdynamics.py`,
 `src/demo_open_position_space.py`,
 `src/demo_interworld_coupling.py`,
-`src/demo_species_phase_duality.py`. All
+`src/demo_species_sectors_and_annihilation.py`. All
 non-trivial claims in these notes are verified numerically before inclusion.
 
 ## Related

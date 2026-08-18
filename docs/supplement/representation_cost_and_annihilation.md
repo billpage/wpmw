@@ -481,7 +481,7 @@ doing all the work in that sentence, and no one has measured it.
 ## 8. Where to go
 
 *Update (August 2026):*
-[`../analysis/species_phase_duality.md`](../analysis/species_phase_duality.md)
+[`../analysis/species_sectors_and_annihilation.md`](../analysis/species_sectors_and_annihilation.md)
 settles N1 negatively as a theorem (no unraveling linear in the ensemble is
 $L^1$-stationary; the governing exponent is $`\rho(|L|) = 2.341`$, not
 $`\gamma_{\max}`$ or $`\gamma_{\rm avg}`$), prices the soft-blob option of N3 as

@@ -592,37 +592,45 @@ see that directory's README for the ladder itself.
   period, the two-line spectrum against a continuum control, and the
   `U(X, Y)` landscape.
 
-- `demo_species_phase_duality.py` — verification companion to
-  `docs/analysis/species_phase_duality.md`, which asks how world-particle
-  species relates to world-particle phase, and what an annihilation process
-  would cost.  Seven parts plus figures.  A: the Wigner quadrature validated
-  against the published table of the representation-cost supplement
-  (‖W‖₁ = 1.0027 / 1.2082 / 1.5848 against 1.0027 / 1.2082 / 1.5875), then
-  Theorem D1 — the cat at rest has `cos μ < 0` on exactly 0.0000 of its pairs
-  and negativity 0.2924, and under a boost `μ = kY` to 3.1×10⁻¹⁵.  B: Theorem
-  D2 — the Weyl symbol of `2·1` is constant at 0.31830989 = 2/h for every
-  background coherence length, and `[H, 1] = 0` to 1.3×10⁻¹⁴ for a random
-  Hermitian `H` on 129 sites.  C: Theorem D3 to 3.7×10⁻¹⁵ (one mode) and
-  8.0×10⁻¹⁵ (three modes), and Proposition D4 — the activity of a background
-  of coherence length `ε` is linear in `ε`, ratio to prediction 0.9998.
-  D: Theorem D5 — the sign of `W` settles at a leg reach of `d + 4σ` with no
-  dependence on `Δx`.  E: Theorem D6 — a momentum blob of width `σ_p` against
-  a separation window of length `ħ/σ_p`, agreeing to 1.1×10⁻¹⁶.  F: the Perron
-  root `ρ(|L|) = 2.340863`, between `γ_avg = 1.9099` and `γ_max = 3.0000`.
-  G: the annihilation substep — the ledger grows 9.97×10² without it and 1.32
-  with it over the same interval, at a wall-clock overhead of 0.32 per cent of
-  the jump pass, and an ensemble sweep over three decades shows `ν^{-1/2}`
-  convergence with no plateau above occupancy 1.
+- `demo_species_sectors_and_annihilation.py` — verification companion to
+  `docs/analysis/species_sectors_and_annihilation.md`.  Ten parts plus figures.
+  A: the Wigner quadrature validated against the published table of the
+  representation-cost supplement, then Theorem D1 — the cat at rest has
+  `cos mu < 0` on exactly 0.0000 of its pairs and negativity 0.2924, and under
+  a boost `mu = kY` to 3.1e-15.  B: Theorem D0 — the E1 and E2 species censuses
+  are anti-correlated (cat 0.1843 against 0.0000, boosted Gaussian 0.0000
+  against 0.4928), so no carrier-level correspondence exists.  C: Theorem D2.1
+  — dark under twelve random Hermitian `H` iff `c·1`, with the neutral sea at
+  `c = 0` and the crystal shift at `c = 2`, whose Weyl symbol is constant at
+  0.31830989 = 2/h.  D: Theorem D3 to 8.0e-15 on three simultaneous modes, and
+  Proposition D4 — activity linear in the background coherence length, ratio to
+  prediction 0.9998.  E: Theorem D5 — the sign of `W` settles at a leg reach of
+  `d + 4σ` with no dependence on `Δx`; Theorem D6 — a momentum blob of width
+  `σ_p` against a separation window `ħ/σ_p`, agreeing to 1.1e-16.  F: Theorems
+  D8–D10 — the momentum marginal of `W` is the diagonal of `rho` to 1.6e-14 and
+  never negative, the off-diagonal sector is column-balanced to 1.6e-16, and
+  the jump and streaming substeps conserve complementary marginals.  G:
+  Proposition U1 and the Perron root `rho(|L|) = 2.3409`, unchanged by four
+  guiding functions.  H: Theorems D12–D14 — momentum reflection is exactly
+  species conjugation, `Z2` is the Hermiticity residue of `U(1)`, and a boost
+  to `k = 20` leaves the negaton census at 0.1853.  I: Theorem D15 — the split
+  reading conserves `N_total` with drift 0.000e+00 while the spawn reading
+  drifts by 5.740, and Theorem D16 gives the sizing floor.  J: Theorem D17 —
+  adaptive sea allocation reproduces the error to five digits at 0.7 to 1.8 per
+  cent of the world-particle count, with zero blocked splits.
 
   ![Species and phase](https://raw.githubusercontent.com/billpage/wpmw/output/figures/species_phase_duality.png)
 
-  ![The sea is the identity](https://raw.githubusercontent.com/billpage/wpmw/output/figures/sea_identity_darkness.png)
+  ![The dark family](https://raw.githubusercontent.com/billpage/wpmw/output/figures/sea_identity_darkness.png)
 
-  ![Annihilation cost and benefit](https://raw.githubusercontent.com/billpage/wpmw/output/figures/annihilation_cost_benefit.png)
+  ![Excess sectors](https://raw.githubusercontent.com/billpage/wpmw/output/figures/excess_sectors.png)
+
+  ![Sea sizing](https://raw.githubusercontent.com/billpage/wpmw/output/figures/sea_sizing_and_annihilation.png)
 
   The sign structure of `W` beside a pair kernel with no phase in it; the
-  background flattening to `2/h` as its coherence length goes to zero; and the
-  ledger with and without the substep.
+  background flattening to `2/h` as its coherence length goes to zero; the
+  column excess tracking the diagonal of `rho`; and the sea drawn down when
+  recombination is switched off, beside the adaptive allocation.
 
 - `demo_takabayasi_stochastic_picture.py` — verification companion to
   `docs/supplement/takabayasi_1954_stochastic_picture.md`, which reads §3 of
