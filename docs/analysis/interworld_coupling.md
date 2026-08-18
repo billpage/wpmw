@@ -490,7 +490,7 @@ $`Y = 0`$ marked.
    obvious candidate — it bounds $`|Y|`$, which is exactly the variable this
    note is about — but the resulting rule set is approximate, and by how much
    is not established.
-4. **Third-moment test for a mechanical model.** Moments $`0`$–$`2`$ of the
+4. **Third-moment test for a mechanical model.** Moments $`0`$ – $`2`$ of the
    stencil are independent of the shift size at fixed force, so classical
    mechanics constrains only the product $`\Gamma\Delta`$. The shift first
    appears at the third momentum moment, as $`F\Delta^2`$. Any candidate

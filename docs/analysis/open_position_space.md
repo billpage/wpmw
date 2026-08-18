@@ -11,7 +11,7 @@ which asked whether an absorbing layer can be given a microdynamic reading.
 
 **Inherits.** From
 [`../algorithm/phase_space_crystal_lattice_algorithm.md`](../algorithm/phase_space_crystal_lattice_algorithm.md)
-§1 and §3b: the momentum quantum $`\Delta p = \pi\hbar/L`$, the mode-$`q`$
+§1 and §3b: the momentum quantum $`\Delta p = \pi\hbar/L`$, the mode $`q`$
 stencil and its rate field $`\Gamma_q(x)`$. From
 [`four_rule_microdynamics_equivalence.md`](four_rule_microdynamics_equivalence.md):
 the four-action channels and the exactness family. From

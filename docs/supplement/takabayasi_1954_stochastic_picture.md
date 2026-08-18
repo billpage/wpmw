@@ -411,7 +411,7 @@ $`\lbrace -4,-3,-2,-1,0,1,2,3,4,6\rbrace`$, all integers.
    the project's four-action stencil $`\Gamma_q(x)(W_{n+q}-W_{n-q})`$
    (Lemma T1). The two constructions target the identical generator.
 2. For a periodic potential, $J$'s support **is** the momentum lattice
-   $`\pi\hbar/L`$, which is also the exact Wigner support of any period-$`L`$
+   $`\pi\hbar/L`$, which is also the exact Wigner support of any period $`L`$
    state (Proposition T2). The phase-space crystal lattice is not a
    discretisation; it is the reciprocal lattice.
 3. His one-body Markov reading fails for three reasons, of which he names one:
@@ -422,7 +422,7 @@ $`\lbrace -4,-3,-2,-1,0,1,2,3,4,6\rbrace`$, all integers.
    orthogonal plus non-negative forces a deterministic flow (Theorem T5).
    Takabayasi's assessment cannot be refuted on its own terms.
 5. The project overcomes it by leaving those terms. Sign becomes species
-   ($`E = U^{+}-U^{-}`$) and channel direction ($`\sigma = \mathrm{sign}\thinspace\Gamma`$);
+   ($`E = U^{+}-U^{-}`$ ) and channel direction ($`\sigma = \mathrm{sign}\thinspace\Gamma`$);
    zero net rate becomes a small bias on large sea traffic; the half-photon
    becomes an interference midpoint of a whole-photon transfer. All three moves
    were already in the ladder, made for other reasons.

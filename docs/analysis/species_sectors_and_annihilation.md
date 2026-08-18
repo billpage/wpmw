@@ -198,7 +198,7 @@ $`X`$ and every $`V`$, so no phase can ever accumulate on a coincident pair.
 description of the mechanism.
 
 **Theorem D2.2 (the two seas are not interchangeable).** The neutral sea
-($`c = 0`$) and the crystal shift ($`c = 2`$) have near-opposite roles:
+($`c = 0`$ ) and the crystal shift ($`c = 2`$) have near-opposite roles:
 
 | | neutral sea, $`c = 0`$ | crystal shift, $`c = 2`$ |
 |---|---|---|
