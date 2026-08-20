@@ -632,6 +632,54 @@ see that directory's README for the ladder itself.
   column excess tracking the diagonal of `rho`; and the sea drawn down when
   recombination is switched off, beside the adaptive allocation.
 
+- `demo_compensated_liouville_splitting.py` — verification companion to
+  `docs/analysis/compensated_liouville_splitting.md`, on putting the classical
+  force into the first substep.  Eight parts.  A: Theorem C1 — the potential
+  term is multiplication by `M(x,s) = (i/ħ)[V(x+ħs/2) − V(x−ħs/2)]` and its
+  classical and residual parts are diagonal in the same variables, so
+  `exp(τM) = exp(τM_cl)exp(τM_res)` to 1.1e-16, 2.6e-16, 9.5e-16 at
+  τ = 0.01, 0.1, 1.0 with no growth in τ, commutator exactly 0; Theorem C2 —
+  the residual of the open parabola is 1.4e-14 against a symbol of size 128.
+  Also records that at the crystal quantum the stencil arm reaches exactly
+  ±L/2.  B: Theorem C3, the band condition — the per-mode ratio is
+  `|sin u − u|/u`, which is 0.0007 at u = 0.02π and exactly 1 at u = π, so
+  there is no gain at the grid edge; in state terms the requirement is
+  `σ_p ≫ ħk/2`.  C: Theorem C4 — on a circle only constants are classical,
+  and the periodised parabola's residual support is the bowtie
+  `|x| + |ħs/2| > L/2`, measured at 0.4961 of the grid against a predicted
+  0.5039, with 1.1e-14 inside; Corollary C4.2 — a coherence horizon
+  `L_c < L − 2x_m` restores exact classicality, verified at 3.6e-15 for
+  `L_c = 2, 4, 6`.  D: Theorem C5 — the hop intensity of the compensated
+  generator equals that of the uncompensated one mode for mode (25.938,
+  6.485, 2.882, 1.621 for q = 1..4), so operator splitting is rate neutral;
+  potential splitting takes the interior budget from 41.6 to exactly 0.
+  E: mode truncation, where the two measures disagree and both are right —
+  the compensated scheme is 6 to 44 times more accurate in the state-weighted
+  `L¹` and worse in the worst case over the whole grid, both for the same
+  reason.  F: evolution — the periodised parabola's `L¹` gap between exact and
+  classical is 8.3e-5 against the cosine well's 0.744, a factor 8982, with
+  seam-generated negativity 2.4e-5 against a classical floor of 4.4e-9.
+  G: Coulomb — the ratio is exactly `ρ²/(1−ρ²)` to 7.1e-15, so the Moyal
+  series is geometric with radius of convergence equal to the distance to the
+  nucleus; the gain condition is `σ_p|x| ≫ ħ/2`; the residual falls off as
+  1/x⁴ against a 1/x² classical force; and a soft core is still required, at a
+  price set directly by ε.
+
+  ![Symbol decomposition and band condition](https://raw.githubusercontent.com/billpage/wpmw/output/figures/compensated_symbol_and_band.png)
+
+  ![Bowtie residual support](https://raw.githubusercontent.com/billpage/wpmw/output/figures/compensated_ring_residual.png)
+
+  ![Mode truncation](https://raw.githubusercontent.com/billpage/wpmw/output/figures/compensated_truncation.png)
+
+  ![Evolution comparison](https://raw.githubusercontent.com/billpage/wpmw/output/figures/compensated_evolution.png)
+
+  ![Coulomb](https://raw.githubusercontent.com/billpage/wpmw/output/figures/compensated_coulomb.png)
+
+  The sine against its own tangent; the diamond of exact classicality
+  inscribed in the ring; which error each truncation makes; the parabola's
+  seam leaking into an otherwise classical evolution; and Coulomb's residual
+  retreating into the core.
+
 - `demo_takabayasi_stochastic_picture.py` — verification companion to
   `docs/supplement/takabayasi_1954_stochastic_picture.md`, which reads §3 of
   Takabayasi (1954) against the derivation ladder.  Eight parts.  A: direct

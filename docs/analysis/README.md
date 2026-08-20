@@ -196,6 +196,26 @@ retracts.
     *This note replaces an earlier step 13, `species_phase_duality.md`; its
     §0.3 records what changed.*
 
+14. **[`compensated_liouville_splitting.md`](compensated_liouville_splitting.md)** — Putting the classical
+    force into the first substep. In the variable `s` conjugate to momentum
+    the whole potential term is multiplication by a single symbol
+    `M(x,s) = (i/ℏ)[V(x+ℏs/2) − V(x−ℏs/2)]`; subtracting its part linear in
+    the stencil arm splits off the exact classical Liouville force, and both
+    factors are diagonal in the same variables, so the factorisation carries
+    no Trotter error (Theorem C1). The residual is a running second
+    difference of `V′` and vanishes iff `V‴ ≡ 0` (C2). Theorem C4: on a
+    circle only *constant* potentials are exactly classical — the harmonic
+    oscillator on the ring is not — and for the periodised parabola the
+    residual support is exactly the bowtie `|x| + |ℏs/2| > L/2`, which the
+    coherence horizon of step 11 erases (C4.2). Theorem C5 is the constraint:
+    operator splitting is *rate neutral*, so as a particle rule the
+    reorganisation is the identity and the four-rule ontology is untouched;
+    only splitting the *potential* removes jump events. Closes with Coulomb,
+    where everything is closed form: the Moyal series is geometric with
+    radius of convergence equal to the distance to the nucleus, the gain
+    condition is the uncertainty product `σ_p|x| ≫ ℏ/2`, and the residual
+    localises as `1/x⁴` against a `1/x²` classical force.
+
 ## Companion code
 
 Every note lists its verifying script in §0 and its numerical results in a
@@ -208,7 +228,8 @@ late section. In ladder order: `src/demo_four_rule_equivalence.py`,
 `src/demo_fourd_microdynamics.py`,
 `src/demo_open_position_space.py`,
 `src/demo_interworld_coupling.py`,
-`src/demo_species_sectors_and_annihilation.py`. All
+`src/demo_species_sectors_and_annihilation.py`,
+`src/demo_compensated_liouville_splitting.py`. All
 non-trivial claims in these notes are verified numerically before inclusion.
 
 ## Related
