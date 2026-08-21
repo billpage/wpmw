@@ -215,10 +215,16 @@ retracts.
     and the price of that difference is a condition on the reach (C4): the
     split gains for `k·y_max ≪ π` and loses beyond `π/2`, and reach and
     momentum quantum are the same parameter, `Δp = πℏ/(2y_max)`. Theorem C5:
-    a ring pins every world at `u = qπ` for every mode, exactly the crossover,
-    which is why the reorganisation looks empty when analysed on the ring; a
-    coherence horizon fixes that and the seam artefact together. Closes with
-    Coulomb, whose Moyal series is geometric and converges iff the reach
+    a ring pins every world at `u = qπ` for every mode — the two ket–bra arms
+    meet at the antipode, so the symbol vanishes and the residual exactly
+    cancels the classical term — which is why the reorganisation looks empty
+    when tested on a ring, and why a ring is not a valid testbed for the reach
+    condition. Theorem C7 is the open-line payoff: if `V‴` vanishes on
+    `[x−y_max, x+y_max]` then a world at `x` takes no events at all, and for a
+    barrier the interaction region is the barrier profile translated outward
+    by exactly the reach — the finite-reach refinement of Theorem O1, and the
+    sense in which the coherence horizon restores locality in position. Closes
+    with Coulomb, whose Moyal series is geometric and converges iff the reach
     misses the nucleus.
 
 ## Companion code

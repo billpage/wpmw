@@ -31,22 +31,33 @@ which turns out to be the load-bearing idea here. From
 [`four_rule_microdynamics_equivalence.md`](four_rule_microdynamics_equivalence.md):
 the four channels and the exactness family.
 
-**Corrects the framing of the prompting question in two places.**
+**Errata to the previous revision (commit `71d6dce`).** Its §0 asserted that
+"there is no inter-mode cancellation". That is false, and the case in which it
+is false is the one that matters. The correct statement has two cases, split
+by whether the potential is presented on the open line or on a ring, and it is
+recorded here because it is also the cleanest argument for the reach
+formulation of §3.
 
-1. *"It is a theorem that these modes cancel in such a way that for up to
-   quadratic potentials all but the zeroth term cancels."* There is no
-   inter-mode cancellation. Each mode's stencil is separately exact and
-   separately splits into a classical piece and an $`O(u^3)`$ remainder. For a
-   genuinely quadratic $`V`$ the Fourier weight sits at $`k = 0`$, where the
-   remainder vanishes pointwise.
-2. *"For the harmonic oscillator the potential is represented as an infinite
-   number of modes but the evolution is in fact classical Liouvillian."* On
-   the ring that is false — Theorem C5 below. On the open line it is true, and
-   true without any compensation at all: the infinite mode sum was an artefact
-   of periodisation.
+- **A true quadratic on the open line.** Its Fourier weight is a distribution
+  supported at $`k = 0`$ involving derivatives only through second order. The
+  residual weight of mode $`k`$ carries a factor $`k^3`$, which annihilates
+  anything supported at the origin through second order, so every mode's
+  residual is *separately* zero. Nothing cancels because there is nothing to
+  cancel — but equally, no infinite mode sum is involved.
+- **The periodised parabola on a ring.** Every mode's residual is separately
+  nonzero and $`O(1)`$, and they cancel: exactly to zero inside the bowtie of
+  §6.1, and to the seam value outside it. The cancellation is only
+  *conditionally* convergent (§6.2). This is the case the prompting question
+  had in mind, and its description of it was right.
 
-**Corrects one further point in the framing**, on where quantum mechanics
-enters. It was put as two channels, the initial negativity of $`W`$ and the
+What survives from the previous version's claim is only the exactness of each
+mode's stencil, which is independent of the cancellation question and is
+recorded as Lemma C0 in §6.2.
+
+**Corrects the framing of the prompting question in one place**, on where
+quantum mechanics enters.
+
+It was put as two channels, the initial negativity of $`W`$ and the
 mediated jumps. Negativity is neither necessary nor the sharp criterion: a
 coherent or squeezed state has $`W \ge 0`$ everywhere, evolves by exact
 classical Liouville flow in a harmonic well, and is fully quantum. What is
@@ -266,7 +277,76 @@ exactly Newtonian — the classical limit, with the right scaling.
 
 ---
 
-## 5. Why the ring cannot host this
+## 5. The quiet region
+
+Theorem C2 bounds the residual by the supremum of $`|V'''|`$ *over the reach*.
+On the open line that turns immediately into a statement about position: there
+are places a world can be where it takes no events at all.
+
+**Theorem C7 (quiet region).** Fix a reach $`y_{\max}`$. If $`V''' \equiv 0`$
+on $`[x - y_{\max},\; x + y_{\max}]`$ then
+$`M_{\mathrm{res}}(x, \cdot) \equiv 0`$: a world at $`x`$ takes no events
+whatever and moves on an exact Newtonian trajectory in the full potential.
+
+*Proof.* By C2 the residual is the odd part of the cubic Taylor remainder
+$`R_x(y)`$, and $`V''' \equiv 0`$ on the reach makes $`R_x \equiv 0`$ there.
+$`\square`$
+
+The condition is sufficient but **not** necessary. What is necessary and
+sufficient is that $`R_x`$ be an *even* function of $`y`$ on the reach, and
+parity can arrange that at isolated points without $`V'''`$ vanishing — at a
+symmetry point of $`V`$, for instance, where the odd part of the remainder
+cancels for reasons having nothing to do with the reach. The verification
+below shows both kinds of silence: quiet by C7 outside the bump, and quiet by
+parity at $`x = 0`$.
+
+*Verified* (Part G) on a harmonic trap plus a $`C^\infty`$ bump supported on
+$`[-1, 1]`$, so that $`V''' \equiv 0`$ exactly outside the bump. The predicted
+quiet region is $`|x| > 1 + y_{\max}`$, and the edge is sharp to machine
+precision at exactly that point for every reach:
+
+| reach $`y_{\max}`$ | $`x = 0`$ | edge $`-\thinspace 0.3`$ | edge $`-\thinspace 0.05`$ | edge $`+\thinspace 0.05`$ | edge $`+\thinspace 3`$ |
+|---|---|---|---|---|---|
+| 0.5 | 0 (parity) | 1.41e-01 | 3.51e-05 | 6.7e-16 | 4.4e-15 |
+| 1.0 | 0 (parity) | 1.41e-01 | 3.51e-05 | 1.3e-15 | 6.2e-15 |
+| 2.0 | 0 (parity) | 1.41e-01 | 3.51e-05 | 3.6e-15 | 7.1e-15 |
+
+### 5.1 The reach restores locality
+
+A potential without compact support has no exactly quiet region, but the same
+mechanism still localises the interaction. For a Gaussian barrier of width
+$`\sigma`$ sitting on a harmonic trap, the residual at $`x`$ tracks the barrier
+profile **translated outward by exactly the reach**:
+
+| $`x`$ | 1.0 | 1.5 | 2.0 | 2.5 | 3.0 |
+|---|---|---|---|---|---|
+| $`\max\lvert M_{\mathrm{res}}\rvert`$ at $`y_{\max} = 1`$ | 4.75e-01 | 4.41e-01 | 4.38e-02 | 8.84e-04 | 3.73e-06 |
+| shifted profile | 1.00e+00 | 4.58e-01 | 4.39e-02 | 8.84e-04 | 3.73e-06 |
+| bare profile | 4.39e-02 | 8.84e-04 | 3.73e-06 | 3.29e-09 | 6.10e-13 |
+
+Three significant figures of agreement with the shifted profile from $`x = 2`$
+outward, against a bare profile seven orders of magnitude smaller by
+$`x = 3`$.
+
+This is the finite-reach refinement of **Theorem O1** of
+[`open_position_space.md`](open_position_space.md), which says the untruncated
+Wigner kernel's modulus has no position envelope — a world arbitrarily far
+from a scatterer is still struck at an appreciable rate. With a bounded reach
+that fails, and it fails in the sharpest possible way: the interaction is
+supported within $`y_{\max}`$ of the non-quadratic part of $`V`$, exactly.
+**The coherence horizon is what restores locality of the interaction in
+position space.** O1 and C7 are the same statement at $`y_{\max} = \infty`$ and
+at $`y_{\max} < \infty`$.
+
+![The quiet region](https://raw.githubusercontent.com/billpage/wpmw/output/figures/compensated_quiet_region.png)
+
+---
+
+## 6. The ring as a diagnostic
+
+The periodic box is not where this ontology lives — §5 is. But the periodised
+parabola is an unusually informative test object, and three of its properties
+sharpen the open-line case. One of them is a warning about ring numerics.
 
 **Theorem C5.** Let $`V`$ be smooth on the circle of circumference $`L`$.
 Then $`M_{\mathrm{res}} \equiv 0`$ if and only if $`V`$ is constant.
@@ -275,27 +355,19 @@ Then $`M_{\mathrm{res}} \equiv 0`$ if and only if $`V`$ is constant.
 locally quadratic; single-valuedness forces the linear and quadratic
 coefficients to vanish. $`\square`$
 
-That is the familiar obstruction, but there is a second one, and it is the
-sharper of the two. **A ring pins every world at maximal reach.** With
-$`y_{\max} = L/2`$, mode $`q`$ has $`u = q\pi`$, and $`|\sin u - u|/|u| = 1`$
-exactly, for every mode:
+So the quiet region of C7 is empty on a ring for every non-constant potential.
+That makes the ring a stress test rather than a home — but a stress test with
+closed-form answers, which is what the rest of this section trades on.
 
-| mode $`q`$ | 1 | 2 | 3 | 4 |
-|---|---|---|---|---|
-| $`u`$ | $`\pi`$ | $`2\pi`$ | $`3\pi`$ | $`4\pi`$ |
-| $`\lvert M_{\mathrm{res}}\rvert/\lvert M_{\mathrm{cl}}\rvert`$ | 1.0000 | 1.0000 | 1.0000 | 1.0000 |
+### 6.1 The bowtie: C7 where the potential is nowhere quadratic
 
-So on a ring the split buys nothing, ever, at any mode. This is why an
-analysis conducted entirely on the ring concludes that the reorganisation is
-rate-neutral: the ring sits exactly at the crossover point of C4 and cannot
-move off it. The conclusion is an artefact of the geometry, not a property of
-the splitting.
+The periodised parabola is nowhere globally quadratic — it has a kink at the
+seam — yet it has an explicit quiet region, and the geometry is exact. It is
+therefore the cleanest available demonstration that C2 and C7 are statements
+about $`V`$ *on the reach* and not about $`V`$ globally. The seam plays the
+role that the compact bump plays in §5.
 
-### 5.1 The bowtie
-
-For the periodised parabola the first obstruction is exact geometry.
-
-**Proposition C5.1.** $`M_{\mathrm{res}}(x, s) = 0`$ exactly if and only if
+**Proposition C6.1.** $`M_{\mathrm{res}}(x, s) = 0`$ exactly if and only if
 $`|x| + |y| < L/2`$.
 
 *Proof.* If both arms stay inside the fundamental domain the wrap is inactive
@@ -309,7 +381,7 @@ inscribed in the computational domain.
 
 ![Residual support is a bowtie](https://raw.githubusercontent.com/billpage/wpmw/output/figures/compensated_ring_residual.png)
 
-**Corollary C5.2.** A coherence horizon $`L_c`$ fixes both obstructions at
+**Corollary C6.2.** A coherence horizon $`L_c`$ fixes both obstructions at
 once. It puts the seam out of reach — the ring parabola becomes exactly
 Newtonian for every $`|x| < L/2 - L_c/2`$, verified at $`3.6\times10^{-15}`$
 for $`L_c = 2, 4, 6`$ — and it moves worlds off the maximal-reach point where
@@ -319,7 +391,77 @@ This is the strongest reading the coherence horizon has been given. It is not
 a convenience for bounding jump traffic; it is the condition under which the
 classical/quantum split exists at all.
 
-### 5.2 How far off is the ring parabola?
+### 6.2 Modes cancel, and badly
+
+**Lemma C0 (the mode stencil is exact).** For $`V(x) = A\cos(kx + \phi)`$ the
+exact symbol is
+
+```math
+M(x, s) \;=\; -\thinspace\frac{2iA}{\hbar}\thinspace\sin(kx + \phi)\thinspace\sin u ,
+\qquad u = k\thinspace y ,
+```
+
+whose inverse transform is exactly two atoms at $`\xi = \pm\hbar k/2`$. So
+replacing $`\partial_p W`$ by a centred finite difference at spacing
+$`\hbar k/2`$ is an **identity**, to all orders in $`\hbar`$, not an
+approximation. The classical term's symbol is the same expression with
+$`\sin u`$ replaced by $`u`$ — so the derivative is the approximation to the
+finite difference, and not the other way round.
+
+`../supplement/phase_space_crystal_lattice_supplement.md` §6.1 states this
+inverted, describing its own exact result as an approximation; see CLS5.
+
+Now sum the modes of the periodised parabola at a point *inside* the bowtie,
+where §6.1 says the residual is exactly zero:
+
+| modes summed $`Q`$ | 1 | 20 | 100 | 500 | 4000 |
+|---|---|---|---|---|---|
+| signed sum | $`-1.4359`$ | $`-0.2114`$ | $`-0.0422`$ | $`-0.0084`$ | $`+0.0011`$ |
+| largest single term | 1.436 | 4.116 | 4.116 | 4.116 | 4.116 |
+| $`\sum\lvert\text{terms}\rvert`$ | 1.44 | 29.1 | 49.0 | 68.8 | 94.3 |
+
+The signed sum converges to zero like $`1/Q`$. The individual terms do not get
+small — the largest stays at 4.12 forever — and the sum of absolute values
+diverges logarithmically, about 12.3 per e-fold of $`Q`$. This is genuine
+cancellation between distinct modes, and it is only conditionally convergent.
+
+That has a direct consequence for how one should compute. Bounding the
+residual mode by mode gives $`\sum |V_q| k_q^3`$, which diverges — as it must,
+since $`V''' = -m\omega^2 L\thinspace\delta'`$ at the seam has no absolutely
+convergent Fourier series. Bounding it by reach, via C2, gives zero in one
+line, because both arms sit inside the fundamental domain where $`V`$ is
+quadratic. **The mode representation converts an exactly-zero local quantity
+into a conditionally convergent sum of $`O(1)`$ terms whose absolute sum
+diverges.** The remark in §1 that no Fourier decomposition of $`V`$ is needed
+is therefore not a convenience: it is what makes C2 and C7 provable at all.
+
+### 6.3 Why ring numerics mislead about the reach condition
+
+§6.1 and §6.2 are the ring being useful. This one is the ring being
+dangerous.
+
+At maximal reach $`y_{\max} = L/2`$ the two arms $`x + y`$ and $`x - y`$ are
+the *same point* — they meet around the back of the circle. So
+$`V(x+y) - V(x-y) = 0`$ identically, the whole symbol vanishes, and
+$`M_{\mathrm{res}} = -M_{\mathrm{cl}}`$ exactly, for every mode and for the
+sum. Checked directly: $`\sin(q\pi)`$ evaluates to
+$`1.2\times10^{-16}`$, $`-2.4\times10^{-16}`$, $`3.7\times10^{-16}`$ for
+$`q = 1, 2, 3`$, and the full symbol at $`y = L/2`$ is $`0.000`$.
+
+| mode $`q`$ | 1 | 2 | 3 | 4 |
+|---|---|---|---|---|
+| $`u`$ | $`\pi`$ | $`2\pi`$ | $`3\pi`$ | $`4\pi`$ |
+| $`\lvert M_{\mathrm{res}}\rvert/\lvert M_{\mathrm{cl}}\rvert`$ | 1.0000 | 1.0000 | 1.0000 | 1.0000 |
+
+So a ring pins every world at exactly the crossover point of C4, for every
+mode, by geometry rather than by accident. Any benchmark of the splitting
+conducted on a ring will conclude that it is worthless — which is precisely
+the conclusion an earlier revision of this note drew, and recorded as a
+rate-neutrality theorem. The lesson for open-line work is concrete: **a ring
+is not a valid testbed for the reach condition**, because the one parameter
+the condition depends on is frozen there at its worst value.
+
+### 6.4 How far off is the ring parabola?
 
 A Gaussian of width $`\sigma_x = 0.4`$ released at $`x = 1`$, integrated to
 $`t = 2`$, under the exact symbol and under the Newtonian term alone:
@@ -336,7 +478,7 @@ depth, with a residual negativity generated entirely at the seam.
 
 ---
 
-## 6. Coulomb
+## 7. Coulomb
 
 **Theorem C6.** For $`V(x) = -Z/x`$, with $`\rho = y/x`$,
 
@@ -376,7 +518,7 @@ while the long-range Kepler dynamics is deterministic.
 
 ---
 
-## 7. Summary
+## 8. Summary
 
 | | statement | verified |
 |---|---|---|
@@ -384,26 +526,39 @@ while the long-range Kepler dynamics is deterministic.
 | C2 | the residual is the odd part of the cubic Taylor remainder of $`V`$ | bound tight to $`<2\times`$ |
 | C3 | at bounded reach the residual is a bounded, number- and momentum-conserving signed jump measure | $`\sim10^{-6}`$ of $`V'`$ |
 | C4 | the split gains for $`k\thinspace y_{\max} \ll \pi`$; reach and momentum quantum are one parameter | $`TV`$ table, §4 |
-| C5 | a ring pins worlds at $`u = q\pi`$, where the split buys nothing | 1.0000 for all $`q`$ |
+| C5 | on a circle only constants have a vanishing residual | — |
 | C6 | Coulomb: the Moyal series converges iff the reach misses the nucleus | $`7.1\times10^{-15}`$ |
+| C7 | quiet region: $`V'''`$ vanishing on the reach implies no events at $`x`$ | edge sharp to $`10^{-15}`$ |
+| C0 | the mode stencil is an identity; the derivative approximates it | analytic |
 
-The short version. The classical force can be moved into the first substep,
-exactly, for any potential and with no Trotter error, and what is left for the
-jump channel is a zero-mean focus-and-hop interaction sourced by $`V'''`$.
-The condition is that a world's coherence reach be short compared with the
-scale on which the potential varies. That condition fails on a ring by
-construction, which is why the reorganisation looks empty there and works on
-the open line.
+The short version. On the open line the classical force can be moved into the
+first substep, exactly, for any potential and with no Trotter error, and what
+is left for the jump channel is a zero-mean focus-and-hop interaction sourced
+by $`V'''`$ and supported within one reach of the non-quadratic part of the
+potential. The condition is that a world's coherence reach be short compared
+with the scale on which the potential varies. A ring freezes that one
+parameter at its worst value, which is why the reorganisation looks empty when
+tested there; the ring's value is as a source of closed-form counterexamples,
+not as a home for the ontology.
 
 ---
 
-## 8. Open items
+## 9. Open items
 
-- **CLS1.** C2 bounds the residual by $`\sup|V'''|`$ over the reach, a crude
-  bound. The natural refinement is the best quadratic fit to $`V`$ on the
-  reach interval rather than the osculating quadratic at $`x`$; the residual
-  would then be the fit error rather than the Taylor remainder. Does the
-  fitted split still commute exactly, given that the fit is $`x`$-dependent?
+- **CLS1.** C2 bounds the residual by the supremum of $`|V'''|`$ over the
+  reach, a crude bound. The natural refinement is the best quadratic fit to
+  $`V`$ on the reach interval rather than the osculating quadratic at $`x`$;
+  the residual would then be the fit error rather than the Taylor remainder.
+  Does the fitted split still commute exactly, given that the fit is
+  $`x`$-dependent?
+- **CLS6.** C7 is sufficient but not necessary, the gap being potentials whose
+  Taylor remainder is even on the reach without vanishing. Parity supplies
+  isolated such points. Is there a potential with a quiet region of positive
+  measure not explained by the vanishing of $`V'''`$?
+- **CLS7.** §5.1 makes the coherence horizon the restorer of position-space
+  locality, sharpening Theorem O1. Does the same truncation restore locality
+  for the two-body kernel of the interworld coupling notes, or is that a
+  different mechanism?
 - **CLS2.** Does the deterministic acceleration have a field reading in the
   four-action model? The natural candidate is the mean occupation of a
   coherent mode field, with the residual as the fluctuation about it. If that

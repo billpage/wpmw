@@ -132,6 +132,30 @@ def dV_bar(z):
     return -z / BAR_S ** 2 * V_bar(z)
 
 
+BUMP_A, BUMP_W = 1.0, 1.0
+
+
+def bump(z):
+    """C-infinity bump supported exactly on [-BUMP_W, BUMP_W]."""
+    t = np.atleast_1d(np.asarray(z, dtype=float)) / BUMP_W
+    out = np.zeros_like(t)
+    m = np.abs(t) < 1
+    out[m] = BUMP_A * np.exp(-1.0 / (1.0 - t[m] ** 2))
+    return out if np.ndim(z) else float(out[0])
+
+
+def dbump(z, h=1e-6):
+    return (bump(z + h) - bump(z - h)) / (2 * h)
+
+
+def V_trap_bump(z):
+    return 0.5 * MASS * 1.0 ** 2 * z ** 2 + bump(z)
+
+
+def dV_trap_bump(z):
+    return MASS * 1.0 ** 2 * z + dbump(z)
+
+
 COU_Z, COU_EPS = 1.0, 0.5
 
 
@@ -413,6 +437,108 @@ def part_f():
 
 
 # --------------------------------------------------------------------- #
+# Part G -- the quiet region                                             #
+# --------------------------------------------------------------------- #
+def res_amplitude(x, y_max, Vf, dVf, n=2048):
+    s = np.linspace(-2 * y_max / HBAR, 2 * y_max / HBAR, n)
+    y = HBAR * s / 2
+    return np.abs((1 / HBAR) * (Vf(x + y) - Vf(x - y) - 2 * y * dVf(x))).max()
+
+
+def part_g():
+    banner("Part G -- C7, the quiet region on the open line")
+    print("  V = harmonic trap + a C-infinity bump supported on [-1, 1], so")
+    print("  the third derivative of V vanishes outside the bump.  C7 predicts silence for")
+    print("  |x| > 1 + y_max.")
+    for y_max in (0.5, 1.0, 2.0):
+        edge = BUMP_W + y_max
+        print()
+        print(f"  reach y_max = {y_max}:  predicted quiet for |x| > {edge}")
+        print(f"  {'x':>7} {'max |Mres|':>13} {'quiet?':>8}")
+        for x in (0.0, edge - 0.3, edge - 0.05, edge + 0.05, edge + 3.0):
+            v = res_amplitude(x, y_max, V_trap_bump, dV_trap_bump)
+            tag = "yes" if v < 1e-12 else "no"
+            note = "  (by parity)" if (x == 0.0 and v < 1e-12) else ""
+            print(f"  {x:7.2f} {v:13.3e} {tag:>8}{note}")
+    print()
+    print("  x = 0 is quiet for a different reason: V is even there, so the")
+    print("  odd part of the Taylor remainder cancels by parity even though")
+    print("  the third derivative does not vanish on the reach.  C7 is sufficient, not")
+    print("  necessary.")
+    print()
+    print("  A Gaussian barrier has no exactly quiet region, but the same")
+    print("  mechanism localises the interaction: the residual tracks the")
+    print("  barrier profile translated outward by exactly the reach.")
+    sig, y_max = 0.4, 1.0
+
+    def Vg(z):
+        return 0.5 * MASS * z ** 2 + np.exp(-z ** 2 / (2 * sig ** 2))
+
+    def dVg(z):
+        return MASS * z - z / sig ** 2 * np.exp(-z ** 2 / (2 * sig ** 2))
+
+    print(f"  {'x':>6} {'max |Mres|':>13} {'shifted profile':>17} "
+          f"{'bare profile':>14}")
+    for x in (1.0, 1.5, 2.0, 2.5, 3.0):
+        print(f"  {x:6.2f} {res_amplitude(x, y_max, Vg, dVg):13.3e} "
+              f"{np.exp(-(abs(x) - y_max) ** 2 / (2 * sig ** 2)):17.3e} "
+              f"{np.exp(-x ** 2 / (2 * sig ** 2)):14.3e}")
+    print()
+    print("  This is the finite-reach refinement of Theorem O1: the untruncated")
+    print("  kernel has no position envelope, but a bounded reach confines the")
+    print("  interaction to within y_max of the non-quadratic part of V.")
+
+
+# --------------------------------------------------------------------- #
+# Part H -- the ring as a diagnostic                                     #
+# --------------------------------------------------------------------- #
+def ring_modes(qmax):
+    q = np.arange(1, qmax + 1)
+    Vq = 0.5 * MASS * OMEGA ** 2 * L ** 2 / np.pi ** 2 * (-1.0) ** q / q ** 2
+    return q, Vq
+
+
+def part_h():
+    banner("Part H -- the ring as a diagnostic")
+    q, Vq = ring_modes(4000)
+    k = 2 * np.pi * q / L
+    x, y = 1.0, 1.0                      # inside the bowtie: |x| + |y| = 2 < 4
+    exact = ((1 / HBAR) * (V_par_ring(x + y) - V_par_ring(x - y))
+             - dV_par_ring(x) * (2 * y / HBAR))
+    terms = -(2 * Vq / HBAR) * np.sin(k * x) * (np.sin(k * y) - k * y)
+    print(f"  Inside the bowtie (x = {x}, y = {y}), C6.1 gives exactly zero;")
+    print(f"  from V pointwise: {exact:+.10f}")
+    print()
+    print(f"  {'Q':>6} {'signed sum':>15} {'largest term':>14} "
+          f"{'sum |terms|':>13}")
+    for Q in (1, 20, 100, 500, 4000):
+        print(f"  {Q:6d} {terms[:Q].sum():+15.6f} "
+              f"{np.abs(terms[:Q]).max():14.4f} "
+              f"{np.abs(terms[:Q]).sum():13.2f}")
+    print()
+    print("  The signed sum falls like 1/Q; the largest term does not fall at")
+    print("  all; the absolute sum diverges logarithmically.  The modes do")
+    print("  cancel, conditionally.  Bounding mode by mode gives")
+    print("  sum |V_q| k_q^3, which diverges, while C2 on the reach gives zero")
+    print("  in one line -- the case for never decomposing V into modes.")
+    print()
+    print("  At maximal reach y = L/2 the two arms meet at the antipode:")
+    print(f"  {'q':>3} {'u/pi':>6} {'sin(u)':>12} {'|Mres|/|Mcl|':>14}")
+    for qq in (1, 2, 3, 4):
+        kk = 2 * np.pi * qq / L
+        u = kk * (L / 2)
+        Aq = 0.5 * MASS * OMEGA ** 2 * L ** 2 / np.pi ** 2 * (-1.0) ** qq / qq ** 2
+        mr = -(2 * Aq / HBAR) * np.sin(kk * x) * (np.sin(u) - u)
+        mc = -(2 * Aq / HBAR) * np.sin(kk * x) * u
+        print(f"  {qq:3d} {u / np.pi:6.1f} {np.sin(u):12.3e} "
+              f"{abs(mr / mc):14.5f}")
+    arms = (1 / HBAR) * (V_par_ring(x + L / 2) - V_par_ring(x - L / 2))
+    print(f"  full symbol at y = L/2: {arms:.3e}   (the arms coincide)")
+    print("  So a ring pins every mode at the crossover of C4 by geometry.")
+    print("  A ring is not a valid testbed for the reach condition.")
+
+
+# --------------------------------------------------------------------- #
 # Figures                                                                #
 # --------------------------------------------------------------------- #
 def fig_symbol():
@@ -524,6 +650,51 @@ def fig_world_paths():
     plt.close(fig)
 
 
+def fig_quiet_region():
+    fig, axes = plt.subplots(1, 2, figsize=(11, 4))
+    ax = axes[0]
+    xs = np.linspace(0.0, 6.0, 400)
+    for y_max, col in ((0.5, "#1D9E75"), (1.0, "#D85A30"), (2.0, "0.35")):
+        vals = [res_amplitude(xv, y_max, V_trap_bump, dV_trap_bump, n=512)
+                for xv in xs]
+        ax.semilogy(xs, np.maximum(vals, 1e-18), "-", color=col, lw=1.5,
+                    label=f"$y_{{\max}} = {y_max}$")
+        ax.axvline(BUMP_W + y_max, color=col, ls=":", lw=1.0)
+    ax.axvspan(0, BUMP_W, color="#EEEDFE")
+    ax.set_xlabel("$x$")
+    ax.set_ylabel(r"$\max_y |M_{\rm res}|$")
+    ax.set_title("Quiet beyond $|x| = b + y_{\\max}$ (bump shaded)",
+                 fontsize=10)
+    ax.legend(fontsize=9)
+    ax.grid(alpha=0.3, which="both")
+
+    ax = axes[1]
+    sig, y_max = 0.4, 1.0
+
+    def Vg(z):
+        return 0.5 * MASS * z ** 2 + np.exp(-z ** 2 / (2 * sig ** 2))
+
+    def dVg(z):
+        return MASS * z - z / sig ** 2 * np.exp(-z ** 2 / (2 * sig ** 2))
+
+    xs = np.linspace(0.8, 3.5, 200)
+    vals = [res_amplitude(xv, y_max, Vg, dVg, n=512) for xv in xs]
+    ax.semilogy(xs, vals, "-", color="#D85A30", lw=1.8,
+                label=r"$\max_y |M_{\rm res}|$")
+    ax.semilogy(xs, np.exp(-(np.abs(xs) - y_max) ** 2 / (2 * sig ** 2)), "--",
+                color="#1D9E75", lw=1.5, label="barrier shifted by $y_{\\max}$")
+    ax.semilogy(xs, np.exp(-xs ** 2 / (2 * sig ** 2)), ":", color="0.5",
+                lw=1.5, label="bare barrier")
+    ax.set_xlabel("$x$")
+    ax.set_ylabel("magnitude")
+    ax.set_title("The reach translates the interaction outward", fontsize=10)
+    ax.legend(fontsize=8)
+    ax.grid(alpha=0.3, which="both")
+    fig.tight_layout()
+    save_fig(fig, "compensated_quiet_region.png")
+    plt.close(fig)
+
+
 def fig_ring_residual(Mres, act):
     fig, axes = plt.subplots(1, 3, figsize=(14, 4))
     order = np.argsort(s_grid)
@@ -628,10 +799,13 @@ def main():
     Mres, act = part_d()
     times, d_par, d_cos, snaps = part_e()
     part_f()
+    part_g()
+    part_h()
     banner("Figures")
     fig_symbol()
     fig_reach(bdata)
     fig_world_paths()
+    fig_quiet_region()
     fig_ring_residual(Mres, act)
     fig_evolution(times, d_par, d_cos, snaps)
     fig_coulomb()
@@ -648,6 +822,9 @@ def main():
     print("      nothing; a coherence horizon fixes that and the seam at once")
     print("  C6  Coulomb: the Moyal series converges iff the reach misses the")
     print("      nucleus")
+    print("  C7  quiet region: a vanishing third derivative on the reach")
+    print("      implies no events at x; a bounded reach confines the")
+    print("      interaction to within y_max of the non-quadratic part of V")
     print("\ndone.")
 
 

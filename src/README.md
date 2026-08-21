@@ -654,13 +654,27 @@ see that directory's README for the ladder itself.
   to 3.6e-15.  E: evolution — the ring parabola's L¹ gap from Newtonian motion
   is 8.3e-5 against the cosine well's 0.744.  F: Theorem C6 — the Coulomb
   ratio is exactly `ρ²/(1−ρ²)` to 7.1e-15, so the Moyal series is geometric
-  and converges iff the reach misses the nucleus.
+  and converges iff the reach misses the nucleus.  G: Theorem C7, the quiet
+  region — for a harmonic trap plus a C∞ bump on [−1, 1] the residual is 1.4e-1
+  just inside `b + y_max` and 6.7e-16 just outside it, a cliff edge sharp to
+  machine precision at exactly that point for every reach; `x = 0` is quiet
+  too, but by parity rather than by C7, so the condition is sufficient and not
+  necessary.  For a Gaussian barrier the residual tracks the barrier profile
+  translated outward by exactly the reach, agreeing to three figures from
+  x = 2 while the bare profile is seven orders smaller by x = 3.  H: the ring
+  as a diagnostic — inside the bowtie the mode residuals sum to zero like 1/Q
+  while the largest single term stays at 4.116 and the absolute sum diverges
+  logarithmically (94.32 at Q = 4000), so the modes do cancel, conditionally;
+  and at maximal reach the two arms meet at the antipode, `sin(qπ)` is 1.2e-16,
+  the full symbol is 0.000, and the ratio is 1.00000 for every mode.
 
   ![The split of a mode symbol](https://raw.githubusercontent.com/billpage/wpmw/output/figures/compensated_symbol_and_band.png)
 
   ![Event budget and the vanishing first moment](https://raw.githubusercontent.com/billpage/wpmw/output/figures/compensated_reach.png)
 
   ![Newtonian arcs plus zero-mean hops](https://raw.githubusercontent.com/billpage/wpmw/output/figures/compensated_world_paths.png)
+
+  ![The quiet region](https://raw.githubusercontent.com/billpage/wpmw/output/figures/compensated_quiet_region.png)
 
   ![Bowtie residual support](https://raw.githubusercontent.com/billpage/wpmw/output/figures/compensated_ring_residual.png)
 
@@ -670,7 +684,8 @@ see that directory's README for the ladder itself.
 
   The sine against its own tangent; the budget crossing over as the reach
   grows while the residual's first moment stays at zero; a world's arcs
-  acquiring hops as its reach lengthens; the diamond of exact classicality
+  acquiring hops as its reach lengthens; the cliff edge of silence at one reach
+  beyond the bump; the diamond of exact classicality
   inscribed in the ring; the parabola's seam leaking into an otherwise
   Newtonian evolution; and Coulomb's hop channel retreating into the core.
 
