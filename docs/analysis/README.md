@@ -196,25 +196,30 @@ retracts.
     *This note replaces an earlier step 13, `species_phase_duality.md`; its
     §0.3 records what changed.*
 
-14. **[`compensated_liouville_splitting.md`](compensated_liouville_splitting.md)** — Putting the classical
-    force into the first substep. In the variable `s` conjugate to momentum
-    the whole potential term is multiplication by a single symbol
-    `M(x,s) = (i/ℏ)[V(x+ℏs/2) − V(x−ℏs/2)]`; subtracting its part linear in
-    the stencil arm splits off the exact classical Liouville force, and both
+14. **[`compensated_liouville_splitting.md`](compensated_liouville_splitting.md)** — The classical force as
+    deterministic acceleration. In the variable `s` conjugate to momentum the
+    whole potential term is multiplication by
+    `M(x,s) = (i/ℏ)[V(x+y) − V(x−y)]` with `y = ℏs/2` the half ket–bra
+    separation — so a world consults V only within its own reach, and no
+    Fourier decomposition of V is needed anywhere. Subtracting the part linear
+    in `y` splits off the classical Liouville force with the *full* `V′`; both
     factors are diagonal in the same variables, so the factorisation carries
-    no Trotter error (Theorem C1). The residual is a running second
-    difference of `V′` and vanishes iff `V‴ ≡ 0` (C2). Theorem C4: on a
-    circle only *constant* potentials are exactly classical — the harmonic
-    oscillator on the ring is not — and for the periodised parabola the
-    residual support is exactly the bowtie `|x| + |ℏs/2| > L/2`, which the
-    coherence horizon of step 11 erases (C4.2). Theorem C5 is the constraint:
-    operator splitting is *rate neutral*, so as a particle rule the
-    reorganisation is the identity and the four-rule ontology is untouched;
-    only splitting the *potential* removes jump events. Closes with Coulomb,
-    where everything is closed form: the Moyal series is geometric with
-    radius of convergence equal to the distance to the nucleus, the gain
-    condition is the uncertainty product `σ_p|x| ≫ ℏ/2`, and the residual
-    localises as `1/x⁴` against a `1/x²` classical force.
+    no Trotter error (C1), and the residual is exactly the odd part of the
+    cubic Taylor remainder of V (C2). Theorem C3 is the point: restricted to a
+    bounded coherence reach the residual kernel has zero zeroth *and* first
+    moments, so it is a bounded signed jump measure that conserves worlds and
+    carries no net momentum — a focus-and-hop that delivers no force, leaving
+    the entire classical force in the deterministic step. This is the
+    phase-space analogue of the Bohm–Nelson classical/quantum split, with the
+    difference that the quantum part is an interaction rather than a force,
+    and the price of that difference is a condition on the reach (C4): the
+    split gains for `k·y_max ≪ π` and loses beyond `π/2`, and reach and
+    momentum quantum are the same parameter, `Δp = πℏ/(2y_max)`. Theorem C5:
+    a ring pins every world at `u = qπ` for every mode, exactly the crossover,
+    which is why the reorganisation looks empty when analysed on the ring; a
+    coherence horizon fixes that and the seam artefact together. Closes with
+    Coulomb, whose Moyal series is geometric and converges iff the reach
+    misses the nucleus.
 
 ## Companion code
 
