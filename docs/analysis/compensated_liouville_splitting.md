@@ -73,8 +73,9 @@ note is about the second channel.
 ## 1. The symbol
 
 Let $`s`$ be conjugate to momentum and write $`y = \hbar s/2`$. This $`y`$ is
-the half ket–bra separation: the distance at which a world consults the
-potential. Under $`W(x, p \pm a) \leftrightarrow e^{\pm ias}\hat W(x,s)`$ the
+the **half** ket–bra separation: the ket sits at $`x + y`$, the bra at
+$`x - y`$, and $`x`$ is their midpoint, so the separation between them is
+$`2y`$. It is the distance at which a world consults the potential. Under $`W(x, p \pm a) \leftrightarrow e^{\pm ias}\hat W(x,s)`$ the
 whole potential term of the QLE collapses to multiplication by one scalar
 function,
 
@@ -97,6 +98,45 @@ Two features matter, and both are local statements about a single world.
 - **Only odd derivatives survive.** $`V(x+y) - V(x-y)`$ is odd in $`y`$, so
   the even part of $`V`$ about $`x`$ cancels identically. The Moyal series is
   the Taylor expansion of $`M`$ in $`s`$.
+
+### 1.1 The reach
+
+Because the whole of this note turns on how far a world looks, the term is
+worth pinning down before it is used.
+
+**The reach $`y_{\max}`$ of a world is the greatest value of $`|y|`$ at which
+it consults the potential** — equivalently, the greatest half ket–bra
+separation the model instantiates. It is exactly half the coherence horizon
+$`L_c`$ of [`open_position_space.md`](open_position_space.md) §3,
+Definitions (H) and (R):
+
+```math
+y_{\max} \;=\; \frac{L_c}{2},
+\qquad
+\text{the world samples } V \text{ on }
+[\thinspace x - y_{\max},\; x + y_{\max}\thinspace] .
+```
+
+In the variable $`s`$ the same bound is the band
+$`|s| \le 2y_{\max}/\hbar`$, so every symbol in this note is a function on
+that band and nothing outside it is ever evaluated. The associated momentum
+quantum is $`\Delta p = \pi\hbar/L_c = \pi\hbar/(2 y_{\max})`$: reach and
+momentum resolution are one parameter, a point that returns as Theorem C4.
+
+Three things the reach is **not**, since each has caused a confusion
+somewhere in the drafting of this note:
+
+- It is not a bound on $`x`$. Worlds range over all of $`\mathbb{R}`$; the
+  bound is in the relative coordinate only.
+- It is not a property of a particular state. It is a postulate about which
+  ket–bra pairs exist, so every world has the same reach.
+- It is not a length scale of $`V`$. The interesting quantity throughout is
+  the *ratio* of the reach to the scale on which $`V`$ varies, which is what
+  $`u = k\thinspace y_{\max}`$ measures.
+
+An unbounded reach, $`y_{\max} = \infty`$, is the untruncated Wigner equation.
+Most of the results below fail there and hold for every finite $`y_{\max}`$,
+so the distinction is not a technicality.
 
 ---
 
@@ -292,6 +332,20 @@ whatever and moves on an exact Newtonian trajectory in the full potential.
 $`R_x(y)`$, and $`V''' \equiv 0`$ on the reach makes $`R_x \equiv 0`$ there.
 $`\square`$
 
+**What is new here and what is not.** The localisation itself is not new:
+**Proposition O4** of [`open_position_space.md`](open_position_space.md) §3
+already states that under a coherence horizon all vertex activity is confined
+to $`\mathrm{dist}(x, \mathrm{supp}\thinspace V) \le L_c/2`$, with a table
+whose collapse edge tracks $`L_c/2`$ in every row. In the language of
+Definition (R) that is exactly a quiet region at reach $`y_{\max}`$. C7 adds
+one thing: O4 is stated for a potential that *vanishes* outside a compact
+support, so a world beyond the edge is free and its deterministic
+acceleration is zero. C7 replaces "vanishes" by "is quadratic". A world in a
+harmonic trap beyond the bump is not free — it accelerates, exactly, under
+the trap's full classical force — and it still takes no events. That is the
+version needed for §3, where the point is that the deterministic step carries
+the force rather than that there is no force to carry.
+
 The condition is sufficient but **not** necessary. What is necessary and
 sufficient is that $`R_x`$ be an *even* function of $`y`$ on the reach, and
 parity can arrange that at isolated points without $`V'''`$ vanishing — at a
@@ -328,7 +382,8 @@ Three significant figures of agreement with the shifted profile from $`x = 2`$
 outward, against a bare profile seven orders of magnitude smaller by
 $`x = 3`$.
 
-This is the finite-reach refinement of **Theorem O1** of
+This is O4 again, in the form it takes when $`V`$ does not have compact
+support, and it is the finite-reach refinement of **Theorem O1** of
 [`open_position_space.md`](open_position_space.md), which says the untruncated
 Wigner kernel's modulus has no position envelope — a world arbitrarily far
 from a scatterer is still struck at an appreciable rate. With a bounded reach
@@ -528,7 +583,7 @@ while the long-range Kepler dynamics is deterministic.
 | C4 | the split gains for $`k\thinspace y_{\max} \ll \pi`$; reach and momentum quantum are one parameter | $`TV`$ table, §4 |
 | C5 | on a circle only constants have a vanishing residual | — |
 | C6 | Coulomb: the Moyal series converges iff the reach misses the nucleus | $`7.1\times10^{-15}`$ |
-| C7 | quiet region: $`V'''`$ vanishing on the reach implies no events at $`x`$ | edge sharp to $`10^{-15}`$ |
+| C7 | quiet region: $`V'''`$ vanishing on the reach implies no events at $`x`$ (extends O4 from a vanishing to a quadratic potential) | edge sharp to $`10^{-15}`$ |
 | C0 | the mode stencil is an identity; the derivative approximates it | analytic |
 
 The short version. On the open line the classical force can be moved into the
@@ -555,8 +610,8 @@ not as a home for the ontology.
   Taylor remainder is even on the reach without vanishing. Parity supplies
   isolated such points. Is there a potential with a quiet region of positive
   measure not explained by the vanishing of $`V'''`$?
-- **CLS7.** §5.1 makes the coherence horizon the restorer of position-space
-  locality, sharpening Theorem O1. Does the same truncation restore locality
+- **CLS7.** §5 and §5.1 make the coherence horizon the restorer of
+  position-space locality, extending Proposition O4 and sharpening Theorem O1. Does the same truncation restore locality
   for the two-body kernel of the interworld coupling notes, or is that a
   different mechanism?
 - **CLS2.** Does the deterministic acceleration have a field reading in the

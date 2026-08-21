@@ -211,6 +211,57 @@ wall in position space, and it is orthogonal to $`x`$:
                   supp V + Lc
 ```
 
+**Definition (R), the reach.** The quantity that actually enters every formula
+below is not $`L_c`$ itself but **half** of it. Give it a name:
+
+```math
+y_{\max} \;\equiv\; \frac{L_c}{2}
+```
+
+is the **reach** of a world — the greatest distance from its own position at
+which it consults the potential.
+
+Four remarks, because this quantity appears under several different names
+across these notes and the factors of two are easy to lose.
+
+1. *Why half.* The kernel above integrates against
+   $`V(x + y) - V(x - y)`$, where $`x`$ is the pair **midpoint** and $`y`$ is
+   the **half** separation: the ket sits at $`x + y`$ and the bra at
+   $`x - y`$, so the separation between them is $`2y`$. A horizon
+   $`|x_{\rm ket} - x_{\rm bra}| \le L_c`$ is therefore the window
+   $`|y| \le L_c/2 = y_{\max}`$. A world of reach $`y_{\max}`$ samples $`V`$
+   on the interval $`[x - y_{\max},\; x + y_{\max}]`$, of total length
+   $`L_c`$, and on nothing else.
+
+2. *Other names for the same thing.* In the momentum-conjugate variable
+   $`s`$, where the potential term becomes a multiplication operator, the same
+   quantity is the **stencil arm** $`y = \hbar s/2`$, and the horizon is the
+   band $`|s| \le 2y_{\max}/\hbar`$. In the position-pair ladder it is the
+   maximum rung, $`|k| \le L_c/a = 2y_{\max}/a`$. All three are the same
+   bound written in three variables.
+
+3. *Relation to the momentum quantum.* Combining
+   $`\Delta p = \pi\hbar/L_c`$ from §1 with $`L_c = 2y_{\max}`$ gives
+
+   ```math
+   \Delta p \;=\; \frac{\pi\hbar}{2\thinspace y_{\max}} .
+   ```
+
+   Reach and momentum quantum are one parameter, not two: a world that
+   consults $`V`$ only within $`y_{\max}`$ can resolve momentum transfers only
+   down to $`\pi\hbar/(2y_{\max})`$. Shortening the reach coarsens the
+   momentum lattice, and conversely.
+
+4. *What it is not.* The reach is not a length scale of the potential, not a
+   confinement of $`x`$, and not a property of any particular state. It is a
+   postulate about which ket–bra pairs the model instantiates at all, so two
+   worlds at the same $`x`$ with the same $`p`$ have the same reach.
+
+The reach is used in this sense throughout
+[`compensated_liouville_splitting.md`](compensated_liouville_splitting.md),
+where it turns out to be the parameter that decides whether the classical
+force can be carried by deterministic acceleration rather than by events.
+
 **Proposition O3 (truncation is not absorption).** The windowed kernel is
 still odd in $`\xi`$, so $`\int V_W^{L_c}(x,\xi)\thinspace d\xi = 0`$
 identically and the signed world number is conserved exactly, for every

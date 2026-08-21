@@ -121,6 +121,10 @@ retracts.
     the momentum quantum, and keeping worlds in view. Only the first is real,
     and it has three independent sources — ring circumference, coherence
     horizon, and periodicity of `V` — of which the last works on all of ℝ.
+    Definitions (H) and (R) in §3 fix the coherence horizon `L_c` and the
+    **reach** `y_max = L_c/2`, the greatest half ket–bra separation a world
+    instantiates and hence the greatest distance at which it consults the
+    potential; the reach is the central parameter of step 14.
     Theorem O1: the Wigner kernel's modulus is independent of position for
     *every* potential, so a world far from a localised scatterer is struck at
     full rate and its free behaviour is a cancellation whose fringe frequency
@@ -215,6 +219,8 @@ retracts.
     and the price of that difference is a condition on the reach (C4): the
     split gains for `k·y_max ≪ π` and loses beyond `π/2`, and reach and
     momentum quantum are the same parameter, `Δp = πℏ/(2y_max)`. Theorem C5:
+    the reach `y_max = L_c/2` of Definition (R) is the one parameter
+    everything depends on, and
     a ring pins every world at `u = qπ` for every mode — the two ket–bra arms
     meet at the antipode, so the symbol vanishes and the residual exactly
     cancels the classical term — which is why the reorganisation looks empty
