@@ -208,7 +208,10 @@ retracts.
     Fourier decomposition of V is needed anywhere. Subtracting the part linear
     in `y` splits off the classical Liouville force with the *full* `V′`; both
     factors are diagonal in the same variables, so the factorisation carries
-    no Trotter error (C1), and the residual is exactly the odd part of the
+    no Trotter error within the potential substep (C1; §2.1 spells out in
+    which representation, why the symbol's independence of `p` is what
+    makes the two factors commute, and why the free/potential Strang error
+    is untouched), and the residual is exactly the odd part of the
     cubic Taylor remainder of V (C2). Theorem C3 is the point: restricted to a
     bounded coherence reach the residual kernel has zero zeroth *and* first
     moments, so it is a bounded signed jump measure that conserves worlds and

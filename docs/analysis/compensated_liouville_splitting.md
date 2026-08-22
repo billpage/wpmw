@@ -162,10 +162,78 @@ e^{\tau M} \;=\; e^{\tau M_{\mathrm{cl}}}\thinspace e^{\tau M_{\mathrm{res}}}
 \qquad\text{for every }\tau ,
 ```
 
-with no Trotter error. *Verified:* commutator identically zero;
+with no Trotter error *within the potential substep* — the Strang error
+between free streaming and the potential is a separate matter and is
+unaffected; see §2.1. *Verified:* commutator identically zero;
 factorisation error $`1.1\times10^{-16}`$, $`2.6\times10^{-16}`$,
 $`9.5\times10^{-16}`$ at $`\tau = 0.01, 0.1, 1.0`$, with no growth in
 $`\tau`$.
+
+### 2.1 In what sense these are multiplication operators
+
+"Multiplication operator" is a claim about a representation, not about an
+operator in the abstract, so it is worth saying which representation and why
+the potential term admits it.
+
+**Not in $`(x, p)`.** Acting on $`W(x, p)`$, neither piece is multiplication
+by anything. The potential term is an integral operator,
+
+```math
+(L_{\mathrm{res}} W)(x, p) \;=\;
+\int K_{\mathrm{res}}(x, \xi)\thinspace W(x,\thinspace p - \xi)\thinspace d\xi ,
+```
+
+a convolution in momentum — on the crystal lattice, the hop stencil of
+`../supplement/phase_space_crystal_lattice_supplement.md` §7.
+
+**In $`(x, s)`.** Take the partial Fourier transform in $`p`$ alone,
+$`\hat W(x, s) = \int W(x, p)\thinspace e^{-ips}\thinspace dp`$, leaving
+$`x`$ untouched. Then
+
+```math
+\widehat{L_{\mathrm{res}} W}(x, s)
+\;=\; M_{\mathrm{res}}(x, s)\thinspace\cdot\thinspace\hat W(x, s) ,
+```
+
+a pointwise product, independently at each $`(x, s)`$. That is the sense
+meant throughout this note, and it is the same transform the algorithm
+already performs to integrate the momentum substep exactly.
+
+**Why the potential term has this form.** Two structural properties, both of
+which fail for other terms of the QLE:
+
+1. *Local in $`x`$.* The potential term never differentiates or displaces
+   $`x`$; it evaluates $`V`$ at $`x \pm y`$ about a fixed midpoint. So $`x`$
+   is a spectator parameter.
+2. *Translation-invariant in $`p`$.* The kernel depends on $`p - p'`$ only.
+   Physically: a world receives the same distribution of kicks however fast
+   it happens to be moving.
+
+Together these force the symbol to depend on $`(x, s)`$ and — the load-bearing
+point — **not on $`p`$**. Were it to depend on $`p`$ as well as $`s`$,
+"multiplication by $`M`$" would be ambiguous, since one would have to choose
+between Weyl and other orderings, and two such operators would in general fail
+to commute because $`p`$ and $`s`$ are conjugate. Because the symbol contains
+no $`p`$, multiplication is unambiguous, and functions of $`x`$ and functions
+of $`s`$ commute freely with one another: $`s`$ is conjugate to $`p`$, not to
+$`x`$. Hence $`[M_{\mathrm{cl}}, M_{\mathrm{res}}] = 0`$ pointwise, which is
+all Theorem C1 needs.
+
+**Multiplicative does not mean bounded.** $`M_{\mathrm{cl}} = iV'(x)s`$ is
+multiplication by a function growing without limit in $`s`$; as an operator
+on $`W`$ it is the differential operator $`V'(x)\thinspace\partial_p`$. Here
+"multiplication operator" means diagonal, not bounded. This is precisely why
+the reach does work later: restricted to $`|s| \le 2 y_{\max}/\hbar`$ these
+symbols are bounded functions, which is what allows Theorem C3 to call
+$`M_{\mathrm{res}}`$ a jump measure rather than a differential operator.
+
+**Free streaming is not of this form.** The term
+$`(p/m)\thinspace\partial_x`$ is local in $`p`$ and translation-invariant in
+$`x`$, so it is diagonal in $`(k_x, p)`$ — the opposite representation, and
+one that does not commute with this one. Theorem C1 therefore removes the
+Trotter error *inside* the potential substep only. The Strang error between
+free streaming and the potential is untouched by anything in this note, and
+"no Trotter error" above should not be read more broadly than that.
 
 **Theorem C2.** Because the quadratic term of $`V`$ cancels in the odd
 combination, $`M_{\mathrm{res}}`$ is exactly the odd part of the **cubic
