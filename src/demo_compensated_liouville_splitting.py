@@ -539,6 +539,72 @@ def part_h():
 
 
 # --------------------------------------------------------------------- #
+# Part I -- structure of the residual kernel                             #
+# --------------------------------------------------------------------- #
+def sym_kernel(Vf, dVf, x, y_max, n=2049):
+    """Kernel of L_res in the momentum-transfer variable xi.
+
+    n must be odd so that s = 0 is a grid point and ifftshift aligns.
+    """
+    assert n % 2 == 1
+    s_max = 2 * y_max / HBAR
+    s = (np.arange(n) - (n - 1) // 2) * (2 * s_max / n)
+    y = HBAR * s / 2
+    M = (1j / HBAR) * (Vf(x + y) - Vf(x - y))
+    Mres = M - 1j * dVf(x) * s
+    return np.fft.ifft(np.fft.ifftshift(M)), np.fft.ifft(np.fft.ifftshift(Mres))
+
+
+def part_i():
+    banner("Part I -- what L_res does: structure of K_res")
+    print("  L_res W(x, p) = integral K_res(x, xi) W(x, p - xi) d xi,")
+    print("  with xi the momentum transferred TO the world.")
+    print()
+    print("  K_res is real and odd in xi (Mres is imaginary and odd in s):")
+    print(f"  {'potential':>18} {'n':>7} {'max|Im K|/max|K|':>18} "
+          f"{'oddness':>11}")
+    for name, Vf, dVf in (("cosine well", V_cos, dV_cos),
+                          ("Gaussian barrier", V_bar, dV_bar)):
+        for n in (2049, 8193):
+            _, Kr = sym_kernel(Vf, dVf, 1.0, 1.0, n)
+            m = np.abs(Kr).max()
+            odd = np.abs(Kr + Kr[(-np.arange(n)) % n]).max() / m
+            print(f"  {name:>18} {n:7d} {np.abs(Kr.imag).max() / m:18.3e} "
+                  f"{odd:11.3e}")
+    print()
+    print("  Consequences.  Oddness gives zero total rate for free -- no world")
+    print("  is created or destroyed.  Zero FIRST moment is the extra property")
+    print("  that compensation buys (C3).  And a non-zero odd kernel must take")
+    print("  both signs, so L_res is never the generator of a one-body Markov")
+    print("  jump process, for any potential: Proposition T3 again.")
+    print()
+    print(f"  {'potential':>18} {'max K_res':>13} {'min K_res':>13} "
+          f"{'sum K_res':>12}")
+    for name, Vf, dVf in (("cosine well", V_cos, dV_cos),
+                          ("Gaussian barrier", V_bar, dV_bar)):
+        _, Kr = sym_kernel(Vf, dVf, 1.0, 1.0)
+        r = Kr.real
+        print(f"  {name:>18} {r.max():+13.4e} {r.min():+13.4e} "
+              f"{r.sum():+12.2e}")
+    print()
+    print("  Which transfers exist.  M is periodic in s with period 2a/hbar")
+    print("  exactly when V is periodic in x with period a, and a symbol")
+    print("  periodic in s has its kernel on a lattice in xi of spacing")
+    print(f"  pi hbar / a = {np.pi * HBAR / L:.6f} = dp.  Check on the cosine well:")
+    x = 1.0
+    for s0 in (0.7, 1.9, 3.3):
+        a = (1j / HBAR) * (V_cos(x + HBAR * s0 / 2) - V_cos(x - HBAR * s0 / 2))
+        s1 = s0 + 2 * L / HBAR
+        b = (1j / HBAR) * (V_cos(x + HBAR * s1 / 2) - V_cos(x - HBAR * s1 / 2))
+        print(f"     s = {s0:4.1f}:  |M(s) - M(s + 2a/hbar)| = {abs(a - b):.3e}")
+    print("  So mode q of V contributes the transfer hbar k_q / 2 = q dp: a")
+    print("  world in momentum cell n exchanges with cells n +- q at a rate set")
+    print("  by the q-th Fourier amplitude of V at the world's own position.")
+    print("  For an aperiodic V there is no lattice and the spectrum of")
+    print("  available transfers is continuous.")
+
+
+# --------------------------------------------------------------------- #
 # Figures                                                                #
 # --------------------------------------------------------------------- #
 def fig_symbol():
@@ -801,6 +867,7 @@ def main():
     part_f()
     part_g()
     part_h()
+    part_i()
     banner("Figures")
     fig_symbol()
     fig_reach(bdata)

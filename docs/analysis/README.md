@@ -211,7 +211,10 @@ retracts.
     no Trotter error within the potential substep (C1; §2.1 spells out in
     which representation, why the symbol's independence of `p` is what
     makes the two factors commute, and why the free/potential Strang error
-    is untouched), and the residual is exactly the odd part of the
+    is untouched; §2.2 says what the operator actually does to worlds —
+    a convolution in momentum whose kernel is real and odd, hence signed,
+    hence never a one-body Markov jump generator), and the residual is
+    exactly the odd part of the
     cubic Taylor remainder of V (C2). Theorem C3 is the point: restricted to a
     bounded coherence reach the residual kernel has zero zeroth *and* first
     moments, so it is a bounded signed jump measure that conserves worlds and

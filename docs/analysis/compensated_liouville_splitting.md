@@ -235,6 +235,117 @@ Trotter error *inside* the potential substep only. The Strang error between
 free streaming and the potential is untouched by anything in this note, and
 "no Trotter error" above should not be read more broadly than that.
 
+### 2.2 What $`M_{\mathrm{res}}`$ does
+
+§2.1 says where the operator is diagonal. This section says what it does to
+worlds, since "multiplication operator" is not an answer to that.
+
+**The kernel.** Undoing the transform of §2.1, $`M_{\mathrm{res}}`$ acts on
+$`W`$ as a convolution in momentum,
+
+```math
+(L_{\mathrm{res}} W)(x, p) \;=\;
+\int K_{\mathrm{res}}(x, \xi)\thinspace W(x,\thinspace p - \xi)\thinspace d\xi ,
+\qquad
+K_{\mathrm{res}}(x, \xi) \;=\; \frac{1}{2\pi}\int
+  M_{\mathrm{res}}(x, s)\thinspace e^{-i\xi s}\thinspace ds ,
+```
+
+where $`\xi`$ is the momentum **transferred to** the world. So
+$`K_{\mathrm{res}}(x, \xi)`$ is a density of transfer rates: at position
+$`x`$, weight arrives at momentum $`p`$ from momentum $`p - \xi`$ at rate
+$`K_{\mathrm{res}}(x, \xi)`$.
+
+**The kernel is real and odd in $`\xi`$.** $`M_{\mathrm{res}}`$ is $`i/\hbar`$
+times $`V(x+y) - V(x-y) - 2yV'(x)`$, which is real and odd in $`y`$ and hence
+in $`s`$. The inverse transform of an imaginary odd function is a real odd
+one. *Verified* to $`1.1\times10^{-16}`$ for both the cosine well and a
+Gaussian barrier, grid-independently.
+
+Three consequences follow immediately, and they are the whole content of the
+operator.
+
+1. **No worlds are created or destroyed.** Oddness gives
+   $`\int K_{\mathrm{res}}\thinspace d\xi = 0`$ for free: every arrival is
+   matched by a departure. This is automatic and is *not* the compensation.
+2. **No net momentum is delivered.** $`\int \xi K_{\mathrm{res}}\thinspace
+   d\xi = 0`$ is a genuine extra property, and it is exactly what subtracting
+   $`M_{\mathrm{cl}}`$ bought. The uncompensated kernel $`K`$ is also odd but
+   has first moment $`-V'(x)`$: it carries the entire classical force. This is
+   Theorem C3.
+3. **The kernel necessarily takes both signs.** A nonzero odd function cannot
+   be non-negative. So $`L_{\mathrm{res}}`$ is *never* the generator of a
+   one-body Markov jump process, for any potential — a Markov jump generator
+   needs a non-negative off-diagonal kernel. This is **Proposition T3** of
+   [`../supplement/takabayasi_1954_stochastic_picture.md`](../supplement/takabayasi_1954_stochastic_picture.md)
+   reappearing in the compensated channel, unweakened — compensation removes
+   the force from the jump channel but does nothing whatever to its sign
+   structure. Measured for the cosine
+   well at $`x = 1`$, $`y_{\max} = 1`$: the kernel runs from
+   $`-2.264\times10^{-2}`$ to $`+2.264\times10^{-2}`$, exactly antisymmetric,
+   summing to $`10^{-17}`$.
+
+**Which momenta talk to which.** Because $`L_{\mathrm{res}}`$ is local in
+$`x`$ and a convolution in $`p`$:
+
+- Only worlds **at the same position** interact through this channel. Two
+  worlds at different $`x`$ never exchange momentum here, whatever their
+  momenta.
+- Within a column of fixed $`x`$, the coupling between $`p`$ and $`p'`$
+  depends only on the difference $`p - p'`$, never on either momentum
+  separately. A world receives the same distribution of kicks however fast it
+  is moving; a slow world and a fast world at the same place are struck
+  identically.
+- The strength of the coupling depends on $`x`$ alone, through the shape of
+  $`V`$ within one reach of $`x`$.
+
+**Which transfers are available.** The support of $`K_{\mathrm{res}}`$ in
+$`\xi`$ is fixed by a periodicity, and the correspondence is exact: $`M`$ is
+periodic in $`s`$ with period $`2a/\hbar`$ if and only if $`V`$ is periodic
+in $`x`$ with period $`a`$, and a symbol periodic in $`s`$ has a kernel
+supported on a lattice in $`\xi`$ of spacing
+
+```math
+\frac{2\pi}{2a/\hbar} \;=\; \frac{\pi\hbar}{a} \;=\; \Delta p .
+```
+
+*Verified:* $`|M(x, s) - M(x, s + 2a/\hbar)| \approx 10^{-15}`$ for a cosine
+well. This is Theorem O5 of
+[`open_position_space.md`](open_position_space.md) seen from the kernel side.
+So for an $`a`$-periodic potential the available transfers are exactly the
+multiples of $`\Delta p`$, and the mode $`q`$ of $`V`$ contributes the
+transfer $`\hbar k_q/2 = q\thinspace\Delta p`$: **a world at momentum cell
+$`n`$ exchanges with cells $`n \pm q`$, at a rate set by the $`q`$-th Fourier
+amplitude of $`V`$ evaluated at the world's own position.** For an aperiodic
+potential there is no lattice and the transfer spectrum is continuous.
+
+**Is a stochastic process mandatory?** No, and it is worth separating three
+readings that are easy to run together.
+
+1. *As an equation.* $`L_{\mathrm{res}}`$ is a deterministic linear operator,
+   the tail of the Moyal series. Integrating it on a mesh by the transform of
+   §2.1 involves no randomness at all, and that is what the companion demo
+   does. Nothing in this note requires sampling.
+2. *As something to sample.* If one wants a Monte Carlo realisation, the
+   signed density $`K_{\mathrm{res}}`$ must be split into $`|K_{\mathrm{res}}|`$
+   for the rates and a sign carried as a weight. That is a numerical choice,
+   not a physical commitment, and it is where the sign problem shows up as
+   variance.
+3. *As a microdynamics.* If the world-particle ontology is taken seriously,
+   consequence 3 above forbids the obvious construction: no one-body jump
+   process will do. The positon/negaton two-species construction of the
+   four-action model is therefore not a stylistic preference but a necessity,
+   the sign becoming a species label rather than a weight.
+
+**What the reach does to the kernel.** At unbounded reach
+$`M_{\mathrm{res}}`$ grows linearly in $`s`$, and $`K_{\mathrm{res}}`$ is not
+a density at all: it is the kernel of $`K`$ plus a $`\delta'(\xi)`$, a
+derivative of a delta at zero transfer, which is a drift and not a jump. Only
+a bounded reach confines $`s`$ to an interval on which
+$`M_{\mathrm{res}}`$ is a bounded function, making $`K_{\mathrm{res}}`$ an
+honest bounded signed density. That, rather than anything about convergence,
+is the content of Theorem C3.
+
 **Theorem C2.** Because the quadratic term of $`V`$ cancels in the odd
 combination, $`M_{\mathrm{res}}`$ is exactly the odd part of the **cubic
 Taylor remainder** of $`V`$ about $`x`$. Equivalently,

@@ -666,7 +666,17 @@ see that directory's README for the ladder itself.
   while the largest single term stays at 4.116 and the absolute sum diverges
   logarithmically (94.32 at Q = 4000), so the modes do cancel, conditionally;
   and at maximal reach the two arms meet at the antipode, `sin(qπ)` is 1.2e-16,
-  the full symbol is 0.000, and the ratio is 1.00000 for every mode.
+  the full symbol is 0.000, and the ratio is 1.00000 for every mode.  I: the
+  structure of the residual kernel — `K_res` is real and odd in the momentum
+  transfer to 1.1e-16, grid-independently, which gives zero total rate for
+  free (no world created or destroyed) and forces the kernel to take both
+  signs (+2.264e-02 to −2.264e-02 for the cosine well, summing to 7e-18), so
+  `L_res` is never the generator of a one-body Markov jump process — the
+  compensation removes the force from the jump channel and does nothing to its
+  sign structure.  Also checks that `M` is periodic in `s` with period `2a/ħ`
+  to 1.1e-15 exactly when `V` is `a`-periodic, which is why the available
+  transfers form a lattice of spacing `πħ/a = Δp` with mode `q` sitting at
+  `qΔp`.
 
   ![The split of a mode symbol](https://raw.githubusercontent.com/billpage/wpmw/output/figures/compensated_symbol_and_band.png)
 
