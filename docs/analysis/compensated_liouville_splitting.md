@@ -1,7 +1,13 @@
 # Compensated Liouville splitting: the classical force as deterministic acceleration
 
 **Status.** Analysis note. Companion demo:
-`src/demo_compensated_liouville_splitting.py`.
+`src/demo_compensated_liouville_splitting.py`. Promoted to a specification in
+[`../algorithm/compensated_liouville_algorithm.md`](../algorithm/compensated_liouville_algorithm.md),
+which corrects one thing here: the total-variation figures of §4 below are
+grid-dependent, not absolute — under a hard coherence horizon the event rate
+grows like `ln N_p` and the momentum churn like `N_p`. See that document's
+§4.4, which also argues that the horizon should carry a profile rather than a
+sharp cutoff.
 
 The crystal-lattice algorithm of
 [`../supplement/phase_space_crystal_lattice_supplement.md`](../supplement/phase_space_crystal_lattice_supplement.md)
@@ -455,6 +461,13 @@ condition on the reach rather than nothing at all.
 How short must the reach be? The natural measure of event traffic is the
 kernel's total variation, and compensation is worth doing exactly when
 $`TV(K_{\mathrm{res}}) < TV(K)`$.
+
+**Erratum.** The $`TV`$ columns below are computed on a particular rung grid
+and are not absolute quantities; see
+[`../algorithm/compensated_liouville_algorithm.md`](../algorithm/compensated_liouville_algorithm.md)
+§4.4. The ratios are stable to about ten per cent, so what follows stands, but
+the $`y_{\max} = 4`$ row is meaningless as a number: there $`TV(K)`$ is finite
+and exact while $`TV(K_{\mathrm{res}})`$ diverges with the grid.
 
 **Theorem C4.** Per mode, $`|M_{\mathrm{res}}|/|M_{\mathrm{cl}}| =
 |\sin u - u|/|u| = u^2/6 + O(u^4)`$ with $`u = k\thinspace y_{\max}`$, and the

@@ -239,6 +239,18 @@ retracts.
     with Coulomb, whose Moyal series is geometric and converges iff the reach
     misses the nucleus.
 
+    *Promoted to a specification.*
+    [`../algorithm/compensated_liouville_algorithm.md`](../algorithm/compensated_liouville_algorithm.md)
+    turns this note into an implementable open-line algorithm and records what
+    the continuum argument leaves out: the reach fixes the momentum grid
+    outright, the compensation must be taken against the kernel's own first
+    moment rather than `V′(x)`, the Nyquist rung must be zeroed, and — an
+    erratum for §4 here — the total-variation figures tabulated in this note
+    are functions of the rung count rather than absolute numbers, because
+    under a *hard* coherence horizon the event rate diverges logarithmically
+    and the momentum churn linearly. Read that specification's §4.4 before
+    quoting any event budget from §4 below.
+
 ## Companion code
 
 Every note lists its verifying script in §0 and its numerical results in a
@@ -252,7 +264,8 @@ late section. In ladder order: `src/demo_four_rule_equivalence.py`,
 `src/demo_open_position_space.py`,
 `src/demo_interworld_coupling.py`,
 `src/demo_species_sectors_and_annihilation.py`,
-`src/demo_compensated_liouville_splitting.py`. All
+`src/demo_compensated_liouville_splitting.py`,
+`src/demo_compensated_liouville_algorithm.py`. All
 non-trivial claims in these notes are verified numerically before inclusion.
 
 ## Related

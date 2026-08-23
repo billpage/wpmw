@@ -55,9 +55,29 @@ extended derivations belong in `docs/supplement/` and `docs/analysis/`.
   a full live-sea integrator is not yet in `wpmwlib`, and §10 rungs 5–6
   define the decisive test it must pass.
 
+- **[`compensated_liouville_algorithm.md`](compensated_liouville_algorithm.md)** — Wigner evolution as exact
+  Newtonian flow plus a zero-mean signed hop channel: the crystal-lattice jump
+  rule of §3b above with the rate field replaced and a deterministic step in
+  front of it. Written for the **open line**; the ring appears only as the
+  corner where the algorithm degenerates back to the crystal lattice. Promotes
+  [`../analysis/compensated_liouville_splitting.md`](../analysis/compensated_liouville_splitting.md)
+  (theorems C0–C7) and adds what a grid forces: the reach *is* the momentum
+  cell and `N_p` is the ket–bra rung count, so neither is a convergence knob
+  (§2); the deterministic force must be the kernel's own first moment, not
+  `V′(x)` (§3.2); the Nyquist rung must be zeroed (§4.1); and the coherence
+  horizon needs a **profile**, since under a hard cutoff the event rate, the
+  momentum churn and the third moment all diverge — a soft horizon is what
+  gives the discrete operator a Moyal expansion at all (§4.4). §8 sketches the
+  `wpmwlib` interface. Companion code `src/demo_compensated_liouville_algorithm.py`.
+
 ## Reading order
 
 [`phase_space_crystal_lattice_algorithm.md`](phase_space_crystal_lattice_algorithm.md) alone is enough to reproduce every
-result in `src/`. The other three extend it in three independent directions —
-more particles, a dual representation, and a deeper microdynamics — and none
-is a prerequisite for the others.
+result in `src/`. The other four extend it in four independent directions —
+more particles, a dual representation, a deeper microdynamics, and a
+reordering of the same update into a classical and a quantum channel — and
+none is a prerequisite for the others.
+[`compensated_liouville_algorithm.md`](compensated_liouville_algorithm.md) is
+the closest to the canonical spec and reuses its jump rule verbatim, so read
+that one second if you want the shortest path from the lattice to the open
+line.

@@ -699,6 +699,60 @@ see that directory's README for the ladder itself.
   inscribed in the ring; the parabola's seam leaking into an otherwise
   Newtonian evolution; and Coulomb's hop channel retreating into the core.
 
+- `demo_compensated_liouville_algorithm.py` — verification companion to
+  `docs/algorithm/compensated_liouville_algorithm.md`, the specification that
+  promotes the note above.  Where that note argues on the real line, this
+  script checks what a grid forces.  Nine parts.  A: the reach IS the momentum
+  grid — `dp = πħ/(2 y_max)` is not a choice, and `N_p` is the number of
+  ket–bra rungs inside the horizon (exactly 64 rungs at `N_p = 64`, rung
+  spacing `a = 2L_c/N_p`), so neither is a convergence parameter.  B: the
+  Nyquist rung — with `N_p` even the grid holds `−y_max` but not `+y_max`, and
+  left alone that one unpaired rung makes the kernel 11 per cent complex,
+  destroys its oddness at 2.3e−1, and drives a real `W` complex at 1.6e−2
+  every substep; zeroing it gives 1.1e−16, 2.3e−16, 5.6e−16.  C: compensate
+  against the kernel, not `V′` — subtracting `iV′(x)s` leaves a spurious force
+  of 6.4e−3 to 4.4e−2 against forces of 0.5 to 0.8, while taking the
+  deterministic force from the kernel's own first moment (Theorem O2) makes
+  the residual momentum-neutral to ~1e−15 at every `N_p`, for the cosine well,
+  the Gaussian barrier and soft-core Coulomb alike.  D: the jump rule is
+  unchanged — `W += dt Σ_q Γ^res_q(x)[W(p_{n+q}) − W(p_{n−q})]` with
+  `Γ^res_q = −K_res` reproduces the spectral action of `L_res` to 7.1e−16
+  relative, and at maximal reach the uncompensated field collapses onto the two
+  atoms `q = ±1` with `−K_1 = Γ_1` to 8.9e−16 and nothing else above 2.2e−16,
+  so the crystal-lattice algorithm is a corner of this one.  E: the coherence
+  horizon needs a profile — under a hard cutoff the seam law
+  `R ≈ (2/π)|M_res(x,s_max)| ln N_p` is confirmed to four figures against
+  fitted slopes for two potentials and three reaches, the momentum churn
+  `Σ|ξK|` diverges *linearly* (14.4 → 943 over `N_p` = 256 → 16384), and the
+  third moment diverges too, so the discrete operator has no Moyal expansion;
+  a raised cosine gives a `q^-3` tail instead of `q^-1` and converges in all
+  three, its third moment landing on the analytic leading Moyal coefficient
+  −0.128465 to six figures.  F: the reordering shrinks the Strang constant —
+  both schemes split the same operator, both are second order, and the
+  compensated one gains 9.5–10.4× flat in `dt`, against a symbol ratio of
+  0.0904 and the leading estimate `u²/6 = 0.103`.  G: the quiet region as an
+  active set — 20.0, 24.2, 32.1 and 48.3 per cent of position cells active at
+  reaches 0.25 to 2, with the edge tracking `b + y_max` with unit slope.
+  H: where the profile multiplies — windowing the whole symbol manufactures a
+  residual of 22 in a quadratic potential that has none and shifts the force by
+  5.5e−2, while windowing the residual alone leaves harmonic exactness at
+  1.2e−13; so the horizon grades the coherence channel only.  I: the open line
+  — no wrap anywhere, the active set compact (232 of 600 cells) inside an
+  unbounded potential, and a 40 000-world velocity-Verlet ensemble with sampled
+  hops whose signed mean transfer is 4.3e−3 of the transfer scale against a
+  statistical floor of 1.7e−2, so the sampler inherits Theorem C3; the ensemble
+  weight grows by 1.095 over a trap period, which is the sign problem priced.
+
+  ![Event budget under a hard and a soft horizon](https://raw.githubusercontent.com/billpage/wpmw/output/figures/compensated_algorithm_budget.png)
+
+  ![Splitting error and the active set](https://raw.githubusercontent.com/billpage/wpmw/output/figures/compensated_algorithm_validation.png)
+
+  The hop rate climbing without limit under a hard horizon while the soft one
+  sits flat, beside the `1/q` sidelobes of a hard-edged aperture against the
+  `q^-3` tail of an apodised one; and the compensated scheme's error running a
+  decade below the uncompensated at every step size, beside the cliff of
+  silence one reach beyond the bump.
+
 - `demo_takabayasi_stochastic_picture.py` — verification companion to
   `docs/supplement/takabayasi_1954_stochastic_picture.md`, which reads §3 of
   Takabayasi (1954) against the derivation ladder.  Eight parts.  A: direct
