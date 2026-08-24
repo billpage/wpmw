@@ -181,7 +181,7 @@ $`\tau`$.
 operator in the abstract, so it is worth saying which representation and why
 the potential term admits it.
 
-**Not in $`(x, p)`.** Acting on $`W(x, p)`$, neither piece is multiplication
+**Not in $`(x, p)`$.** Acting on $`W(x, p)`$, neither piece is multiplication
 by anything. The potential term is an integral operator,
 
 ```math
@@ -192,7 +192,7 @@ by anything. The potential term is an integral operator,
 a convolution in momentum — on the crystal lattice, the hop stencil of
 `../supplement/phase_space_crystal_lattice_supplement.md` §7.
 
-**In $`(x, s)`.** Take the partial Fourier transform in $`p`$ alone,
+**In $`(x, s)`$.** Take the partial Fourier transform in $`p`$ alone,
 $`\hat W(x, s) = \int W(x, p)\thinspace e^{-ips}\thinspace dp`$, leaving
 $`x`$ untouched. Then
 

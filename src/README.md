@@ -955,6 +955,12 @@ actually hit:
   at all: math inside a `*...*` emphasis span, and math whose opening `$` is
   glued to a hyphen or a quotation mark (`-$x$`, `"$x$`). In every such case
   the dollar signs survive to the rendered page;
+- a `` $`...`$ `` backtick-math span missing its closing `$` (`` $`(x, p)` ``
+  with nothing after the last backtick). CommonMark then parses the
+  backticks as an ordinary code span, leaving the orphaned `$` as literal
+  text — or GitHub's math scanner pairs it with the *next* properly-closed
+  span's closing `` `$ `` on the line and renders everything between them,
+  prose included, as one garbled expression;
 - macros that vanilla LaTeX accepts but GitHub's MathJax config blocks —
   notably `\operatorname`, `\bm`, `\href`, `\DeclareMathOperator`,
   `\newcommand`, `\definecolor`, `\colorbox`, `\label` / `\ref` / `\eqref`,
