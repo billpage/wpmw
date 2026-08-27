@@ -47,6 +47,20 @@ strictly worse than the alternative, for three separate reasons.
    $`K`$ independent copies of the same problem rather than resolving any one
    of them better. Within a sector the resolution is fixed by $`V`$.
 
+**Corrected in turn by [`reach_energy_coupling.md`](reach_energy_coupling.md).**
+Three statements below are superseded by that note, and two open items of §9
+are closed by it. The corrections are marked in place; in summary:
+
+1. Definition (R) of §3 describes the reach as an *aperture*. It is a
+   **period**: a momentum lattice exists iff the separation coordinate is
+   compact as a group, which finite support alone does not give (Theorem E1).
+2. §3.2 concludes that a sharp horizon is wrong for a crystal potential. The
+   divergence tabulated there is off-lattice; on the momentum lattice a
+   *commensurate* sharp window is exact (Proposition E1.1).
+3. §4.1 calls (P) a mechanism "different in kind" from (R) and (H). All three
+   supply the same object — a period in the separation coordinate — from three
+   different sources (Theorem E1).
+
 **Contradicts, gently, the hope that prompted §4.** Periodicity of $`V`$ is a
 genuinely better assumption than compactness of $`x`$, and §4 makes that case
 in full. But it does not rescue the project's current test problem: the
@@ -218,8 +232,20 @@ below is not $`L_c`$ itself but **half** of it. Give it a name:
 y_{\max} \;\equiv\; \frac{L_c}{2}
 ```
 
-is the **reach** of a world — the greatest distance from its own position at
-which it consults the potential.
+is the **reach** of a world.
+
+**Superseded by Theorem E1 of
+[`reach_energy_coupling.md`](reach_energy_coupling.md).** Earlier drafts of
+this definition read "the greatest distance from its own position at which a
+world consults the potential", which describes an aperture. What every formula
+below actually requires is that the separation coordinate be **periodic** with
+period $`L_c`$ — a Born–von Kármán condition on $`y`$, not a window. The
+distinction is not cosmetic: $`\xi`$ and $`y`$ are Pontryagin duals, so a
+discrete momentum-transfer lattice needs $`y`$ compact *as a group*, and a
+compactly supported $`D_x(y)`$ on the line has an entirely continuous
+transform. The construction here already periodises (the $`N_p`$ rungs are a
+DFT); only the prose said otherwise. Remarks 1–4 below are unaffected, since
+they concern factors of two rather than the character of the bound.
 
 Four remarks, because this quantity appears under several different names
 across these notes and the factors of two are easy to lose.
@@ -311,16 +337,34 @@ $`2|\Gamma_q(x)| = 1.7820`$ (two deltas at $`\xi = \pm\pi\hbar/a`$), Part C3:
 | windowed budget, $`L_c = 8`$ | $`3.627`$ | $`3.716`$ | $`3.759`$ | $`3.781`$ | $`3.792`$ |
 | ratio to exact | $`2.04`$ | $`2.09`$ | $`2.11`$ | $`2.12`$ | $`2.13`$ |
 
-Already twice the true rate at the coarsest cutoff, and still climbing. A
-sharp horizon is the wrong tool for a crystal potential — which is exactly
-the case §4 handles without any window at all.
+Already twice the true rate at the coarsest cutoff, and still climbing.
+
+**Corrected by Proposition E1.1 of
+[`reach_energy_coupling.md`](reach_energy_coupling.md).** The table above is
+the *continuous*-$`\xi`$ integral $`\int|V_W^{L_c}|\thinspace d\xi`$, which
+the algorithm never evaluates. On the momentum lattice the sidelobes fall
+exactly on lattice zeros — their spacing $`\pi\hbar/L_c`$ *is* $`\Delta p`$ —
+and the on-lattice budget is $`1.782013`$, the exact value, at every rung count
+from $`N_p = 16`$ to $`4096`$. The criterion is **commensuration**, not
+sharpness: with $`a = 4`$, a sharp window gives ratio $`1.0000`$ at
+$`L_c = 4`$ and $`8`$, and $`6.23`$ and $`4.67`$ at $`L_c = 6`$ and $`5`$.
+A taper is never exact for a comb, giving $`0.750`$ at $`L_c = a`$ — so for a
+crystal a soft horizon is strictly worse than a commensurate sharp one.
+
+The case §4 handles without any window at all remains the cleaner route.
 
 ---
 
 ## 4. Periodicity of $V$, not compactness of $x$
 
-This is the useful half of the answer, and it is a different mechanism from
-§3 in kind, not just in degree.
+This is the useful half of the answer. It was originally presented as a
+different mechanism from §3 in kind; Theorem E1 of
+[`reach_energy_coupling.md`](reach_energy_coupling.md) shows that (R), (P) and
+(H) all supply the same object — a period in the ket–bra separation $`y`$,
+with $`\Delta p = \pi\hbar/(\text{that period})`$ — and differ only in
+whether the period comes from the state, from the potential, or from a
+postulate. Periodicity of $`V`$ remains the *best-motivated* source, which is
+the substance of what follows.
 
 ### 4.1 Two independent discreteness mechanisms
 
@@ -590,18 +634,33 @@ distinction of §1 is visible from wherever a reader meets $`\Delta p`$:
 
 ## 9. Open items
 
-1. **A tapered horizon.** §3.2 shows a sharp window is wrong for a
+1. ~~**A tapered horizon.** §3.2 shows a sharp window is wrong for a
    non-decaying $`V`$. A taper kills the $`1/\xi`$ tails but destroys the
    exact momentum lattice, since the windowed kernel is no longer a finite
    Fourier series in $`y`$. Whether a taper exists that preserves both is
-   unresolved.
+   unresolved.~~ **Resolved** by
+   [`reach_energy_coupling.md`](reach_energy_coupling.md) §1–§2: don't taper.
+   A sharp window commensurate with the period of $`V`$ preserves the lattice
+   exactly and has no tails to kill (Proposition E1.1); for a decaying $`V`$,
+   folding the tail back in rather than discarding it gives the exact kernel
+   of the periodised potential sampled on the lattice (Theorem E2), at the
+   cost of Proposition O4.
 2. **The sea per unit length.** §6. Restating global neutrality, postulate
    (S), and the storage arithmetic as densities.
 3. **Half-jump or full-jump**, and hence whether Theorem O5's modulus is
    $`\pi\hbar/a`$ or $`2\pi\hbar/a`$. Ties to `multi_body_extension.md` §12.
-4. **Energy under the horizon.** Proposition O3 proves signed number is
+4. ~~**Energy under the horizon.** Proposition O3 proves signed number is
    conserved exactly by truncation. Energy is not checked, and there is no
-   reason to expect it to be exact.
+   reason to expect it to be exact.~~ **Resolved** by
+   [`reach_energy_coupling.md`](reach_energy_coupling.md) §3, Theorem E3:
+   energy is exact, for the same reason worlds are. Conservation of energy is
+   the condition $`\int\xi^2 V_W^{L_c}\thinspace d\xi = 0`$, which follows
+   from oddness in $`\xi`$ exactly as Proposition O3's zeroth moment does, and
+   every even window preserves oddness. Measured worst defect
+   $`7.9\times10^{-10}`$ over four potentials, two reaches and three window
+   types. What the reach *does* touch is the $`\hbar^2`$ Moyal coefficient —
+   and only when the horizon profile is applied to the uncompensated kernel
+   (Theorems E5 and E6).
 5. **Sampling the $`\theta`$-integral.** Sectors are independent, but a
    wavepacket needs many of them. Whether importance sampling in $`\theta`$
    is possible, and whether the sea must be instantiated separately per
@@ -645,6 +704,9 @@ All from `src/demo_open_position_space.py`.
   §4.2, §7 — the escape problem and the open item this note answers.
 - [`fourd_microdynamics.md`](fourd_microdynamics.md) — Theorem A3.
 - [`position_pair_ladder.md`](position_pair_ladder.md) §1 — the rung index.
+- [`reach_energy_coupling.md`](reach_energy_coupling.md) — the follow-on note
+  that restates the reach as a period, closes open items 1 and 4, and settles
+  what the reach does and does not control.
 - The semi-discrete Wigner formalism, in which a finite coherence length is
   the standard route to a discrete momentum space for signed-particle Monte
   Carlo, is due to Nedjalkov, Ellinghaus, Sellier, Selberherr and

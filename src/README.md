@@ -632,6 +632,12 @@ see that directory's README for the ladder itself.
   column excess tracking the diagonal of `rho`; and the sea drawn down when
   recombination is switched off, beside the adaptive allocation.
 
+- `demo_reach_energy_coupling.py` — verification companion to
+  `docs/analysis/reach_energy_coupling.md`, on what the coherence reach
+  actually controls: it is a period rather than an aperture, it leaves signed
+  world number, the classical force and the energy ledger untouched, and it
+  reaches the leading Moyal coefficient only when the horizon profile is
+  applied to the uncompensated kernel.
 - `demo_compensated_liouville_splitting.py` — verification companion to
   `docs/analysis/compensated_liouville_splitting.md`, on moving the classical
   force into the first substep.  Six parts.  A: Theorems C1 and C2 — the
