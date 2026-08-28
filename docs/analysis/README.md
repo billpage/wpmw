@@ -251,6 +251,37 @@ retracts.
     and the momentum churn linearly. Read that specification's §4.4 before
     quoting any event budget from §4 below.
 
+15. **[`eckart_barrier_compensated.md`](eckart_barrier_compensated.md)** — The
+    first open-line test problem that actually exercises the hop channel
+    against a closed form. Theorem E7 rules out polynomials (no jump measure
+    without a reach) and Theorem I4 rules out the harmonic and inverted
+    harmonic alike (no jump channel at all), which between them had left the
+    project without one. The Eckart pair barrier `V₀ sech²(r/a)` is bounded,
+    asymptotically free on both sides, has a non-vanishing third derivative,
+    and has an exact transmission coefficient. Theorem K1 generalises C6: the
+    reach ceiling is the distance to the nearest *complex* singularity of
+    `V`, so Coulomb's real-axis pole is the special case, sech² has the
+    uniform ceiling `y_max < πa/2`, and for a soft core the softening length
+    **is** the ceiling — with the corollary that `Δp > ℏ/a`, so fewer than
+    `β` rungs span the barrier's own momentum scale and a reach-limited
+    lattice cannot resolve the packet at all. Theorem K2 gives the exact
+    far-field law, the hyperbolic continuation of Lemma C0, and corrects §5.1
+    of the splitting note: for an exponential tail the reach *rescales* the
+    interaction profile rather than translating it. Theorem K3: weighted by
+    the potential's own spectrum the budget ratio saturates at 1 from below,
+    so on the open line compensation never loses — the opposite of the ring,
+    where §6.3 pins it at 1. Theorems K4–K6 are the point. The classical
+    outcome functional is exactly invariant under streaming plus
+    deterministic acceleration, so the entire quantum correction to the
+    transmission is delivered by the residual channel (0.044475 measured
+    against a closed-form 0.044134); that correction arrives as a small
+    imbalance between two large opposed flows of positon–negaton pairs across
+    the classical separatrix, net/gross = 0.19; and the cancellation tightens
+    as `1/β`, because a packet centred on the barrier kills the slope term
+    and leaves only the Jacobian `dp/dE` across the tunnelling window — so
+    resolving `T` to fixed relative accuracy costs `β²` particles, and the
+    semiclassical limit is the expensive one.
+
 ## Companion code
 
 Every note lists its verifying script in §0 and its numerical results in a
@@ -265,7 +296,8 @@ late section. In ladder order: `src/demo_four_rule_equivalence.py`,
 `src/demo_interworld_coupling.py`,
 `src/demo_species_sectors_and_annihilation.py`,
 `src/demo_compensated_liouville_splitting.py`,
-`src/demo_compensated_liouville_algorithm.py`. All
+`src/demo_compensated_liouville_algorithm.py`,
+`src/demo_eckart_barrier_compensated.py`. All
 non-trivial claims in these notes are verified numerically before inclusion.
 
 ## Related
