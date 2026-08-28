@@ -448,7 +448,7 @@ class Run:
         return np.real(np.fft.ifft(ind_hat * np.conj(np.fft.fft(f, axis=1)),
                                    axis=1))
 
-    def separatrix_flux(self, w):
+    def separatrix_flux(self, w, mask=None):
         """Signed rates of weight entering and leaving the classical set.
 
         Uses sum_q K_q = 0 to replace the raw gain by the crossing form
@@ -456,8 +456,9 @@ class Run:
         into its +1 (in) and -1 (out) parts.
         """
         kr = np.real(self.k_res)
-        g_in = self._corr(self.a_hat, self.outside * w)
-        g_out = self._corr(self.b_hat, self.inside * w)
+        src = w if mask is None else w * mask
+        g_in = self._corr(self.a_hat, self.outside * src)
+        g_out = self._corr(self.b_hat, self.inside * src)
         phi_in = float(np.sum(kr * g_in)) * self.dr * self.dp
         phi_out = float(np.sum(kr * g_out)) * self.dr * self.dp
         return phi_in, phi_out
@@ -703,6 +704,205 @@ def part_h():
     return tracks
 
 
+def lobe_edges(a):
+    """Zeros of the third derivative of sech^2, other than the summit.
+
+    With c = sech^2 u and t = tanh u at u = r/a, the third derivative is
+    proportional to c t (2c - t^2), which vanishes when tanh^2 u = 2/3, at
+    u = artanh(sqrt(2/3)) = arcsinh(sqrt 2) = ln(sqrt 2 + sqrt 3).
+    """
+    return a * np.log(np.sqrt(2.0) + np.sqrt(3.0))
+
+
+def part_i(run):
+    banner("Part I  Theorem K7: the emission bias reverses four times")
+    a = run.a
+    r_star = lobe_edges(a)
+    print(f"  a = {a},  r* = a ln(sqrt2 + sqrt3) = {r_star:.4f}")
+    print("  The third derivative vanishes at r = 0 and at r = +/- r*, so")
+    print("  the barrier carries four emission lobes of alternating sign,")
+    print("  separated by three quiet points in the sense of Theorem C7.")
+    print("  The summit itself is quiet: no pairs are emitted there.\n")
+    print(f"  {'r':>6} {'V3(r)':>11} {'Gamma':>10} {'lobe':>6}")
+    r_probe = np.linspace(-10.0, 10.0, 2001)
+    _, _, kq_probe = residual_lattice(run.v0, a, np.pi * a / 2.0, r_probe,
+                                      n_rungs=32)
+    q_probe = np.fft.fftfreq(1024, d=1.0 / 1024).astype(int)
+    for r in (-6.0, -3.0, -1.5, 0.0, 1.5, 3.0, 6.0):
+        j = int(np.argmin(np.abs(r_probe - r)))
+        gam = float(np.sum(np.abs(kq_probe[j])))
+        lab = ("I" if r < -r_star else "II" if r < 0
+               else "III" if r < r_star else "IV")
+        print(f"  {r:6.1f} {d3V(r, run.v0, a):11.5f} {gam:10.5f} {lab:>6}")
+
+    edges = [-np.inf, -r_star, 0.0, r_star, np.inf]
+    names = ["I   r < -r*", "II  -r* < r < 0", "III  0 < r < r*",
+             "IV  r > r*"]
+    masks = [((run.r > lo) & (run.r <= hi))[:, None].astype(float)
+             for lo, hi in zip(edges[:-1], edges[1:])]
+
+    dt, t_max, every = 0.01, 22.0, 2
+    w = run.w0.copy()
+    acc = np.zeros(4)
+    prev = np.zeros(4)
+    first = True
+    for step in range(int(round(t_max / dt))):
+        w = run._stream(w, 0.5 * dt)
+        w = run._p_mult(w, run.m_cl, dt)
+        if step % every == 0:
+            cur = np.empty(4)
+            for i, m in enumerate(masks):
+                f_in, f_out = run.separatrix_flux(w, m)
+                cur[i] = f_in - f_out
+            if not first:
+                acc += 0.5 * (cur + prev) * dt * every
+            prev, first = cur, False
+        w = run._p_mult(w, run.m_res, dt)
+        w = run._stream(w, 0.5 * dt)
+
+    print(f"\n  {'lobe':<18} {'net transfer':>14}")
+    for nm, v in zip(names, acc):
+        print(f"  {nm:<18} {v:+14.6f}")
+    print(f"  {'total':<18} {acc.sum():+14.6f}")
+    print(f"  {'sum of |lobes|':<18} {np.abs(acc).sum():+14.6f}")
+    print(f"  {'net / gross by lobe':<18} "
+          f"{acc.sum() / np.abs(acc).sum():14.4f}")
+    return r_star, acc, names
+
+
+def sample_spacetime(v0, a, y_max, t_max=13.0, dt=0.004, seed=11,
+                     thin=0.06):
+    """Space-time worldlines: excess positons plus one emitted generation.
+
+    Every world-particle follows a genuine Newtonian worldline.  The
+    residual channel never displaces a world: it creates a positon-negaton
+    pair of zero net weight, and the parent continues unbroken.  Identity
+    is preserved; only the population changes.  One generation is drawn,
+    and the emission rate is thinned for legibility.
+    """
+    rng = np.random.default_rng(seed)
+    r_grid = np.linspace(-12.0 * a, 12.0 * a, 1201)
+    q, dp, kq = residual_lattice(v0, a, y_max, r_grid, n_rungs=32)
+    nz = q != 0
+    rate_grid = np.sum(np.abs(kq[:, nz]), axis=1)
+    xi = q[nz] * dp
+
+    def newton(r, p, t0, sign):
+        rs, ts = [r], [t0]
+        t = t0
+        while t < t_max:
+            p = p - dV(r, v0, a) * 0.5 * dt
+            r = r + p / MU * dt
+            p = p - dV(r, v0, a) * 0.5 * dt
+            t += dt
+            rs.append(r)
+            ts.append(t)
+            if abs(r) > 11.0 * a:
+                break
+        return dict(r=np.array(rs), t=np.array(ts), sign=sign, p_end=p)
+
+    p_b = np.sqrt(2.0 * MU * v0)
+    parents, children = [], []
+    for frac in (0.88, 0.96, 1.04, 1.12):
+        r, p, t = -4.0 * a, frac * p_b, 0.0
+        rs, ts, events = [r], [t], []
+        while t < t_max:
+            p = p - dV(r, v0, a) * 0.5 * dt
+            r = r + p / MU * dt
+            p = p - dV(r, v0, a) * 0.5 * dt
+            t += dt
+            rs.append(r)
+            ts.append(t)
+            if abs(r) > 11.0 * a:
+                break
+            rate = float(np.interp(r, r_grid, rate_grid))
+            if rate > 0 and rng.random() < rate * dt * thin:
+                j0 = int(np.clip(np.searchsorted(r_grid, r), 1,
+                                 len(r_grid) - 1))
+                wgt = np.abs(kq[j0, nz])
+                if wgt.sum() <= 0:
+                    continue
+                j = int(rng.choice(len(xi), p=wgt / wgt.sum()))
+                sgn = float(np.sign(kq[j0, nz][j]))
+                events.append((r, t))
+                children.append(newton(r, p + xi[j], t, +sgn))
+                children.append(newton(r, p - xi[j], t, -sgn))
+        parents.append(dict(r=np.array(rs), t=np.array(ts),
+                            events=events, p0=frac * p_b))
+    return parents, children
+
+
+def fig_spacetime(run, r_star, acc):
+    v0, a = run.v0, run.a
+    parents, children = sample_spacetime(v0, a, np.pi * a / 2.0)
+    n_pos = sum(1 for c in children if c["sign"] > 0)
+    print(f"  space-time: {len(parents)} excess positons,"
+          f" {len(children)} emitted ({n_pos} positon,"
+          f" {len(children) - n_pos} negaton)")
+    fig = plt.figure(figsize=(13.5, 5.4))
+
+    ax = fig.add_subplot(1, 3, 1)
+    rr = np.linspace(-6 * a, 6 * a, 801)
+    v3 = d3V(rr, v0, a)
+    ax.plot(rr, v3, "k", lw=1.3)
+    ax.axhline(0.0, lw=0.6, color="0.6")
+    ax.fill_between(rr, 0, v3, where=v3 > 0, color="#fee2e2")
+    ax.fill_between(rr, 0, v3, where=v3 < 0, color="#dbeafe")
+    for e in (-r_star, 0.0, r_star):
+        ax.axvline(e, color="C3", ls=":", lw=1.0)
+    for x, lab in ((-4.0 * a, "I"), (-0.5 * a, "II"),
+                   (0.5 * a, "III"), (4.0 * a, "IV")):
+        ax.text(x, 0.40, lab, ha="center", fontsize=11)
+    ax.set_xlabel("$r$")
+    ax.set_ylabel("$V'''(r)$")
+    ax.set_title("(a) four emission lobes,\nthree quiet points")
+
+    ax = fig.add_subplot(1, 3, 2)
+    ax.axvspan(-r_star, r_star, color="0.94", zorder=0)
+    for e in (-r_star, 0.0, r_star):
+        ax.axvline(e, color="C3", ls=":", lw=0.9, zorder=1)
+    for c in children:
+        col = "C3" if c["sign"] > 0 else "C0"
+        ax.plot(c["r"], c["t"], color=col, lw=1.0, alpha=0.85, zorder=2)
+    for pa in parents:
+        refl = pa["r"][-1] < 0
+        ax.plot(pa["r"], pa["t"], color="0.15", lw=1.6,
+                ls="--" if refl else "-", zorder=3)
+        for (er, et) in pa["events"]:
+            ax.plot(er, et, "o", color="k", ms=4.0, zorder=6)
+    ax.text(-8.4 * a, 12.0, "classically\nreflected", fontsize=8,
+            ha="left")
+    ax.text(8.4 * a, 12.0, "classically\ntransmitted", fontsize=8,
+            ha="right")
+    ax.plot([], [], color="0.15", lw=1.6, label="excess positon")
+    ax.plot([], [], color="0.15", lw=1.6, ls="--",
+            label="  (same, reflected)")
+    ax.plot([], [], color="C3", lw=1.0, label="emitted positon")
+    ax.plot([], [], color="C0", lw=1.0, label="emitted negaton")
+    ax.set_xlim(-9 * a, 9 * a)
+    ax.set_ylim(0, 13)
+    ax.set_xlabel("$r$")
+    ax.set_ylabel("$t$")
+    ax.set_title("(b) world-particle space-time paths;\n"
+                 "every path is Newtonian, pairs branch")
+    ax.legend(fontsize=8, loc="lower right")
+
+    ax = fig.add_subplot(1, 3, 3)
+    cols = ["C0" if v < 0 else "C3" for v in acc]
+    ax.bar(range(4), acc, color=cols)
+    ax.axhline(float(acc.sum()), color="k", lw=1.5,
+               label=f"net {acc.sum():+.4f}")
+    ax.axhline(0.0, lw=0.6, color="0.6")
+    ax.set_xticks(range(4))
+    ax.set_xticklabels(["I", "II", "III", "IV"])
+    ax.set_xlabel("lobe")
+    ax.set_ylabel("net transfer across the separatrix")
+    ax.set_title("(c) the four lobes\nnearly cancel")
+    ax.legend(fontsize=9)
+    fig.tight_layout()
+    save_fig(fig, "eckart_compensated_spacetime.png")
+
+
 # --------------------------------------------------------------------- #
 # Figures                                                                #
 # --------------------------------------------------------------------- #
@@ -828,26 +1028,18 @@ def fig_separatrix(run, tracks, times, phi_in, phi_out, cum_net,
     ax.set_ylabel("$p_r$")
     ax.set_title("(a) hops cross the classical outcome boundary")
 
-    # (b) sample world trajectories
+    # (b) phase-space arcs only.  A momentum jump is not a line in
+    # space, so the emission story belongs in the space-time figure.
     ax = fig.add_subplot(2, 2, 2)
     ax.fill_between(rr, pb_curve, 2.6, color="#dbeafe")
     ax.plot(rr, pb_curve, "k", lw=1.4)
-    for path_r, path_p, events in tracks:
-        ax.plot(path_r, path_p, color="0.25", lw=1.1)
-        for (er, ep, exi) in events:
-            ax.plot([er, er], [ep, ep + exi], color="C3", lw=1.2, alpha=0.9)
-            ax.plot([er, er], [ep, ep - exi], color="C0", lw=1.2, alpha=0.9)
-            ax.plot(er, ep + exi, "o", color="C3", ms=4)
-            ax.plot(er, ep - exi, "o", color="C0", ms=4)
-    ax.plot([], [], color="0.25", lw=1.1, label="Newtonian arc")
-    ax.plot([], [], color="C3", lw=1.2, label="positon child")
-    ax.plot([], [], color="C0", lw=1.2, label="negaton child")
+    for path_r, path_p, _ in tracks:
+        ax.plot(path_r, path_p, color="0.25", lw=1.2)
     ax.set_xlim(-3.5 * a, 3.5 * a)
     ax.set_ylim(-0.9, 2.6)
     ax.set_xlabel("$r$")
     ax.set_ylabel("$p_r$")
-    ax.set_title("(b) world-particle paths and emitted pairs")
-    ax.legend(fontsize=8, loc="lower right")
+    ax.set_title("(b) deterministic arcs alone do not cross")
 
     # (c) the two flows
     ax = fig.add_subplot(2, 2, 3)
@@ -919,6 +1111,7 @@ def main():
     times, phi_in, phi_out, cum_net = part_f(run, series, transmissions)
     rows = part_g()
     tracks = part_h()
+    r_star, acc, _ = part_i(run)
 
     banner("Figures")
     fig_split(grid, ratios)
@@ -926,6 +1119,7 @@ def main():
     fig_separatrix(run, tracks, times, phi_in, phi_out, cum_net,
                    transmissions, w_full)
     fig_scaling(rows)
+    fig_spacetime(run, r_star, acc)
 
     banner("Summary")
     print("  K1  the reach ceiling is the analyticity strip of V; for")
@@ -940,6 +1134,8 @@ def main():
     print("      the entire quantum correction")
     print("  K5  that correction is the small imbalance of two large")
     print("      opposed flows across the classical separatrix")
+    print("  K7  the emission bias reverses at the summit and at the two")
+    print("      zeros of the third derivative, so four lobes cancel")
     print("  K6  gross traffic saturates in beta while the net falls as")
     print("      1 / beta: the sampling cost of tunnelling grows linearly")
     print("\ndone.")

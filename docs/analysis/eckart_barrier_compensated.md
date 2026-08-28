@@ -66,7 +66,7 @@ T(E) \;=\;
 
 ### 0.3 What this note claims
 
-Six theorems, K1–K6. The one that matters for the ontology is K4 together with
+Seven theorems, K1–K7. The one that matters for the ontology is K4 together with
 K5: **the deterministic step conserves the classical outcome exactly, so the
 whole of tunnelling is delivered by the residual channel, and it arrives as a
 small imbalance between two large opposed flows of positon–negaton pairs
@@ -379,7 +379,7 @@ what is left over when the two flows almost, but not exactly, cancel. This is
 the positon–negaton sea picture appearing on a problem with a closed-form
 answer.
 
-Two cautions on the drawing in §8. The residual kernel is signed, so by
+Two cautions on the drawing, expanded in §8. The residual kernel is signed, so by
 consequence 3 of §2.2 of the splitting note **no one-body jump process
 exists**; what is drawn is the pair-generation form, in which the parent
 streams deterministically and at rate $`\Gamma(r) = \sum_q|K_q(r)|`$ emits a
@@ -433,7 +433,122 @@ expensive one — the opposite of the usual intuition.
 
 ---
 
-## 8. Figures
+## 8. World-particle identity, and where tunnelling comes from
+
+### 8.1 A hop is not a jump
+
+It is tempting to read the residual channel as a world *jumping* in
+momentum: a phase point at $`(r, p)`$ that discontinuously becomes
+$`(r, p + \xi_q)`$. That reading is not available. By consequence 3 of §2.2
+of [`compensated_liouville_splitting.md`](compensated_liouville_splitting.md),
+$`K_{\rm res}`$ is signed, so it is not a rate and there is no one-body
+Markov jump process for it to generate.
+
+What the channel does generate is *pair creation*. Because
+$`\sum_q K_q = 0`$ and $`K_{-q} = -K_q`$, the operator can be realised
+exactly as: the parent world streams on undisturbed, and at rate
+$`\Gamma(r) = \sum_{q \ne 0}|K_q(r)|`$ a **positon–negaton pair** appears at
+$`p \pm \xi_q`$, carrying opposite signs and hence zero expected weight.
+
+The ontological consequence is worth stating plainly. **No world-particle
+ever changes its momentum discontinuously.** Every world-particle in the
+ensemble — the excess positons of the initial condition and every member of
+the created sea alike — follows a genuine Newtonian worldline under the full
+classical force, for its entire life. World-particle identity is never
+broken by the quantum channel. What the quantum channel changes is *how many
+worlds there are*, and with what signs.
+
+This is the sense in which the compensated split earns its name
+ontologically rather than numerically. The uncompensated kernel mixes the
+classical force into the jump measure, so that "hops" include the ordinary
+acceleration and no world has a Newtonian history. Under compensation the
+deterministic step is the whole of the force, and the residual is the whole
+of the quantum — and the residual acts only by creating and destroying, never
+by moving.
+
+### 8.2 Theorem K7: the emission bias reverses four times
+
+**Theorem K7.** For $`V_0\thinspace\mathrm{sech}^2(r/a)`$ the emission rate
+$`\Gamma`$ vanishes and the sign of $`K_q`$ reverses at three points,
+
+```math
+r \;=\; 0
+\qquad\text{and}\qquad
+r \;=\; \pm r_*,
+\qquad
+r_* \;=\; a\thinspace\mathrm{artanh}\sqrt{2/3}
+      \;=\; a\ln\bigl(\sqrt2 + \sqrt3\bigr) \;\approx\; 1.1462\thinspace a,
+```
+
+so the barrier carries four emission lobes of alternating sign.
+
+*Proof.* $`V''' \propto c\thinspace t\thinspace(2c - t^2)`$ with
+$`c = \mathrm{sech}^2u`$, $`t = \tanh u`$, $`u = r/a`$. It vanishes at
+$`t = 0`$ and where $`2(1 - t^2) = t^2`$, i.e. $`t = \sqrt{2/3}`$, whence
+$`\sinh u = \sqrt2`$. By Theorem C7 these are quiet points at short reach,
+and $`K_q`$ inherits the sign of $`V'''`$ at leading order in the reach.
+$`\square`$
+
+Numerically, with $`a = 2`$ so $`r_* = 2.2924`$:
+
+| $`r`$ | $`-6`$ | $`-3`$ | $`-1.5`$ | $`0`$ | $`1.5`$ | $`3`$ | $`6`$ |
+|---|---|---|---|---|---|---|---|
+| $`V'''`$ | $`+0.0095`$ | $`+0.0749`$ | $`-0.2993`$ | $`0`$ | $`+0.2993`$ | $`-0.0749`$ | $`-0.0095`$ |
+| $`\Gamma`$ | 0.291 | 0.180 | 4.304 | **0** | 4.304 | 0.180 | 0.291 |
+| lobe | I | I | II | — | III | IV | IV |
+
+The summit is quiet: **no pairs are emitted at the top of the barrier at
+all**. The emission is concentrated on the flanks, peaking near
+$`|r| \approx a/2`$, and reverses sign at $`\pm r_*`$.
+
+Splitting the separatrix ledger of Theorem K5 by lobe:
+
+| lobe | net transfer |
+|---|---|
+| I, $`r < -r_*`$ | $`-0.034500`$ |
+| II, $`-r_* < r < 0`$ | $`+0.065978`$ |
+| III, $`0 < r < r_*`$ | $`+0.011088`$ |
+| IV, $`r > r_*`$ | $`-0.000457`$ |
+| **total** | $`+0.042109`$ |
+| sum of the lobe magnitudes | $`0.112022`$ |
+
+So Theorem K5's cancellation is not a single opposition of two flows but a
+**fourfold** one, and it is dominated by the approach flank: the outer lobe I
+drives worlds *out* of the transmitting set as the packet decelerates, the
+inner lobe II drives them back in and overshoots, and the far side barely
+contributes because the packet crosses it quickly and the outcome is already
+settled. This is visible directly in the time trace of §6: $`\Sigma`$ dips to
+0.451 before rising to 0.545.
+
+### 8.3 The origin of tunnelling, stated in one sentence
+
+A world does not pass through the barrier. It runs up the flank on an
+ordinary Newtonian worldline and, if its energy is short of $`V_0`$, it turns
+around and leaves — always. What crosses is not that world but *other* worlds:
+positon–negaton pairs conjured on the flanks, whose members follow their own
+Newtonian worldlines from birth, some of them fast enough to clear the
+summit. Tunnelling is the residue left when the positons and negatons that
+clear the summit fail, by a fraction $`\approx 0.55/\beta`$, to cancel.
+
+![Space-time worldlines and the four lobes](https://raw.githubusercontent.com/billpage/wpmw/output/figures/eckart_compensated_spacetime.png)
+
+(a) the four emission lobes and the three quiet points of Theorem K7;
+(b) space-time worldlines — four excess positons, two of which are classically
+reflected, with the positon–negaton pairs they emit on the flanks, every path
+Newtonian and every branch a creation rather than a displacement;
+(c) the fourfold cancellation of the lobe ledger.
+
+One caution about panel (b), which is worth more than it looks. The ten
+emissions drawn there happen to put a *negative* signed weight on the far
+side, whereas the true net is positive. That is not an error in the drawing;
+it is Theorem K6 made visible. With net/gross $`\approx 0.19`$ at
+$`\beta = 2`$, a handful of sampled emissions cannot resolve even the sign of
+the effect, and the figure is an illustration of the mechanism, not an
+estimate of its size.
+
+---
+
+## 9. Figures
 
 ![The split, and the budget ratio](https://raw.githubusercontent.com/billpage/wpmw/output/figures/eckart_compensated_split.png)
 
@@ -462,7 +577,7 @@ $`\beta`$ on log axes against $`0.55/\beta`$.
 
 ---
 
-## 9. Open items
+## 10. Open items
 
 - **K-LS1.** The flux ledger closes to 3.8 per cent, limited by the
   generator-versus-exponential error of the diagnostic. A ledger built from
@@ -483,6 +598,10 @@ $`\beta`$ on log axes against $`0.55/\beta`$.
   §5 variant of the inverted-pair note — an initial state with genuine
   negativity straddling the separatrix — should worsen the cancellation, but
   by how much is unmeasured.
+- **K-LS6.** Theorem K7 is stated for sech². The number of emission lobes
+  is the number of sign changes of $`V'''`$, so it is potential-specific; a
+  general statement relating lobe count to the cancellation depth of
+  Theorem K5 has not been attempted.
 - **K-LS5.** The soft-core reading of Corollary K1.2 suggests the next test
   case: soft-core Coulomb has a tunable ceiling $`\epsilon`$ and, unlike the
   Eckart barrier, an attractive well with bound states.
