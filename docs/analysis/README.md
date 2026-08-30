@@ -282,6 +282,30 @@ retracts.
     resolving `T` to fixed relative accuracy costs `β²` particles, and the
     semiclassical limit is the expensive one.
 
+16. **[`sea_population_equilibrium.md`](sea_population_equilibrium.md)** — What
+    the signed residual channel costs the *ledger*, as opposed to the
+    observable. Prices open item CLA3 of the compensated specification. The
+    Moyal equation fixes `u+ - u-` and says nothing about `u+ + u-`, so the
+    population is extra structure; S1 shows any `E`-preserving sink is
+    bilinear, which is exactly the class Proposition U1 left open. Momentum
+    conservation forces the consumed sea pair to sit on the parent's own row
+    (S0), making "ionisation" a derivation rather than a metaphor. The spec's
+    rate `R = sum_q |K_res|` silently selects the **emissive** realisation of
+    every event, and that choice is ruinous: the sea is relocated, not
+    consumed, with the worst-cell deficit growing without bound (S4), and
+    throttling by a finite sea moves `W` by 40 per cent in the core while
+    leaving norm and `<p>` exact (S5). The **absorptive** realisation —
+    a deposition of `-1` realised by removing a positon rather than adding a
+    negaton — is identical in the observable and opposite in the ledger, so
+    debit and credit both land on row `p`. It is per event and not per leg
+    (S6, body momentum), hence supply limited. Theorem S7 is the note's
+    centre: with absorptive fraction `f`, `dN = 2(1-2f) n_ev` and
+    `dS = (2f-1) n_ev`, so `f = 1/2` closes both ledgers at once. Measured
+    `f = 0.434`, and absorption already restores QLE fidelity by four orders
+    at fixed `dt` — the emissive gap being the sign problem showing up as
+    integration error rather than variance. Leaves the prediction that a
+    supra-minimal initial ensemble drives `f` to `1/2`.
+
 ## Companion code
 
 Every note lists its verifying script in §0 and its numerical results in a

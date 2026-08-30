@@ -829,6 +829,50 @@ see that directory's README for the ladder itself.
   two pathwise growth bounds on a log scale.  The gap between them is the L1
   mass that garbage collection has to remove per unit time.
 
+- `demo_sea_population_equilibrium.py` — verification companion to
+  `docs/analysis/sea_population_equilibrium.md`, which prices the
+  positon/negaton unravelling that the compensated specification recommends
+  but leaves uncosted (open item CLA3).  Three fields per cell: the observable
+  `E = u+ - u-`, the body count `N = u+ + u-`, and the bound sea `S` against
+  the background `B = 2/h`.  Parts A–C establish that the Moyal equation
+  constrains only `E`, that any `E`-preserving sink is bilinear, and that the
+  `N` equation runs under the *absolute-value* kernel with the closed-form
+  local fixed point `N_eq = G/kappa + sqrt(G^2/kappa^2 + E^2)` — verified to
+  1e-13 from both directions — whose fast-recombination limit is the minimal,
+  pure-positon ensemble.  Part C measures what the specification's rate
+  `R = sum_q |K_res|` actually does: it debits the sea at the parent momentum
+  row and credits it at the daughter rows, so the mean occupancy is conserved
+  while the worst cell drains without bound.  Part D is the body-momentum
+  table that forbids a mixed realisation, and hence forces the emissive /
+  absorptive choice to be made per event rather than per leg.  Part E verifies
+  the ledger identity `dN = 2(1-2f) n_ev`, `dS = (2f-1) n_ev` to 1.5e-14 and
+  1.7e-11, so an absorptive fraction `f = 1/2` closes both ledgers at once.
+  Part F runs the two unravellings against the exact mesh QLE: the emissive
+  ensemble reaches N = 1.07e5 with a relative L2 error of 94, the absorptive
+  one N = 2.33 with 9.7e-3, both first order in dt — the gap is the sign
+  problem appearing as integration error, since the emissive ledger forms `E`
+  as a small difference of two huge populations.  Part G sweeps the coherence
+  reach.
+
+  Sample output figures (committed on the `output` branch):
+
+  ![The ledger fixed point](https://raw.githubusercontent.com/billpage/wpmw/output/figures/sea_population_fixed_point.png)
+
+  `N_eq` against `kappa` with its `|E|` and `2 Gamma / kappa` limits; the
+  universal `2/(kappa t)` vacuum asymptote reached from three preparations
+  spanning four decades; and `Gamma_tot(r)` on the Eckart barrier with the
+  three K7 quiet points marked.
+
+  ![Emissive against absorptive](https://raw.githubusercontent.com/billpage/wpmw/output/figures/sea_population_unravelling.png)
+
+  The body count and the worst-cell sea occupancy for the two unravellings on
+  log axes, and the fidelity of each against the exact mesh QLE as dt falls.
+
+  ![The ledger identity](https://raw.githubusercontent.com/billpage/wpmw/output/figures/sea_population_ledger_identity.png)
+
+  The absorptive fraction against the coherence reach with the closing value
+  f = 1/2 marked, and the residual worst-cell deficit alongside it.
+
 ### Figure generators and regression tests
 
 - `gen_microdynamics_4d_figures.py` — generates the five schematic
