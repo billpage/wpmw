@@ -290,6 +290,47 @@ The absorptive deficit fluctuates and grows sub-linearly; the emissive one is
 exponential. Global sea loss under absorption is 0.6 per cent over 24 time
 units.
 
+**Theorem S9 (the absorptive fraction regulates itself).** $`f`$ is an
+attractor near $`1/2`$, approached from both sides and independent of the
+initial ensemble.
+
+The mechanism is Theorem S7 read as a feedback law. If $`f > 1/2`$ then
+$`\Delta N < 0`$: bodies drain, partners become scarcer, and $`f`$ falls. If
+$`f < 1/2`$ then $`\Delta N > 0`$ and the reverse. Part H measures it by
+padding the initial ensemble with $`\pm`$ pairs — which leaves $`E`$ untouched
+— to a ratio $`\rho = N_0/|E|`$:
+
+| $`\rho`$ | $`t=0.5`$ | $`t=1`$ | $`t=2`$ | $`t=4`$ | $`t=6`$ | $`t=8`$ |
+|---|---|---|---|---|---|---|
+| 1 | 0.4619 | 0.4565 | 0.4637 | 0.4365 | 0.4126 | 0.4840 |
+| 2 | 0.5906 | 0.4770 | 0.4544 | 0.4462 | 0.4184 | 0.4903 |
+| 5 | 0.7730 | 0.6065 | 0.4847 | 0.4429 | 0.4518 | 0.4875 |
+| 20 | 0.8360 | 0.7109 | 0.5037 | 0.5051 | 0.4626 | 0.4992 |
+
+A twentyfold padding starts at $`f = 0.836`$ and falls; the minimal ensemble
+starts at $`0.462`$ and rises; by $`t = 8`$ they agree to within 0.015. **The
+ledger closure requires no tuning.**
+
+Two qualifications, both material.
+
+First, $`N`$ does *not* forget: $`N(8) = 2.51, 2.63, 3.17, 6.80`$ across the
+same sweep. Only $`f`$ is preparation-independent. This is Theorem S3 — the
+vacuum relaxes as $`1/t`$ — so the memory decays, but not on the timescale of
+these runs.
+
+Second, the attractor sits slightly *below* $`1/2`$. The shortfall is not a
+timestep artefact: at $`\Delta t = 0.02, 0.01, 0.005`$ it measures
+$`f = 0.4718, 0.4706, 0.4704`$. It is controlled by the reach, with
+$`1/2 - f = 0.119, 0.029, 0.017`$ at $`y_{\max}/a = \pi, 2\pi, 4\pi`$. Three
+points cannot distinguish convergence to zero from convergence to a floor near
+$`0.015`$; see S-SP3.
+
+**Why the minimal ensemble cannot absorb.** The obstruction is not size, it is
+species availability. For a positive $`W`$ the minimal ensemble has
+$`u^- = 0`$ *everywhere*, and absorbing a $`+1`$ deposition requires a negaton.
+So $`f`$ must start at zero and can only rise as emissive events manufacture
+the partners that absorption then consumes.
+
 ---
 
 ## 7. Where this leaves the recombination rule
@@ -302,27 +343,39 @@ Collecting §§1–6, the rule is constrained on four sides and free on one:
 | removes coincident pairs only | S1 | the reach of the removal |
 | $`\kappa \propto \Gamma_{\rm tot}(x)`$ | §4 | reach independence of the ledger |
 | $`f = 1/2`$ | S7 | closure of both ledgers |
-| one dimensionless constant | — | **not fixed** |
+| $`f \to 1/2`$ dynamically | S9 | closure needs no tuning |
+| one dimensionless constant | — | **still not fixed** |
 
-The one remaining constant is the same object as the choice of initial
-ensemble, because $`N_{\rm eq}`$ depends on $`\Gamma/\kappa`$ and on nothing
-else about the state. Whether one principle fixes both is §8's first open item.
+The constant survives S9. The natural hope was that some initial ratio
+$`\rho = N_0/|E|`$ would be the one that closes the ledger, thereby pinning
+$`\kappa`$ through $`N_{\rm eq}`$. Part H rules that out: $`f`$ self-regulates
+at *every* $`\rho`$, so $`\rho`$ is not a control knob for $`f`$ and closure
+carries no information about $`\kappa`$. The good news and the bad news are
+the same measurement — the ledger closes on its own, and because it does, it
+says nothing about the free constant.
+
+Note also that no separate recombination rate is required for closure at all.
+Absorption is itself a pair-removal channel satisfying S1, and S9 says it
+suffices. A finite $`\kappa`$ remains available as a tuning knob for the
+population, but it is no longer load-bearing.
 
 ---
 
 ## 8. Open items
 
-- **S-SP1 (the supra-minimal ensemble).** The measured $`f = 0.434`$ falls
-  short of the closing value $`1/2`$ because partners are not always available
-  — and they are not available because the runs start from the *minimal*
-  ensemble $`N_0 = |E|`$. Theorem S2's fixed point is strictly above $`|E|`$
-  whenever $`\kappa`$ is finite, and that excess is exactly the standing
-  unpaired population absorption needs. **Prediction:** sweeping
-  $`N_0/|E|`$ should drive $`f`$ to $`1/2`$ at some finite ratio, at which the
-  ledger closes exactly and the free constant of §7 is determined rather than
-  chosen. If instead $`f`$ saturates below $`1/2`$, the ledger has an
-  irreducible leak and the free constant stays free. This is the decisive
-  next measurement and it is cheap.
+- **S-SP1 (the supra-minimal ensemble). Resolved, against the prediction.**
+  The prediction was that some finite $`N_0/|E|`$ would drive $`f`$ to $`1/2`$
+  and thereby determine $`\kappa`$. The premise holds — $`f`$ does rise with
+  $`\rho`$, steeply, and the diagnosis of *why* the minimal ensemble cannot
+  absorb turned out to be species availability rather than ensemble size — but
+  the conclusion fails. Theorem S9: $`f`$ converges to the same value from
+  every $`\rho`$, so no particular $`\rho`$ is selected and $`\kappa`$ stays
+  free. What replaces the prediction is stronger in one direction and weaker in
+  another: closure is automatic, and closure is therefore uninformative about
+  the remaining constant. Fixing that constant now needs a different argument
+  entirely — a candidate is the requirement that $`N_{\rm eq}`$ equal the
+  standing population S9's feedback actually sustains, which would be a
+  self-consistency condition rather than a free choice.
 - **S-SP2 (tension with the sea-dressed note).**
   [`sea_dressed_microdynamics.md`](sea_dressed_microdynamics.md) §8 and §10
   show a live ledger converging onto the pinned run as $`\kappa_{\rm rec}`$
@@ -332,18 +385,28 @@ else about the state. Whether one principle fixes both is §8's first open item.
   compensated split at reach $`2\pi a`$. Which difference is responsible is
   unmeasured, and until it is, neither result should be read as overturning
   the other.
-- **S-SP3 (what $`f`$ depends on).** $`f`$ rises with reach — 0.369, 0.434,
-  0.462 at $`y_{\max}/a = \pi, 2\pi, 4\pi`$ — presumably because a longer
-  reach opens more channels and so more chances of finding a partner. Whether
-  it approaches $`1/2`$ from below in the limit, or crosses it, is not known,
-  and the residual deficit still tracks the reach.
-- **S-SP4 (the mean-field caps).** The absorptive allocation is a tau-leap
-  processed channel by channel with live population caps, in the manner of
-  `sea_dressed_lattice.step_jump_sea_mc`. Sequential processing makes later
-  channels see earlier channels' depositions; that is an $`O(\Delta t)`$
-  effect and it is inside the measured first-order convergence, but the
-  allocation is not symmetric in the channel ordering and no one has checked
-  how much $`f`$ moves under a permuted order.
+- **S-SP3 (does the shortfall vanish?).** The late-time shortfall
+  $`1/2 - f`$ is reach-controlled and not a discretisation artefact: it is flat
+  in $`\Delta t`$ (0.4718, 0.4706, 0.4704 at $`\Delta t = 0.02, 0.01, 0.005`$)
+  and falls as 0.119, 0.029, 0.017 across
+  $`y_{\max}/a = \pi, 2\pi, 4\pi`$. The first step is a factor 4, the second
+  only 1.7, so three points do not settle whether the limit is zero or a floor
+  near 0.015. A fourth point at $`8\pi a`$ needs $`n_p = 256`$ and would
+  decide it. This matters because an irreducible floor means the ledger leaks
+  at a fixed rate per event no matter what, and the residual worst-cell
+  deficit does still track the reach ($`-0.42, -1.32, -3.10`$).
+- **S-SP4 (the mean-field caps). Resolved, with a caveat worth keeping.**
+  Part I re-runs the tau-leap under forward, reversed, two fixed random and one
+  per-step reshuffled channel ordering. The observable barely moves: the
+  spread in $`E`$ is $`3.0`$ to $`3.5\times10^{-3}`$ against a splitting error of
+  $`1.0\times10^{-2}`$, so ordering sits comfortably inside the error the
+  method already carries, and $`f`$ moves only from 0.431 to 0.442. The
+  **ledger** is a different matter: $`N(T)`$ runs 2.58, 2.59, 2.96, 2.87, 2.73
+  — a spread of about 14 per cent — and the worst-cell deficit from $`-0.64`$
+  to $`-0.97`$. So every $`N`$ and min-$`S/B`$ figure in this note should be
+  read as carrying an $`O(15\%)`$ method uncertainty that the fidelity figures
+  do not. The conclusions are all order-of-magnitude or sign statements and
+  none of them turn on 15 per cent.
 - **S-SP5 (a genuine ensemble).** Everything here is mean field on a mesh.
   The claimed advantage is a world-ensemble claim, so CLA2's decisive test —
   a signed ensemble against the mesh at fixed variance — still stands, now
@@ -370,6 +433,8 @@ else about the state. Whether one principle fixes both is §8's first open item.
 | E | S7, both ledger identities to $`1.5\times10^{-14}`$ and $`1.7\times10^{-11}`$ |
 | F | S8, the fidelity and deficit tables, first-order in $`\Delta t`$ |
 | G | reach dependence of $`f`$ and of $`N_{\rm eq}`$; the $`\kappa \propto \Gamma`$ scaling |
+| H | S9, the $`\rho = N_0/\lvert E\rvert`$ sweep and the approach to $`f = 1/2`$ from both sides |
+| I | S-SP4, the channel-ordering spread in $`E`$, $`f`$, $`N`$ and min $`S/B`$ |
 
 Figures on the `output` branch:
 
@@ -388,6 +453,13 @@ the fidelity of each against the exact mesh QLE as $`\Delta t`$ falls.
 
 The absorptive fraction against the reach with the closing value $`f = 1/2`$
 marked, and the residual deficit alongside it.
+
+[![The attractor](https://raw.githubusercontent.com/billpage/wpmw/output/figures/sea_population_attractor.png)](https://raw.githubusercontent.com/billpage/wpmw/output/figures/sea_population_attractor.png)
+
+Left: the instantaneous absorptive fraction from four initial ratios spanning
+a factor twenty, converging on $`f = 1/2`$ from above and below. Right: the
+body count for the same four runs, which does not converge — only $`f`$ is
+preparation-independent.
 
 ---
 

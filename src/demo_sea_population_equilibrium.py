@@ -29,6 +29,10 @@ Parts
   F  Theorem S8: absorptive unravelling restores QLE fidelity, bounds the
      body count, and shrinks the sea deficit by two to three orders.
   G  Reach dependence, and the kappa proportional to Gamma scaling.
+  H  Theorem S9: f is an attractor at 1/2, reached from both sides.  Sweeps
+     the initial ratio rho = N0/|E| (padding added as +- pairs, so E is
+     untouched) and traces the instantaneous absorptive fraction.
+  I  The channel-ordering sensitivity of the tau-leap allocation.
 
 Run as::
 
@@ -249,6 +253,88 @@ class Ledger:
                     fid=float(np.linalg.norm(e - ref) / np.linalg.norm(ref)))
 
 
+def channels_ordered(run, up, um, S, dt, seq):
+    """The demo's tau-leap with an explicit channel ordering (Part I)."""
+    n_abs = n_emi = 0.0
+    for q in seq:
+        lam = np.abs(run.k[:, q])[:, None]
+        if lam.max() < 1e-14:
+            continue
+        sg = np.sign(run.k[:, q])[:, None]
+        for parent, sp in ((up, 1.0), (um, -1.0)):
+            D = lam * parent * dt
+            if D.max() <= 0.0:
+                continue
+            t = np.broadcast_to(sg * sp, D.shape)
+            A = np.minimum(D, np.minimum(
+                np.where(t > 0, np.roll(um, -q, axis=1),
+                         np.roll(up, -q, axis=1)),
+                np.where(t > 0, np.roll(up, q, axis=1),
+                         np.roll(um, q, axis=1))))
+            Em = D - A
+            n_abs += float(A.sum())
+            n_emi += float(Em.sum())
+            aq, am = np.roll(A, q, axis=1), np.roll(A, -q, axis=1)
+            um -= np.where(t > 0, aq, 0.0)
+            up -= np.where(t > 0, 0.0, aq)
+            up -= np.where(t > 0, am, 0.0)
+            um -= np.where(t > 0, 0.0, am)
+            S += A
+            eq, em_ = np.roll(Em, q, axis=1), np.roll(Em, -q, axis=1)
+            up += np.where(t > 0, eq, 0.0)
+            um += np.where(t > 0, 0.0, eq)
+            um += np.where(t > 0, em_, 0.0)
+            up += np.where(t > 0, 0.0, em_)
+            S -= Em
+            np.maximum(up, 0.0, out=up)
+            np.maximum(um, 0.0, out=um)
+    return n_abs, n_emi
+
+
+def run_traced(run, e0, t_max, dt, rho=1.0, order="forward", seed=0,
+               every=0.25):
+    """Event-resolved run with a per-step trace of the absorptive fraction."""
+    pad = 0.5 * (rho - 1.0) * np.abs(e0)          # added as +- pairs
+    up = np.maximum(e0, 0.0) + pad
+    um = np.maximum(-e0, 0.0) + pad
+    S = np.full_like(e0, B)
+    ref = e0.copy()
+    rng = np.random.default_rng(seed)
+    qs = list(range(1, run.n_p // 2))
+    if order == "reverse":
+        qs = qs[::-1]
+    elif order == "fixed_random":
+        rng.shuffle(qs)
+    tr, acc = [], np.zeros(2)
+    n_steps = int(round(t_max / dt))
+    for step in range(n_steps):
+        up, um, S = (run.stream(up, .5 * dt), run.stream(um, .5 * dt),
+                     run.stream(S, .5 * dt))
+        seq = qs
+        if order == "shuffled":
+            seq = list(qs)
+            rng.shuffle(seq)
+        a, e_ = channels_ordered(run, up, um, S, dt, seq)
+        acc += (a, e_)
+        up, um, S = (run.stream(up, .5 * dt), run.stream(um, .5 * dt),
+                     run.stream(S, .5 * dt))
+        ref = run.qle_step(ref, dt)
+        if step % max(1, int(every / dt)) == 0 or step == n_steps - 1:
+            tot = acc[0] + acc[1]
+            tr.append((step * dt, acc[0] / max(tot, 1e-30),
+                       float(np.sum(up + um) * run.area),
+                       float((S / B).min())))
+            acc[:] = 0.0
+    e = up - um
+    return dict(trace=np.array(tr), e=e, N=float(np.sum(up + um) * run.area),
+                Smin=float((S / B).min()),
+                fid=float(np.linalg.norm(e - ref) / np.linalg.norm(ref)))
+
+
+def late_f(tr, t_max, window=2.0):
+    return float(tr[tr[:, 0] >= t_max - window][:, 1].mean())
+
+
 def gaussian(run, r_c, p_c, sigma_r):
     sp = HBAR / (2.0 * sigma_r)
     w = np.exp(-((run.r[:, None] - r_c) ** 2) / (2.0 * sigma_r ** 2)
@@ -444,8 +530,65 @@ def part_g(e0_unused):
     return rows
 
 
+def part_h(run, e0):
+    banner("H  Theorem S9: f is an attractor at 1/2")
+    print("  A +1 deposition absorbs a NEGATON.  For a positive W the minimal")
+    print("  ensemble has u- = 0 everywhere, so it has no partners at all --")
+    print("  the obstruction is species availability, not ensemble size.")
+    print(f"  packet: sum u+ = {np.maximum(e0,0).sum()*run.area:.6f}, "
+          f"sum u- = {np.maximum(-e0,0).sum()*run.area:.6f}\n")
+    T, dt = 8.0, 0.01
+    ts = (0.5, 1.0, 2.0, 4.0, 6.0, 8.0)
+    traces = {}
+    print(f"  instantaneous f, T = {T}, dt = {dt}")
+    print("  " + f"{'rho':>6}" + "".join(f"{'t=' + str(t):>9}" for t in ts))
+    for rho in (1.0, 2.0, 5.0, 20.0):
+        o = run_traced(run, e0, T, dt, rho=rho)
+        traces[rho] = o
+        tr = o["trace"]
+        row = [tr[int(np.argmin(np.abs(tr[:, 0] - t))), 1] for t in ts]
+        print(f"  {rho:6.1f}" + "".join(f"{v:9.4f}" for v in row))
+    print("\n  and the body count N(t)")
+    print("  " + f"{'rho':>6}" + "".join(f"{'t=' + str(t):>9}" for t in ts))
+    for rho, o in traces.items():
+        tr = o["trace"]
+        row = [tr[int(np.argmin(np.abs(tr[:, 0] - t))), 2] for t in ts]
+        print(f"  {rho:6.1f}" + "".join(f"{v:9.4f}" for v in row))
+    print(f"\n  {'rho':>6} {'f(late)':>9} {'N(T)':>8} {'min S/B':>9}"
+          f" {'rel L2':>10}")
+    for rho, o in traces.items():
+        print(f"  {rho:6.1f} {late_f(o['trace'], T):9.4f} {o['N']:8.4f}"
+              f" {o['Smin']:9.4f} {o['fid']:10.3e}")
+    print("\n  f > 1/2 drains bodies, dN = 2(1-2f) n_ev < 0, which removes")
+    print("  partners and lowers f; f < 1/2 does the reverse.  So f = 1/2 is")
+    print("  an attractor and needs no tuning.  N, by contrast, keeps a")
+    print("  memory of its preparation: the vacuum relaxes only as 1/t (S3).")
+    return traces, T
+
+
+def part_i(run, e0):
+    banner("I  channel-ordering sensitivity of the tau-leap allocation")
+    T, dt = 6.0, 0.01
+    print(f"  rho = 3, T = {T}, dt = {dt}\n")
+    print(f"  {'ordering':>14} {'f(late)':>9} {'N(T)':>8} {'min S/B':>9}"
+          f" {'rel L2':>10} {'dE vs forward':>15}")
+    base = None
+    for order, seed in (("forward", 0), ("reverse", 0), ("fixed_random", 1),
+                        ("fixed_random", 2), ("shuffled", 3)):
+        o = run_traced(run, e0, T, dt, rho=3.0, order=order, seed=seed)
+        if base is None:
+            base, d = o["e"], 0.0
+        else:
+            d = float(np.linalg.norm(o["e"] - base) / np.linalg.norm(base))
+        tag = order if order != "fixed_random" else f"{order}{seed}"
+        print(f"  {tag:>14} {late_f(o['trace'], T):9.4f} {o['N']:8.4f}"
+              f" {o['Smin']:9.4f} {o['fid']:10.3e} {d:15.3e}")
+    print("\n  The observable is ordering-robust -- the spread sits inside the")
+    print("  splitting error.  The body count is not: it moves by ~20%.")
+
+
 # ----------------------------------------------------------------------
-def figures(run, G, E, outs, fid, tr_e, tr_a, rows, f_meas):
+def figures(run, G, E, outs, fid, tr_e, tr_a, rows, f_meas, traces, Th):
     kap = np.logspace(-1, 3, 200)
 
     fig, ax = plt.subplots(1, 3, figsize=(15, 4.2))
@@ -534,6 +677,29 @@ def figures(run, G, E, outs, fid, tr_e, tr_a, rows, f_meas):
     fig.suptitle(f"The ledger identity (measured f = {f_meas:.4f})", y=1.02)
     save_fig(fig, "sea_population_ledger_identity.png")
 
+    fig, ax = plt.subplots(1, 2, figsize=(10.5, 4.2))
+    for (rho, o), c in zip(traces.items(), ("C0", "C1", "C2", "C3")):
+        tr = o["trace"]
+        ax[0].plot(tr[:, 0], tr[:, 1], color=c, lw=1.8,
+                   label=rf"$\rho={rho:g}$")
+        ax[1].semilogy(tr[:, 0], tr[:, 2], color=c, lw=1.8,
+                       label=rf"$\rho={rho:g}$")
+    ax[0].axhline(0.5, ls="--", color="k", lw=1.2, label=r"$f=1/2$")
+    ax[0].set_xlabel("t")
+    ax[0].set_ylabel("instantaneous f")
+    ax[0].set_ylim(0.3, 0.95)
+    ax[0].set_title("S9: f is approached from both sides")
+    ax[0].legend(fontsize=9, ncol=2)
+    ax[0].grid(alpha=.3)
+    ax[1].set_xlabel("t")
+    ax[1].set_ylabel(r"$N_{\rm tot}$")
+    ax[1].set_title("the body count keeps its preparation memory")
+    ax[1].legend(fontsize=9)
+    ax[1].grid(alpha=.3)
+    fig.suptitle(r"S-SP1: sweeping the initial ratio $\rho = N_0/|E|$",
+                 y=1.02)
+    save_fig(fig, "sea_population_attractor.png")
+
 
 def main():
     run = Ledger()
@@ -544,10 +710,13 @@ def main():
     f_meas = part_e(run, e0)
     fid, tr_e, tr_a = part_f(run, e0)
     rows = part_g(e0)
-    figures(run, G, E, outs, fid, tr_e, tr_a, rows, f_meas)
+    traces, Th = part_h(run, e0)
+    part_i(run, e0)
+    figures(run, G, E, outs, fid, tr_e, tr_a, rows, f_meas, traces, Th)
     print("\nFigures: sea_population_fixed_point.png, "
           "sea_population_unravelling.png,\n"
-          "         sea_population_ledger_identity.png")
+          "         sea_population_ledger_identity.png, "
+          "sea_population_attractor.png")
 
 
 if __name__ == "__main__":

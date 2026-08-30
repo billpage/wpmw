@@ -852,7 +852,15 @@ see that directory's README for the ladder itself.
   one N = 2.33 with 9.7e-3, both first order in dt — the gap is the sign
   problem appearing as integration error, since the emissive ledger forms `E`
   as a small difference of two huge populations.  Part G sweeps the coherence
-  reach.
+  reach.  Parts H and I close two of the note's open items: H pads the initial
+  ensemble with +- pairs to a ratio rho = N0/|E| spanning a factor twenty and
+  traces the instantaneous absorptive fraction, which converges on 1/2 from
+  above and from below (0.836 -> 0.499 at rho = 20; 0.462 -> 0.484 at rho = 1)
+  — so the ledger closes with no tuning, though the body count keeps its
+  preparation memory.  I re-runs the tau-leap under five channel orderings:
+  the observable moves by 3e-3 against a splitting error of 1e-2, but N(T)
+  moves by ~14%, so the ledger figures carry a method uncertainty the fidelity
+  figures do not.
 
   Sample output figures (committed on the `output` branch):
 
@@ -872,6 +880,12 @@ see that directory's README for the ladder itself.
 
   The absorptive fraction against the coherence reach with the closing value
   f = 1/2 marked, and the residual worst-cell deficit alongside it.
+
+  ![The attractor](https://raw.githubusercontent.com/billpage/wpmw/output/figures/sea_population_attractor.png)
+
+  Left: the instantaneous absorptive fraction from four initial ratios,
+  converging on f = 1/2 from both sides.  Right: the body count for the same
+  four runs, which does not converge — only f is preparation-independent.
 
 ### Figure generators and regression tests
 

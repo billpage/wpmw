@@ -303,8 +303,12 @@ retracts.
     `dS = (2f-1) n_ev`, so `f = 1/2` closes both ledgers at once. Measured
     `f = 0.434`, and absorption already restores QLE fidelity by four orders
     at fixed `dt` — the emissive gap being the sign problem showing up as
-    integration error rather than variance. Leaves the prediction that a
-    supra-minimal initial ensemble drives `f` to `1/2`.
+    integration error rather than variance. S9 then shows `f` is an
+    *attractor*: `f > 1/2` drains bodies and so removes partners, `f < 1/2`
+    does the reverse, and a twentyfold padding of the initial ensemble and the
+    minimal one converge on the same value from opposite sides. Closure
+    therefore needs no tuning — and, for the same reason, says nothing about
+    the one dimensionless constant the recombination rate still carries.
 
 ## Companion code
 
