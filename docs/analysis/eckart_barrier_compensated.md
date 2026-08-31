@@ -450,6 +450,37 @@ exactly as: the parent world streams on undisturbed, and at rate
 $`\Gamma(r) = \sum_{q \ne 0}|K_q(r)|`$ a **positon–negaton pair** appears at
 $`p \pm \xi_q`$, carrying opposite signs and hence zero expected weight.
 
+Two refinements of that sentence, both established after this note was first
+written and both needed before the ensemble can actually be run.
+
+**Proposition K8 (the pair is ionised, not created).** If the event conserves
+body momentum and the parent streams on undisturbed, the pair it produces must
+come from a bound sea pair sitting at the parent's *own* momentum row.
+
+*Proof.* The children carry $`(p + \xi_q) + (p - \xi_q) = 2p`$. A neutral
+bound pair drawn from row $`p'`$ carries $`2p'`$, so $`p' = p`$. Nothing else
+can supply the difference: the parent's momentum is fixed by the paragraph
+above, and the deterministic step is the whole of the force. $`\square`$
+
+So the event is the ionisation of a neutral pair co-located with the parent in
+both $`r`$ and $`p`$ — the $`c = 0`$ member of the dark family of
+[`species_sectors_and_annihilation.md`](species_sectors_and_annihilation.md),
+not the $`c = 2`$ crystal shift. Weight and momentum are both conserved by the
+event rather than merely in expectation.
+
+**And $`\Gamma`$ is not a property of the potential alone.** It depends on the
+coherence horizon, and it grows with it without bound. With the raised-cosine
+profile at $`V_0 = a = \mu = \hbar = 1`$:
+
+| $`y_{\max}/a`$ | $`\pi/2`$ | $`\pi`$ | $`2\pi`$ | $`4\pi`$ | $`8\pi`$ | $`16\pi`$ |
+|---|---|---|---|---|---|---|
+| $`\Gamma_{\max}`$ | 0.325 | 1.132 | 3.132 | 6.604 | 12.94 | 25.34 |
+| $`\int\Gamma\,dr`$ | 0.637 | 2.975 | 10.48 | 26.05 | — | — |
+
+At unbounded reach — which is what §5 runs at — $`\Gamma_{\max} = 175`$. The
+emission rate is therefore a representation parameter, not an observable, even
+though the transmission it produces is not. §8.4 is about what follows.
+
 The ontological consequence is worth stating plainly. **No world-particle
 ever changes its momentum discontinuously.** Every world-particle in the
 ensemble — the excess positons of the initial condition and every member of
@@ -546,6 +577,130 @@ $`\beta = 2`$, a handful of sampled emissions cannot resolve even the sign of
 the effect, and the figure is an illustration of the mechanism, not an
 estimate of its size.
 
+### 8.4 What the classical-trajectory reading costs
+
+§8.1 asserts that no world-particle ever changes its momentum discontinuously.
+That claim survives, but it is a *choice* with a measurable price, and the
+price was not visible when this note was written. This section states it.
+
+**Creation alone diverges.** If every event is realised emissively — which is
+what the specification's rate $`R(x) = \sum_q|K_{\rm res}|`$ prescribes if
+read literally — the unpaired population grows as $`\exp\int\Gamma\,dt`$. Per
+barrier transit at $`p_b`$ that is a factor 1.57, 8.2, $`1.6\times10^{3}`$,
+$`1.0\times10^{8}`$ at $`y_{\max}/a = \pi/2, \pi, 2\pi, 4\pi`$. Worse, the
+observable degrades with it: because $`E = u^+ - u^-`$ is then a small
+difference of two enormous populations, integration error is amplified by
+$`N/\lVert E\rVert`$, and the QLE fidelity at fixed $`\Delta t`$ is four
+orders of magnitude worse than it needs to be. The sign problem shows up here
+as integration error rather than as variance.
+
+**The repair keeps every trajectory classical.** A deposition of $`-1`$ at a
+cell can be realised by *removing a positon* there instead of adding a negaton;
+the two are identical in $`E`$. Run that way the event consumes two unpaired
+bodies of opposite species from the two daughter rows and binds them into a
+neutral pair at the parent row — the exact reverse of Proposition K8, and
+equally free of any momentum jump. Bodies are still only ever created and
+destroyed in pairs, never moved. With absorptive fraction $`f`$ over
+$`n_{\rm ev}`$ events the ledger reads $`\Delta N = 2(1-2f)n_{\rm ev}`$ and
+$`\Delta S = (2f-1)n_{\rm ev}`$, so $`f = 1/2`$ closes the population and the
+sea at once. See
+[`sea_population_equilibrium.md`](sea_population_equilibrium.md) for the
+general treatment; what is specific to this barrier is what it takes to reach
+$`f = 1/2`$ here.
+
+**Theorem K9 (the supply condition).** Absorption need not be maximally
+available, only attainable at half the demand. Aggregating the demand each
+cell must serve across all channels in a step, the condition for $`f = 1/2`$
+is
+
+```math
+\min\bigl(u^+(r,p),\; u^-(r,p)\bigr)
+  \;\ge\; \tfrac12\,\Delta t\,\bigl(|K| \star N\bigr)(r,p).
+```
+
+The right-hand side is $`O(\Delta t)`$, so the condition is satisfiable
+wherever the minority species is strictly positive, and fails only where it is
+exactly zero. Refining $`\Delta t`$ therefore cannot help — measured
+shortfalls are 0.4718, 0.4706, 0.4704 at $`\Delta t = 0.02, 0.01, 0.005`$ —
+because the failure is at the *boundary of the support* of the minority
+species, not a rate.
+
+**Why this bites on a barrier.** The §5 initial condition is a positive
+Wigner function, so $`u^- = 0`$ everywhere at $`t = 0`$ and absorption is
+impossible: the ensemble must bootstrap, manufacturing by emission the
+negatons that absorption later consumes. Absorption then starves at the moving
+frontier of the negaton support. Decomposing the cap at $`y_{\max} = 4\pi a`$
+into per-leg availabilities $`a_A`$ (negaton at $`p+\xi_q`$) and $`a_B`$
+(positon at $`p-\xi_q`$):
+
+| $`y_{\max}/a`$ | $`\langle a_A\rangle`$ | $`\langle a_B\rangle`$ | $`\langle\min\rangle = f`$ | $`\langle\lvert a_A - a_B\rvert\rangle`$ |
+|---|---|---|---|---|
+| $`2\pi`$ | 0.6718 | 0.7359 | 0.4386 | 0.5305 |
+| $`4\pi`$ | 0.6899 | 0.7543 | 0.4685 | 0.5072 |
+| $`8\pi`$ | 0.7105 | 0.7586 | 0.4874 | 0.4942 |
+
+Neither leg is the obstruction — each finds its partner 67–76 per cent of the
+time. The *conjunction* is: the mean leg disagreement is $`\approx 0.5`$
+against means of $`0.7`$, so typically one leg has its partner and the other
+does not. Requiring both costs about a quarter of all events, and that cost
+barely moves with reach. The negaton leg is consistently the harder one, as
+the minority-species reading predicts.
+
+**Theorem K9 is met by a standing dressed population.** Padding the initial
+ensemble with $`\pm`$ pairs to a ratio $`\rho = N_0/|E|`$ — which leaves
+$`E`$, and therefore every observable, untouched — and taking absorption only
+up to the $`D/2`$ the ledger needs, so the reserve is not eaten:
+
+| $`\rho`$ | $`1/2 - f`$ at $`2\pi`$ | starved demand | $`1/2 - f`$ at $`4\pi`$ | starved demand | rel $`L^2`$ at $`4\pi`$ |
+|---|---|---|---|---|---|
+| 1 | 0.0541 | 20.1% | 0.0325 | 11.6% | $`5.5\times10^{-2}`$ |
+| 3 | 0.0402 | 8.9% | 0.0247 | 5.1% | $`5.3\times10^{-2}`$ |
+| 10 | 0.0166 | 3.7% | 0.0114 | 2.0% | $`8.2\times10^{-2}`$ |
+| 30 | 0.0059 | 2.0% | 0.0044 | 1.0% | $`2.4\times10^{-1}`$ |
+| 100 | 0.0020 | 1.6% | 0.0021 | 0.7% | $`8.3\times10^{-1}`$ |
+
+The shortfall falls roughly as $`\rho^{-2/3}`$ and does not stop, so there is
+no finite $`\rho`$ at which the ledger closes exactly — but there is no
+obstruction either. The cost is not the bodies, it is the amplification again:
+by $`\rho = 100`$ the QLE fidelity has degraded by a factor of 25 at fixed
+$`\Delta t`$, because $`E`$ is once more a difference of two nearly equal
+populations. **$`\rho \approx 3`$ to 10 at $`y_{\max} = 4\pi a`$ is the
+usable window**: 1 to 2.5 per cent residual imbalance, 2 to 5 per cent starved
+demand, and fidelity essentially unchanged from the minimal ensemble.
+
+**What that is, in world-particles.** $`B = 2/h`$ is a density of *pairs*, so
+$`Bh = 2`$: **every phase-space cell of area $`h`$ holds exactly two bound sea
+pairs**, independent of any grid. Against that, $`|W| \le 2/h`$ for pure
+states (saturated at a Gaussian centre), so the net excess at the packet core
+is 2 per $`h`$-cell and the unpaired population is $`2\rho`$ per $`h`$-cell:
+
+| $`\rho`$ | positons : negatons per $`h`$-cell | excess as a fraction of the population |
+|---|---|---|
+| 1 | 2 : 0 | 1 |
+| 3 | 4 : 2 | 1/3 |
+| 10 | 11 : 9 | 1/10 |
+
+At one world-particle per unit of net weight, the whole ontological content of
+a tunnelling event on this barrier is **three to ten unpaired bodies**, two
+positons to one negaton at $`\rho = 3`$, moving through a sea of two pairs per
+Planck cell. Every one of them Newtonian for its entire life.
+
+**A note on the reach.** The ledger prefers more reach than Theorem K1's
+series ceiling allows, but not without limit. At converged spatial resolution:
+
+| $`y_{\max}/a`$ | $`1/2 - f`$ | worst-cell $`S/B`$ | required sea depth | $`\Gamma_{\max}`$ |
+|---|---|---|---|---|
+| $`2\pi`$ | 0.0585 | $`-1.47`$ | $`2.47\,B`$ | 3.13 |
+| $`4\pi`$ | 0.0201 | $`-1.45`$ | $`2.45\,B`$ | 6.58 |
+| $`8\pi`$ | 0.0127 | $`-2.56`$ | $`3.56\,B`$ | 12.94 |
+
+Doubling from $`2\pi`$ to $`4\pi`$ cuts the leak threefold at no storage cost;
+doubling again buys 1.6 for $`1.45\times`$ the storage and another factor two
+in $`\Gamma`$, which sets the timestep. The knee is at
+$`y_{\max} \approx 4\pi a`$ — about four barrier widths. This is a
+per-potential number, but it is the first time the reach has had a cost-benefit
+optimum attached rather than being set by what the grid allowed.
+
 ---
 
 ## 9. Figures
@@ -605,3 +760,22 @@ $`\beta`$ on log axes against $`0.55/\beta`$.
 - **K-LS5.** The soft-core reading of Corollary K1.2 suggests the next test
   case: soft-core Coulomb has a tunable ceiling $`\epsilon`$ and, unlike the
   Eckart barrier, an attractive well with bound states.
+- **K-LS7 (does the sea inherit the lobes?).** A local balance between
+  emission and absorption would put the equilibrium unpaired density
+  proportional to $`\Gamma`$, and so give it the four-lobe structure of
+  Theorem K7 with *exact holes* at $`r = 0`$ and
+  $`r = \pm a\ln(\sqrt2 + \sqrt3)`$. But pairs stream, so the realised
+  profile is $`\Gamma`$ transported by the classical flow, and whether the
+  quiet points survive is a computation rather than an argument. Either answer
+  is informative: nodes surviving is a sharp potential-specific prediction;
+  nodes filling in measures the transport length against the reaction length.
+  Unmeasured.
+- **K-LS8 (the box).** The sea is uniform at two pairs per $`h`$-cell, so its
+  total scales with the phase-space volume of the simulation, while the
+  unpaired population does not: the sea outnumbers the bodies of §8.4 by
+  40 to 140 to one in the §5 domain, and by more if the domain is widened. On
+  a closed system that ratio would be physics; on the open line it is a
+  boundary choice. Presumably only the sea within the packet's support ever
+  participates, since elsewhere there is no demand — but nothing measured here
+  establishes that, and if the sea is to be read as real rather than as
+  bookkeeping the box dependence needs an answer.

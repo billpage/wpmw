@@ -280,7 +280,18 @@ retracts.
     as `1/β`, because a packet centred on the barrier kills the slope term
     and leaves only the Jacobian `dp/dE` across the tunnelling window — so
     resolving `T` to fixed relative accuracy costs `β²` particles, and the
-    semiclassical limit is the expensive one.
+    semiclassical limit is the expensive one. Extended after the fact with §8.4, which
+    prices the classical-trajectory ontology on this barrier: Proposition K8
+    shows momentum conservation forces the emitted pair to be an *ionised*
+    neutral pair co-located with the parent, and that `Gamma` is a horizon
+    parameter rather than a property of the potential. Theorem K9 gives the
+    supply condition `min(u+, u-) >= (dt/2)(|K| * N)` for the ledger to close
+    with every trajectory Newtonian; it fails only where the minority species
+    is exactly zero, which for a positive initial `W` is everywhere at `t=0`,
+    so the ensemble must bootstrap. A standing dressed population `rho` of 3
+    to 10 at reach `4 pi a` is the usable window, and in world-particles that
+    is three to ten unpaired bodies against a sea of exactly two pairs per
+    Planck cell.
 
 16. **[`sea_population_equilibrium.md`](sea_population_equilibrium.md)** — What
     the signed residual channel costs the *ledger*, as opposed to the
