@@ -56,9 +56,10 @@ extended derivations belong in `docs/supplement/` and `docs/analysis/`.
   define the decisive test it must pass.
 
 - **[`compensated_liouville_algorithm.md`](compensated_liouville_algorithm.md)** — Wigner evolution as exact
-  Newtonian flow plus a zero-mean signed hop channel: the crystal-lattice jump
-  rule of §3b above with the rate field replaced and a deterministic step in
-  front of it. Written for the **open line**; the ring appears only as the
+  Newtonian flow plus a zero-mean signed mediated-jump channel: the
+  crystal-lattice jump rule of §3b above with the rate field replaced and a
+  deterministic step in front of it. Written for the **open line**; the ring
+  appears only as the
   corner where the algorithm degenerates back to the crystal lattice. Promotes
   [`../analysis/compensated_liouville_splitting.md`](../analysis/compensated_liouville_splitting.md)
   (theorems C0–C7) and adds what a grid forces: the reach *is* the momentum
@@ -67,8 +68,20 @@ extended derivations belong in `docs/supplement/` and `docs/analysis/`.
   `V′(x)` (§3.2); the Nyquist rung must be zeroed (§4.1); and the coherence
   horizon needs a **profile**, since under a hard cutoff the event rate, the
   momentum churn and the third moment all diverge — a soft horizon is what
-  gives the discrete operator a Moyal expansion at all (§4.4). §8 sketches the
-  `wpmwlib` interface. Companion code `src/demo_compensated_liouville_algorithm.py`.
+  gives the discrete operator a Moyal expansion at all (§4.4). Revised in
+  September 2026 against ladder steps 15–17: §1.3 states the four postulates
+  the algorithm realises, §2.4 gains the reach ceiling (the analyticity strip
+  of `V`, Theorem K1) and the conflict between it and what the ledger wants,
+  §3.4 gains the exact invariant of the deterministic step, and **§5 is new** —
+  the ledger the world form has to carry, which §4.3 previously left both
+  unspecified and, read literally, wrong. §4.0 fixes the vocabulary: this is a
+  **jump** algorithm and contains no **hops**, in the four-action sense of
+  [`../analysis/four_rule_microdynamics_equivalence.md`](../analysis/four_rule_microdynamics_equivalence.md)
+  §2, and earlier drafts had the two words the wrong way round. §9 sketches the
+  `wpmwlib` interface
+  for both the mesh class and the ledger class. Companion code
+  `src/demo_compensated_liouville_algorithm.py` and, for §5,
+  `src/demo_sea_population_equilibrium.py`.
 
 ## Reading order
 
