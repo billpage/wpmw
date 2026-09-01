@@ -5,12 +5,26 @@ source (DOI, arXiv, publisher page). Do **not** commit PDFs to this repository.
 
 ## Wigner equation, signed-particle Monte Carlo
 
-- Nedjalkov, M., et al. — signed-particle Wigner Monte Carlo with annihilation.
-  *(TODO: add specific references.)*
+- Nedjalkov, M.; Kosina, H.; Selberherr, S.; Ringhofer, C.; Ferry, D. K. —
+  "Unified particle approach to Wigner–Boltzmann transport in small
+  semiconductor devices." *Phys. Rev. B* **70**, 115319 (2004). The
+  signed-particle method with same-cell annihilation.
+  https://doi.org/10.1103/PhysRevB.70.115319
 - Querlioz, D.; Dollfus, P. — *The Wigner Monte Carlo Method for Nanoelectronic
-  Devices.* Wiley, 2010. *(TODO: link.)*
-- Sellier, J. M. — *Signed-particle formulation of quantum mechanics.*
-  *(TODO: add specific references.)*
+  Devices.* Wiley, 2010. ISBN 978-1-84821-150-6.
+- Sellier, J. M.; Nedjalkov, M.; Dimov, I. — "An introduction to applied
+  quantum mechanics in the Wigner Monte Carlo formalism." *Phys. Rep.* **577**,
+  1–34 (2015). The review of record for the signed-particle method.
+  https://doi.org/10.1016/j.physrep.2015.03.001
+- Sellier, J. M. — "A signed particle formulation of non-relativistic quantum
+  mechanics." *J. Comput. Phys.* **297**, 254 (2015). See the dedicated
+  section below; this is the closest published relative of the ontology of
+  `docs/analysis/compensated_ontology.md`.
+  https://doi.org/10.1016/j.jcp.2015.05.036 (arXiv:1509.06708)
+- Shao, S.; Xiong, Y. — "Branching random walk solutions to the Wigner
+  equation." *SIAM J. Numer. Anal.* **58**, 2589 (2020). The branching-process
+  reading of the signed kernel, with the positive/negative parts as birth
+  rates. https://doi.org/10.1137/19M1272408 (arXiv:1907.01897)
 
 ## Phase-space kinetic theory
 
@@ -200,6 +214,141 @@ project.
   method." *J. Comput. Appl. Math.* **277**, 87 (2015). Variance-based
   sensitivity of the results to the coherence length.
   https://doi.org/10.1016/j.cam.2014.09.008
+
+## The compensated split, and creation/annihilation read as an ontology
+
+Background for [`../docs/analysis/compensated_ontology.md`](../docs/analysis/compensated_ontology.md).
+Three claims have to be kept apart when reading this literature: (i) the
+*split* of the Wigner generator into a classical-force part and a signed
+residual; (ii) the reading of the signed residual as literal creation and
+annihilation of particles; and (iii) the further claim that the resulting
+particle ensemble is the ontology rather than a sampling scheme. (i) has been
+published at least three times as numerics and never as physics; (ii) and (iii)
+have been published once, by Sellier, but *without* (i) — his particles are
+field-less, so the whole classical force is delivered by pair creation.
+
+### The split, as numerics
+
+- Bordone, P.; Bertoni, A.; Brunetti, R.; Jacoboni, C. — "Infinite barriers
+  and classical force in the Wigner-function approach to quantum electron
+  transport." *Physica B* **314**, 123–127 (2002). The earliest separation
+  found of the classical force from the quantum corrections in a general
+  potential profile, with the observation that the integral term reduces to
+  the classical-force term for potentials up to quadratic — the transport
+  literature's version of Theorem I4.
+  https://doi.org/10.1016/S0921-4526(01)01355-2
+- Van de Put, M. L.; Sorée, B.; Magnus, W. — "Efficient solution of the
+  Wigner–Liouville equation using a spectral decomposition of the force
+  field." *J. Comput. Phys.* **350**, 314–325 (2017). The closest published
+  relative of the compensated split: the Wigner–Liouville equation
+  reformulated around the classical *force* rather than the potential, and
+  read explicitly as two processes — classical evolution under the averaged
+  driving field, plus a probability-preserving generation-and-annihilation
+  term whose non-locality in momentum has only a limited range. That limited
+  range is the reach of Definition (R), arrived at independently and treated
+  as a numerical convenience rather than as a regulator.
+  https://doi.org/10.1016/j.jcp.2017.08.059
+- Benam, M.; Nedjalkov, M.; Selberherr, S. — "A Wigner potential decomposition
+  in the signed-particle Monte Carlo approach." *Lect. Notes Comput. Sci.*
+  **11189**, 263–272 (2019). Splits the Wigner potential so that the
+  signed particles experience a force through the classical component;
+  motivated by numerical complexity and by self-consistent Wigner–Poisson
+  coupling. https://doi.org/10.1007/978-3-030-10692-8_29
+
+### The split plus the branching reading, as foundations
+
+- Limkumnerd, S.; Phanthaphanitkul, P. — "Weighted phase-space paths for exact
+  Wigner dynamics." arXiv:2605.05764 (2026). Takes classical Hamiltonian flow
+  as the carrier, splits the Wigner generator into the classical Liouville
+  part and the Moyal residual, writes the residual as a signed kernel and
+  represents it by signed weights or branching events. Independently states
+  the harmonic-oscillator null case — nonclassicality carried by the initial
+  Wigner function rather than by any correction to the flow — and verifies it
+  numerically against a quartic benchmark. The residual is taken in
+  differential (Moyal-series) form, so the total-variation obstruction of
+  Theorem E7 is not confronted and no reach appears; the positive/negative
+  split is Hahn–Jordan, whose minimal-total-variation property is a useful
+  reference scale for `Gamma`. The aim is a forward–reverse signed-path
+  relation, not an ontology. https://arxiv.org/abs/2605.05764
+
+### Creation and annihilation as a literal particle ontology
+
+- Sellier, J. M. — "A signed particle formulation of non-relativistic quantum
+  mechanics." *J. Comput. Phys.* **297**, 254 (2015). Three postulates:
+  signed Newtonian particles; a **field-less** classical point-particle that
+  during `dt` creates a pair at `p ± p'` with probability `gamma(x) dt`,
+  `gamma` being the momentum integral of the positive part of the Wigner
+  kernel; and same-cell annihilation. The published statement of the thesis
+  that quantum mechanics adds only creation and annihilation. Two points of
+  difference from `compensated_ontology.md`: the particles feel no force, so
+  `gamma` is large for a harmonic oscillator where the compensated rate is
+  exactly zero (§3 there); and admissibility is handled by asserting that the
+  uncertainty principle is "embedded in terms of unknown initial conditions"
+  rather than as a constraint on the ensemble.
+  https://doi.org/10.1016/j.jcp.2015.05.036 (arXiv:1509.06708)
+- Sellier, J. M.; Kapanova, K. G. — "A study of the hydrogen atom by means of
+  the signed particle formulation." arXiv:1704.06113 (2017).
+  https://arxiv.org/abs/1704.06113
+- Attar, M.; Selim, B.; Sellier, J. M. — "Efficient approximation of the Wigner
+  kernel in phase-space quantum mechanics." arXiv:2606.28269 (2026). The
+  signed-particle programme is current. https://arxiv.org/abs/2606.28269
+
+### Deterministic motion punctuated by stochastic creation/annihilation
+
+The same architecture as postulates (S) and (D), in configuration space and
+with positive rates only.
+
+- Bell, J. S. — "Beables for quantum field theory." *Phys. Rep.* **137**,
+  49–54 (1986).
+- Dürr, D.; Goldstein, S.; Tumulka, R.; Zanghì, N. — "Trajectories and
+  particle creation and annihilation in quantum field theory." *J. Phys. A*
+  **36**, 4143–4149 (2003). https://arxiv.org/abs/quant-ph/0208072
+- Dürr, D.; Goldstein, S.; Tumulka, R.; Zanghì, N. — "Bell-type quantum field
+  theories." *J. Phys. A* **38**, R1–R43 (2005). The **minimal jump rate**
+  construction — the closest existing analogue of `Gamma`, and of the question
+  of what fixes it. https://arxiv.org/abs/quant-ph/0407116
+- Georgii, H.-O.; Tumulka, R. — "Some jump processes in quantum field theory."
+  In *Interacting Stochastic Systems*, Springer (2004), 55–73. Non-explosion
+  of the jump process; the counterpart of the supply condition K9.
+  https://arxiv.org/abs/math/0312326
+- Colin, S.; Struyve, W. — "A Dirac sea pilot-wave model for quantum field
+  theory." *J. Phys. A* **40**, 7309–7341 (2007). Creation read as promotion
+  out of a filled sea, so particle number is conserved and identity persists.
+  The nearest published cousin of Proposition K8's ionisation reading.
+  https://doi.org/10.1088/1751-8113/40/26/015
+- Deckert, D.-A.; Esfeld, M.; Oldofredi, A. — "A persistent particle ontology
+  for QFT in terms of the Dirac sea." *Brit. J. Phil. Sci.* **70**, 747–770
+  (2019). The philosophical case for the same move.
+  https://doi.org/10.1093/bjps/axx018
+
+### Admissibility: which signed ensembles are quantum states
+
+Postulate (A) of `compensated_ontology.md` is a constraint on ensembles, not
+on their motion, and it has its own literature — cited but not used by the
+signed-particle formulation.
+
+- Dias, N. C.; Prata, J. N. — "Admissible states in quantum phase space."
+  *Ann. Phys.* **313**, 110–146 (2004). The characterisation of the Wigner
+  functions of density operators.
+  https://doi.org/10.1016/j.aop.2004.04.003
+- Narcowich, F. J. — "Conditions for the convolution of two Wigner
+  distributions to be itself a Wigner distribution." *J. Math. Phys.* **29**,
+  2036 (1988). The `hbar`-positive-definiteness (Kastler–Loupias–Miracle-Sole)
+  form of the constraint. https://doi.org/10.1063/1.527860
+- Hudson, R. L. — see the entry under interworld couplings below.
+
+### Negative probability as a foundational stance
+
+- Feynman, R. P. — "Negative probability." In *Quantum Implications: Essays in
+  Honour of David Bohm*, ed. Hiley & Peat, Routledge (1987), 235–248.
+- Mückenheim, W. — "A review of extended probabilities." *Phys. Rep.* **133**,
+  337–401 (1986). https://doi.org/10.1016/0370-1573(86)90110-9
+- Scully, M. O.; Walther, H.; Schleich, W. — "Feynman's approach to negative
+  probability in quantum mechanics." *Phys. Rev. A* **49**, 1562 (1994).
+  https://doi.org/10.1103/PhysRevA.49.1562
+- Cini, M. — "Quantum mechanics without waves: a generalization of classical
+  statistical mechanics." *Ann. Phys.* **273**, 99–113 (1999).
+  https://arxiv.org/abs/quant-ph/9807001
 
 ## Forward–backward / objective QFT
 

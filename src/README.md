@@ -887,6 +887,50 @@ see that directory's README for the ladder itself.
   converging on f = 1/2 from both sides.  Right: the body count for the same
   four runs, which does not converge — only f is preparation-independent.
 
+- `demo_compensated_ontology.py` — verification companion to
+  `docs/analysis/compensated_ontology.md`, which asks whether the compensated
+  picture can be stated as an ontology for quantum mechanics rather than for
+  tunnelling.  Part A is the discriminating measurement between the
+  compensated reading and the published field-less signed-particle
+  formulation: for quadratic `V` the compensated rate is 1.2e-15 at every
+  reach — `D_res = V(x+y) - V(x-y) - 2 y V'(x)` vanishes identically — while
+  the field-less rate is O(100), so the two readings disagree about whether a
+  harmonic oscillator emits pairs at all.  Part B is the null test: the
+  Wigner function of `(|0> + |2>)/sqrt(2)` has negativity volume 0.436 and is
+  carried exactly by the classical rotation, to 1.6e-6 at `t = pi` where the
+  rotation is grid-exact.  Part C sweeps the quartic coupling and shows the
+  dynamical residual strength `chi_Q` falling continuously to zero while the
+  state's negativity does not move — the two occurrences of `hbar` are
+  independent.  Part D exhibits four isotropic Gaussians that are all exactly
+  stationary under the harmonic flow and differ by a factor eight in
+  phase-space area, so admissibility is not derivable from the dynamics; the
+  violated inequality is exactly the Wigner bound `|W| <= 2/h`.  Part E is the
+  note's new result: the least eigenvalue of the `rho` reconstructed from `W`
+  stays at the 1e-8 grid floor under exact evolution but reaches -0.10 under
+  classical carrier transport alone, so the residual channel is what keeps the
+  ensemble inside the admissible set.  Part F separates census from generator:
+  over a sixteenfold range of reach `Gamma_max` grows from 5.6 to 143 while
+  the reach error of `L_res` acting on a Gaussian test state falls to 1e-14.
+
+  Sample output figures (committed on the `output` branch):
+
+  ![Two occurrences of hbar](https://raw.githubusercontent.com/billpage/wpmw/output/figures/compensated_ontology_two_doors.png)
+
+  The dynamical residual strength against the quartic coupling, with the
+  state's negativity volume as a horizontal line: the dynamical door closes
+  continuously and shuts at `lambda = 0`, the kinematic one does not move.
+
+  ![Census against generator](https://raw.githubusercontent.com/billpage/wpmw/output/figures/compensated_ontology_regulator.png)
+
+  `Gamma_max` growing roughly linearly with the coherence reach, alongside the
+  relative reach error of the same kernel's action on a Gaussian test state,
+  which reaches the numerical floor by `y_max = 2 pi a`.
+
+  ![Admissibility](https://raw.githubusercontent.com/billpage/wpmw/output/figures/compensated_ontology_admissibility.png)
+
+  The magnitude of the least eigenvalue of the reconstructed density operator
+  under (S)+(D) and under (S) alone, for the quartic at `lambda = 0.05`.
+
 ### Figure generators and regression tests
 
 - `gen_microdynamics_4d_figures.py` — generates the five schematic

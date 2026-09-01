@@ -321,6 +321,41 @@ retracts.
     therefore needs no tuning — and, for the same reason, says nothing about
     the one dimensionless constant the recombination rate still carries.
 
+17. **[`compensated_ontology.md`](compensated_ontology.md)** — The ladder's
+    picture stated as a proposed ontology, and bounded. Four postulates: (E)
+    the world is a signed counting measure on phase space; (A) only ensembles
+    whose expectation is a Wigner function of some `rho >= 0` occur; (S) every
+    world-particle streams on a Newtonian arc under the *full* classical
+    force; (D) pairs are ionised from and recombined into the sea at rate
+    `Gamma = sum_q |K_res|`, absorptive fraction `f = 1/2`. Theorem G1 is only
+    an assembly of C1–C3, K4, K8 and S7, and the note is really about what
+    G1 leaves out. **Theorem G2**: for quadratic `V` the demographic channel
+    is *empty*, measured at 1.2e-15 at every reach — while the published
+    field-less signed-particle formulation has a rate of O(100) for the same
+    system, which is the sharpest available argument that the compensated
+    split is ontology and not numerics. So creation and annihilation cannot be
+    the whole of the quantum, and **Theorem G3** locates the rest: the
+    residual generator and the admissibility constraint are independent
+    functions of `hbar`, and a quartic sweep closes the first continuously
+    while the second does not move. Proposition G3.1 exhibits four Gaussians
+    the dynamics cannot tell apart, differing by a factor eight in phase-space
+    area; the inequality that separates them is exactly the Wigner bound
+    `|W| <= 2/h`. **Theorem G4** was not anticipated and is the note's own
+    contribution: admissibility is preserved by (S)+(D) and *not* by (S)
+    alone, the least eigenvalue of the reconstructed `rho` going from the 1e-8
+    grid floor to -0.10 under classical carrier transport — so the residual
+    channel is doing kinematic work, and the sea is not optional. **Theorem
+    G5** records the outstanding defect: `Gamma` grows roughly linearly with
+    the coherence reach while the generator converges to 1e-14, so how many
+    worlds exist is a property of the regulator. Corrects the framing that
+    prompted it — the compensated split eliminates quantum *force*, not
+    quantum *kinematics* — and leaves the split gauge-invariance theorem
+    (G-SP1) as the load-bearing open item. §8 delimits the scope: `N` bodies
+    verbatim, spin not at all, measurement untouched, and states narrowly what
+    survives a survey of the signed-particle, Bell-type-QFT, Dirac-sea and
+    negative-probability literatures now recorded in
+    [`../../references/bibliography.md`](../../references/bibliography.md).
+
 ## Companion code
 
 Every note lists its verifying script in §0 and its numerical results in a
@@ -336,7 +371,8 @@ late section. In ladder order: `src/demo_four_rule_equivalence.py`,
 `src/demo_species_sectors_and_annihilation.py`,
 `src/demo_compensated_liouville_splitting.py`,
 `src/demo_compensated_liouville_algorithm.py`,
-`src/demo_eckart_barrier_compensated.py`. All
+`src/demo_eckart_barrier_compensated.py`,
+`src/demo_compensated_ontology.py`. All
 non-trivial claims in these notes are verified numerically before inclusion.
 
 ## Related
