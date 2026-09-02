@@ -829,6 +829,35 @@ see that directory's README for the ladder itself.
   two pathwise growth bounds on a log scale.  The gap between them is the L1
   mass that garbage collection has to remove per unit time.
 
+- `demo_emission_and_absorption.py` — verification companion to
+  `docs/supplement/emission_and_absorption.md`, the tutorial treatment of the
+  two realisations of a residual-channel event.  Builds the rate field the way
+  the specification requires — raised-cosine horizon applied to both symbols
+  *before* the §3.2 discrete first-moment compensation, since compensating and
+  then windowing puts the horizon's own first moment back into a channel
+  specified to carry none, which leaves 2.8e-2 of spurious force instead of
+  1.9e-15.  Part A checks that `K_res` is real, odd, and moves neither worlds
+  nor momentum, so `(q, -q)` is one event with two legs rather than two
+  events.  Part B settles the same state both ways and finds the observable
+  moved identically while `dN/dS = -2` exactly in each case.  Part C verifies
+  that the two species never move separately (1.3e-15), which is why
+  stationarity means `f = 1/2` and nothing else.  Part D is Theorems J1 and
+  J2: `P = S + N/2` is conserved by the event channel to 3.5e-16 globally at
+  absorptive fractions from 0.43 to 0.71, and violated 4e9 times more strongly
+  cell by cell.  It also runs every case with the `u± ≥ 0` clamp on and off,
+  isolating the clamp as the sole cause of the ledger residual (1.5e-7) and of
+  the species asymmetry (2.4e-4).  Part E re-clocks the relaxation of `f`
+  against cumulative events across four regimes — packet parked on either
+  emitting lobe, parked in a quiet region, and moving — whose wall-clock
+  durations differ nineteenfold, and finds one collapsed curve.  Part F
+  measures single-leg against joint partner availability (0.82 and 0.78 against
+  0.67) and reports that the joint figure sits *above* the product at
+  `rho = 10` and `20`, which withdraws support for the anti-correlated-leg
+  reading of the conjunction cost.  Part G prepares the same `W` at `rho = 1`
+  and `rho = 20` and measures the drift between the two observables: 2.00,
+  2.00 halving with dt when the clamp is off, stalling at 1.2e-2 when it is
+  on.
+
 - `demo_sea_population_equilibrium.py` — verification companion to
   `docs/analysis/sea_population_equilibrium.md`, which prices the
   positon/negaton unravelling that the compensated specification recommends
