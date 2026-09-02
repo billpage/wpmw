@@ -435,9 +435,20 @@ expensive one — the opposite of the usual intuition.
 
 ## 8. World-particle identity, and where tunnelling comes from
 
-### 8.1 A hop is not a jump
+### 8.1 A jump is not a hop
 
-It is tempting to read the residual channel as a world *jumping* in
+*Wording corrected, September 2026.* This section previously read "a hop is
+not a jump" and used the two words the other way round from the rest of the
+project. §4.0 of
+[`../algorithm/compensated_liouville_algorithm.md`](../algorithm/compensated_liouville_algorithm.md)
+now fixes them against their sources: a **jump** is the mediated transfer of
+[`../algorithm/phase_space_crystal_lattice_algorithm.md`](../algorithm/phase_space_crystal_lattice_algorithm.md)
+§3b, in which the mediator is unchanged; a **hop** is Right-Hop or Left-Hop of
+[`four_rule_microdynamics_equivalence.md`](four_rule_microdynamics_equivalence.md)
+§2, in which one body is carried from momentum cell $`n - q`$ to $`n + q`$.
+The argument below is unchanged and the labels are now the right way round.
+
+It is tempting to read the residual channel as a world *hopping* in
 momentum: a phase point at $`(r, p)`$ that discontinuously becomes
 $`(r, p + \xi_q)`$. That reading is not available. By consequence 3 of §2.2
 of [`compensated_liouville_splitting.md`](compensated_liouville_splitting.md),
@@ -491,8 +502,8 @@ worlds there are*, and with what signs.
 
 This is the sense in which the compensated split earns its name
 ontologically rather than numerically. The uncompensated kernel mixes the
-classical force into the jump measure, so that "hops" include the ordinary
-acceleration and no world has a Newtonian history. Under compensation the
+classical force into the jump measure, so that the transfers include the
+ordinary acceleration and no world has a Newtonian history. Under compensation the
 deterministic step is the whole of the force, and the residual is the whole
 of the quantum — and the residual acts only by creating and destroying, never
 by moving.
