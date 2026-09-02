@@ -7,20 +7,20 @@ guide to what's in each subdirectory here and where to start reading.
 
 ## The three directories
 
-- **[`algorithm/`](algorithm/README.md)** — The canonical specifications.
+- **[`algorithm/`](algorithm)** — The canonical specifications.
   Precise enough to re-implement in another language, and the only
   directory you need if you just want to run or reproduce what's in `src/`.
   Start with `phase_space_crystal_lattice_algorithm.md`; it alone reproduces
   every result in `src/`.
 
-- **[`analysis/`](analysis/README.md)** — The mathematical case for why the
+- **[`analysis/`](analysis)** — The mathematical case for why the
   algorithm is what it is. A **derivation ladder** of notes, each taking as
   input something its predecessor postulated and ending with the open items
   that motivate the next. Read in order starting from
   `phase_space_crystal_lattice_review.md` if you want to follow the
   reasoning rather than just the result.
 
-- **[`supplement/`](supplement/README.md)** — Background that supports, but
+- **[`supplement/`](supplement)** — Background that supports, but
   isn't part of, the algorithm specs: redrafted source memos from David
   Cyganski, the interaction-diagram drawings, targeted test cases (e.g. the
   inverted pair barrier), a close reading of Takabayasi (1954), and the
