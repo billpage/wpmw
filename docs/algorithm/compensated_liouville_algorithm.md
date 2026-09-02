@@ -14,7 +14,7 @@ Companion verification: `src/demo_compensated_liouville_algorithm.py`.
 **The one-sentence relation to the rest of `algorithm/`.** This is
 [`phase_space_crystal_lattice_algorithm.md`](phase_space_crystal_lattice_algorithm.md)
 with the rate field replaced and one step added: the mediated-jump rule of its
-§3b is used verbatim, the rate field $`\Gamma_q(x)`$ is replaced by a
+[§3b](phase_space_crystal_lattice_algorithm.md#3b-potential-driven-mediated-jumps) is used verbatim, the rate field $`\Gamma_q(x)`$ is replaced by a
 compensated field $`\Gamma^{\mathrm{res}}_q(x)`$ computed from $`V`$ without
 any Fourier decomposition of $`V`$, and a deterministic acceleration step is
 placed in front of it.
