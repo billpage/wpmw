@@ -31,17 +31,21 @@ new:
   free bodies — is conserved *exactly* by the event channel, at any absorptive
   fraction, but only **globally**. Cell by cell it is violated by nine orders
   of magnitude more. §5 works out what each half of that means.
-- **A diagnosis.** The one operation in the specified world form that breaks
-  the ledger identity, and that lets the ledger reach the observable, is the
-  $`u^\pm \ge 0`$ clamp that §5.1 of the specification places inside the
-  allocation loop. It is not repairing the allocation; it is repairing
-  spectral transport, in the wrong place. §9.2.
+Two open items are logged in §12 rather than argued in the body, because
+neither belongs in a tutorial: **J-SP1** withdraws support for one existing
+explanation of the conjunction cost, and **J-SP2** proposes a change to the
+allocation loop of the specification. J-SP2 in particular is a separate
+subject and is written as a proposal, not a finding about the ontology.
 
-It also **withdraws support** for one claim made elsewhere in the project: that
-the two legs of an absorptive event have strongly anti-correlated partner
-availability. §8 measures them as very nearly independent. That does not refute
-the claim — the diagnostic is not a correlation test — but it does not support
-it either, and it is logged as J-SP1.
+**A note on metaphor.** An earlier draft of this note leaned on bookkeeping
+language — settling a debt, paying in one currency or another. That language is
+ontologically wrong here. If the sea is real, the difference between the two
+realisations is not a difference in how something is *recorded*; different
+things happen to different real objects. The vocabulary below is accordingly
+demographic: three populations, births and deaths among them, and an
+equilibrium between two opposed processes. The word *ledger* is kept, because
+the specification uses it, but it means an inventory of real populations and
+not a choice of description.
 
 ---
 
@@ -170,7 +174,7 @@ for*.
 
 ---
 
-## 4. The two settlements
+## 4. The two realisations
 
 Here is the whole idea, and it takes three sentences.
 
@@ -178,32 +182,60 @@ $`E`$ is a difference. So "deposit $`+1`$ here" has two readings: **add a
 positon**, or **remove a negaton**. They are indistinguishable in the
 observable and opposite in every other book.
 
-Applying that to both legs at once gives the two realisations:
+Applying that to both legs at once gives the two realisations. The
+specification's own verbs are the right ones, and they are the verbs of
+ionisation chemistry rather than of accounting:
 
-**Emissive.** Add a positon at $`p + \xi_q`$ and a negaton at $`p - \xi_q`$.
-The two new bodies come from somewhere — a bound sea pair at the parent row
-$`p`$ is broken open, and its two constituents are the two new bodies. One
-bound pair is spent; two free bodies appear.
+**Emissive — a bound pair is *ionised*.** Add a positon at $`p + \xi_q`$ and a
+negaton at $`p - \xi_q`$. The two new bodies come from somewhere: a bound sea
+pair at the parent row $`p`$ comes apart, and its two constituents are the two
+new bodies. One bound pair is consumed; two free bodies enter circulation.
 
-**Absorptive.** Remove a negaton at $`p + \xi_q`$ and a positon at
-$`p - \xi_q`$. The two removed bodies do not vanish — they are bound together
-into a neutral pair at the parent row $`p`$. Two free bodies are spent; one
-bound pair appears.
+**Absorptive — two free bodies are *bound*.** Remove a negaton at
+$`p + \xi_q`$ and a positon at $`p - \xi_q`$. The two removed bodies do not
+vanish; they bind into a neutral pair at the parent row $`p`$. Two free bodies
+leave circulation; one bound pair is created.
 
-![The two settlements](https://raw.githubusercontent.com/billpage/wpmw/output/figures/emission_absorption_realisations.png)
+These are the two directions of a single exchange between the bound population
+and the free one — dissociation and recombination, as in an ionisation
+equilibrium. Both run forward in time. Neither is the other's time-reverse:
+time reversal would flip every momentum, and nothing here does. They are
+opposed in the sense that a forward and a reverse reaction are opposed, which
+is why §7 can be an equilibrium argument.
 
-The picture is the same picture with the arrows reversed. That is not a
-coincidence; it is the content of §5.
+![The two realisations](https://raw.githubusercontent.com/billpage/wpmw/output/figures/emission_absorption_realisations.png)
 
-The demo measures both settlements on the same state (part B):
+The picture is the same picture with the arrows reversed, because the exchange
+is the same exchange run the other way.
+
+That phase-space cartoon has one serious defect: it invites the reader to see
+the diagonal arrows as *paths*, along which something travels from the parent
+momentum row to the daughters. Nothing travels. The honest picture is in
+space-time, where all three populations are visible as worldlines and a
+momentum is a **slope**:
+
+![Space-time worldlines](https://raw.githubusercontent.com/billpage/wpmw/output/figures/emission_absorption_worldlines.png)
+
+Read the left panel. A bound pair moves classically with slope $`p`$. At the
+event its worldline **ends**, and two new worldlines **begin** at the same
+space-time point, with slopes $`p + \xi_q`$ and $`p - \xi_q`$. In the right
+panel two worldlines end and one begins. The faint lines are the ambient sea:
+real, present everywhere, at every momentum.
+
+Momentum conservation is now a geometric statement — the single line's slope is
+the mean of the pair's — and the thing that looked like a jump between momentum
+rows has become a fork. §9 makes that argument properly, since it is the
+objection most likely to stop a careful reader.
+
+The demo runs both realisations on the same state (part B):
 
 ```
-   settlement                events       f   |dE| moved        dN        dS
-   emissive settlement      0.00560   0.000    9.577e-06  +0.01121  -0.00560
-   absorptive settlement    0.00558   0.922    9.664e-06  -0.00947  +0.00473
+   process                      events       f   |dE| moved        dN        dS
+   emissive   (pair -> two)    0.00560   0.000    9.577e-06  +0.01121  -0.00560
+   absorptive (two -> pair)    0.00558   0.924    9.664e-06  -0.00947  +0.00473
 
-     emissive settlement : dN/dS = -2.000000
-     absorptive settlement: dN/dS = -2.000000
+     emissive   (pair -> two): dN/dS = -2.000000
+     absorptive (two -> pair): dN/dS = -2.000000
 ```
 
 Read the columns. The amount of $`E`$ moved agrees to under one per cent — the
@@ -212,8 +244,8 @@ it is $`O(\Delta t)`$ and converges away. The ledger columns do not agree at
 all: $`\Delta N`$ and $`\Delta S`$ have opposite signs. And the ratio
 $`\Delta N / \Delta S = -2`$ is exact in both cases.
 
-That $`-2`$ is the accounting statement of "one bound pair for two free
-bodies," and it is the hinge of everything that follows.
+That $`-2`$ is the stoichiometry of the exchange — one bound pair for two free
+bodies — and it is the hinge of everything that follows.
 
 **Vocabulary.** The specification calls this a *jump* — a mediated transfer, in
 which no body's momentum changes discontinuously. It reserves *hop* for the
@@ -222,11 +254,11 @@ excluded variant in which a body is physically moved between momentum rows.
 
 ---
 
-## 5. The three ledgers, and the one identity
+## 5. Three populations, and the one identity
 
-Three populations are now in play: the sea $`S`$, the bodies $`N`$, and the
-observable $`E`$. It is tempting to think of these as three independent things
-that must each be kept in balance. They are not.
+Three populations are now in play: the bound pairs $`S`$, the free bodies
+$`N`$, and the signed difference $`E`$. It is tempting to think of these as
+three independent stocks that must each be kept in balance. They are not.
 
 ### 5.1 Theorem J1: the pair count is conserved
 
@@ -243,10 +275,10 @@ P \;=\; S \;+\; N/2 .
 
 Then $`\Delta P = 1 - 1 = 0`$ for an emissive event and $`\Delta P = -1 + 1 = 0`$
 for an absorptive one. **The event channel cannot change $`P`$ at all**, no
-matter what mixture of settlements it uses.
+matter what mixture of the two it uses.
 
 Part D verifies this in a full streaming run with the bilinear recombination
-sink also active:
+sink also active (the `clamp` column is explained in §12):
 
 ```
       rho   clamp        f  rel |dP| per step   max |du+ - du-|
@@ -261,10 +293,11 @@ everywhere.
 
 This is worth pausing on because it simplifies the picture enormously. There is
 **one** conserved quantity here, the total pair count, counting a bound pair as
-one and two free bodies as one. Emission and absorption do not create or
-destroy; they only move pairs across the bound/free line. The absorptive
-fraction $`f`$ is not a rate constant in a two-population system. It is the
-**partition parameter** of a single population.
+one and two free bodies as one. Emission and absorption neither create nor
+destroy pairs; they only move them across the bound/free boundary. The
+absorptive fraction $`f`$ is not a rate constant in a two-population system. It
+is the **partition parameter** of a single population — what fraction of a
+fixed stock is currently in circulation rather than in the reservoir.
 
 That in turn makes the specification's ledger identity almost obvious rather
 than surprising: if a single number controls the partition, then of course one
@@ -393,8 +426,8 @@ $`f`$ near $`0.88`$. None is told where to go. All arrive.
 The measured attractor sits slightly *below* one half, and the shortfall
 narrows as the coherence reach grows. The reason is in the word "both."
 
-An absorptive settlement needs a partner at **both** daughter rows
-simultaneously, because §10 forbids settling the two legs differently. Part F
+An absorptive event needs a partner at **both** daughter rows simultaneously,
+because §10 forbids realising the two legs differently. Part F
 measures how often each leg alone could be satisfied, and how often both can be
 at once:
 
@@ -424,15 +457,16 @@ comes from.
 
 ---
 
-## 9. Two objections a careful reader will raise
+## 9. The objection a careful reader will raise
 
-### 9.1 "Doesn't ionisation teleport bodies between momentum rows?"
+> *If no world-particle ever changes its momentum discontinuously, how can
+> ionising a sea pair at row $`p`$ put its two constituents at rows
+> $`p \pm \xi_q`$? Surely that is exactly a discontinuous momentum change — and
+> for two bodies at once.*
 
-It looks like it does. The bound pair sits at row $`p`$; its two constituents
-end up at rows $`p \pm \xi_q`$. If those constituents were world-particles with
-momenta, their momenta just changed discontinuously — and the project's central
-ontological commitment is that **no world-particle ever changes its momentum
-discontinuously**.
+It certainly looks like one. The bound pair sits at row $`p`$; its two constituents
+end up at rows $`p \pm \xi_q`$. If those constituents were world-particles
+with momenta of their own, those momenta just changed discontinuously.
 
 The resolution is §2's careful sentence. A bound sea pair is *one* neutral
 object, not two world-particles. Its constituents have no worldlines while
@@ -444,66 +478,21 @@ Symmetrically, at an absorptive event two worldlines **end**, and a neutral
 object appears at the parent row. The bodies were not carried to $`p`$; they
 ceased to be bodies.
 
-The correct way to draw this is a **space-time worldline diagram**, in which
-the two lines fork out of a point, not a phase-space picture with horizontal
-segments connecting momentum rows — that picture draws exactly the teleport
-that does not happen.
+This is why the space-time figure of §4 is the one to trust and the phase-space
+cartoon is the one to be careful with. In space-time the two lines fork out of a
+point. The phase-space picture, read carelessly, draws horizontal segments
+connecting momentum rows — exactly the transport that does not happen.
 
 Momentum still balances: the pair at $`p`$ carries $`2p`$, and the daughters
-carry $`(p + \xi_q) + (p - \xi_q) = 2p`$.
+carry $`(p + \xi_q) + (p - \xi_q) = 2p`$. In the space-time picture that is
+just the statement that the parent's slope is the mean of the daughters'.
 
-### 9.2 The clamp
-
-The specification requires $`u^{\pm} \ge 0`$ pointwise and clamps after every
-allocation. That clamp turns out to be the one thing in the specified world
-form that breaks everything this note has claimed. Part D, both settings:
-
-```
-      rho   clamp        f  rel |dP| per step   max |du+ - du-|
-      1.0   False   0.4277          3.487e-16         5.477e-16
-      1.0    True   0.4287          1.501e-07         2.384e-04
-     20.0   False   0.7148          3.475e-16         3.553e-15
-     20.0    True   0.7158          2.437e-07         4.790e-04
-```
-
-With the clamp on, the exact identity J1 degrades to $`10^{-7}`$, and the two
-species stop moving together at $`10^{-4}`$.
-
-It gets worse. Part G asks whether the ledger can reach the observable, by
-preparing the same $`W`$ at $`\rho = 1`$ and $`\rho = 20`$ — twenty times as
-many bodies, identical $`E`$ — and measuring how far apart the two observables
-have drifted at $`t = 2`$:
-
-```
-         dt     clamp off   ratio      clamp on   ratio
-      0.020    2.7989e-03            1.0688e-02
-      0.010    1.3980e-03    2.00    1.1951e-02    0.89
-      0.005    6.9850e-04    2.00    1.2567e-02    0.95
-```
-
-Clamp off, the difference halves cleanly with $`\Delta t`$: it is tau-leap
-allocation error amplified by $`N/\|E\|`$, and it converges to zero. In the
-continuum the observable does not know how the ledger settled its events, which
-is what the theory requires. Clamp on, it stalls near $`10^{-2}`$ and does not
-converge at all.
-
-**The diagnosis.** The clamp is not repairing an over-drawn allocation. The
-caps are read live and clipped at zero, so the allocation never over-draws. It
-is repairing the small negative populations that **spectral transport** leaves
-behind through ringing — a transport artefact, being fixed up inside the event
-loop, where it corrupts event arithmetic that is otherwise exact.
-
-The specification already mandates a separate repair after transport (restoring
-$`N \ge |E|`$), which is the right place for this. The proposal this note
-offers, for the maintainer's judgement rather than as a change: clip the
-partner **caps** at zero inside the allocation, which is local, physically
-obvious — a negative supply is no supply — and preserves the ledger arithmetic
-exactly; and let transport ringing be handled at the transport step.
-
-This also gives the specification's own consistency test a second failure mode
-it does not currently name. That test reads a ledger residual above the
-floor as evidence that an implementation has admitted a hop. It can equally
-mean the clamp is firing. Logged as **J-SP2**.
+The same reading disposes of a related worry. One might ask what *holds* a sea
+pair together, given that the project admits no new forces. Nothing does, in
+the sense of a binding force. A bound pair is a single neutral member of a
+third population; it is not a composite held in place by an interaction. Its
+constituents are not two things that have been joined, which is why they have
+no separate worldlines to be joined along.
 
 ---
 
@@ -517,10 +506,12 @@ bodies: one has appeared at one daughter row and one has disappeared at the
 other, and the difference has to have been carried between two momentum rows
 separated by $`2\xi_q`$. Nothing can carry it. A world-particle would have had
 to move — a **hop**, not a jump — and individual body-momentum conservation
-fails. The settlement is therefore a property of the **event**, not of a leg.
+fails. The realisation is therefore a property of the **event**, not of a leg.
 
-The accounting way to say it: an event is a single transaction with two
-entries, and you cannot pay one entry in cash and the other on credit.
+In space-time the reason is immediate: a mixed realisation would have one
+worldline beginning at one daughter row and another ending at the other, with
+nothing connecting them, and the momentum books would not close. A pair is
+either coming apart or coming together. It cannot do half of each.
 
 **Relocating a body instead of pairing.** The third channel, in which a body is
 simply moved from one row to another, is genuinely available and is analysed
@@ -539,12 +530,13 @@ All figures and tables above are produced by
 | part | what it establishes |
 |---|---|
 | A | $`K_{\mathrm{res}}`$ real, odd, moving neither worlds nor momentum; $`(q, -q)`$ is one event |
-| B | the two settlements agree in $`E`$ and differ in the ledger, with $`\Delta N/\Delta S = -2`$ exactly |
+| — | four figures, including the space-time worldlines of §4 |
+| B | the two realisations agree in $`E`$ and differ in the populations, with $`\Delta N/\Delta S = -2`$ exactly |
 | C | both species move together; $`\Delta N = 2(1-2f)n`$ to $`1.5 \times 10^{-14}`$ |
 | D | J1 exact to $`3.5\times10^{-16}`$ globally; J2, local violation $`4\times10^{9}`$ larger |
 | E | the relaxation of $`f`$ collapses on the event clock across four rate regimes |
-| F | the conjunction cost; and the withdrawal of the anti-correlation claim |
-| G | the observable's independence from the ledger is $`O(\Delta t)`$ — clamp permitting |
+| F | the conjunction cost, and the withdrawal of the anti-correlation claim (J-SP1) |
+| G | the observable's independence from the populations is $`O(\Delta t)`$; see J-SP2 |
 
 Run as:
 
@@ -556,16 +548,76 @@ WPMW_OUTPUT=... PYTHONPATH=src python3 src/demo_emission_and_absorption.py
 
 ## 12. Open items
 
-- **J-SP1.** The conjunction cost is measured; its attribution to
-  anti-correlated leg availability is not. A proper correlation test on the two
-  caps, at fixed demand, would settle it.
-- **J-SP2.** The $`u^{\pm} \ge 0`$ clamp inside the allocation loop breaks J1
-  at $`10^{-7}`$ and puts a $`10^{-2}`$ floor under the ledger's independence
-  from the observable. Proposed: clip the caps instead, and repair transport
-  ringing at the transport step.
-- The local sea level is a live two-field dynamical variable (§5.2). What it
-  does — whether it supports oscillation or travelling structure — is untouched
-  here.
+### J-SP1 — the conjunction cost is measured, its explanation is not
+
+§8 establishes the cost. The project has elsewhere attributed it to strong
+*anti-correlation* between the two legs' partner availability, and these
+numbers give that no support: the joint figure sits slightly below the product
+of the two single-leg figures at $`\rho = 3`$ and slightly **above** it at
+$`\rho = 10`$ and $`20`$. A mean of a minimum against a product of means is not
+a correlation test, so nothing is refuted — but nothing is established either.
+A proper test would correlate the two caps directly at fixed demand.
+
+### J-SP2 — a proposed change to the allocation loop
+
+**This is a separate subject from the tutorial and is recorded here only so it
+is not lost.** It is a proposal for the maintainer's judgement, not a finding
+about the ontology.
+
+§5.1 of the specification requires $`u^{\pm} \ge 0`$ pointwise and clamps after
+every allocation. That clamp is the only operation in the specified world form
+that can break Theorem J1. Part D of the demo runs every case both ways:
+
+```
+      rho   clamp        f  rel |dP| per step   max |du+ - du-|
+      1.0   False   0.4277          3.487e-16         5.477e-16
+      1.0    True   0.4287          1.501e-07         2.384e-04
+     20.0   False   0.7148          3.475e-16         3.553e-15
+     20.0    True   0.7158          2.437e-07         4.790e-04
+```
+
+With the clamp on, J1 degrades from machine precision to $`10^{-7}`$ and the
+two species stop moving together at $`10^{-4}`$.
+
+Part G is the sharper measurement. It prepares the same $`W`$ at $`\rho = 1`$
+and $`\rho = 20`$ — twenty times as many bodies, identical $`E`$ — and asks how
+far apart the two observables have drifted at $`t = 2`$:
+
+```
+         dt     clamp off   ratio      clamp on   ratio
+      0.020    2.7989e-03            1.0688e-02
+      0.010    1.3980e-03    2.00    1.1951e-02    0.89
+      0.005    6.9850e-04    2.00    1.2567e-02    0.95
+```
+
+Clamp off, the difference halves cleanly with $`\Delta t`$ — it is tau-leap
+allocation error amplified by $`N/\|E\|`$, and it converges to zero, which is
+what the theory requires. Clamp on, it stalls near $`10^{-2}`$ and does not
+converge at all.
+
+**Diagnosis.** The clamp is not repairing an over-drawn allocation. The partner
+caps are read live and clipped at zero, so the allocation never over-draws. It
+is repairing the small negative populations that **spectral transport** leaves
+behind through ringing — a transport artefact, repaired inside the event loop,
+where it corrupts event arithmetic that is otherwise exact.
+
+**Proposal, for judgement.** Clip the partner **caps** at zero inside the
+allocation — local, physically obvious, since a negative supply is no supply,
+and it leaves the population arithmetic exact — and let transport ringing be
+repaired at the transport substep, where the specification already mandates a
+separate repair restoring $`N \ge |E|`$.
+
+**A corollary worth flagging separately.** The specification's own consistency
+test reads a ledger residual above the floor as evidence that an implementation
+has admitted a hop. On this measurement it can equally mean the clamp is
+firing. That test may need a second named failure mode.
+
+### Untouched here
+
+The local sea level is a live dynamical variable in a genuinely two-field
+system (§5.2). What it does — whether it supports oscillation or travelling
+structure, and how the free and bound populations exchange locally rather than
+in total — is not addressed by this note.
 
 ---
 

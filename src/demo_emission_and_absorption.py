@@ -17,8 +17,9 @@ Parts
   A  What an event is.  K_res is real and odd, so (q, -q) is ONE event with
      two legs of opposite sign, and the event deposits +1 at one daughter
      momentum row and -1 at the other.
-  B  The two realisations.  Emissive and absorptive settlements of the same
-     event are identical in E and opposite in N and S.
+  B  The two realisations.  Ionising a bound pair and binding two free
+     bodies are the two directions of one exchange between the bound and
+     the free populations: identical in E, opposite in N and S.
   C  Both species move together.  Every event changes u+ and u- by the same
      amount, +1 each when emissive and -1 each when absorptive.  This is why
      stationarity of the populations means f = 1/2 and nothing else.
@@ -150,10 +151,10 @@ class Ledger:
         """One potential substep, tau-leaped over channel pairs (q, -q).
 
         Each pair is ONE event depositing +1 at one daughter momentum row
-        and -1 at the other.  The absorptive settlement needs a partner of
-        the opposite species at BOTH daughters; when supply fails the event
-        falls back to the emissive settlement, which splits a bound sea pair
-        at the parent row.  Caps are read live, per the allocation rule.
+        and -1 at the other.  The absorptive process needs a partner of the
+        opposite species at BOTH daughters; when supply fails the event
+        proceeds emissively instead, breaking a bound sea pair at the parent
+        row.  Caps are read live, per the allocation rule.
         """
         n_abs = n_emi = 0.0
         for q in range(1, self.n_p // 2):
@@ -272,8 +273,8 @@ def part_b(run):
     banner("B. The two realisations: same E, opposite ledger")
     e0 = packet(run)
     rows = []
-    for tag, absorb in (("emissive settlement ", False),
-                        ("absorptive settlement", True)):
+    for tag, absorb in (("emissive   (pair -> two)", False),
+                        ("absorptive (two -> pair)", True)):
         up, um, sea = run.prepare(e0, 6.0)
         e_pre = up - um
         n_pre, s_pre = float((up + um).sum()), float(sea.sum())
@@ -283,13 +284,13 @@ def part_b(run):
                      float(np.linalg.norm((up - um) - e_pre)),
                      float((up + um).sum()) - n_pre,
                      float(sea.sum()) - s_pre))
-    print(f"   {'settlement':<22}{'events':>10}{'f':>8}"
+    print(f"   {'process':<25}{'events':>10}{'f':>8}"
           f"{'|dE| moved':>13}{'dN':>10}{'dS':>10}")
     for tag, nev, f, de, dn, ds in rows:
-        print(f"   {tag:<22}{nev:>10.5f}{f:>8.3f}{de:>13.3e}"
+        print(f"   {tag:<25}{nev:>10.5f}{f:>8.3f}{de:>13.3e}"
               f"{dn:>+10.5f}{ds:>+10.5f}")
     print()
-    print("   The two settlements move E by the same amount to within the")
+    print("   The two directions move E by the same amount to within the")
     print("   sequential-allocation difference of the tau-leap; Part G shows")
     print("   that residue is O(dt).  What they do NOT share is the ledger:")
     print("   dN and dS have opposite signs, and the ratio dN/dS is exactly")
@@ -370,11 +371,10 @@ def part_d(run):
     print()
     print("   Clamp off, the identity is exact: an event moves N by 2 and S")
     print("   by 1 in opposite senses, so P cannot move at all.  Clamp on it")
-    print("   holds only to 1e-7.  The clamp is not repairing an over-drawn")
-    print("   allocation -- the caps are read live and clipped at zero, so")
-    print("   the allocation never over-draws.  It is repairing the negative")
-    print("   ringing left by SPECTRAL TRANSPORT, inside the event loop,")
-    print("   where it corrupts the event arithmetic.  See section 9.")
+    print("   holds only to 1e-7, and the two species stop moving together.")
+    print("   The clamp is the only operation here that can break J1; the")
+    print("   note records the diagnosis and a proposed change under open")
+    print("   item J-SP2 rather than in the tutorial body.")
 
     print()
     print("   J2, local.  The same quantity, cell by cell, one substep.")
@@ -524,8 +524,8 @@ def part_g(run):
     print("   converges to zero.  In the continuum the observable does not")
     print("   know how the ledger settled its events -- which is the whole")
     print("   force of Theorem S2.")
-    print("   Clamp on, it stalls near 1e-2.  The clamp is the one operation")
-    print("   in the specified world form that lets the ledger reach E.")
+    print("   Clamp on, it stalls near 1e-2 and does not converge.  See")
+    print("   open item J-SP2.")
     return rows
 
 
@@ -571,9 +571,88 @@ def fig_realisations(run):
         a.set_ylim(-1.7, 1.7)
         for sp in ("top", "right", "bottom"):
             a.spines[sp].set_visible(False)
-    fig.suptitle("One event, two settlements: identical in $E$, "
-                 "opposite in the ledger", y=1.04)
+    fig.suptitle("One exchange, two directions: identical in $E$, "
+                 "opposite in the populations", y=1.04)
     save_fig(fig, "emission_absorption_realisations.png")
+
+
+def fig_worldlines():
+    """Space-time worldlines for all three species, both directions.
+
+    The phase-space cartoon is easy to misread as a body being carried
+    between momentum rows.  In space-time there is no carrying: two
+    worldlines begin at a point, or two end at one.  A momentum is a SLOPE
+    here, so momentum conservation is the geometric statement that the
+    single line's slope is the mean of the pair's.
+    """
+    fig, ax = plt.subplots(1, 2, figsize=(11, 4.6))
+    t_ev, sl_p, sl_m, sl_0 = 0.5, 1.8, 0.6, 1.2
+
+    for k, emissive in enumerate((True, False)):
+        a = ax[k]
+        # the ambient sea: real, everywhere, at every momentum
+        for x0, sl in ((-0.95, 0.35), (0.15, 2.1), (0.62, 0.9),
+                       (-0.35, -0.7), (0.95, 1.5)):
+            a.plot([x0, x0 + sl], [0, 1], color="0.75", lw=1.1,
+                   alpha=.55, zorder=1)
+        if emissive:
+            a.plot([-sl_0 * t_ev, 0], [0, t_ev], color="0.45", lw=2.6,
+                   zorder=3)
+            a.plot([0, sl_p * (1 - t_ev)], [t_ev, 1], color="C0", lw=2.6,
+                   zorder=3)
+            a.plot([0, sl_m * (1 - t_ev)], [t_ev, 1], color="C4", lw=2.6,
+                   zorder=3)
+            a.annotate("two worldlines\nbegin here",
+                       xy=(0, t_ev), xytext=(-0.92, 0.72), fontsize=9,
+                       arrowprops=dict(arrowstyle="->", color="0.35",
+                                       lw=1))
+            a.text(sl_p * (1 - t_ev) + .04, 1.0, "positon\n$p + \\xi_q$",
+                   color="C0", fontsize=9, va="top")
+            a.text(sl_m * (1 - t_ev) + .04, 1.0, "negaton\n$p - \\xi_q$",
+                   color="C4", fontsize=9, va="top")
+            a.text(-sl_0 * t_ev - .04, 0.02, "bound pair\n$p$",
+                   color="0.35", fontsize=9, ha="right", va="bottom")
+            a.set_title("emissive: a bound pair is ionised", fontsize=11)
+        else:
+            a.plot([-sl_p * t_ev, 0], [0, t_ev], color="C4", lw=2.6,
+                   zorder=3)
+            a.plot([-sl_m * t_ev, 0], [0, t_ev], color="C0", lw=2.6,
+                   zorder=3)
+            a.plot([0, sl_0 * (1 - t_ev)], [t_ev, 1], color="0.45", lw=2.6,
+                   zorder=3)
+            a.annotate("two worldlines\nend here",
+                       xy=(0, t_ev), xytext=(-1.05, 0.76), fontsize=9,
+                       arrowprops=dict(arrowstyle="->", color="0.35",
+                                       lw=1))
+            a.text(-sl_p * t_ev + sl_p * .06 + .04, 0.05,
+                   "negaton\n$p + \\xi_q$",
+                   color="C4", fontsize=9, ha="left", va="bottom")
+            a.text(-sl_m * t_ev + sl_m * .06 + .04, 0.05,
+                   "positon\n$p - \\xi_q$",
+                   color="C0", fontsize=9, ha="left", va="bottom")
+            a.text(sl_0 * (1 - t_ev) + .04, 1.0, "bound pair\n$p$",
+                   color="0.45", fontsize=9, va="top")
+            a.set_title("absorptive: two free bodies bind", fontsize=11)
+
+        a.plot([0], [t_ev], "o", ms=7, mfc="w", mec="0.2", mew=1.6,
+               zorder=4)
+        a.axhline(t_ev, color="0.9", lw=.8, zorder=0)
+        a.set_xlim(-1.15, 1.35)
+        a.set_ylim(-0.01, 1.1)
+        a.set_xlabel("position $x$")
+        a.set_ylabel("time $t$")
+        a.set_xticks([])
+        a.set_yticks([])
+        for sp in ("top", "right"):
+            a.spines[sp].set_visible(False)
+
+    fig.suptitle("The same two events in space-time: momentum is a slope, "
+                 "so nothing is carried anywhere", y=1.0)
+    fig.text(0.5, -0.04, "The single line's slope is the mean of the "
+                         "pair's, which is momentum conservation.  Faint "
+                         "lines are the ambient sea.",
+             ha="center", fontsize=9, color="0.35")
+    save_fig(fig, "emission_absorption_worldlines.png")
 
 
 def fig_thermostat(traces, frows):
@@ -642,9 +721,11 @@ def main():
     frows = part_f(run)
     grows = part_g(run)
     fig_realisations(run)
+    fig_worldlines()
     fig_thermostat(traces, frows)
     fig_ledger(glob, loc, tot, grows)
     print("\nFigures: emission_absorption_realisations.png,")
+    print("         emission_absorption_worldlines.png,")
     print("         emission_absorption_thermostat.png,")
     print("         emission_absorption_ledger.png")
 

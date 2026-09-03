@@ -856,7 +856,8 @@ see that directory's README for the ladder itself.
   reading of the conjunction cost.  Part G prepares the same `W` at `rho = 1`
   and `rho = 20` and measures the drift between the two observables: 2.00,
   2.00 halving with dt when the clamp is off, stalling at 1.2e-2 when it is
-  on.
+  on.  Four figures, including space-time worldlines for all three species in
+  both directions, where the parent's slope is the mean of the daughters'.
 
 - `demo_sea_population_equilibrium.py` — verification companion to
   `docs/analysis/sea_population_equilibrium.md`, which prices the
