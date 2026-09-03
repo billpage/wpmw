@@ -625,6 +625,10 @@ in total — is not addressed by this note.
 
 - [`compensated_liouville_algorithm.md`](../algorithm/compensated_liouville_algorithm.md)
   §5 — the normative specification this note unpacks.
+- [`compensated_liouville_splitting.md`](../analysis/compensated_liouville_splitting.md)
+  — where the residual channel comes from: the exact removal of the classical
+  force, and why something is left over afterwards. The right note to read
+  first if §3 above went too fast.
 - [`sea_population_equilibrium.md`](../analysis/sea_population_equilibrium.md)
   — the derivation, the failure of emissive-only unravelling, and the attractor
   result.

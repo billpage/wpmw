@@ -17,7 +17,12 @@ specification.
 | [`../analysis/compensated_ontology.md`](../analysis/compensated_ontology.md) | 17 | G1–G5 | the four postulates this algorithm is a realisation of |
 
 Companion verification: `src/demo_compensated_liouville_algorithm.py`, and for
-§5 `src/demo_sea_population_equilibrium.py`.
+§5 `src/demo_sea_population_equilibrium.py` and
+`src/demo_emission_and_absorption.py`.
+
+A tutorial introduction to §5, self-contained for a reader without the
+background assumed here, is
+[`../supplement/emission_and_absorption.md`](../supplement/emission_and_absorption.md).
 
 **The one-sentence relation to the rest of `algorithm/`.** This is
 [`phase_space_crystal_lattice_algorithm.md`](phase_space_crystal_lattice_algorithm.md)
@@ -747,6 +752,24 @@ is why the sea has to be indexed by momentum row and not merely by cell.
 
 ### 5.3 Two realisations, and two that are excluded
 
+> **Arriving here from a link?** This section is normative and terse, and it
+> assumes the rest of the document. Three places to get the background:
+>
+> - [`../supplement/emission_and_absorption.md`](../supplement/emission_and_absorption.md)
+>   is a tutorial treatment of exactly this table, written to stand alone. It
+>   builds the signed ensemble, the sea, and the event from scratch, draws both
+>   realisations in phase space *and* as space-time worldlines for all three
+>   species, and gives the demographic reading of why the absorptive fraction
+>   finds $`1/2`$ without being told to.
+> - [`../analysis/compensated_liouville_splitting.md`](../analysis/compensated_liouville_splitting.md)
+>   (theorems C0–C7) derives the split that produces this residual channel in
+>   the first place — why there is anything left over once the classical force
+>   has been removed exactly.
+> - [`../analysis/eckart_barrier_compensated.md`](../analysis/eckart_barrier_compensated.md)
+>   §8 shows what the same two realisations look like as a physical process:
+>   tunnelling through a barrier, read as two large opposed flows of pairs
+>   across the classical separatrix.
+
 ```
    momentum row                     deposit   emissive      absorptive
    ------------------------------   -------   -----------   -----------
@@ -1469,5 +1492,6 @@ translation.
 - [`phase_space_crystal_lattice_algorithm.md`](phase_space_crystal_lattice_algorithm.md) — §3b/§3c, the jump rule reused verbatim in §4.2.
 - [`../analysis/open_position_space.md`](../analysis/open_position_space.md) — Definitions (H) and (R), Theorem O2 (the first moment is the force), Theorem O5 (the coset invariant).
 - [`../supplement/takabayasi_1954_stochastic_picture.md`](../supplement/takabayasi_1954_stochastic_picture.md) — Proposition T3, on why the signed kernel admits no one-body Markov unraveling.
+- [`../supplement/emission_and_absorption.md`](../supplement/emission_and_absorption.md) — tutorial treatment of §5.3 and §5.4; Theorem J1 (the pair count $`P = S + N/2`$ is conserved by the event channel at any absorptive fraction) and Theorem J2 (that identity is global only, and does not constrain the local dynamics). Open item J-SP2 proposes a change to the allocation loop of §5.5.
 - [`../analysis/species_sectors_and_annihilation.md`](../analysis/species_sectors_and_annihilation.md) — the positon/negaton unraveling of §4.3, and the $`c = 0`$ dark pair of §5.2.
 - David Cyganski, *Extended Fokker–Planck Eq. and the QLE V2* (project memo).
