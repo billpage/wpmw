@@ -17,6 +17,12 @@ literally that prescribes an **emissive** unravelling: every event creates a
 positon–negaton pair. This note prices that choice, finds it ruinous, and
 identifies the alternative.
 
+**A tutorial version of this note exists.** [`../supplement/emission_and_absorption.md`](../supplement/emission_and_absorption.md) covers §3 and §6 below —
+what an event is, and the two realisations — from scratch, for a reader who has
+not met the signed ensemble or the sea. It also proves Theorems J1 and J2 on
+the pair-count identity $`P = S + N/2`$, which bear directly on the ledger
+identity of §6.
+
 **Settles.**
 
 - **CLA3.** The emissive unravelling is not merely expensive. It drains the
@@ -217,6 +223,8 @@ diagnostics do not see it.
 ---
 
 ## 6. The other realisation
+
+*Tutorial treatment of this section, with figures:* [`../supplement/emission_and_absorption.md`](../supplement/emission_and_absorption.md).
 
 Every deposition has two realisations, identical in $`E`$:
 
@@ -477,6 +485,7 @@ preparation-independent.
   §8 — open item N1, which asked whether the action set contains its own
   garbage collection. S7 is the nearest thing this note has to an answer:
   it does, conditionally on $`f = 1/2`$.
+- [`../supplement/emission_and_absorption.md`](../supplement/emission_and_absorption.md) — tutorial treatment of §3 and §6, and Theorems J1 and J2.
 - The absorptive realisation was proposed by B. Page (conversation, August
   2026), from the observation that a negaton arriving in a region of positon
   excess can be realised as a positon hole.

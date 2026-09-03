@@ -20,6 +20,14 @@ Companion script: [`../../src/demo_eckart_barrier_compensated.py`](../../src/dem
 - [`reach_energy_coupling.md`](reach_energy_coupling.md) Theorem E1
   ($`\Delta p = \pi\hbar/(2y_{\max})`$, the reach is a period) and Theorem E7.
 
+**Downstream.** §8 below reads the residual channel physically: what a
+world-particle is, and where tunnelling comes from. A tutorial treatment of the
+same two realisations, written to stand alone for a reader without the
+machinery above, is
+[`../supplement/emission_and_absorption.md`](../supplement/emission_and_absorption.md).
+Its §4 draws both realisations as space-time worldlines, which is the picture
+§8.1 below argues for in words.
+
 ### 0.2 Why sech²
 
 Two results already in the ladder close off the obvious test problems.
@@ -447,6 +455,11 @@ now fixes them against their sources: a **jump** is the mediated transfer of
 [`four_rule_microdynamics_equivalence.md`](four_rule_microdynamics_equivalence.md)
 §2, in which one body is carried from momentum cell $`n - q`$ to $`n + q`$.
 The argument below is unchanged and the labels are now the right way round.
+
+The same argument is made pictorially in §4 and §9 of [`../supplement/emission_and_absorption.md`](../supplement/emission_and_absorption.md), where the two
+realisations are drawn as space-time worldlines: a momentum is a slope there,
+so a jump is a fork and a hop would be a kink, and the difference is visible
+rather than asserted.
 
 It is tempting to read the residual channel as a world *hopping* in
 momentum: a phase point at $`(r, p)`$ that discontinuously becomes

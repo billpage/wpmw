@@ -37,6 +37,12 @@ which turns out to be the load-bearing idea here. From
 [`four_rule_microdynamics_equivalence.md`](four_rule_microdynamics_equivalence.md):
 the four channels and the exactness family.
 
+**Downstream.** The split derived here is what leaves a residual channel to be
+unravelled at all. What that channel *does* once it exists — the two
+realisations of an event, and how they hold the sea and body populations in
+balance — is treated as a tutorial, self-contained and assuming none of the
+machinery below, in [`../supplement/emission_and_absorption.md`](../supplement/emission_and_absorption.md).
+
 **Errata to the previous revision (commit `71d6dce`).** Its §0 asserted that
 "there is no inter-mode cancellation". That is false, and the case in which it
 is false is the one that matters. The correct statement has two cases, split
@@ -834,4 +840,6 @@ not as a home for the ontology.
 - [`../supplement/phase_space_crystal_lattice_supplement.md`](../supplement/phase_space_crystal_lattice_supplement.md) §5–§7.
 - [`open_position_space.md`](open_position_space.md) — Theorems O1 and O5, and the coherence horizon.
 - [`four_rule_microdynamics_equivalence.md`](four_rule_microdynamics_equivalence.md).
+- [`../supplement/emission_and_absorption.md`](../supplement/emission_and_absorption.md) — downstream tutorial on the two realisations of a residual-channel
+  event; Theorems J1 and J2 on the pair-count identity.
 - R. L. Hudson, "When is the Wigner quasi-probability density non-negative?", *Rep. Math. Phys.* **6**, 249 (1974).
