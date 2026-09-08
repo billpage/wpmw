@@ -172,7 +172,7 @@ four postulates of
 |---|---|---|
 | (E) | a world is a locally finite *signed* counting measure | two body fields, §5.1 |
 | (A) | admissible ensembles are those whose mean is a Wigner transform of some $`\rho \succeq 0`$ | an initial-state check and a diagnostic; nothing in the step enforces it |
-| (S) | between events every world streams under the **full** classical force, momentum continuous without exception | §3.1, §3.2, and §5.3 — jumps only, no hops: no code path may move a body between momentum rows |
+| (S) | between events every world streams under the **full** classical force, momentum continuous without exception — **including sea pairs**, whose two members are co-located and share a trajectory, so the charge-blind force carries a pair without separating it | §3.1, §3.2, and §5.3 — jumps only, no hops: no code path may move a body between momentum rows |
 | (D) | superimposed on (S), a birth-and-death process against a sea of neutral bound pairs | §4, §5 |
 
 Theorem G1 assembles C1–C3, K4, K8 and S7 into the statement that (E), (S),

@@ -229,12 +229,15 @@ equation. It is a consequence of the momentum offset $`\pm\xi_q`$ — of working
 in phase space with a finite reach — and Holland's position-space construction
 has no analogue of it.
 
-This locates open item CLA8 more precisely than "the price of the ontology."
+This locates the sea deficit more precisely than "the price of the
+ontology."  Note that the specification carries no enumerated open item for
+it: CLA8 is the box-scaling question, and the deficit appears only in the
+discussion of CLA9.
 
 **A construction that makes the tension explicit.** Introduce a third field
 $`\Sigma`$ and write $`\rho = \exp[(S_{+} - S_{-} + \Sigma)/\hbar]`$. The
 Schrödinger equation holds if and only if $`\Sigma \equiv 0`$, so any
-non-trivial dynamics for $`\Sigma`$ breaks it. This is the CLA8 tension in a
+non-trivial dynamics for $`\Sigma`$ breaks it. This is the sea-deficit tension in a
 formalism with no mesh, no reach and no tau-leap, which suggests the *tension*
 — a floored population against an unconstrained gauge sector — is structural
 even though the *deficit* by H7 is not.
@@ -282,4 +285,4 @@ cheapest available test of H7.
 - [`../analysis/sea_population_equilibrium.md`](../analysis/sea_population_equilibrium.md)
   — Theorems S2, S5, S7, S9 and open item S-SP3.
 - [`../algorithm/compensated_liouville_algorithm.md`](../algorithm/compensated_liouville_algorithm.md)
-  §5 — the specification and open item CLA8.
+  §5 — the specification; the sea deficit is discussed under CLA9.

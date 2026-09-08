@@ -126,15 +126,31 @@ class Ledger:
         self.k = np.real(self.k_full)                      # real, odd in q
         self.sym_e = np.fft.fft(self.k, axis=1)
         self.gamma_tot = np.abs(self.k).sum(axis=1)
+        # postulate (S): the classical p-drift, applied by stream() to EVERY
+        # field, sea pairs included
+        self.cls = 1j * self.dv_eff[:, None] * s[None, :]
 
     # -- transport -----------------------------------------------------
     def stream(self, f, dt):
+        """Classical transport under postulate (S): x-advection at p/mu AND
+        the full classical force as a drift in p.
+
+        Omitting the p-drift strands every sea deficit at the momentum row
+        where it was made, since x-advection alone never moves anything in p.
+        """
         fh = np.fft.fft(f, axis=0)
         fh *= np.exp(-1j * self.kr[:, None] * self.p[None, :] * dt / MU)
-        return np.real(np.fft.ifft(fh, axis=0))
+        f = np.real(np.fft.ifft(fh, axis=0))
+        return np.real(np.fft.ifft(np.fft.fft(f, axis=1)
+                                   * np.exp(dt * self.cls), axis=1))
 
     def stream3(self, up, um, sea, dt):
-        """Transport all three fields.  The sea is carried, not pinned."""
+        """Transport all three fields.  The sea is carried, not pinned, and
+        it streams under the classical force exactly as the free bodies do:
+        the two members of a sea pair are co-located and share a trajectory,
+        and the force is charge-blind, so classical streaming is the unique
+        motion that carries the pair without separating it.
+        """
         return (self.stream(up, dt), self.stream(um, dt),
                 self.stream(sea, dt))
 

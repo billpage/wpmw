@@ -49,6 +49,22 @@ not a choice of description.
 
 ---
 
+**Erratum: postulate (S) in transport.** `stream()` in
+`src/demo_emission_and_absorption.py` advected in $`x`$ only; the classical
+force was extracted by the compensated split and never re-applied, so no
+field drifted in $`p`$. Since x-advection cannot move anything in $`p`$, a
+sea deficit made at a parent momentum row was stranded there for the whole
+run. The figures below predate the repair. J1 is unaffected — the global
+pair-count residual is $`3.5\times10^{-16}`$ either way, a $`p`$-translation
+applied identically to all three fields being a redistribution — as is the
+first-order independence of $`E`$ from $`N`$ in §5.2, whose refinement ratios
+remain 2.00 and 2.00. What changes is the sea trace: for the moving packet
+the minimum recovers to $`0.75\thinspace B`$ by the end of the run instead of
+draining monotonically to $`0.51\thinspace B`$.
+
+The kernel construction in this demo was already correct and is the one now
+shared by both demos.
+
 ## 1. Worlds, and why the ensemble must be signed
 
 Start with the picture the project is committed to. A quantum state is not a

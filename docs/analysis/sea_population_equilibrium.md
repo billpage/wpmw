@@ -23,6 +23,43 @@ not met the signed ensemble or the sea. It also proves Theorems J1 and J2 on
 the pair-count identity $`P = S + N/2`$, which bear directly on the ledger
 identity of §6.
 
+**Erratum: transport and kernel ordering.** Two defects in
+`src/demo_sea_population_equilibrium.py` were found after this note was
+written, and every figure quoted below predates their repair.
+
+1. `stream()` advected in $`x`$ only. The classical force extracted by the
+   compensated split was never re-applied, so nothing drifted in $`p`$ and
+   postulate (S) was never exercised. A sea deficit made at a parent momentum
+   row could not move in $`p`$ and was stranded there permanently.
+2. The residual kernel subtracted $`2 y V'(x)`$ analytically and applied the
+   raised-cosine horizon *afterwards*, returning the horizon's own first
+   moment to a channel specified to carry none:
+   $`\max_x |\sum_q \xi_q K_q|`$ was $`3.568\times10^{-5}`$ against
+   $`1.998\times10^{-15}`$ after repair.
+
+The second is numerically a $`10^{-5}`$ perturbation — the $`\Gamma_{\rm tot}`$
+peak moves from 3.1295 to 3.1297 — so essentially all of what follows is the
+force.
+
+*Unaffected.* S7, whose two ledgers still match prediction to $`10^{-14}`$;
+S2's fixed point; S4's verdict on the emissive unravelling, still divergent;
+and the first-order convergence of every fidelity column.
+
+*Materially improved.* S8's floor at $`\Delta t = 0.01`$ moves from
+$`-1.2353`$ to $`-0.3386`$, and the absorptive trace turns **positive** from
+$`t = 2`$ onward — $`+0.19, +0.17, +0.19, +0.16`$ at $`t = 6, 10, 14, 18`$
+against $`-1.00, -1.43, -2.41, -1.65`$. The sea dips once, early, to about
+$`-0.17\thinspace B`$ and then recovers. Fidelity improves roughly 40 per
+cent throughout. The standing sea deficit of §6 is therefore a transient, not
+a steady state.
+
+*Changed against the argument of this note.* The shortfall $`\tfrac{1}{2}-f`$
+**grows**, from 0.0656 to 0.1002, and S9's attractor is looser: the spread in
+late $`f`$ across padding widens from 0.018 to 0.043, with the
+$`\rho = 20`$ arm overshooting to 0.5138. S9's qualitative claim survives;
+its stated tolerance does not. This bears directly on S-SP3, and in the
+opposite direction to the one that note anticipates.
+
 **Settles.**
 
 - **CLA3.** The emissive unravelling is not merely expensive. It drains the

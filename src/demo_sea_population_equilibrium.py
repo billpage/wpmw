@@ -92,21 +92,55 @@ class Ledger:
         self.area = self.dr * self.dp
 
         rr, yy = self.r[:, None], self.y[None, :]
-        d_res = (V(rr + yy, v0, a) - V(rr - yy, v0, a)
-                 - 2.0 * yy * dV(rr, v0, a))
-        # raised-cosine horizon, the specification's default profile
+        self.xi = np.round(np.fft.fftfreq(n_p, d=1.0) * n_p) * dp
+        nyq = n_p // 2
+
+        m_full = (1j / HBAR) * (V(rr + yy, v0, a) - V(rr - yy, v0, a))
+        s_sym = np.broadcast_to(s, m_full.shape).copy()
+        m_full[:, nyq] = 0.0                  # 4.1, normative
+        s_sym[:, nyq] = 0.0
+
+        def first_moment(sym):
+            return np.real((self.xi * np.fft.ifft(sym, axis=-1)).sum(axis=-1))
+
+        # The raised-cosine horizon is applied FIRST, to both symbols.
+        # Subtracting 2 y V'(x) analytically and windowing afterwards puts the
+        # horizon's own first moment back into a channel specified to carry
+        # none: that ordering leaves 3.6e-05 of spurious classical force
+        # against 1.9e-15 here.  3.2, normative: the compensation is the
+        # kernel's own DISCRETE first moment, not V'(x).
         w = np.cos(np.pi * self.y / (2.0 * self.y_max)) ** 2
-        m_res = (1j / HBAR) * d_res * w[None, :]
+        m_full = m_full * w[None, :]
+        s_sym = s_sym * w[None, :]
+
+        self.dv_eff = first_moment(m_full) / first_moment(1j * s_sym)
+        m_res = m_full - 1j * self.dv_eff[:, None] * s_sym
+
         self.k = np.real(np.fft.ifft(m_res, axis=1))       # real, odd in q
         self.sym_e = np.fft.fft(self.k, axis=1)            # signed symbol
         self.sym_a = np.real(np.fft.fft(np.abs(self.k), axis=1))
         self.gamma_tot = self.sym_a[:, 0].copy()           # sum_q |K_q|
+        # postulate (S): the classical p-drift, applied by stream() to EVERY
+        # field, sea pairs included
+        self.cls = 1j * self.dv_eff[:, None] * s[None, :]
 
     # -- transport and the two mesh kernels ----------------------------
     def stream(self, f, dt):
+        """Classical transport under postulate (S): x-advection at p/mu AND
+        the full classical force as a drift in p.
+
+        Applied to the sea as well as to the free bodies.  The two members of
+        a sea pair are co-located and share a trajectory, and the force is
+        charge-blind, so classical streaming is the unique motion that carries
+        the pair without separating it.  Omitting the p-drift strands every
+        sea deficit at the momentum row where it was made, since x-advection
+        alone never moves anything in p.
+        """
         fh = np.fft.fft(f, axis=0)
         fh *= np.exp(-1j * self.kr[:, None] * self.p[None, :] * dt / MU)
-        return np.real(np.fft.ifft(fh, axis=0))
+        f = np.real(np.fft.ifft(fh, axis=0))
+        return np.real(np.fft.ifft(np.fft.fft(f, axis=1)
+                                   * np.exp(dt * self.cls), axis=1))
 
     def kick(self, f, sym, dt):
         return np.real(np.fft.ifft(np.fft.fft(f, axis=1)
