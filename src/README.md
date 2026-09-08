@@ -1052,6 +1052,22 @@ see that directory's README for the ladder itself.
   Python, and original spec §3c) on a coherent state, confirming that only
   the QLE-consistent form drives the centroid downhill.
 
+### Documentation tools
+
+- `md_to_pdf.py` — renders a WPMW markdown doc (e.g. anything under `docs/`)
+  to PDF with its embedded LaTeX math typeset correctly. Rewrites this
+  project's GitHub math conventions (`` $`...`$ `` inline, ` ```math ` fenced
+  display blocks — see the style guide below) into Pandoc-native `$...$` /
+  `$$...$$` in a temporary copy, then renders with Pandoc + xelatex.
+  Equivalent in content to GitHub's preview, though not pixel-identical
+  (LaTeX's own typesetting, not a copy of GitHub's MathJax/KaTeX rendering).
+  Requires `pandoc`, `xelatex`, and `lmodern` on `PATH`
+  (`apt-get install pandoc texlive-xetex lmodern`).
+
+  ```bash
+  python3 src/md_to_pdf.py docs/supplement/emission_and_absorption.md
+  ```
+
 ## Output path convention
 
 All scripts in this directory must write files through helpers from
