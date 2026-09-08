@@ -1046,6 +1046,27 @@ see that directory's README for the ladder itself.
 
   Process 4, the suppressed channels: nothing is forbidden, and misaligned
   traffic simply averages away.
+- `demo_limkumnerd_weighted_paths.py` — verification companion to
+  `docs/supplement/limkumnerd_weighted_paths.md`, which runs the benchmark of
+  Limkumnerd & Phanthaphanitkul (arXiv:2605.05764) on this project's
+  machinery.  Part A is their harmonic null test: `V''' = 0`, the residual
+  vanishes identically, and classical carrier transport is exact to 5.0e-06
+  against their quoted interpolation floor of 4.8e-05.  Part B is the quartic
+  benchmark, reproducing their published classical-carrier errors — 5.673e-02
+  at `lambda = 0.02` against 5.7e-02, and 1.081e-01 at `lambda = 0.05` against
+  1.1e-01 — and then restoring the signed residual, which for a quartic is the
+  exact QLE by Theorem E7 rather than a truncation.  Part C rescores the same
+  runs by the least eigenvalue of the `rho` reconstructed from `W`,
+  independently reproducing Theorem G4's `-4.97e-02`.  Part D band-limits the
+  residual symbol to `|s| <= 2 y_max`: the Wigner error saturates to six
+  figures by `y_max = 6` while the event budget `R_res` holds x8.00 per
+  doubling with no saturation, which is Theorem E8 on a potential and at
+  parameters chosen by someone else.  Their momentum step `dp = pi/48` is the
+  reach `y_max = 12`, so their grid carries eight times the budget of a
+  converged run — invisible on a grid, where a stencil costs the same whatever
+  its total variation.
+
+
 - `sign_convention_check.py` — regression test for the §6.3 sign correction
   in `docs/supplement/phase_space_crystal_lattice_supplement.md`. Compares
   three candidate discrete update rules (V2 general formula, V2 simplified /

@@ -259,17 +259,44 @@ field-less, so the whole classical force is delivered by pair creation.
 
 - Limkumnerd, S.; Phanthaphanitkul, P. — "Weighted phase-space paths for exact
   Wigner dynamics." arXiv:2605.05764 (2026). Takes classical Hamiltonian flow
-  as the carrier, splits the Wigner generator into the classical Liouville
-  part and the Moyal residual, writes the residual as a signed kernel and
-  represents it by signed weights or branching events. Independently states
-  the harmonic-oscillator null case — nonclassicality carried by the initial
-  Wigner function rather than by any correction to the flow — and verifies it
-  numerically against a quartic benchmark. The residual is taken in
-  differential (Moyal-series) form, so the total-variation obstruction of
-  Theorem E7 is not confronted and no reach appears; the positive/negative
-  split is Hahn–Jordan, whose minimal-total-variation property is a useful
-  reference scale for `Gamma`. The aim is a forward–reverse signed-path
-  relation, not an ontology. https://arxiv.org/abs/2605.05764
+  as the carrier — with the full `V'`, not a quadratic fit — and splits the
+  Wigner generator into the classical Liouville part and the Moyal residual.
+  This is term-by-term the compensated split of
+  [`compensated_liouville_splitting.md`](../docs/analysis/compensated_liouville_splitting.md)
+  §2, reached independently and for the same stated reasons: a transparent
+  classical limit, and the quantum content confined to one channel. The
+  residual is then represented by signed weights on positive carrier paths,
+  `F_W = E[W_t delta(z - z_t)]`; branching is mentioned as an alternative and
+  not constructed. Independently states the harmonic-oscillator null case —
+  nonclassicality carried by the initial Wigner function rather than by any
+  correction to the flow.
+
+  Their quartic benchmark is, to the parameter, Part E of
+  [`compensated_ontology.md`](../docs/analysis/compensated_ontology.md):
+  `V = q^2/2 + lambda q^4` with `lambda = 0.02, 0.05`, initial state
+  `(|0> + |2>)/sqrt(2)`, `t_f = pi/2`. Their published classical-carrier
+  errors are reproduced here to three figures by
+  `src/demo_limkumnerd_weighted_paths.py`, and their momentum step
+  `dp = pi/48` is the reach `y_max = 12`.
+
+  Where it stops. The residual is kept in differential (Moyal-series) form;
+  the transfer kernel is written once, schematically, and never constructed.
+  So the total-variation obstruction of Theorem E7 is not confronted and no
+  reach appears — though one is instantiated by the grid, at a value that
+  costs eight times the event budget of a run already converged (Theorem E8,
+  confirmed on their potential). Their Hahn–Jordan decomposition is applied
+  to the residual *field* on phase space, whose positive/negative split
+  always exists and is always finite, not to the transfer kernel, whose split
+  is what a particle representation needs and which for a polynomial `V` does
+  not exist at all. It is therefore **not** a reference scale for `Gamma`;
+  an earlier revision of this entry said otherwise and was wrong.
+
+  The aim is a representation theorem plus a forward–reverse signed-path
+  relation `dmu_F/dmu_R = A_sign exp(A_mag)`, not an ontology; that relation
+  has no counterpart here and is the one part of the paper this project could
+  import. Full treatment in
+  [`limkumnerd_weighted_paths.md`](../docs/supplement/limkumnerd_weighted_paths.md).
+  https://arxiv.org/abs/2605.05764
 
 ### Creation and annihilation as a literal particle ontology
 
