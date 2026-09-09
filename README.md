@@ -132,5 +132,45 @@ The URL pattern is always:
 
 ## License
 
-TODO — license not yet selected. Until a license is added, default copyright
-applies and the contents should be treated as all-rights-reserved by the author.
+This repository uses two licenses, split by content type:
+
+- **Code** (`src/`, including `wpmwlib/`) — [GNU Affero General Public
+  License v3.0 or later](LICENSE) (`AGPL-3.0-or-later`). Copyleft that
+  extends to network use: a modified version served over a network must
+  still offer its source to users interacting with it, not only to those
+  who receive a distributed copy.
+- **Documentation, derivations, and figures** (`docs/`, `references/`,
+  and the images on the `output` branch) — [Creative Commons
+  Attribution-ShareAlike 4.0 International](LICENSE-DOCS)
+  (`CC-BY-SA-4.0`). Adaptations must credit the original authors and stay
+  under the same license, whether or not they are formally published.
+
+See [`LICENSE`](LICENSE) and [`LICENSE-DOCS`](LICENSE-DOCS) for the full
+terms. If you build on this work, please cite it as described below.
+
+## Citation
+
+If you use or build on this repository, please credit the authors. A
+machine-readable citation is also available in
+[`CITATION.cff`](CITATION.cff), which GitHub uses to generate a "Cite
+this repository" option.
+
+Plain text:
+
+> Bill Page and contributors (2026). *WPMW: A compensated Liouville
+> algorithm for quantum dynamics via signed particles* [Software and
+> research notes]. GitHub. https://github.com/billpage/wpmw
+
+BibTeX:
+
+```bibtex
+@misc{wpmw2026,
+  author       = {Page, Bill and contributors},
+  title        = {{WPMW}: A compensated {Liouville} algorithm for quantum
+                   dynamics via signed particles},
+  year         = {2026},
+  howpublished = {GitHub repository},
+  url          = {https://github.com/billpage/wpmw},
+  note         = {Accessed: insert date}
+}
+```

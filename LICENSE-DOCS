@@ -1,0 +1,37 @@
+Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)
+==========================================================================
+
+This license covers the non-code content of this repository: everything
+under `docs/` and `references/`, plus the demo figures stored on the
+`output` branch. Python source under `src/` is licensed separately — see
+`LICENSE` (GNU AGPL-3.0-or-later) in the repository root.
+
+    Copyright (C) 2026  Bill Page and contributors
+
+This work is licensed under the Creative Commons Attribution-ShareAlike
+4.0 International License (SPDX: CC-BY-SA-4.0). The full, legally
+operative license text is at:
+
+    https://creativecommons.org/licenses/by-sa/4.0/legalcode
+
+A human-readable summary (not a substitute for the license itself) is at:
+
+    https://creativecommons.org/licenses/by-sa/4.0/
+
+In short, under this license you are free to share and adapt this
+material for any purpose, including commercially, as long as you:
+
+  - **Attribution** — give appropriate credit to the original authors,
+    link back to this repository, indicate the license, and note any
+    changes you made. See the "Citation" section of `README.md` for the
+    preferred citation format.
+
+  - **ShareAlike** — if you remix, transform, or build on this material,
+    you must distribute your contributions under this same license
+    (CC BY-SA 4.0), so downstream derivatives stay open on the same
+    terms regardless of whether they are formally published.
+
+No warranties are given. The license may not give you all of the
+permissions necessary for your intended use — for example, other rights
+such as publicity, privacy, or moral rights may limit how you use the
+material, independent of this license.
