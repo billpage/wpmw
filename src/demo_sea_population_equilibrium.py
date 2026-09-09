@@ -33,6 +33,9 @@ Parts
      the initial ratio rho = N0/|E| (padding added as +- pairs, so E is
      untouched) and traces the instantaneous absorptive fraction.
   I  The channel-ordering sensitivity of the tau-leap allocation.
+  J  S-SP3: the ledger estimator for the shortfall, and the shortfall
+     against a horizon set independently of the momentum grid.  Set
+     WPMW_HEAVY=1 to add the dp = 0.0625 row (n_p = 256, slow).
 
 Run as::
 
@@ -40,6 +43,8 @@ Run as::
 """
 
 from __future__ import annotations
+
+import os
 
 import numpy as np
 
@@ -339,7 +344,8 @@ def run_traced(run, e0, t_max, dt, rho=1.0, order="forward", seed=0,
         qs = qs[::-1]
     elif order == "fixed_random":
         rng.shuffle(qs)
-    tr, acc = [], np.zeros(2)
+    tr, acc, cum = [], np.zeros(2), np.zeros(2)
+    n0_bodies = float(np.sum(up + um) * run.area)
     n_steps = int(round(t_max / dt))
     for step in range(n_steps):
         up, um, S = (run.stream(up, .5 * dt), run.stream(um, .5 * dt),
@@ -350,6 +356,7 @@ def run_traced(run, e0, t_max, dt, rho=1.0, order="forward", seed=0,
             rng.shuffle(seq)
         a, e_ = channels_ordered(run, up, um, S, dt, seq)
         acc += (a, e_)
+        cum += (a, e_)
         up, um, S = (run.stream(up, .5 * dt), run.stream(um, .5 * dt),
                      run.stream(S, .5 * dt))
         ref = run.qle_step(ref, dt)
@@ -357,11 +364,17 @@ def run_traced(run, e0, t_max, dt, rho=1.0, order="forward", seed=0,
             tot = acc[0] + acc[1]
             tr.append((step * dt, acc[0] / max(tot, 1e-30),
                        float(np.sum(up + um) * run.area),
-                       float((S / B).min())))
+                       float((S / B).min()),
+                       float(cum.sum()) * run.area,
+                       float(cum[0]) * run.area))
             acc[:] = 0.0
     e = up - um
-    return dict(trace=np.array(tr), e=e, N=float(np.sum(up + um) * run.area),
-                Smin=float((S / B).min()),
+    n_end = float(np.sum(up + um) * run.area)
+    n_ev = float(cum.sum()) * run.area
+    return dict(trace=np.array(tr), e=e, N=n_end,
+                Smin=float((S / B).min()), n_ev=n_ev,
+                f_cum=float(cum[0] / max(cum.sum(), 1e-30)),
+                dN=n_end - n0_bodies,
                 fid=float(np.linalg.norm(e - ref) / np.linalg.norm(ref)))
 
 
@@ -374,6 +387,230 @@ def gaussian(run, r_c, p_c, sigma_r):
     w = np.exp(-((run.r[:, None] - r_c) ** 2) / (2.0 * sigma_r ** 2)
                - ((run.p[None, :] - p_c) ** 2) / (2.0 * sp ** 2))
     return w / (np.sum(w) * run.dr * run.dp)
+
+
+class Horizon(Ledger):
+    """A Ledger whose horizon is set independently of the momentum grid.
+
+    In Ledger the raised-cosine window sits at the Nyquist wavenumber, so the
+    reach y_max = pi hbar / (2 dp) and the resolution of a packet in p are the
+    SAME knob: refining dp to buy reach also refines the packet.  A reach
+    ladder built that way runs diagonally across a two-dimensional convergence
+    and cannot say which axis it is measuring.  Here the window is
+    cos^2(pi y / 2 y_h) truncated to |y| <= y_h, applied to both symbols in
+    the order 4.1/3.2 requires -- window first, discrete first moment after --
+    so y_h may be varied at fixed dp.
+    """
+
+    def __init__(self, y_h, **kw):
+        super().__init__(**kw)
+        n_p = self.n_p
+        s = 2.0 * np.pi * np.fft.fftfreq(n_p, d=self.dp)
+        rr, yy = self.r[:, None], self.y[None, :]
+        nyq = n_p // 2
+        m_full = (1j / HBAR) * (V(rr + yy, self.v0, self.a)
+                                - V(rr - yy, self.v0, self.a))
+        s_sym = np.broadcast_to(s, m_full.shape).copy()
+        m_full[:, nyq] = 0.0
+        s_sym[:, nyq] = 0.0
+
+        def first_moment(sym):
+            return np.real((self.xi * np.fft.ifft(sym, axis=-1)).sum(axis=-1))
+
+        w = np.where(np.abs(self.y) <= y_h,
+                     np.cos(np.pi * self.y / (2.0 * y_h)) ** 2, 0.0)
+        m_full, s_sym = m_full * w[None, :], s_sym * w[None, :]
+        self.y_h = y_h
+        self.dv_eff = first_moment(m_full) / first_moment(1j * s_sym)
+        m_res = m_full - 1j * self.dv_eff[:, None] * s_sym
+        self.k = np.real(np.fft.ifft(m_res, axis=1))
+        self.sym_e = np.fft.fft(self.k, axis=1)
+        self.sym_a = np.real(np.fft.fft(np.abs(self.k), axis=1))
+        self.gamma_tot = self.sym_a[:, 0].copy()
+        self.cls = 1j * self.dv_eff[:, None] * s[None, :]
+
+
+def run_ledger(run, t_max, dt, rho=2.0, cap_clip=False, clamp=True):
+    """Cumulative absorptive fraction, measured through the S7 identity.
+
+    Returns f_cum = n_abs/n_ev and the independent estimate dN/(4 n_ev).
+    They agree to machine precision exactly when nothing in the loop
+    manufactures bodies, which makes their gap a clamp diagnostic.
+    """
+    e0 = gaussian(run, 0.0, 1.0, 1.0)
+    pad = 0.5 * (rho - 1.0) * np.abs(e0)
+    up = np.maximum(e0, 0.0) + pad
+    um = np.maximum(-e0, 0.0) + pad
+    S = np.full_like(e0, B)
+    n0 = float(np.sum(up + um) * run.area)
+    cum, q1 = np.zeros(2), np.zeros(2)
+    n_steps = int(round(t_max / dt))
+    half = n_steps // 2
+    mid = None
+    for step in range(n_steps):
+        if step == half:
+            mid = (float(np.sum(up + um) * run.area), cum.copy())
+        up, um, S = (run.stream(up, .5 * dt), run.stream(um, .5 * dt),
+                     run.stream(S, .5 * dt))
+        for q in range(1, run.n_p // 2):
+            lam = np.abs(run.k[:, q])[:, None]
+            if lam.max() < 1e-14:
+                continue
+            sg = np.sign(run.k[:, q])[:, None]
+            for parent, sp in ((up, 1.0), (um, -1.0)):
+                D = lam * parent * dt
+                if D.max() <= 0.0:
+                    continue
+                t = np.broadcast_to(sg * sp, D.shape)
+                cA = np.where(t > 0, np.roll(um, -q, axis=1),
+                              np.roll(up, -q, axis=1))
+                cB = np.where(t > 0, np.roll(up, q, axis=1),
+                              np.roll(um, q, axis=1))
+                if cap_clip:
+                    cA, cB = np.maximum(cA, 0.0), np.maximum(cB, 0.0)
+                A = np.minimum(D, np.minimum(cA, cB))
+                Em = D - A
+                cum += (float(A.sum()), float(Em.sum()))
+                if q == 1:
+                    q1 += (float(A.sum()), float(Em.sum()))
+                aq, am = np.roll(A, q, axis=1), np.roll(A, -q, axis=1)
+                um -= np.where(t > 0, aq, 0.0)
+                up -= np.where(t > 0, 0.0, aq)
+                up -= np.where(t > 0, am, 0.0)
+                um -= np.where(t > 0, 0.0, am)
+                S += A
+                eq, em_ = np.roll(Em, q, axis=1), np.roll(Em, -q, axis=1)
+                up += np.where(t > 0, eq, 0.0)
+                um += np.where(t > 0, 0.0, eq)
+                um += np.where(t > 0, em_, 0.0)
+                up += np.where(t > 0, 0.0, em_)
+                S -= Em
+                if clamp:
+                    np.maximum(up, 0.0, out=up)
+                    np.maximum(um, 0.0, out=um)
+        up, um, S = (run.stream(up, .5 * dt), run.stream(um, .5 * dt),
+                     run.stream(S, .5 * dt))
+    n_end = float(np.sum(up + um) * run.area)
+    n_ev = float(cum.sum()) * run.area
+    dN = n_end - n0
+    lcum = cum - mid[1]
+    return dict(f=float(cum[0] / cum.sum()), n_ev=n_ev, dN=dN,
+                short_ledger=dN / (4.0 * n_ev),
+                f_late=float(lcum[0] / lcum.sum()),
+                short_late=(n_end - mid[0]) / (4.0 * float(lcum.sum())
+                                               * run.area),
+                f_q1=float(q1[0] / max(q1.sum(), 1e-30)),
+                Smin=float((S / B).min()))
+
+
+def figure_horizon(ladder):
+    fig, ax = plt.subplots(figsize=(6.8, 4.6))
+    neg = False
+    for (dp, pts), c in zip(sorted(ladder.items()), ("C0", "C1", "C2")):
+        m = [v[0] for v in pts]
+        for col, style, tag in ((1, "o-", "whole run"),
+                                (2, "s--", "late half")):
+            y = [abs(v[col]) for v in pts]
+            ax.plot(m, y, style, lw=2, color=c, ms=6,
+                    alpha=1.0 if col == 1 else 0.55,
+                    label=rf"$\Delta p={dp:g}$ ({0.5/dp:.0f} pts$/\sigma_p$),"
+                          f" {tag}")
+            for mm, v in zip(m, pts):
+                if v[col] < 0:
+                    neg = True
+                    ax.plot([mm], [abs(v[col])], "o", mfc="w", mec=c, ms=11,
+                            zorder=5)
+    ax.set_xscale("log", base=2)
+    ax.set_yscale("log")
+    ax.set_xticks([1, 2, 4, 8])
+    ax.set_xticklabels([r"$\pi$", r"$2\pi$", r"$4\pi$", r"$8\pi$"])
+    ax.set_xlabel(r"horizon $y_h/a$")
+    ax.set_ylabel(r"$|\,1/2 - f\,|$")
+    ax.set_title("S-SP3: the shortfall against a horizon set independently\n"
+                 "of the momentum grid", fontsize=11)
+    ax.legend(fontsize=8)
+    ax.grid(alpha=.3, which="both")
+    if neg:
+        fig.text(0.5, -0.02, "open circles mark a negative shortfall",
+                 ha="center", fontsize=8)
+    save_fig(fig, "sea_population_horizon_ladder.png")
+
+
+def part_j(traces, Th):
+    banner("J  S-SP3: the shortfall against an independent horizon")
+    print("  First the estimator.  late_f averages a 0.25-windowed trace over")
+    print("  the last 2.0 -- comparable to the packet's own oscillation, so it")
+    print("  phase-samples a wobble the size of the thing being measured.")
+    print("  S7 gives an exact alternative: 1/2 - f = dN / (4 n_ev), a ratio")
+    print("  of two smooth cumulative totals.\n")
+    print(f"  {'rho':>6} {'late_f':>9} {'1/2-f win':>11}"
+          f" {'f (late half)':>14} {'1/2-f led':>11} {'gap':>10}")
+    for rho, o in traces.items():
+        tr = o["trace"]
+        lf = late_f(tr, Th)
+        h = tr[np.argmin(np.abs(tr[:, 0] - 0.5 * Th))]
+        d_ev, d_ab, d_N = tr[-1, 4] - h[4], tr[-1, 5] - h[5], tr[-1, 2] - h[2]
+        f_l = d_ab / d_ev
+        led = d_N / (4.0 * d_ev)
+        print(f"  {rho:6.1f} {lf:9.4f} {0.5 - lf:+11.4f}"
+              f" {f_l:14.4f} {led:+11.4f} {abs(0.5 - f_l - led):10.2e}")
+    print("\n  Columns three and five are the same measurement: the ledger")
+    print("  estimator is S7 read over a window, and the gap between them is")
+    print("  machine noise.  Column two compresses the spread across rho")
+    print("  from 0.064 to 0.043 -- the phase bias flatters S9.\n")
+
+    print("  Now the reach.  Ledger puts the horizon at the Nyquist, so a")
+    print("  reach ladder built by refining dp also refines the packet in p")
+    print("  -- two effects, one knob.  Horizon separates them.\n")
+    T, dt = 8.0, 0.02
+    grids = [(0.25, 64), (0.125, 128)]
+    if os.environ.get("WPMW_HEAVY"):
+        grids.append((0.0625, 256))
+    ladder = {}
+    print(f"  {'dp':>7} {'pts/sig':>8} {'y_h/a':>8} {'Gam_pk':>8}"
+          f" {'1/2-f':>10} {'late half':>10} {'f(q=1)':>8}")
+    for dp, n_p in grids:
+        for m in (1.0, 2.0, 4.0, 8.0):
+            if m * np.pi > HBAR * np.pi / (2.0 * dp) + 1e-9:
+                continue
+            run = Horizon(m * np.pi, n_p=n_p, dp=dp)
+            o = run_ledger(run, T, dt)
+            ladder.setdefault(dp, []).append((m, 0.5 - o["f"],
+                                             o["short_late"]))
+            print(f"  {dp:7.4f} {0.5/dp:8.1f} {m:7.2f}pi"
+                  f" {run.gamma_tot.max():8.4f}"
+                  f" {0.5 - o['f']:+10.5f} {o['short_late']:+10.5f}"
+                  f" {o['f_q1']:8.3f}")
+    print("\n  Read the last two columns against each other.  Over the whole")
+    print("  run the shortfall falls along both axes; over the late half the")
+    print("  resolution axis washes out (0.0429 against 0.0422 at 2pi) and")
+    print("  only the horizon is left, falling by about four per doubling.")
+    print("  So the resolution contamination is a transient -- the packet")
+    print("  starts two grid points wide in p and spreads -- and the reach")
+    print("  dependence is the physical one.  It also changes sign, at")
+    print("  rho = 20 above and at dp = 0.0625 under WPMW_HEAVY, which a")
+    print("  systematic per-event leak cannot do.\n")
+    print("  Claim: f -> 1/2 exactly as the regulator is removed.  Four")
+    print("  points with a wobbly tail are evidence, not proof.\n")
+    figure_horizon(ladder)
+
+    print("  A second, independent route to the same place.  J-SP2 of the")
+    print("  emission/absorption tutorial proposes clipping the partner CAPS")
+    print("  at zero -- a negative supply is no supply -- and repairing")
+    print("  transport ringing at the transport substep instead of inside the")
+    print("  event loop.  Clipping the caps alone is worse than useless:\n")
+    print(f"  {'variant':>28} {'f_cum':>9} {'1/2-f':>10} {'ledger gap':>12}")
+    for tag, cc, cl in (("specified", False, True),
+                        ("caps clipped, clamp kept", True, True),
+                        ("J-SP2 (caps clipped, no clamp)", True, False)):
+        run = Ledger()
+        o = run_ledger(run, T, dt, cap_clip=cc, clamp=cl)
+        gap = abs(0.5 - o["f"] - o["short_ledger"])
+        print(f"  {tag:>28} {o['f']:9.5f} {0.5 - o['f']:+10.5f} {gap:12.2e}")
+    print("\n  Clipping the caps drives the clamp, which manufactures bodies")
+    print("  and breaks S7 outright.  Doing both halves of J-SP2 keeps S7 at")
+    print("  machine precision and cuts the shortfall fivefold.")
+    return ladder
 
 
 # ======================================================================
@@ -735,6 +972,7 @@ def figures(run, G, E, outs, fid, tr_e, tr_a, rows, f_meas, traces, Th):
     save_fig(fig, "sea_population_attractor.png")
 
 
+
 def main():
     run = Ledger()
     G, E = part_a(run)
@@ -746,11 +984,13 @@ def main():
     rows = part_g(e0)
     traces, Th = part_h(run, e0)
     part_i(run, e0)
+    part_j(traces, Th)
     figures(run, G, E, outs, fid, tr_e, tr_a, rows, f_meas, traces, Th)
     print("\nFigures: sea_population_fixed_point.png, "
           "sea_population_unravelling.png,\n"
           "         sea_population_ledger_identity.png, "
-          "sea_population_attractor.png")
+          "sea_population_attractor.png,\n"
+          "         sea_population_horizon_ladder.png")
 
 
 if __name__ == "__main__":

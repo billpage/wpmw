@@ -200,9 +200,24 @@ sharper statement is the useful one.
 **Conjecture H6.** If T exchanges the channels, then $`f = 1/2`$ is the
 T-symmetric point of the event ensemble and Theorem S9's attractor is
 symmetry-restoring, with the shortfall $`\tfrac{1}{2} - f`$ a measure of
-T-breaking by the reach regulator. This bears on open item S-SP3. It is
-*not* established: $`f`$ lives in the sector the observable cannot see, so
-T-invariance of $`E`$ does not by itself force T-invariance of $`f`$.
+T-breaking by the reach regulator. It is *not* established: $`f`$ lives in the
+sector the observable cannot see, so T-invariance of $`E`$ does not by itself
+force T-invariance of $`f`$.
+
+**Status: supported, and no longer contradicted.** An earlier reading of the
+transport repair had the shortfall *growing* under refinement, which would
+have refuted H6, and its withdrawal was being prepared. That reading came from
+a windowed estimator and from a reach ladder in which reach and momentum
+resolution were the same knob; both are corrected in Part J of
+[`../analysis/sea_population_equilibrium.md`](../analysis/sea_population_equilibrium.md).
+With the horizon set independently of the grid the shortfall falls
+monotonically as the regulator is removed — 0.133, 0.026, 0.015, 0.007 over
+$`y_h/a = \pi, 2\pi, 4\pi, 8\pi`$ at fixed resolution — and changes sign,
+which is what a regulator artefact does and a systematic leak cannot. That is
+H6's prediction and not an argument for it: the mechanism demonstrated is
+discretisation, not T-symmetry. What H6 would add, if it can be made, is the
+*reason* the limit is one half rather than some other fixed point, and it is
+the most promising route to the analytic argument S-SP3 still lacks.
 
 ---
 

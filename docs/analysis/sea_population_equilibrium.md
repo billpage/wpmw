@@ -53,12 +53,19 @@ $`-0.17\thinspace B`$ and then recovers. Fidelity improves roughly 40 per
 cent throughout. The standing sea deficit of §6 is therefore a transient, not
 a steady state.
 
-*Changed against the argument of this note.* The shortfall $`\tfrac{1}{2}-f`$
-**grows**, from 0.0656 to 0.1002, and S9's attractor is looser: the spread in
-late $`f`$ across padding widens from 0.018 to 0.043, with the
-$`\rho = 20`$ arm overshooting to 0.5138. S9's qualitative claim survives;
-its stated tolerance does not. This bears directly on S-SP3, and in the
-opposite direction to the one that note anticipates.
+*Changed against the argument of this note.* S9's attractor is looser: the
+spread in late $`f`$ across padding widens from 0.018 to 0.043, with the
+$`\rho = 20`$ arm overshooting to 0.5138. S9's qualitative claim survives; its
+stated tolerance does not.
+
+*Withdrawn.* A first pass at this addendum also reported that the shortfall
+$`\tfrac{1}{2}-f`$ **grows** under the repair, from 0.0656 to 0.1002, and read
+that as evidence against S-SP3. It is not. Both figures came from `late_f`,
+which averages a windowed trace over the last 2.0 of the run — comparable to
+the packet's own oscillation period, so it phase-samples a wobble the size of
+the quantity being measured. Read instead through the exact identity of
+Theorem S7, the shortfall falls under every refinement available. §S9 and
+Part J carry the corrected account.
 
 **Settles.**
 
@@ -347,28 +354,56 @@ padding the initial ensemble with $`\pm`$ pairs — which leaves $`E`$ untouched
 
 | $`\rho`$ | $`t=0.5`$ | $`t=1`$ | $`t=2`$ | $`t=4`$ | $`t=6`$ | $`t=8`$ |
 |---|---|---|---|---|---|---|
-| 1 | 0.4619 | 0.4565 | 0.4637 | 0.4365 | 0.4126 | 0.4840 |
-| 2 | 0.5906 | 0.4770 | 0.4544 | 0.4462 | 0.4184 | 0.4903 |
-| 5 | 0.7730 | 0.6065 | 0.4847 | 0.4429 | 0.4518 | 0.4875 |
-| 20 | 0.8360 | 0.7109 | 0.5037 | 0.5051 | 0.4626 | 0.4992 |
+| 1 | 0.4576 | 0.4160 | 0.2983 | 0.4443 | 0.4716 | 0.4273 |
+| 2 | 0.5730 | 0.4168 | 0.3430 | 0.4455 | 0.4851 | 0.4278 |
+| 5 | 0.7521 | 0.4456 | 0.4382 | 0.4280 | 0.4877 | 0.4358 |
+| 20 | 0.8162 | 0.5304 | 0.4192 | 0.4849 | 0.5134 | 0.5266 |
+| *mean* | 0.6497 | 0.4522 | 0.3747 | 0.4507 | 0.4895 | 0.4544 |
+| *spread* | 0.3586 | 0.1144 | 0.1399 | 0.0569 | 0.0418 | 0.0993 |
 
-A twentyfold padding starts at $`f = 0.836`$ and falls; the minimal ensemble
-starts at $`0.462`$ and rises; by $`t = 8`$ they agree to within 0.015. **The
-ledger closure requires no tuning.**
+A twentyfold padding starts at $`f = 0.816`$ and falls; the minimal ensemble
+starts at $`0.458`$ and rises; by $`t = 8`$ the spread across a factor twenty
+in preparation is 0.099 against an initial 0.359. **The ledger closure
+requires no tuning.**
+
+The last two rows are there to stop a misreading. Every column moves together
+— the mean dips to 0.375 at $`t = 2`$ and recovers — and that common motion is
+as large as the spread across $`\rho`$. It belongs to the packet, which starts
+at the barrier top with $`\bar{p} = 1`$ and leaves: the event rate falls by
+more than a factor three over the run, so the late trace is read off a driving
+that is switching itself off. No individual row's wiggle is a fact about its
+own $`\rho`$.
 
 Two qualifications, both material.
 
-First, $`N`$ does *not* forget: $`N(8) = 2.51, 2.63, 3.17, 6.80`$ across the
+First, $`N`$ does *not* forget: $`N(8) = 3.06, 3.17, 4.24, 11.39`$ across the
 same sweep. Only $`f`$ is preparation-independent. This is Theorem S3 — the
 vacuum relaxes as $`1/t`$ — so the memory decays, but not on the timescale of
 these runs.
 
-Second, the attractor sits slightly *below* $`1/2`$. The shortfall is not a
-timestep artefact: at $`\Delta t = 0.02, 0.01, 0.005`$ it measures
-$`f = 0.4718, 0.4706, 0.4704`$. It is controlled by the reach, with
-$`1/2 - f = 0.119, 0.029, 0.017`$ at $`y_{\max}/a = \pi, 2\pi, 4\pi`$. Three
-points cannot distinguish convergence to zero from convergence to a floor near
-$`0.015`$; see S-SP3.
+Second, the attractor does not sit at $`1/2`$ at any finite reach, and the
+right way to say by how much it misses is not `late_f`. Theorem S7 is exact,
+and it holds over any window, so
+
+```math
+\tfrac{1}{2} - f \;=\; \frac{\Delta N}{4\, n_{\rm ev}}
+```
+
+turns the shortfall into a ratio of two cumulative totals with no window and
+no phase bias. Part J reads Part H's own runs both ways over the late half:
+
+| $`\rho`$ | `late_f` | $`\tfrac{1}{2}-f`$ windowed | $`\tfrac{1}{2}-f`$ ledger |
+|---|---|---|---|
+| 1 | 0.4713 | $`+0.0287`$ | $`+0.0492`$ |
+| 2 | 0.4741 | $`+0.0259`$ | $`+0.0414`$ |
+| 5 | 0.4809 | $`+0.0191`$ | $`+0.0276`$ |
+| 20 | 0.5138 | $`-0.0138`$ | $`-0.0143`$ |
+
+The two routes agree to $`5\times10^{-15}`$ where they measure the same thing.
+The windowed column is not a second opinion; it is the same number seen
+through a filter that compresses the spread across $`\rho`$ from 0.064 to
+0.043. **Read correctly the shortfall is larger than this note first reported
+and it converges faster.** S-SP3 carries the ladder.
 
 **Why the minimal ensemble cannot absorb.** The obstruction is not size, it is
 species availability. For a positive $`W`$ the minimal ensemble has
@@ -430,16 +465,53 @@ population, but it is no longer load-bearing.
   compensated split at reach $`2\pi a`$. Which difference is responsible is
   unmeasured, and until it is, neither result should be read as overturning
   the other.
-- **S-SP3 (does the shortfall vanish?).** The late-time shortfall
-  $`1/2 - f`$ is reach-controlled and not a discretisation artefact: it is flat
-  in $`\Delta t`$ (0.4718, 0.4706, 0.4704 at $`\Delta t = 0.02, 0.01, 0.005`$)
-  and falls as 0.119, 0.029, 0.017 across
-  $`y_{\max}/a = \pi, 2\pi, 4\pi`$. The first step is a factor 4, the second
-  only 1.7, so three points do not settle whether the limit is zero or a floor
-  near 0.015. A fourth point at $`8\pi a`$ needs $`n_p = 256`$ and would
-  decide it. This matters because an irreducible floor means the ledger leaks
-  at a fixed rate per event no matter what, and the residual worst-cell
-  deficit does still track the reach ($`-0.42, -1.32, -3.10`$).
+- **S-SP3 (does the shortfall vanish?). Resolved as far as numbers can
+  resolve it: yes.** The original ladder had two defects. It measured $`f`$
+  with `late_f`, which phase-samples the packet's oscillation; and it varied
+  the reach by refining $`\Delta p`$, but in `Ledger` the raised-cosine
+  horizon sits at the Nyquist wavenumber, $`y_{\max} = \pi\hbar/2\Delta p`$,
+  so refining for reach also refines the packet's resolution in momentum.
+  Reach and resolution were one knob and the ladder ran diagonally across a
+  two-dimensional convergence. `Horizon` in Part J sets $`y_h`$ independently,
+  and the ledger estimator removes the window:
+
+  | $`\Delta p`$ | pts$`/\sigma_p`$ | $`y_h/a`$ | whole run | late half |
+  |---|---|---|---|---|
+  | 0.25 | 2 | $`\pi`$ | $`+0.2055`$ | $`+0.2195`$ |
+  | 0.25 | 2 | $`2\pi`$ | $`+0.0440`$ | $`+0.0429`$ |
+  | 0.125 | 4 | $`\pi`$ | $`+0.1158`$ | $`+0.1928`$ |
+  | 0.125 | 4 | $`2\pi`$ | $`+0.0148`$ | $`+0.0422`$ |
+  | 0.125 | 4 | $`4\pi`$ | $`+0.0059`$ | $`+0.0105`$ |
+  | 0.0625 | 8 | $`\pi`$ | $`+0.0509`$ | $`+0.1328`$ |
+  | 0.0625 | 8 | $`2\pi`$ | $`-0.0029`$ | $`+0.0260`$ |
+  | 0.0625 | 8 | $`4\pi`$ | $`+0.0016`$ | $`+0.0152`$ |
+  | 0.0625 | 8 | $`8\pi`$ | $`+0.0009`$ | $`+0.0070`$ |
+
+  Three things follow. **The resolution contamination is a transient.** Over
+  the whole run the shortfall falls along both axes; over the late half the
+  resolution axis washes out — 0.0429 against 0.0422 at $`2\pi`$ — and only
+  the horizon is left. The packet begins two grid points wide in $`p`$ and
+  spreads, so the early ringing that a coarse $`\Delta p`$ buys is paid off by
+  the time the attractor is being read. **The reach dependence survives and is
+  clean.** At $`\Delta p = 0.0625`$ the late-half ladder falls 0.133, 0.026,
+  0.015, 0.007 over three doublings of $`y_h`$, monotone, close to a factor
+  four and then two per doubling. **It changes sign**, at $`\rho = 20`$ in
+  Part H and at $`(\Delta p, y_h) = (0.0625, 2\pi)`$ here. A systematic
+  per-event ledger leak cannot change sign, so what is left is truncation
+  error, not a floor. The $`\Delta t`$-flatness the note first reported is
+  unchanged and now says what it should: at $`\Delta p = 0.125`$, $`y_h = 4\pi`$
+  the shortfall reads 0.00585, 0.00653, 0.00687 at
+  $`\Delta t = 0.02, 0.01, 0.005`$ — flat, so refining time buys nothing,
+  which is exactly what one expects of an error controlled by a spatial
+  regulator.
+
+  **The claim, stated as a claim.** $`f \to 1/2`$ exactly as the regulator is
+  removed. Four points with a wobbling tail are evidence and not proof, and no
+  analytic argument is offered here; the natural candidate is the T-symmetry
+  route of Conjecture H6 in
+  [`../supplement/holland_two_fluid_correspondence.md`](../supplement/holland_two_fluid_correspondence.md),
+  which this ladder now supports rather than embarrasses.
+
 - **S-SP4 (the mean-field caps). Resolved, with a caveat worth keeping.**
   Part I re-runs the tau-leap under forward, reversed, two fixed random and one
   per-step reshuffled channel ordering. The observable barely moves: the
@@ -461,6 +533,25 @@ population, but it is no longer load-bearing.
   state would make "equilibrium" exact rather than asymptotic, but the Eckart
   barrier has no bound states; K-LS5's soft-core Coulomb, which has both a
   tunable ceiling and an attractive well, is the natural vehicle.
+- **S-SP7 (the negative-cap leakage).** The residual at the finest
+  configuration is not reach at all. Spectral transport leaves small negative
+  populations behind through ringing — worst cell $`-6\times10^{-3}`$ at
+  $`\Delta p = 0.25`$, about two per cent of the packet peak — and the
+  allocation $`A = \min(D, {\rm cap}_A, {\rm cap}_B)`$ inherits their sign. A
+  negative $`A`$ is an event run backwards: it credits bodies where it should
+  debit them and debits the sea where it should credit it. The damage is
+  concentrated in one channel, because $`q = 1`$ carries about 56 per cent of
+  all demand and its measured $`f_q`$ is nonsensical wherever the negative caps
+  dominate ($`-15.8, -4.7, -1.2`$ across the coarse end of the ladder, rising
+  to 0.35 at the fine end). Part J confirms the fix proposed as **J-SP2** in
+  [`../supplement/emission_and_absorption.md`](../supplement/emission_and_absorption.md):
+  clipping the caps *and* moving the ringing repair out of the event loop
+  keeps S7 at machine precision and cuts the shortfall from 0.0440 to 0.0079.
+  Clipping the caps alone is worse than doing nothing — the population clamp
+  then fires, manufactures bodies, and breaks S7 outright, the two sides of
+  the identity parting by $`9\times10^{-2}`$. This is a specification question
+  and is left to J-SP2; it is logged here because it is the second independent
+  route to $`f = 1/2`$ and the two should not be confused with each other.
 
 ---
 
@@ -480,6 +571,7 @@ population, but it is no longer load-bearing.
 | G | reach dependence of $`f`$ and of $`N_{\rm eq}`$; the $`\kappa \propto \Gamma`$ scaling |
 | H | S9, the $`\rho = N_0/\lvert E\rvert`$ sweep and the approach to $`f = 1/2`$ from both sides |
 | I | S-SP4, the channel-ordering spread in $`E`$, $`f`$, $`N`$ and min $`S/B`$ |
+| J | S-SP3, the ledger estimator against `late_f`, and the shortfall against a horizon set independently of the momentum grid; the J-SP2 comparison. `WPMW_HEAVY=1` adds the $`n_p = 256`$ row |
 
 Figures on the `output` branch:
 
@@ -505,6 +597,13 @@ Left: the instantaneous absorptive fraction from four initial ratios spanning
 a factor twenty, converging on $`f = 1/2`$ from above and below. Right: the
 body count for the same four runs, which does not converge — only $`f`$ is
 preparation-independent.
+
+[![The horizon ladder](https://raw.githubusercontent.com/billpage/wpmw/output/figures/sea_population_horizon_ladder.png)](https://raw.githubusercontent.com/billpage/wpmw/output/figures/sea_population_horizon_ladder.png)
+
+S-SP3: the magnitude of the shortfall against a horizon $`y_h`$ set
+independently of the momentum grid, at two grid resolutions. Open circles mark
+a negative shortfall — the sign change is the reason to read the residual as
+truncation error rather than as a floor.
 
 ---
 

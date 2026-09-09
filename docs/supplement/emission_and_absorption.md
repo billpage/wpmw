@@ -439,8 +439,25 @@ $`f`$ near $`0.88`$. None is told where to go. All arrive.
 
 ## 8. Why it stops just short
 
-The measured attractor sits slightly *below* one half, and the shortfall
-narrows as the coherence reach grows. The reason is in the word "both."
+**Correction, and a narrowing of what this section claims.** Two things have
+since changed under it. First, the shortfall quoted throughout the project was
+measured with a windowed estimator that phase-samples the packet's own
+oscillation; Theorem S7 gives an exact window-free alternative. Second, the
+reach ladder varied the horizon by refining $`\Delta p`$, which in this code
+also refines the packet's resolution in momentum — one knob, two effects. With
+both corrected (Part J of
+[`../analysis/sea_population_equilibrium.md`](../analysis/sea_population_equilibrium.md))
+the shortfall falls monotonically towards zero as the horizon opens. So the
+conjunction cost below sets the *rate of approach* to one half at finite
+reach. It is not a floor, and the attractor is not below one half in the
+limit. A further caution: at coarse reach some of the measured cost is not
+conjunction at all but the negative-cap leakage diagnosed in J-SP2 below,
+which makes the per-leg figures unreliable exactly where the cost looks
+largest.
+
+The measured attractor sits slightly *below* one half at any finite reach, and
+the shortfall narrows as the coherence reach grows. The reason is in the word
+"both."
 
 An absorptive event needs a partner at **both** daughter rows simultaneously,
 because §10 forbids realising the two legs differently. Part F
@@ -622,6 +639,26 @@ allocation — local, physically obvious, since a negative supply is no supply,
 and it leaves the population arithmetic exact — and let transport ringing be
 repaired at the transport substep, where the specification already mandates a
 separate repair restoring $`N \ge |E|`$.
+
+**Status: independently confirmed, and the proposal is the whole proposal.**
+Part J of [`../analysis/sea_population_equilibrium.md`](../analysis/sea_population_equilibrium.md)
+runs all three variants at $`T = 8`$, $`\Delta t = 0.02`$ and reads the
+shortfall through S7:
+
+| variant | $`\tfrac{1}{2}-f`$ | ledger gap |
+|---|---|---|
+| as specified | $`+0.0440`$ | $`5\times10^{-17}`$ |
+| caps clipped, clamp kept | $`-0.1040`$ | $`9\times10^{-2}`$ |
+| J-SP2: caps clipped, clamp removed | $`+0.0079`$ | $`4\times10^{-15}`$ |
+
+Doing half of it is worse than doing none: clipping the caps starves the
+allocation of the negative supply it had been drawing on, the population clamp
+fires to make up the difference, and S7 parts by $`9\times10^{-2}`$. Doing both
+halves keeps S7 at machine precision and cuts the shortfall fivefold. The
+channel decomposition says why the effect is so concentrated: $`q = 1`$ carries
+about 56 per cent of all demand, and its absorptive fraction is nonsensical —
+$`-15.8`$ at the coarse end of the reach ladder — wherever the negative caps
+dominate. Logged from that side as S-SP7.
 
 **A corollary worth flagging separately.** The specification's own consistency
 test reads a ledger residual above the floor as evidence that an implementation

@@ -885,12 +885,25 @@ see that directory's README for the ladder itself.
   reach.  Parts H and I close two of the note's open items: H pads the initial
   ensemble with +- pairs to a ratio rho = N0/|E| spanning a factor twenty and
   traces the instantaneous absorptive fraction, which converges on 1/2 from
-  above and from below (0.836 -> 0.499 at rho = 20; 0.462 -> 0.484 at rho = 1)
+  above and from below (0.816 -> 0.527 at rho = 20; 0.458 -> 0.427 at rho = 1)
   — so the ledger closes with no tuning, though the body count keeps its
   preparation memory.  I re-runs the tau-leap under five channel orderings:
   the observable moves by 3e-3 against a splitting error of 1e-2, but N(T)
   moves by ~14%, so the ledger figures carry a method uncertainty the fidelity
-  figures do not.
+  figures do not.  Part J closes S-SP3.  It replaces the windowed estimator
+  `late_f` — which averages over 2.0 of a trace that oscillates with the
+  packet, and so phase-samples a wobble the size of the thing measured — with
+  the exact form of the ledger identity, `1/2 - f = dN / (4 n_ev)`, valid over
+  any window; and it separates two knobs the earlier reach ladder had
+  conflated, since `Ledger` puts the raised-cosine horizon at the Nyquist
+  wavenumber, so refining `dp` for reach also refines the packet's resolution
+  in momentum.  The `Horizon` subclass sets `y_h` independently.  The shortfall
+  then falls monotonically as the horizon opens — 0.133, 0.026, 0.015, 0.007
+  over `y_h/a = pi, 2pi, 4pi, 8pi` at fixed resolution — and changes sign,
+  which a systematic per-event leak cannot do.  Part J also runs the J-SP2
+  variant of the allocation loop, which cuts the shortfall from 0.044 to
+  0.0079 while keeping the ledger identity at machine precision.  Set
+  `WPMW_HEAVY=1` to add the n_p = 256 row (slow).
 
   Sample output figures (committed on the `output` branch):
 
@@ -916,6 +929,14 @@ see that directory's README for the ladder itself.
   Left: the instantaneous absorptive fraction from four initial ratios,
   converging on f = 1/2 from both sides.  Right: the body count for the same
   four runs, which does not converge — only f is preparation-independent.
+
+  ![The horizon ladder](https://raw.githubusercontent.com/billpage/wpmw/output/figures/sea_population_horizon_ladder.png)
+
+  S-SP3: the magnitude of the shortfall against a horizon set independently of
+  the momentum grid, at two grid resolutions, whole-run and late-half.  The
+  late-half curves for the two resolutions lie on top of each other, so the
+  resolution contamination is a transient and the reach dependence is the
+  physical one.
 
 - `demo_compensated_ontology.py` — verification companion to
   `docs/analysis/compensated_ontology.md`, which asks whether the compensated
