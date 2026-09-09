@@ -460,6 +460,134 @@ condition on the reach rather than nothing at all.
 
 ![Newtonian arcs plus zero-mean hops at three reaches](https://raw.githubusercontent.com/billpage/wpmw/output/figures/compensated_world_paths.png)
 
+### 3.1 The residual has no hop rate on the momentum lattice
+
+Theorem C3 says the residual is a bounded signed jump measure in the transfer
+variable $`\xi`$. It does not say that the *rates* of those jumps can be
+written down on the crystal lattice, and they cannot. This deserves its own
+statement, because the crystal-lattice algorithm is where most readers arrive
+from, and because it settles CLS3.
+
+Work per Fourier mode at fixed $`x`$, in the lattice variables of
+[`four_rule_microdynamics_equivalence.md`](four_rule_microdynamics_equivalence.md)
+(**FR**): $`A`$ shifts by $`q`$ momentum cells, with symbol
+$`z = e^{iu}`$. The two frameworks share one variable,
+
+```math
+u \;=\; q\thinspace\delta\thinspace s \;=\; k_q\thinspace y ,
+```
+
+using the crystal quantum $`q\delta = \hbar k_q/2`$: **FR's lattice angle and
+this note's reach parameter are the same quantity.** That is Theorem C4's
+"reach and momentum quantum are one parameter" seen from the lattice side.
+
+FR's family splits the mode generator into two channels, a *focus* channel
+$`(2 - A - A^{-1})F`$ in which two co-located worlds exchange a half-photon,
+and a *hop* channel $`(A^{-1} - A)H`$ in which one world exchanges a whole
+photon with the mode. For the symmetric member their symbols are
+
+```math
+\underbrace{2i\Gamma\thinspace\sin u\thinspace(1 - \cos u)}_{\text{focus}}
+\;+\;
+\underbrace{i\Gamma\thinspace\sin 2u}_{\text{hop}}
+\;=\;
+2i\Gamma\thinspace\sin u ,
+```
+
+the right-hand side being the exact mode symbol of Lemma C0. *Verified*
+(Part J) to $`1.8\times10^{-15}`$ against the lattice stencils.
+
+> **Lemma C8.** For **every** member of the FR family the focus channel
+> contributes nothing to the first moment: its contribution carries the factor
+> $`2 - 2\cos u = u^2 + O(u^4)`$, so a drift term — linear in $`u`$ — would
+> require a rate $`\hat F \sim 1/u`$, which is unbounded at $`u \to 0`$ and is
+> not a jump measure. The classical force sits entirely in the one-photon hop
+> channel, and does so necessarily rather than by choice.
+
+*Verified* (Part J), cosine well at $`x = 1`$: the focus channel delivers
+$`\Delta P = 0.000000`$ and $`\Delta E_{\rm kin} = 0.000000`$, the hop channel
+$`\Delta P = +0.833041`$ against $`-V'(x)\rho = +0.833041`$.
+
+So the compensation of §2 is an operation on the hop rate alone. Carrying it
+out gives the obstruction.
+
+> **Theorem C9.** Solving the FR generator equation for the compensated target
+> $`M_{\rm res}`$ in place of $`M`$ gives
+> ```math
+> \hat H_{\rm comp}(u) \;=\; \bigl(2 - 2\cos u\bigr)\hat G(u)
+> \;-\; \Gamma\thinspace\frac{\sin u - u}{\sin u}
+> \;=\; \hat H(u) \;+\; \Gamma\thinspace\frac{u}{\sin u} .
+> ```
+> The compensating term $`\Gamma\thinspace u/\sin u`$ is (i) **not periodic**
+> in $`u`$, so it is the symbol of no translation-invariant operator on the
+> momentum lattice; (ii) **singular** at $`u = m\pi`$, $`m \ne 0`$; and
+> (iii) not integrable on $`(-\pi, \pi)`$, so it has no Fourier coefficients
+> and hence no kernel of any range. Every member of the compensated family
+> inherits all three, so no compensated member is a finite-range lattice rate
+> law, and none is endpoint-local in the sense of FR.
+
+*Verified* (Part J). $`|\hat H_{\rm comp}(u + 2\pi) - \hat H_{\rm comp}(u)|
+= 10.34`$ at $`u = 0.7`$, against $`0`$ for any lattice symbol;
+$`\int_{\epsilon < |u| < \pi - \epsilon} |u/\sin u|\thinspace du`$ grows by
+$`2\pi\ln 10 = 14.47`$ per decade of $`\epsilon`$; and at $`\hat G = 0`$:
+
+| $`u/\pi`$ | 0.05 | 0.25 | 0.50 | 0.90 | 0.99 |
+|---|---|---|---|---|---|
+| $`\hat H_{\rm comp}/1`$ | $`-0.0044`$ | $`-0.117`$ | $`-0.605`$ | $`-8.64`$ | $`-104.0`$ |
+
+The pole is not an accident of the algebra. $`\sin u = 0`$ at $`u = \pi`$ is
+the null direction of the hop operator $`A^{-1} - A`$ — the staggered mode,
+which is FR's null bias $`H_0`$. A channel that cannot act on the staggered
+mode cannot be asked to cancel a drift there, and the rate required to do it
+anyway diverges.
+
+**What survives.** The momentum lattice survives as a *transfer* spectrum and
+not as a *state* space. Theorem O5 puts the support of $`K_{\rm res}`$ in
+$`\xi`$ on a lattice of spacing $`\Delta p`$ whenever $`V`$ is periodic, and
+that is a statement about momentum *differences*, not about the momenta worlds
+carry. Under the split a world's own momentum is continuous and is moved
+continuously by step 1; only the offsets $`\pm\xi_q`$ at which the residual
+deposits stay quantised. This is the answer to CLS3, and it is a stronger
+answer than the question anticipated: it is not merely that a sub-$`\Delta p`$
+deterministic acceleration cannot be represented on the lattice, but that the
+jump rate which would have to represent it instead is singular at the lattice's
+own Nyquist point.
+
+### 3.2 Mediator, parent, and what the rate is weighted by
+
+The crystal-lattice rule reads: a positon at cell $`n`$ *mediates*, at rate
+$`|\Gamma|`$ per mediator, the transfer of one positon from $`n+q`$ to
+$`n-q`$; the mediator is unchanged. The same arithmetic is realised quite
+differently once the force has been removed and the demography of
+[`../supplement/emission_and_absorption.md`](../supplement/emission_and_absorption.md)
+supplies the events: the rate at row $`n`$ is set by the signed body occupancy
+there, the material comes from a neutral sea pair on that row, and two
+worldlines *begin* at $`n \pm q`$. Nothing is transferred.
+
+Two roles that the lattice rule held in one object are now held by two:
+
+- the **parent** body at row $`n`$, which sets the rate and is unchanged by the
+  event — a catalyst in the strict sense;
+- the **sea pair** on the same row, which is consumed (emissive) or created
+  (absorptive) — the participant.
+
+The word *mediator* should be retired here, for two reasons. First, there is
+nothing to mediate: a mediator stands between two states that a quantum moves
+between, and under the compensated demography nothing moves. Second, the word
+names both roles at once, and they come apart — the bodies and the sea can be
+independently short of supply, which is exactly the rationing that makes the
+absorptive fraction an attractor rather than a tuned constant. *Parent* and
+*sea pair* are the specification's own words and they are the right ones.
+
+One consequence is worth recording rather than arguing. FR §6.2 objects to the
+pure-hop rule that its rate is weighted by the occupancy of a cell the event
+does not visit. Under the compensated reading that cell **is** visited: the sea
+pair there is destroyed or created. So the objection is weakened. It is not
+dissolved, and it would be wrong to claim otherwise: what weights the rate is
+still the *body* occupancy, and the body is still a spectator. Whether the
+distinction between "the event touches this cell" and "the event consumes the
+object whose density sets its rate" has any content is CLS8.
+
 ---
 
 ## 4. The reach condition
@@ -503,6 +631,17 @@ collapses to the two-atom mode stencil — checked directly:
 $`TV(K) = 2.121320`$ against the analytic $`2|\Gamma_q| = 2.121320`$. Coarse
 momentum is exactly what makes the residual a finite jump measure rather than
 a differential operator, so the two facts are one fact.
+
+**Why the ratio turns over where it does.** Theorem C9 supplies the mechanism.
+Restricted to $`|u| \le k\thinspace y_{\max}`$ the compensated hop symbol is a
+bounded function; as $`k\thinspace y_{\max} \to \pi`$ it is not. The budget
+ratio reaching unity at $`u = \pi`$ and the compensated rate law diverging
+there both trace to the same zero, $`\sin u = 0`$: there the residual is pure
+anti-drift, $`M_{\rm res} = -M_{\rm cl}`$, and a channel carrying the factor
+$`\sin u`$ can only deliver it at infinite rate. So the reach condition has a
+third reading alongside the budget one and the semiclassical one below — it is
+the condition under which the rate law that replaces the deterministic force
+stays finite at all.
 
 The physical reading of $`u \ll \pi`$ is the semiclassical condition in
 disguise. Writing $`y_{\max} \sim \hbar/(2\sigma_p)`$ for a state of momentum
@@ -783,6 +922,8 @@ while the long-range Kepler dynamics is deterministic.
 | C6 | Coulomb: the Moyal series converges iff the reach misses the nucleus | $`7.1\times10^{-15}`$ |
 | C7 | quiet region: $`V'''`$ vanishing on the reach implies no events at $`x`$ (extends O4 from a vanishing to a quadratic potential) | edge sharp to $`10^{-15}`$ |
 | C0 | the mode stencil is an identity; the derivative approximates it | analytic |
+| C8 | the focus channel carries no drift for any rate law: the classical force is necessarily in the one-photon hop channel | $`\Delta P`$ table, §3.1 |
+| C9 | the compensated hop rate is non-periodic, singular at $`u = \pi`$, and has no lattice kernel; the momentum lattice survives only as a transfer spectrum | $`10.34`$, $`2\pi\ln 10`$ per decade |
 
 The short version. On the open line the classical force can be moved into the
 first substep, exactly, for any potential and with no Trotter error, and what
@@ -812,19 +953,43 @@ not as a home for the ontology.
   position-space locality, extending Proposition O4 and sharpening Theorem O1. Does the same truncation restore locality
   for the two-body kernel of the interworld coupling notes, or is that a
   different mechanism?
-- **CLS2.** Does the deterministic acceleration have a field reading in the
-  four-action model? The natural candidate is the mean occupation of a
+- **CLS2.** Half settled by Lemma C8, §3.1: the deterministic acceleration is
+  exactly the first moment of the one-photon channel, and no rate law can put
+  any part of it elsewhere, so the Cyganski memo's tying of all the force to
+  the photon channel is not a convention but forced. What remains open is the
+  mean-field/shot-noise reading itself, and there is a definite obstacle to it:
+  the focus channel contributes to the residual at the same order $`u^3`$, with
+  the opposite sign and three times the magnitude, and focus is not the
+  fluctuation of anything — it is a second vertex. So C3 is not the
+  decomposition of a single field. Original wording: does the deterministic
+  acceleration have a field reading in the four-action model? The natural candidate is the mean occupation of a
   coherent mode field, with the residual as the fluctuation about it. If that
   holds, C3 is the mean-field / shot-noise decomposition of a single field.
   This wants checking against the momentum-and-energy balance argument of the
   Cyganski memo, which currently ties all of the force to the photon channel.
-- **CLS3.** C4 identifies the reach with the momentum quantum. On the crystal
+- ~~**CLS3.** C4 identifies the reach with the momentum quantum. On the crystal
   lattice momentum is quantised and a deterministic sub-$`\Delta p`$
   acceleration cannot be represented at all. Does step 1 then require
-  continuous momentum, and hence — via Theorem O5 — an aperiodic potential?
+  continuous momentum, and hence — via Theorem O5 — an aperiodic potential?~~
+  **Resolved by Theorem C9, §3.1**, in the affirmative for the first half and
+  in the negative for the second. Step 1 does require continuous momentum, and
+  for a reason stronger than the question anticipated: the compensated hop rate
+  is not a lattice operator at all. But periodicity of $`V`$ is not thereby
+  lost — by Theorem O5 it quantises the *transfers* $`\xi`$, not the momenta
+  worlds carry, and only the former is needed. What remains open is the
+  aperiodic case: for a $`V`$ with no period the transfer spectrum is
+  continuous, and what then plays the role of the four channels has not been
+  worked out.
 - **CLS4.** What sets $`L_c`$ physically? C4 makes it the parameter that
   decides whether the classical/quantum split exists, which is a heavy load
   for a quantity so far introduced as a truncation.
+- **CLS8.** §3.2. Under the compensated demography the rate at a row is
+  weighted by the body occupancy there while the object consumed is the sea
+  pair on the same row. FR's locality objection to a rate that reads a
+  non-participating cell is thereby weakened but not dissolved. Is there a
+  formulation of momentum-space locality that distinguishes "the event touches
+  this cell" from "the event consumes the object whose density sets its rate",
+  and does the distinction have observable content?
 - **CLS5.** An errata line for
   `../supplement/phase_space_crystal_lattice_supplement.md` §6.1, which
   describes the mode finite difference as an approximation. For a single

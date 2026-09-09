@@ -40,6 +40,11 @@ D  Theorem C5, the ring.  On a circle V''' = 0 forces V constant; the
 E  Evolution in the ring parabola against a cosine well, for scale.
 F  Theorem C6, Coulomb.
 G  Summary.
+J  Lemma C8 and Theorem C9.  The four-rule channel decomposition of the mode
+   symbol; the focus channel carries no drift for any rate law, so the
+   classical force is necessarily in the one-photon hop channel; and the
+   compensated hop rate acquires the factor Gamma u / sin u, which is not
+   periodic, is singular at u = pi, and has no lattice kernel.
 
 Run with ``WPMW_OUTPUT`` set (``/mnt/user-data/outputs`` in the container).
 """
@@ -856,6 +861,91 @@ def fig_coulomb():
     plt.close(fig)
 
 
+
+# --------------------------------------------------------------------- #
+# Part J -- Lemma C8 and Theorem C9                                      #
+# --------------------------------------------------------------------- #
+def part_j():
+    banner("Part J -- the residual has no hop rate on the lattice (C8, C9)")
+    q = 1
+    npc = 256
+    delta = HBAR * K_COS / (2 * q)          # crystal quantum, q delta = hbar k / 2
+    x = 1.0
+    G = -V_P / HBAR * np.sin(K_COS * x)     # rate field Gamma_q(x)
+
+    def roll(a, k):
+        return np.roll(a, -k * q)
+
+    print("  FR's lattice angle and this note's reach parameter are one")
+    print("  variable: u = q delta s = k_q y.  Channel symbols of the")
+    print("  symmetric member, checked against the lattice stencils:")
+    rng = np.random.default_rng(7)
+    W = rng.standard_normal(npc)
+    f = 0.5 * G * (roll(W, 1) - roll(W, -1))
+    h = -0.5 * G * (roll(W, 1) + roll(W, -1))
+    foc = 2.0 * f - roll(f, -1) - roll(f, 1)
+    hop = roll(h, -1) - roll(h, 1)
+    Wt = np.fft.fft(W)
+    u = q * 2.0 * np.pi * np.fft.fftfreq(npc)
+
+    def back(sym):
+        return np.real(np.fft.ifft(sym * Wt))
+
+    print(f"     focus vs 2iG sin u (1-cos u)   "
+          f"{np.abs(foc - back(2j * G * np.sin(u) * (1 - np.cos(u)))).max():.3e}")
+    print(f"     hop   vs iG sin 2u             "
+          f"{np.abs(hop - back(1j * G * np.sin(2 * u))).max():.3e}")
+    print(f"     sum   vs G (W_n+q - W_n-q)     "
+          f"{np.abs(foc + hop - G * (roll(W, 1) - roll(W, -1))).max():.3e}")
+
+    print()
+    print("  Lemma C8.  The focus contribution carries the factor 2 - 2 cos u")
+    print("  = u^2 + O(u^4), so it cannot contain a drift unless F ~ 1/u.")
+    n = np.arange(npc) - npc // 2
+    pv = n * delta
+    Wp = np.exp(-0.5 * (n / 12.0) ** 2)
+    Wp /= Wp.sum()
+    f = 0.5 * G * (roll(Wp, 1) - roll(Wp, -1))
+    h = -0.5 * G * (roll(Wp, 1) + roll(Wp, -1))
+    foc = 2.0 * f - roll(f, -1) - roll(f, 1)
+    hop = roll(h, -1) - roll(h, 1)
+    print(f"     {'channel':>8} {'dN':>12} {'dP':>12} {'dE_kin':>12}")
+    for name, ch in (("focus", foc), ("hop", hop), ("total", foc + hop)):
+        print(f"     {name:>8} {ch.sum():+12.3e} {(pv * ch).sum():+12.6f} "
+              f"{(pv ** 2 / (2 * MASS) * ch).sum():+12.6f}")
+    print(f"     {'-V rho':>8} {'':>12} {V_P * K_COS * np.sin(K_COS * x):+12.6f}")
+
+    print()
+    print("  Theorem C9.  H_comp = H + Gamma u / sin u.  The added term is not")
+    print("  periodic, is singular at u = pi, and is not integrable there.")
+
+    def H_comp(uu, alpha):
+        return (2 - 2 * np.cos(uu)) * alpha - G * (np.sin(uu) - uu) / np.sin(uu)
+
+    print(f"     {'u/pi':>8} {'G_op = 0':>14} {'G_op = Gamma/2':>16}")
+    for r in (0.05, 0.25, 0.50, 0.90, 0.99):
+        uu = r * np.pi
+        print(f"     {r:>8.2f} {H_comp(uu, 0.0):>14.5f} {H_comp(uu, G / 2):>16.5f}")
+    u0 = 0.7
+    print(f"     |H(u + 2pi) - H(u)| at u = {u0}: "
+          f"{abs(H_comp(u0 + 2 * np.pi, 0.0) - H_comp(u0, 0.0)):.4f}   "
+          f"(0 for any lattice symbol)")
+    print("     integral of |u / sin u| over eps < |u| < pi - eps:")
+    prev = None
+    for eps in (1e-2, 1e-3, 1e-4, 1e-5):
+        uu = np.linspace(eps, np.pi - eps, 2_000_001)
+        val = 2.0 * np.trapezoid(np.abs(uu / np.sin(uu)), uu)
+        step = "" if prev is None else f"   (+{val - prev:.4f} per decade)"
+        prev = val
+        print(f"        eps = {eps:<8.0e} {val:10.4f}{step}")
+    print(f"     analytic increment per decade: 2 pi ln 10 = "
+          f"{2 * np.pi * np.log(10):.4f}")
+    print()
+    print("  So no compensated member is a finite-range lattice rate law.  The")
+    print("  momentum lattice survives as a transfer spectrum (O5 quantises xi,")
+    print("  not p); a world's own momentum is continuous under step 1.")
+
+
 # --------------------------------------------------------------------- #
 def main():
     print("Verification for docs/analysis/compensated_liouville_splitting.md")
@@ -868,6 +958,7 @@ def main():
     part_g()
     part_h()
     part_i()
+    part_j()
     banner("Figures")
     fig_symbol()
     fig_reach(bdata)
@@ -889,6 +980,11 @@ def main():
     print("      nothing; a coherence horizon fixes that and the seam at once")
     print("  C6  Coulomb: the Moyal series converges iff the reach misses the")
     print("      nucleus")
+    print("  C8  the focus channel carries no drift for any rate law: the")
+    print("      classical force is necessarily in the one-photon hop channel")
+    print("  C9  the compensated hop rate is non-periodic, singular at u = pi,")
+    print("      and has no kernel on the momentum lattice; the lattice")
+    print("      survives only as a transfer spectrum")
     print("  C7  quiet region: a vanishing third derivative on the reach")
     print("      implies no events at x; a bounded reach confines the")
     print("      interaction to within y_max of the non-quadratic part of V")
