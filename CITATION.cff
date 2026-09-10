@@ -1,11 +1,30 @@
 cff-version: 1.2.0
-message: "If you use or build on this repository, please cite it as below."
-title: "WPMW: a compensated Liouville algorithm for quantum dynamics via signed particles"
+message: >-
+  The primary content of this repository is the theoretical notes and
+  derivations under docs/ (see preferred-citation below); the Python
+  source under src/ implements and numerically verifies them. If you use
+  or build on this work, please cite it as below.
+title: "WPMW: notes, derivations, and code for a compensated Liouville algorithm for quantum dynamics via signed particles"
 type: software
 authors:
   - family-names: Page
     given-names: Bill
 url: "https://github.com/billpage/wpmw"
+repository-code: "https://github.com/billpage/wpmw"
 license: "AGPL-3.0-or-later"
 license-url: "https://github.com/billpage/wpmw/blob/main/LICENSE"
-repository-code: "https://github.com/billpage/wpmw"
+preferred-citation:
+  type: report
+  title: "WPMW: notes and derivations on a compensated Liouville algorithm for quantum dynamics via signed particles"
+  authors:
+    - family-names: Page
+      given-names: Bill
+  url: "https://github.com/billpage/wpmw/tree/main/docs"
+  repository-code: "https://github.com/billpage/wpmw"
+  year: 2026
+  notes: >-
+    Research notes, derivations, and analysis under docs/ (algorithm,
+    supplement, and analysis subdirectories), licensed CC BY-SA 4.0 —
+    see LICENSE-DOCS. The Python code under src/ is a secondary,
+    separately licensed (AGPL-3.0-or-later) implementation used to
+    verify these notes numerically.

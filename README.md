@@ -150,27 +150,33 @@ terms. If you build on this work, please cite it as described below.
 
 ## Citation
 
-If you use or build on this repository, please credit the authors. A
-machine-readable citation is also available in
-[`CITATION.cff`](CITATION.cff), which GitHub uses to generate a "Cite
-this repository" option.
+The primary content of this repository is the research notes, derivations,
+and analysis under `docs/` — the Python code in `src/` is a secondary,
+numerical-verification companion to those notes. Cite the notes as below;
+a machine-readable version is in [`CITATION.cff`](CITATION.cff) as the
+`preferred-citation`, which GitHub's "Cite this repository" option and
+tools such as Zenodo read in preference to the plain software entry.
 
 Plain text:
 
-> Bill Page and contributors (2026). *WPMW: A compensated Liouville
-> algorithm for quantum dynamics via signed particles* [Software and
-> research notes]. GitHub. https://github.com/billpage/wpmw
+> Bill Page (2026). *WPMW: notes and derivations on a compensated
+> Liouville algorithm for quantum dynamics via signed particles*
+> [Research notes]. https://github.com/billpage/wpmw/tree/main/docs
 
 BibTeX:
 
 ```bibtex
-@misc{wpmw2026,
-  author       = {Page, Bill and contributors},
-  title        = {{WPMW}: A compensated {Liouville} algorithm for quantum
-                   dynamics via signed particles},
-  year         = {2026},
-  howpublished = {GitHub repository},
-  url          = {https://github.com/billpage/wpmw},
-  note         = {Accessed: insert date}
+@techreport{wpmw2026notes,
+  author = {Page, Bill},
+  title  = {{WPMW}: notes and derivations on a compensated {Liouville}
+             algorithm for quantum dynamics via signed particles},
+  year   = {2026},
+  url    = {https://github.com/billpage/wpmw/tree/main/docs},
+  note   = {Accessed: insert date}
 }
 ```
+
+If you specifically need to cite the code rather than the notes (e.g. you
+ran the simulations but aren't drawing on the derivations), use the
+top-level entry in `CITATION.cff` instead — same author, but scoped to
+`src/` and the AGPL-3.0-or-later license.
