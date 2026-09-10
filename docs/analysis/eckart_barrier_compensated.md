@@ -777,13 +777,13 @@ $`\beta`$ on log axes against $`0.55/\beta`$.
   §5 variant of the inverted-pair note — an initial state with genuine
   negativity straddling the separatrix — should worsen the cancellation, but
   by how much is unmeasured.
+- **K-LS5.** The soft-core reading of Corollary K1.2 suggests the next test
+  case: soft-core Coulomb has a tunable ceiling $`\epsilon`$ and, unlike the
+  Eckart barrier, an attractive well with bound states.
 - **K-LS6.** Theorem K7 is stated for sech². The number of emission lobes
   is the number of sign changes of $`V'''`$, so it is potential-specific; a
   general statement relating lobe count to the cancellation depth of
   Theorem K5 has not been attempted.
-- **K-LS5.** The soft-core reading of Corollary K1.2 suggests the next test
-  case: soft-core Coulomb has a tunable ceiling $`\epsilon`$ and, unlike the
-  Eckart barrier, an attractive well with bound states.
 - **K-LS7 (does the sea inherit the lobes?).** A local balance between
   emission and absorption would put the equilibrium unpaired density
   proportional to $`\Gamma`$, and so give it the four-lobe structure of

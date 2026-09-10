@@ -1428,6 +1428,20 @@ translation.
   [`../analysis/species_sectors_and_annihilation.md`](../analysis/species_sectors_and_annihilation.md)
   against nodal structure and this note's pricing against event rate have
   still not been compared on one problem.
+- **CLA4 (time-dependent $`V`$).** The whole rate field is rebuilt each step,
+  and §7.5's cost comparison inverts. Whether the active set still pays is
+  unknown.
+- **CLA5 (the sub-$`\Delta p`$ acceleration).** This is CLS3 of the note,
+  partly answered. Step 1 moves momentum by an amount that is generically not
+  a multiple of $`\Delta p`$, so it cannot be represented on the momentum
+  lattice at all; §3.3's two forms both evade this by keeping momentum
+  continuous within step 1 (semi-Lagrangian, or per-world). Whether a strictly
+  lattice-resident version exists — and hence whether Theorem O5's coset
+  invariant survives the compensated split as an exact statement — is open.
+- **CLA6 (multi-dimensional).** The symbol construction is per-degree-of-
+  freedom and the rung grid becomes a lattice in $`\mathbf{y}`$, so the setup
+  cost scales as $`(M_x N_p)^d`$. The active set may be the only thing that
+  makes $`d = 2`$ affordable; untested.
 - **CLA7 (the reach is over-determined).** §2.4. K1 caps $`y_{\max}`$ at the
   analyticity strip, $`\pi a/2`$ for the Eckart barrier; the ledger of §5 wants
   $`\approx 4\pi a`$, eight times larger; and Corollary K1.1 says a
@@ -1465,20 +1479,6 @@ translation.
   gauge invariance is proved, $`f`$, $`N`$ and $`S`$ are quantities of the
   representation and not of the physics, and no result in §5 should be quoted
   without its reach.
-- **CLA4 (time-dependent $`V`$).** The whole rate field is rebuilt each step,
-  and §7.5's cost comparison inverts. Whether the active set still pays is
-  unknown.
-- **CLA5 (the sub-$`\Delta p`$ acceleration).** This is CLS3 of the note,
-  partly answered. Step 1 moves momentum by an amount that is generically not
-  a multiple of $`\Delta p`$, so it cannot be represented on the momentum
-  lattice at all; §3.3's two forms both evade this by keeping momentum
-  continuous within step 1 (semi-Lagrangian, or per-world). Whether a strictly
-  lattice-resident version exists — and hence whether Theorem O5's coset
-  invariant survives the compensated split as an exact statement — is open.
-- **CLA6 (multi-dimensional).** The symbol construction is per-degree-of-
-  freedom and the rung grid becomes a lattice in $`\mathbf{y}`$, so the setup
-  cost scales as $`(M_x N_p)^d`$. The active set may be the only thing that
-  makes $`d = 2`$ affordable; untested.
 
 ---
 

@@ -945,14 +945,6 @@ not as a home for the ontology.
   the residual would then be the fit error rather than the Taylor remainder.
   Does the fitted split still commute exactly, given that the fit is
   $`x`$-dependent?
-- **CLS6.** C7 is sufficient but not necessary, the gap being potentials whose
-  Taylor remainder is even on the reach without vanishing. Parity supplies
-  isolated such points. Is there a potential with a quiet region of positive
-  measure not explained by the vanishing of $`V'''`$?
-- **CLS7.** §5 and §5.1 make the coherence horizon the restorer of
-  position-space locality, extending Proposition O4 and sharpening Theorem O1. Does the same truncation restore locality
-  for the two-body kernel of the interworld coupling notes, or is that a
-  different mechanism?
 - **CLS2.** Half settled by Lemma C8, §3.1: the deterministic acceleration is
   exactly the first moment of the one-photon channel, and no rate law can put
   any part of it elsewhere, so the Cyganski memo's tying of all the force to
@@ -983,6 +975,19 @@ not as a home for the ontology.
 - **CLS4.** What sets $`L_c`$ physically? C4 makes it the parameter that
   decides whether the classical/quantum split exists, which is a heavy load
   for a quantity so far introduced as a truncation.
+- **CLS5.** An errata line for
+  `../supplement/phase_space_crystal_lattice_supplement.md` §6.1, which
+  describes the mode finite difference as an approximation. For a single
+  Fourier mode it is an identity, and that exactness is what lets the mode sum
+  reproduce the whole Moyal series.
+- **CLS6.** C7 is sufficient but not necessary, the gap being potentials whose
+  Taylor remainder is even on the reach without vanishing. Parity supplies
+  isolated such points. Is there a potential with a quiet region of positive
+  measure not explained by the vanishing of $`V'''`$?
+- **CLS7.** §5 and §5.1 make the coherence horizon the restorer of
+  position-space locality, extending Proposition O4 and sharpening Theorem O1. Does the same truncation restore locality
+  for the two-body kernel of the interworld coupling notes, or is that a
+  different mechanism?
 - **CLS8.** §3.2. Under the compensated demography the rate at a row is
   weighted by the body occupancy there while the object consumed is the sea
   pair on the same row. FR's locality objection to a rate that reads a
@@ -990,11 +995,6 @@ not as a home for the ontology.
   formulation of momentum-space locality that distinguishes "the event touches
   this cell" from "the event consumes the object whose density sets its rate",
   and does the distinction have observable content?
-- **CLS5.** An errata line for
-  `../supplement/phase_space_crystal_lattice_supplement.md` §6.1, which
-  describes the mode finite difference as an approximation. For a single
-  Fourier mode it is an identity, and that exactness is what lets the mode sum
-  reproduce the whole Moyal series.
 
 ---
 
