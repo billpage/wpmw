@@ -160,6 +160,32 @@ Use the `/blob/` URL, not `/raw/` — GitHub renders `.ipynb` files (markdown,
 code, and any saved outputs) at the `/blob/` path; `/raw/` would just serve
 the JSON.
 
+**Math in notebook markdown cells uses a different convention than
+`.md` files.** `docs/*.md` files use GitHub's backtick-dollar form,
+`` $`...`$ `` and fenced ` ```math ` blocks, specifically to dodge
+CommonMark's backslash-stripping when GitHub renders a *markdown* file (see
+`wpmwlib/check_md_math.py`). GitHub's notebook viewer renders each markdown
+cell through a plain-MathJax pipeline that does not recognise either
+extension — the backtick-dollar form renders as a literal code span with
+visible backslashes, and a ` ```math ` fence renders as a literal code
+block. The fix is the plain form, `$...$` and `$$...$$`; because a
+notebook's cell source is stored as a raw string with no CommonMark pass in
+between, none of the backslash problems the backtick-dollar form exists to
+dodge apply in a notebook anyway. If a notebook is assembled by copying a
+tutorial's markdown into cells (as `emission_and_absorption.ipynb` was),
+run every markdown cell's text through a `$`...`$` → `$...$` /
+` ```math ` → `$$...$$` conversion before writing the notebook, and check
+the result with:
+
+```bash
+PYTHONPATH=src python3 -m wpmwlib.check_notebook_math docs/notebooks
+```
+
+which flags any leftover `.md`-convention math and any unbalanced `$` in a
+notebook's markdown cells. It is a separate tool from `check_md_math.py`
+by design — the two conventions being linted are opposites, not variations
+on the same rule.
+
 ## File conventions
 
 - Follow the existing directory structure for new files.
