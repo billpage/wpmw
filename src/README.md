@@ -1100,7 +1100,10 @@ see that directory's README for the ladder itself.
   to PDF with its embedded LaTeX math typeset correctly. Rewrites this
   project's GitHub math conventions (`` $`...`$ `` inline, ` ```math ` fenced
   display blocks — see the style guide below) into Pandoc-native `$...$` /
-  `$$...$$` in a temporary copy, then renders with Pandoc + xelatex.
+  `$$...$$` in a temporary copy, then renders with Pandoc + xelatex (with
+  the `tex_math_single_backslash` extension enabled, so GitHub's other two
+  math forms, `\(...\)` and `\[...\]`, would also render correctly if
+  they ever appear, though current WPMW docs don't use them).
   Equivalent in content to GitHub's preview, though not pixel-identical
   (LaTeX's own typesetting, not a copy of GitHub's MathJax/KaTeX rendering).
   Requires `pandoc`, `xelatex`, and `lmodern` on `PATH`

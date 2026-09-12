@@ -1,4 +1,4 @@
-"""
+r"""
 Render a WPMW markdown document (with embedded LaTeX math) to PDF.
 
 WPMW's markdown math conventions do not use plain CommonMark math syntax —
@@ -14,6 +14,12 @@ Pandoc does not recognise either form as math on its own, so this script
 rewrites both into Pandoc-native ``$...$`` / ``$$...$$`` in a temporary
 copy of the file, then hands that copy to Pandoc with the xelatex engine.
 The source document on disk is never modified.
+
+Pandoc is also invoked with the ``tex_math_single_backslash`` extension, so
+GitHub's other two math forms — inline ``\(...\)`` and display ``\[...\]``
+— render correctly too, in case they ever appear (current WPMW docs use
+only the two forms above; this is included for compatibility with GitHub's
+full math syntax rather than because it's presently exercised).
 
 Requires ``pandoc`` and a LaTeX engine (``xelatex``) on PATH, plus the
 ``lmodern`` font-metrics package. On Debian/Ubuntu::
@@ -60,10 +66,11 @@ _HEADER_INCLUDES = r"""
 
 
 def convert_math_delimiters(text: str) -> str:
-    """Rewrite WPMW's GitHub math conventions to Pandoc-native math.
+    """Rewrite the two GitHub math forms Pandoc doesn't parse natively.
 
     ```` ```math ... ``` ```` fenced blocks become ``$$ ... $$``, and
-    ``` $`...`$ ``` inline spans become ``$...$``.
+    ``` $`...`$ ``` inline spans become ``$...$``. Already-native ``$...$``,
+    ``$$...$$``, ``\\(...\\)``, and ``\\[...\\]`` are left untouched.
     """
     text = re.sub(
         r"```math\n(.*?)\n```",
@@ -91,6 +98,7 @@ def render_pdf(src_path: str, dst_path: str, timeout: int = 90) -> None:
         subprocess.run(
             [
                 "pandoc", md_path, "-o", dst_path,
+                "-f", "markdown+tex_math_single_backslash",
                 "--pdf-engine=xelatex",
                 "-V", "mainfont=DejaVu Serif",
                 "-V", "monofont=DejaVu Sans Mono",
