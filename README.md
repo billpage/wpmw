@@ -48,6 +48,29 @@ references/     bibliography.md (links to papers; PDFs are NOT committed)
 See [`docs/README.md`](docs/README.md) for a guide to what's in each
 documentation subdirectory and where to start reading.
 
+## Why document research this way
+
+A look at comparable research code repositories elsewhere shows this
+isn't the default. Most keep the paper as the documentation and the repo
+to code plus a usage README — the methodology lives in a separate
+publication, not in the repo. That held true across projects at very
+different scales, from small individual efforts to well-resourced ones.
+
+The exceptions we found instead of that pattern were a multi-institution
+collaboration's onboarding wiki (justified by needing to teach the physics
+to new contributors at scale) and a domain convention that makes
+theorem-by-theorem tracking the point of the tooling itself (as in formal
+proof-assistant "blueprint" documents). Neither reason obviously applies
+to a single-investigator project — but a third one does: this repository
+has no peer-reviewed venue checking each step as it happens, and no
+department verifying results before they're relied on for the next one.
+The documentation ladder in `docs/` is what stands in for that — a
+versioned, dated record of what was claimed, what was verified, and
+what's still open, so a claim from months ago can be checked against what
+actually justified it rather than against memory. It also functions as
+the working interface between collaborators (Bill Page, David Cyganski,
+and Claude) across sessions that don't share memory of each other.
+
 ## Output path convention
 
 All Python scripts in WPMW must write their outputs (PNGs, MP4s, CSVs, etc.)
@@ -207,6 +230,23 @@ file's actual directory, not the notebook's.
 - Drop version suffixes from filenames — git tracks revisions.
 - Do not commit copyrighted PDFs, personal files, or admin material.
 - Reference papers go in `references/bibliography.md` as links, not as PDFs.
+
+## AI collaboration and authorship
+
+This repository is a collaboration between Bill Page and Claude
+(Anthropic). Bill directs the research questions and every design and
+ontological decision, and reviews and applies every change by hand rather
+than merging automatically. Claude drafts analysis notes, implements and
+numerically verifies code, and is credited as commit author for that
+work — but is not a research author: consistent with current publisher
+and ACM guidance that authorship requires the ability to understand,
+consent to, and take responsibility for content, which an AI system
+cannot do. Nothing in this repository has been through external peer
+review.
+
+See [`AI-USE.md`](AI-USE.md) for the fuller picture of how the
+collaboration actually works, what "verified" means in this repository,
+and how that bears on the licensing below.
 
 ## License
 
