@@ -186,6 +186,21 @@ notebook's markdown cells. It is a separate tool from `check_md_math.py`
 by design — the two conventions being linted are opposites, not variations
 on the same rule.
 
+**Relative markdown links copied from a tutorial need rewriting to
+absolute URLs.** A `.md` file's relative links (e.g. `../algorithm/foo.md`
+from `docs/supplement/`) are correct only for that file's own position in
+the tree. A notebook built by copying that text lives somewhere else
+entirely — `docs/notebooks/` on `main`, `notebooks/` on the `output`
+branch — so the same relative link resolves to the wrong path, and 404s.
+(GitHub's notebook renderer compounds this: it resolves a notebook's
+relative links against the blob's commit SHA rather than the branch name,
+so even a *correctly*-relative link would behave differently there than in
+a `.md` file — see the 404 this produced on the `output`-branch copy of
+`emission_and_absorption.ipynb`, 2026-09.) Rewrite every relative link to
+an absolute `github.com/.../blob/main/...` URL when assembling a notebook
+from tutorial markdown, resolving each target against the *source* `.md`
+file's actual directory, not the notebook's.
+
 ## File conventions
 
 - Follow the existing directory structure for new files.
