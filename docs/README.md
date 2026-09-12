@@ -1,11 +1,11 @@
 # docs
 
-Project documentation, split into three directories that play different
+Project documentation, split into four directories that play different
 roles. See the top-level [`README.md`](../README.md) for repository-wide
 conventions (cloning, output paths, the `output` branch); this page is a
 guide to what's in each subdirectory here and where to start reading.
 
-## The three directories
+## The four directories
 
 - **[`algorithm/`](algorithm)** — The canonical specifications.
   Precise enough to re-implement in another language, and the only
@@ -26,6 +26,15 @@ guide to what's in each subdirectory here and where to start reading.
   inverted pair barrier), a close reading of Takabayasi (1954), and the
   `figures/` cited by those documents.
 
+- **[`notebooks/`](notebooks)** — Jupyter notebook companions to selected
+  supplement tutorials, interleaving that tutorial's prose with the same
+  code from its demo script and the figures it generates, for interactive
+  reading. Outputs are stripped here for reviewable diffs; a rendered copy
+  of each notebook, with outputs and figures intact, lives on the `output`
+  branch (see the top-level README's "Notebooks" section). These are a
+  companion rendering, not a replacement for the tutorial or the script,
+  which remain canonical.
+
 ## How they relate
 
 `algorithm/` is self-contained — read it alone to implement or run the
@@ -33,5 +42,6 @@ model. `analysis/` and `supplement/` are where the algorithm's claims get
 justified, corrected, and cross-checked against both the source material and
 each other; `analysis/` carries the theorems and the ladder structure,
 `supplement/` carries the background documents and worked test cases those
-theorems draw on. Each subdirectory's own `README.md` links every document
-it contains.
+theorems draw on. `notebooks/` sits on top of `supplement/`, one level
+further towards interactive reading rather than new claims. Each
+subdirectory's own `README.md` links every document it contains.

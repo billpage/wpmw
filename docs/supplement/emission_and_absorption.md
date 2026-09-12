@@ -22,7 +22,10 @@ This note is that reader's on-ramp. It is expository, not normative. Where it
 and the specification disagree, the specification wins.
 
 Companion code: [`src/demo_emission_and_absorption.py`](../../src/demo_emission_and_absorption.py),
-parts A–G. Every number quoted below is an output of that script.
+parts A–G. Every number quoted below is an output of that script. A notebook
+version of this tutorial, interleaving this text with that script and its
+figures, is at [`docs/notebooks/emission_and_absorption.ipynb`](../notebooks/emission_and_absorption.ipynb)
+([rendered copy, output branch](https://github.com/billpage/wpmw/blob/output/notebooks/emission_and_absorption.ipynb)).
 
 **Two things this note contributes** beyond exposition, both numerical and both
 new:

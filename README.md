@@ -38,6 +38,8 @@ docs/
   algorithm/    Core algorithm specifications
   supplement/   Extended analysis and discussion
   analysis/     Mathematical derivations and review notes
+  notebooks/    Notebook companions to supplement tutorials (outputs stripped;
+                rendered copies live on the `output` branch)
 src/            Python implementations (runnable demos / scripts)
   wpmwlib/      Shared library modules imported by the scripts
 references/     bibliography.md (links to papers; PDFs are NOT committed)
@@ -122,6 +124,41 @@ git push origin output
 
 The URL pattern is always:
 `https://raw.githubusercontent.com/billpage/wpmw/output/<subdir>/<filename>`
+
+## Notebooks
+
+Some ladder steps also have a Jupyter notebook companion that interleaves a
+supplement tutorial's prose with the same code from its demo script, plus
+its generated figures — meant for interactive reading, not as a replacement
+for the tutorial or the script, which remain canonical.
+
+Notebooks follow the same two-copy split as figures, using the same
+`docs_path()` helper with an explicit `subdir`:
+
+```python
+from wpmwlib.wpmw_utils import docs_path
+
+dp = docs_path("my_notebook.ipynb", subdir="notebooks")
+```
+
+- **Rendered copy** (outputs and figures intact) — committed to the `output`
+  branch worktree at `notebooks/<filename>.ipynb`, exactly parallel to
+  `figures/`. This is the copy worth reading or running interactively.
+- **Stripped copy** (`jupyter nbconvert --clear-output`, no outputs, no
+  execution counts) — committed to `docs/notebooks/<filename>.ipynb` on
+  `main`, so future patches to it stay reviewable as plain-text diffs
+  instead of noisy JSON-with-embedded-images diffs.
+
+**Linking to both from a markdown doc on `main`:**
+
+```markdown
+[Notebook (rendered, output branch)](https://github.com/billpage/wpmw/blob/output/notebooks/my_notebook.ipynb) ·
+[Notebook (source, main)](https://github.com/billpage/wpmw/blob/main/docs/notebooks/my_notebook.ipynb)
+```
+
+Use the `/blob/` URL, not `/raw/` — GitHub renders `.ipynb` files (markdown,
+code, and any saved outputs) at the `/blob/` path; `/raw/` would just serve
+the JSON.
 
 ## File conventions
 
