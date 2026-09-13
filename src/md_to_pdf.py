@@ -81,7 +81,12 @@ _HEADER_INCLUDES = r"""
 \sloppy
 """
 
-_FENCED_MATH = re.compile(r"```math\n(.*?)\n```", re.DOTALL)
+# Group 1 is whatever leading indentation and/or blockquote markers (">")
+# precede the fence -- required to match identically on the closing fence
+# via the \1 backreference, so a fence nested in a list item or blockquote
+# doesn't let an unrelated later ``` anywhere in the document act as its
+# closing marker (see module docstring).
+_FENCED_MATH = re.compile(r"^([ \t>]*)```math\n(.*?)\n\1```", re.DOTALL | re.MULTILINE)
 _BACKTICK_DOLLAR = re.compile(r"\$`([^`\n]+?)`\$")
 _BLOCK_MATH = re.compile(r"\$\$(.+?)\$\$", re.DOTALL)
 _INLINE_MATH = re.compile(
@@ -110,12 +115,25 @@ def convert_math_delimiters(text: str) -> str:
     reduced to single-backslash form before Pandoc sees it. Already-native
     ``\\(...\\)`` and ``\\[...\\]`` are left untouched (handled by Pandoc's
     ``tex_math_single_backslash`` extension instead).
+
+    A fenced block nested inside a list item or blockquote carries that
+    context's marker (indentation and/or ``>``) on every line, including
+    the fence lines themselves. That shared prefix is captured and stripped
+    from the content before stashing, then reapplied to every line of the
+    restored ``$$...$$`` block, so the math stays correctly nested rather
+    than being hoisted out of its list item or blockquote.
     """
-    fenced_store: list[str] = []
+    fenced_store: list[tuple[str, str]] = []
 
     def _stash_fenced(m: re.Match) -> str:
-        fenced_store.append(m.group(1))
-        return f"\x00FENCED{len(fenced_store) - 1}\x00"
+        prefix, content = m.group(1), m.group(2)
+        if prefix:
+            content = "\n".join(
+                line[len(prefix):] if line.startswith(prefix) else line
+                for line in content.split("\n")
+            )
+        fenced_store.append((prefix, content))
+        return f"{prefix}\x00FENCED{len(fenced_store) - 1}\x00"
 
     text = _FENCED_MATH.sub(_stash_fenced, text)
 
@@ -132,9 +150,11 @@ def convert_math_delimiters(text: str) -> str:
     text = _INLINE_MATH.sub(
         lambda m: f"${_reduce_doubled_escapes(m.group(1))}$", text)
 
-    for i, content in enumerate(fenced_store):
-        text = text.replace(f"\x00FENCED{i}\x00",
-                             f"$$\n{content.strip(chr(10))}\n$$")
+    for i, (prefix, content) in enumerate(fenced_store):
+        restored = f"$$\n{content.strip(chr(10))}\n$$"
+        if prefix:
+            restored = "\n".join(prefix + line for line in restored.split("\n"))
+        text = text.replace(f"{prefix}\x00FENCED{i}\x00", restored)
     for i, content in enumerate(backtick_store):
         text = text.replace(f"\x00BACKTICK{i}\x00", f"${content}$")
 
