@@ -1,5 +1,9 @@
 # Phase-Alignment Microdynamics: The Contact Interaction Without Beats or Resonance
 
+> A change of variables on the predecessor: the beat, the grating and the resonance condition are replaced by a single scalar, the misalignment `μ` of two transported clock phases. No new postulates and no different predictions, but Theorem 4 is stronger than what it replaces: requiring `μ` to hold still through a vertex forces the vertex to be a **momentum swap**, from which energy conservation and the selection rule follow rather than being imposed.
+
+*Ladder abstract — see the [full list](README.md#the-ladder).*
+
 ## 0. Status and provenance
 
 This note is a **change of variables** applied to

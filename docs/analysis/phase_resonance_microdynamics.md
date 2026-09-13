@@ -1,5 +1,9 @@
 # Phase-Resonance Microdynamics: Deriving the Collision Term from World-Particle Phases
 
+> Derives that polarisation rather than postulating it, by making phase a particle-level property (P0–P5, Theorems 1–3). Contains the parity result (fundamental particles occupy even momentum sites), the rate-table no-go (Theorem 2: phase-blind transition rules cannot reproduce linear rates), and the dark-sea lemma.
+
+*Ladder abstract — see the [full list](README.md#the-ladder).*
+
 ## 0. Status and provenance
 
 This note is the sequel to

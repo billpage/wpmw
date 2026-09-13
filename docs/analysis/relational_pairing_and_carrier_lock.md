@@ -1,5 +1,9 @@
 # Relational Pairing and the Carrier-Lock Postulate
 
+> Removes stored partnership from the algorithm specification (§2.2), at the cost of one postulate (S), the sea carrier lock. Proposition R1 shows a partner index carries no relational state; Theorem R4 factorises the vertex weight through a per-cell, per-row order parameter `Z_r`, cutting the encounter loop from `O(N_exc · B)` to `O(N_exc + N_sea)`; and §8 records a defect the indexed formulation concealed — under permanent partnership the sea is a consumable resource with no source, short by ≈770× for the cosine-well parameters.
+
+*Ladder abstract — see the [full list](README.md#the-ladder).*
+
 **Partnership is not stored state. Removing it is correct, costs one postulate, and pays for itself four times over — including a defect in the sea's accounting that the indexed formulation concealed.**
 
 ## 0. Status and provenance

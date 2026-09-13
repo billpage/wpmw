@@ -1,5 +1,9 @@
 # The position-space coherence ladder
 
+> The same construction in the *position* representation, ρ(X, X'), where each leg carries a place and a clock and nothing else. The potential and the kinetic operator swap jobs: the potential only winds μ, and all motion is four one-leg hops of amplitude ±iJ/ħ. Momentum turns out not to be carried at all — it is the misalignment of a nearest-neighbour conjugate pair, p̄ = ħμ/a — and the Euler force term follows from the pump alone. Corrects four statements of the density-matrix algorithm specification, in particular that the continuum's missing uniform bound is restored on the lattice, and that the spec's mean-field pair-Bohm machinery is unnecessary. Ends on two obstructions: hop *probability* is second order in δt, and local gauge sweeps arg ρ around the whole circle, so no positon-only sea exists here. The observable sector survives as a genuine positive-rate particle process guided by sin μ; the coherence sector does not.
+
+*Ladder abstract — see the [full list](README.md#the-ladder).*
+
 **Status.** Analysis note, step 9 of the ladder. Companion demo:
 `src/demo_position_pair_ladder.py`.
 

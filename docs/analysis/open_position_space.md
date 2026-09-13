@@ -1,5 +1,9 @@
 # Open position space: the horizon, the coset, and what the box was hiding
 
+> What happens when position space is not closed. Separates the two jobs the periodic box has been doing: fixing the momentum quantum, and keeping worlds in view. Only the first is real, and it has three independent sources — ring circumference, coherence horizon, and periodicity of `V` — of which the last works on all of ℝ. Definitions (H) and (R) in §3 fix the coherence horizon `L_c` and the **reach** `y_max = L_c/2`, the greatest half ket–bra separation a world instantiates and hence the greatest distance at which it consults the potential; the reach is the central parameter of step 14. Theorem O1: the Wigner kernel's modulus is independent of position for *every* potential, so a world far from a localised scatterer is struck at full rate and its free behaviour is a cancellation whose fringe frequency grows as 2x/ℏ; the escape problem is therefore not a boundary problem and no absorber can fix it. Theorem O5: for an `a`-periodic potential every world's `p mod (πℏ/a)` is exactly conserved with no box at all, so an L = na ring is not an approximation to open space but exactly `n` of its sectors — the modular companion to Theorem A3. Corrects the algorithm specifications on both points, retracts open item 4 of the inverted-pair supplement, and records that the sea-dressed layer does *not* generalise naively, its constant background having infinite total on non-compact phase space.
+
+*Ladder abstract — see the [full list](README.md#the-ladder).*
+
 **Status.** Analysis note, step 10 of the ladder. Companion demo:
 `src/demo_open_position_space.py`. Prompted by open item 4 of
 [`../supplement/inverted_pair_barrier.md`](../supplement/inverted_pair_barrier.md),

@@ -1,5 +1,9 @@
 # Four-Rule Two-Body Microdynamics: Analysis and Equivalence with the Single Mediated-Jump Rule
 
+> Analysis of Cyganski's proposal (Zoom, 2026) to replace the single mediated-jump rule with four two-body rules (Focus, Defocus, Right-Hop, Left-Hop). Proves exact equivalence at any particle number `ν`, shows the four-rule form is ≈5.6× quieter, and identifies the `G`-freedom — a family of exact rate assignments of which the single rule is the `G = 0` member. Ends on a no-go lemma: pairwise mass action among tracked particles is quadratic in occupancy while the QLE generator is linear, so a fully collision-based microdynamics needs a species whose density is *pinned*.
+
+*Ladder abstract — see the [full list](README.md#the-ladder).*
+
 **Analysis of D. Cyganski's proposal (Zoom presentation, 2026) to replace the single mediated momentum-jump rule of the phase-space crystal lattice with four two-body interaction rules, with an exactness proof, an algorithm specification, and numerical verification.**
 
 ---

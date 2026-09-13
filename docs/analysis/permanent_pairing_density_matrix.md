@@ -1,5 +1,9 @@
 # Permanent pairing and the density-matrix ontology
 
+> Reinstates permanent pairing under a density-matrix reading: a pair is a sampled element of ρ (positon = ket leg, negaton = bra leg, μ = arg ρ), an excess particle a diagonal sample. Retracts two *inferences* of its predecessor while keeping its calculations: pairing adds nothing to the one-particle marginal but is the entire content of the two-point function; and the pump — whose sidebands *are* split-pair amplitudes — is the source Corollary R5.1 declared absent. Derives the stencil and the mediated counting from one-leg hops of bound pairs, shows storage feasibility is exactly the Wigner bound |W| ≤ 2/h (the same inequality as W' ≥ 0), makes postulate (S) unnecessary, and leaves one load-bearing theorem: split pairs mediate with the same vertex constant as pump-excited pairs.
+
+*Ladder abstract — see the [full list](README.md#the-ladder).*
+
 **Status.** Analysis note, step 7 of the ladder. Companion demo:
 `src/demo_pairing_resource_arithmetic.py`.
 

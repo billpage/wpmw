@@ -1,5 +1,9 @@
 # The coherence ladder
 
+> Indexes ρ by splitting rung and derives the complete first-order channel table of the pairing vertex from stationarity: exact (K3), leg-local ladder, and compound classes. Proves the ladder theorem — four leg-local channels (struck leg ket/bra × direction), sea strikers for interior edges, phase continuity, conjugate bra factors and one constant reproduce the commutator elementwise at machine precision, freezing exactly at V = 0. Corrects five earlier statements, including the spec's "sea–sea optional" (the sea is the interior engine) and its erase amplitude (all transfers carry μ₁, by the licensing argument). Leaves open: striker back-reaction neutrality and compound-channel cancellation.
+
+*Ladder abstract — see the [full list](README.md#the-ladder).*
+
 **Status.** Analysis note, step 8 of the ladder. Companion demo:
 `src/demo_coherence_ladder.py`.
 

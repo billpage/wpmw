@@ -1,5 +1,9 @@
 # Sea-Dressed Two-Body Microdynamics: A Fully World-Particle Realization of the Crystal-Lattice Collision Term
 
+> Takes the step that lemma leaves open. Realises the collision term as sixteen local, two-body, momentum-conserving channels against a pinned Dirac sea of positon–negaton pairs, exact at pinned sea. Postulates the sea's polarisation: the rate field `Γ_q(x)`, its sign structure, and the half-quantum stencil offsets all enter as assumptions.
+
+*Ladder abstract — see the [full list](README.md#the-ladder).*
+
 ## 0. Status and provenance
 
 This note is the sequel to

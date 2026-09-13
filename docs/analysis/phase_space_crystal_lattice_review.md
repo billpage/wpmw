@@ -1,5 +1,9 @@
 # Phase-Space-Crystal-Lattice Interpretation of the Wigner Equation
 
+> Review of the two source documents (Cyganski's *Extended Fokker–Planck Eq. and the QLE V2* memo and the *Wigner Collisions Diagram* Sozi deck), cross-referenced at the equation-and-page level. The entry point for anyone tracing a claim back to its origin.
+
+*Ladder abstract — see the [full list](README.md#the-ladder).*
+
 **Summary review of two project documents**
 
 - `Extended_Fokker_Planck_Eq_and_the_QLE_V2.pdf` (the analytical document)

@@ -1,5 +1,9 @@
 # Four-Dimensional Microdynamics: Two Particles in 1D and One Particle in 2D, Through the Four-Action, Sea-Dressed and Phase-Alignment Layers
 
+> The ladder pushed into four-dimensional phase space: two particles on a line, and one particle in the plane. Everything above generalises under one substitution — the shift operator becomes shift-by-`q` for a *vector* wavevector — so the exactness family, the participant-locality selection of the symmetric member, and endpoint locality all survive unchanged (Theorem A1). What does not survive is the 4-D supplement's framing: Theorem A3 shows a momentum direction is conserved iff it is orthogonal to every active mode wavevector, so the 2p/1D-versus-1p/2D distinction dissolves — the two are the same equation, verified to zero. Corrects the four-rule note's claim that the hop channel cannot be a particle–particle exchange (true for external modes only), and shows that Theorem 4 of the phase-alignment note is unique **only in one spatial dimension**: in d ≥ 2 its conditions leave a (d−1)-parameter family whose every member conserves energy and does not dephase, so the swap must be postulated (exchange-only). Establishes that the sea is not merely convenient but the *only* available collision partner once N > 1, that the crystal shift does not commute with products, and that peak |W|/(2/h)^d is the state purity — so entanglement is literally excess-to-background loss. Closes with the harmonic potential: exactly classical in the mean (the Moyal bracket truncates), and the microdynamics' worst case, since the per-mode injected momentum variance is 2mω²ℏ independent of q and the total therefore grows linearly in the mode cutoff.
+
+*Ladder abstract — see the [full list](README.md#the-ladder).*
+
 ## 0. Status and provenance
 
 This note takes the derivation ladder of `docs/analysis/` — built entirely in
