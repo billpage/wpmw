@@ -26,6 +26,9 @@ parts A–G. Every number quoted below is an output of that script. A notebook
 version of this tutorial, interleaving this text with that script and its
 figures, is at [`docs/notebooks/emission_and_absorption.ipynb`](../notebooks/emission_and_absorption.ipynb)
 ([rendered copy, output branch](https://github.com/billpage/wpmw/blob/output/notebooks/emission_and_absorption.ipynb)).
+A [PDF version](https://github.com/billpage/wpmw/releases/latest/download/emission_and_absorption.pdf)
+of this tutorial is also available, typeset from this same source (see
+"PDF releases" in the top-level README).
 
 **Two things this note contributes** beyond exposition, both numerical and both
 new:

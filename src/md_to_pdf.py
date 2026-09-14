@@ -54,7 +54,7 @@ actually draws the strike.
 Requires ``pandoc`` and a LaTeX engine (``xelatex``) on PATH, plus the
 ``lmodern`` font-metrics package. On Debian/Ubuntu::
 
-    apt-get install pandoc texlive-xetex lmodern
+    apt-get install pandoc texlive-xetex lmodern texlive-plain-generic
 
 Usage
 -----

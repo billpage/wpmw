@@ -1107,11 +1107,14 @@ see that directory's README for the ladder itself.
   Equivalent in content to GitHub's preview, though not pixel-identical
   (LaTeX's own typesetting, not a copy of GitHub's MathJax/KaTeX rendering).
   Requires `pandoc`, `xelatex`, and `lmodern` on `PATH`
-  (`apt-get install pandoc texlive-xetex lmodern`).
+  (`apt-get install pandoc texlive-xetex lmodern texlive-plain-generic`).
 
   ```bash
   python3 src/md_to_pdf.py docs/supplement/emission_and_absorption.md
   ```
+
+  Docs can also opt in to an automated, published PDF via GitHub Releases —
+  see "PDF releases" in the top-level README.
 
 ## Output path convention
 

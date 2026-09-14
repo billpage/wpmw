@@ -1,0 +1,68 @@
+name: docs-release
+
+# Publishes PDF companions for docs that opt in, as a draft GitHub Release.
+#
+# A doc opts in by linking to its own PDF at the stable, evergreen URL
+# releases/latest/download/<its own filename stem>.pdf (see "PDF releases"
+# in the top-level README). Pushing a tag matching docs-v* scans docs/ for
+# any file containing such a self-link, renders each match with
+# src/md_to_pdf.py, and opens a draft release with the results attached
+# (individually, and as a single zip). The release stays a draft -- and
+# releases/latest/download/... keeps resolving to whatever the current
+# latest *published* release is -- until a human reviews it and clicks
+# Publish.
+
+on:
+  push:
+    tags:
+      - "docs-v*"
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Install pandoc + xelatex
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y pandoc texlive-xetex lmodern texlive-plain-generic
+
+      - name: Render self-declared docs
+        run: |
+          set -e
+          mkdir -p release_pdfs
+          found=0
+          while IFS= read -r doc; do
+            stem=$(basename "$doc" .md)
+            if grep -qF "releases/latest/download/${stem}.pdf" "$doc"; then
+              rel="${doc#docs/}"
+              out="release_pdfs/${rel%.md}.pdf"
+              mkdir -p "$(dirname "$out")"
+              echo "Rendering $doc -> $out"
+              python3 src/md_to_pdf.py "$doc" -o "$out"
+              found=$((found + 1))
+            fi
+          done < <(find docs -name '*.md' | sort)
+          if [ "$found" -eq 0 ]; then
+            echo "::error::No doc self-declared a PDF link (releases/latest/download/<stem>.pdf) -- nothing to release." >&2
+            exit 1
+          fi
+          echo "Rendered $found doc(s)."
+          (cd release_pdfs && zip -r ../wpmw-docs.zip .)
+
+      - name: Create draft release
+        uses: softprops/action-gh-release@v2
+        with:
+          draft: true
+          generate_release_notes: true
+          files: |
+            wpmw-docs.zip
+            release_pdfs/**/*.pdf

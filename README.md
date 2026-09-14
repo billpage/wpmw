@@ -224,6 +224,43 @@ an absolute `github.com/.../blob/main/...` URL when assembling a notebook
 from tutorial markdown, resolving each target against the *source* `.md`
 file's actual directory, not the notebook's.
 
+## PDF releases
+
+Some docs also get a PDF companion, typeset with `src/md_to_pdf.py`. This
+is opt-in per doc, not automatic for every doc under `docs/` — the corpus
+churns too often (most commits touch a doc) for a PDF kept continuously in
+sync to be worth the upkeep, and a stale PDF actively misleads a reader
+rather than just being absent. Instead, PDFs are generated on demand and
+published as GitHub Releases.
+
+**Opting a doc in:** add a link to its own PDF, at the stable URL pattern
+below, using the doc's own filename stem:
+
+```markdown
+[PDF](https://github.com/billpage/wpmw/releases/latest/download/emission_and_absorption.pdf)
+```
+
+Pushing a tag matching `docs-v*` runs the `docs-release` GitHub Action
+(`.github/workflows/docs-release.yml`), which scans every file under
+`docs/` for a self-link of exactly this form — matching that file's own
+stem, so a doc that merely links to a *different* doc's PDF isn't swept in
+— renders each match with `src/md_to_pdf.py`, and opens a **draft** release
+with the results attached, individually and as a single `wpmw-docs.zip`.
+Nothing is public until the draft is reviewed and published by hand:
+
+```bash
+git tag docs-v1
+git push origin docs-v1
+# review the draft at github.com/billpage/wpmw/releases, then:
+gh release edit docs-v1 --draft=false
+```
+
+`releases/latest/download/<filename>` always resolves to the asset of that
+name in the current latest *published* release, so the link above never
+needs updating across future releases — provided the PDF's filename stays
+the same from one release to the next. Keep any version identifier in the
+release's tag/title instead of in the PDF's filename.
+
 ## File conventions
 
 - Follow the existing directory structure for new files.
