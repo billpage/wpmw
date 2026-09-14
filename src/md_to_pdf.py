@@ -38,6 +38,19 @@ subject to GitHub's strip in the first place, and may contain a *genuine*
 intentional ``\\`` line break, e.g. inside ``\begin{cases}...\end{cases}``)
 is left completely untouched.
 
+GFM strikethrough (``~~...~~``) containing inline math is also handled.
+Pandoc's default LaTeX template auto-loads the ``soul`` package and emits
+``\st{...}`` for strikeout content; ``soul`` builds ``\st`` by measuring
+and re-kerning each syllable, which corrupts or crashes outright on
+content containing a math-mode box (``Extra }, or forgotten $`` deep in
+``soul``'s internal macros, from real documents, not a contrived example).
+``ulem``'s ``\sout`` does not have this problem -- it draws a straight
+strike rule under the content without trying to re-typeset it -- so this
+script loads ``ulem`` (with ``normalem``, so it doesn't also redefine
+``\emph`` to underline) after ``soul`` and aliases ``\let\st\sout``,
+letting Pandoc's own output stand unmodified while replacing which macro
+actually draws the strike.
+
 Requires ``pandoc`` and a LaTeX engine (``xelatex``) on PATH, plus the
 ``lmodern`` font-metrics package. On Debian/Ubuntu::
 
@@ -79,6 +92,8 @@ _HEADER_INCLUDES = r"""
 \usepackage{microtype}
 \emergencystretch=3em
 \sloppy
+\usepackage[normalem]{ulem}
+\let\st\sout
 """
 
 # Group 1 is whatever leading indentation and/or blockquote markers (">")
@@ -87,7 +102,7 @@ _HEADER_INCLUDES = r"""
 # doesn't let an unrelated later ``` anywhere in the document act as its
 # closing marker (see module docstring).
 _FENCED_MATH = re.compile(r"^([ \t>]*)```math\n(.*?)\n\1```", re.DOTALL | re.MULTILINE)
-_BACKTICK_DOLLAR = re.compile(r"\$`([^`\n]+?)`\$")
+_BACKTICK_DOLLAR = re.compile(r"\$`([^`]+?)`\$", re.DOTALL)
 _BLOCK_MATH = re.compile(r"\$\$(.+?)\$\$", re.DOTALL)
 _INLINE_MATH = re.compile(
     r"(?<![\\$])\$(?![ \t\n$`])([^\n$]+?)(?<![ \t])\$(?![0-9$])"
@@ -122,6 +137,18 @@ def convert_math_delimiters(text: str) -> str:
     from the content before stashing, then reapplied to every line of the
     restored ``$$...$$`` block, so the math stays correctly nested rather
     than being hoisted out of its list item or blockquote.
+
+    A ``` $`...`$ ``` span may itself wrap across a source line break (a
+    long expression hand-wrapped in prose); the non-greedy, backtick-free
+    content class already stops at the first ``` `$ ```, so this is safe
+    for the ordinary case. As a guard against the one degenerate case that
+    isn't -- a genuinely unclosed opening ``` $` ``` with no backtick
+    before its eventual, unrelated closing marker -- a match that would
+    cross a blank line (a paragraph break, where CommonMark could not have
+    intended a single span to continue) is left untouched rather than
+    stashed, matching this project's own linter, which already flags an
+    unclosed ``` $`...`$ ``` as a lint error rather than something this
+    script should try to repair.
     """
     fenced_store: list[tuple[str, str]] = []
 
@@ -140,7 +167,10 @@ def convert_math_delimiters(text: str) -> str:
     backtick_store: list[str] = []
 
     def _stash_backtick(m: re.Match) -> str:
-        backtick_store.append(m.group(1))
+        content = m.group(1)
+        if re.search(r"\n[ \t]*\n", content):
+            return m.group(0)
+        backtick_store.append(content)
         return f"\x00BACKTICK{len(backtick_store) - 1}\x00"
 
     text = _BACKTICK_DOLLAR.sub(_stash_backtick, text)
