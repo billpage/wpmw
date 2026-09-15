@@ -452,3 +452,58 @@ structures the four-wave-mixing analogy appeals to.
   interatomic scattering length.  The contrast case: the four rules need no
   such nonlinearity.
   https://doi.org/10.1038/18395
+
+## Density-dependent Markov jump processes and their diffusion limits
+
+The formal setting of [`../docs/analysis/stochastic_ledger.md`](../docs/analysis/stochastic_ledger.md).
+The ledger is a population process, not a diffusion, so the literature that
+applies to it is the birth–death literature and not the stochastic-mechanics
+literature listed above.
+
+- Kurtz, T. G. — "Solutions of ordinary differential equations as limits of
+  pure jump Markov processes." *J. Appl. Prob.* **7**, 49 (1970).  The law of
+  large numbers: a density-dependent jump process converges to the solution of
+  the deterministic rate equation.  What licenses reading the mean-field mesh
+  ledger as the `M -> infinity` limit of the counting process.
+  https://doi.org/10.2307/3212147
+- Kurtz, T. G. — "Limit theorems for sequences of jump Markov processes
+  approximating ordinary differential processes." *J. Appl. Prob.* **8**, 344
+  (1971).  The Gaussian fluctuation theorem around that limit, which is what
+  makes `Var(Lambda) = M / f'` a theorem rather than a fit.
+  https://doi.org/10.2307/3211904
+- van Kampen, N. G. — *Stochastic Processes in Physics and Chemistry*, 3rd ed.
+  North-Holland (2007), ch. X.  The system-size expansion, and the standard
+  account of why the Kramers–Moyal series truncates at second order for a
+  process of this class.
+- Gillespie, D. T. — "Exact stochastic simulation of coupled chemical
+  reactions." *J. Phys. Chem.* **81**, 2340 (1977).  The algorithm the
+  companion demo runs.  Exact, so nothing in that note is a stepping artefact.
+  https://doi.org/10.1021/j100540a008
+- Gardiner, C. W. — *Handbook of Stochastic Methods for Physics, Chemistry and
+  the Natural Sciences*, 4th ed. Springer (2009), ch. 11.
+  Ornstein–Uhlenbeck stationary statistics, used for the relaxation rate and
+  the stationary variance.
+
+## Soft-core Coulomb as a model atom
+
+Background for [`../docs/analysis/soft_core_coulomb.md`](../docs/analysis/soft_core_coulomb.md).
+The one-dimensional potential `-Z/sqrt(x^2 + eps^2)` is standard in
+strong-field physics, where the softening is a numerical convenience; the
+project's interest in it is that the softening length is simultaneously the
+reach ceiling (Corollary K1.2) and the origin of two of the four emission
+lobes (Corollary Z1.1).
+
+- Javanainen, J.; Eberly, J. H.; Su, Q. — "Numerical simulations of
+  multiphoton ionization and above-threshold electron spectra." *Phys. Rev. A*
+  **38**, 3430 (1988).  The origin of the soft-core model atom and of the
+  convention used in the note.
+  https://doi.org/10.1103/PhysRevA.38.3430
+- Su, Q.; Eberly, J. H. — "Model atom for multiphoton physics." *Phys. Rev. A*
+  **44**, 5997 (1991).  Bound-state structure of the same potential, against
+  which the eigenvalues of Part D can be checked independently.
+  https://doi.org/10.1103/PhysRevA.44.5997
+- Eckart, C. — "The penetration of a potential barrier by electrons."
+  *Phys. Rev.* **35**, 1303 (1930).  Already the source of the previous
+  note's test problem; listed here for the contrast drawn in §4 between a
+  barrier, where the packet width is free, and a well, where it is not.
+  https://doi.org/10.1103/PhysRev.35.1303

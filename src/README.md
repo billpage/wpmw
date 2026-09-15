@@ -982,6 +982,77 @@ see that directory's README for the ladder itself.
   The magnitude of the least eigenvalue of the reconstructed density operator
   under (S)+(D) and under (S) alone, for the quartic at `lambda = 0.05`.
 
+- `demo_stochastic_ledger.py` — verification companion to
+  `docs/analysis/stochastic_ledger.md`, which runs the ledger as an exact
+  Markov jump process on integer counts rather than as a mean field on a
+  mesh.  Exact Gillespie throughout — no tau-leap, no time discretisation —
+  on a ring of `M` momentum cells carrying `(n+, n-, S)` per cell, with three
+  channels: the event with its two realisations and its blind selection rule,
+  a hop channel at rate `nu` standing in for postulate (S), and the bilinear
+  coincident-pair sink at rate `kappa`.  Part A measures the pathwise
+  invariant `2P = 2 sum S + sum(n+ + n-)` at exactly zero drift over 3e5
+  steps, and confirms that both realisations of an event move `E` by `+1` at
+  the upper daughter and `-1` at the lower, so the Bernoulli(`f`) choice is a
+  null direction of the observable map.  Part B is the note's centre: the
+  stationary sum rule `Gamma_tot (1 - 2f) = R_sink`, verified to between
+  1e-4 and 9e-3 relative over `kappa` from 0.05 to 2, so `f = 1/2` is the
+  sinkless special case and every body sink moves `f` below it by exactly
+  half its share of the event rate.  Part C holds the mixing rate fixed and
+  varies `gamma` over 32x: `f` stays between 0.49977 and 0.50013 throughout,
+  and the mean body count per cell reads 2.4487 at the well-mixed end against
+  the closure's 2.4559.  Part D scans the channel count `Q` from 1 to 12 and
+  finds the standing population flat to half a per cent, as a closure with no
+  channel index in it requires.  Part E scans `M` from 8 to 128 and confirms
+  `Var(Lambda)` linear in `M`, the Ornstein-Uhlenbeck prediction of the
+  diffusion limit.  Part F is the reassignment: with transport off the
+  per-cell spread grows fiftyfold over the run and `kappa` damps it only
+  partly while dragging `f` to 0.32, whereas the mildest transport holds the
+  spread flat and leaves `f` at 0.5004.
+
+  Sample output figures (committed on the `output` branch):
+
+  ![Sum rule, closure, local regulator](https://raw.githubusercontent.com/billpage/wpmw/output/figures/stochastic_ledger_summary.png)
+
+  Left: the sum rule, measured shortfall against the independently measured
+  sink rate.  Centre: the closure's two constants against a scan in `M`.
+  Right: the per-cell spread against time, under transport and under
+  recombination.
+
+  ![Relaxation](https://raw.githubusercontent.com/billpage/wpmw/output/figures/stochastic_ledger_relaxation.png)
+
+  One exact trajectory started at four times the equilibrium population,
+  against the closure's derived `2 lam* = 2.4559` bodies per cell.  Nothing in
+  the run is told where to go.
+
+- `demo_soft_core_coulomb.py` — verification companion to
+  `docs/analysis/soft_core_coulomb.md`, which puts `-Z/sqrt(r^2 + eps^2)`
+  through the geometry the Eckart note put `V0 sech^2(r/a)` through.  Part A
+  checks the closed form `V''' = (Z/eps^4) u (6u^2 - 9) (1+u^2)^(-7/2)`
+  against a fourth-order stencil and bisects its positive root at
+  `eps sqrt(3/2)` to six figures for five `(Z, eps)` pairs — the quiet radius
+  carries no `Z`, so doubling the charge and reversing its sign both leave it
+  where it was.  Part B builds the residual lattice with the raised-cosine
+  horizon and finds `Gamma(0) = 0` identically at every reach (the nucleus is
+  dark, by parity) with the interior quiet ring surviving the horizon and
+  drifting outward from +0.08 to +6.13 per cent over a tenfold reach range.
+  Part C tabulates the position-dependent ceiling `R(x) = sqrt(x^2 + eps^2)`
+  and the momentum quantum it implies.  Part D solves the ground state by
+  tridiagonal eigensolve and bisects for the crossings of the resolution
+  condition, measuring 34.60 and 432.92 against the predicted
+  `k^4 pi^4 / 4` = 24.35 and 389.6, with the ratio falling as the anharmonic
+  correction to `sigma_r` dies.  Part E confirms the demographic channel is
+  not empty at threshold: `Gamma(sigma_r)/Gamma_max = 0.974` where a harmonic
+  well would give exactly zero.
+
+  Sample output figure (committed on the `output` branch):
+
+  ![Soft-core Coulomb geometry](https://raw.githubusercontent.com/billpage/wpmw/output/figures/soft_core_coulomb_geometry.png)
+
+  Left: `V'''` and the emission rate, both normalised, with the three quiet
+  points marked.  Centre: the local momentum quantum against position,
+  against the floor a uniform lattice must accept.  Right: rungs per
+  `sigma_p` against the softening length, with the two thresholds.
+
 ### Figure generators and regression tests
 
 - `gen_microdynamics_4d_figures.py` — generates the five schematic

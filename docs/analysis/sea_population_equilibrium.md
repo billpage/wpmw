@@ -57,6 +57,52 @@ $`-0.17\thinspace B`$ and then recovers. Fidelity improves roughly 40 per
 cent throughout. The standing sea deficit of §6 is therefore a transient, not
 a steady state.
 
+**Erratum: `f = 1/2` is the sinkless case, not the law.** Theorem S7 below
+states that `f = 1/2` closes both ledgers at once, and §7 collects that as one
+of the constraints on the recombination rule. Theorem N3 of
+[`stochastic_ledger.md`](stochastic_ledger.md) shows S7 is the special case
+`R_sink = 0` of
+
+```math
+\Gamma_{\rm tot}\,\bigl(1 - 2f\bigr) \;=\; R_{\rm sink},
+```
+
+where $`R_{\rm sink}`$ is the total rate of every body-removing channel other
+than absorption. The derivation is arithmetic on $`\pm2`$ — each emissive
+event changes the body count by $`+2`$, each absorptive event and each
+coincident-pair removal by $`-2`$ — and it uses nothing about the potential,
+the reach or the closure. The sea ledger gives the same equation, which is why
+one number still closes both.
+
+Three consequences for what follows.
+
+1. S7's numerics are unaffected: `run_traced`, which produces every $`f`$
+   quoted in §S9 and Part J, carries no recombination, so $`R_{\rm sink} = 0`$
+   and $`f = 1/2`$ is the right target there.
+2. §7's constraint table should read "$`f = 1/2`$ **when the only body sink is
+   absorption**". Any $`\kappa > 0`$ forces $`f < 1/2`$ strictly, by
+   $`\tfrac12 - f = R_{\rm sink}/2\Gamma_{\rm tot}`$, measured to within
+   0.9 per cent over a fortyfold range of $`\kappa`$ in Part B of
+   `demo_stochastic_ledger.py`.
+3. **The argument in S-SP3 below does not hold.** It reads that the shortfall
+   changes sign, that a systematic per-event leak cannot change sign, and that
+   therefore what remains is truncation error rather than a floor. But S-SP7,
+   in the same list, identifies *two* channels of opposite sign in the same
+   code — the negative caps, a sink, and the population clamp, a source — and
+   by N3 the shortfall reports their difference, which changes sign as soon as
+   they cross. The sign change is therefore consistent with a floor and cannot
+   discriminate. S-SP3's *conclusion* is not challenged here: the monotone
+   reach ladder in Part J is separate evidence and it stands. What is withdrawn
+   is one of the two arguments offered for it, and N-SP1 of the stochastic
+   note gives the measurement that would settle the question outright —
+   instrument $`R_{\rm sink}`$ and test the identity per step.
+
+Also worth recording against §7: the same note's Theorem N6 finds that
+transport, not recombination, is what makes the *local* ledger stationary, and
+that $`\kappa`$ at a strength sufficient to damp the local spread costs about
+a third of the absorptive fraction. The free constant is therefore even less
+load-bearing than §7 concludes.
+
 *Changed against the argument of this note.* S9's attractor is looser: the
 spread in late $`f`$ across padding widens from 0.018 to 0.043, with the
 $`\rho = 20`$ arm overshooting to 0.5138. S9's qualitative claim survives; its
@@ -470,7 +516,10 @@ population, but it is no longer load-bearing.
   unmeasured, and until it is, neither result should be read as overturning
   the other.
 - **S-SP3 (does the shortfall vanish?). Resolved as far as numbers can
-  resolve it: yes.** The original ladder had two defects. It measured $`f`$
+  resolve it: yes — but see the erratum in §0, which withdraws the sign-change
+  argument used below and replaces it with a direct measurement, N-SP1 of
+  [`stochastic_ledger.md`](stochastic_ledger.md).** The original ladder had two
+  defects. It measured $`f`$
   with `late_f`, which phase-samples the packet's oscillation; and it varied
   the reach by refining $`\Delta p`$, but in `Ledger` the raised-cosine
   horizon sits at the Nyquist wavenumber, $`y_{\max} = \pi\hbar/2\Delta p`$,

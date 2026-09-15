@@ -356,6 +356,84 @@ retracts.
     negative-probability literatures now recorded in
     [`../../references/bibliography.md`](../../references/bibliography.md).
 
+18. **[`stochastic_ledger.md`](stochastic_ledger.md)** — The ledger run as an
+    exact Markov jump process on integer counts, rather than as a mean field
+    on a mesh. Answers the standing request for a formal stochastic treatment
+    of the free-body and sea-pair populations, and corrects the law it was
+    meant to confirm. Theorem N1 strengthens J1: `P = S + N/2` is conserved
+    *pathwise*, in exact integers, on every trajectory and not merely in
+    expectation — a deterministic invariant of the generator, not a
+    martingale. Theorem N2 is why the ledger is invisible: both realisations
+    of an event move `E` by `+1` at the upper daughter and `-1` at the lower,
+    so the Bernoulli(`f`) choice between them lies entirely in the kernel of
+    the observable map, and the only noise `W` ever sees is Poisson
+    event-timing noise common to both branches. The framing consequence is
+    worth stating plainly — this is not a stochastic mechanics in Nelson's
+    sense: trajectories are exactly Newtonian by (S), the diffusion in the
+    phase variables is identically zero, and the whole stochastic content is
+    demographic. **Theorem N3 is the note's centre and a correction to S7.**
+    Stationarity of the body count gives `Gamma_tot (1 - 2f) = R_sink` with no
+    closure and nothing about the potential, where `R_sink` is the total rate
+    of every *other* body-removing channel — so `f = 1/2` is the sinkless
+    special case and not the law, and any `kappa > 0` forces `f < 1/2` by a
+    computable amount, verified to between 0.01 and 0.9 per cent over a
+    fortyfold range of `kappa`. That invalidates the argument S-SP3 used to
+    rule out a floor — that a systematic leak cannot change sign — because
+    S-SP7 identifies a sink *and* a source, and their difference changes sign
+    freely. Theorems N4 and N5 close the availability question: `f` is the
+    probability that both legs find a partner, which under an
+    independent-occupancy closure is `(1 - e^-lam)^2`, so `f = 1/2` pins `lam*
+    = -ln(1 - 2^-1/2) = 1.227947` bodies per species per cell, `f'(lam*) =
+    sqrt2 - 1` exactly, `Var(Lambda)/M = 1/f' = 2.414214`, and a Fano factor
+    `0.983028`, slightly sub-Poissonian — five numbers carrying no free
+    constant, measured at 2.4487 against 2.4559 in the well-mixed limit and
+    flat across `Q = 1` to `12`, as a closure with no channel index in it
+    requires. In world-particles that is 2.456 bodies against exactly two sea
+    pairs per Planck cell, the low end of K9's empirical window. Theorem N6
+    reassigns a role the project had given to recombination: with transport
+    off, per-cell occupancy is a reflected critical random walk whose spread
+    grows without bound, `kappa` damps it only partly and drags `f` to 0.32,
+    and turning streaming on instead holds the spread flat and leaves `f` at
+    0.5005. Streaming, not recombination, is the local regulator — and by N3
+    no sink could have been, since every sink moves `f` off one half.
+
+19. **[`soft_core_coulomb.md`](soft_core_coulomb.md)** — The potential open
+    item K-LS5 nominated, put through the geometry the Eckart note put `V0
+    sech^2(r/a)` through. Theorem Z1: for `-Z/sqrt(r^2 + eps^2)` the third
+    derivative is `(Z/eps^4) u (6u^2 - 9) (1+u^2)^(-7/2)` with `u = r/eps`, so
+    it vanishes at `r = 0` and `r = +- eps sqrt(3/2)` and the soft core
+    carries **four** emission lobes — the same count K7 found for sech², but
+    with a quiet radius set by the softening length alone and carrying no `Z`
+    at all. Pure Coulomb has `V''' = -6Z/r^4`, one sign on each half-line and
+    no interior zero, so it carries two: the inner pair of lobes is
+    manufactured by the softening and collapses onto the origin as `eps -> 0`,
+    which makes the soft core a source of structure rather than a
+    regularisation convenience. Theorem Z2: `Gamma(0) = 0` identically at
+    every reach, so the nucleus is dark exactly as the sech² summit is, and
+    the interior quiet ring survives the horizon, drifting outward by 0.4 per
+    cent at `y_max = eps/4` and 6.1 per cent at `y_max = 0.99 eps`. **Theorem
+    Z3 is what this potential can raise and sech² cannot**: by Corollary K1.2
+    the reach ceiling is `R(x) = sqrt(x^2 + eps^2)`, which *varies with
+    position*, so either the momentum quantum `dp = pi hbar / 2 y_max` varies
+    with `x` — and the phase-space crystal is not uniform — or a single
+    uniform lattice must take the infimum `y_max < eps`, the tightest ceiling
+    in the problem and located at the one point where nothing is emitted
+    anyway. Theorem Z4 prices the uniform choice: the well is harmonic for
+    `eps >> a0` with `sigma_r = eps^(3/4)/sqrt2`, so resolving the ground
+    state to `k` rungs per `sigma_p` needs `eps >= k^4 pi^4 / 4` in units `a0
+    = hbar^2 / mu Z` — 24.35 `a0` for one rung, 389.6 for two, the cost
+    quartic in resolution; measured crossings 34.6 and 432.9, the ratio to
+    prediction falling from 1.42 to 1.11 as the anharmonic correction dies. An
+    unsoftened atom therefore cannot live on a uniform reach-limited crystal
+    at all. Theorem Z5 is the consolation and the reason this is the right
+    vehicle for S-SP6: at threshold the horizon spans 2.8 `sigma_r` and
+    `Gamma(sigma_r)/Gamma_max = 0.974`, so unlike the Eckart barrier — where
+    K-LS2's ceiling and resolution conditions have no common ground — the
+    window where the lattice works is *not* the window where the demographic
+    channel is empty. Leaves the non-uniform lattice as Z-LS1 and the
+    transmission calculation, which has no closed form and needs a
+    split-operator reference, as Z-LS2.
+
 ## Companion code
 
 Every note lists its verifying script in §0 and its numerical results in a
@@ -372,7 +450,9 @@ late section. In ladder order: `src/demo_four_rule_equivalence.py`,
 `src/demo_compensated_liouville_splitting.py`,
 `src/demo_compensated_liouville_algorithm.py`,
 `src/demo_eckart_barrier_compensated.py`,
-`src/demo_compensated_ontology.py`. All
+`src/demo_compensated_ontology.py`,
+`src/demo_stochastic_ledger.py`,
+`src/demo_soft_core_coulomb.py`. All
 non-trivial claims in these notes are verified numerically before inclusion.
 
 ## Related
