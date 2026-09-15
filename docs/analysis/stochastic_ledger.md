@@ -614,7 +614,7 @@ same quantity **J-SP1** asks about, now with a sign attached.
   hypotheses in usable form. The one to check here is the Lipschitz condition
   on the rate function, which the availability indicator $`n \ge 1`$ fails
   and which the closure of §5.1 is what repairs — see the annotation in
-  [`../../references/bibliography.md`](../../references/bibliography.md).
+  [`../../references/bibliography.md`](/wpmw/blob/main/references/bibliography.md#density-dependent-markov-jump-processes-and-their-diffusion-limits).
 - N. G. van Kampen, *Stochastic Processes in Physics and Chemistry*,
   3rd ed., North-Holland 2007, ch. X and ch. XI. The system-size expansion,
   and the critical birth–death walk behind §7.
