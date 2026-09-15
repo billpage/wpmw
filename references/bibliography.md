@@ -458,31 +458,114 @@ structures the four-wave-mixing analogy appeals to.
 The formal setting of [`../docs/analysis/stochastic_ledger.md`](../docs/analysis/stochastic_ledger.md).
 The ledger is a population process, not a diffusion, so the literature that
 applies to it is the birth–death literature and not the stochastic-mechanics
-literature listed above.
+literature listed above.  Nelson's diffusion puts the noise in `dx`; postulate
+(S) forbids that, and what is left fluctuating is *how many worlds there are*.
+
+**The dictionary, stated once, since every entry below uses it.**  A
+density-dependent family in Kurtz's sense is a jump process whose transition
+rates take the form `Omega beta(z, l)` for a jump `l/Omega`, with `beta`
+depending on the state only through the intensive densities `z`.  In the
+ledger the identification is
+
+| Kurtz | the ledger |
+|---|---|
+| system size `Omega` | `M`, the number of momentum cells |
+| intensive density `z` | `lam = Lambda / 2M`, bodies per species per cell |
+| jump `l` | `+-2` bodies, or `+-1` per species per cell touched |
+| rate `Omega beta` | `gamma M Q` for events, `nu Lambda` for hops, `kappa sum n+ n-` for recombination |
+
+Each of the three channels is of that form: the event rate is `M` times a
+constant, the hop rate is `M` times `2 nu lam`, and the recombination rate is
+`M` times `kappa` times a quadratic in the densities.  The scaling is
+therefore `M -> infinity` at fixed occupancy per cell — **not** the continuum
+limit the mesh demo takes, which refines `Delta p` at fixed physical reach and
+so changes the cell rather than adding cells.  The two limits are different
+and open item N-SP2 is exactly the question of whether they can be identified.
+Citing Kurtz licenses the first reading and says nothing about the second.
 
 - Kurtz, T. G. — "Solutions of ordinary differential equations as limits of
   pure jump Markov processes." *J. Appl. Prob.* **7**, 49 (1970).  The law of
-  large numbers: a density-dependent jump process converges to the solution of
-  the deterministic rate equation.  What licenses reading the mean-field mesh
-  ledger as the `M -> infinity` limit of the counting process.
+  large numbers for this class: as `Omega -> infinity` the density process
+  converges, uniformly on compact time intervals and in probability, to the
+  solution of the deterministic rate equation `dz/dt = F(z)` with
+  `F(z) = sum_l l beta(z, l)`.  *How it applies.*  It is what licenses reading
+  the mean-field mesh ledger of `sea_population_equilibrium.md` §4 as the
+  large-system limit of the counting process at all — the two-field split
+  written there is `F(z)` for this generator.  It also underwrites the drift
+  used in Theorem N3: the sum rule is `F(z) = 0` in the body coordinate,
+  which is why N3 needs no closure and no assumption about the potential.
+  What the theorem does *not* give is uniformity in time, so it says nothing
+  about the stationary state directly; §5's `lam*` is the fixed point of
+  `F`, and its attractivity is a separate (and here elementary) argument.
   https://doi.org/10.2307/3212147
 - Kurtz, T. G. — "Limit theorems for sequences of jump Markov processes
   approximating ordinary differential processes." *J. Appl. Prob.* **8**, 344
-  (1971).  The Gaussian fluctuation theorem around that limit, which is what
-  makes `Var(Lambda) = M / f'` a theorem rather than a fit.
+  (1971).  The central-limit companion: the rescaled deviation
+  `sqrt(Omega) (z_Omega - z)` converges to a Gaussian process solving the
+  linearised equation driven by white noise with covariance
+  `G(z) = sum_l l l^T beta(z, l)`.  *How it applies.*  This is what makes the
+  Ornstein–Uhlenbeck law of §6.1 a theorem rather than a fit, and with it the
+  two quantitative predictions of Theorem N5 — `Var(Lambda) = M / f'(lam*)`,
+  hence linear in `M` and, because `Gamma_tot` cancels between the drift
+  slope and the diffusion coefficient, *independent of the event rate and so
+  of the coherence reach*; and the Fano factor `1 / (2 f' lam*) = 0.983028`,
+  slightly sub-Poissonian.  The `1/sqrt(Omega)` scaling is also the honest
+  reason the measured Fano factor in §8 cannot yet resolve the 1.7 per cent
+  by which the prediction differs from unity: that is open item N-SP3.
   https://doi.org/10.2307/3211904
+- Ethier, S. N.; Kurtz, T. G. — *Markov Processes: Characterization and
+  Convergence.*  Wiley (1986), ch. 11.  The modern textbook statement of both
+  theorems above, with the hypotheses in usable form.  *How it applies.*  The
+  hypothesis to check in this project is the local Lipschitz condition on
+  `beta`, and it is where the availability rule bites: the absorptive branch
+  fires on the indicator `n >= 1`, which is not a smooth function of the
+  density, so `beta` is only Lipschitz once the indicator is replaced by its
+  expectation under the occupancy distribution — which is exactly the
+  independent-occupancy closure `f(lam) = (1 - e^-lam)^2` of §5.1.  The
+  closure is therefore not a convenience bolted on for arithmetic; it is the
+  step that puts the generator inside the class the theorems apply to, and
+  the 0.3 to 2 per cent by which the measurement sits above it (open item
+  N-SP5, and J-SP1 from the other side) is the size of the error that step
+  introduces.
 - van Kampen, N. G. — *Stochastic Processes in Physics and Chemistry*, 3rd ed.
-  North-Holland (2007), ch. X.  The system-size expansion, and the standard
-  account of why the Kramers–Moyal series truncates at second order for a
-  process of this class.
+  North-Holland (2007), ch. X.  The system-size (`Omega`) expansion, reaching
+  the same Fokker–Planck equation by expanding the master equation in powers
+  of `Omega^(-1/2)`.  *How it applies.*  Two things Kurtz's formulation does
+  not make as visible.  First, the expansion makes explicit *why* the
+  Kramers–Moyal series truncates at second order here — the jump sizes are
+  bounded (`+-2`) and the rates extensive, so third and higher moments come
+  with `Omega^(-1/2)` and vanish in the limit; the truncation is a theorem
+  about this generator and not the usual uncontrolled approximation.  Second,
+  the expansion separates macroscopic drift from fluctuation at the start,
+  which is the natural place to state Theorem N2: the Bernoulli(`f`) choice
+  between realisations contributes to the fluctuation term and has zero
+  projection onto `E`, so the observable inherits event-timing noise only.
+  Chapter XI's treatment of a critical (null-recurrent) birth–death walk is
+  also the standard account of the mechanism behind Theorem N6, where the
+  per-cell occupancy at `f = 1/2` has equal birth and death rates and no
+  stationary distribution until transport or a sink intervenes.
 - Gillespie, D. T. — "Exact stochastic simulation of coupled chemical
-  reactions." *J. Phys. Chem.* **81**, 2340 (1977).  The algorithm the
-  companion demo runs.  Exact, so nothing in that note is a stepping artefact.
+  reactions." *J. Phys. Chem.* **81**, 2340 (1977).  *How it applies.*  The
+  algorithm `src/demo_stochastic_ledger.py` runs.  It samples the master
+  equation exactly — the waiting time from the total rate, the channel from
+  the rate ratios — so unlike the tau-leap used on the mesh it introduces no
+  time-step error at all.  That matters for Theorem N1 in particular, which
+  claims an *exact integer* invariant: a result of that form would be
+  meaningless if the integrator were approximate.  It also means the
+  discrepancies reported in §8 against the closure are closure error and
+  sampling noise only, with no third term to disentangle.
   https://doi.org/10.1021/j100540a008
 - Gardiner, C. W. — *Handbook of Stochastic Methods for Physics, Chemistry and
-  the Natural Sciences*, 4th ed. Springer (2009), ch. 11.
-  Ornstein–Uhlenbeck stationary statistics, used for the relaxation rate and
-  the stationary variance.
+  the Natural Sciences*, 4th ed. Springer (2009), ch. 4 and ch. 11.
+  *How it applies.*  The standard results for the linear (Ornstein–Uhlenbeck)
+  Fokker–Planck equation that §6.1 quotes without proof: stationary variance
+  `B / 2k` for drift `-k x` and diffusion `B`, and the exponential decay of
+  the autocorrelation at rate `k`.  Used to get `Var(Lambda) = 4 Gamma_tot /
+  2k = M / f'` and the relaxation rate `k = 2 gamma Q f'(lam*)`, the latter
+  being the formal counterpart of the observation in
+  `../docs/supplement/emission_and_absorption.md` §7 that four regimes
+  differing nineteenfold in wall-clock time collapse onto one curve when
+  clocked against cumulative events.
 
 ## Soft-core Coulomb as a model atom
 

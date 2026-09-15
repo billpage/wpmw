@@ -609,8 +609,15 @@ same quantity **J-SP1** asks about, now with a sign attached.
   theorems for sequences of jump Markov processes approximating ordinary
   differential processes*, J. Appl. Prob. **8** (1971) 344–356. The law of
   large numbers and the Gaussian fluctuation theorem for §6.
+- S. N. Ethier and T. G. Kurtz, *Markov Processes: Characterization and
+  Convergence*, Wiley 1986, ch. 11. The textbook statement of both, with the
+  hypotheses in usable form. The one to check here is the Lipschitz condition
+  on the rate function, which the availability indicator $`n \ge 1`$ fails
+  and which the closure of §5.1 is what repairs — see the annotation in
+  [`../../references/bibliography.md`](../../references/bibliography.md).
 - N. G. van Kampen, *Stochastic Processes in Physics and Chemistry*,
-  3rd ed., North-Holland 2007, ch. X. The system-size expansion.
+  3rd ed., North-Holland 2007, ch. X and ch. XI. The system-size expansion,
+  and the critical birth–death walk behind §7.
 - D. T. Gillespie, *Exact stochastic simulation of coupled chemical
   reactions*, J. Phys. Chem. **81** (1977) 2340–2361. The algorithm used
   throughout the companion demo.
