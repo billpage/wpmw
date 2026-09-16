@@ -1053,6 +1053,50 @@ see that directory's README for the ladder itself.
   against the floor a uniform lattice must accept.  Right: rungs per
   `sigma_p` against the softening length, with the two thresholds.
 
+- `demo_reach_tutorial.py` — verification companion to
+  `docs/supplement/what_the_reach_is.md`, a tutorial on the reach.  Part A
+  tabulates the position-pair ladder's current `J |rho_1| sin(mu) / hbar`
+  across a zone, making the point the tutorial opens with: momentum is the
+  misalignment of a pair of legs, and the self-conjugate pair — legs
+  coincident, `mu = 0` — is motionless.  Part B puts a cat state
+  (`d = 4`, `sigma = 0.5`, coherences at `y = +-2`) through the two candidate
+  readings of the reach: an aperture that deletes `rho` beyond `y_max`, which
+  drops purity from 1.0007 to 0.4224 and the interference fringe from 0.556 to
+  8e-4, against the fold the DFT actually performs, which destroys neither and
+  instead produces `Tr rho^2 = 2.72`.  Part B(iii) locates that excess: folding
+  identifies leg separation `k` with `k + L_c`, so a coherence lands on the
+  diagonal when `L_c` divides `d/2` — the true diagonal peak 0.398942 becomes
+  0.798688, a ratio of 2.002, at `L_c = 2`, and is untouched at `L_c = 3`.
+  A longer reach is dirty where a shorter one is clean.  Part C runs the
+  measurement that separates aperture from period on `V = cos(2 pi x / 4)`:
+  sharp and commensurate is exact, sharp and incommensurate is off by 6.2x,
+  and the taper loses a quarter of the budget at `L_c = a`.  Part D crosses the
+  analyticity radius `R(x)` deliberately on sech^2 and measures what breaks —
+  nothing does; `M0` and `M1` stay at round-off and `M3` stays on
+  `hbar^2 V'''/4` out to eight times `R`, while the Taylor series at the same
+  `x` reaches 1.0e5 against an exact 2.287 — and contrasts pure Coulomb,
+  whose real-axis pole drives `max|D_res|` to 2.0e4 as the reach reaches the
+  nucleus, against a soft core that sails three times past its own `R`.
+
+  Sample output figures (committed on the `output` branch):
+
+  ![Legs and the two ceilings](https://raw.githubusercontent.com/billpage/wpmw/output/figures/reach_tutorial_geometry.png)
+
+  Left: three pairs drawn as two legs and a midpoint inside the horizon band —
+  the reach is a bound in the vertical coordinate and is orthogonal to
+  position.  Right: the complex `y` plane, with the poles of `V`, the circle
+  of radius `R(x)`, and two reaches; the kernel only ever walks the real axis.
+
+  ![Aperture against fold](https://raw.githubusercontent.com/billpage/wpmw/output/figures/reach_tutorial_coherence.png)
+
+  Purity and interference under the two readings.  The aperture decays; the
+  fold aliases.
+
+  ![One dial, three consequences](https://raw.githubusercontent.com/billpage/wpmw/output/figures/reach_tutorial_tradeoff.png)
+
+  `Delta p` falls, the event budget rises, and the third moment does not move
+  at all — including across `R(x)`, marked.
+
 ### Figure generators and regression tests
 
 - `gen_microdynamics_4d_figures.py` — generates the five schematic
