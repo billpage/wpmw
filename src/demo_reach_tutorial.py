@@ -29,6 +29,7 @@ import numpy as np
 from wpmwlib.wpmw_utils import docs_path, output_path
 
 HBAR = 1.0
+MU_MASS = 1.0
 
 # the cat state used in Parts A and B
 CAT_D = 4.0
@@ -128,12 +129,70 @@ def part_a():
                "zone boundary, maximal" if f == 0.5 else
                "antipodal: motionless again" if f == 1.0 else "")
         print(f"     {f:8.2f} {np.sin(mu):10.5f} {cur:10.5f}    {tag}")
-    print("\n  The object that looks most like a classical particle -- legs")
-    print("  together, mu = 0 -- is the one that cannot move.  Momentum in")
-    print("  this representation is p_bar = hbar mu / a, a property of the")
-    print("  RELATION between two legs, not a property carried by a body.")
-    print("  Nothing here is a separation between two bodies, and there is")
-    print("  only ever one body.")
+    print("\n  A self-conjugate carrier -- legs together, mu = 0 -- carries")
+    print("  the full probability density and no current.  It is STILL.")
+    print("  Momentum in this representation is p_bar = hbar mu / a, a")
+    print("  property of the RELATION between two legs, not something a body")
+    print("  carries.  Nothing here separates two bodies; there is one body.")
+    print("\n  Exactly, from rho(x+y, x-y) = psi(x+y) psi*(x-y):")
+    print("     d/dy rho |_(y=0) = 2i Im(psi* psi') = (2 i m / hbar) j(x)")
+    print("  so  j(x) = -(i hbar / 2m) d_y rho |_(y=0) = int (p/m) W dp.")
+    print("  The current is the first y-derivative of the density matrix at")
+    print("  zero separation.  Checked against the exact current:\n")
+    a_g, n_g = 0.004, 200001
+    X = (np.arange(n_g) - n_g // 2) * a_g
+    print("        p0     from d_y rho     exact j      ratio")
+    for p0 in (0.5, 1.0, 2.0, 5.0):
+        psi = np.exp(-X**2 / 4.0) * np.exp(1j * p0 * X / HBAR)
+        psi /= np.sqrt(np.sum(np.abs(psi) ** 2) * a_g)
+        i = n_g // 2
+        # y-derivative of rho(x+y, x-y) at y = 0, centred difference in y
+        h = a_g
+        r_p = psi[i + 1] * np.conj(psi[i - 1])
+        r_m = psi[i - 1] * np.conj(psi[i + 1])
+        dy_rho = (r_p - r_m) / (2.0 * h)
+        j_from = float(np.real(-1j * HBAR / (2.0 * MU_MASS) * dy_rho))
+        j_ex = float(np.abs(psi[i]) ** 2) * p0 / MU_MASS
+        print(f"    {p0:7.2f} {j_from:14.6f} {j_ex:12.6f} {j_from/j_ex:10.6f}")
+
+
+def part_a2():
+    banner("A2  two quantities are called mu, and they are not the same one")
+    print("  (1) LADDER mu = arg rho(X, X'): between the two LEGS of a")
+    print("      ket-bra pair -- one body, two branches.")
+    print("      d mu / dX = p / hbar, the TOTAL momentum.\n")
+    a_l = 0.05
+    X = (np.arange(801) - 400) * a_l
+    print("          p0     mu/a measured     p0/hbar      ratio")
+    for p0 in (0.5, 1.0, 2.0, 5.0):
+        psi = np.exp(-X**2 / 4.0) * np.exp(1j * p0 * X / HBAR)
+        r1 = psi[1:] * np.conj(psi[:-1])
+        mu = float(np.angle(r1[len(r1) // 2]))
+        print(f"     {p0:8.2f} {mu / a_l:14.6f} {p0 / HBAR:12.6f}"
+              f" {mu / a_l / (p0 / HBAR):11.6f}")
+    print("\n  (2) PAIR mu = Phi_a - Phi_b: between the two MEMBERS of a sea")
+    print("      pair -- two world-particles, two clocks.")
+    print("      d mu / dx = (p_a - p_b) / hbar, the SPLITTING.")
+    print("      Pair amplitude |Psi| = 2 |sin(mu/2)|, evaluated at x = 0.7")
+    print("      with a relative clock offset theta_a - theta_b = 0.4.\n")
+    print("      p_a    p_b      dp   d mu/dx     mu(0.7)    |Psi|    state")
+    for pa, pb in ((1.0, 1.0), (1.0, 0.8), (2.0, 1.0), (3.0, -1.0)):
+        x = 0.7
+        mu = 0.4 + (pa - pb) * x / HBAR
+        amp = 2.0 * abs(np.sin(mu / 2.0))
+        tag = "co-moving: mu frozen" if pa == pb else "split: mu winds"
+        print(f"   {pa:7.2f} {pb:7.2f} {pa-pb:7.2f} {(pa-pb)/HBAR:9.4f}"
+              f" {mu:11.4f} {amp:8.4f}    {tag}")
+    print("\n  Same structure -- a gauge-invariant relative phase of a")
+    print("  two-ended object, whose gradient is the momentum conjugate to")
+    print("  the ends' separation.  Different variable.")
+    print("\n  Three ways of contributing nothing, and they are distinct:")
+    print("    self-conjugate carrier   mu = 0 in (1): no momentum, no")
+    print("                             current, full density.  STILL.")
+    print("    dark sea pair            mu = 0 in (2): definite p, streams")
+    print("                             under (S), |Psi| = 0.  INVISIBLE.")
+    print("    free positon or negaton  definite p, streams, contributes")
+    print("                             +-1 to E.  Neither.")
 
 
 # --------------------------------------------------------------------- #
@@ -328,6 +387,60 @@ def part_d():
     return rows, R, exact3
 
 
+def part_d2():
+    banner("D2  the ceiling in more than one dimension")
+    print("  For -Z / sqrt(r.r + eps^2) the complexified singular set is the")
+    print("  CONE  r.r = -eps^2, not a point.  In d >= 2 the imaginary part")
+    print("  of y can be taken transverse to x, which lets the cone reach")
+    print("  closer to a real field point than the real singularity does.\n")
+    print("  Minimising |y|^2 = |a|^2 + |b|^2 subject to")
+    print("      |x+a|^2 - |b|^2 + eps^2 = 0   and   (x+a).b = 0")
+    print("  gives a = -x/2, hence |b|^2 = |x|^2/4 + eps^2 and\n")
+    print("      R_(d>=2) = sqrt( |x|^2 / 2 + eps^2 )")
+    print("      R_1      = sqrt( |x|^2     + eps^2 )\n")
+    print("  independent of d for every d >= 2, because only one transverse")
+    print("  direction is used.  One dimension is the outlier, and the loose")
+    print("  one.  Checked against a constrained numerical minimisation in")
+    print("  d = 3:\n")
+    try:
+        from scipy.optimize import minimize
+    except ImportError:
+        print("  (scipy unavailable; analytic values only)")
+        minimize = None
+    print("       eps      |x|      R numeric      R analytic      R_1D"
+          "     ratio")
+    for eps in (0.3, 1.0):
+        for xm in (0.0, 1.0, 2.0, 5.0):
+            pred = np.sqrt(xm**2 / 2.0 + eps**2)
+            one = np.sqrt(xm**2 + eps**2)
+            if minimize is None:
+                num = float("nan")
+            else:
+                x = np.array([xm, 0.0, 0.0])
+                obj = lambda v: v[:3] @ v[:3] + v[3:] @ v[3:]
+                c1 = lambda v: ((x + v[:3]) @ (x + v[:3])
+                                - v[3:] @ v[3:] + eps**2)
+                c2 = lambda v: (x + v[:3]) @ v[3:]
+                best = np.inf
+                for seed in range(8):
+                    rng = np.random.default_rng(seed)
+                    v0 = rng.normal(scale=max(xm, eps) + 0.5, size=6)
+                    r = minimize(obj, v0, options={"maxiter": 800,
+                                                   "ftol": 1e-14},
+                                 constraints=[{"type": "eq", "fun": c1},
+                                              {"type": "eq", "fun": c2}])
+                    if r.success:
+                        best = min(best, np.sqrt(r.fun))
+                num = best
+            print(f"    {eps:7.2f} {xm:8.2f} {num:14.6f} {pred:15.6f}"
+                  f" {one:10.6f} {num/one:9.4f}")
+    print("\n  So three dimensions makes the Coulomb ceiling TIGHTER, by up")
+    print("  to sqrt(2).  Theorem Z4's threshold would tighten by a factor")
+    print(f"  (sqrt 2)^4 = 4, to eps >= pi^4 = {np.pi**4:.2f} a0 for one rung.")
+    print("  This is ceiling 2, so it binds the semiclassical reading and")
+    print("  not the model; see section 5 and open item R-SP1.")
+
+
 # --------------------------------------------------------------------- #
 # Figures                                                               #
 # --------------------------------------------------------------------- #
@@ -439,17 +552,20 @@ def figures(ap, fo, dg, d_rows, R, EX3):
 
 def main():
     part_a()
+    part_a2()
     ap, fo, dg = part_b()
     part_c()
     d_rows, R, EX3 = part_d()
+    part_d2()
     figures(ap, fo, dg, d_rows, R, EX3)
     banner("summary")
     print("  2y separates two LEGS of one pair -- two worlds' answers about")
     print("  one body -- and not two bodies.")
     print("  The reach is a period in that separation, not an aperture;")
     print("  it aliases coherence rather than destroying it;")
-    print("  and it has two ceilings, one on the model and one on the")
-    print("  semiclassical reading of it.")
+    print("  it has two ceilings, one on the model and one on the")
+    print("  semiclassical reading of it, the second tighter in 3D;")
+    print("  and the two quantities called mu are not the same one.")
 
 
 if __name__ == "__main__":

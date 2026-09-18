@@ -68,7 +68,7 @@ cross, inside the horizon band. The reach is a bound in the *vertical*
 coordinate — it is orthogonal to position and is not a wall in space. Right:
 §5.
 
-### 1.1 The ladder has already proved the point harder
+### 1.1 Where momentum lives
 
 The position-pair ladder's central result is
 
@@ -77,30 +77,109 @@ The position-pair ladder's central result is
 \qquad \mu \;=\; \arg\rho(X, X') ,
 ```
 
-so momentum is not carried by anything. It *is* the misalignment of a pair of
-legs. The current between neighbouring legs is $`J|\rho_1|\sin\mu/\hbar`$
-(Part A):
+so momentum is not something a body carries. It is the *misalignment* of a
+pair of legs. The current between neighbouring legs is
+$`J|\rho_1|\sin\mu/\hbar`$, and a **self-conjugate** carrier — legs
+coincident, $`\mu = 0`$ — carries the full probability density and no current
+at all.
 
+*This section previously read that the self-conjugate carrier "is the object
+that looks most like a classical particle, and it is the one that cannot
+move," and concluded that the particle intuition fails at the first thing one
+would ask a particle to do. Every clause was true and the conclusion was
+overstated, in a way that invited a reasonable objection: the ledger notes
+have sea pairs moving, so the two appeared to contradict each other. They do
+not, and §1.2 says why.* Translated through $`\bar p = \hbar\mu/a`$, the
+statement $`\mu = 0 \Leftrightarrow p = 0`$ says that a world at rest is at
+rest. The content is not a prohibition on motion; it is that **momentum is a
+relational datum**.
+
+Exactly, and without metaphor. With
+$`\rho(x+y, x-y) = \psi(x+y)\psi^*(x-y)`$,
+
+```math
+\partial_y\,\rho(x+y,\,x-y)\Big|_{y=0}
+  \;=\; \psi^*\psi' - \psi\psi^{*\prime}
+  \;=\; 2i\,\mathrm{Im}\bigl(\psi^*\psi'\bigr)
+  \;=\; \frac{2im}{\hbar}\,j(x) ,
 ```
-        mu/pi     sin mu     current    interpretation
-         0.00    0.00000    0.00000    self-conjugate: motionless
-         0.25    0.70711    0.70711
-         0.50    1.00000    1.00000    zone boundary, maximal
-         0.75    0.70711    0.70711
-         1.00    0.00000    0.00000    antipodal: motionless again
+
+so
+
+```math
+j(x) \;=\; -\frac{i\hbar}{2m}\;
+  \partial_y\,\rho(x+y,\,x-y)\Big|_{y=0}
+  \;=\; \int \frac{p}{m}\,W(x,p)\,dp .
 ```
 
-A *self-conjugate* pair — legs coincident, $`\mu = 0`$ — is the object that
-looks most like a classical particle, and it is the one that cannot move. A
-population consisting only of self-conjugate pairs has exactly zero flux. The
-particle intuition therefore fails at the very first thing one would ask a
-particle to do.
+**The current is the first $`y`$-derivative of the density matrix at zero
+separation** — which is the $`p`$-moment of $`W`$, so the two representations
+say the same thing. An object supported at $`y = 0`$, or whose $`y`$-derivative
+vanishes there, has no current. Part A checks the identity against
+$`|\psi|^2 p_0/m`$ to five figures.
 
-This matters for everything that follows, because a period in $`y`$ reads as
-an absurdity under the particle picture ("space is a circle") and as something
-quite mild under the leg picture (§3).
+That is the whole content, stated in the tutorial's own coordinate. The
+diagonal of $`\rho`$ holds the probability density; the off-diagonal holds the
+coherences, in the standard sense of Bloch (1946) and Fano (1957). A
+self-conjugate carrier has the first and not the second.
 
----
+*A warning about that vocabulary.* "Population" for a diagonal element is
+standard everywhere else in physics, and in this project it already means the
+world-particle count $`N`$ of the ledger notes. §7 keeps them apart by writing
+out "diagonal, the probability density" rather than leaning on either
+shorthand.
+
+### 1.2 Two quantities are called mu
+
+The objection above has a sharp resolution, and it is worth stating because
+the collision is easy to walk into. **There are two different misalignments in
+this project.**
+
+| | ladder $`\mu`$ | pair $`\mu`$ |
+|---|---|---|
+| source | `../analysis/position_pair_ladder.md` | `../analysis/phase_alignment_microdynamics.md`, Def. (misalignment) |
+| $`\mu =`$ | $`\arg\rho(X, X')`$ | $`\Phi_a(x^*,t^*) - \Phi_b(x^*,t^*)`$ |
+| between | two **legs** of a ket–bra pair — one body, two branches | two **members** of a sea pair — two world-particles, two clocks |
+| winds at | $`\partial\mu/\partial X = p/\hbar`$, the *total* momentum | $`\partial\mu/\partial x = \Delta p/\hbar`$, the *splitting* |
+| $`\mu = 0`$ means | $`p = 0`$: no current | $`\lvert\Psi\rvert = 2\lvert\sin(\mu/2)\rvert = 0`$: dark |
+
+Both are gauge-invariant relative phases of a two-ended object, whose gradient
+is the momentum conjugate to the ends' separation, and whose vanishing is a
+kind of invisibility. Same structure, different variable. Part A2 measures
+both.
+
+The second is not folklore. Lemma 4 of the phase-alignment note establishes
+that $`\mu`$ is a pair's *entire* gauge-invariant content — the pair state is
+$`(p_a, p_b, \mu)`$ and nothing else — and Proposition 3 of the same note gives
+the winding rate, from which a co-located, co-moving pair has $`\Delta p = 0`$,
+never winds, and stays dark for all time. Phase is a genuine particle-level
+property there, by Postulates P0–P5 of
+`../analysis/phase_resonance_microdynamics.md`, and its Theorem 2 is a no-go
+showing the phase variable is *necessary*: no phase-blind microdynamics can be
+linear in $`V_q`$.
+
+### 1.3 Three ways of contributing nothing
+
+| | momentum | moves? | contributes to $`E`$ | verdict |
+|---|---|---|---|---|
+| self-conjugate carrier | none defined — a $`\delta(y)`$, flat in $`p`$ | no flux, because no momentum | the full probability density | **still** |
+| dark sea pair | definite $`p`$, forced onto the parent row by Prop. S0 | yes, Newtonian by (S) | exactly zero | **invisible** |
+| free positon or negaton | definite $`p`$ | yes | $`\pm1`$ | neither |
+
+A sea pair is invisible, not still. A self-conjugate carrier is the reverse:
+fully visible in the density, and flux-free. Collapsing the two into one idea
+is what made the ladder and the ledger notes look inconsistent, and it is the
+*pair* collision of §7 doing its work.
+
+**One caution, and it is the open one.** The two $`\mu`$'s belong to two
+formulations that are exactly equivalent as generators — see
+`../analysis/four_rule_microdynamics_equivalence.md` — but the phase machinery
+was built on a vertex in which the excess particle *changes momentum*, which
+§8.1 of the Eckart note forbids. Equivalence of generators is equivalence in
+$`E`$, and an identity question is precisely what that cannot settle. Whether
+the phase notion transplants onto the compensated model's mediated-jump vertex
+is unresolved and is the subject of
+[`phase_compatibility_handoff.md`](phase_compatibility_handoff.md).
 
 ## 2. Is the reach a coherence length?
 
@@ -322,6 +401,54 @@ because the two pull $`y_{\max}`$ in opposite directions.
 
 ---
 
+### 5.1 And the convergence ceiling is tighter in three dimensions
+
+A natural guess is that more room helps. It does not.
+
+For $`-Z/\sqrt{\mathbf{r}\cdot\mathbf{r} + \epsilon^2}`$ the complexified
+singular set is the **cone** $`\mathbf{r}\cdot\mathbf{r} = -\epsilon^2`$, not a
+point. Writing $`\mathbf{y} = \mathbf{a} + i\mathbf{b}`$, the cone condition
+separates into
+
+```math
+|\mathbf{x}+\mathbf{a}|^2 - |\mathbf{b}|^2 + \epsilon^2 = 0 ,
+\qquad (\mathbf{x}+\mathbf{a})\cdot\mathbf{b} = 0 ,
+```
+
+and minimising $`|\mathbf{y}|^2 = |\mathbf{a}|^2 + |\mathbf{b}|^2`$ subject to
+both gives $`\mathbf{a} = -\mathbf{x}/2`$, hence
+$`|\mathbf{b}|^2 = |\mathbf{x}|^2/4 + \epsilon^2`$ and
+
+```math
+R_{d\ge2}(x) = \sqrt{\tfrac12|\mathbf{x}|^2 + \epsilon^2}
+\qquad\text{against}\qquad
+R_1(x) = \sqrt{|x|^2 + \epsilon^2} .
+```
+
+The value is the same for every $`d \ge 2`$, because only one transverse
+direction is used. **One dimension is the outlier, and it is the loose one.**
+Part D2 checks the closed form against a constrained numerical minimisation in
+$`d = 3`$:
+
+| $`\epsilon`$ | $`\lvert x\rvert`$ | $`R`$ numeric | $`R`$ analytic | $`R_1`$ | ratio |
+|---|---|---|---|---|---|
+| 0.30 | 0.00 | 0.300000 | 0.300000 | 0.300000 | 1.0000 |
+| 0.30 | 1.00 | 0.768115 | 0.768115 | 1.044031 | 0.7357 |
+| 0.30 | 5.00 | 3.548239 | 3.548239 | 5.008992 | 0.7084 |
+| 1.00 | 2.00 | 1.732051 | 1.732051 | 2.236068 | 0.7746 |
+
+Six figures, and the ratio tends to $`1/\sqrt2`$ as the softening becomes
+irrelevant. What the transverse direction buys is a shorter path to the
+singularity, not a longer one.
+
+Consequence for `../analysis/soft_core_coulomb.md`: Theorem Z4's threshold
+$`\epsilon \ge k^4\pi^4/4\,a_0`$ tightens by $`(\sqrt2)^4 = 4`$ in three
+dimensions, to $`\epsilon \ge \pi^4 \approx 97.4\,a_0`$ for a single rung per
+$`\sigma_p`$. Since this is ceiling 2 it binds the semiclassical reading
+rather than the model, so R-SP1 applies here too — but anyone hoping that a
+realistic three-dimensional atom would be *easier* to put on a uniform
+reach-limited lattice should know it is four times harder.
+
 ## 6. So where does the reach sit?
 
 The discomfort that prompted this document is well founded, and §4 and §5
@@ -343,7 +470,10 @@ What can be cleared up is the rest of it, and the cleaned-up statement is:
   resolution limit and not a decoherence length.
 - It is **constitutive**: the limit that would remove it does not exist (§3.1).
 - It buys resolution, costs budget, and buys no accuracy (§4).
-- Its two ceilings are different, and only one bounds the theory (§5).
+- Its two ceilings are different, only one bounds the theory, and the other
+  is four times tighter in three dimensions than in one (§5, §5.1).
+- What is separated by $`2y`$ is two legs, and the misalignment of a pair of
+  legs is not the misalignment of a pair of bodies (§1.2).
 
 ---
 
@@ -361,8 +491,12 @@ column is what the term actually denotes here.
 | **reach** | how far something can see or act | the **period** of the leg separation. Not an aperture, not a distance a world "consults" over — that wording is retracted by E1 and survives in Definition (R) only with a superseding note |
 | **coherence horizon** | a distance past which coherence is lost | a distance past which coherences become *indistinguishable*. Nothing is lost; §2 |
 | **reach ceiling** | one number | **two numbers**, and the tighter one is not a bound on the theory; §5 |
-| **self-conjugate particle** | an ordinary classical particle | a pair with coincident legs, which is the one object in the theory that cannot move; §1.1 |
+| **self-conjugate particle** | an ordinary classical particle | a carrier with coincident legs. It holds the full probability density and no current — *still*, which is not the same as *dark*; §1.1, §1.3 |
+| **carrier** | a thing that conveys cargo | a matrix element $`\rho_{nm}`$. It conveys nothing; the word names an index pair |
 | **momentum** | something a body carries | the misalignment $`\bar p = \hbar\mu/a`$ of a pair of legs. Nothing carries it |
+| **mu** | one quantity | **two quantities.** Ladder $`\mu = \arg\rho(X,X')`$ winds at $`p/\hbar`$; pair $`\mu = \Phi_a - \Phi_b`$ winds at $`\Delta p/\hbar`$. §1.2 |
+| **dark** | absent, or destroyed | present, streaming, and contributing exactly zero — by cancellation in $`E`$, or by interference at $`\mu \equiv 0`$. A dark pair has a definite momentum and a Newtonian worldline; §1.3 |
+| **population** | the world-particle count $`N`$ of the ledger notes | **also** the standard name for a diagonal element of $`\rho`$, in the sense of Bloch and Fano. Written out here rather than used |
 | **absorbing boundary** | a sponge that eats worlds | the statement that beyond the horizon a world is exactly free (Proposition O4) |
 | **truncation** | an approximation to be refined away | for an unbounded $`V`$, constitutive: there is nothing to refine towards (E7) |
 
@@ -410,6 +544,27 @@ column is what the term actually denotes here.
   [`../analysis/README.md`](../analysis/README.md) is
   `open_position_space.md` and the note has no entry. Presumably an omission
   when it was merged. Not fixed here, by decision.
+- **R-SP7 (the sea side of Theorem N6 is untested).** N6 of
+  [`../analysis/stochastic_ledger.md`](../analysis/stochastic_ledger.md) finds
+  that transport, not recombination, regulates the local ledger. But the hop
+  channel in its companion demo moves free bodies only; $`S`$ is a per-cell
+  integer that never moves. Theorem S4 of
+  [`../analysis/sea_population_equilibrium.md`](../analysis/sea_population_equilibrium.md)
+  says the *unbounded* failure is on the sea side — the sea is relocated
+  without bound — and `stream3` in `src/demo_emission_and_absorption.py`
+  carries the sea with the classical flow for a stated reason. So N6 tests one
+  of the two fields and the argument needs both. Adding a sea-hop channel to
+  `demo_stochastic_ledger.py` is a small change and would settle it.
+- **R-SP8 (the two pictures do not share an inventory).** A single
+  world-particle at $`(x,p)`$ maps under the $`y`$-transform to
+  $`e^{2ipy/\hbar}`$, spread across every rung of the position-pair ladder; a
+  single rung maps to something spread across every momentum. The two pictures
+  share the $`\mu`$-structure of §1.2 but not the set of things that exist,
+  and neither set is a coarse-graining of the other. That is the ordinary
+  relationship between conjugate bases and is not by itself a problem — but
+  the project makes ontological claims in both, and they cannot both be the
+  fundamental inventory. Related to, and probably prior to, the question in
+  [`phase_compatibility_handoff.md`](phase_compatibility_handoff.md).
 - **R-SP6 (the vocabulary).** §7 names the collisions; nothing is renamed. The
   count of bare "particle" — excluding *world-particle*, *signed particle*,
   *N-particle* and similar — runs 19 in `position_pair_ladder.md`, 17 in
@@ -435,5 +590,16 @@ column is what the term actually denotes here.
 - Paley, R. E. A. C.; Wiener, N. — *Fourier Transforms in the Complex Domain*,
   AMS Colloquium Publications **19** (1934). Why finite support gives no
   lattice, §3.
+- Bloch, F. — *Nuclear Induction*, Phys. Rev. **70** (1946) 460–474; and
+  Fano, U. — *Description of States in Quantum Mechanics by Density Matrix and
+  Operator Techniques*, Rev. Mod. Phys. **29** (1957) 74–93. Populations and
+  coherences — the standard vocabulary for the distinction §1.1 needs, and the
+  reason that section writes the terms out rather than adopting them.
+- Madelung, E. — *Quantentheorie in hydrodynamischer Form*, Z. Phys. **40**
+  (1927) 322–326. The probability current of §1.1.
+- de Broglie, L. — *Recherches sur la théorie des quanta*, Ann. Phys. **3**
+  (1925) 22–128. The phase that winds along a worldline, which Postulates
+  P0–P5 of `../analysis/phase_resonance_microdynamics.md` promote to a
+  particle-level property; §1.2.
 - The analysis notes cited in §0, which contain all the theorems; this
-  document contains none of its own except the reading in §5.
+  document contains none of its own except the readings in §5 and §5.1.

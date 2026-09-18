@@ -1067,7 +1067,14 @@ see that directory's README for the ladder itself.
   identifies leg separation `k` with `k + L_c`, so a coherence lands on the
   diagonal when `L_c` divides `d/2` — the true diagonal peak 0.398942 becomes
   0.798688, a ratio of 2.002, at `L_c = 2`, and is untouched at `L_c = 3`.
-  A longer reach is dirty where a shorter one is clean.  Part C runs the
+  A longer reach is dirty where a shorter one is clean.  Part A also
+  checks the exact identity behind the prose -- that the probability current is
+  the first `y`-derivative of `rho(x+y, x-y)` at zero separation -- against
+  `|psi|^2 p0 / m`, to five figures.  Part A2 measures the two quantities both
+  called `mu` side by side: the ladder's, winding at `p / hbar` between the two
+  legs of one body, and the sea pair's, winding at `(p_a - p_b) / hbar` between
+  two bodies, with the pair amplitude `2 |sin(mu/2)|` that makes a co-moving
+  pair dark for all time.  Part C runs the
   measurement that separates aperture from period on `V = cos(2 pi x / 4)`:
   sharp and commensurate is exact, sharp and incommensurate is off by 6.2x,
   and the taper loses a quarter of the budget at `L_c = a`.  Part D crosses the
@@ -1077,6 +1084,11 @@ see that directory's README for the ladder itself.
   `x` reaches 1.0e5 against an exact 2.287 — and contrasts pure Coulomb,
   whose real-axis pole drives `max|D_res|` to 2.0e4 as the reach reaches the
   nucleus, against a soft core that sails three times past its own `R`.
+  Part D2 minimises `|y|` over the complexified cone `r.r = -eps^2` in
+  three dimensions and confirms `R = sqrt(|x|^2/2 + eps^2)` to six
+  figures, against the one-dimensional `sqrt(x^2 + eps^2)` -- so more
+  room makes the Coulomb ceiling tighter, by up to `sqrt(2)`, and
+  Theorem Z4's threshold four times harder.
 
   Sample output figures (committed on the `output` branch):
 
