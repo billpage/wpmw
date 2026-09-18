@@ -680,6 +680,36 @@ in total — is not addressed by this note.
 
 ---
 
+### J-SP3 — the sea depth is an initial condition, not a theorem
+
+§14.2. Pathwise conservation of $`P`$ fixes the attainable sea depth from the
+initial free-body count, so a bootstrap that starts with no sea needs
+$`N_{\rm free}(0) \ge 6.455894`$ unpaired bodies per Planck cell to reach the
+$`B = 2/h`$ that §2 derives as the tightest admissible shift. That converts a
+derived bound into a tuning requirement. Three things would settle it: a check
+that $`\lambda^{*}`$ really is the right per-cell body count to use against a
+continuum $`B`$ — which is open item N-SP2 of
+[`../analysis/stochastic_ledger.md`](../analysis/stochastic_ledger.md) and the
+weakest link here; a simulation of the ledger-rich transient from $`S = 0`$,
+which the companion demo of that note cannot currently do because it holds
+$`S`$ fixed per cell; and a decision about whether a universe is entitled to
+represent states that saturate the parity bound, since if it is not, the
+requirement relaxes.
+
+### J-SP4 — two vertices are called absorption
+
+§14.3. The ledger absorption of §4 consumes bodies from the two daughter rows
+and binds them at the parent row with no body changing momentum. The K3 vertex
+of `../analysis/phase_resonance_microdynamics.md` has the excess particle exit
+at a different momentum. The two formulations are exactly equivalent as
+generators, but the property at issue — that the created pair is dark, and
+more broadly that worldline identity survives the event — is not a property of
+the generator. Whether the phase machinery transplants onto the mediated-jump
+vertex is the substance of
+[`phase_compatibility_handoff.md`](phase_compatibility_handoff.md), and until
+it is settled §14.3's creation rule is a postulate here even though it is a
+consequence there.
+
 ## 13. Where to go next
 
 - [`compensated_liouville_algorithm.md`](../algorithm/compensated_liouville_algorithm.md)
@@ -695,3 +725,126 @@ in total — is not addressed by this note.
   — what the sea is, and why the dark bound pair is not the crystal shift.
 - [`eckart_barrier_compensated.md`](../analysis/eckart_barrier_compensated.md)
   §8 — what all this looks like as tunnelling.
+## 14. Where the sea comes from
+
+§2 introduces the sea as a standing background of density $`B = 2/h`$ and §3
+has events ionise it. Neither says where it came from. This section takes the
+question seriously, because the answer constrains the initial condition more
+than one would expect.
+
+### 14.1 The bootstrap, and its direction
+
+Absorption converts two unpaired bodies of opposite species into one bound
+pair; emission does the reverse. So a universe that begins with no sea at all
+can build one, *provided* absorption can fire — and absorption needs a negaton
+at the upper daughter and a positon at the lower. Two opposite starting
+points, then, with opposite bootstraps.
+
+**Ledger-poor start.** A positive Wigner function prepared as positons alone,
+which is the §5 initial condition of
+[`../analysis/eckart_barrier_compensated.md`](../analysis/eckart_barrier_compensated.md)
+and the $`\kappa\to\infty`$ fixed point of Theorem S2. Then $`u^- = 0`$, no
+event has a negaton to consume, and **emission must go first**: the ensemble
+manufactures by emission the negatons that absorption later consumes. §8.4 of
+that note works the case through, and Theorem K9 measures what it costs.
+
+**Ledger-rich start.** A population of free positons and negatons with a
+slight positon excess, so that $`E = u^+ - u^-`$ is the intended Wigner
+function and $`N = u^+ + u^-`$ is much larger. Both species are present
+everywhere, so **absorption goes first** and emission is blocked for want of a
+sea pair to ionise. The transient runs absorptively until $`S`$ is deep enough
+to unblock emission, after which the attractor of Theorem S9 takes over.
+
+The second is the more natural cosmological picture and it has a pleasant
+consequence: if absorption is the *only* source of bound pairs, then the sea
+consists of pairs by construction rather than by stipulation, and the question
+"why is the sea paired?" does not arise. But it is not free.
+
+### 14.2 Pathwise conservation prices it
+
+Theorem N1 of [`../analysis/stochastic_ledger.md`](../analysis/stochastic_ledger.md)
+states that
+
+```math
+P \;=\; \sum_c \Bigl(S_c + \tfrac{N_c}{2}\Bigr)
+```
+
+is conserved *pathwise*, in exact integers, on every trajectory: emission has
+$`\Delta S = -1, \Delta N = +2`$, absorption and recombination
+$`\Delta S = +1, \Delta N = -2`$, and transport moves both together. So $`P`$
+is fixed once, by the initial condition, and no dynamics can change it.
+
+Start with no sea. Then $`P = N_{\rm free}(0)/2`$, and at equilibrium the body
+count settles at $`N \to 2\lambda^{*}`$ per cell with
+$`\lambda^{*} = -\ln(1 - 2^{-1/2}) = 1.227947`$ by Theorem N5, so
+
+```math
+S_{\rm eq} \;=\; P - \lambda^{*}
+           \;=\; \tfrac12 N_{\rm free}(0) - 1.227947 .
+```
+
+Now impose what §2 requires of the sea. The bound $`|W| \le 2/h`$ is saturated
+at the centre of any Gaussian and reached at $`-0.827`$ of it in a cat state's
+interference trough, so the shift $`B = 2/h`$ — two pairs per Planck cell — is
+the *tightest* one for which $`W' = W + B \ge 0`$ holds for all pure states.
+Requiring $`S_{\rm eq} \ge 2`$ gives
+
+```math
+N_{\rm free}(0) \;\ge\; 2\bigl(2 + \lambda^{*}\bigr) \;=\; 6.455894
+\qquad\text{unpaired bodies per Planck cell.}
+```
+
+**This is the cost, and it should be stated plainly.** In §2 the value
+$`B = 2/h`$ is *derived*, as the tightest uniform shift compatible with the
+parity bound. Under the ledger-rich bootstrap it becomes instead a *constraint
+on the initial free-body density*: a universe that starts below 6.456 unpaired
+bodies per Planck cell can never accumulate a sea deep enough to represent a
+state that saturates $`|W| \le 2/h`$, because $`P`$ forbids it. The number is
+not large and nothing rules it out, but it is a tuning requirement where the
+project currently has a theorem, and it is the kind of thing better noticed
+now than later.
+
+The ledger-poor bootstrap has the same arithmetic and reaches it from the
+other side: there $`N_{\rm free}(0) = |E|`$ is small, $`P`$ is correspondingly
+small, and the sea that can ever be built is shallow. This is a sharper form
+of §8.4's observation that the barrier ensemble starves — and it says the
+starvation is not a transient to be waited out but a conservation law.
+
+### 14.3 Why the pairs are dark, and the problem that raises
+
+A bound pair contributes zero to $`E`$ arithmetically, its two members having
+opposite sign. But §1.1 of
+[`../analysis/phase_resonance_microdynamics.md`](../analysis/phase_resonance_microdynamics.md)
+makes phase a genuine particle-level property, and there darkness is
+*interference* rather than bookkeeping: by Lemma 4 of
+[`../analysis/phase_alignment_microdynamics.md`](../analysis/phase_alignment_microdynamics.md)
+a pair's entire gauge-invariant content is the misalignment
+$`\mu = \Phi_a - \Phi_b`$ of its two transported clock phases, the pair
+amplitude is $`|\Psi| = 2|\sin(\mu/2)|`$, and darkness is $`\mu \equiv 0`$.
+
+That is good news for the bootstrap, and it is *stable*. Proposition 3 of the
+same note gives $`\partial\mu/\partial x = \Delta p/\hbar`$, so a pair whose
+members are co-located and co-moving has $`\Delta p = 0`$ and its misalignment
+never winds: set to zero at creation, it stays dark for all time under
+classical streaming. A creation rule — absorption always binds its two bodies
+with matched phase — therefore does not have to be re-imposed, and the K3
+vertex of the phase-resonance note already delivers it, the struck partner
+exiting "at its mate's momentum with gauge-matched phase" and the pair exiting
+dark.
+
+**The problem is that these may not be the same vertex.** Ledger absorption,
+as defined in §4 above, consumes a positon and a negaton from the two
+*daughter* rows $`p \pm \xi_q`$ and binds them at the *parent* row $`p`$, with
+no body changing momentum. The phase-resonance K3 vertex has the excess
+particle exit at $`p_{lo} = p_{hi} - \sigma\,2q\,\delta p`$ — the particle
+changes momentum, which §8.1 of the Eckart note forbids. The two formulations
+are exactly equivalent as generators, by
+[`../analysis/four_rule_microdynamics_equivalence.md`](../analysis/four_rule_microdynamics_equivalence.md),
+but that is equivalence in $`E`$, and an identity question is precisely what
+equivalence in $`E`$ cannot settle — the same structure as Theorem N2, and as
+the emissive/absorptive choice itself.
+
+So "absorption creates dark pairs" is well supported in one formulation and
+unestablished in the one this note uses. Logged as **J-SP4** and handed off
+to a dedicated treatment; see
+[`phase_compatibility_handoff.md`](phase_compatibility_handoff.md).
