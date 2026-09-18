@@ -178,8 +178,8 @@ was built on a vertex in which the excess particle *changes momentum*, which
 §8.1 of the Eckart note forbids. Equivalence of generators is equivalence in
 $`E`$, and an identity question is precisely what that cannot settle. Whether
 the phase notion transplants onto the compensated model's mediated-jump vertex
-is unresolved and is the subject of
-[`phase_compatibility_handoff.md`](phase_compatibility_handoff.md).
+is unresolved, and is held for a note of its own; open item J-SP4 of
+[`emission_and_absorption.md`](emission_and_absorption.md) states it.
 
 ## 2. Is the reach a coherence length?
 
@@ -563,8 +563,11 @@ column is what the term actually denotes here.
   and neither set is a coarse-graining of the other. That is the ordinary
   relationship between conjugate bases and is not by itself a problem — but
   the project makes ontological claims in both, and they cannot both be the
-  fundamental inventory. Related to, and probably prior to, the question in
-  [`phase_compatibility_handoff.md`](phase_compatibility_handoff.md).
+  fundamental inventory. Related to, and probably prior to, the question
+  raised by J-SP4 of
+  [`emission_and_absorption.md`](emission_and_absorption.md): a vertex cannot
+  be said to preserve identity until one has said what the identified things
+  are.
 - **R-SP6 (the vocabulary).** §7 names the collisions; nothing is renamed. The
   count of bare "particle" — excluding *world-particle*, *signed particle*,
   *N-particle* and similar — runs 19 in `position_pair_ladder.md`, 17 in

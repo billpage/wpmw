@@ -705,10 +705,12 @@ at a different momentum. The two formulations are exactly equivalent as
 generators, but the property at issue — that the created pair is dark, and
 more broadly that worldline identity survives the event — is not a property of
 the generator. Whether the phase machinery transplants onto the mediated-jump
-vertex is the substance of
-[`phase_compatibility_handoff.md`](phase_compatibility_handoff.md), and until
-it is settled §14.3's creation rule is a postulate here even though it is a
-consequence there.
+vertex is an open question held for a note of its own, and until it is settled
+§14.3's creation rule is a postulate here even though it is a consequence
+there. The sharpest single test available is whether Theorem 2's no-go — that
+no phase-blind microdynamics can be linear in $`V_q`$ — reaches the
+mediated-jump formulation at all, and it should be done before any
+constructive work, because a negative answer changes everything downstream.
 
 ## 13. Where to go next
 
@@ -845,6 +847,5 @@ equivalence in $`E`$ cannot settle — the same structure as Theorem N2, and as
 the emissive/absorptive choice itself.
 
 So "absorption creates dark pairs" is well supported in one formulation and
-unestablished in the one this note uses. Logged as **J-SP4** and handed off
-to a dedicated treatment; see
-[`phase_compatibility_handoff.md`](phase_compatibility_handoff.md).
+unestablished in the one this note uses. Logged as **J-SP4** and held for a
+dedicated treatment.
