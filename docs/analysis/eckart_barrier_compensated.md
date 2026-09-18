@@ -731,6 +731,62 @@ optimum attached rather than being set by what the grid allowed.
 
 ---
 
+### 8.5 What absorption does to that picture, and what it does not
+
+§8.3 tells the story emissively: pairs conjured on the flanks, some members
+fast enough to clear the summit, tunnelling the residue left when they fail to
+cancel. §8.4 then replaces half those events with the absorptive realisation.
+It is worth saying explicitly what that replacement changes, because the
+natural reading — that absorption is a second tunnelling mechanism alongside
+emission — is wrong.
+
+**Nothing crosses, under either realisation.** Emissively, a bound pair
+co-located with the parent in both $`r`$ and $`p`$ is ionised, and one member
+appears at $`p + \xi_q`$ with beyond-barrier momentum: the transmitted flux is
+a *newly created* world. Absorptively, a negaton already sitting at
+$`p + \xi_q`$ is removed, which raises $`E`$ there by exactly the same amount:
+the transmitted flux appears by *deleting an anti-world*. In neither case was
+the world found beyond the barrier ever on the near side of it. §8.1's
+conclusion is unweakened — identity is never transported across the barrier,
+and the quantum channel still acts only by changing how many worlds there
+are.
+
+**And the observable cannot tell the two apart.** Both realisations deposit
+$`+1`$ at the upper daughter and $`-1`$ at the lower, so they move $`E`$
+identically; Theorem N2 of
+[`stochastic_ledger.md`](stochastic_ledger.md) states this as the exact claim
+that the choice between them lies in the kernel of the observable map. The
+transmission coefficient of §5 is therefore blind to $`f`$. Whatever
+absorption contributes, it is not transmission.
+
+**What it contributes is computability.** Under pure emission the unpaired
+population grows as $`\exp\int\Gamma\,dt`$ — the factors of $`1.6\times10^{3}`$
+and $`1.0\times10^{8}`$ per barrier transit tabulated in §8.4 — and $`E`$
+becomes a small difference of two enormous populations, at a cost of four
+orders of magnitude in QLE fidelity at fixed $`\Delta t`$. Absorption holds the
+population down without touching $`E`$. That is the whole of its role here,
+and it is a large role: it is the difference between a mechanism and a
+mechanism one can integrate.
+
+**On a barrier it cannot even start.** The §5 initial condition is a positive
+Wigner function, so $`u^- = 0`$ everywhere at $`t = 0`$ and no event has a
+negaton to consume. The first tunnelling events are therefore necessarily
+emissive, and absorption becomes available only once emission has manufactured
+the negatons it will later consume. Theorem K9 measures what that costs: $`f`$
+starves at the moving frontier of the negaton support, reaching 0.4386 and
+0.4685 at $`y_{\max}/a = 2\pi`$ and $`4\pi`$, and refining $`\Delta t`$ does not
+help because the failure is at the boundary of the minority species' support
+rather than in a rate.
+
+So the summary sentence for a barrier is the reverse of what one might guess:
+**emission does the tunnelling, and absorption is what keeps the bookkeeping
+from exploding while it happens.** Note that this asymmetry is a property of
+the initial condition and not of the channel. An initial ensemble already
+carrying both species admits absorption from the first step and bootstraps the
+sea the other way round; §14 of
+[`../supplement/emission_and_absorption.md`](../supplement/emission_and_absorption.md)
+works that case through and shows what it costs elsewhere.
+
 ## 9. Figures
 
 ![The split, and the budget ratio](https://raw.githubusercontent.com/billpage/wpmw/output/figures/eckart_compensated_split.png)
