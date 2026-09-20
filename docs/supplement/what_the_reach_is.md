@@ -42,6 +42,14 @@ writing, more than once — is to read
 
 as two bodies at two places. There is one body.
 
+**Step 20 adds one line to this.** The separation $`y`$ — the ladder $`\mu`$'s
+conjugate — is what the compensated kernel integrates over, so the
+compensated formulation is phase-blind in its *bodies* and not in its
+*kernel*: see Theorem Y1 of
+[`../analysis/dark_sea_and_worldline_identity.md`](../analysis/dark_sea_and_worldline_identity.md).
+Keeping that $`\mu`$ apart from the pair $`\mu`$ of the phase formulation is
+what §1 below is for.
+
 $`W`$ and $`\rho`$ are related by
 
 ```math

@@ -449,6 +449,15 @@ expensive one — the opposite of the usual intuition.
 
 ### 8.1 A jump is not a hop
 
+> **See also** step 20,
+> [`dark_sea_and_worldline_identity.md`](dark_sea_and_worldline_identity.md).
+> Theorem Y5 shows that conserving world-particles — reading an aligned pair
+> as two co-moving clocks rather than as one object — forces kinks, so the
+> ban below is a consequence of birth and death rather than an independent
+> postulate. The kinks it forces are simultaneous, co-located,
+> opposite-species and equal and opposite, so they conserve momentum event by
+> event and leave Proposition K8 standing.
+
 *Wording corrected, September 2026.* This section previously read "a hop is
 not a jump" and used the two words the other way round from the rest of the
 project. §4.0 of
@@ -588,6 +597,16 @@ positon–negaton pairs conjured on the flanks, whose members follow their own
 Newtonian worldlines from birth, some of them fast enough to clear the
 summit. Tunnelling is the residue left when the positons and negatons that
 clear the summit fail, by a fraction $`\approx 0.55/\beta`$, to cancel.
+
+**Qualification, step 20.** That paragraph is a statement about identity, and
+identity is exactly what the ontology has not yet fixed. It holds as written
+under birth and death. Under the piecewise reading of
+[`dark_sea_and_worldline_identity.md`](dark_sea_and_worldline_identity.md) §6,
+where world-particles are conserved and kinks come in opposite-species pairs,
+no body is ever in a classically forbidden place either — but individual
+bodies do cross the separatrix, in both directions, at a rate set by the
+momentum diffusion of Theorem Y6, which no observable records. The demographic
+account of `E` is untouched by the choice; the sentence about *a world* is not.
 
 ![Space-time worldlines and the four lobes](https://raw.githubusercontent.com/billpage/wpmw/output/figures/eckart_compensated_spacetime.png)
 

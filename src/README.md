@@ -1243,6 +1243,28 @@ see that directory's README for the ladder itself.
   Docs can also opt in to an automated, published PDF via GitHub Releases —
   see "PDF releases" in the top-level README.
 
+- `demo_dark_sea_and_identity.py` — verification companion to
+  `docs/analysis/dark_sea_and_worldline_identity.md`, on what makes the sea
+  dark and what stays the same body through an event.  Part A is the note's
+  sharpest test, run first: `K(lam V) = lam K(V)` to machine precision over
+  `lam` from `1e-3` to `-1`, so the compensated vertex reads the potential
+  itself and the phase-blind no-go does not reach it.  Part B settles the
+  integer books for the four ways to source a catalysed recombination's two
+  legs, all of which move `E` identically, and exhibits the sea-eligible
+  realisations whose count signature is exactly the excluded hop.  Part C
+  shows the two consumed bodies are a winding pair centred on the parent's
+  row — `| |Psi| - 2|sin(mu/2)| |` at `4e-15`, node spacing `h/|dp|`,
+  envelope velocity equal to the parent's — and that binding with continuous
+  phases leaves a permanently gray pair.  Part D verifies the phase ramp a
+  kink carries: slope `xi/hbar`, zero at the pivot, and a node-located kink
+  equal to a reset of `mu(x*)/2` per body.  Part E tags the incident
+  positons and follows them through both processes: zero mean kick,
+  `Gamma(0) = 0` at the summit, and a crossing fraction that tracks neither
+  the classical nor the quantum transmission.  `--full` reproduces the
+  note's table on the fine lattice (about five minutes per packet); the
+  default runs one packet on a coarse lattice in about a minute.  No
+  figures.
+
 ## Output path convention
 
 All scripts in this directory must write files through helpers from

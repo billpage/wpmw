@@ -434,6 +434,53 @@ retracts.
     transmission calculation, which has no closed form and needs a
     split-operator reference, as Z-LS2.
 
+20. **[`dark_sea_and_worldline_identity.md`](dark_sea_and_worldline_identity.md)** —
+    Whether the phase machinery transplants from the phase-resonance
+    formulation onto the compensated one, and what the sea's darkness is a
+    statement about. Theorem Y1 answers the sharpest test first, negatively
+    for the no-go: the compensated kernel is read from the potential
+    directly, `K(lam V) = lam K(V)` to machine precision, so the phase-blind
+    no-go (Theorem 2) does not reach it and the phase it needs is not absent
+    but already integrated into the kernel as the ladder `mu`. By Corollary
+    Y1.1 a particle-level phase can therefore never be *necessary* for `E`,
+    and any phase rule lives in the kernel of the observable map — where, by
+    Theorem N2, the realisation choice already lives. Theorem Y2 asks what
+    the sea's ineligibility for recombination is worth, since all four ways
+    of settling the two legs move `E` identically: with the sea eligible
+    there are realisations with `dN = dS = 0` whose effect on the counts is
+    exactly the excluded hop, and which conserve momentum by shifting one
+    aligned pair a row, while `P = S + N/2` stays conserved throughout — so
+    ineligibility, not arithmetic, is what gives postulate (S) and
+    Proposition K8 their content, and with it every event carries `|dS| =
+    1`. Theorems Y3 and Y4 supply the phase account darkness was missing:
+    the two bodies a catalysed recombination consumes are a winding pair
+    whose midpoint is the parent's own row, with `|Psi| = 2|sin(mu/2)|` and
+    an envelope drifting at the parent's velocity, and a momentum kink of
+    `+-xi` carries a phase ramp pinned at the point where it happens, so the
+    created pair's misalignment freezes at `mu(x_k)` and is dark exactly
+    when the kink sits at a node — a node-located kink and a phase reset at
+    the parent's position being one freedom seen twice, not two rules.
+    **Theorem Y5 is the cost.** If world-particles are conserved and none
+    ever changes momentum at an event, per-row species counts are
+    event-invariant and the residual channel can do nothing; so the
+    two-clock reading forces piecewise worldlines, and the alternative is
+    birth and death. Theorem Y6 prices that choice with tagged positons at
+    the Eckart barrier: the individual momentum walk is driftless (`sum_q
+    xi_q K_q = 0`) with diffusion `D_p = (1/2) sum_q xi_q^2 |K_q|`, an
+    *unsigned* moment `E` never feels; `Gamma(0) = 0`, so no kink ever
+    happens at the summit and an individual crosses by flank activation and
+    classical passage, never through; and the measured crossing of tagged
+    positons — 0.327 against 0.213 for `E` and 0.069 classically at `E_0 =
+    V_0/2` — tracks neither the classical nor the quantum transmission,
+    falling *below* both above the barrier, and is insensitive to the sea's
+    momentum profile. Tunnelling therefore survives as a demographic account
+    of `E` and not as a statement about identity, which corrects
+    `eckart_barrier_compensated.md` §8.3 and the ledger note's "the
+    diffusion in the phase variables is identically zero". Section 8 records
+    a defect found along the way: the population clamp in
+    `demo_emission_and_absorption.py` costs 16 per cent of `E` in 250 steps
+    and biases `f`.
+
 ## Companion code
 
 Every note lists its verifying script in §0 and its numerical results in a

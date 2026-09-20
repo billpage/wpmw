@@ -459,6 +459,16 @@ measurement is now a consequence rather than an observation.
 It is worth being explicit, because the phrase "stochastic differential
 equation for quantum mechanics" points at a large and different literature.
 
+**Qualification, step 20.** What follows holds under birth and death, the
+ontology this note assumes. Under the piecewise reading of
+[`dark_sea_and_worldline_identity.md`](dark_sea_and_worldline_identity.md) the
+phase-variable diffusion is not zero: bodies take momentum kicks of
+$`\pm\xi_q`$ with no mean drift and diffusion
+$`D_p = \tfrac{1}{2}\sum_q \xi_q^2 |K_q|`$ (Theorem Y6). It is still not a
+Nelson diffusion — that one acts in position — and it is still invisible to
+$`W`$, since $`D_p`$ is an unsigned moment of a kernel $`E`$ feels only
+through its signed moments.
+
 In Nelson's stochastic mechanics (Nelson 1966, 1985) the noise is in the
 trajectory: $`dx = b\,dt + \sqrt{\hbar/m}\,dW`$, and a particle's path is
 nowhere differentiable. In the compensated ontology the opposite holds.

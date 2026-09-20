@@ -345,6 +345,18 @@ by the requirement that the pair leave aligned, which by Lemma 4 is one
 equation for one unknown and hence always solvable from vertex-local
 data. The mate is untouched in worldline, momentum and phase.
 
+**Status of that requirement, step 20.** It is a rule, not a consequence:
+the exit phase is *set* so that the pair leaves aligned. Step 20,
+[`dark_sea_and_worldline_identity.md`](dark_sea_and_worldline_identity.md)
+§5, identifies what the freedom is — by Theorem Y4 a momentum kink carries a
+phase ramp pinned at the point where the kink happens, so imposing alignment
+at the vertex position and placing the kink at a node of the consumed pair's
+envelope are the same choice made twice. Dark creation is therefore a
+postulate here on the same footing as in §14.3 of
+[`../supplement/emission_and_absorption.md`](../supplement/emission_and_absorption.md),
+and the correction is to the earlier reading that it was a consequence in
+this formulation and a postulate only in the other.
+
 ## 7. Translation table
 
 | phase-resonance note | this note |

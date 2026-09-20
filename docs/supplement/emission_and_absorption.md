@@ -712,6 +712,22 @@ no phase-blind microdynamics can be linear in $`V_q`$ — reaches the
 mediated-jump formulation at all, and it should be done before any
 constructive work, because a negative answer changes everything downstream.
 
+**Answered in part, step 20**
+([`../analysis/dark_sea_and_worldline_identity.md`](../analysis/dark_sea_and_worldline_identity.md)).
+The no-go does **not** reach the compensated formulation: by Theorem Y1 the
+vertex consults the potential itself, `K(lam V) = lam K(V)`, which is the
+exception Theorem 2 names, and the phase that note requires is present as the
+ladder `mu` already integrated into the kernel. So a particle-level phase can
+never be necessary for `E` here (Corollary Y1.1), and a phase rule can only
+live where the realisation choice already lives, in the kernel of the
+observable map. The two vertices are *not* the same event — the swap is
+elastic and permutes labels, this one is perfectly inelastic and relies on
+bodies beginning and ending — but the phase account of darkness does
+transplant (Theorem Y3), at the price of piecewise worldlines (Theorem Y5).
+One thing above is withdrawn: dark creation is not a consequence "there"
+either; §6 of the phase-alignment note imposes it. What remains open is the
+creation rule itself, as Y-SP1 and Y-SP2.
+
 ## 13. Where to go next
 
 - [`compensated_liouville_algorithm.md`](../algorithm/compensated_liouville_algorithm.md)

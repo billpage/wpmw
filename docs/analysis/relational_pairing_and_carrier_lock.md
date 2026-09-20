@@ -140,6 +140,13 @@ must supply that content by other means.
 
 ## 4. Postulate (S) and the equivalence theorem
 
+> **Naming collision.** The (S) of this section is the *sea carrier lock*,
+> withdrawn by the phase-alignment algorithm specification. It is not the (S)
+> of §1 of [`compensated_ontology.md`](compensated_ontology.md), which is the
+> *streaming* postulate and stands. Both labels are in live use; see §9 of
+> [`dark_sea_and_worldline_identity.md`](dark_sea_and_worldline_identity.md),
+> open item Y-SP8.
+
 **Postulate (S) — sea carrier lock.** *Sea particles sharing a cell and
 a momentum row share a transported phase, up to the pumped
 misalignment.*
