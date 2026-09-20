@@ -138,6 +138,37 @@ retracts.
     naively, its constant background having infinite total on non-compact
     phase space.
 
+11b. **[`reach_energy_coupling.md`](reach_energy_coupling.md)** — What the
+    reach actually controls, prompted by the question of whether the
+    coherence horizon of `open_position_space.md` §3 is necessary at all.
+    Settles open items 1 and 4 of that note and corrects three of its
+    statements. Theorem E1: the reach is a *period*, not an aperture — a
+    momentum lattice exists iff the difference field `D_x(y) = V(x+y) −
+    V(x−y)` is periodic in the half separation `y`, with `Δp = πℏ/period`,
+    and the ring, the periodicity of `V` and the postulated horizon are one
+    mechanism with three sources for that period; a window of finite support
+    does not by itself deliver a lattice. Proposition E1.1: a sharp window
+    is exact on the lattice when `2y_max` is a whole number of periods of
+    the potential and fails otherwise, so commensuration, not sharpness, is
+    what matters, and Theorem E2 makes the fold of a decaying potential's
+    tail back into one period exact. Theorem E3: signed world number and
+    energy are reach-independent for *every* even window, both being moment
+    conditions that follow from oddness — which closes open item 4, and
+    contradicts an earlier draft of the note that expected the reach to
+    couple to the energy balance once `V` has more than one harmonic.
+    Theorem E4 extends the four-action energy ledger to any number of modes:
+    for the symmetric member the focus channel does no net work and the hop
+    channel delivers the whole classical power. The coupling that does exist
+    lives one order higher. Theorem E5 finds a `1/y_max²` contamination of
+    the third moment when a horizon profile is applied to the *full* kernel,
+    and Theorem E6 shows it vanishes exactly when the profile is applied to
+    the compensated residual instead. Theorem E7: for a polynomial `V` the
+    Moyal series terminates, so there is no jump measure on the open line
+    until a reach is imposed. Theorem E8: under the compensated split the
+    residual event budget grows without bound with the reach for every `V`
+    with `V′(x) ≠ 0` — linearly for bounded `V`, cubically for the quartic
+    double well.
+
 12. **[`interworld_coupling.md`](interworld_coupling.md)** — Why four rules, and why not more. Reads
     the potential as a coupling between the two legs of a position pair,
     `U = V(x₁) − V(x₂)`, in midpoint and *full* separation coordinates
@@ -481,6 +512,26 @@ retracts.
     `demo_emission_and_absorption.py` costs 16 per cent of `E` in 250 steps
     and biases `f`.
 
+## Index
+
+[`INDEX.md`](INDEX.md) lists every labelled theorem, proposition, lemma,
+corollary, definition, postulate and open item in these notes, each with a
+section reference, a one-line statement and a *standing* — whether a later
+note corrected, restricted, superseded or retracted it, or which open item it
+feeds. It also carries the prefix registry (which theorem letters are
+reused), a ledger of what each note corrected, and the open items with their
+equivalents in the algorithm and supplement folders. Use the ladder above to
+read; use the index to look a label up.
+
+The index is updated in the same patch as the note it indexes, alongside
+that note's ladder entry above and the abstract blockquote under its title.
+Both are checked:
+
+```bash
+PYTHONPATH=src python3 -m wpmwlib.check_abstracts docs/analysis
+PYTHONPATH=src python3 -m wpmwlib.check_index docs/analysis
+```
+
 ## Companion code
 
 Every note lists its verifying script in §0 and its numerical results in a
@@ -492,6 +543,7 @@ late section. In ladder order: `src/demo_four_rule_equivalence.py`,
 `src/demo_position_pair_ladder.py`,
 `src/demo_fourd_microdynamics.py`,
 `src/demo_open_position_space.py`,
+`src/demo_reach_energy_coupling.py`,
 `src/demo_interworld_coupling.py`,
 `src/demo_species_sectors_and_annihilation.py`,
 `src/demo_compensated_liouville_splitting.py`,

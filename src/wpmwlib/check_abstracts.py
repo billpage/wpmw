@@ -40,10 +40,13 @@ from pathlib import Path
 
 # Start of a numbered ladder entry, e.g.:
 #   14. **[`compensated_liouville_splitting.md`](compensated_liouville_splitting.md)** -- The classical force ...
+# The step label is digits with an optional letter (``11b``): a note that
+# refines an existing step is filed as its "b" rather than renumbering the
+# ladder, which other notes cite by number.
 # The filename and link target are usually identical (same-directory
 # link); only the filename is used to locate the target file.
 _ITEM_START = re.compile(
-    r"^(?P<num>\d+)\.\s+\*\*\[`(?P<file>[^`]+)`\]\((?P<link>[^)]+)\)\*\*\s*(?P<rest>.*)$"
+    r"^(?P<num>\d+[a-z]?)\.\s+\*\*\[`(?P<file>[^`]+)`\]\((?P<link>[^)]+)\)\*\*\s*(?P<rest>.*)$"
 )
 _HEADING = re.compile(r"^#{1,6}\s")
 _EM_DASH_PREFIX = re.compile(r"^\u2014\s*")
@@ -51,7 +54,7 @@ _EM_DASH_PREFIX = re.compile(r"^\u2014\s*")
 
 @dataclass
 class LadderEntry:
-    number: int
+    number: str
     filename: str
     abstract: str
     line: int
@@ -93,7 +96,7 @@ def parse_ladder(readme_path: Path) -> tuple[list[LadderEntry], list[str]]:
             i += 1
             continue
         start_line = i + 1
-        num = int(m.group("num"))
+        num = m.group("num")
         filename = m.group("file")
         para_lines: list[str] = [m.group("rest")]
         paragraphs: list[str] = []

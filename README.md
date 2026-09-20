@@ -261,6 +261,34 @@ needs updating across future releases — provided the PDF's filename stays
 the same from one release to the next. Keep any version identifier in the
 release's tag/title instead of in the PDF's filename.
 
+## Documentation checks
+
+Three small linters guard the documentation. Run them from the repository
+root before committing a change under `docs/`; each exits 1 when it finds a
+problem.
+
+```bash
+PYTHONPATH=src python3 -m wpmwlib.check_md_math docs README.md src/README.md
+PYTHONPATH=src python3 -m wpmwlib.check_abstracts docs/analysis
+PYTHONPATH=src python3 -m wpmwlib.check_index docs/analysis
+```
+
+- `check_md_math` — math that GitHub will not render (see "Markdown math
+  linter" in [`src/README.md`](src/README.md)). Runs in CI.
+- `check_abstracts` — each numbered entry in the ladder of
+  [`docs/analysis/README.md`](docs/analysis/README.md) matches, word for
+  word, the blockquote under the corresponding note's title. A step label may
+  carry a letter (`11b`), which is how a note that refines an existing step is
+  filed without renumbering the ladder.
+- `check_index` — every labelled theorem, proposition, lemma, corollary,
+  definition, postulate and open item in `docs/analysis/*.md` has a row in
+  [`docs/analysis/INDEX.md`](docs/analysis/INDEX.md), and every relative link
+  in the index resolves. `--suggest` prints skeleton rows for whatever is
+  missing. A change to a note's results or open items updates the index in
+  the same commit; the statement and standing columns are written by hand.
+
+`check_abstracts` and `check_index` are not run in CI.
+
 ## File conventions
 
 - Follow the existing directory structure for new files.

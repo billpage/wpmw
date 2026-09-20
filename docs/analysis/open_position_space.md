@@ -4,7 +4,7 @@
 
 *Ladder abstract — see the [full list](README.md#the-ladder).*
 
-**Status.** Analysis note, step 10 of the ladder. Companion demo:
+**Status.** Analysis note, step 11 of the ladder. Companion demo:
 `src/demo_open_position_space.py`. Prompted by open item 4 of
 [`../supplement/inverted_pair_barrier.md`](../supplement/inverted_pair_barrier.md),
 which asked whether an absorbing layer can be given a microdynamic reading.

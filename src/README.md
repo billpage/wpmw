@@ -36,6 +36,13 @@ imported by the scripts here.
   force-kick kernel must be replaced by the full Wigner–Moyal kernel.
 - `wpmwlib/check_md_math.py` — markdown LaTeX-math linter (see "Markdown
   math linter" below).
+- `wpmwlib/check_abstracts.py` — checks that each numbered ladder entry in
+  `docs/analysis/README.md` (step labels may carry a letter, as in `11b`)
+  matches, word for word, the blockquote under its note's title.
+- `wpmwlib/check_index.py` — checks `docs/analysis/INDEX.md` against the
+  notes: every labelled theorem-like result and labelled open item has a row,
+  and every relative link in the index resolves. `--suggest` prints skeleton
+  rows for whatever is missing.
 
 ## Runnable scripts
 

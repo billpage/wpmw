@@ -18,7 +18,8 @@ guide to what's in each subdirectory here and where to start reading.
   input something its predecessor postulated and ending with the open items
   that motivate the next. Read in order starting from
   `phase_space_crystal_lattice_review.md` if you want to follow the
-  reasoning rather than just the result.
+  reasoning rather than just the result. To look up a theorem or open item by
+  its label (Theorem K4, S-SP3, C2), use [`analysis/INDEX.md`](analysis/INDEX.md).
 
 - **[`supplement/`](supplement)** — Background that supports, but
   isn't part of, the algorithm specs: redrafted source memos from David

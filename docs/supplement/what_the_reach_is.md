@@ -547,11 +547,11 @@ column is what the term actually denotes here.
   third-moment table inherits it: the raised cosine gives conditional rather
   than absolute convergence, so the $`M_3`$ column's agreement is real at the
   $`10^{-4}`$ level and not beyond.
-- **R-SP5 (`reach_energy_coupling.md` is not in the ladder).** It is labelled
-  "step 11 of the ladder," but step 11 in
+- **R-SP5 (`reach_energy_coupling.md` is not in the ladder).** **Resolved.**
+  It was labelled "step 11 of the ladder," but step 11 in
   [`../analysis/README.md`](../analysis/README.md) is
-  `open_position_space.md` and the note has no entry. Presumably an omission
-  when it was merged. Not fixed here, by decision.
+  `open_position_space.md` and the note had no entry. It is now step 11b, so
+  that no existing step number changes.
 - **R-SP7 (the sea side of Theorem N6 is untested).** N6 of
   [`../analysis/stochastic_ledger.md`](../analysis/stochastic_ledger.md) finds
   that transport, not recombination, regulates the local ledger. But the hop
