@@ -45,7 +45,10 @@ src/            Python implementations (runnable demos / scripts)
 references/     bibliography.md (links to papers; PDFs are NOT committed)
 ```
 
-See [`docs/README.md`](docs/README.md) for a guide to what's in each
+See [`ORIENTATION.md`](ORIENTATION.md) for a conceptual guide to the
+project — what the central idea is, what the vocabulary means, and what is
+established as against postulated, open, or retracted — and
+[`docs/README.md`](docs/README.md) for a guide to what's in each
 documentation subdirectory and where to start reading.
 
 ## Why document research this way
@@ -268,7 +271,7 @@ root before committing a change under `docs/`; each exits 1 when it finds a
 problem.
 
 ```bash
-PYTHONPATH=src python3 -m wpmwlib.check_md_math docs README.md src/README.md
+PYTHONPATH=src python3 -m wpmwlib.check_md_math docs README.md ORIENTATION.md src/README.md
 PYTHONPATH=src python3 -m wpmwlib.check_abstracts docs/analysis
 PYTHONPATH=src python3 -m wpmwlib.check_index docs/analysis
 ```

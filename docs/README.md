@@ -2,8 +2,11 @@
 
 Project documentation, split into four directories that play different
 roles. See the top-level [`README.md`](../README.md) for repository-wide
-conventions (cloning, output paths, the `output` branch); this page is a
-guide to what's in each subdirectory here and where to start reading.
+conventions (cloning, output paths, the `output` branch), and
+[`ORIENTATION.md`](../ORIENTATION.md) for the conceptual guide — what the
+central idea is, which words mean what, and what has been retracted. This
+page is a guide to what's in each subdirectory here and where to start
+reading.
 
 ## The four directories
 
