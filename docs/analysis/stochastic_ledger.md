@@ -555,8 +555,8 @@ the fact.
 
 | part | claim | result |
 |---|---|---|
-| A | N1, pathwise invariant | $`\max|2P(t)-2P(0)| = 0`$, exact integer |
-| A | N2, null direction | per-cell $`|\Delta E| = 1`$, $`|\sum_c\Delta E| = 0`$ |
+| A | N1, pathwise invariant | $`\max\|2P(t)-2P(0)\| = 0`$, exact integer |
+| A | N2, null direction | per-cell $`\|\Delta E\| = 1`$, $`\|\sum_c\Delta E\| = 0`$ |
 | B | N3, the sum rule | rel. err. $`10^{-4}`$ to $`9\times10^{-3}`$, $`\kappa \in [0.05, 2]`$ |
 | C | $`f \to 1/2`$ | 0.49977 to 0.50013 over $`\gamma/\nu \in [1/32, 1]`$ |
 | C | closure, mean | 2.4487 against 2.4559, well-mixed end |

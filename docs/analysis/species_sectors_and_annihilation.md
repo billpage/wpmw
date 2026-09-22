@@ -417,7 +417,7 @@ channel table comes in crossing-conjugate mirror families.
 $`s\,e^{-ipY/\hbar} = e^{i\pi(1-s)/2}e^{-ipY/\hbar}`$, and Hermiticity of
 $`\rho`$ restricts the offset to $`\{0,\pi\}`$:
 
-| | Hermiticity residual | $`\max|\mathrm{Im}\,W|/\max|\mathrm{Re}\,W|`$ | distinct phases |
+| | Hermiticity residual | $`\max\|\mathrm{Im}\,W\|/\max\|\mathrm{Re}\,W\|`$ | distinct phases |
 |---|---|---|---|
 | Hermitian $`\rho`$ | $`2\times10^{-3}`$ | $`1.1\times10^{-16}`$ | 3, i.e. $`\{0,\pm\pi\}`$ |
 | $`Y`$-even twist applied | $`4.5\times10^{-1}`$ | $`1.7\times10^{-1}`$ | 7529 |
@@ -529,12 +529,12 @@ positon and one negaton from a single cell changes $`E`$ by zero, hence $`W`$
 by zero, hence every moment by zero. Not an approximation, and no error term at
 any order.
 
-| stencil | $`\Delta\sum w`$ | $`\Delta\sum wp`$ | $`\Delta\sum|w|`$ | verdict |
+| stencil | $`\Delta\sum w`$ | $`\Delta\sum wp`$ | $`\Delta\sum\|w\|`$ | verdict |
 |---|---|---|---|---|
-| same cell, opposite species | 0 | 0 | $`-2|w|`$ | exact |
-| exact reverse of the outward action | 0 | $`+2q\Delta p\,w`$ | $`-2|w|`$ | erases the force |
-| soft blob of width $`\sigma_p`$ | 0 | 0 | $`-2|w|`$ | decoheres at $`\hbar/\sigma_p`$ |
-| whole column | 0 | $`\neq 0`$ | $`-2|w|`$ | preserves the Born density exactly |
+| same cell, opposite species | 0 | 0 | $`-2\|w\|`$ | exact |
+| exact reverse of the outward action | 0 | $`+2q\Delta p\,w`$ | $`-2\|w\|`$ | erases the force |
+| soft blob of width $`\sigma_p`$ | 0 | 0 | $`-2\|w\|`$ | decoheres at $`\hbar/\sigma_p`$ |
+| whole column | 0 | $`\neq 0`$ | $`-2\|w\|`$ | preserves the Born density exactly |
 
 **Theorem D11.** Every member of the family, from cell-exact to whole-column,
 leaves the diagonal of $`\rho`$ invariant to $`2.7\times10^{-13}`$. They differ
@@ -621,7 +621,7 @@ climbing toward $`\rho(|L|) = 2.341`$, and the sea drains monotonically.
 | D | D3 to $`8.0\times10^{-15}`$ on three modes; D4 linear in $`\epsilon`$ to ratio 0.9998 |
 | E | D5 reach $`d + 4\sigma`$; D6 to $`1.1\times10^{-16}`$ |
 | F | D8 to $`1.6\times10^{-14}`$; D9 balance to $`1.6\times10^{-16}`$; D10 |
-| G | U1; $`\rho(|L|) = 2.3409`$, unchanged by four guiding functions |
+| G | U1; $`\rho(\|L\|) = 2.3409`$, unchanged by four guiding functions |
 | H | D12 exact; D13; D14 boost table |
 | I | D15, $`N_{\rm total}`$ drift $`0.000\times10^{0}`$ against 5.740; D16 floor |
 | J | D17, D18: identical error at 0.7–1.8 per cent of the uniform particle count |

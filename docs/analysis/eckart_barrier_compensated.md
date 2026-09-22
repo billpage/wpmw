@@ -327,7 +327,7 @@ $`dt = 0.02`$, $`t = 22`$):
 | closed form, classical | 0.500023 |
 | full symbol run, final | 0.544477 |
 | compensated product run, final | 0.544473 |
-| closed form $`\int|\phi(k)|^2 T(E)\thinspace dk`$ | 0.544156 |
+| closed form $`\int\|\phi(k)\|^2 T(E)\thinspace dk`$ | 0.544156 |
 | C1 check, $`\lvert`$ full $`-`$ compensated $`\rvert`$ | $`4.0\times10^{-6}`$ |
 | closed-form check, $`\lvert`$ run $`-`$ exact $`\rvert`$ | $`3.2\times10^{-4}`$ |
 | gap delivered by the residual | 0.044475 |

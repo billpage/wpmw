@@ -409,11 +409,11 @@ properties to $`0.0`$, confirming that they do not discriminate.
 
 | quantity | value |
 |---|---|
-| $`\max\bigl|U - 2V_p\sin kX\sin(kY/2)\bigr|`$ | $`1.221\times10^{-14}`$ |
+| $`\max\bigl\|U - 2V_p\sin kX\sin(kY/2)\bigr\|`$ | $`1.221\times10^{-14}`$ |
 | coupling period in $`Y`$, measured from zeros | $`15.9998`$ |
 | potential period $`\lambda`$ | $`8.0000`$ |
 | ratio | $`1.999980`$ |
-| $`\max\bigl|\Gamma(X) + F(X)/(\hbar k)\bigr|`$ | $`2.220\times10^{-16}`$ |
+| $`\max\bigl\|\Gamma(X) + F(X)/(\hbar k)\bigr\|`$ | $`2.220\times10^{-16}`$ |
 
 **C. Theorem I3.** Two lines found, at $`q = \pm 0.39270`$; $`\hbar k/2 =
 0.39270`$; discrepancy $`0.0`$. Discrete-versus-continuum scaling test:

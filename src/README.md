@@ -1507,6 +1507,31 @@ A short cheat sheet for keeping new docs lint-clean:
 
   The linter's emphasis-span pass enforces this.
 
+- **In a table row, escape every `|` inside math as `\|`.** GitHub splits
+  a table row into cells at each unescaped pipe *before* it recognises
+  code spans or math, so an absolute value or norm on a table row cuts the
+  math span in two: the cell ends at the first `|` and the rest is lost. In
+  a header row the stray pipes change the column count, and the whole block
+  renders as plain text instead of a table.
+
+  ```text
+  Don't write:   | rate | $`\sum_q |K_q|`$ |
+  Write instead: | rate | $`\sum_q \|K_q\|`$ |
+  ```
+
+  (Shown in a code block because a table cannot display an unescaped pipe
+  even inside a code span — which is the same rule again.)
+
+  GFM removes the backslash while splitting the row, so the math renderer
+  receives an ordinary `|` and the absolute value is drawn correctly. The
+  same `\|` *outside* a table is LaTeX's double bar, so this is a
+  table-only rule. Found on the rendered `ORIENTATION.md` (September 2026);
+  the same scan then turned up thirteen more in four analysis notes,
+  including two tables in `species_sectors_and_annihilation.md` that had
+  never rendered as tables.
+
+  The linter's table-pipe pass enforces this.
+
 - **Inline math with two `^*` (complex conjugate) in the same paragraph.**
   The `*` after `^` is left-flanking per CommonMark and can open
   emphasis. If TWO `^*` expressions appear in the same paragraph,
