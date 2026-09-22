@@ -201,26 +201,45 @@ hops with this probability" (splitting note §2.2, and Proposition T3 in
 [`takabayasi_1954_stochastic_picture.md`](docs/supplement/takabayasi_1954_stochastic_picture.md)).
 Something has to supply the negative part.
 
-That something is the **sea**. Write $`K_{\mathrm{res}}(q)`$ for the
-residual kernel's signed weight for a momentum transfer of $`q`$ rungs. An
-event is generated at a **parent** world in row $`c`$, and its whole effect
-on the observable is $`+1`$ at row $`c+q`$ and $`-1`$ at row $`c-q`$. There
-are exactly two ways to realise that
+That something is the **sea**. The residual kernel is a sum over
+**channels** $`q`$: channel $`q`$ transfers momentum $`\xi_q`$ and carries
+the signed weight $`K_{\mathrm{res}}(q)`$. An event is generated at a
+**parent** world of momentum $`p`$, and its whole effect on the observable
+is $`+1`$ at row $`p+\xi_q`$ and $`-1`$ at row $`p-\xi_q`$. There are
+exactly two ways to realise that
 ([`stochastic_ledger.md`](docs/analysis/stochastic_ledger.md) §1):
 
 - **emissive** — **ionise** a sea pair at the parent's row: its positon
-  appears as a body at $`c+q`$ and its negaton at $`c-q`$;
-- **absorptive** — remove a negaton body at $`c+q`$ and a positon body at
-  $`c-q`$, and a new sea pair appears at the parent's row. The notes call
-  this **catalysed recombination**.
+  appears as a body at $`p+\xi_q`$ and its negaton at $`p-\xi_q`$;
+- **absorptive** — remove a negaton body at $`p+\xi_q`$ and a positon body
+  at $`p-\xi_q`$, and a new sea pair appears at the parent's row. The notes
+  call this **catalysed recombination**.
+
+![The three processes that change the pair ledger](https://raw.githubusercontent.com/billpage/wpmw/output/figures/orientation_pair_processes.png)
+
+*How to read it.* The top row shows the momentum rows at the event's
+position, before and after; a hollow marker is something that ceases to
+exist. The bottom row shows the same processes as worldlines in space-time,
+where momentum is **slope** — a faster body leans further from vertical —
+so nothing is drawn travelling between rows: at an event some worldlines
+end and others begin. The dashed line is the parent, which passes through
+both events unchanged. The first two columns have identical effects on the
+observable and opposite effects on the ledger. The third is not an event
+at all: **contact recombination** (§8) combines two bodies already in the
+same cell, with no parent and no momentum transfer, and leaves the
+observable unchanged. The fuller argument, with the ambient sea drawn in,
+is in [`emission_and_absorption.md`](docs/supplement/emission_and_absorption.md)
+§4; the figure is produced by `src/gen_orientation_figures.py`, which
+checks each process's ledger arithmetic before drawing it.
 
 Two things about the sea that are easy to get wrong:
 
 1. **It is not optional bookkeeping.** By postulate (S) of §7 the parent
    does not recoil — it stays on its Newtonian arc — so the momentum the two
-   daughters carry, $`(c+q) + (c-q) = 2c`$ in rung units, must come from
-   something already at row $`c`$: a
-   neutral pair at the parent's own row (Proposition K8, Theorem S0). That
+   daughters carry, $`(p+\xi_q) + (p-\xi_q) = 2p`$, must come from something
+   already at momentum $`p`$: a
+   neutral pair at the parent's own row, whose two members carry $`p`$
+   each (Proposition K8, Theorem S0). That
    is what makes "ionisation" a derivation rather than a metaphor. And by
    Theorem G4 (§5) the sea's events are what keep the ensemble physically
    admissible. The collision layer reached the same necessity by a
@@ -339,7 +358,7 @@ Stated as four postulates in
 | **(E)** | Existence | A world is a signed counting measure on phase space. |
 | **(A)** | Admissibility | Only ensembles whose expectation is the Wigner function of some $`\rho \ge 0`$ occur. |
 | **(S)** | Streaming | Every world-particle streams on a Newtonian arc under the *full* classical force. Co-located members of a sea pair share a trajectory. |
-| **(D)** | Demography | Pairs are ionised from and recombined into the sea at rate $`\Gamma = \sum_q |K_{\mathrm{res}}(q)|`$, a fraction $`f`$ of events realised absorptively (§8). |
+| **(D)** | Demography | Pairs are ionised from and recombined into the sea at rate $`\Gamma = \sum_q \|K_{\mathrm{res}}(q)\|`$, a fraction $`f`$ of events realised absorptively (§8). |
 
 (A) is **not** derivable from (S) + (D) — that is Proposition G3.1 and
 Theorem G4. It is non-dynamical: it constrains which ensembles occur, not
@@ -531,7 +550,7 @@ are the ones an outside reader is most likely to have picked up.
 | "No new physics" | "No new force": (A) is non-dynamical and not derivable from (S)+(D). |
 | $`f = 1/2`$ is a universal law (S7) | $`\Gamma_{\mathrm{tot}}(1-2f) = R_{\mathrm{sink}}`$ (N3); $`f = 1/2`$ is the sinkless case. |
 | Each world's trajectory can stay continuous through every event | **Theorem Y5**: an event has to change how many positons and negatons sit in some momentum row. If no world is created or destroyed and none changes momentum, nothing changes and the residual channel does nothing. So either worlds jump in momentum at events — piecewise worldlines — or they are born and die. There is no third option. |
-| "The diffusion in the phase variables is identically zero" (step 18) | **Theorem Y6**: holds under birth and death. Under piecewise worldlines a *tagged* positon — one individual, followed by label — performs a driftless momentum walk with diffusion $`D_p = \tfrac12\sum_q \xi_q^2\,|K_{\mathrm{res}}(q)|`$, where $`\xi_q`$ is the momentum jump of channel $`q`$: an unsigned moment, which the observable never feels. |
+| "The diffusion in the phase variables is identically zero" (step 18) | **Theorem Y6**: holds under birth and death. Under piecewise worldlines a *tagged* positon — one individual, followed by label — performs a driftless momentum walk with diffusion $`D_p = \tfrac12\sum_q \xi_q^2\,\|K_{\mathrm{res}}(q)\|`$ (§4): an unsigned moment, which the observable never feels. |
 | Tunnelling is a population effect superposed on continuous individual trajectories | **Theorem Y6**: at the Eckart barrier with incident energy half the barrier height, tagged positons cross with probability 0.327, against 0.213 for the observable and 0.069 classically — tracking neither, and falling *below* both above the barrier. Tunnelling survives as a demographic account of $`\mathcal{E}`$ and **not** as a statement about identity. |
 | A reach is an aperture; a finite window gives a momentum lattice | **Theorem E1 / Proposition E1.1**: reach is a *period*; commensuration, not sharpness, is what delivers the lattice. |
 | An absorbing layer can stop worlds escaping | **Theorem O1**: the Wigner kernel's modulus is independent of position, so no absorber can. The horizon goes on the separation. |
