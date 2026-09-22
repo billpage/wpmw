@@ -1,11 +1,14 @@
-"""Figures for ORIENTATION.md §4: the three processes that change the pair
-ledger, each drawn twice -- in phase space and in space-time.
+"""Figure for ORIENTATION.md §4: the two realisations of a residual event,
+each drawn twice -- in phase space and in space-time.
 
 Columns:
-  1. emissive event       -- a sea pair at the parent's row is ionised;
-  2. absorptive event     -- two bodies recombine into a sea pair at the
-                             parent's row (catalysed recombination);
-  3. contact recombination -- two coincident bodies combine; no parent.
+  1. emissive event   -- a sea pair at the parent's row is ionised;
+  2. absorptive event -- two bodies recombine into a sea pair at the
+                         parent's row (catalysed recombination).
+
+The optional bilinear sink (rate kappa n+ n-) is deliberately not drawn: it
+is not part of postulate (D), whose f = 1/2 is the sinkless case (Theorem
+N3); ORIENTATION.md §8 states its status.
 
 Before drawing, each process is written down as a list of (species,
 momentum, +1 created / -1 destroyed) entries and checked against the rules
@@ -43,8 +46,6 @@ PROCESSES = [
      [(PARENT, P, 0), (PAIR, P, -1), (POS, P + XI, +1), (NEG, P - XI, +1)]),
     ("absorptive event\n(catalysed recombination)",
      [(PARENT, P, 0), (NEG, P + XI, -1), (POS, P - XI, -1), (PAIR, P, +1)]),
-    ("contact recombination\n(no parent)",
-     [(POS, P, -1), (NEG, P, -1), (PAIR, P, +1)]),
 ]
 
 
@@ -74,7 +75,7 @@ def verify():
     rows = []
     ok = True
     for (title, entries), want_E, want_N, want_S in zip(
-            PROCESSES, [expect_E, expect_E, {}], [+2, -2, -2], [-1, +1, +1]):
+            PROCESSES, [expect_E, expect_E], [+2, -2], [-1, +1]):
         dE, dN, dS, dP, dmom = ledger(entries)
         checks = {
             "dE": dE == want_E,
@@ -121,9 +122,6 @@ def phase_panel(ax, entries):
         # the parent sits just left of its row's centre so a co-located
         # sea pair can still be seen
         dx = -0.14 if sp == PARENT else 0.0
-        # contact case: two bodies in one cell, drawn side by side
-        if sp in (POS, NEG) and all(q == P for _, q, _ in entries):
-            dx = -0.06 if sp == POS else 0.06
         if s <= 0:
             marker(ax, sp, xb + dx, p, hollow=(s < 0))
         if s >= 0:
@@ -156,10 +154,6 @@ def spacetime_panel(ax, entries):
             seg = ([-sl * t_ev, 0], [0, t_ev])
         else:
             seg = ([0, sl * (1 - t_ev)], [t_ev, 1])
-        if sp == NEG and all(q == P for _, q, _ in entries):
-            # coincident with the positon: stripe it over the blue line
-            ax.plot(*seg, color=c, lw=lw, ls=(0, (4, 4)), zorder=4)
-            continue
         ax.plot(*seg, color=c, lw=lw, solid_capstyle="round", zorder=3)
     ax.plot(0, t_ev, "o", ms=8, mfc="white", mec="k", mew=1.5, zorder=6)
     ax.set_xlim(-0.75, 0.75)
@@ -173,13 +167,13 @@ def spacetime_panel(ax, entries):
 
 
 def main():
-    print("Ledger checks for the three processes "
+    print("Ledger checks for the two realisations "
           f"(parent row p = {P}, transfer xi_q = {XI})\n")
     if not verify():
         raise SystemExit("\nA ledger check failed; not drawing.")
     print("\nAll checks pass; drawing.")
 
-    fig, axs = plt.subplots(2, 3, figsize=(14, 8.6),
+    fig, axs = plt.subplots(2, 2, figsize=(10, 8.6),
                             gridspec_kw=dict(height_ratios=[1, 1.15]))
     for j, (title, entries) in enumerate(PROCESSES):
         axs[0, j].set_title(title, fontsize=11)
@@ -188,8 +182,7 @@ def main():
     axs[0, 0].set_ylabel("momentum row\n(at the event's position)")
 
     subs = [r"$\Delta N=+2,\ \Delta S=-1$;  $E$: $+1$ at $p+\xi_q$, $-1$ at $p-\xi_q$",
-            r"$\Delta N=-2,\ \Delta S=+1$;  $E$: $+1$ at $p+\xi_q$, $-1$ at $p-\xi_q$",
-            r"$\Delta N=-2,\ \Delta S=+1$;  $E$ unchanged"]
+            r"$\Delta N=-2,\ \Delta S=+1$;  $E$: $+1$ at $p+\xi_q$, $-1$ at $p-\xi_q$"]
     for j, s in enumerate(subs):
         axs[0, j].text(0.5, -0.2, s, transform=axs[0, j].transAxes,
                        ha="center", va="top", fontsize=9, color="0.25")
@@ -208,9 +201,9 @@ def main():
         plt.Line2D([], [], color="k", lw=1.4, ls=(0, (5, 3)),
                    label="parent worldline (unchanged)"),
     ]
-    fig.legend(handles=handles, loc="lower center", ncol=6, frameon=False,
+    fig.legend(handles=handles, loc="lower center", ncol=3, frameon=False,
                fontsize=9, bbox_to_anchor=(0.5, -0.005))
-    fig.suptitle("The three processes that change the pair ledger — "
+    fig.suptitle("The two realisations of one residual event\n"
                  "top: momentum rows before and after; "
                  "bottom: worldlines, where momentum is slope",
                  fontsize=12)

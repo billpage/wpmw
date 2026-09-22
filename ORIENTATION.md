@@ -215,7 +215,7 @@ exactly two ways to realise that
   at $`p-\xi_q`$, and a new sea pair appears at the parent's row. The notes
   call this **catalysed recombination**.
 
-![The three processes that change the pair ledger](https://raw.githubusercontent.com/billpage/wpmw/output/figures/orientation_pair_processes.png)
+![The two realisations of one residual event](https://raw.githubusercontent.com/billpage/wpmw/output/figures/orientation_pair_processes.png)
 
 *How to read it.* The top row shows the momentum rows at the event's
 position, before and after; a hollow marker is something that ceases to
@@ -223,11 +223,9 @@ exist. The bottom row shows the same processes as worldlines in space-time,
 where momentum is **slope** — a faster body leans further from vertical —
 so nothing is drawn travelling between rows: at an event some worldlines
 end and others begin. The dashed line is the parent, which passes through
-both events unchanged. The first two columns have identical effects on the
-observable and opposite effects on the ledger. The third is not an event
-at all: **contact recombination** (§8) combines two bodies already in the
-same cell, with no parent and no momentum transfer, and leaves the
-observable unchanged. The fuller argument, with the ambient sea drawn in,
+both events unchanged. The two columns have identical effects on the
+observable and opposite effects on the ledger. The fuller argument, with
+the ambient sea drawn in,
 is in [`emission_and_absorption.md`](docs/supplement/emission_and_absorption.md)
 §4; the figure is produced by `src/gen_orientation_figures.py`, which
 checks each process's ledger arithmetic before drawing it.
@@ -395,15 +393,28 @@ Write $`f`$ for the absorptive fraction. **Theorem N3** is the current law:
 
 where $`\Gamma_{\mathrm{tot}}`$ is the total event rate and
 $`R_{\mathrm{sink}}`$ the total rate of every *other* channel that removes
-bodies — for instance **contact recombination**, a separate channel in
-which a coincident positon and negaton body combine into a sea pair at rate
-$`\kappa\,n_+n_-`$. So:
+bodies. So:
 
 - $`f = 1/2`$ is the **sinkless special case**, not a universal law — this
   is an explicit correction to the earlier Theorem S7;
 - any sink forces $`f < 1/2`$ by a computable amount, verified to between
   0.01 and 0.9 per cent over a fortyfold range;
 - population closure is a dynamical problem in its own right.
+
+**Is there any such sink? Not in the model as postulated.** Theorem S1
+fixes what one would have to be: the only way to remove bodies without
+changing the observable is to remove a positon and a negaton together from
+the same cell, at a rate $`\kappa\,n_+n_-`$. The project has carried
+exactly this channel since the collision layer — step 3's recombination
+channel, step 13's annihilation substep — because without it unpaired
+bodies accumulate, and step 16 took it into the compensated ledger as the
+$`\kappa`$ sink. Step 20 names it *contact* recombination, to distinguish
+it from the catalysed kind of §4. In the compensated model it proved
+unnecessary: the absorptive event is itself a pair-removal channel of S1's
+form, and by Theorem S9 it holds the ledger closed with no tuning. Postulate (D), with
+$`f = 1/2`$, is therefore the sinkless case, and the algorithm
+specification keeps $`\kappa`$ only as an optional setting whose one
+constant nothing fixes (open item S-SP1).
 
 Under an independent-occupancy closure $`f(\lambda) = (1-e^{-\lambda})^2`$,
 and the sinkless value pins
@@ -414,12 +425,13 @@ N4, N5). Here $`\lambda`$ is the mean number of bodies of one sign in a
 cell, and $`f`$ is the probability that an event finds both bodies it needs
 to settle absorptively.
 
-**Theorem N6** reassigns a role the project had wrongly given to
-recombination: with streaming off, per-cell occupancy is a reflected
-critical random walk whose spread grows without bound; turning streaming on
-holds it flat. **Streaming, not recombination, is the local regulator** —
-and by N3 no sink could have been, since every sink moves $`f`$ off one
-half.
+**Theorem N6** removes the last role the $`\kappa`$ sink might have had:
+with streaming off, per-cell occupancy is a reflected critical random walk
+whose spread grows without bound; the $`\kappa`$ sink damps it only partly,
+and drags $`f`$ down to 0.32; turning streaming on instead holds it flat
+and leaves $`f`$ at one half. **Streaming, not recombination, is the local
+regulator** — and by N3 no sink could have been, since every sink moves
+$`f`$ off one half.
 
 ---
 
@@ -438,7 +450,7 @@ half.
 | **Dark / aligned** | *pair* $`\mu = 0`$ (§9.2) | a *relational* state of a pair, not a species |
 | **Residual channel** | compensated odd kernel $`\mathcal{R}`$ | what is left of the QLE after the classical force is removed |
 | **Ionisation** | sea pair $`\to`$ two visible daughters | the microscopic realisation of a residual event |
-| **Recombination** | two bodies $`\to`$ sea pair | **two channels**, catalysed and contact — see §9.3 |
+| **Recombination** | two bodies $`\to`$ sea pair | in the model, the absorptive realisation of an event (§4); see §9.3 for an older use |
 | **Four actions** | focus, defocus, left hop, right hop | the collision rules of step 2 (§2.1) |
 | **Admissibility** | $`\rho \ge 0`$ after reconstruction | the constraint (A) selecting physical ensembles |
 | **$`\mathcal{E}`$ (the observable map)** | ensemble $`\to`$ $`W`$ | what is measurable; the ledger lives in its kernel |
@@ -473,10 +485,13 @@ ionisation" as one chain, it has crossed between the two.
   argues the word is wrong — nothing holds the pair together; the relation
   is alignment — and open item Y-SP8 proposes "aligned" instead. No note has
   been renamed yet.
-- **"Recombination"** names two different channels: *catalysed*
-  recombination is the absorptive realisation of an event, at the parent's
-  row (§4); *contact* recombination is the $`\kappa`$ sink of §8, two
-  coincident bodies combining with no parent.
+- **"Recombination"**, in the model, is the absorptive realisation of an
+  event, at the parent's row (§4). But where steps 3, 13, 16 and 18 speak
+  of a recombination channel or rate, they mean the sink of §8 — two bodies
+  in one cell combining, with no parent. It was essential in the collision
+  layer; in the compensated model it is optional, and not part of
+  postulate (D). Step 20 separates the two as *catalysed* and *contact*
+  recombination.
 - **"Sea"** describes what a pair is doing in the population dynamics;
   **"dark"** describes its internal phase relation. A dark sea pair is
   both; neither word implies the other.
