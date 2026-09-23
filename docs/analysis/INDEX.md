@@ -46,6 +46,7 @@ Theorem and open-item labels are shared across the whole of `docs/`. Each note u
 | S | step 16 (S0–S9); postulate (S) in steps 6 and 17 | Two postulates are called (S): the sea carrier lock (step 6) and streaming (step 17). Step 20 §9 records this. |
 | U | step 13 (U1) | — |
 | Y | step 20 (Y1–Y6) | — |
+| M | step 21 (M0–M10) | Not to be confused with the symbol M(x, s), the hops M± of the algorithm specification §5.3, or the moments M0 and M2 of step 11b; none of those is a label. |
 | Z | step 19 (Z1–Z5) | — |
 | Thm 1–4, Lem 0–5, Prop 1–3, Cor 4.x | steps 4 and 5 | Numbered without a letter; later notes cite them as 'Theorem 4', 'Lemma 4', 'Proposition 3'. |
 | F, H, J, T, W | supplement: four_action_foundations (F1–F4), holland_two_fluid_correspondence (H1–H7), emission_and_absorption (J1–J2), takabayasi_1954_stochastic_picture (T-series), limkumnerd_weighted_paths (W1–W5) | Cited from the analysis notes; see §9. |
@@ -54,7 +55,7 @@ Open-item ID series, all of the form `<note prefix><suffix><n>`. The suffixes `S
 
 | Suffix | Where used |
 |---|---|
-| -SP | G-SP (step 17), S-SP (16), N-SP (18), Y-SP (20); supplement: J-SP, H-SP, W-SP, R-SP |
+| -SP | G-SP (step 17), S-SP (16), N-SP (18), Y-SP (20), M-SP (21); supplement: J-SP, H-SP, W-SP, R-SP |
 | -LS | K-LS (step 15), Z-LS (step 19) |
 | CLS | step 14 |
 | CLA | docs/algorithm/compensated_liouville_algorithm.md |
@@ -108,6 +109,12 @@ Kept apart from the results because a postulate is what everything else assumes,
 | [Post (A)](compensated_ontology.md#1-four-postulates) | 1 | Admissibility: only ensembles whose expectation is the Wigner function of some ρ at least 0 occur. | independent of (S) + (D) (G3.1); particle-level statement open (G-SP2) |
 | [Post (S)](compensated_ontology.md#1-four-postulates) | 1 | Streaming: between events every world-particle obeys the full classical force; momentum is continuous along every worldline. | NOT the sea carrier lock of step 6; the notation collision is recorded in step 20 §9 |
 | [Post (D)](compensated_ontology.md#1-four-postulates) | 1 | Demography: a parent ionises a neutral sea pair on its own row at rate Γ = sum of abs(K_res); recombination is the reverse; absorptive fraction f = 1/2. | f = 1/2 is the sinkless case (N3) |
+
+### Step 21 — [Compensated ledger in four dimensions](fourd_compensated_ledger.md)
+
+| ID | § | Says | Standing |
+|---|---|---|---|
+| [Def M0](fourd_compensated_ledger.md#23-definition-m0-the-matching-cell) | 2.3 | The matching cell: r-bin, p_r row, and a centre-of-mass bin of area A in (X, P); A = ∞ is the 1D ledger. | only the p_r row is forced (by the reach) |
 
 ## 4. Results by note
 
@@ -204,15 +211,15 @@ No labelled results. See the note's own sections.
 |---|---|---|---|
 | [Thm A1](fourd_microdynamics.md#21-the-exactness-theorem-lifts-verbatim) | 2.1 | With shift-by-q for a vector wavevector, the exactness family, participant-locality selection of the symmetric member and endpoint locality all lift unchanged. | — |
 | [Prop A2](fourd_microdynamics.md#22-modes-fibre-the-lattice-and-different-modes-fibre-it-differently) | 2.2 | Mode q decomposes the joint momentum lattice into disjoint chains (lines along q); the four-action process runs independently on each. | — |
-| [Thm A3](fourd_microdynamics.md#23-what-leaks-the-mode-wavevector-decides) | 2.3 | Leak law: a momentum direction u is conserved event by event iff u is orthogonal to every active mode wavevector; focus and defocus never change u·P. | corrects the 4-D supplement's 2p/1D versus 1p/2D table (§0.1); modular companion is O5 |
+| [Thm A3](fourd_microdynamics.md#23-what-leaks-the-mode-wavevector-decides) | 2.3 | Leak law: a momentum direction u is conserved event by event iff u is orthogonal to every active mode wavevector; focus and defocus never change u·P. | corrects the 4-D supplement's 2p/1D versus 1p/2D table (§0.1); modular companion is O5; collapses to its neutral half under (S) (step 21 M2) |
 | [Prop B1](fourd_microdynamics.md#31-the-joint-sea-is-a-product-sea-but-the-shift-is-not-a-product) | 3.1 | For a product state the joint sea is not the product of single-particle seas: the missing cross terms are −(2/h)(W1 + W2). | — |
 | [Prop B2](fourd_microdynamics.md#32-the-sixteen-channels-lift-and-the-sea-stops-being-optional) | 3.2 | Excess worlds per cell fall as W times (M_x M_p) to the power −dN: excess–excess collisions essentially never occur once N > 1, so the sea is the only collision partner. | — |
 | [Prop B3](fourd_microdynamics.md#33-the-cost-stated-plainly) | 3.3 | For a Gaussian the peak of abs(W) in units of (2/h)^d equals the state's purity: entanglement is excess-to-background loss. | — |
 | [Thm C1](fourd_microdynamics.md#42-theorem-4-loses-its-uniqueness) | 4.2 | In d ≥ 2 the two conditions of Thm 4 leave a (d − 1)-parameter family of vertices. | corrects the uniqueness of step 5 Thm 4 (d = 1 only); label collides with steps 8 and 14 |
 | [Cor C2](fourd_microdynamics.md#42-theorem-4-loses-its-uniqueness) | 4.2 | Every member of that family conserves energy identically, so energy does not select the swap. | label collides with steps 8 and 14 |
 | [Prop C3](fourd_microdynamics.md#42-theorem-4-loses-its-uniqueness) | 4.2 | The swap is the unique member whose out-momenta are a permutation of the in-momenta. | — |
-| [Prop C4](fourd_microdynamics.md#43-what-the-transverse-parameter-is) | 4.3 | Every member gives the excess particle the same transfer; at a transversally uniform sea the family is invisible to the QLE. | invisibility fails in a live 4-D sea (open item 1) |
-| [Thm D](fourd_microdynamics.md#55-the-cost-an-exact-mean-bought-with-unbounded-noise) | 5.5 | Mode-independent noise: for the ring harmonic, rate amplitude times squared hop displacement is 2mω²ℏ for every q, so injected momentum variance grows linearly with the mode cutoff. | label collides with step 13 |
+| [Prop C4](fourd_microdynamics.md#43-what-the-transverse-parameter-is) | 4.3 | Every member gives the excess particle the same transfer; at a transversally uniform sea the family is invisible to the QLE. | invisibility fails in a live 4-D sea (open item 1); does not transfer to the compensated ledger (step 21 M8) |
+| [Thm D](fourd_microdynamics.md#55-the-cost-an-exact-mean-bought-with-unbounded-noise) | 5.5 | Mode-independent noise: for the ring harmonic, rate amplitude times squared hop displacement is 2mω²ℏ for every q, so injected momentum variance grows linearly with the mode cutoff. | label collides with step 13; does not arise under (S) (step 21 M3) |
 
 ### Step 11 — [Open position space](open_position_space.md)
 
@@ -331,7 +338,7 @@ No labelled results. See the note's own sections.
 | [Thm S6](sea_population_equilibrium.md#6-the-other-realisation) | 6 | An event is wholly emissive or wholly absorptive (a mixed one would change body momentum by 2ξ); absorption needs a partner at both daughters and is supply-limited. | — |
 | [Thm S7](sea_population_equilibrium.md#6-the-other-realisation) | 6 | Ledger identity: with absorptive fraction f, dN = 2(1 − 2f) n_ev and dS = (2f − 1) n_ev, so f = 1/2 closes both ledgers. | corrected: f = 1/2 is the sinkless case; the law is N3 (erratum §0) |
 | [Thm S8](sea_population_equilibrium.md#6-the-other-realisation) | 6 | Absorptive unravelling on the Eckart summit restores QLE fidelity by four orders at fixed dt (measured f = 0.434). | figures improved by the transport/kernel repair (erratum §0) |
-| [Thm S9](sea_population_equilibrium.md#6-the-other-realisation) | 6 | f is an attractor near 1/2, approached from both sides and independent of the initial ensemble; so closure carries no information about the recombination constant. | attractor sits slightly below 1/2 (S-SP3) |
+| [Thm S9](sea_population_equilibrium.md#6-the-other-realisation) | 6 | f is an attractor near 1/2, approached from both sides and independent of the initial ensemble; so closure carries no information about the recombination constant. | attractor sits slightly below 1/2 (S-SP3); reached only once the population fills its reachable cells (step 21 M5, M6) |
 
 ### Step 17 — [Compensated ontology](compensated_ontology.md)
 
@@ -351,8 +358,8 @@ No labelled results. See the note's own sections.
 | [Thm N1](stochastic_ledger.md#2-theorem-n1-the-pair-count-is-a-pathwise-invariant) | 2 | P = S + N/2 is conserved pathwise, in exact integers, on every trajectory: a deterministic invariant of the generator, not a martingale. | strengthens J1 |
 | [Thm N2](stochastic_ledger.md#3-theorem-n2-the-realisation-is-a-null-direction) | 3 | Both realisations of an event move E identically, so the Bernoulli(f) choice lies in the kernel of the observable map; the only noise W sees is Poisson event timing. | not a stochastic mechanics in Nelson's sense (§6.2) |
 | [Thm N3](stochastic_ledger.md#4-theorem-n3-the-sum-rule-and-what-it-corrects) | 4 | Sum rule: in any stationary state Γ_tot (1 − 2f) = R_sink, the rate of every other body-removing channel; f = 1/2 is the sinkless case. | corrects S7 and the sign-change argument of S-SP3 |
-| [Thm N4](stochastic_ledger.md#51-the-closure) | 5.1 | The availability closure contains no channel index, so the standing population is independent of the number of channels. | — |
-| [Thm N5](stochastic_ledger.md#52-five-numbers) | 5.2 | Under independent occupancy f = (1 − e^(−λ))², so f = 1/2 fixes λ* = 1.227947 bodies per species per cell, f′(λ*) = √2 − 1, Var/M = 2.414214 and Fano factor 0.983028, with no free constant. | N-SP2, N-SP3 open |
+| [Thm N4](stochastic_ledger.md#51-the-closure) | 5.1 | The availability closure contains no channel index, so the standing population is independent of the number of channels. | restricted: under streaming availability is structural, not Poisson (step 21 M7) |
+| [Thm N5](stochastic_ledger.md#52-five-numbers) | 5.2 | Under independent occupancy f = (1 − e^(−λ))², so f = 1/2 fixes λ* = 1.227947 bodies per species per cell, f′(λ*) = √2 − 1, Var/M = 2.414214 and Fano factor 0.983028, with no free constant. | N-SP2, N-SP3 open; restricted with N4 (step 21 M7) |
 | [Thm N6](stochastic_ledger.md#7-theorem-n6-transport-is-the-local-regulator) | 7 | Transport, not recombination, is the local regulator: recombination damps per-cell spread only partially and by N3 costs f; streaming holds the spread flat at no cost. | sea side untested (R-SP7) |
 
 ### Step 19 — [Soft-core Coulomb](soft_core_coulomb.md)
@@ -378,6 +385,21 @@ No labelled results. See the note's own sections.
 | [Cor Y4.1](dark_sea_and_worldline_identity.md#5-theorem-y4-the-kink-and-its-phase-ramp) | 5 | A phase reset at the parent's position and a node-located kink are one freedom seen twice. | — |
 | [Thm Y5](dark_sea_and_worldline_identity.md#6-theorem-y5-two-clocks-force-piecewise-worldlines) | 6 | If world-particles are conserved and no body changes momentum at an event, per-row species counts are event-invariant and the residual channel can do nothing: conservation forces kinks. | the alternative is birth and death |
 | [Thm Y6](dark_sea_and_worldline_identity.md#7-theorem-y6-who-crosses-the-barrier) | 7 | Under piecewise worldlines a tagged body's momentum walk has zero drift and diffusion D_p = (1/2) sum of ξ_q² abs(K_q); tagged crossing (0.327) tracks neither classical (0.069) nor quantum (0.213) transmission. | corrects Eckart §8.3 and the ledger note §1 |
+
+### Step 21 — [Compensated ledger in four dimensions](fourd_compensated_ledger.md)
+
+| ID | § | Says | Standing |
+|---|---|---|---|
+| [Prop M1](fourd_compensated_ledger.md#21-proposition-m1-the-pair-kernel-moves-relative-momentum-only) | 2.1 | For a pair potential the residual symbol depends on s only through s1 − s2: every event transfers (ξ, −ξ), moves p_r, and leaves X, P and r unchanged. | compensated counterpart of step 10's A2 and §4.4 |
+| [Thm M2](fourd_compensated_ledger.md#22-theorem-m2-every-event-is-momentum-neutral) | 2.2 | Under (S) every event leaves every momentum functional unchanged; all exchange with the field goes through the force. | collapses step 10's A3 to its neutral half |
+| [Cor M3](fourd_compensated_ledger.md#31-corollary-m3-the-quadratic-sectors-are-free) | 3.1 | Quadratic sectors carry no events, so step 10's Theorem D and its §5.4 and §5.6 obstructions do not arise. | from G2 and I4 |
+| [Prop M4](fourd_compensated_ledger.md#32-proposition-m4-the-event-budget-depends-on-the-reach) | 3.2 | Measured on a common lattice at y_max = 2π: residual over uncompensated maximal rate is 0 (harmonic), 0.834 (cosine), 2.825 (Pöschl–Teller). | as step 14's C4 predicts; M-SP4 |
+| [Prop M5](fourd_compensated_ledger.md#4-proposition-m5-the-population-fills-cells) | 4 | Measured: body count proportional to occupied joint cells (2.4 to 4.6 per cell); A = h and h/4 multiply the saturated count by 4.8 and 13.2; error grows about as √N. | the note's centre |
+| [Prop M6](fourd_compensated_ledger.md#51-proposition-m6-the-cells-are-the-windows) | 5.1 | Measured: the cells filled are those escaped bodies reach, not the state's support; doubling the window raises the count. | M-SP1, M-SP2 |
+| [Prop M7](fourd_compensated_ledger.md#52-proposition-m7-availability-is-structural) | 5.2 | Measured: under streaming, per-leg availability stays 0.55 to 0.74 for mean requested occupancy 1.3 to 10.3; not Poisson. | restricts N4, N5 |
+| [Prop M8](fourd_compensated_ledger.md#6-proposition-m8-co-location-in-the-centre-of-mass-is-not-a-gauge-choice) | 6 | Measured: at A = ∞, partners from the wrong centre-of-mass component shift the conditional ⟨V⟩ by about 4 within a quarter time unit. | answers step 10 open item 1 for this layer; C4 does not transfer |
+| [Prop M9](fourd_compensated_ledger.md#7-proposition-m9-sub-cell-positions) | 7 | Measured: with sub-cell positions, cell-level matching biases ⟨V⟩ by +0.133 at t = 1; finer matching cells reduce it at 1.7 to 4.2 times the bodies. | sharpens N-SP2; bears on Y-SP1; M-SP6 |
+| [Cor M10](fourd_compensated_ledger.md#8-corollary-m10-what-the-cost-scales-with) | 8 | The world form's cost scales with the occupied joint cells, a product over degrees of freedom that M8 prevents coarse binning from keeping small. | the exponential of step 10's B2, B3, returned as body inflation |
 
 ## 5. No-go and negative results
 
@@ -434,6 +456,7 @@ What each note corrected in an earlier statement, most of which the earlier stat
 | Step 18 | S7; S-SP3; the informal reading of κ | f = 1/2 is a special case (N3); the sign-change argument fails; recombination does not hold the local population steady (N6). [§0](stochastic_ledger.md#0-what-this-note-settles-and-what-it-corrects). |
 | Step 19 | K7's 'exact zeros' (a gloss, not an error) | Nodes of V‴ are not nodes of Γ at finite reach; K-LS7 should carry a depth. [§2](soft_core_coulomb.md#2-theorem-z2-the-nucleus-is-dark-and-the-ring-survives). |
 | Step 20 | Eckart §8.3; step 18 §1; step 5 §6; demo_emission_and_absorption.py | Individual crossing happens under piecewise worldlines; 'diffusion identically zero' holds only under birth and death; dark creation is a rule, not a consequence; the population clamp breaks E. [§0](dark_sea_and_worldline_identity.md#0-what-this-note-settles-and-what-it-corrects), [§8](dark_sea_and_worldline_identity.md#8-a-defect-in-the-mean-field-demo). |
+| Step 21 | step 18 N4, N5; step 16 S9; step 10 C4 (transfer only) | The availability closure does not describe the ledger under real streaming (M7); S9's attractor is reached only after the population fills its reachable cells (M5, M6); step 10's transverse freedom is visible in the compensated layer (M8). [§0](fourd_compensated_ledger.md#0-what-this-note-settles-and-what-it-corrects) |
 | Supplement R-SP5 | step 11b was missing from the ladder | Resolved: added to the ladder as step 11b in the same patch as this index. |
 
 ## 7. Open items
@@ -519,7 +542,7 @@ Labelled items link to their line; the unlabelled items of the older notes are g
 
 | ID | Item | Status | See |
 |---|---|---|---|
-| 1 | Postulate (X): exchange-only, or transverse family physical | open | live 4-D run |
+| 1 | Postulate (X): exchange-only, or transverse family physical | open for the phase-alignment layer; answered for the compensated ledger by step 21 M8 | live 4-D run |
 | 2 | Directional sea ledger | open | subsumes step 5 item 3, step 3 item 3 |
 | 3 | Joint sea instantiation | open | — |
 | 4 | Classical-drift/quantum-remainder splitting | developed in step 14 | variance measurement open |
@@ -621,9 +644,9 @@ Labelled items link to their line; the unlabelled items of the older notes are g
 | ID | Item | Status | See |
 |---|---|---|---|
 | [N-SP1](stochastic_ledger.md#9-open-items) | Instrument the sum rule in the mesh demo | open (highest value) | settles S-SP3 exactly |
-| [N-SP2](stochastic_ledger.md#9-open-items) | The dictionary between lattice occupancy and Wigner units, hence κ | open | J-SP3 |
+| [N-SP2](stochastic_ledger.md#9-open-items) | The dictionary between lattice occupancy and Wigner units, hence κ | open | J-SP3; sharpened by step 21 M9 |
 | [N-SP3](stochastic_ledger.md#9-open-items) | Measure the Fano factor properly | open | — |
-| [N-SP4](stochastic_ledger.md#9-open-items) | Transport that is transport | open | with K-LS7 |
+| [N-SP4](stochastic_ledger.md#9-open-items) | Transport that is transport | open | with K-LS7; answered in part by step 21 M7 |
 | [N-SP5](stochastic_ledger.md#9-open-items) | The two legs are not independent | open | J-SP1 |
 
 ### Step 19 — [Soft-core Coulomb](soft_core_coulomb.md#8-open-items)
@@ -641,7 +664,7 @@ Labelled items link to their line; the unlabelled items of the older notes are g
 
 | ID | Item | Status | See |
 |---|---|---|---|
-| [Y-SP1](dark_sea_and_worldline_identity.md#10-open-items) | Does a world-particle carry a position below cell resolution? | open | Z-LS1 |
+| [Y-SP1](dark_sea_and_worldline_identity.md#10-open-items) | Does a world-particle carry a position below cell resolution? | open | Z-LS1; measured consequence in step 21 M9 |
 | [Y-SP2](dark_sea_and_worldline_identity.md#10-open-items) | Creation rule: forced or free | open | — |
 | [Y-SP3](dark_sea_and_worldline_identity.md#10-open-items) | Is the ±ξ²/m per event the same 1/2 as N3's? | open | — |
 | [Y-SP4](dark_sea_and_worldline_identity.md#10-open-items) | Does T_tag converge as dp → 0 and as the reach grows? | open | — |
@@ -649,6 +672,19 @@ Labelled items link to their line; the unlabelled items of the older notes are g
 | [Y-SP6](dark_sea_and_worldline_identity.md#10-open-items) | The clamp of §8 | open | S-SP7 |
 | [Y-SP7](dark_sea_and_worldline_identity.md#10-open-items) | Phase-gated allocation changes T_tag and leaves E exactly | open | — |
 | [Y-SP8](dark_sea_and_worldline_identity.md#10-open-items) | Vocabulary: 'aligned' for 'bound'; a rename for the carrier lock | open | R-SP6 |
+
+### Step 21 — [Compensated ledger in four dimensions](fourd_compensated_ledger.md#10-open-items)
+
+| ID | Item | Status | See |
+|---|---|---|---|
+| [M-SP1](fourd_compensated_ledger.md#10-open-items) | The open line: any ledger equilibrium for a bound problem when escaped bodies cannot return? | open | CLA8 |
+| [M-SP2](fourd_compensated_ledger.md#10-open-items) | Contact recombination for the escaped population: revisit its exclusion? | open | ORIENTATION §8 |
+| [M-SP3](fourd_compensated_ledger.md#10-open-items) | The Eckart pair collision through the ledger, against Part E's verified reference | open | — |
+| [M-SP4](fourd_compensated_ledger.md#10-open-items) | The scan at a reach where M4's ratio is below one | open | CLA7 |
+| [M-SP5](fourd_compensated_ledger.md#10-open-items) | A non-separable problem; bins in particle coordinates | open | — |
+| [M-SP6](fourd_compensated_ledger.md#10-open-items) | A matching rule that removes M9's bias without multiplying the population | open | Y-SP1, N-SP2 |
+| [M-SP7](fourd_compensated_ledger.md#10-open-items) | Fidelity per unit cost as a function of ν once cells set the population | open | — |
+| [M-SP8](fourd_compensated_ledger.md#10-open-items) | Event-ordering sensitivity of the body counts | open | S-SP4 |
 
 ## 8. Defects found in demos
 

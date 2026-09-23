@@ -96,8 +96,10 @@ Schrödinger equation and against Ehrenfest's theorem, which is exact.
    [`../analysis/stochastic_ledger.md`](../analysis/stochastic_ledger.md),
    about $`1.23`$ bodies of each sign per cell), which in the joint
    $`2dN`$-dimensional phase space asks for a population that grows with the
-   number of cells in the state's support. How the ledger behaves in two or
-   more degrees of freedom is unmeasured and open.
+   number of cells in the state's support. Measured since in
+   [`../analysis/fourd_compensated_ledger.md`](../analysis/fourd_compensated_ledger.md)
+   (step 21): the body count follows the number of occupied joint cells, and
+   the cells filled are the window's rather than the support's.
 
 **What survives.** The single-particle mesh form of §§2–3 is the 1+1D
 crystal-lattice rule applied axis by axis, and is correct as an uncompensated

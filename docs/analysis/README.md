@@ -512,6 +512,38 @@ retracts.
     `demo_emission_and_absorption.py` costs 16 per cent of `E` in 250 steps
     and biases `f`.
 
+21. **[`fourd_compensated_ledger.md`](fourd_compensated_ledger.md)** — The
+    compensated world form taken out of 1+1 dimensions for the first time: two
+    particles on a line, the ledger run on exact integer counts with bodies
+    carrying their own sub-cell positions, and the one cell size nothing fixes
+    — the bin area `A` in the centre-of-mass directions — scanned. Proposition
+    M1: for a pair potential the residual symbol depends on the ket–bra
+    separation only through `y1 - y2`, so every event moves relative momentum
+    and leaves `P` untouched, and Theorem M2 collapses step 10's leak law:
+    under (S) every event is momentum-neutral in every direction and the
+    field's share goes wholly through the force. Corollary M3 turns step 10's
+    worst case into a free one — the harmonic sector carries no events, so
+    Theorem D and the ring-seam obstruction do not arise — while Proposition M4
+    records that the residual is not always cheaper than the uncompensated
+    kernel on the same lattice (0.83 for a cosine, 2.8 for the attractive
+    Poeschl–Teller well at the ledger runs' reach, as Theorem C4 of step 14
+    predicts). **Proposition M5 is the note's centre**: the equilibrium body
+    count is proportional to the number of occupied joint cells, 2.4 to 4.6
+    bodies per cell, so shrinking `A` from infinity to `h` and `h/4` multiplies
+    it by 4.8 and 13.2, with fidelity error growing as its square root.
+    Proposition M6: the cells filled are those escaped bodies reach, not the
+    state's support, and doubling the window raises the count again.
+    Proposition M7 restricts N4 and N5: under real streaming, partner
+    availability is structural, 0.55 to 0.74 whether the mean occupancy of a
+    requested cell is 1.3 or 10.3. Proposition M8 answers step 10's open item 1
+    for this layer: at `A` infinite, partners drawn from the wrong
+    centre-of-mass component move the conditional potential energy by 4 within
+    a quarter time unit, so co-location in the centre of mass is not a gauge
+    choice. Proposition M9 finds the same trade-off inside the 1D cell, which
+    the mesh ledger cannot show. Corollary M10: the cost is a product over
+    degrees of freedom — the exponential of step 10's Propositions B2 and B3,
+    returned as body inflation now that the sea is no longer a partner.
+
 ## Index
 
 [`INDEX.md`](INDEX.md) lists every labelled theorem, proposition, lemma,

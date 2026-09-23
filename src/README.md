@@ -1136,6 +1136,35 @@ see that directory's README for the ladder itself.
   `Delta p` falls, the event budget rises, and the third moment does not move
   at all — including across `R(x)`, marked.
 
+- `demo_fourd_compensated_ledger.py` — verification companion to
+  `docs/analysis/fourd_compensated_ledger.md` (step 21): the compensated
+  world form taken into the 4D phase space of two particles on a line, with
+  the ledger on exact integer counts and bodies carrying their own sub-cell
+  positions.  The pair potential is the attractive Pöschl–Teller well
+  `-6 sech^2(r)` (exact bound states), the centre of mass sits in a harmonic
+  trap that costs no events, and the bin area `A` in the centre-of-mass
+  directions is scanned.  Part E verifies the two-particle Eckart collision
+  as an exact 4D reference (transmission 0.544134 against 0.544156 closed
+  form; out-state entropy 0.976 nats).  Part K compares the residual kernel
+  with the uncompensated one on the same lattice (event-rate ratio 0, 0.834,
+  2.825 for harmonic, cosine, Pöschl–Teller).  Part S is the scan: the body
+  count follows the occupied joint cells at 2.4 to 4.6 per cell, and
+  `A = h` and `h/4` multiply the saturated count by 4.8 and 13.2.  Part X
+  doubles the window and the count rises again.  Part B shows that at
+  `A = inf` partners from the wrong centre-of-mass component shift the
+  conditional `<V>` by about 4 within a quarter time unit.  Part W finds the
+  same trade-off inside the 1D cell: a `<V>` bias of +0.133 at `t = 1`,
+  reduced by finer matching cells at up to 4.2 times the bodies.  Parts run
+  separately (`... demo_fourd_compensated_ledger.py S`); the whole takes
+  about five minutes.
+
+  ![The compensated ledger in four dimensions](https://raw.githubusercontent.com/billpage/wpmw/output/figures/fourd_compensated_ledger.png)
+
+  (a) Body count against time for each `A`; (b) body count against occupied
+  cells, one line for every run; (c) conditional `<V>` on each side of the
+  centre-of-mass bisector at `A = inf` and `A = h`; (d) the within-cell bias
+  against the body count as the matching cell is refined.
+
 ### Figure generators and regression tests
 
 - `gen_microdynamics_4d_figures.py` — generates the five schematic
