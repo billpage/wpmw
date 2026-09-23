@@ -161,6 +161,26 @@ Grouped by role. Within each group the order is the order to read them in.
   well bound (turning points well below V_max = +V_p).  Tick marks at
   t = T_period, 2 T_period, 3 T_period sit close together on each orbit,
   confirming the period.
+
+- `demo_multibody_world_rule.py` — verification companion to the erratum in
+  §0 of `docs/algorithm/multi_body_extension.md`.  Tests that specification's
+  world-ensemble jump rules on a ring (`L = 2π`, `ħ = m = 1`, one mode
+  `V1 cos x`) against a split-operator Schrödinger reference and against
+  Ehrenfest's theorem, which is exact.  A: the §6.2 rule as written pushes
+  worlds against the classical force — initial `d⟨p⟩/dt` of −0.898 against
+  an exact +0.883; with the sign reversed, +0.875.  B: both versions heat,
+  where the exact evolution conserves energy to 4e−7; the measured heating
+  over `t ∈ [0, 6]` (+2.156 as written, +1.968 reversed) matches the exact
+  expected-value identity `d⟨H⟩/dt = (ħk)²⟨|Γ|⟩/2m − (1 − s)⟨pF⟩/m` to 0.3–0.6
+  per cent.  The first term is a momentum diffusion the QLE does not have.
+  C: the §6.3 pair rule has the same inverted sign (−0.775 against +0.779)
+  and conserves `p1 + p2` per world to 9e−16.  D: the exact state becomes
+  Wigner-negative (0.084 after a positivity-preserving smoothing in `p`,
+  against an estimator floor of 2e−4), which a positive Markov jump process
+  can never produce from a Gaussian.
+
+  ![The §6.2 world rule against exact quantum dynamics](https://raw.githubusercontent.com/billpage/wpmw/output/figures/multibody_world_rule.png)
+
 ### Microdynamics ladder
 
 Each demo verifies one rung of the derivation ladder in `docs/analysis/`;

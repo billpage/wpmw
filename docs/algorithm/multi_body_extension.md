@@ -6,6 +6,118 @@
 
 ## 0. Status of this specification
 
+> **Superseded — kept as a record, not as a specification to implement.**
+> The world-ensemble form of §§5–6 does not solve the quantum Liouville
+> equation: it gives each world a positive-rate Markov jump process, which
+> Proposition T3 of
+> [`../supplement/takabayasi_1954_stochastic_picture.md`](../supplement/takabayasi_1954_stochastic_picture.md)
+> excludes, and its jump direction is inverted relative to this document's
+> own mesh form. The erratum below lists what is wrong and what survives.
+> The current single-particle model is
+> [`compensated_liouville_algorithm.md`](compensated_liouville_algorithm.md);
+> no $`N`$-body specification of it exists yet.
+
+### 0.1 Erratum (September 2026)
+
+Verified by `src/demo_multibody_world_rule.py` on a ring of length
+$`L = 2\pi`$ with $`\hbar = m = 1`$ and one mode $`V_1\cos kx`$,
+$`k = 1`$, $`V_1 = 1`$, against a split-operator solution of the
+Schrödinger equation and against Ehrenfest's theorem, which is exact.
+
+1. **The rate field is the uncompensated one.** Everything here extends the
+   crystal-lattice algorithm, whose event rate carries the classical force as
+   well as the quantum correction. The project's current model moves the
+   force into deterministic streaming and keeps only the residual kernel
+   ([`../analysis/compensated_liouville_splitting.md`](../analysis/compensated_liouville_splitting.md)).
+   [`../analysis/compensated_ontology.md`](../analysis/compensated_ontology.md)
+   §8 states that the compensated *symbol* carries over to $`N`$ bodies
+   unchanged; the compensated *world form*, with the ledger of
+   [`compensated_liouville_algorithm.md`](compensated_liouville_algorithm.md)
+   §5, has not been extended to more than one degree of freedom.
+
+2. **§6.2 and §6.3 have the jump direction inverted.** The mesh form of §3.4
+   moves density from $`p + \hbar k/2`$ to $`p - \hbar k/2`$ when
+   $`\Gamma_{\vec q} > 0`$; the world rule
+   $`\vec p \to \vec p + \mathrm{sgn}(\Gamma_{\vec q})\,\hbar\vec k`$
+   moves it the other way, so every world is pushed against the classical
+   force. Measured initial rate $`d\langle p\rangle/dt`$: exact
+   $`+0.8825`$, §6.2 as written $`-0.8978`$, with the sign reversed
+   $`+0.8753`$ (noise about $`0.007`$). For the pair rule of §6.3,
+   $`d\langle p_1\rangle/dt`$ is exact $`+0.7788`$ against $`-0.7746`$ as
+   written; total momentum $`p_1 + p_2`$ is conserved per world to
+   $`9\times10^{-16}`$, as §8.1 claims.
+
+3. **With the sign corrected, §6 is still not quantum dynamics.** Each world
+   jumps by $`\pm\hbar k`$ at the non-negative rate
+   $`|\Gamma_{\vec q}|`$, so the expected density obeys the master equation
+   of a positive Markov jump process. Two consequences follow, both
+   independent of the sign:
+
+   - It adds a momentum diffusion the QLE does not have. The single-mode QLE
+     term is odd in the momentum shift and has zero second moment; the world
+     rule has second moment $`(\hbar k)^2|\Gamma|`$. The exact expected
+     heating is
+     $`d\langle H\rangle/dt = (\hbar k)^2\langle|\Gamma|\rangle/2m`$ for the
+     corrected rule (plus $`-2\langle pF\rangle/m`$ for the rule as
+     written). Measured over $`t \in [0, 6]`$: exact evolution
+     $`-4\times10^{-7}`$; corrected rule $`+1.968`$ against $`+1.973`$ from
+     the identity; rule as written $`+2.156`$ against $`+2.169`$.
+   - It preserves positivity: a positive Markov semigroup maps
+     $`W \ge 0`$ to $`W \ge 0`$, and it annihilates the constant background
+     of §5.2, so the ensemble can never develop Wigner negativity from a
+     Gaussian. The exact state at $`t = 6`$ has negativity $`0.084`$ even
+     after a positivity-preserving smoothing in $`p`$, against an estimator
+     floor of $`2\times10^{-4}`$.
+
+   The rule is classical mechanics with $`\hbar`$-sized momentum noise.
+   §8.1's "no spawning, no annihilation" is the symptom: a signed kernel
+   cannot be unravelled without a sign-carrying population (the
+   [`compensated_liouville_algorithm.md`](compensated_liouville_algorithm.md)
+   §4.3 statement of T3), and §12 item 7 had already noticed that the
+   mediator of the 1+1D rule has no counterpart here.
+
+4. **§10 treats the singular part of Coulomb classically.** The short-range
+   piece $`\mathrm{erfc}(\alpha r)/r`$ behaves as $`1/r`$ at small $`r`$
+   for every $`\alpha`$, so it is not smooth on the de Broglie scale and its
+   Moyal corrections are not small near coalescence, which is where
+   electronic structure is decided. In the compensated setting the same
+   obstruction appears as Theorem Z4 of
+   [`../analysis/soft_core_coulomb.md`](../analysis/soft_core_coulomb.md): an
+   unsoftened atom cannot live on a uniform reach-limited crystal.
+
+5. **§5.2 and §12 item 1 claim more than is established.** "No
+   exponential-in-$`N`$ scaling for low-body observables" was argued for the
+   positive rule of §6, which is not quantum dynamics. For a signed ensemble,
+   Proposition R4 of
+   [`../supplement/representation_cost_and_annihilation.md`](../supplement/representation_cost_and_annihilation.md)
+   makes the sampling cost multiplicative across non-Gaussian factors, and
+   the compensated ledger closes only when an event finds both partners in
+   its own cell (Theorem N4 of
+   [`../analysis/stochastic_ledger.md`](../analysis/stochastic_ledger.md),
+   about $`1.23`$ bodies of each sign per cell), which in the joint
+   $`2dN`$-dimensional phase space asks for a population that grows with the
+   number of cells in the state's support. How the ledger behaves in two or
+   more degrees of freedom is unmeasured and open.
+
+**What survives.** The single-particle mesh form of §§2–3 is the 1+1D
+crystal-lattice rule applied axis by axis, and is correct as an uncompensated
+solver, though unverified in $`d > 1`$. The two-body Moyal derivation of §7,
+the joint Wigner bound of §4, and the observation of §12 item 7 all stand.
+Sellier and Dimov (*J. Comput. Phys.* **273**, 589 (2014), in
+[`../../references/bibliography.md`](../../references/bibliography.md)) is
+the published two-particle signed-particle method against which any future
+$`N`$-body specification here should be compared.
+
+![The §6.2 world rule against exact quantum dynamics](https://raw.githubusercontent.com/billpage/wpmw/output/figures/multibody_world_rule.png)
+
+*Left: mean momentum. The rule as written (red) accelerates the packet the
+wrong way; with the sign reversed (green) it tracks the exact evolution
+(black) for about one time unit and then departs from it. Right: energy. The
+exact evolution and classical Liouville conserve it; both versions of the
+rule heat, along the curve the identity of item 3 predicts (dotted).*
+
+### 0.2 The original status statement
+
 This document is a **forward-looking extension** of `docs/algorithm/phase_space_crystal_lattice_algorithm.md` (hereafter "the 1+1D spec"). It generalizes that algorithm in two stages:
 
 1. **Single particle in $d$ spatial dimensions** (§§2–3). A direct vectorial extension; the structure of the 1+1D algorithm carries over with no conceptual change. Cost scales as $(M_x M_p)^d$.

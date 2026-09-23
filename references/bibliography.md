@@ -21,6 +21,14 @@ source (DOI, arXiv, publisher page). Do **not** commit PDFs to this repository.
   section below; this is the closest published relative of the ontology of
   `docs/analysis/compensated_ontology.md`.
   https://doi.org/10.1016/j.jcp.2015.05.036 (arXiv:1509.06708)
+- Sellier, J. M.; Dimov, I. — "The many-body Wigner Monte Carlo method for
+  time-dependent ab-initio quantum simulations." *J. Comput. Phys.* **273**,
+  589–597 (2014). The signed-particle method extended to two distinguishable
+  particles without spin: two free Gaussian packets, a potential barrier, and
+  a pair of entangled (correlated) particles. The published baseline any
+  N-body world-particle specification here has to be compared against;
+  see the erratum in `docs/algorithm/multi_body_extension.md` §0.
+  https://doi.org/10.1016/j.jcp.2014.05.039
 - Shao, S.; Xiong, Y. — "Branching random walk solutions to the Wigner
   equation." *SIAM J. Numer. Anal.* **58**, 2589 (2020). The branching-process
   reading of the signed kernel, with the positive/negative parts as birth
@@ -376,6 +384,28 @@ signed-particle formulation.
 - Cini, M. — "Quantum mechanics without waves: a generalization of classical
   statistical mechanics." *Ann. Phys.* **273**, 99–113 (1999).
   https://arxiv.org/abs/quant-ph/9807001
+- Bell, J. S. — "EPR correlations and EPW distributions." In *New Techniques
+  and Ideas in Quantum Measurement Theory*, *Ann. N. Y. Acad. Sci.* **480**,
+  263 (1986); reprinted as ch. 21 of *Speakable and Unspeakable in Quantum
+  Mechanics*. The original EPR state has an everywhere-positive Wigner
+  function, hence a local hidden-variable model for position and momentum
+  measurements. Entanglement alone does not make a phase-space ensemble
+  signed.
+- Banaszek, K.; Wódkiewicz, K. — "Nonlocality of the Einstein-Podolsky-Rosen
+  state in the Wigner representation." *Phys. Rev. A* **58**, 4345 (1998).
+  The same positive-W state violates a Bell inequality once the measured
+  observable is displaced parity, whose Weyl symbol is a delta function rather
+  than a bounded response function. Nonlocality in phase space is a joint property of state and
+  measurement. https://doi.org/10.1103/PhysRevA.58.4345
+  (arXiv:quant-ph/9806069)
+- Al-Safi, S. W.; Short, A. J. — "Simulating all nonsignaling correlations
+  via classical or quantum theory with negative probabilities." *Phys. Rev.
+  Lett.* **111**, 170403 (2013). Any non-signalling correlation follows from a
+  local classical model once the shared distribution may be negative. A local
+  signed ensemble therefore reproduces Bell violations without saying why
+  quantum correlations stop at the Tsirelson bound: in this project the
+  candidate for that work is admissibility, postulate (A).
+  https://doi.org/10.1103/PhysRevLett.111.170403 (arXiv:1301.2170)
 
 ## Forward–backward / objective QFT
 

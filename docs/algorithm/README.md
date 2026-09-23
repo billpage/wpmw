@@ -22,8 +22,13 @@ extended derivations belong in `docs/supplement/` and `docs/analysis/`.
   step where the source memo lost it. Implemented in
   `src/wpmwlib/phase_space_crystal_lattice.py`. Items marked **[choice]** are
   implementation decisions not fixed by the source documents.
-- **[`multi_body_extension.md`](multi_body_extension.md)** — Forward-looking extension of the 1+1-D spec
-  to `d` spatial dimensions (a direct vectorial generalisation, cost
+- **[`multi_body_extension.md`](multi_body_extension.md)** — **Superseded; kept as a
+  record.** Its world-ensemble form gives each world a positive-rate Markov
+  jump process with the jump direction inverted, so it does not solve the
+  quantum Liouville equation (erratum in its §0, verified by
+  `src/demo_multibody_world_rule.py`). No $`N`$-body specification of the
+  compensated model exists yet. As originally written: a forward-looking
+  extension of the 1+1-D spec to `d` spatial dimensions (a direct vectorial generalisation, cost
   `(M_x M_p)^d`) and to `N` interacting particles, where the mesh becomes
   infeasible and the world-ensemble representation is the only viable form.
   Includes the two-body Moyal-bracket derivation, the Ewald treatment of
