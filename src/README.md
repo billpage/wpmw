@@ -1523,7 +1523,9 @@ A short cheat sheet for keeping new docs lint-clean:
   The linter applies the static pass (forbidden macros) and both
   render passes to fenced content, but skips the GFM pass — fenced
   math is exempt by design.
-- Bold math: `\boldsymbol{x}` or `\mathbf{x}`, not `\bm{x}`.
+- Bold math: `\mathbf{x}` for Latin letters and `\pmb{\xi}` for Greek.
+  Neither `\bm` nor `\boldsymbol` is loaded on GitHub (base and ams only),
+  and `\mathbf{\xi}` renders but is not bold.
 - Inline math: write `$x$5` carefully — GitHub treats `$` adjacent to digits
   inconsistently. A space (`$x$ 5`) avoids the problem entirely.
 - **Inline math with `}_` or `'_` (subscript right after a brace or prime): wrap in

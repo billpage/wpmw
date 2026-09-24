@@ -170,12 +170,12 @@ linear momentum functional $`u\cdot\mathbf P`$ unchanged, for every mode
 geometry. All momentum exchange with the field is carried by the classical
 force.*
 
-*Proof.* An event deposits $`+1`$ at $`\mathbf p + \boldsymbol\xi`$ and $`-1`$ at
-$`\mathbf p - \boldsymbol\xi`$ and binds or ionises a pair at $`\mathbf p`$
+*Proof.* An event deposits $`+1`$ at $`\mathbf p + \pmb{\xi}`$ and $`-1`$ at
+$`\mathbf p - \pmb{\xi}`$ and binds or ionises a pair at $`\mathbf p`$
 itself (S0/K8). Counting the created or removed bodies with their momenta,
 the displacement is
-$`(\mathbf p + \boldsymbol\xi - \mathbf p) + (\mathbf p - \boldsymbol\xi - \mathbf p) = 0`$.
-The hops, which would move one body by $`2\boldsymbol\xi`$, are excluded by
+$`(\mathbf p + \pmb{\xi} - \mathbf p) + (\mathbf p - \pmb{\xi} - \mathbf p) = 0`$.
+The hops, which would move one body by $`2\pmb{\xi}`$, are excluded by
 (S) (specification §5.3). $`\square`$
 
 Step 10's leak law, Theorem A3, had Focus and Defocus neutral and the hops

@@ -294,7 +294,11 @@ _STATIC_PATTERNS: list[tuple[re.Pattern, str]] = [
     (re.compile(r"\\mathds\b"),
      r"\mathds — dsfont package not available; use \mathbb."),
     (re.compile(r"\\bm\b"),
-     r"\bm — bm package not loaded; use \boldsymbol or \mathbf."),
+     r"\bm — bm package not loaded; use \pmb for bold Greek, \mathbf for Latin."),
+    (re.compile(r"\\boldsymbol\b"),
+     r"\boldsymbol — boldsymbol package not loaded (GitHub loads base and ams "
+     r"only); use \pmb for bold Greek, \mathbf for Latin. \mathbf{\xi} renders "
+     r"but is not bold."),
     (re.compile(r"\\colorbox\b|\\fcolorbox\b"),
      r"\colorbox / \fcolorbox — not supported."),
     (re.compile(r"\\definecolor\b"),
