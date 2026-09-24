@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The sea lock: phase field over phase space</title>
+<!--
+  Interactive companion to docs/analysis/sea_phase_reference.md (ladder step 22).
+  Self-contained: no external scripts, fonts or data. The same computation, as
+  static figures, is src/demo_sea_lock.py part C.
+-->
+<style>
+  :root {
+    --bg: #fbfbf9; --fg: #1f1f1d; --muted: #6b6b66; --line: #d6d4cc; --accent: #3b5bdb;
+    color-scheme: light dark; box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) { --bg: #1b1b1a; --fg: #ecebe6; --muted: #a3a29b; --line: #3a3a37; --accent: #8ea4ff; }
+  }
+  :root[data-theme="dark"] { --bg: #1b1b1a; --fg: #ecebe6; --muted: #a3a29b; --line: #3a3a37; --accent: #8ea4ff; }
+  html, body { margin: 0; background: var(--bg); color: var(--fg); }
+  body { font: 15px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 980px; margin: 0 auto; padding: 1.25rem 1rem 2rem; }
+  h1 { font-size: 1.35rem; font-weight: 600; margin: 0 0 0.25rem; }
+  p { margin: 0.4rem 0 0.8rem; max-width: 70ch; }
+  .muted { color: var(--muted); font-size: 0.9rem; }
+  .controls { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; margin: 0.75rem 0; }
+  button { font: inherit; font-size: 0.9rem; padding: 0.3rem 0.75rem; border-radius: 6px;
+           border: 1px solid var(--line); background: transparent; color: var(--fg); cursor: pointer; }
+  button[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); }
+  .slider { display: flex; align-items: center; gap: 0.5rem; flex: 1 1 240px; }
+  .slider input { flex: 1; }
+  canvas { display: block; width: 100%; }
+  #cv { height: min(62vh, 520px); border-radius: 6px; }
+  .legend { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.4rem; }
+  #lg { height: 10px; flex: 1; border-radius: 4px; }
+  a { color: var(--accent); }
+</style>
+</head>
+<body>
+<main>
+  <h1>The sea lock: phase field over phase space</h1>
+  <p class="muted">Companion to <a href="https://github.com/billpage/wpmw/blob/main/docs/analysis/sea_phase_reference.md">ladder step 22, <em>The sea as a phase reference</em></a>.</p>
+  <p>Hue is the phase at every point of phase space: each point is traced back along its classical trajectory to <em>t</em> = 0, given the locked starting phase <em>p</em><sub>0</sub><em>x</em><sub>0</sub>/ħ, and the Lagrangian action accumulated on the way is added. White curves are six sample rows of the sea, rippled by their own phase. <strong>Locked</strong>: every aligned pair samples its row's plane wave. <strong>Gas</strong>: every pair starts with a random phase.</p>
+
+  <div class="controls" role="group" aria-label="Potential and sea">
+    <button id="pe" aria-pressed="true">Eckart barrier</button>
+    <button id="pc" aria-pressed="false">Coulomb well</button>
+    <button id="bl" aria-pressed="true">Locked</button>
+    <button id="bg" aria-pressed="false">Gas</button>
+    <div class="slider"><label for="tt" class="muted">time</label>
+      <input type="range" id="tt" min="0" max="12" step="0.1" value="0">
+      <span id="to" class="muted" style="min-width:2.5rem">0.0</span></div>
+  </div>
+  <canvas id="cv" role="img" aria-label="Phase field over phase space with sample rows"></canvas>
+  <div class="legend muted"><span>phase 0</span><canvas id="lg"></canvas><span>2π</span></div>
+
+  <p class="muted">What to look for. Along any one curve the phase stays continuous and satisfies dθ = p dx/ħ: a locked row is a Lagrangian manifold carrying the action. In phase space the field never folds. Folds appear only when a curve is seen along <em>x</em>, where two momenta sit over one place on two differently coloured patches — the loss of same-row coherence the step 22 probes measure. Units: ħ = m = 1; <em>V</em> = sech²<em>x</em> or −1/√(<em>x</em>²+1).</p>
+</main>
+<script>
+(() => {
+  const cv = document.getElementById('cv'), lg = document.getElementById('lg');
+  const XH = 12, PH = 3, N = 300, rows = [-2.5, -1.5, -0.5, 0.5, 1.5, 2.5];
+  const A = 0.11, DT = 0.02, DTB = 0.04, GX = 220, GY = 140;
+  let pot = 'eckart', mode = 'locked', t = 0, pending = false;
+  const Vf = { eckart: x => 1 / Math.cosh(x) ** 2, coulomb: x => -1 / Math.sqrt(x * x + 1) };
+  const Ff = { eckart: x => 2 * Math.tanh(x) / Math.cosh(x) ** 2, coulomb: x => -x / Math.pow(x * x + 1, 1.5) };
+  const noise = (x, p) => { const s = Math.sin(Math.floor(x * 4) * 127.1 + Math.floor(p * 8) * 311.7) * 43758.5453; return (s - Math.floor(s)) * 2 * Math.PI; };
+  function hsl(h, s, l) { const k = n => (n + h * 12) % 12, a = s * Math.min(l, 1 - l),
+    f = n => l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1))); return [255 * f(0), 255 * f(8), 255 * f(4)]; }
+  const wrap = ph => (((ph % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI)) / (2 * Math.PI);
+  const off = document.createElement('canvas'); off.width = GX; off.height = GY;
+  const rowNoise = rows.map((_, k) => Array.from({ length: N }, (_, i) => noise(i * 0.37 + k, k * 1.3)));
+
+  function background() {
+    const V = Vf[pot], F = Ff[pot], n = Math.round(t / DTB), oc = off.getContext('2d'), img = oc.createImageData(GX, GY);
+    for (let j = 0; j < GY; j++) for (let i = 0; i < GX; i++) {
+      let x = -XH + 2 * XH * (i + 0.5) / GX, p = PH - 2 * PH * (j + 0.5) / GY, S = 0;
+      for (let s = 0; s < n; s++) { p -= 0.5 * DTB * F(x); x -= p * DTB; p -= 0.5 * DTB * F(x); S += (p * p / 2 - V(x)) * DTB; }
+      let th = p * x + S; if (mode === 'gas') th += noise(x, p);
+      const [r, g, b] = hsl(wrap(th), 0.6, 0.42), o = 4 * (j * GX + i);
+      img.data[o] = r; img.data[o + 1] = g; img.data[o + 2] = b; img.data[o + 3] = 255;
+    }
+    oc.putImageData(img, 0, 0);
+  }
+  function evolve() {
+    const V = Vf[pot], F = Ff[pot], n = Math.round(t / DT);
+    return rows.map((p0, k) => {
+      const xs = new Float64Array(N), ps = new Float64Array(N), th = new Float64Array(N);
+      for (let i = 0; i < N; i++) { xs[i] = -XH + 2 * XH * (i + 0.5) / N; ps[i] = p0; th[i] = p0 * xs[i]; }
+      for (let s = 0; s < n; s++) for (let i = 0; i < N; i++) {
+        let x = xs[i], p = ps[i]; p += 0.5 * DT * F(x); x += p * DT; p += 0.5 * DT * F(x);
+        th[i] += (p * p / 2 - V(x)) * DT; xs[i] = x; ps[i] = p; }
+      if (mode === 'gas') for (let i = 0; i < N; i++) th[i] += rowNoise[k][i];
+      return { xs, ps, th };
+    });
+  }
+  function draw() {
+    pending = false; background();
+    const d = window.devicePixelRatio || 1, w = cv.clientWidth, h = cv.clientHeight;
+    cv.width = w * d; cv.height = h * d; const c = cv.getContext('2d'); c.scale(d, d);
+    const muted = getComputedStyle(document.documentElement).getPropertyValue('--muted').trim() || '#888';
+    const L = 34, R = w - 8, T = 36, B = h - 26, sx = x => L + (x + XH) / (2 * XH) * (R - L), sy = p => T + (PH - p) / (2 * PH) * (B - T);
+    c.imageSmoothingEnabled = true; c.drawImage(off, L, T, R - L, B - T);
+    const V = Vf[pot]; c.strokeStyle = muted; c.lineWidth = 1; c.beginPath();
+    for (let i = 0; i <= 300; i++) { const x = -XH + 2 * XH * i / 300, y = 18 - 14 * V(x); i ? c.lineTo(sx(x), y) : c.moveTo(sx(x), y); }
+    c.stroke();
+    c.font = '12px system-ui, sans-serif'; c.fillStyle = muted; c.textAlign = 'left';
+    c.fillText(pot === 'eckart' ? 'V = sech²x' : 'V = −1/√(x²+1)', L + 4, 12);
+    c.textAlign = 'right'; c.textBaseline = 'middle'; [-3, -2, -1, 0, 1, 2, 3].forEach(p => c.fillText(p, L - 6, sy(p)));
+    c.save(); c.beginPath(); c.rect(L, T, R - L, B - T); c.clip();
+    evolve().forEach(({ xs, ps, th }) => {
+      c.strokeStyle = 'rgba(255,255,255,0.92)'; c.lineWidth = 1.6; c.beginPath(); let st = false;
+      for (let i = 0; i < N; i++) {
+        const x = xs[i];
+        if (Math.abs(x) > XH) { st = false; continue; }
+        if (i && (Math.abs(ps[i] - ps[i - 1]) > 0.6 || Math.abs(x - xs[i - 1]) > 2)) st = false;
+        const X = sx(x), Y = sy(ps[i] + A * Math.cos(th[i])); st ? c.lineTo(X, Y) : c.moveTo(X, Y); st = true;
+      }
+      c.stroke();
+    });
+    c.restore();
+    c.textAlign = 'center'; c.textBaseline = 'alphabetic'; c.fillStyle = muted; c.fillText('x', (L + R) / 2, h - 6);
+    c.save(); c.translate(10, (T + B) / 2); c.rotate(-Math.PI / 2); c.fillText('p', 0, 0); c.restore();
+    const lw = lg.clientWidth; lg.width = lw * d; lg.height = 10 * d; const g = lg.getContext('2d'); g.scale(d, d);
+    for (let i = 0; i < lw; i++) { const [r, gg, b] = hsl(i / lw, 0.6, 0.42); g.fillStyle = `rgb(${r},${gg},${b})`; g.fillRect(i, 0, 1, 10); }
+    [['pe', pot === 'eckart'], ['pc', pot === 'coulomb'], ['bl', mode === 'locked'], ['bg', mode === 'gas']]
+      .forEach(([id, on]) => document.getElementById(id).setAttribute('aria-pressed', on ? 'true' : 'false'));
+  }
+  const req = () => { if (!pending) { pending = true; requestAnimationFrame(draw); } };
+  document.getElementById('pe').onclick = () => { pot = 'eckart'; req(); };
+  document.getElementById('pc').onclick = () => { pot = 'coulomb'; req(); };
+  document.getElementById('bl').onclick = () => { mode = 'locked'; req(); };
+  document.getElementById('bg').onclick = () => { mode = 'gas'; req(); };
+  document.getElementById('tt').oninput = e => { t = +e.target.value; document.getElementById('to').textContent = t.toFixed(1); req(); };
+  window.addEventListener('resize', req); draw();
+})();
+</script>
+</body>
+</html>

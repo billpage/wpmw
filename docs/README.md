@@ -39,6 +39,13 @@ reading.
   companion rendering, not a replacement for the tutorial or the script,
   which remain canonical.
 
+- **[`interactive/`](interactive)** — self-contained interactive web pages
+  (one HTML file each, no external scripts) that let a reader vary the
+  parameters of a figure in an analysis note. They are served by GitHub
+  Pages (see the top-level README's "Interactive pages" section). Like the
+  notebooks they add no claims: each page names the note and the demo whose
+  computation it repeats.
+
 ## How they relate
 
 `algorithm/` is self-contained — read it alone to implement or run the
@@ -47,5 +54,6 @@ justified, corrected, and cross-checked against both the source material and
 each other; `analysis/` carries the theorems and the ladder structure,
 `supplement/` carries the background documents and worked test cases those
 theorems draw on. `notebooks/` sits on top of `supplement/`, one level
-further towards interactive reading rather than new claims. Each
+further towards interactive reading rather than new claims, and
+`interactive/` does the same for figures in `analysis/`. Each
 subdirectory's own `README.md` links every document it contains.

@@ -40,6 +40,8 @@ docs/
   analysis/     Mathematical derivations and review notes
   notebooks/    Notebook companions to supplement tutorials (outputs stripped;
                 rendered copies live on the `output` branch)
+  interactive/  Self-contained interactive pages (one HTML file each),
+                served by GitHub Pages
 src/            Python implementations (runnable demos / scripts)
   wpmwlib/      Shared library modules imported by the scripts
 references/     bibliography.md (links to papers; PDFs are NOT committed)
@@ -226,6 +228,35 @@ a `.md` file — see the 404 this produced on the `output`-branch copy of
 an absolute `github.com/.../blob/main/...` URL when assembling a notebook
 from tutorial markdown, resolving each target against the *source* `.md`
 file's actual directory, not the notebook's.
+
+## Interactive pages
+
+Some analysis notes also have an interactive page: a single self-contained
+HTML file under `docs/interactive/` — inline CSS and JavaScript, no external
+scripts, fonts or data — that repeats the computation behind one of the
+note's figures and lets the reader vary its parameters. The first is
+[`sea_lock.html`](docs/interactive/sea_lock.html), for ladder step 22.
+
+GitHub shows an `.html` file on `main` as source, not as a page, so pages
+are served by **GitHub Pages** from the `docs/` folder of `main`
+(Settings → Pages → *Deploy from a branch*, branch `main`, folder `/docs`),
+at
+
+```
+https://billpage.github.io/wpmw/interactive/<page>.html
+```
+
+Until Pages is enabled, the same file can be viewed through
+`https://raw.githack.com/billpage/wpmw/main/docs/interactive/<page>.html`.
+Unlike figures and notebooks there is no second copy on the `output`
+branch: the page has no outputs of its own, and the file on `main` is both
+source and artefact.
+
+Conventions for a new page: one file; a header comment naming the note and
+the demo whose computation it repeats; light and dark colour schemes from
+`prefers-color-scheme`; the page must work offline; and the note links it
+with a relative link (for readers of the repository) and the Pages URL (for
+everyone else).
 
 ## PDF releases
 

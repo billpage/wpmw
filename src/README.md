@@ -1321,6 +1321,32 @@ see that directory's README for the ladder itself.
   default runs one packet on a coarse lattice in about a minute.  No
   figures.
 
+- `demo_sea_lock.py` — verification companion to
+  `docs/analysis/sea_phase_reference.md` (ladder step 22).  Part A writes the
+  residual-kernel weights as a sum over contacts and checks it against the
+  code's `K_q` (`5.5e-7` at `q = 1`), the strip identity `B dp 2 y_max = 1`
+  and the single-contact estimator (`std*sqrt(N) ~ 0.90`).  Part B re-locks
+  a sea on the row lattice and measures its dephasing: the rate matches the
+  trapezoid-residual prediction to correlation `0.999`, but only `0.3-0.4`
+  against the compensated kernel, and its third moment is about `-2` times
+  the kernel's.  Part C draws the locked phase field over phase space for the
+  Eckart barrier and a soft-core Coulomb well
+  (`sea_lock_phase_field.png`, `sea_lock_locked_vs_gas.png`).  About a
+  minute.
+
+- `demo_contact_kernel.py` — step 22 section 2: the ledger with kernel
+  weights generated from sea contacts, against the exact mesh.  Weighting
+  contacts by the actual sea, Poisson contact noise at rates `R_c` given on
+  the command line, and per-contact force removal (`--comp r|min`).  A few
+  minutes per rate.
+
+- `demo_sea_lock_particles.py` — step 22 sections 5 and 6: world-particles
+  with Lagrangian clocks at the Eckart barrier, with the compensated
+  kernel's events, optional re-locking of kinked bodies (`--relock-w`) and
+  dark catalysis (`--dark imprint|mean|reach`).  Measures same-row
+  sea-clock coherence and the correlation of the pair-sum kernel with `K`.
+  The note's commands reproduce its tables; one to three minutes per run.
+
 ## Output path convention
 
 All scripts in this directory must write files through helpers from
