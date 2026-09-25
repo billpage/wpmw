@@ -53,7 +53,7 @@ model. `analysis/` and `supplement/` are where the algorithm's claims get
 justified, corrected, and cross-checked against both the source material and
 each other; `analysis/` carries the theorems and the ladder structure,
 `supplement/` carries the background documents and worked test cases those
-theorems draw on. `notebooks/` sits on top of `supplement/`, one level
-further towards interactive reading rather than new claims, and
-`interactive/` does the same for figures in `analysis/`. Each
-subdirectory's own `README.md` links every document it contains.
+theorems draw on. `notebooks/` contains Jupyter notesbooks with illustrative
+code and tutorial level explanations. `interactive/` contains interactive
+HTML-based graphics and examples that are accessible through rendered github
+pages. Each subdirectory's own `README.md` links every document it contains.
