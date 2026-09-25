@@ -47,7 +47,7 @@ Theorem and open-item labels are shared across the whole of `docs/`. Each note u
 | U | step 13 (U1) | — |
 | Y | step 20 (Y1–Y6) | — |
 | M | step 21 (M0–M10) | Not to be confused with the symbol M(x, s), the hops M± of the algorithm specification §5.3, or the moments M0 and M2 of step 11b; none of those is a label. |
-| L | step 22 (L0–L8) | Not to be confused with a length L or a Lagrangian; neither is a label. The open-item series is L-SP, not the -LS suffix. |
+| L | step 22 (L0–L9) | Not to be confused with a length L or a Lagrangian; neither is a label. The open-item series is L-SP, not the -LS suffix. |
 | Z | step 19 (Z1–Z5) | — |
 | Thm 1–4, Lem 0–5, Prop 1–3, Cor 4.x | steps 4 and 5 | Numbered without a letter; later notes cite them as 'Theorem 4', 'Lemma 4', 'Proposition 3'. |
 | F, H, J, T, W | supplement: four_action_foundations (F1–F4), holland_two_fluid_correspondence (H1–H7), emission_and_absorption (J1–J2), takabayasi_1954_stochastic_picture (T-series), limkumnerd_weighted_paths (W1–W5) | Cited from the analysis notes; see §9. |
@@ -121,7 +121,7 @@ Kept apart from the results because a postulate is what everything else assumes,
 
 | ID | § | Says | Standing |
 |---|---|---|---|
-| [Def L0](sea_phase_reference.md#5-definition-l0-the-sea-lock) | 5 | The sea lock: each aligned pair's clock equals its row's plane-wave phase at its position, θ = px/ℏ up to a constant per row; a relation between pairs, not within one. | carried by classical flow as the phase field S/ℏ; eroded inside a potential when read in its members' own frames (L7); in the parent's frame the drift is the kernel (L8) |
+| [Def L0](sea_phase_reference.md#5-definition-l0-the-sea-lock) | 5 | The sea lock: each aligned pair's clock equals its row's plane-wave phase at its position, θ = px/ℏ up to a constant per row; a relation between pairs, not within one. | carried by classical flow as the phase field S/ℏ; eroded inside a potential when read in its members' own frames (L7); in the parent's frame the drift is the kernel (L8); its erosion in the particle model is mostly within-row momentum spread and row mixing by the force (L9) |
 
 ## 4. Results by note
 
@@ -415,11 +415,12 @@ No labelled results. See the note's own sections.
 | [Thm L1](sea_phase_reference.md#1-theorem-l1-the-kernel-as-a-sum-over-contacts) | 1 | K_q(x) = −(B dp/ℏ)∫dy U_res w sin(2ξ_q y/ℏ): the kernel is a sum over contacts; B dp 2y_max = 1, one aligned pair per strip. | — |
 | [Prop L2](sea_phase_reference.md#2-proposition-l2-contact-noise-and-the-measure) | 2 | Measured: contact sampling is unbiased but needs about 1.7 × 10⁵ contacts per unit time; weighting by the actual sea costs little (2.9 → 3.8 per cent); single contacts carry a force. | open item L-SP8 |
 | [Thm L3](sea_phase_reference.md#3-theorem-l3-what-two-clocks-carry) | 3 | Two Lagrangian clocks at x ∓ y wind apart by the kernel's U(x, y); their midpoint misalignment winds at the energy difference. | visible only for same-row partners |
-| [Thm L4](sea_phase_reference.md#4-theorem-l4-darkness-annihilates-signed-pair-sums) | 4 | Any ε-weighted pair sum vanishes on aligned pairs, so the sea can enter a vertex only as unsigned clocks. | open item L-SP6 |
+| [Thm L4](sea_phase_reference.md#4-theorem-l4-darkness-annihilates-signed-pair-sums) | 4 | Any ε-weighted pair sum vanishes on aligned pairs, so the sea can enter a vertex only as unsigned clocks. | L-SP6 answered by §8: clocks at positions, read against the reader's P2 amplitude |
 | [Thm L5](sea_phase_reference.md#6-theorem-l5-dark-catalysis-and-maintenance) | 6 | Dark catalysis: an aligned pair fires at the kernel's rate with both members together; ΔE = ΔN = ΔS = 0, momentum conserved, the partner pair leaves aligned. | open item L-SP2 |
-| [Prop L6](sea_phase_reference.md#6-theorem-l5-dark-catalysis-and-maintenance) | 6 | Measured: dark catalysis couples 87–95 per cent of the sea near the barrier; at reach scale it maintains a lock against event damage (0.470 against 0.461 with no events); co-located coupling does not (0.395). | answers Y-SP2 in part |
+| [Prop L6](sea_phase_reference.md#6-theorem-l5-dark-catalysis-and-maintenance) | 6 | Measured: dark catalysis couples 87–95 per cent of the sea near the barrier; at reach scale it maintains a lock against event damage (0.470 against 0.461 with no events); co-located coupling does not (0.395). | answers Y-SP2 in part; §9 traces the ceiling to the initial lock's within-row spread and to row mixing |
 | [Thm L7](sea_phase_reference.md#7-theorem-l7-the-dephasing-of-a-locked-sea) | 7 | A freshly locked sea dephases at the trapezoid residual U − y[V′(x−y) + V′(x+y)]: force-free, but its third moment is about −2 times the compensated kernel's. | the trapezoid rule's error where the kernel is the midpoint rule's (§7); sign of one measured correlation corrected (§7); the own-frame reading of L8 (c), resolved by L8 (b) |
-| [Thm L8](sea_phase_reference.md#8-theorem-l8-the-readers-frame) | 8 | A reader with momentum p_ref comparing two same-row clocks sees ℏμ̇ = V(x_j) − V(x_i) + 2y ṗ_ref + (p_j − p_i)(2p_ref − p_i − p_j)/2m: an inertial reader reads U, a reader streaming with the parent reads U_res exactly at re-lock, the partners' own levers read L7's trapezoid residual. | answers L-SP1; sharpens L-SP6; the drift after re-lock is L-SP9 |
+| [Thm L8](sea_phase_reference.md#8-theorem-l8-the-readers-frame) | 8 | A reader with momentum p_ref comparing two same-row clocks sees ℏμ̇ = V(x_j) − V(x_i) + 2y ṗ_ref + (p_j − p_i)(2p_ref − p_i − p_j)/2m: an inertial reader reads U, a reader streaming with the parent reads U_res exactly at re-lock, the partners' own levers read L7's trapezoid residual. | answers L-SP1 and L-SP6 (the reader's lever is P2 applied to the reader); its fixed-pair drift does not bind a vertex (Prop L9) |
+| [Prop L9](sea_phase_reference.md#9-proposition-l9-the-reader-in-the-particle-model) | 9 | For a reader and partners in one row of width dp the drift term of L8 is below dp²/m, so a vertex reading its row reads U_res from clock rates; measured: the drift is 0.11 per cent of U_res, and the lock limits the reading — 0.45 for the sea of §6, 0.82 for a sea that keeps its rows, at the kernel's re-locking rate, against a 0.89 control. | answers L-SP7 and L-SP9; opens L-SP10 |
 
 ## 5. No-go and negative results
 
@@ -482,6 +483,7 @@ What each note corrected in an earlier statement, most of which the earlier stat
 | Supplement R-SP5 | step 11b was missing from the ladder | Resolved: added to the ladder as step 11b in the same patch as this index. |
 | Step 22 | step 20 §2 and abstract (Y1 wording); step 20 §6 (the two recombinations) | The ladder μ is not 'integrated out' into the kernel: the kernel holds the potential's rule for winding it, and arg ρ survives as the sign structure of W. The contact (κ) recombination of §6 is not part of the model (ORIENTATION). [§0](sea_phase_reference.md#0-what-this-note-asks-settles-and-leaves-open). |
 | Step 22 (addendum) | its own §7 (the L7 verification table) | The correlation of the dephasing kernel with K_res was printed as +0.29 to +0.38; in Theorem L1's sign it is −0.38 to −0.29, an anti-correlation, as the third-moment ratio says. [§7](sea_phase_reference.md#7-theorem-l7-the-dephasing-of-a-locked-sea). |
+| Step 22 (second addendum) | its own §8 and L-SP7 as restated by the first addendum | The first addendum drew a re-lock interval short against 1/ω (ω² = V″/m) from the drift of pairs followed from re-lock, and called the ceiling near 0.46 an own-frame effect. Neither holds: a vertex reads same-row partners, for which the drift is capped by the row (Prop L9), and the two frames read the same ceiling. [§9](sea_phase_reference.md#9-proposition-l9-the-reader-in-the-particle-model). |
 
 ## 7. Open items
 
@@ -710,19 +712,20 @@ Labelled items link to their line; the unlabelled items of the older notes are g
 | [M-SP7](fourd_compensated_ledger.md#10-open-items) | Fidelity per unit cost as a function of ν once cells set the population | open | — |
 | [M-SP8](fourd_compensated_ledger.md#10-open-items) | Event-ordering sensitivity of the body counts | open | S-SP4 |
 
-### Step 22 — [The sea as a phase reference](sea_phase_reference.md#9-open-items)
+### Step 22 — [The sea as a phase reference](sea_phase_reference.md#10-open-items)
 
 | ID | Question | Status | Related |
 |---|---|---|---|
-| [L-SP1](sea_phase_reference.md#9-open-items) | Can partner clocks be referred to the parent's frame, or is the leg-force term a vertex postulate? | answered: the parent's frame; the leg-force term is how fast the lever mismatch grows (Thm L8) | Thm L7, Thm L8 |
-| [L-SP2](sea_phase_reference.md#9-open-items) | Reach-scale dark catalysis: how is the partner chosen, and what is its standing? | open | Thm L5 |
-| [L-SP3](sea_phase_reference.md#9-open-items) | The particle model's events fail 20–45 per cent of the time and E is unchecked; repeat on the exact ledger. | open | Y-SP5 |
-| [L-SP4](sea_phase_reference.md#9-open-items) | Does co-located coupling coarsen to the reach scale from a gas at long times? | open | Prop L6 |
-| [L-SP5](sea_phase_reference.md#9-open-items) | Is a locked sea an admissible initial state, a boundary condition? | open | Def L0 |
-| [L-SP6](sea_phase_reference.md#9-open-items) | The sea at the vertex as unsigned clocks while dark as amplitude: postulate or reading of P2? | open; sharpened by §8 (clocks at positions, the reader's lever) | Thm L4, Thm L8 |
-| [L-SP7](sea_phase_reference.md#9-open-items) | Is any locked reference maintainable inside a potential under (S)? | open; restated by §8 (the 0.46 ceiling is an own-frame reading) | Prop L6, Thm L7, Thm L8 |
-| [L-SP8](sea_phase_reference.md#9-open-items) | Σ E drifts to 1.0010 in the sea-weighted kernel run although every event deposits ±1. | open | Prop L2 |
-| [L-SP9](sea_phase_reference.md#9-open-items) | Re-locking against the parent-frame drift, relative size −3V″t²/m: does dark catalysis renew the lock often enough, or is the exact reading (A′) needed? | open | Thm L8, Thm L5 |
+| [L-SP1](sea_phase_reference.md#10-open-items) | Can partner clocks be referred to the parent's frame, or is the leg-force term a vertex postulate? | answered: the parent's frame; the leg-force term is how fast the lever mismatch grows (Thm L8) | Thm L7, Thm L8 |
+| [L-SP2](sea_phase_reference.md#10-open-items) | Reach-scale dark catalysis: how is the partner chosen, and what is its standing? | open | Thm L5 |
+| [L-SP3](sea_phase_reference.md#10-open-items) | The particle model's events fail 20–45 per cent of the time and E is unchecked; repeat on the exact ledger. | open | Y-SP5 |
+| [L-SP4](sea_phase_reference.md#10-open-items) | Does co-located coupling coarsen to the reach scale from a gas at long times? | open | Prop L6 |
+| [L-SP5](sea_phase_reference.md#10-open-items) | Is a locked sea an admissible initial state, a boundary condition? | open | Def L0 |
+| [L-SP6](sea_phase_reference.md#10-open-items) | The sea at the vertex as unsigned clocks while dark as amplitude: postulate or reading of P2? | answered: a reading of P2 — the lever is P2 applied to the reader, compared at meetings (§8) | Thm L4, Thm L8 |
+| [L-SP7](sea_phase_reference.md#10-open-items) | Is any locked reference maintainable inside a potential under (S)? | answered for this model: not under (S) at the kernel's rate; a sea that keeps its rows nearly does (Prop L9) | Prop L6, Thm L7, Prop L9 |
+| [L-SP8](sea_phase_reference.md#10-open-items) | Σ E drifts to 1.0010 in the sea-weighted kernel run although every event deposits ±1. | open | Prop L2 |
+| [L-SP9](sea_phase_reference.md#10-open-items) | Re-locking against the parent-frame drift, relative size −3V″t²/m: does dark catalysis renew the lock often enough, or is the exact reading (A′) needed? | answered: neither — the drift is capped by the row for the partners a vertex reads, and the limit is the lock (Prop L9) | Thm L8, Thm L5, Prop L9 |
+| [L-SP10](sea_phase_reference.md#10-open-items) | May the sea keep its rows, its momenta blind to the force, against postulate (S)? | open | Prop L9, Thm L4, Thm L8 |
 
 ## 8. Defects found in demos
 

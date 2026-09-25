@@ -27,6 +27,30 @@ indices, free bodies have mate = -1.
               |<e^{i mu}>| per separation bin against its floor 1/sqrt(n),
               and corr(Kp, K) of the pair-sum kernel against the true K_q(x)
               near the barrier, with the mu = 0 control.
+  readers     (--readers) the four readings of step 22 section 9 near the
+              barrier, each correlated with K_q(x): the static reading in the
+              partners' own frames (as above) and in the parent's frame
+              (reader at the chord midpoint, row-centre momentum), which is
+              also the exact rate reading (A'); the rate reading (A), with
+              hbar dmu/dt formed from the partners' clock rates L = p^2/2m - V
+              and the reader's force, no precomputed U; and the own-frame
+              rate reading (trapezoid).  Also the rms drift term of Theorem
+              L8 relative to rms U_res, and the median age of the sea's
+              clocks near the barrier (time since each was last set).
+  --lever     transport used when a clock is set from others: own (each sea
+              clock carried by its own momentum, as in section 6) or reader
+              (by the momentum of the body being set, Theorem L8).
+  --dark-rate multiplies the dark-catalysis rate (1 = the kernel's own rate).
+  --sea-force S (default): aligned pairs stream under the classical force like
+              every body (postulate (S)).  blind: aligned pairs get no
+              momentum kick -- they keep their rows -- while positions
+              advect and clocks wind at L = p^2/2m - V(x) as before; a body
+              feels the force again once ionised.  A diagnostic for step 22
+              open item L-SP7, not a proposal: it breaks (S) for the sea.
+  --sea-p     continuous (default): initial sea momenta uniform within each
+              row.  rows: initial sea momenta at the row centres, so the
+              locked phases p x / hbar agree with every reader in the row at
+              every x; under (S) the force then spreads them near the barrier.
 
 Usage::
 
@@ -48,6 +72,16 @@ ap.add_argument("--dark", choices=("off", "imprint", "mean", "reach"), default="
 ap.add_argument("--no-events", action="store_true", help="streaming (+ dark) only")
 ap.add_argument("--t-end", type=float, default=0.0, help="0: one packet crossing")
 ap.add_argument("--seed", type=int, default=None)
+ap.add_argument("--readers", action="store_true",
+                help="print the reader-frame readings (step 22 section 9)")
+ap.add_argument("--lever", choices=("own", "reader"), default="own",
+                help="transport lever when a clock is set from others")
+ap.add_argument("--dark-rate", type=float, default=1.0,
+                help="multiplier on the dark-catalysis rate")
+ap.add_argument("--sea-force", choices=("S", "blind"), default="S",
+                help="whether aligned pairs feel the classical force")
+ap.add_argument("--sea-p", choices=("continuous", "rows"), default="continuous",
+                help="initial sea momenta: uniform, or at row centres")
 ARGS = ap.parse_args()
 NU, MODE = ARGS.nu, ARGS.mode
 rng = np.random.default_rng(ARGS.seed if ARGS.seed is not None else 2026 + NU)
@@ -60,6 +94,8 @@ Q = np.arange(1, NP // 2)
 XI = Q * DP
 DX_BIN, RELOCK_W, DARK = ARGS.dx_bin, ARGS.relock_w, ARGS.dark
 NOEVENTS, T_END = ARGS.no_events, ARGS.t_end
+READERS, LEVER, DARK_RATE = ARGS.readers, ARGS.lever, ARGS.dark_rate
+SEA_BLIND = ARGS.sea_force == "blind"
 
 
 def V(x):
@@ -79,6 +115,8 @@ def kidx(x):
 n_pairs = int(round(NU * B * L * 2 * PMAX))
 xs = rng.uniform(-L / 2, L / 2, n_pairs)
 ps = rng.uniform(-PMAX, PMAX, n_pairs)
+if ARGS.sea_p == "rows":
+    ps = DP * np.clip(np.round(ps / DP), -(NP // 2) + 1, NP // 2 - 1)
 if MODE == "locked":
     ths = np.zeros(n_pairs)                    # theta = 0 at x = 0 ...
     ths = ps * xs / HBAR                       # ... so Phi_j(x) = p_j x / hbar
@@ -114,6 +152,8 @@ print(f"nu={NU} mode={MODE}: {n_pairs} aligned pairs, {n_pos} positons +"
 # ------------------------------------------------------------ events
 stats = dict(recomb=0, ion=0, fail=0, gray=[], relock=0, noref=0, dark=0, dark_empty=0)
 touched = np.zeros(N, bool)
+last_set = np.zeros(N)                         # time each clock was last set
+NOW = [0.0]
 
 
 def reference(excl, xj, pj):
@@ -125,7 +165,8 @@ def reference(excl, xj, pj):
     if not m.any():
         stats["noref"] += 1
         return None
-    z = np.exp(1j * (th[m] + p[m] * (xj - x[m]) / HBAR)).sum()
+    lever = p[m] if LEVER == "own" else pj
+    z = np.exp(1j * (th[m] + lever * (xj - x[m]) / HBAR)).sum()
     stats["relock"] += 1
     return float(np.angle(z))
 
@@ -168,6 +209,7 @@ def events(dt):
                 if ref is not None:            # aligned AND on the field
                     th[j_neg] = th[j_pos] = ref
                     touched[j_neg] = touched[j_pos] = True
+                    last_set[j_neg] = last_set[j_pos] = NOW[0]
                 mu = np.angle(np.exp(1j * (th[j_pos] - th[j_neg])))
                 stats["gray"].append(abs(mu))
                 stats["recomb"] += 1
@@ -183,6 +225,7 @@ def events(dt):
                     if ref is not None:
                         th[b] = ref
                         touched[b] = True
+                        last_set[b] = NOW[0]
                 stats["ion"] += 1
             else:
                 stats["fail"] += 1
@@ -195,7 +238,7 @@ def dark_catalysis(dt):
     if DARK == "off":
         return
     A_all = np.flatnonzero((mate >= 0) & (eps > 0))
-    fire = A_all[rng.poisson(run.gamma_tot[kidx(x[A_all])] * dt) > 0]
+    fire = A_all[rng.poisson(DARK_RATE * run.gamma_tot[kidx(x[A_all])] * dt) > 0]
     for a in fire:
         if mate[a] < 0:
             continue
@@ -214,8 +257,10 @@ def dark_catalysis(dt):
             new = float(np.angle(np.exp(1j * phi_a) + np.exp(1j * th[c])))
             th[a] = th[mate[a]] = new - p[a] * (x[c] - x[a]) / HBAR
             touched[a] = touched[mate[a]] = True
+            last_set[a] = last_set[mate[a]] = NOW[0]
         th[c] = th[mate[c]] = new
         touched[c] = touched[mate[c]] = True
+        last_set[c] = last_set[mate[c]] = NOW[0]
         stats["dark"] += 1
 
 
@@ -275,7 +320,41 @@ def measure():
     xc = -3.0 + 0.5 * (np.arange(12) + 0.5)
     kt = run.k[kidx(xc)][:, Q]
     corr = lambda a, b: float(np.corrcoef(a.ravel(), b.ravel())[0, 1])
-    return out, corr(kp, kt), corr(kpe, kt), corr(kp0, kt), len(i)
+    rd = None
+    if READERS:
+        # Theorem L8: a reader at the chord midpoint with the row-centre
+        # momentum, streaming with the parent (dp_ref/dt = -V'_eff there)
+        ii, jj = i[near], j[near]
+        dd = d[near]
+        pref = DP * np.round(0.5 * (p[ii] + p[jj]) / DP)
+        mu_ref = th[ii] - th[jj] + pref * dd / HBAR
+        lag = lambda k: p[k] ** 2 / (2 * MU) - V(x[k])     # the clocks' rates
+        rate_a = lag(ii) - lag(jj) - dd * dv + pref * (p[jj] - p[ii]) / MU
+        kin = (p[jj] - p[ii]) * (2 * pref - p[ii] - p[jj]) / (2 * MU)
+        u_trap = (V(x[jj]) - V(x[ii])
+                  - y * (-F(x[ii]) - F(x[jj])))               # own-frame rate
+        ures_raw = V(x[jj]) - V(x[ii]) - dd * dv
+        kpp = np.zeros((12, len(Q)))                          # static parent = A'
+        kra = np.zeros((12, len(Q)))                          # rate (A)
+        kro = np.zeros((12, len(Q)))                          # rate, own frame
+        for q, xq in enumerate(XI):
+            sp_ = np.sin(xq * dd / HBAR + mu_ref) * w * nm
+            kpp[:, q] = np.bincount(c, -ures_raw * sp_, minlength=12)[:12]
+            kra[:, q] = np.bincount(c, -rate_a * sp_, minlength=12)[:12]
+            so_ = np.sin(xq * dd / HBAR + mu[near]) * w * nm
+            kro[:, q] = np.bincount(c, -u_trap * so_, minlength=12)[:12]
+        sea_near = (mate >= 0) & (np.abs(x) < 3.0)
+        sp_pairs = (mate[ii] >= 0) & (mate[jj] >= 0) & nm
+        rd = dict(static_parent=corr(kpp, kt), rate_a=corr(kra, kt),
+                  rate_own=corr(kro, kt),
+                  kin_rel=float(np.sqrt((kin[nm] ** 2).mean()
+                                        / (ures_raw[nm] ** 2).mean())),
+                  coh_ref=float(np.abs(np.exp(1j * mu_ref[sp_pairs]).mean())),
+                  coh_own=float(np.abs(np.exp(1j * mu[near][sp_pairs]).mean())),
+                  age=float(np.median(NOW[0] - last_set[sea_near]))
+                  if sea_near.any() else float("nan"),
+                  u_rms=float(np.sqrt((ures_raw[nm] ** 2).mean())))
+    return out, corr(kp, kt), corr(kpe, kt), corr(kp0, kt), len(i), rd
 
 
 # ------------------------------------------------------------ run
@@ -287,20 +366,29 @@ print(f"{'t':>6} {'pairs':>8} {'corr(Kp,K)':>11} {'eps-weighted':>12} {'mu=0 con
       f"coherence C(d)/floor, same-row, d-bins of {DBINS[1]:.2f}:", flush=True)
 for step in range(nstep + 1):
     if step in snaps:
-        out, ck, cke, ck0, npairs = measure()
+        out, ck, cke, ck0, npairs, rd = measure()
         line = f"{step*dt:6.2f} {npairs:8d} {ck:11.3f} {cke:12.3f} {ck0:12.3f}"
         near_sea = (mate >= 0) & (np.abs(x) < 4.0)
         line += f"   touched: {touched[near_sea].mean() if near_sea.any() else 0:.2f} of sea near barrier"
         print(line, flush=True)
+        if rd is not None:
+            print(f"         readers: static own {ck:6.3f}  static parent (A') "
+                  f"{rd['static_parent']:6.3f}  rate (A) {rd['rate_a']:6.3f}  "
+                  f"rate own {rd['rate_own']:6.3f}  | drift/U_res "
+                  f"{rd['kin_rel']:.4f}  sea coherence parent {rd['coh_ref']:.3f}"
+                  f" own {rd['coh_own']:.3f}  median clock age {rd['age']:.2f}"
+                  f"  rms U_res {rd['u_rms']:.3f}", flush=True)
         for name, (cc, fl, n) in out.items():
             ratio = " ".join(f"{a/b:5.1f}" for a, b in zip(cc, fl))
             print(f"         {name:9s} C/floor: {ratio}   (C in bin 1:"
                   f" {cc[0]:.3f}, n={n[0]})", flush=True)
     if step == nstep:
         break
-    p += 0.5 * dt * F(x)
+    NOW[0] = (step + 1) * dt
+    kick = np.where(mate >= 0, 0.0, 1.0) if SEA_BLIND else 1.0
+    p += 0.5 * dt * F(x) * kick
     x += p / MU * dt
-    p += 0.5 * dt * F(x)
+    p += 0.5 * dt * F(x) * kick
     x[:] = (x + L / 2) % L - L / 2
     th += (p ** 2 / (2 * MU) - V(x)) * dt / HBAR
     if not NOEVENTS:

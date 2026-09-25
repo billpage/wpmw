@@ -587,11 +587,17 @@ retracts.
     partner's own lever reads the trapezoid residual, and a reader streaming
     with the parent under (S) reads `U_res` exactly at re-lock, to all orders
     in `y`. The compensated split is therefore the choice of the parent as
-    reader, the sea at the vertex is a set of clocks at positions, and the
-    leg-force term is how fast the lever mismatch grows, not a postulate; the
-    price is a drift of relative size `-3 V'' t^2/m` that re-locking must
-    outrun. Sections 5 and 8 carry the figures, and §5 an interactive page of
-    the phase field.
+    reader, the sea at the vertex is a set of clocks at positions, the
+    leg-force term is how fast the lever mismatch grows, not a postulate, and
+    the reader's lever is P2 applied to the reader, not a new rule.
+    **Proposition L9** caps the drift of that reading by the row for the
+    partners a vertex actually reads, so in the particle model the limit is
+    the lock itself: more than half of the ceiling near 0.46 came from the
+    continuous momenta within each row of the initial lock, and a sea that
+    keeps its rows, re-locked at the kernel's own rate, reads 0.82 against a
+    control of 0.89 — but keeping its rows means its momenta ignore the force,
+    which (S) does not allow. Sections 5, 8 and 9 carry the figures, and §5 an
+    interactive page of the phase field.
 
 ## Index
 

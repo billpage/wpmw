@@ -1350,7 +1350,18 @@ see that directory's README for the ladder itself.
   kernel's events, optional re-locking of kinked bodies (`--relock-w`) and
   dark catalysis (`--dark imprint|mean|reach`).  Measures same-row
   sea-clock coherence and the correlation of the pair-sum kernel with `K`.
-  The note's commands reproduce its tables; one to three minutes per run.
+  The note's commands reproduce its tables; a few seconds per run.  Step 22
+  section 9 adds `--readers` (the static readings in both frames, the rate
+  reading from clock rates, the drift term, and the median clock age),
+  `--lever own|reader`, `--dark-rate`, and two diagnostic sea variants:
+  `--sea-p rows` (initial sea momenta at row centres) and
+  `--sea-force blind` (aligned pairs keep their rows; breaks (S) for the
+  sea).
+- `scan_sea_lock_readers.py` — step 22 section 9, open items L-SP7 and
+  L-SP9: runs the particle demo with `--readers` over the maintenance
+  regimes of section 6 and faster dark catalysis, and over three sea
+  variants, three seeds each; prints late means and writes
+  `sea_lock_readers_scan.png`.  About three minutes.
 
 ## Output path convention
 

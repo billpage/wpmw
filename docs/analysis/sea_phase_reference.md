@@ -1,6 +1,6 @@
 # The sea as a phase reference
 
-> Whether the residual-kernel weights, which the compensated algorithm reads from the potential as a precomputed field, could instead emerge from the world-particles themselves, and what the sea would have to be for that to work. Theorem L1 writes each weight as a sum over contacts, `K_q(x) = -(B dp/hbar) int dy U_res(x,y) w(y) sin(2 xi_q y/hbar)`, in which the prefactor `B = 1/(pi hbar)` is the sea's own density and the strip the kernel sweeps holds exactly one aligned pair, `B dp 2 y_max = 1`; but by Proposition L2 sampling those contacts impulsively costs about `10^5` contacts per unit time to match the exact kernel, because each weight is a signed interference sum whose cancellations are the point, while replacing the pinned density `B` by the actual ledger sea costs almost nothing. Theorem L3 shows why per-world phases are the natural carrier: at their midpoint two bodies' extended phases wind apart at their energy difference, which for partners in one momentum row is the kernel's own `U(x,y)`. Theorem L4 is the obstacle it meets: with species signs, every aligned pair cancels exactly in any pair sum, so the sea can serve only as a set of unsigned clocks — a phase reference, invisible as amplitude. Definition L0 makes the required relation precise: the **sea lock**, each aligned pair's clock sampling its row's plane wave, which classical flow carries as a smooth phase field `theta = S/hbar` over phase space that folds only when projected onto position. A gas of random phases never locks under the event rules; a locked sea largely persists. Theorem L5 introduces **dark catalysis**, an interaction between aligned pairs at the kernel's own rate in which both members of a pair fire together and their deposits cancel exactly, so it moves phase and nothing else; by Proposition L6 it couples nearly the whole sea near the barrier, makes created pairs dark, and at reach scale maintains the lock against the damage events do — 0.470 against 0.461 with no events at all and 0.395 with co-located coupling. **Theorem L7 is the negative result.** A freshly locked sea dephases at a rate that is a force-free pair sum linear in `V`, reproduced to correlation 0.999, but the force it subtracts is the partners' rather than the parent's: it is the trapezoid rule's error for `U = int V' dx'` over the chord where the compensated kernel is the midpoint rule's, so its third moment — the leading quantum correction — is about `-2` times the kernel's. **Theorem L8 removes the obstacle.** Comparing two clocks at a distance needs a lever momentum, and whoever supplies it is the reader: an inertial reader reads the full `U`, each partner's own lever reads the trapezoid residual, and a reader streaming with the parent under (S) reads `U_res` exactly at re-lock, to all orders in `y`. The compensated split is therefore the choice of the parent as reader, the sea at the vertex is a set of clocks at positions, and the leg-force term is how fast the lever mismatch grows, not a postulate; the price is a drift of relative size `-3 V'' t^2/m` that re-locking must outrun. Sections 5 and 8 carry the figures, and §5 an interactive page of the phase field.
+> Whether the residual-kernel weights, which the compensated algorithm reads from the potential as a precomputed field, could instead emerge from the world-particles themselves, and what the sea would have to be for that to work. Theorem L1 writes each weight as a sum over contacts, `K_q(x) = -(B dp/hbar) int dy U_res(x,y) w(y) sin(2 xi_q y/hbar)`, in which the prefactor `B = 1/(pi hbar)` is the sea's own density and the strip the kernel sweeps holds exactly one aligned pair, `B dp 2 y_max = 1`; but by Proposition L2 sampling those contacts impulsively costs about `10^5` contacts per unit time to match the exact kernel, because each weight is a signed interference sum whose cancellations are the point, while replacing the pinned density `B` by the actual ledger sea costs almost nothing. Theorem L3 shows why per-world phases are the natural carrier: at their midpoint two bodies' extended phases wind apart at their energy difference, which for partners in one momentum row is the kernel's own `U(x,y)`. Theorem L4 is the obstacle it meets: with species signs, every aligned pair cancels exactly in any pair sum, so the sea can serve only as a set of unsigned clocks — a phase reference, invisible as amplitude. Definition L0 makes the required relation precise: the **sea lock**, each aligned pair's clock sampling its row's plane wave, which classical flow carries as a smooth phase field `theta = S/hbar` over phase space that folds only when projected onto position. A gas of random phases never locks under the event rules; a locked sea largely persists. Theorem L5 introduces **dark catalysis**, an interaction between aligned pairs at the kernel's own rate in which both members of a pair fire together and their deposits cancel exactly, so it moves phase and nothing else; by Proposition L6 it couples nearly the whole sea near the barrier, makes created pairs dark, and at reach scale maintains the lock against the damage events do — 0.470 against 0.461 with no events at all and 0.395 with co-located coupling. **Theorem L7 is the negative result.** A freshly locked sea dephases at a rate that is a force-free pair sum linear in `V`, reproduced to correlation 0.999, but the force it subtracts is the partners' rather than the parent's: it is the trapezoid rule's error for `U = int V' dx'` over the chord where the compensated kernel is the midpoint rule's, so its third moment — the leading quantum correction — is about `-2` times the kernel's. **Theorem L8 removes the obstacle.** Comparing two clocks at a distance needs a lever momentum, and whoever supplies it is the reader: an inertial reader reads the full `U`, each partner's own lever reads the trapezoid residual, and a reader streaming with the parent under (S) reads `U_res` exactly at re-lock, to all orders in `y`. The compensated split is therefore the choice of the parent as reader, the sea at the vertex is a set of clocks at positions, the leg-force term is how fast the lever mismatch grows, not a postulate, and the reader's lever is P2 applied to the reader, not a new rule. **Proposition L9** caps the drift of that reading by the row for the partners a vertex actually reads, so in the particle model the limit is the lock itself: more than half of the ceiling near 0.46 came from the continuous momenta within each row of the initial lock, and a sea that keeps its rows, re-locked at the kernel's own rate, reads 0.82 against a control of 0.89 — but keeping its rows means its momenta ignore the force, which (S) does not allow. Sections 5, 8 and 9 carry the figures, and §5 an interactive page of the phase field.
 
 *Ladder abstract — see the [full list](README.md#the-ladder).*
 
@@ -15,6 +15,12 @@ quadrature error and corrects the sign of one of its measured correlations.
 §8, Theorem L8 (the reader's frame), is new and answers L-SP1; the open
 items move to §9, with L-SP6 and L-SP7 restated and L-SP9 added. Part D of
 `src/demo_sea_lock.py` verifies §8.
+
+**Second addendum (September 2026).** §8 now argues that the reader's lever is
+P2 applied to the reader (L-SP6 answered) and corrects its account of the
+drift; §9, Proposition L9 and the particle-model readings, is new and answers
+L-SP7 and L-SP9. Open items move to §10, with L-SP10 added.
+`src/scan_sea_lock_readers.py` verifies §9.
 
 ---
 
@@ -37,17 +43,23 @@ world-particles meeting one another, with phase as the carrier?
 - Pairwise clock differences carry the kernel's $`U`$ with the kernel's own
   geometry (§3), but only as unsigned clocks, because darkness annihilates any
   signed sum over the sea (§4).
-- What the sea would need is a phase lock (§5), which events can maintain
-  once a reach-scale E-neutral interaction is added (§6).
+- What the sea would need is a phase lock (§5), which events can partly
+  maintain once a reach-scale E-neutral interaction is added (§6); §9 finds
+  what limits it.
 - A sea read in its members' own frames dephases at the wrong kernel, the
   trapezoid rule's error where the compensated kernel is the midpoint
   rule's (§7).
 - Read in the parent's frame, the same sea gives the compensated kernel
   exactly at re-lock: the compensated split is the choice of the parent as
-  reader, and the leg-force term of §7 is not a postulate (§8).
+  reader, the leg-force term of §7 is not a postulate, and the reader's
+  lever is P2 applied to the reader (§8).
+- For the partners a vertex reads, the drift of that reading is capped by the
+  row (Proposition L9). The limit is the lock: its within-row momentum spread
+  and row mixing by the force. A sea that keeps its rows reads nearly the
+  exact kernel at the kernel's own re-locking rate (§9).
 
-**Leaves open** the items of §9. L-SP1 is answered by §8; its price, the
-re-lock interval the parent-frame reading needs, is the new item L-SP9.
+**Leaves open** the items of §10, chief among them whether the sea may keep
+its rows against postulate (S) (L-SP10).
 
 **Inherits.** Theorem N2 (kernel of the observable map) from step 18;
 Theorems Y1, Y3–Y5 from step 20; Theorem I5 (the winding of the misalignment,
@@ -285,8 +297,9 @@ co-located coupling builds coherent patches that coarsen outward but do not
 reach the reach scale by $`t = 25`$. (c) Against the damage events do,
 reach-scale dark catalysis maintains a lock to within error of streaming with
 no events at all, while co-located coupling does not. (d) What none of them
-repairs is the erosion by streaming itself (§7), as long as the lock is
-read in its members' own frames (§8).*
+repairs is the erosion by streaming itself (§7). Section 9 finds that
+more than half of the remaining ceiling comes from the within-row momentum
+spread of the initial lock, and the rest from row mixing by the force.*
 
 Coherence of sea clocks (C/floor), same row, $`\nu = 16`$, imprint, from a
 gas, by separation bin of width 1.57:
@@ -568,22 +581,59 @@ each sample against its own transmitter's Doppler-shifted carrier removes the
 shift one set out to measure; the own-frame reading does that with the
 partners' accelerations.
 
-*P2 is unchanged; the vertex fixes the lever.* P2 gives each body its own
-extended phase, $`\Phi_j(x) = \theta_j + p_j(x - x_j)/\hbar`$. What a vertex
-needs is not partner $`j`$'s plane wave at $`x`$ but partner $`j`$'s clock
-continued by the reader's wavenumber, $`\theta_j + p_{\mathrm{ref}}(x - x_j)/\hbar`$.
-P2 does not say who supplies the lever when two clocks are compared, so L8
-adds nothing about the potential or the sea. Whether "the reader supplies the
-lever" is a reading of P2 or a rule to be listed beside it is L-SP6, sharpened.
+*The lever is P2 applied to the reader.* P2 gives every body an extended
+amplitude whose phase at $`x`$ is $`\varphi_k(x) = \theta_k + p_k(x - x_k)/\hbar`$,
+and Lemma 0 of step 4 ([`phase_resonance_microdynamics.md`](phase_resonance_microdynamics.md#2-postulates))
+says what it is for. With P1 the extended amplitude is the plane wave
+$`e^{i(p_kx - E_kt)/\hbar}`$, so the phase a body predicts at a place is the
+phase it carries on arriving there, and relative phases are defined at
+meetings. Reading (b) is two such meetings. With the reader $`r`$ at momentum
+$`p_{\mathrm{ref}}`$,
 
-**The price: re-locking must outrun the drift.** In reading (b) the relative
-error $`-3V''t^2/m = -3\omega^2t^2`$, with $`\omega^2 = V''/m`$ the local
-curvature rate of the classical flow, sets the interval within which the lock
-must be renewed: short against $`1/\lvert\omega\rvert`$. At the Eckart summit
-$`V'' = -2`$ and $`\lvert\omega\rvert = \sqrt2`$, and the peak event rate
-near it is about 3 per unit time; over the Eckart window the reading of short
-chords is 5 per cent off after $`t \approx 0.2`$. Long chords, whose partners sit where the force is nearly
-uniform, drift far less. This is L-SP9.
+```math
+\mu^{\mathrm{ref}}_{ij} = \big[\varphi_i(x_i) - \varphi_r(x_i)\big] - \big[\varphi_j(x_j) - \varphi_r(x_j)\big],
+```
+
+since $`\varphi_i(x_i) = \theta_i`$ and $`\varphi_r(x_i) - \varphi_r(x_j) = p_{\mathrm{ref}}(x_i - x_j)/\hbar`$;
+the reader's own clock and position cancel. Each bracket is the phase of a
+partner relative to the reader at a meeting at the partner's position, which
+is what P2 predicts. Four things follow.
+
+- *Each partner is read where it is.* No partner's amplitude is extended at
+  all: $`\varphi_i(x_i)`$ is the clock itself. A partner's momentum therefore
+  never enters, beyond putting it in the row, which is why the sea can be
+  clocks at positions (Theorem L4) and why its lever does not matter.
+- *The only extended amplitude used is the reader's.* P2 is applied to one
+  body, the one doing the comparing, at the places it compares.
+- *One vertex needs one lever.* A vertex sums over many pairs. Extending each
+  pair's partners with their own momenta, as the own frame does, gives every
+  pair its own lever; that is the $`y`$-dependent "force" of the second reason
+  above, which no streaming carries. The reader's amplitude gives every pair
+  the same lever.
+- *The Wigner transform is built the same way.* Because
+  $`\psi_r^*(x+y)\,\psi_r(x-y) = e^{-2ip_{\mathrm{ref}}y/\hbar}`$ for any clock
+  and position of the reader,
+
+  ```math
+  W(x,p) = \frac{1}{\pi\hbar}\int dy\;\rho(x+y, x-y)\,\psi_p^*(x+y)\,\psi_p(x-y),
+  ```
+
+  with $`\psi_p`$ the P2 amplitude of a reader at momentum $`p`$: the Wigner
+  function at $`(x,p)`$ is the density matrix read, along the chords centred
+  at $`x`$, against that reader's own plane wave.
+
+So "the reader supplies the lever" adds nothing to the postulates: it is P2
+applied to the reader, compared at meetings in the sense of Lemma 0. L-SP6 is
+answered as a reading of P2.
+
+**The drift, and what a vertex reads.** For a pair followed from re-lock,
+reading (b) is in error by the last term of L8, of relative size
+$`-3V''t^2/m = -3\omega^2t^2`$ with $`\omega^2 = V''/m`$ the local curvature
+rate of the classical flow; the table below measures it. The first addendum
+drew from this a re-lock interval short against $`1/\lvert\omega\rvert`$.
+That was wrong for a vertex, which does not follow pairs but reads whichever
+partners are in its row: for those the drift term is capped by the row
+(Proposition L9, §9), and what limits the reading is the lock itself.
 
 *Verification.* Part D of `demo_sea_lock.py`, on the setup of Part B (Eckart
 barrier, row lattice, pairs binned by midpoint cell, bookkeeping frozen at
@@ -635,7 +685,132 @@ $`T`$ after re-lock, for short (filled) and long (open) chords.*
 
 ---
 
-## 9. Open items
+## 9. Proposition L9: the reader in the particle model
+
+Section 8 read pairs followed from a re-lock. A vertex does something
+different: at each moment it reads whichever partners are in its row. That
+difference removes the drift term and leaves the lock as the only limit.
+
+**Proposition L9.** *If the reader and both partners are in one momentum row
+of width $`dp`$, the drift term of Theorem L8 obeys*
+
+```math
+\left\lvert\frac{(p_j - p_i)(2p_{\mathrm{ref}} - p_i - p_j)}{2m}\right\rvert < \frac{dp^2}{m},
+```
+
+*however long ago the lock was set. A vertex that reads the partners in its
+row therefore reads $`U_{\mathrm{res}}`$ from the clock rates to within
+$`dp^2/m`$. The drift of Theorem L8 (b) belongs to pairs followed across rows,
+and those the vertex no longer reads.*
+
+*Proof.* $`\lvert p_j - p_i\rvert < dp`$, and
+$`\lvert 2p_{\mathrm{ref}} - p_i - p_j\rvert \le \lvert p_{\mathrm{ref}} - p_i\rvert + \lvert p_{\mathrm{ref}} - p_j\rvert < 2dp`$. $`\square`$
+
+With $`dp = 0.25`$ the bound is 0.0625, against an rms $`U_{\mathrm{res}}`$ of
+about 3 near the barrier. The time $`1/\lvert\omega\rvert`$ of §8 therefore
+never constrains a vertex's reading. What does constrain it is the weight
+$`\sin(\xi_q d/\hbar + \mu^{\mathrm{ref}})`$: the rate is right, but the lock
+it is read against must hold.
+
+*Verification.* `src/scan_sea_lock_readers.py` runs the particle model of §6
+(`demo_sea_lock_particles.py --readers`, $`\nu = 8`$, Eckart barrier, three
+seeds, late means over $`4 \le t \le 25`$) and forms four readings near the
+barrier, each correlated with $`K_q(x)`$. The first is §6's static reading in
+the partners' own frames. The second is the same in the parent's frame (a
+reader at the chord midpoint with the row-centre momentum), which is also the
+exact rate reading (A′), since (A′) reads $`U_{\mathrm{res}}`$ itself. The
+third is the rate reading (A), with $`\hbar\dot\mu^{\mathrm{ref}}`$ formed from
+the partners' clock rates $`p_k^2/2m - V(x_k)`$, their momenta and the reader's
+force, and no precomputed potential. The fourth is the own-frame rate reading.
+For the sea of §6:
+
+| regime | static own | parent = (A′) | rate (A) | rate, own frame | drift / $`U_{\mathrm{res}}`$ | sea coherence | median clock age |
+|---|---|---|---|---|---|---|---|
+| streaming only | 0.461 ± 0.012 | 0.443 ± 0.014 | 0.443 | −0.163 | 0.0011 | 0.240 | 14.6 |
+| co-located dark catalysis | 0.395 ± 0.010 | 0.379 ± 0.011 | 0.378 | −0.131 | 0.0011 | 0.284 | 0.54 |
+| reach dark catalysis | 0.470 ± 0.043 | 0.449 ± 0.036 | 0.449 | −0.178 | 0.0011 | 0.255 | 0.40 |
+| the same, reader's lever | 0.458 ± 0.040 | 0.438 ± 0.035 | 0.438 | −0.172 | 0.0011 | 0.253 | 0.40 |
+| reach, rate ×3 | 0.621 ± 0.017 | 0.604 ± 0.020 | 0.604 | −0.237 | 0.0011 | 0.380 | 0.12 |
+| reach, rate ×10 | 0.734 ± 0.020 | 0.716 ± 0.022 | 0.716 | −0.280 | 0.0011 | 0.535 | 0.03 |
+| reach, rate ×30 | 0.751 ± 0.013 | 0.735 ± 0.016 | 0.735 | −0.277 | 0.0011 | 0.619 | 0.00 |
+
+The $`\mu \equiv 0`$ control is 0.88–0.89 throughout. The table settles four
+things.
+
+- **(A′) is not needed.** The drift term is 0.11 per cent of $`U_{\mathrm{res}}`$
+  in every regime, as Proposition L9 says, and readings (A) and (A′) agree to
+  three decimals.
+- **The ceiling is not a frame effect.** The static readings in the two frames
+  differ by about 0.02. At a snapshot the two frames' misalignments differ
+  only by $`2y(\bar p - p_{\mathrm{ref}})/\hbar`$, a sub-row offset that
+  shifts the channels by less than half a row.
+  The own-frame *rate* reading is anti-correlated in every regime, which is
+  Theorem L7 at the particle level.
+- **The kernel's own rate is not enough.** Reach dark catalysis at its own
+  rate re-sets clocks every 0.4 time units, well inside $`1/\lvert\omega\rvert
+  = 0.71`$, yet it reads no better than no events at all. Faster catalysis
+  helps and saturates near 0.74.
+- **The lever used when setting clocks does not matter.** Re-locking with the
+  reader's momentum instead of each sea clock's own changes nothing within
+  errors.
+
+**What limits the lock.** Two things erode the lock, and neither is the
+drift.
+
+*The within-row spread of the initial lock.* The sea of §6 starts with
+momenta uniform within each row and phases $`\theta = px/\hbar`$. Two clocks in
+one row with momenta differing by $`\Delta p`$ agree with a row-centre reader
+only within a beat length $`\hbar/\Delta p`$ of the anchor $`x = 0`$. With
+$`\Delta p \sim dp`$ that length is the reach itself, because the strip of
+Theorem L1 holds one aligned pair, $`B\,dp\,2y_{\max} = 1`$ with
+$`B = 1/\pi\hbar`$, so $`dp\,y_{\max} = \pi\hbar/2`$. Sea bodies that stream
+in from afar arrive with phases that are wrong at the kernel's own scale.
+
+*Row mixing by the force.* Under (S) the force carries sea bodies from row to
+row near the barrier, and each arrives with a phase locked to the row it left.
+
+Three sea variants separate the two (three seeds each, rate reading (A)):
+
+| sea | streaming only | reach dark ×1 | ×3 | ×10 |
+|---|---|---|---|---|
+| (S), momenta continuous within rows (§6) | 0.443 ± 0.014 | 0.449 ± 0.036 | 0.604 ± 0.020 | 0.716 ± 0.022 |
+| (S), momenta at row centres | 0.689 ± 0.011 | 0.674 ± 0.005 | 0.725 ± 0.009 | 0.805 ± 0.004 |
+| row-keeping, at row centres | 0.732 ± 0.015 | 0.820 ± 0.006 | 0.846 ± 0.005 | 0.851 ± 0.004 |
+
+In the row-keeping sea (`--sea-force blind`) aligned pairs get no momentum
+kick, so they keep their rows, while their positions advect and their clocks
+wind at $`p^2/2m - V(x)`$ as before. It is a diagnostic: it breaks (S) for
+the sea.
+
+Starting the sea on row centres alone lifts the unmaintained reading from 0.44
+to 0.69, more than half the way to the control. So the larger part of the
+ceiling near 0.46 of §6 was the initial lock's within-row spread, not erosion
+by streaming. Under (S), dark catalysis at the
+kernel's rate then adds nothing, and tenfold reaches 0.80. A sea that keeps
+its rows, re-locked at the kernel's own rate, reaches 0.82, with sea coherence
+0.87; at three times the rate it reaches 0.85 with coherence 0.93, against
+the control's 0.89. Its drift term falls to 0.0002–0.0006 of
+$`U_{\mathrm{res}}`$, because partners on one row have exactly equal momenta.
+
+![The parent-frame rate reading and the sea's coherence, three sea variants](https://raw.githubusercontent.com/billpage/wpmw/output/figures/sea_lock_readers_scan.png)
+
+*Left: the rate reading (A) near the barrier against the re-locking regime,
+for the three seas, with the $`\mu \equiv 0`$ control. Right: the coherence of
+the lock it is read against.*
+
+**Answers.** L-SP9: re-locking does not have to outrun $`1/\lvert\omega\rvert`$,
+and the exact reading (A′) is not needed (Proposition L9). What it has to
+outrun is the lock's dephasing by row mixing, and under (S) reach-scale dark
+catalysis at the kernel's own rate does not. L-SP7: under (S) no maintained
+lock in this model approaches the control at the kernel's rate. A sea whose
+momenta are blind to the force, keeping its rows, nearly does. Whether the sea
+may keep its rows is a question about the ontology, not the numerics, and
+(S) in step 17 says every world-particle streams under the force. That is
+L-SP10.
+
+---
+
+## 10. Open items
 
 - **L-SP1.** *Answered by Theorem L8 (§8).* Can partner clocks be referred
   to the parent's frame, so that the sea's dephasing is the compensated
@@ -659,13 +834,18 @@ $`T`$ after re-lock, for short (filled) and long (open) chords.*
   stays dark as amplitude (Theorem L4): a new postulate, or a reading of P2?
   *Sharpened by §8:* a partner enters only through its clock and position,
   and the lever is the reader's. P2 is unchanged; the question is whether
-  "the reader supplies the lever" is to be listed beside it.
+  "the reader supplies the lever" is to be listed beside it. *Answered (§8):*
+  a reading of P2. The comparison is two meetings of the reader with the
+  partners, each built from the reader's extended amplitude at a partner's
+  position, and the Wigner transform's lever is the same amplitude.
 - **L-SP7.** Is any locked reference maintainable inside a potential under
   (S), or must the reference be blind to $`V`$? The ceiling near 0.46 in §6.
-  *Restated by §8:* that ceiling was measured with the lock read in its
-  members' own frames. In the parent's frame the drift of $`\mu`$ away from
-  zero is the kernel itself, and what remains is L-SP9. Repeat §6 in the
-  parent's frame.
+  *Answered for this model (§9):* the ceiling is not a frame effect (the
+  first addendum's restatement was wrong). More than half of it is the within-row
+  momentum spread of the initial lock, the rest row mixing by the force.
+  Under (S), dark catalysis at the kernel's rate adds nothing; a sea blind to
+  the force in its momenta, keeping its rows, reaches 0.82 against the
+  control's 0.89. Whether that is allowed is L-SP10.
 - **L-SP8.** The drift of $`\sum E`$ to 1.0010 in the sea-weighted kernel run
   of §2, where every event deposits $`\pm 1`$.
 - **L-SP9.** Re-locking against the drift of the parent-frame reading. Its
@@ -674,14 +854,31 @@ $`T`$ after re-lock, for short (filled) and long (open) chords.*
   $`\lvert\omega\rvert = \sqrt2`$, and the peak event rate there is about 3.
   Does reach-scale dark catalysis (§6) renew it often enough, or is the exact
   reading (A′) of §8 needed? Measure with the rate reading in
-  `demo_sea_lock_particles.py`.
+  `demo_sea_lock_particles.py`. *Answered (§9):* neither. For the partners a
+  vertex reads, the drift term is capped by the row (Proposition L9), measured
+  at 0.11 per cent of $`U_{\mathrm{res}}`$, so (A′) is not needed and
+  $`1/\lvert\omega\rvert`$ sets no interval. The limit is the lock's
+  dephasing by row mixing, which dark catalysis at the kernel's rate does not
+  outrun under (S).
+- **L-SP10.** May the sea keep its rows? A sea whose aligned pairs ignore the
+  force in their momenta, while their positions advect and their clocks wind
+  with the potential, holds the lock the reading needs (§9); under (S), which
+  step 17 states for every world-particle, it does not. For keeping them: by
+  Theorem L4 a dark pair's momentum is never seen except as row membership,
+  and by Theorem L8 the force enters the reading once, at the reader.
+  Against: (S) is stated for every world-particle,
+  a pair's members feel the force again the moment it is ionised, and the
+  ledger streams its sea classically. The ledger's reason, that classical
+  streaming is the unique motion carrying the pair without separating it,
+  does not decide the question: a pair that keeps its row is not separated
+  either. Nor does the numerics: a question about the ontology.
 - **Y-SP2** of step 20 is answered in part: re-locking makes dark creation and
   lock maintenance one rule (§6). **Y-SP1** is sharpened by step 21's
   Proposition M9 and by the co-location bins used here.
 
 ---
 
-## 10. Sources
+## 11. Sources
 
 - Adler, R. *A study of locking phenomena in oscillators*, Proc. IRE **34**
   (1946) 351–357.
