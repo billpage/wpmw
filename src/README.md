@@ -1327,12 +1327,17 @@ see that directory's README for the ladder itself.
   code's `K_q` (`5.5e-7` at `q = 1`), the strip identity `B dp 2 y_max = 1`
   and the single-contact estimator (`std*sqrt(N) ~ 0.90`).  Part B re-locks
   a sea on the row lattice and measures its dephasing: the rate matches the
-  trapezoid-residual prediction to correlation `0.999`, but only `0.3-0.4`
-  against the compensated kernel, and its third moment is about `-2` times
-  the kernel's.  Part C draws the locked phase field over phase space for the
-  Eckart barrier and a soft-core Coulomb well
-  (`sea_lock_phase_field.png`, `sea_lock_locked_vs_gas.png`).  About a
-  minute.
+  trapezoid-residual prediction to correlation `0.999`, but is weakly
+  anti-correlated with the compensated kernel (`-0.38` to `-0.29`, signed as
+  in Theorem L1), and its third moment is about `-2` times the kernel's.
+  Part C draws the locked phase field over phase space for the Eckart
+  barrier and a soft-core Coulomb well (`sea_lock_phase_field.png`,
+  `sea_lock_locked_vs_gas.png`).  Part D verifies Theorem L8, the reader's
+  frame: a SymPy check of the rate identity, the midpoint and trapezoid
+  residuals to fifth order and the drift ratio `-3 V'' t^2/m`; the three
+  readers at re-lock (the parent's frame reads the compensated kernel with
+  slope `0.993-0.996`); the drift after re-lock; and
+  `sea_phase_reader_frames.png`.  About a minute.
 
 - `demo_contact_kernel.py` — step 22 section 2: the ledger with kernel
   weights generated from sea contacts, against the exact mesh.  Weighting

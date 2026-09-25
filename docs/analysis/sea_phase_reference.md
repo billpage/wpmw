@@ -1,14 +1,20 @@
 # The sea as a phase reference
 
-> Whether the residual-kernel weights, which the compensated algorithm reads from the potential as a precomputed field, could instead emerge from the world-particles themselves, and what the sea would have to be for that to work. Theorem L1 writes each weight as a sum over contacts, `K_q(x) = -(B dp/hbar) int dy U_res(x,y) w(y) sin(2 xi_q y/hbar)`, in which the prefactor `B = 1/(pi hbar)` is the sea's own density and the strip the kernel sweeps holds exactly one aligned pair, `B dp 2 y_max = 1`; but by Proposition L2 sampling those contacts impulsively costs about `10^5` contacts per unit time to match the exact kernel, because each weight is a signed interference sum whose cancellations are the point, while replacing the pinned density `B` by the actual ledger sea costs almost nothing. Theorem L3 shows why per-world phases are the natural carrier: at their midpoint two bodies' extended phases wind apart at their energy difference, which for partners in one momentum row is the kernel's own `U(x,y)`. Theorem L4 is the obstacle it meets: with species signs, every aligned pair cancels exactly in any pair sum, so the sea can serve only as a set of unsigned clocks — a local oscillator, invisible as amplitude. Definition L0 makes the required relation precise: the **sea lock**, each aligned pair's clock sampling its row's plane wave, which classical flow carries as a smooth phase field `theta = S/hbar` over phase space that folds only when projected onto position. A gas of random phases never locks under the event rules; a locked sea largely persists. Theorem L5 introduces **dark catalysis**, an interaction between aligned pairs at the kernel's own rate in which both members of a pair fire together and their deposits cancel exactly, so it moves phase and nothing else; by Proposition L6 it couples nearly the whole sea near the barrier, makes created pairs dark, and at reach scale maintains the lock against the damage events do — 0.470 against 0.461 with no events at all and 0.395 with co-located coupling. **Theorem L7 is the negative result.** A freshly locked sea dephases at a rate that is a force-free pair sum linear in `V`, reproduced to correlation 0.999, but the force it subtracts is the partners' rather than the parent's, so its third moment — the leading quantum correction — is about `-2` times the compensated kernel's: a sea streaming under its own forces is the wrong reference for the compensated vertex unless a known leg-force term is added. Sections 5 and 6 carry the figures and an interactive page of the phase field.
+> Whether the residual-kernel weights, which the compensated algorithm reads from the potential as a precomputed field, could instead emerge from the world-particles themselves, and what the sea would have to be for that to work. Theorem L1 writes each weight as a sum over contacts, `K_q(x) = -(B dp/hbar) int dy U_res(x,y) w(y) sin(2 xi_q y/hbar)`, in which the prefactor `B = 1/(pi hbar)` is the sea's own density and the strip the kernel sweeps holds exactly one aligned pair, `B dp 2 y_max = 1`; but by Proposition L2 sampling those contacts impulsively costs about `10^5` contacts per unit time to match the exact kernel, because each weight is a signed interference sum whose cancellations are the point, while replacing the pinned density `B` by the actual ledger sea costs almost nothing. Theorem L3 shows why per-world phases are the natural carrier: at their midpoint two bodies' extended phases wind apart at their energy difference, which for partners in one momentum row is the kernel's own `U(x,y)`. Theorem L4 is the obstacle it meets: with species signs, every aligned pair cancels exactly in any pair sum, so the sea can serve only as a set of unsigned clocks — a phase reference, invisible as amplitude. Definition L0 makes the required relation precise: the **sea lock**, each aligned pair's clock sampling its row's plane wave, which classical flow carries as a smooth phase field `theta = S/hbar` over phase space that folds only when projected onto position. A gas of random phases never locks under the event rules; a locked sea largely persists. Theorem L5 introduces **dark catalysis**, an interaction between aligned pairs at the kernel's own rate in which both members of a pair fire together and their deposits cancel exactly, so it moves phase and nothing else; by Proposition L6 it couples nearly the whole sea near the barrier, makes created pairs dark, and at reach scale maintains the lock against the damage events do — 0.470 against 0.461 with no events at all and 0.395 with co-located coupling. **Theorem L7 is the negative result.** A freshly locked sea dephases at a rate that is a force-free pair sum linear in `V`, reproduced to correlation 0.999, but the force it subtracts is the partners' rather than the parent's: it is the trapezoid rule's error for `U = int V' dx'` over the chord where the compensated kernel is the midpoint rule's, so its third moment — the leading quantum correction — is about `-2` times the kernel's. **Theorem L8 removes the obstacle.** Comparing two clocks at a distance needs a lever momentum, and whoever supplies it is the reader: an inertial reader reads the full `U`, each partner's own lever reads the trapezoid residual, and a reader streaming with the parent under (S) reads `U_res` exactly at re-lock, to all orders in `y`. The compensated split is therefore the choice of the parent as reader, the sea at the vertex is a set of clocks at positions, and the leg-force term is how fast the lever mismatch grows, not a postulate; the price is a drift of relative size `-3 V'' t^2/m` that re-locking must outrun. Sections 5 and 8 carry the figures, and §5 an interactive page of the phase field.
 
 *Ladder abstract — see the [full list](README.md#the-ladder).*
 
 **Status.** Analysis note, step 22 of the ladder. Companion demos:
-`src/demo_sea_lock.py` (§1, §7, the figures),
+`src/demo_sea_lock.py` (§1, §7, §8, the figures),
 `src/demo_contact_kernel.py` (§2) and `src/demo_sea_lock_particles.py`
 (§§5–6). Interactive page: <https://billpage.github.io/wpmw/interactive/sea_lock.html>
 (source: [`../interactive/sea_lock.html`](../interactive/sea_lock.html)).
+
+**Addendum (September 2026).** §7 is revised: it reads Theorem L7 as a
+quadrature error and corrects the sign of one of its measured correlations.
+§8, Theorem L8 (the reader's frame), is new and answers L-SP1; the open
+items move to §9, with L-SP6 and L-SP7 restated and L-SP9 added. Part D of
+`src/demo_sea_lock.py` verifies §8.
 
 ---
 
@@ -33,10 +39,15 @@ world-particles meeting one another, with phase as the carrier?
   signed sum over the sea (§4).
 - What the sea would need is a phase lock (§5), which events can maintain
   once a reach-scale E-neutral interaction is added (§6).
-- A sea that streams under its own forces dephases at the wrong kernel (§7).
+- A sea read in its members' own frames dephases at the wrong kernel, the
+  trapezoid rule's error where the compensated kernel is the midpoint
+  rule's (§7).
+- Read in the parent's frame, the same sea gives the compensated kernel
+  exactly at re-lock: the compensated split is the choice of the parent as
+  reader, and the leg-force term of §7 is not a postulate (§8).
 
-**Leaves open** the eight items of §8, chief among them whether partner
-clocks can be referred to the parent's frame (L-SP1).
+**Leaves open** the items of §9. L-SP1 is answered by §8; its price, the
+re-lock interval the parent-frame reading needs, is the new item L-SP9.
 
 **Inherits.** Theorem N2 (kernel of the observable map) from step 18;
 Theorems Y1, Y3–Y5 from step 20; Theorem I5 (the winding of the misalignment,
@@ -137,7 +148,8 @@ both move freely.*
 
 The potential enters the clock difference as exactly the kernel's $`U`$, with
 the kernel's geometry — partners at $`x \pm y`$, vertex at the midpoint — which
-is Theorem I5 appearing without being put in. Part (b) says it is visible only
+is Theorem I5 appearing without being put in; in the terms of §8, it is what
+an inertial reader sees. Part (b) says it is visible only
 when the kinetic difference does not swamp it, that is, for partners in one
 momentum row: the kernel's own strip, $`B\,dp`$.
 
@@ -166,9 +178,12 @@ cancel term by term against every third body.*
 The sea can therefore contribute to the kernel only as **unsigned clocks**: a
 phase reference that is invisible as amplitude. The analogy is a receiver's
 local oscillator, absent from the output and supplying the timing every beat
-is measured against. In the kernel the two legs are one body's ket and bra,
+is measured against (§8 refines it: the sea supplies the phase samples, the
+parent's momentum the carrier). In the kernel the two legs are one body's ket and bra,
 both entering with a plus sign; in the world picture the partner must play
-the bra, a reference phase, not a contribution to $`W`$.
+the bra, a reference phase, not a contribution to $`W`$. Theorem L8 sharpens
+this: a partner enters a vertex through its clock and its position only, and
+the lever its clock is compared against is the parent's.
 
 This is measured directly in §5: with signs included, the pair-sum kernel is
 uncorrelated with $`K`$ even for a perfectly locked sea.
@@ -270,7 +285,8 @@ co-located coupling builds coherent patches that coarsen outward but do not
 reach the reach scale by $`t = 25`$. (c) Against the damage events do,
 reach-scale dark catalysis maintains a lock to within error of streaming with
 no events at all, while co-located coupling does not. (d) What none of them
-repairs is the erosion by streaming itself (§7).*
+repairs is the erosion by streaming itself (§7), as long as the lock is
+read in its members' own frames (§8).*
 
 Coherence of sea clocks (C/floor), same row, $`\nu = 16`$, imprint, from a
 gas, by separation bin of width 1.57:
@@ -341,7 +357,17 @@ order $`\dot\mu\,\delta t`$):
 | | $`\delta t = 0.02`$ | $`\delta t = 0.1`$ |
 |---|---|---|
 | corr(measured rate, Theorem L7 prediction), $`\nu = 8, 16`$, three seeds | 0.999–1.000 | 0.973–0.987 |
-| corr(measured rate, $`K_{\mathrm{res}}`$) | 0.29–0.38 | 0.31–0.40 |
+| corr(dephasing kernel, $`K_{\mathrm{res}}`$) | −0.38 to −0.29 | −0.40 to −0.31 |
+
+*Erratum (September 2026).* The second row was first printed as a positive
+correlation, 0.29–0.38 and 0.31–0.40. The demo correlated the pair sum
+$`\sum w\,\hbar\dot\mu\,\sin(\xi_q d/\hbar)`$ with $`K_{\mathrm{res}}`$; that
+sum is the analogue of $`\int dy\,U\,w\,\sin(2\xi_q y/\hbar)`$, which Theorem
+L1 multiplies by $`-B\,dp/\hbar`$ to make a weight, so the dephasing kernel in
+L1's sign is its negative. Correctly signed, the dephasing kernel is weakly
+*anti*-correlated with the compensated kernel, which is what the third-moment
+ratio below says. The first row and the table below are unaffected; Part B
+now prints the signed value.
 
 | $`x`$ | $`m_3`$ of $`K_{\mathrm{res}}`$ | $`m_3`$ of the dephasing kernel | ratio |
 |---|---|---|---|
@@ -350,21 +376,275 @@ order $`\dot\mu\,\delta t`$):
 | −0.625 | −0.8514 | 1.6547 | −1.94 |
 | −0.30 | −0.9473 | 1.8613 | −1.96 |
 
-So a sea that streams under postulate (S) is the wrong reference for the
+**The quadrature reading.** Both residuals are errors of a quadrature rule
+applied to one integral. Because
+
+```math
+U(x,y) = V(x+y) - V(x-y) = \int_{x-y}^{x+y} V'(x')\,dx',
+```
+
+the compensated residual $`U - 2yV'(x)`$ is the error of the midpoint rule for
+that integral, and the dephasing residual $`U - y[V'(x-y) + V'(x+y)]`$ is the
+error of the trapezoid rule. With derivatives taken at the midpoint,
+
+```math
+U - 2yV'(x) = \frac{1}{3}y^3V''' + \frac{1}{60}y^5V^{(5)} + O(y^7),
+\qquad
+U - y\left[V'(x-y) + V'(x+y)\right] = -\frac{2}{3}y^3V''' - \frac{1}{15}y^5V^{(5)} + O(y^7).
+```
+
+The factor $`-2`$ is the textbook ratio of the two rules' leading errors, the
+one Simpson's rule cancels by weighting midpoint and trapezoid two to one
+(Davis and Rabinowitz 1984, chapter 2). It holds for every smooth potential,
+not just the Eckart barrier. At fifth order the ratio is $`-4`$, which is why
+the measured ratios above scatter about $`-2`$: the reach is not short against
+the barrier's width. On a single chord at $`x = -0.3`$ the ratio moves from
+$`-1.95`$ at $`y = 0.2`$ to $`-1.43`$ at $`y = 0.7`$ (the figure in §8).
+Both series are checked symbolically in Part D of the demo.
+
+**Why the partners read the trapezoid rule.** In $`\mu_{ij}`$ as defined in §3
+each partner's clock is carried to the midpoint by its own momentum, so the
+lever is $`p_iy + p_jy = 2\bar p\,y`$ with $`\bar p = (p_i + p_j)/2`$. The
+reference point is the chord's centre in phase space, $`(\bar x, \bar p)`$,
+and it accelerates at the mean of the two partners' forces, not at the force
+where it stands. The difference,
+
+```math
+\frac{1}{2}\left[V'(x-y) + V'(x+y)\right] - V'(x) = \frac{1}{2}y^2V''' + O(y^4),
+```
+
+is the pair's Ehrenfest defect — the mean of the force over two points is not
+the force at their mean — and the leg-force term
+$`y[V'(x-y) + V'(x+y) - 2V'(x)]`$ is $`2y`$ times it.
+
+The own frame is not wrong about the sea. For partners on one locked row the
+clocks carry the action (Definition L0), and the own-frame misalignment is
+
+```math
+\mu_{ij} = \frac{1}{\hbar}\Big(S(x-y) - S(x+y) + y\left[p(x-y) + p(x+y)\right]\Big),
+```
+
+the trapezoid rule's error for $`\int p\,dx`$ over the chord: $`1/\hbar`$
+times the signed area between the chord and the Lagrangian curve. That area is
+the phase of the semiclassical Wigner function at the chord's midpoint (Berry
+1977). The own frame measures it correctly; it is the wrong reference for a
+vertex that sits on a classical trajectory.
+
+So a sea read in its members' own frames is the wrong reference for the
 compensated vertex: it measures the kernel relative to its own members'
-accelerations. The difference is the known term
-$`y[V'(x-y) + V'(x+y) - 2V'(x)]`$, which the vertex could add, or which would
-vanish if partner clocks were transported in the parent's frame (L-SP1). The
-same erosion caps every maintained lock in §6: with no events at all the
-correlation settles near 0.46.
+accelerations. The same erosion caps every maintained lock in §6, which read
+the lock in this frame: with no events at all the correlation settles near
+0.46. Section 8 shows that it is the frame, not the sea, that has to change.
 
 ---
 
-## 8. Open items
+## 8. Theorem L8: the reader's frame
 
-- **L-SP1.** Can partner clocks be referred to the parent's frame, so that
-  the sea's dephasing is the compensated kernel? Or is the leg-force term of
-  §7 a vertex term to be counted as a postulate?
+Comparing two clocks at different places needs a lever: a momentum that
+carries each phase to a common point. Sections 3 and 7 used each partner's
+own momentum without saying so. The lever is a choice, and whoever supplies it
+is the **reader**.
+
+**Theorem L8.** *Let same-row partners $`i, j`$ at $`x_i < x_j`$, with
+$`2y = x_j - x_i`$, carry Lagrangian clocks (P1) and move under (S), and let a
+reader with momentum $`p_{\mathrm{ref}}(t)`$ compare them through*
+
+```math
+\mu^{\mathrm{ref}}_{ij} = \theta_i - \theta_j + \frac{p_{\mathrm{ref}}\,(x_j - x_i)}{\hbar}.
+```
+
+*Then, exactly,*
+
+```math
+\hbar\,\dot\mu^{\mathrm{ref}}_{ij} = V(x_j) - V(x_i) + 2y\,\dot p_{\mathrm{ref}}
++ \frac{(p_j - p_i)(2p_{\mathrm{ref}} - p_i - p_j)}{2m}.
+```
+
+*(a) An **inertial** reader, $`\dot p_{\mathrm{ref}} = 0`$ with
+$`p_{\mathrm{ref}}`$ the row, reads the full $`U(x,y)`$ at re-lock: Theorem
+L3. (b) A reader that **streams with the parent** under (S),
+$`\dot p_{\mathrm{ref}} = -V'_{\mathrm{eff}}(x_{\mathrm{ref}})`$, placed at
+the chord's midpoint, reads $`U_{\mathrm{res}}(x,y)`$ exactly at re-lock, to
+all orders in $`y`$: the integrand of Theorem L1. Afterwards the last term is
+its error; for short chords its size relative to $`U_{\mathrm{res}}`$ is
+$`-3V''t^2/m`$. (c) The partners' **own** levers are the reader
+$`p_{\mathrm{ref}} = \bar p = (p_i + p_j)/2`$, for which the last term
+vanishes at all times and $`\dot{\bar p}`$ is the mean of the partners'
+forces: Theorem L7, exactly.*
+
+*Proof.* By P1 $`\hbar\dot\theta_k = p_k^2/2m - V(x_k)`$ and by (S)
+$`\dot x_k = p_k/m`$. Differentiating, the kinetic terms are
+$`(p_i^2 - p_j^2)/2m + p_{\mathrm{ref}}(p_j - p_i)/m`$, which factors as
+stated. The reader's own position does not appear in
+$`\mu^{\mathrm{ref}}`$; it enters only through the force the reader feels. At
+re-lock $`p_i = p_j = p_{\mathrm{ref}}`$ and the last term vanishes, giving
+(a) and (b); $`\bar p\,(x_j - x_i) = y(p_i + p_j)`$ is the midpoint lever of
+§3, giving (c). For (b) at time $`t`$, the partners' momenta separate by
+$`-2yV''t`$ and their mean falls behind the reader's by
+$`\tfrac{1}{2}y^2V'''t`$, so the last term is $`-y^3V''V'''t^2/m`$ against
+$`U_{\mathrm{res}} = \tfrac{1}{3}y^3V'''`$. $`\square`$
+
+The identity, the two series of §7 and the drift ratio are checked
+symbolically in Part D of `demo_sea_lock.py`.
+
+| reader | lever | $`\dot p_{\mathrm{ref}}`$ | reads at re-lock | rule removed | split it belongs to |
+|---|---|---|---|---|---|
+| inertial | the row | 0 | $`U`$ | none | uncompensated: the whole potential in the kernel, as in the signed-particle method (Sellier 2015) |
+| parent | the parent's momentum | $`-V'_{\mathrm{eff}}(x)`$ | $`U_{\mathrm{res}}`$ | midpoint | compensated: this project |
+| own | each partner's momentum | $`-\tfrac{1}{2}[V'(x_i) + V'(x_j)]`$ | $`U - y[V'(x_i) + V'(x_j)]`$ | trapezoid | none: the "force" removed depends on $`y`$ |
+
+**Answer to L-SP1.** L-SP1 offered two alternatives: refer partner clocks to
+the parent's frame, or count the leg-force term of §7 as a vertex postulate.
+Theorem L8 shows that they are one correction. The two readings differ by the
+lever mismatch,
+
+```math
+\mu^{(c)}_{ij} - \mu^{(b)}_{ij} = \frac{2y\,(\bar p - p_{\mathrm{ref}})}{\hbar},
+\qquad
+\hbar\,\frac{d}{dt}\big(\mu^{(c)} - \mu^{(b)}\big)
+= -y\left[V'(x_i) + V'(x_j) - 2V'_{\mathrm{eff}}(x_{\mathrm{ref}})\right]
+- \frac{(p_j - p_i)(2p_{\mathrm{ref}} - p_i - p_j)}{2m},
+```
+
+which is zero at re-lock and changes at minus the sum of the leg-force term
+and the drift term. Adding the leg-force term at the vertex and transporting partner clocks
+in the parent's frame are therefore the same correction at re-lock; they
+part only in the drift term. Three realisations follow, and none needs a
+postulate about the potential:
+
+- **(A) The parent's lever.** Partners supply $`\theta_j`$ and $`x_j`$; their
+  momentum only puts them in the row. Exact at re-lock, drifting afterwards.
+- **(A′) The parent's lever and the drift term.** The vertex also reads the
+  partners' momenta and subtracts the last term of L8. Exact at all times, and
+  the potential enters only where each body is: in each partner's clock, at
+  the partner, and in the parent's force, at the parent.
+- **(B) The partners' own levers and the leg-force term.** Exact at all times,
+  but the vertex must know $`V'`$ at both partners: the potential at the legs,
+  which is the dependence on a precomputed field that §0 set out to remove,
+  in its gradient rather than its value.
+
+(A) is the reading, and (A′) its exact completion when re-locking is rare.
+L-SP1 is answered in favour of the parent's frame.
+
+**Why the parent's frame is the right one.** Four reasons, from the formalism
+to the ontology.
+
+*The Wigner transform names the reader.* In
+
+```math
+W(x,p) = \frac{1}{\pi\hbar}\int dy\;\rho(x+y, x-y)\,e^{-2ipy/\hbar}
+```
+
+the lever $`2py`$ belongs to the Wigner point: $`p`$ is conjugate to the
+separation, and the legs $`x \pm y`$ carry phase only. For a locked row whose
+clocks carry the action, $`\mu^{\mathrm{ref}}`$ with the parent's momentum is
+exactly the negative of the integrand's phase at $`(x, p_{\mathrm{ref}}; y)`$,
+and along the parent's classical trajectory the potential winds it at the
+compensated rate. That is the compensated Wigner equation read from the
+parent's side. In the world picture the Wigner point is the parent and the
+legs are partner clocks.
+
+*The compensated split is the choice of reader.* The split removes from $`U`$
+exactly $`2y`$ times the force the parent streams with, and that force — the
+kernel's own discrete first moment $`V'_{\mathrm{eff}}`$ of the algorithm
+specification §3.2 — is reader (b)'s acceleration. A reader that feels no
+force removes nothing: the uncompensated split, whose particles do not feel
+the force and whose kernel holds the whole potential (Sellier 2015). The own
+frames remove $`2y`$ times the mean of the partners' forces, which depends on
+$`y`$. That is not a force on anything at $`(x, p)`$, not an operator of first
+order in $`\partial_p`$, and so not a Liouville flow that any streaming could
+carry; paired with the parent's actual streaming it would give the
+$`\hbar^2`$ Moyal term with the wrong sign and twice its size. A split exists
+only for a reader that is itself a world-particle under (S), feeling one force
+wherever it is.
+
+*The sea is a set of clocks at positions.* In reading (b) a partner is used
+through $`\theta_j`$ and $`x_j`$; its momentum only selects the row. Theorem L4
+made the sea invisible as amplitude; Theorem L8 makes its momentum unnecessary
+as a lever. The local oscillator of §4 needs one correction: the sea is not the
+oscillator but the set of phase samples, and the oscillator, the carrier
+the samples are demodulated against, is the parent's momentum. Demodulating
+each sample against its own transmitter's Doppler-shifted carrier removes the
+shift one set out to measure; the own-frame reading does that with the
+partners' accelerations.
+
+*P2 is unchanged; the vertex fixes the lever.* P2 gives each body its own
+extended phase, $`\Phi_j(x) = \theta_j + p_j(x - x_j)/\hbar`$. What a vertex
+needs is not partner $`j`$'s plane wave at $`x`$ but partner $`j`$'s clock
+continued by the reader's wavenumber, $`\theta_j + p_{\mathrm{ref}}(x - x_j)/\hbar`$.
+P2 does not say who supplies the lever when two clocks are compared, so L8
+adds nothing about the potential or the sea. Whether "the reader supplies the
+lever" is a reading of P2 or a rule to be listed beside it is L-SP6, sharpened.
+
+**The price: re-locking must outrun the drift.** In reading (b) the relative
+error $`-3V''t^2/m = -3\omega^2t^2`$, with $`\omega^2 = V''/m`$ the local
+curvature rate of the classical flow, sets the interval within which the lock
+must be renewed: short against $`1/\lvert\omega\rvert`$. At the Eckart summit
+$`V'' = -2`$ and $`\lvert\omega\rvert = \sqrt2`$, and the peak event rate
+near it is about 3 per unit time; over the Eckart window the reading of short
+chords is 5 per cent off after $`t \approx 0.2`$. Long chords, whose partners sit where the force is nearly
+uniform, drift far less. This is L-SP9.
+
+*Verification.* Part D of `demo_sea_lock.py`, on the setup of Part B (Eckart
+barrier, row lattice, pairs binned by midpoint cell, bookkeeping frozen at
+re-lock, each pair read by a reader at its midpoint). At re-lock, rate over
+$`\delta t = 0.02`$, dephasing kernel in Theorem L1's sign, three seeds each:
+
+| reader | corr(dephasing kernel, $`K_{\mathrm{res}}`$), $`\nu = 8`$ | same, $`\nu = 16`$ | slope on the ideal $`U_{\mathrm{res}}`$ pair sum |
+|---|---|---|---|
+| inertial | −0.11 to −0.08 | −0.12 to −0.10 | −0.05 to −0.03 |
+| parent | 0.86 to 0.90 | 0.95 to 0.96 | 0.993 to 0.996 |
+| own | −0.34 to −0.29 | −0.38 to −0.34 | −0.28 to −0.24 |
+
+The parent-frame reading reaches the $`\mu \equiv 0`$ control of §5 (0.80–0.91
+and 0.95–0.96): what is left is the sampling of the pairs, not the reading,
+and its slope on the ideal compensated pair sum over the same pairs is one to
+within 0.7 per cent. The inertial reading is dominated by the force the
+compensated kernel removes, and the own-frame reading is anti-correlated, as
+§7 says.
+
+After re-lock, $`\nu = 8`$, seed 1: the rms error of $`\hbar\dot\mu`$ against
+$`U_{\mathrm{res}}`$ at the current chord (for the parent, with the reader's
+current force), relative to the rms of $`U_{\mathrm{res}}`$, for short chords,
+$`0.3 < y < 1`$, and long ones, $`y > 1`$:
+
+| $`T`$ | own, short | parent, short | own, long | parent, long | $`3\langle\lvert V''\rvert\rangle T^2`$ |
+|---|---|---|---|---|---|
+| 0 | 2.56 | 0.0005 | 1.09 | 0.0001 | 0 |
+| 0.1 | 2.56 | 0.012 | 1.10 | 0.0007 | 0.015 |
+| 0.2 | 2.58 | 0.046 | 1.11 | 0.0023 | 0.059 |
+| 0.4 | 2.69 | 0.125 | 1.12 | 0.0073 | 0.24 |
+| 0.7 | 2.49 | 0.235 | 1.23 | 0.023 | 0.72 |
+| 1.0 | 2.56 | 0.276 | 1.34 | 0.050 | 1.48 |
+
+The own-frame error is structural: about 3 on short chords, where trapezoid
+minus midpoint is $`-3`$ times the midpoint residual at leading order; it is
+present at re-lock and does not grow. The parent-frame error starts at the
+integrator's level and follows $`3\lvert V''\rvert T^2`$ at short times,
+saturating as the partners leave the potential. Subtracting the drift term
+leaves at most $`6\times10^{-4}`$ at every $`T`$, which is reading (A′).
+
+![Reader frames: quadrature residuals and the drift after re-lock](https://raw.githubusercontent.com/billpage/wpmw/output/figures/sea_phase_reader_frames.png)
+
+*Left: $`V'`$ along one chord of the Eckart barrier. The midpoint residual
+(the parent's frame) is the signed area between the curve and the horizontal
+line through the force at the midpoint; the trapezoid residual (the partners'
+own frames) is the signed area between the curve and the chord joining the
+partners' forces. Right: the two readings against $`U_{\mathrm{res}}`$ a time
+$`T`$ after re-lock, for short (filled) and long (open) chords.*
+
+---
+
+## 9. Open items
+
+- **L-SP1.** *Answered by Theorem L8 (§8).* Can partner clocks be referred
+  to the parent's frame, so that the sea's dephasing is the compensated
+  kernel? Or is the leg-force term of §7 a vertex term to be counted as a
+  postulate? They are one correction: with the parent's momentum as the
+  lever the dephasing is the compensated kernel exactly at re-lock, and the
+  leg-force term is how fast the mismatch between the partners' levers and
+  the parent's grows. No postulate about the potential is needed; the drift
+  after re-lock is L-SP9.
 - **L-SP2.** Reach-scale dark catalysis: how is the partner chosen — uniformly
   within the reach, or weighted by $`w(y)`$ — and is it a postulate of the
   same standing as the kernel's own reach?
@@ -377,22 +657,40 @@ correlation settles near 0.46.
   condition, the sea's "vacuum" — so that emergence need not be shown?
 - **L-SP6.** The status of the sea at the vertex as unsigned clocks while it
   stays dark as amplitude (Theorem L4): a new postulate, or a reading of P2?
+  *Sharpened by §8:* a partner enters only through its clock and position,
+  and the lever is the reader's. P2 is unchanged; the question is whether
+  "the reader supplies the lever" is to be listed beside it.
 - **L-SP7.** Is any locked reference maintainable inside a potential under
   (S), or must the reference be blind to $`V`$? The ceiling near 0.46 in §6.
+  *Restated by §8:* that ceiling was measured with the lock read in its
+  members' own frames. In the parent's frame the drift of $`\mu`$ away from
+  zero is the kernel itself, and what remains is L-SP9. Repeat §6 in the
+  parent's frame.
 - **L-SP8.** The drift of $`\sum E`$ to 1.0010 in the sea-weighted kernel run
   of §2, where every event deposits $`\pm 1`$.
+- **L-SP9.** Re-locking against the drift of the parent-frame reading. Its
+  error grows as $`-3V''t^2/m`$ for short chords, so the lock must be renewed
+  within a time short against $`1/\lvert\omega\rvert`$; at the Eckart summit
+  $`\lvert\omega\rvert = \sqrt2`$, and the peak event rate there is about 3.
+  Does reach-scale dark catalysis (§6) renew it often enough, or is the exact
+  reading (A′) of §8 needed? Measure with the rate reading in
+  `demo_sea_lock_particles.py`.
 - **Y-SP2** of step 20 is answered in part: re-locking makes dark creation and
   lock maintenance one rule (§6). **Y-SP1** is sharpened by step 21's
   Proposition M9 and by the co-location bins used here.
 
 ---
 
-## 9. Sources
+## 10. Sources
 
 - Adler, R. *A study of locking phenomena in oscillators*, Proc. IRE **34**
   (1946) 351–357.
+- Berry, M. V. *Semi-classical mechanics in phase space: a study of
+  Wigner's function*, Phil. Trans. R. Soc. Lond. A **287** (1977) 237–271.
 - Boyd, S., Ghosh, A., Prabhakar, B. and Shah, D. *Randomized gossip
   algorithms*, IEEE Trans. Inf. Theory **52** (2006) 2508–2530.
+- Davis, P. J. and Rabinowitz, P. *Methods of Numerical Integration*, 2nd
+  ed., Academic Press (1984), chapter 2.
 - Happer, W. *Optical pumping*, Rev. Mod. Phys. **44** (1972) 169–249.
 - Kuramoto, Y. *Self-entrainment of a population of coupled non-linear
   oscillators*, in *International Symposium on Mathematical Problems in
@@ -401,6 +699,8 @@ correlation settles near 0.46.
   Phil. Soc. **45** (1949) 99–124.
 - O'Keeffe, K. P., Ceron, S. and Strogatz, S. H. *Oscillators that sync and
   swarm*, Nat. Commun. **8** (2017) 1504.
+- Sellier, J. M. *A signed particle formulation of non-relativistic quantum
+  mechanics*, J. Comput. Phys. **297** (2015) 254.
 - Wigner, E. *On the quantum correction for thermodynamic equilibrium*, Phys.
   Rev. **40** (1932) 749–759.
 - Wiley, D. A., Strogatz, S. H. and Girvan, M. *The size of the sync basin*,

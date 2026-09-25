@@ -198,6 +198,16 @@ survive as inter-trajectory differences rather than disappearing.
   Faraday field stores energy and exerts a force, whereas the transported
   phase of the WPMW sea does neither.
   https://doi.org/10.1146/annurev-fluid-010814-014506
+- Berry, M. V. — "Semi-classical mechanics in phase space: a study of
+  Wigner's function." *Phil. Trans. R. Soc. Lond. A* **287**, 237–271
+  (1977). The semiclassical Wigner function's phase is the area between a
+  chord and the Lagrangian curve; `docs/analysis/sea_phase_reference.md` §7
+  finds that area as the misalignment of two locked sea clocks read in their
+  own frames. https://doi.org/10.1098/rsta.1977.0145
+- Davis, P. J.; Rabinowitz, P. — *Methods of Numerical Integration*, 2nd ed.
+  Academic Press, 1984. Chapter 2: the midpoint and trapezoid rules and the
+  ratio −2 of their leading errors, which step 22 §7 identifies with the
+  compensated kernel and the dephasing of a sea read in its members' frames.
 
 ## Semi-discrete Wigner transport and signed-particle Monte Carlo
 

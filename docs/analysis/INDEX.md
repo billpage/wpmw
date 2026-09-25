@@ -47,7 +47,7 @@ Theorem and open-item labels are shared across the whole of `docs/`. Each note u
 | U | step 13 (U1) | — |
 | Y | step 20 (Y1–Y6) | — |
 | M | step 21 (M0–M10) | Not to be confused with the symbol M(x, s), the hops M± of the algorithm specification §5.3, or the moments M0 and M2 of step 11b; none of those is a label. |
-| L | step 22 (L0–L7) | Not to be confused with a length L or a Lagrangian; neither is a label. The open-item series is L-SP, not the -LS suffix. |
+| L | step 22 (L0–L8) | Not to be confused with a length L or a Lagrangian; neither is a label. The open-item series is L-SP, not the -LS suffix. |
 | Z | step 19 (Z1–Z5) | — |
 | Thm 1–4, Lem 0–5, Prop 1–3, Cor 4.x | steps 4 and 5 | Numbered without a letter; later notes cite them as 'Theorem 4', 'Lemma 4', 'Proposition 3'. |
 | F, H, J, T, W | supplement: four_action_foundations (F1–F4), holland_two_fluid_correspondence (H1–H7), emission_and_absorption (J1–J2), takabayasi_1954_stochastic_picture (T-series), limkumnerd_weighted_paths (W1–W5) | Cited from the analysis notes; see §9. |
@@ -121,7 +121,7 @@ Kept apart from the results because a postulate is what everything else assumes,
 
 | ID | § | Says | Standing |
 |---|---|---|---|
-| [Def L0](sea_phase_reference.md#5-definition-l0-the-sea-lock) | 5 | The sea lock: each aligned pair's clock equals its row's plane-wave phase at its position, θ = px/ℏ up to a constant per row; a relation between pairs, not within one. | carried by classical flow as the phase field S/ℏ; eroded inside a potential (L7) |
+| [Def L0](sea_phase_reference.md#5-definition-l0-the-sea-lock) | 5 | The sea lock: each aligned pair's clock equals its row's plane-wave phase at its position, θ = px/ℏ up to a constant per row; a relation between pairs, not within one. | carried by classical flow as the phase field S/ℏ; eroded inside a potential when read in its members' own frames (L7); in the parent's frame the drift is the kernel (L8) |
 
 ## 4. Results by note
 
@@ -418,7 +418,8 @@ No labelled results. See the note's own sections.
 | [Thm L4](sea_phase_reference.md#4-theorem-l4-darkness-annihilates-signed-pair-sums) | 4 | Any ε-weighted pair sum vanishes on aligned pairs, so the sea can enter a vertex only as unsigned clocks. | open item L-SP6 |
 | [Thm L5](sea_phase_reference.md#6-theorem-l5-dark-catalysis-and-maintenance) | 6 | Dark catalysis: an aligned pair fires at the kernel's rate with both members together; ΔE = ΔN = ΔS = 0, momentum conserved, the partner pair leaves aligned. | open item L-SP2 |
 | [Prop L6](sea_phase_reference.md#6-theorem-l5-dark-catalysis-and-maintenance) | 6 | Measured: dark catalysis couples 87–95 per cent of the sea near the barrier; at reach scale it maintains a lock against event damage (0.470 against 0.461 with no events); co-located coupling does not (0.395). | answers Y-SP2 in part |
-| [Thm L7](sea_phase_reference.md#7-theorem-l7-the-dephasing-of-a-locked-sea) | 7 | A freshly locked sea dephases at the trapezoid residual U − y[V′(x−y) + V′(x+y)]: force-free, but its third moment is about −2 times the compensated kernel's. | open item L-SP1 |
+| [Thm L7](sea_phase_reference.md#7-theorem-l7-the-dephasing-of-a-locked-sea) | 7 | A freshly locked sea dephases at the trapezoid residual U − y[V′(x−y) + V′(x+y)]: force-free, but its third moment is about −2 times the compensated kernel's. | the trapezoid rule's error where the kernel is the midpoint rule's (§7); sign of one measured correlation corrected (§7); the own-frame reading of L8 (c), resolved by L8 (b) |
+| [Thm L8](sea_phase_reference.md#8-theorem-l8-the-readers-frame) | 8 | A reader with momentum p_ref comparing two same-row clocks sees ℏμ̇ = V(x_j) − V(x_i) + 2y ṗ_ref + (p_j − p_i)(2p_ref − p_i − p_j)/2m: an inertial reader reads U, a reader streaming with the parent reads U_res exactly at re-lock, the partners' own levers read L7's trapezoid residual. | answers L-SP1; sharpens L-SP6; the drift after re-lock is L-SP9 |
 
 ## 5. No-go and negative results
 
@@ -449,7 +450,7 @@ Results that say something cannot be done. Each is as valuable as a positive res
 | Step 19 — [Thm Z4](soft_core_coulomb.md#4-theorem-z4-the-softening-threshold) | An unsoftened atom cannot live on a uniform reach-limited crystal. | Non-uniform lattice (Z-LS1), deferred. |
 | Step 20 — [Thm Y5](dark_sea_and_worldline_identity.md#6-theorem-y5-two-clocks-force-piecewise-worldlines), [Thm Y6](dark_sea_and_worldline_identity.md#7-theorem-y6-who-crosses-the-barrier) | World conservation with no momentum change makes the residual channel inert; tagged crossing tracks neither classical nor quantum transmission. | Kinks (piecewise worldlines) or birth and death; tunnelling is a statement about E, not identity. |
 | Supplement — Prop T3 (takabayasi_1954_stochastic_picture) | The residual generator is never a one-body Markov jump generator (cited in the splitting note §2.2). | Signed ensemble. |
-| Step 22 — [Thm L7](sea_phase_reference.md#7-theorem-l7-the-dephasing-of-a-locked-sea) | Reading the compensated kernel off the dephasing of a sea that streams under its own forces: it measures the partners' accelerations, not the parent's, and gets the quantum correction wrong by a factor of about −2. | Add the leg-force term at the vertex, or transport partner clocks in the parent's frame (L-SP1). |
+| Step 22 — [Thm L7](sea_phase_reference.md#7-theorem-l7-the-dephasing-of-a-locked-sea) | Reading the compensated kernel off the dephasing of a sea that streams under its own forces: it measures the partners' accelerations, not the parent's, and gets the quantum correction wrong by a factor of about −2. | Read the partner clocks with the parent's momentum as the lever: [Thm L8](sea_phase_reference.md#8-theorem-l8-the-readers-frame), which answers L-SP1. |
 | Step 22 — [Prop L2](sea_phase_reference.md#2-proposition-l2-contact-noise-and-the-measure) | Generating kernel weights by sampling sea contacts impulsively: unbiased, but about 10⁵ contacts per unit time are needed. | Phase accumulated continuously along worldlines (§3). |
 
 ## 6. Corrections and retractions
@@ -480,6 +481,7 @@ What each note corrected in an earlier statement, most of which the earlier stat
 | Step 21 | step 18 N4, N5; step 16 S9; step 10 C4 (transfer only) | The availability closure does not describe the ledger under real streaming (M7); S9's attractor is reached only after the population fills its reachable cells (M5, M6); step 10's transverse freedom is visible in the compensated layer (M8). [§0](fourd_compensated_ledger.md#0-what-this-note-settles-and-what-it-corrects) |
 | Supplement R-SP5 | step 11b was missing from the ladder | Resolved: added to the ladder as step 11b in the same patch as this index. |
 | Step 22 | step 20 §2 and abstract (Y1 wording); step 20 §6 (the two recombinations) | The ladder μ is not 'integrated out' into the kernel: the kernel holds the potential's rule for winding it, and arg ρ survives as the sign structure of W. The contact (κ) recombination of §6 is not part of the model (ORIENTATION). [§0](sea_phase_reference.md#0-what-this-note-asks-settles-and-leaves-open). |
+| Step 22 (addendum) | its own §7 (the L7 verification table) | The correlation of the dephasing kernel with K_res was printed as +0.29 to +0.38; in Theorem L1's sign it is −0.38 to −0.29, an anti-correlation, as the third-moment ratio says. [§7](sea_phase_reference.md#7-theorem-l7-the-dephasing-of-a-locked-sea). |
 
 ## 7. Open items
 
@@ -708,18 +710,19 @@ Labelled items link to their line; the unlabelled items of the older notes are g
 | [M-SP7](fourd_compensated_ledger.md#10-open-items) | Fidelity per unit cost as a function of ν once cells set the population | open | — |
 | [M-SP8](fourd_compensated_ledger.md#10-open-items) | Event-ordering sensitivity of the body counts | open | S-SP4 |
 
-### Step 22 — [The sea as a phase reference](sea_phase_reference.md#8-open-items)
+### Step 22 — [The sea as a phase reference](sea_phase_reference.md#9-open-items)
 
 | ID | Question | Status | Related |
 |---|---|---|---|
-| [L-SP1](sea_phase_reference.md#8-open-items) | Can partner clocks be referred to the parent's frame, or is the leg-force term a vertex postulate? | open | Thm L7 |
-| [L-SP2](sea_phase_reference.md#8-open-items) | Reach-scale dark catalysis: how is the partner chosen, and what is its standing? | open | Thm L5 |
-| [L-SP3](sea_phase_reference.md#8-open-items) | The particle model's events fail 20–45 per cent of the time and E is unchecked; repeat on the exact ledger. | open | Y-SP5 |
-| [L-SP4](sea_phase_reference.md#8-open-items) | Does co-located coupling coarsen to the reach scale from a gas at long times? | open | Prop L6 |
-| [L-SP5](sea_phase_reference.md#8-open-items) | Is a locked sea an admissible initial state, a boundary condition? | open | Def L0 |
-| [L-SP6](sea_phase_reference.md#8-open-items) | The sea at the vertex as unsigned clocks while dark as amplitude: postulate or reading of P2? | open | Thm L4 |
-| [L-SP7](sea_phase_reference.md#8-open-items) | Is any locked reference maintainable inside a potential under (S)? | open | Prop L6, Thm L7 |
-| [L-SP8](sea_phase_reference.md#8-open-items) | Σ E drifts to 1.0010 in the sea-weighted kernel run although every event deposits ±1. | open | Prop L2 |
+| [L-SP1](sea_phase_reference.md#9-open-items) | Can partner clocks be referred to the parent's frame, or is the leg-force term a vertex postulate? | answered: the parent's frame; the leg-force term is how fast the lever mismatch grows (Thm L8) | Thm L7, Thm L8 |
+| [L-SP2](sea_phase_reference.md#9-open-items) | Reach-scale dark catalysis: how is the partner chosen, and what is its standing? | open | Thm L5 |
+| [L-SP3](sea_phase_reference.md#9-open-items) | The particle model's events fail 20–45 per cent of the time and E is unchecked; repeat on the exact ledger. | open | Y-SP5 |
+| [L-SP4](sea_phase_reference.md#9-open-items) | Does co-located coupling coarsen to the reach scale from a gas at long times? | open | Prop L6 |
+| [L-SP5](sea_phase_reference.md#9-open-items) | Is a locked sea an admissible initial state, a boundary condition? | open | Def L0 |
+| [L-SP6](sea_phase_reference.md#9-open-items) | The sea at the vertex as unsigned clocks while dark as amplitude: postulate or reading of P2? | open; sharpened by §8 (clocks at positions, the reader's lever) | Thm L4, Thm L8 |
+| [L-SP7](sea_phase_reference.md#9-open-items) | Is any locked reference maintainable inside a potential under (S)? | open; restated by §8 (the 0.46 ceiling is an own-frame reading) | Prop L6, Thm L7, Thm L8 |
+| [L-SP8](sea_phase_reference.md#9-open-items) | Σ E drifts to 1.0010 in the sea-weighted kernel run although every event deposits ±1. | open | Prop L2 |
+| [L-SP9](sea_phase_reference.md#9-open-items) | Re-locking against the parent-frame drift, relative size −3V″t²/m: does dark catalysis renew the lock often enough, or is the exact reading (A′) needed? | open | Thm L8, Thm L5 |
 
 ## 8. Defects found in demos
 
@@ -730,6 +733,7 @@ Defects in code or specifications, found in the course of the analysis, whose ef
 | demo_sea_population_equilibrium.py | stream() advected in x only, so postulate (S) was never exercised; the residual kernel applied the horizon after subtracting 2yV′, returning the horizon's own first moment (3.6 × 10⁻⁵ against 2 × 10⁻¹⁵). | repaired; figures in step 16 predate the repair; S7, S2, S4 unaffected, S8 improved | step 16 §0 |
 | demo_emission_and_absorption.py (Ledger.channels) | The population clamp breaks E: Σ E falls from 1 to 0.8402 in 250 steps (22.0 per cent field error against 3.5 per cent without) and biases f from about 0.64 to 0.52. | open item Y-SP6; proposal J-SP2 (clip caps, repair ringing at transport) | step 20 §8 |
 | Algorithm spec §2.2 (indexed partners) | Under permanent partnership the sea is a consumable with no source, short by about 770 times for the cosine-well parameters. | arithmetic confirmed in step 7; the inference retracted | step 6 §8 |
+| demo_sea_lock.py (Part B) | The dephasing pair sum was correlated with K_res without the −B dp/ℏ of Theorem L1, so the printed correlation had the wrong sign. | repaired; Part B prints the signed value | step 22 §7 |
 | Splitting note §4 (TV table) | Total-variation figures are functions of the rung grid, not absolute: under a hard horizon the event rate diverges logarithmically and the momentum churn linearly. | erratum in the note; see algorithm spec §4.4 | step 14 §4 |
 
 ## 9. Cited from outside this folder
