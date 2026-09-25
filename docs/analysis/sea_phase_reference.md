@@ -7,11 +7,8 @@
 **Status.** Analysis note, step 22 of the ladder. Companion demos:
 `src/demo_sea_lock.py` (§1, §7, the figures),
 `src/demo_contact_kernel.py` (§2) and `src/demo_sea_lock_particles.py`
-(§§5–6). Interactive page:
-[`../interactive/sea_lock.html`](../interactive/sea_lock.html), viewable at
-<https://billpage.github.io/wpmw/interactive/sea_lock.html> once GitHub
-Pages serves `docs/`, or through
-<https://raw.githack.com/billpage/wpmw/main/docs/interactive/sea_lock.html>.
+(§§5–6). Interactive page: <https://billpage.github.io/wpmw/interactive/sea_lock.html>
+(source: [`../interactive/sea_lock.html`](../interactive/sea_lock.html)).
 
 ---
 
@@ -205,7 +202,7 @@ spiral.*
 
 ![Locked against gas](https://raw.githubusercontent.com/billpage/wpmw/output/figures/sea_lock_locked_vs_gas.png)
 
-The [interactive page](../interactive/sea_lock.html) shows the same field
+The [interactive page](https://billpage.github.io/wpmw/interactive/sea_lock.html) shows the same field
 with time, potential and sea as controls.
 
 **Does a lock emerge, and does it persist?** `demo_sea_lock_particles.py`

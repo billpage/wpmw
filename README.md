@@ -235,7 +235,8 @@ Some analysis notes also have an interactive page: a single self-contained
 HTML file under `docs/interactive/` — inline CSS and JavaScript, no external
 scripts, fonts or data — that repeats the computation behind one of the
 note's figures and lets the reader vary its parameters. The first is
-[`sea_lock.html`](docs/interactive/sea_lock.html), for ladder step 22.
+[the sea lock](https://billpage.github.io/wpmw/interactive/sea_lock.html), for ladder step 22
+(source: [`docs/interactive/sea_lock.html`](docs/interactive/sea_lock.html)).
 
 GitHub shows an `.html` file on `main` as source, not as a page, so pages
 are served by **GitHub Pages** from the `docs/` folder of `main`
@@ -246,8 +247,7 @@ at
 https://billpage.github.io/wpmw/interactive/<page>.html
 ```
 
-Until Pages is enabled, the same file can be viewed through
-`https://raw.githack.com/billpage/wpmw/main/docs/interactive/<page>.html`.
+Pages redeploys on every push to `main`, usually within a minute or two.
 Unlike figures and notebooks there is no second copy on the `output`
 branch: the page has no outputs of its own, and the file on `main` is both
 source and artefact.
@@ -255,8 +255,9 @@ source and artefact.
 Conventions for a new page: one file; a header comment naming the note and
 the demo whose computation it repeats; light and dark colour schemes from
 `prefers-color-scheme`; the page must work offline; and the note links it
-with a relative link (for readers of the repository) and the Pages URL (for
-everyone else).
+by its Pages URL. A relative link to the `.html` file opens the source on
+GitHub rather than the page, so use one only for the source, labelled as
+such.
 
 ## PDF releases
 
