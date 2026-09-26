@@ -614,9 +614,9 @@ retracts.
     read, a throttled rate, a sea-weighted kernel, its phases and identity.
     **Proposition Q2** gives the kinematics: under (S′) a sea clock stays on
     its row's plane wave up to the eikonal phase and a same-row pair winds at
-    exactly `U`, so Theorem L8's drift term vanishes; under (S) `d(hbar theta
-    - p x) = -H dt - x dp`, a uniform force keeps the row lock, and the
-    mismatch begins at `V''`, which is the row mixing step 22 measured.
+    exactly `U`, so Theorem L8's drift term vanishes; under (S) `d(hbar theta -
+    p x) = -H dt - x dp`, a uniform force keeps the row lock, and the mismatch
+    begins at `V''`, which is the row mixing step 22 measured.
     **Proposition Q3**: what changes is the sea itself — deficits stay in
     their rows, Theorem S8's early dip goes but the worst cell hovers near
     zero, and fast recombination repairs it where slow does not. **Proposition
