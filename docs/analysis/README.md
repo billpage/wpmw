@@ -15,12 +15,14 @@ and each ending with the open items that motivate the next.
 Read in this order. Each note states in its §0 what it inherits and what it
 retracts.
 
-- **1.** **[`phase_space_crystal_lattice_review.md`](phase_space_crystal_lattice_review.md)** — Review of the two source
+- **1.** **[`phase_space_crystal_lattice_review.md`](phase_space_crystal_lattice_review.md)** \
+  Review of the two source
   documents (Cyganski's *Extended Fokker–Planck Eq. and the QLE V2* memo and
   the *Wigner Collisions Diagram* Sozi deck), cross-referenced at the
   equation-and-page level. The entry point for anyone tracing a claim back to
   its origin.
-- **2.** **[`four_rule_microdynamics_equivalence.md`](four_rule_microdynamics_equivalence.md)** — Analysis of Cyganski's
+- **2.** **[`four_rule_microdynamics_equivalence.md`](four_rule_microdynamics_equivalence.md)** \
+  Analysis of Cyganski's
   proposal (Zoom, 2026) to replace the single mediated-jump rule with four
   two-body rules (Focus, Defocus, Right-Hop, Left-Hop). Proves exact
   equivalence at any particle number `ν`, shows the four-rule form is ≈5.6×
