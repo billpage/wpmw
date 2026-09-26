@@ -147,6 +147,18 @@ class Ledger:
         return np.real(np.fft.ifft(np.fft.fft(f, axis=1)
                                    * np.exp(dt * self.cls), axis=1))
 
+    # Sea transport: True is postulate (S), as published; False is (S') of
+    # step 23 (force_blind_sea.md), inertial advection with no p-drift.
+    sea_force = True
+
+    def stream_sea(self, f, dt):
+        """Transport the sea field S under (S) or (S')."""
+        if self.sea_force:
+            return self.stream(f, dt)
+        fh = np.fft.fft(f, axis=0)
+        fh *= np.exp(-1j * self.kr[:, None] * self.p[None, :] * dt / MU)
+        return np.real(np.fft.ifft(fh, axis=0))
+
     def kick(self, f, sym, dt):
         return np.real(np.fft.ifft(np.fft.fft(f, axis=1)
                                    * np.exp(dt * sym), axis=1))
@@ -192,7 +204,7 @@ class Ledger:
         mn = 1.0
         for _ in range(int(round(t_max / dt))):
             e, n, S = (self.stream(e, .5 * dt), self.stream(n, .5 * dt),
-                       self.stream(S, .5 * dt))
+                       self.stream_sea(S, .5 * dt))
             n = self.clamp(n, e)
             sig = np.clip(S / B, 0.0, None) if live else 1.0
             if live:
@@ -206,7 +218,7 @@ class Ledger:
             n = self.recombine(n, e, kappa, dt)
             S = S - dt * born + 0.5 * np.maximum(n_pre - n, 0.0)
             e, n, S = (self.stream(e, .5 * dt), self.stream(n, .5 * dt),
-                       self.stream(S, .5 * dt))
+                       self.stream_sea(S, .5 * dt))
             n = self.clamp(n, e)
             mn = min(mn, float((S / B).min()))
         return dict(e=e, n=n, S=S, min_s=mn,
@@ -273,12 +285,12 @@ class Ledger:
         mn, tr = 1.0, []
         for step in range(int(round(t_max / dt))):
             up, um, S = (self.stream(up, .5 * dt), self.stream(um, .5 * dt),
-                         self.stream(S, .5 * dt))
+                         self.stream_sea(S, .5 * dt))
             up, um, S, a, e_ = self.channels(up, um, S, dt, absorb)
             n_abs += a
             n_emi += e_
             up, um, S = (self.stream(up, .5 * dt), self.stream(um, .5 * dt),
-                         self.stream(S, .5 * dt))
+                         self.stream_sea(S, .5 * dt))
             mn = min(mn, float((S / B).min()))
             ref = self.qle_step(ref, dt)
             if trace and step % max(1, int(0.5 / dt)) == 0:
@@ -349,7 +361,7 @@ def run_traced(run, e0, t_max, dt, rho=1.0, order="forward", seed=0,
     n_steps = int(round(t_max / dt))
     for step in range(n_steps):
         up, um, S = (run.stream(up, .5 * dt), run.stream(um, .5 * dt),
-                     run.stream(S, .5 * dt))
+                     run.stream_sea(S, .5 * dt))
         seq = qs
         if order == "shuffled":
             seq = list(qs)
@@ -358,7 +370,7 @@ def run_traced(run, e0, t_max, dt, rho=1.0, order="forward", seed=0,
         acc += (a, e_)
         cum += (a, e_)
         up, um, S = (run.stream(up, .5 * dt), run.stream(um, .5 * dt),
-                     run.stream(S, .5 * dt))
+                     run.stream_sea(S, .5 * dt))
         ref = run.qle_step(ref, dt)
         if step % max(1, int(every / dt)) == 0 or step == n_steps - 1:
             tot = acc[0] + acc[1]
@@ -451,7 +463,7 @@ def run_ledger(run, t_max, dt, rho=2.0, cap_clip=False, clamp=True):
         if step == half:
             mid = (float(np.sum(up + um) * run.area), cum.copy())
         up, um, S = (run.stream(up, .5 * dt), run.stream(um, .5 * dt),
-                     run.stream(S, .5 * dt))
+                     run.stream_sea(S, .5 * dt))
         for q in range(1, run.n_p // 2):
             lam = np.abs(run.k[:, q])[:, None]
             if lam.max() < 1e-14:
@@ -489,7 +501,7 @@ def run_ledger(run, t_max, dt, rho=2.0, cap_clip=False, clamp=True):
                     np.maximum(up, 0.0, out=up)
                     np.maximum(um, 0.0, out=um)
         up, um, S = (run.stream(up, .5 * dt), run.stream(um, .5 * dt),
-                     run.stream(S, .5 * dt))
+                     run.stream_sea(S, .5 * dt))
     n_end = float(np.sum(up + um) * run.area)
     n_ev = float(cum.sum()) * run.area
     dN = n_end - n0

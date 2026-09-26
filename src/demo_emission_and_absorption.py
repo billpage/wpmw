@@ -144,15 +144,26 @@ class Ledger:
         return np.real(np.fft.ifft(np.fft.fft(f, axis=1)
                                    * np.exp(dt * self.cls), axis=1))
 
+    # Sea transport.  True: postulate (S), the sea streams under the
+    # classical force like the free bodies (the published runs).  False:
+    # postulate (S') of step 23, force_blind_sea.md -- an aligned pair moves
+    # inertially, advecting at p/mu with no drift in p.  Either motion keeps
+    # a pair's members together, so co-location does not decide it.
+    sea_force = True
+
+    def stream_sea(self, f, dt):
+        """Transport a sea (or tags riding in pairs) under (S) or (S')."""
+        if self.sea_force:
+            return self.stream(f, dt)
+        fh = np.fft.fft(f, axis=0)
+        fh *= np.exp(-1j * self.kr[:, None] * self.p[None, :] * dt / MU)
+        return np.real(np.fft.ifft(fh, axis=0))
+
     def stream3(self, up, um, sea, dt):
-        """Transport all three fields.  The sea is carried, not pinned, and
-        it streams under the classical force exactly as the free bodies do:
-        the two members of a sea pair are co-located and share a trajectory,
-        and the force is charge-blind, so classical streaming is the unique
-        motion that carries the pair without separating it.
-        """
+        """Transport all three fields.  The sea is carried, not pinned; how
+        it moves is set by ``sea_force`` (step 23)."""
         return (self.stream(up, dt), self.stream(um, dt),
-                self.stream(sea, dt))
+                self.stream_sea(sea, dt))
 
     def qle_step(self, e, dt):
         """Exact mesh reference for E: stream / exact substep / stream."""

@@ -22,9 +22,13 @@ Reference throughout: the exact mesh (Ledger.qle_step) on the same grid.
 Usage::
 
     PYTHONPATH=src python3 -u src/demo_contact_kernel.py [RATE ...] [--comp r|min]
+        [--sea S|blind]
 
 --comp chooses the per-contact force removal of part B: along the force
 kernel r, or the least-change projection along xi_q (min).
+
+--sea blind moves the ledger sea under postulate (S') of step 23
+(force_blind_sea.md): inertial advection, no drift in p.
 """
 import argparse
 import numpy as np
@@ -33,6 +37,8 @@ from demo_emission_and_absorption import Ledger, packet, B, MU
 ap = argparse.ArgumentParser(description="step 22 contact-kernel probe")
 ap.add_argument("rates", type=float, nargs="*", help="contact rates R_c")
 ap.add_argument("--comp", choices=("r", "min"), default="min")
+ap.add_argument("--sea", choices=("S", "blind"), default="S",
+                help="sea transport: postulate (S), or (S') of step 23")
 ARGS = ap.parse_args()
 rng = np.random.default_rng(12345)
 
@@ -42,6 +48,7 @@ def banner(t):
 
 
 run = Ledger(v0=1.0, a=1.0, n_r=192, r_half=24.0, n_p=64, dp=0.25)
+run.sea_force = ARGS.sea == "S"      # (S) as published, or (S') of step 23
 n_p, n_r = run.n_p, len(run.r)
 Q = np.arange(1, n_p // 2)                         # channels, as in channels()
 m_res = np.fft.fft(run.k_full, axis=1)             # recover M_res(x, s_j)
@@ -59,33 +66,39 @@ def kernel_from_sea(sea):
 
 
 def channels_k(up, um, sea, dt, k):
-    """Ledger.channels, unclamped, with a kernel k[x, p or 1, q]."""
+    """Ledger.channels, unclamped, with a kernel k[x, p or 1, q].
+
+    Every species mask is taken at the PARENT's row and rolled with the
+    deposit.  The published version read the mask at the destination row
+    p +- q; with a kernel whose sign varies with p -- the sea-weighted
+    kernel of part C -- that assigned some deposits to the wrong species
+    and drifted Sum E to 1.0010 (step 22 open item L-SP8, diagnosed in
+    step 23, force_blind_sea.md section 6).  For a kernel whose sign
+    depends on x only the two forms agree exactly.
+    """
+    R = lambda f, s: np.roll(f, s, axis=1)
     for iq, q in enumerate(Q):
         kq = k[:, :, iq]
         lam, sg = np.abs(kq), np.sign(kq)
         for parent, sp in ((up, 1.0), (um, -1.0)):
             D = lam * parent * dt
             t = np.broadcast_to(sg * sp, D.shape)
-            capA = np.clip(np.where(t > 0, np.roll(um, -q, axis=1),
-                                    np.roll(up, -q, axis=1)), 0.0, None)
-            capB = np.clip(np.where(t > 0, np.roll(up, q, axis=1),
-                                    np.roll(um, q, axis=1)), 0.0, None)
+            pos, neg = t > 0, ~(t > 0)
+            capA = np.clip(np.where(pos, R(um, -q), R(up, -q)), 0.0, None)
+            capB = np.clip(np.where(pos, R(up, q), R(um, q)), 0.0, None)
             A = np.minimum(D, np.minimum(capA, capB))
             Em = D - A
-            aq, am = np.roll(A, q, axis=1), np.roll(A, -q, axis=1)
-            eq, em = np.roll(Em, q, axis=1), np.roll(Em, -q, axis=1)
-            um -= np.where(t > 0, aq, 0.0)
-            up -= np.where(t > 0, 0.0, aq)
-            up -= np.where(t > 0, am, 0.0)
-            um -= np.where(t > 0, 0.0, am)
+            um -= R(np.where(pos, A, 0.0), q)
+            up -= R(np.where(neg, A, 0.0), q)
+            up -= R(np.where(pos, A, 0.0), -q)
+            um -= R(np.where(neg, A, 0.0), -q)
             sea += A
-            up += np.where(t > 0, eq, 0.0)
-            um += np.where(t > 0, 0.0, eq)
-            um += np.where(t > 0, em, 0.0)
-            up += np.where(t > 0, 0.0, em)
+            up += R(np.where(pos, Em, 0.0), q)
+            um += R(np.where(neg, Em, 0.0), q)
+            um += R(np.where(pos, Em, 0.0), -q)
+            up += R(np.where(neg, Em, 0.0), -q)
             sea -= Em
     return up, um, sea
-
 
 right = run.r[:, None] > 0.0
 T = lambda w: float(w[np.broadcast_to(right, w.shape)].sum() / w.sum())

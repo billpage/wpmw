@@ -24,6 +24,14 @@ packets on the fine lattice, about five minutes each.
 Usage::
 
     PYTHONPATH=src python3 -u src/demo_dark_sea_and_identity.py [--full]
+        [--parts ABCDE] [--sea S|blind] [--p0 P0 ...]
+
+``--sea blind`` moves the sea, and tags riding in pairs, under postulate
+(S') of step 23 (``force_blind_sea.md``).  Part E's tags are conserved
+exactly since step 23; its last three columns report the total tag
+against the initial tag, the share of the transmitted tag that is inside
+pairs, and the tag mass relocated from spectral-transport ripple, per
+initial tag, summed over the run.
 """
 import argparse
 import numpy as np
@@ -220,8 +228,19 @@ def channels_tagged(run, up, um, sea, tu, ts, dt):
     tagged count when the bodies of a cell are exchangeable.  The fields
     are NOT clamped: clamping small negative populations breaks E (see
     the note, section 8).
+
+    Tags are MOVED, never created or destroyed (step 23, force_blind_sea.md
+    section 6): an absorption takes at most the tag present in the cell it
+    draws from, an ionisation releases at most the tag held by the pairs it
+    draws from, and nothing is clipped afterwards.  The published version
+    let an ionisation beyond the local sea release more tag than the pairs
+    held and then clipped, and grew the total tag by up to 2.25 times.
+    Every species mask is taken at the PARENT's row and then rolled with
+    the deposit, which is what the event means; for this kernel, whose sign
+    depends on x only, that leaves the fields exactly as before.
     """
     n_abs = n_emi = 0.0
+    R = lambda f, s: np.roll(f, s, axis=1)
     for q in range(1, run.n_p // 2):
         lam = np.abs(run.k[:, q])[:, None]
         if lam.max() < 1e-14:
@@ -232,41 +251,53 @@ def channels_tagged(run, up, um, sea, tu, ts, dt):
             if D.max() <= 0.0:
                 continue
             t = np.broadcast_to(sg * sp, D.shape)
-            capA = np.clip(np.where(t > 0, np.roll(um, -q, axis=1),
-                                    np.roll(up, -q, axis=1)), 0.0, None)
-            capB = np.clip(np.where(t > 0, np.roll(up, q, axis=1),
-                                    np.roll(um, q, axis=1)), 0.0, None)
+            pos, neg = t > 0, ~(t > 0)                 # at the parent's row
+            capA = np.clip(np.where(pos, R(um, -q), R(up, -q)), 0.0, None)
+            capB = np.clip(np.where(pos, R(up, q), R(um, q)), 0.0, None)
             A = np.minimum(D, np.minimum(capA, capB))
             Em = D - A
             n_abs += float(A.sum())
             n_emi += float(Em.sum())
-            aq, am = np.roll(A, q, axis=1), np.roll(A, -q, axis=1)
-            eq, em = np.roll(Em, q, axis=1), np.roll(Em, -q, axis=1)
-            # tags, from the fields as they stand before this update
+            # tags, from the fields as they stand before this update.
+            # An absorption consumes a positon at p - q (t > 0) or p + q
+            # (t < 0) and aligns it into a pair on the parent's row p.
             fr_u = np.clip(tu / np.maximum(up, EPS), 0.0, 1.0)
+            lo = R(np.where(pos, A, 0.0), -q) * fr_u      # at p - q
+            hi = R(np.where(neg, A, 0.0), q) * fr_u       # at p + q
+            want = lo + hi
+            scale = np.where(want > tu, tu / np.maximum(want, EPS), 1.0)
+            lo, hi = lo * scale, hi * scale
+            # an ionisation frees the pair's positon at p + q (t > 0) or
+            # p - q (t < 0); it releases at most the tag the pairs hold
             fr_s = np.clip(ts / np.maximum(sea, EPS), 0.0, 1.0)
-            take_lo = np.where(t > 0, am, 0.0) * fr_u
-            take_hi = np.where(t > 0, 0.0, aq) * fr_u
-            ion = Em * fr_s
-            tu = tu - take_lo - take_hi
-            ts = (ts + np.roll(take_lo, q, axis=1)
-                  + np.roll(take_hi, -q, axis=1) - ion)
-            tu = tu + np.where(t > 0, np.roll(ion, q, axis=1),
-                               np.roll(ion, -q, axis=1))
-            # fields, exactly as Ledger.channels but without the clamp
-            um -= np.where(t > 0, aq, 0.0)
-            up -= np.where(t > 0, 0.0, aq)
-            up -= np.where(t > 0, am, 0.0)
-            um -= np.where(t > 0, 0.0, am)
+            ion = np.minimum(Em * fr_s, ts)
+            tu = (tu - lo - hi + R(np.where(pos, ion, 0.0), q)
+                  + R(np.where(neg, ion, 0.0), -q))
+            ts = ts + R(lo, q) + R(hi, -q) - ion
+            # fields: Ledger.channels without the clamp, masks at the parent
+            um -= R(np.where(pos, A, 0.0), q)
+            up -= R(np.where(neg, A, 0.0), q)
+            up -= R(np.where(pos, A, 0.0), -q)
+            um -= R(np.where(neg, A, 0.0), -q)
             sea += A
-            up += np.where(t > 0, eq, 0.0)
-            um += np.where(t > 0, 0.0, eq)
-            um += np.where(t > 0, em, 0.0)
-            up += np.where(t > 0, 0.0, em)
+            up += R(np.where(pos, Em, 0.0), q)
+            um += R(np.where(neg, Em, 0.0), q)
+            um += R(np.where(pos, Em, 0.0), -q)
+            up += R(np.where(neg, Em, 0.0), -q)
             sea -= Em
-            tu = np.clip(tu, 0.0, np.maximum(up, 0.0))
-            ts = np.clip(ts, 0.0, np.maximum(sea, 0.0))
     return up, um, sea, tu, ts, n_abs, n_emi
+
+
+def positive_part(f):
+    """Remove the negative ripple spectral transport leaves on a tag field,
+    rescaling the positive part so the total is unchanged.  Returns the
+    field and the mass relocated.  Spectral streaming is linear and
+    conservative but not positivity-preserving; the channels act only on
+    the positive part of a tag field, so an uncorrected ripple is pumped
+    into the free tags as negative mass (step 23, section 6)."""
+    tot, neg = f.sum(), f[f < 0].sum()
+    g = np.clip(f, 0.0, None)
+    return g * (tot / g.sum()) if g.sum() > 0 else g, -float(neg)
 
 
 def t_exact(p0, sp, v0=1.0, a=1.0):
@@ -280,7 +311,7 @@ def t_exact(p0, sp, v0=1.0, a=1.0):
     return float((w * (s / (s + c))).sum())
 
 
-def part_e(full=False):
+def part_e(full=False, only=None):
     banner("E. Theorem Y6: tagged positons at the Eckart barrier")
     if full:
         run = Ledger(v0=1.0, a=1.0, n_r=256, r_half=40.0, n_p=128, dp=0.125)
@@ -288,15 +319,18 @@ def part_e(full=False):
     else:
         run = Ledger(v0=1.0, a=1.0, n_r=192, r_half=24.0, n_p=64, dp=0.25)
         cases, r0, sr, sp, dt = (1.2,), -8.0, 2.0, 0.25, 0.02
+    if only:
+        cases = tuple(only)
     right = run.r[:, None] > 0.0
     H = (run.p[None, :] ** 2 / (2 * MU)
          + run.v0 / np.cosh(run.r[:, None] / run.a) ** 2)
     trans = lambda w: float(w[np.broadcast_to(right, w.shape)].sum() / w.sum())
     print(f"   barrier-top momentum p_b = {np.sqrt(2 * MU * run.v0):.4f},"
-          f"  lattice dp = {run.dp}")
+          f"  lattice dp = {run.dp},  sea {'(S)' if run.sea_force else "(S')"}")
     print(f"   {'p0':>5} {'E0/V0':>6} {'T_cl':>7} {'T_exact':>8} {'T_mesh':>8}"
           f" {'T_E':>8} {'T_tag':>7} {'tag H>V0':>9} {'<H>/E0':>7}"
-          f" {'kinks':>6} {'f':>6} {'|E-mesh|':>9}")
+          f" {'kinks':>6} {'f':>6} {'|E-mesh|':>9} {'tag/tag0':>9}"
+          f" {'in pairs':>9} {'ripple':>7}")
     for p0 in cases:
         e0 = packet(run, r0=r0, p0=p0, sr=sr, sp=sp)
         nstep = int(round(2.0 * abs(r0) / (p0 / MU) / dt))
@@ -304,16 +338,20 @@ def part_e(full=False):
         tu, ts = up.copy(), np.zeros_like(sea)
         tag0 = tu.sum()
         ecl, emesh = e0.copy(), e0.copy()
-        na = ne = kinks = 0.0
+        na = ne = kinks = ripple = 0.0
         for _ in range(nstep):
             up, um, sea = run.stream3(up, um, sea, .5 * dt)
-            tu, ts = run.stream(tu, .5 * dt), run.stream(ts, .5 * dt)
+            tu, ts = run.stream(tu, .5 * dt), run.stream_sea(ts, .5 * dt)
+            (tu, r1), (ts, r2) = positive_part(tu), positive_part(ts)
+            ripple += r1 + r2
             u0, s0 = tu.copy(), ts.copy()
             up, um, sea, tu, ts, a, em = channels_tagged(
                 run, up, um, sea, tu, ts, dt)
             kinks += 0.5 * (np.abs(tu - u0).sum() + np.abs(ts - s0).sum())
             up, um, sea = run.stream3(up, um, sea, .5 * dt)
-            tu, ts = run.stream(tu, .5 * dt), run.stream(ts, .5 * dt)
+            tu, ts = run.stream(tu, .5 * dt), run.stream_sea(ts, .5 * dt)
+            (tu, r1), (ts, r2) = positive_part(tu), positive_part(ts)
+            ripple += r1 + r2
             ecl = run.stream(ecl, dt)
             emesh = run.qle_step(emesh, dt)
             na += a
@@ -325,7 +363,10 @@ def part_e(full=False):
               f" {tag[H > run.v0].sum() / tag.sum():9.4f}"
               f" {(tag * H).sum() / tag.sum() / E0:7.3f}"
               f" {kinks / tag0:6.3f} {na / (na + ne):6.3f}"
-              f" {np.linalg.norm(E - emesh) / np.linalg.norm(emesh):9.3f}")
+              f" {np.linalg.norm(E - emesh) / np.linalg.norm(emesh):9.3f}"
+              f" {tag.sum() / tag0:9.6f}"
+              f" {ts[np.broadcast_to(right, ts.shape)].sum() / tag[np.broadcast_to(right, tag.shape)].sum():9.4f}"
+              f" {ripple / tag0:7.4f}")
     print()
     xi = np.abs(run.xi)
     dp_diff = 0.5 * (xi[None, :] ** 2 * np.abs(run.k)).sum(axis=1)
@@ -347,12 +388,20 @@ def main():
     ap.add_argument("--full", action="store_true",
                     help="part E: the note's three packets on the fine "
                          "lattice (~5 minutes each)")
+    ap.add_argument("--parts", default="ABCDE",
+                    help="which parts to run, e.g. E")
+    ap.add_argument("--sea", choices=("S", "blind"), default="S",
+                    help="sea transport: postulate (S), or (S') of step 23")
+    ap.add_argument("--p0", type=float, nargs="*", default=None,
+                    help="part E: run only these packet momenta")
     args = ap.parse_args()
-    part_a()
-    part_b()
-    part_c()
-    part_d()
-    part_e(full=args.full)
+    Ledger.sea_force = args.sea == "S"
+    for name, fn in (("A", part_a), ("B", part_b), ("C", part_c),
+                     ("D", part_d)):
+        if name in args.parts:
+            fn()
+    if "E" in args.parts:
+        part_e(full=args.full, only=args.p0)
 
 
 if __name__ == "__main__":

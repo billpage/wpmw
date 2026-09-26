@@ -1362,6 +1362,16 @@ see that directory's README for the ladder itself.
   regimes of section 6 and faster dark catalysis, and over three sea
   variants, three seeds each; prints late means and writes
   `sea_lock_readers_scan.png`.  About three minutes.
+- `demo_force_blind_sea.py` — step 23 (`force_blind_sea.md`), postulate
+  (S′): aligned pairs move inertially.  Part A checks Proposition Q1
+  bitwise (the body fields, so E, N and f, are independent of how the sea
+  moves), Part B checks Proposition Q2 with SymPy, Part C measures what
+  (S′) does to the step 16 sea (Proposition Q3), and `--heavy` adds Part D,
+  Theorem S9's traces under both motions.  About four minutes, fourteen
+  with `--heavy`.  The ledgers of `demo_emission_and_absorption.py` and
+  `demo_sea_population_equilibrium.py` carry a `sea_force` switch (True,
+  the default, is (S) as published); `demo_dark_sea_and_identity.py` and
+  `demo_contact_kernel.py` expose it as `--sea S|blind`.
 
 ## Output path convention
 

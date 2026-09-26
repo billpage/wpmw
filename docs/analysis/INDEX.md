@@ -48,6 +48,7 @@ Theorem and open-item labels are shared across the whole of `docs/`. Each note u
 | Y | step 20 (Y1–Y6) | — |
 | M | step 21 (M0–M10) | Not to be confused with the symbol M(x, s), the hops M± of the algorithm specification §5.3, or the moments M0 and M2 of step 11b; none of those is a label. |
 | L | step 22 (L0–L9) | Not to be confused with a length L or a Lagrangian; neither is a label. The open-item series is L-SP, not the -LS suffix. |
+| Q | step 23 (Q1–Q4); postulate (S′) in step 23 | Not the channel index q of the kernel, nor the channel set Q of the demos. |
 | Z | step 19 (Z1–Z5) | — |
 | Thm 1–4, Lem 0–5, Prop 1–3, Cor 4.x | steps 4 and 5 | Numbered without a letter; later notes cite them as 'Theorem 4', 'Lemma 4', 'Proposition 3'. |
 | F, H, J, T, W | supplement: four_action_foundations (F1–F4), holland_two_fluid_correspondence (H1–H7), emission_and_absorption (J1–J2), takabayasi_1954_stochastic_picture (T-series), limkumnerd_weighted_paths (W1–W5) | Cited from the analysis notes; see §9. |
@@ -56,7 +57,7 @@ Open-item ID series, all of the form `<note prefix><suffix><n>`. The suffixes `S
 
 | Suffix | Where used |
 |---|---|
-| -SP | G-SP (step 17), S-SP (16), N-SP (18), Y-SP (20), M-SP (21), L-SP (22); supplement: J-SP, H-SP, W-SP, R-SP |
+| -SP | G-SP (step 17), S-SP (16), N-SP (18), Y-SP (20), M-SP (21), L-SP (22), Q-SP (23); supplement: J-SP, H-SP, W-SP, R-SP |
 | -LS | K-LS (step 15), Z-LS (step 19) |
 | CLS | step 14 |
 | CLA | docs/algorithm/compensated_liouville_algorithm.md |
@@ -108,7 +109,7 @@ Kept apart from the results because a postulate is what everything else assumes,
 |---|---|---|---|
 | [Post (E)](compensated_ontology.md#1-four-postulates) | 1 | Existence: the world is a locally finite signed counting measure on phase space; no other species or attributes. | — |
 | [Post (A)](compensated_ontology.md#1-four-postulates) | 1 | Admissibility: only ensembles whose expectation is the Wigner function of some ρ at least 0 occur. | independent of (S) + (D) (G3.1); particle-level statement open (G-SP2) |
-| [Post (S)](compensated_ontology.md#1-four-postulates) | 1 | Streaming: between events every world-particle obeys the full classical force; momentum is continuous along every worldline. | NOT the sea carrier lock of step 6; the notation collision is recorded in step 20 §9 |
+| [Post (S)](compensated_ontology.md#1-four-postulates) | 1 | Streaming: between events every world-particle obeys the full classical force; momentum is continuous along every worldline. | NOT the sea carrier lock of step 6; the notation collision is recorded in step 20 §9; provisionally replaced for aligned pairs by (S′), step 23 |
 | [Post (D)](compensated_ontology.md#1-four-postulates) | 1 | Demography: a parent ionises a neutral sea pair on its own row at rate Γ = sum of abs(K_res); recombination is the reverse; absorptive fraction f = 1/2. | f = 1/2 is the sinkless case (N3) |
 
 ### Step 21 — [Compensated ledger in four dimensions](fourd_compensated_ledger.md)
@@ -122,6 +123,12 @@ Kept apart from the results because a postulate is what everything else assumes,
 | ID | § | Says | Standing |
 |---|---|---|---|
 | [Def L0](sea_phase_reference.md#5-definition-l0-the-sea-lock) | 5 | The sea lock: each aligned pair's clock equals its row's plane-wave phase at its position, θ = px/ℏ up to a constant per row; a relation between pairs, not within one. | carried by classical flow as the phase field S/ℏ; eroded inside a potential when read in its members' own frames (L7); in the parent's frame the drift is the kernel (L8); its erosion in the particle model is mostly within-row momentum spread and row mixing by the force (L9) |
+
+### Step 23 — [The force-blind sea](force_blind_sea.md)
+
+| ID | § | Says | Standing |
+|---|---|---|---|
+| [Post (S′)](force_blind_sea.md#1-postulate-s) | 1 | Streaming with a force-blind sea: free bodies obey the full classical force; each member of an aligned pair moves inertially (dq/dt = p/m, dp/dt = 0) while its clock still winds at p²/2m − V. | provisional; replaces (S) of step 17 for aligned pairs |
 
 ## 4. Results by note
 
@@ -422,6 +429,15 @@ No labelled results. See the note's own sections.
 | [Thm L8](sea_phase_reference.md#8-theorem-l8-the-readers-frame) | 8 | A reader with momentum p_ref comparing two same-row clocks sees ℏμ̇ = V(x_j) − V(x_i) + 2y ṗ_ref + (p_j − p_i)(2p_ref − p_i − p_j)/2m: an inertial reader reads U, a reader streaming with the parent reads U_res exactly at re-lock, the partners' own levers read L7's trapezoid residual. | answers L-SP1 and L-SP6 (the reader's lever is P2 applied to the reader); its fixed-pair drift does not bind a vertex (Prop L9) |
 | [Prop L9](sea_phase_reference.md#9-proposition-l9-the-reader-in-the-particle-model) | 9 | For a reader and partners in one row of width dp the drift term of L8 is below dp²/m, so a vertex reading its row reads U_res from clock rates; measured: the drift is 0.11 per cent of U_res, and the lock limits the reading — 0.45 for the sea of §6, 0.82 for a sea that keeps its rows, at the kernel's re-locking rate, against a 0.89 control. | answers L-SP7 and L-SP9; opens L-SP10 |
 
+### Step 23 — [The force-blind sea](force_blind_sea.md)
+
+| ID | § | Says | Standing |
+|---|---|---|---|
+| [Prop Q1](force_blind_sea.md#3-proposition-q1-the-observable-is-blind-to-the-seas-motion) | 3 | In a ledger whose events take their counts from the bodies and the kernel alone, the body fields — so E, N and f — are independent of how the sea moves; verified bitwise. Exceptions: a rate throttled by the sea (S5), a kernel weighted by it (L2(a)), readings of its phases, and identity. | S2, S7, S8, S9, G1 and T_E stand under (S′) |
+| [Prop Q2](force_blind_sea.md#4-proposition-q2-the-kinematics-of-s-and-s) | 4 | Under (S′) a sea clock stays on its row's plane wave up to the eikonal phase −∫V dt/ℏ and a same-row pair winds at exactly U + 2y dP/dt, so L8's drift term vanishes; a motionless pair would need a Hamiltonian clock. Under (S), d(ℏθ − px) = −H dt − x dp: a uniform force keeps the row lock, and the mismatch begins at V″. | checked with SymPy |
+| [Prop Q3](force_blind_sea.md#5-proposition-q3-what-s-does-to-the-sea) | 5 | Measured: under (S′) sea deficits stay in their rows; S8's early dip goes (−0.06 B against −0.34 B) but the worst cell hovers near zero; fast recombination keeps it non-negative, slow does not; S5's throttling error is 0.29–0.30 against 0.25. | the published S5 table is stale under either motion |
+| [Prop Q4](force_blind_sea.md#6-proposition-q4-identity-crosses-in-the-dark) | 6 | Measured, tags conserved: under (S′) tagged bodies cross the Eckart barrier inside dark pairs, through the summit (T_tag 0.89–0.91 below and at the barrier, against 0.34–0.42 under (S)); T_E unchanged. | corrects Y6's mechanism provisionally; Y6's transmissions under (S) survive the tag repair |
+
 ## 5. No-go and negative results
 
 Results that say something cannot be done. Each is as valuable as a positive result, and several are the reason a later step exists.
@@ -484,6 +500,9 @@ What each note corrected in an earlier statement, most of which the earlier stat
 | Step 22 | step 20 §2 and abstract (Y1 wording); step 20 §6 (the two recombinations) | The ladder μ is not 'integrated out' into the kernel: the kernel holds the potential's rule for winding it, and arg ρ survives as the sign structure of W. The contact (κ) recombination of §6 is not part of the model (ORIENTATION). [§0](sea_phase_reference.md#0-what-this-note-asks-settles-and-leaves-open). |
 | Step 22 (addendum) | its own §7 (the L7 verification table) | The correlation of the dephasing kernel with K_res was printed as +0.29 to +0.38; in Theorem L1's sign it is −0.38 to −0.29, an anti-correlation, as the third-moment ratio says. [§7](sea_phase_reference.md#7-theorem-l7-the-dephasing-of-a-locked-sea). |
 | Step 22 (second addendum) | its own §8 and L-SP7 as restated by the first addendum | The first addendum drew a re-lock interval short against 1/ω (ω² = V″/m) from the drift of pairs followed from re-lock, and called the ceiling near 0.46 an own-frame effect. Neither holds: a vertex reads same-row partners, for which the drift is capped by the row (Prop L9), and the two frames read the same ceiling. [§9](sea_phase_reference.md#9-proposition-l9-the-reader-in-the-particle-model). |
+| Step 23 | step 22 L-SP8 and Prop L2(a) | The drift of Σ E to 1.0010 was a demo defect, a species mask read at the destination row; with it repaired Σ E = 1.0000 and L2(a)'s other figures are unchanged. [§7](force_blind_sea.md#7-two-demo-defects). |
+| Step 23 | step 20 Thm Y6 | Part E did not conserve tags (total grew to 2.25 times); repaired, Y6's transmissions under (S) move by about 0.01 but its kink counts were inflated about twofold. Under (S′) its mechanism, never through the summit, fails. [§6](force_blind_sea.md#6-proposition-q4-identity-crosses-in-the-dark). |
+| Step 23 | step 16 Thm S5 table | The published throttling errors (0.402, 0.414) predate the transport repair of step 16's erratum; the current code gives 0.251 and 0.244. [§5](force_blind_sea.md#5-proposition-q3-what-s-does-to-the-sea). |
 
 ## 7. Open items
 
@@ -723,9 +742,18 @@ Labelled items link to their line; the unlabelled items of the older notes are g
 | [L-SP5](sea_phase_reference.md#10-open-items) | Is a locked sea an admissible initial state, a boundary condition? | open | Def L0 |
 | [L-SP6](sea_phase_reference.md#10-open-items) | The sea at the vertex as unsigned clocks while dark as amplitude: postulate or reading of P2? | answered: a reading of P2 — the lever is P2 applied to the reader, compared at meetings (§8) | Thm L4, Thm L8 |
 | [L-SP7](sea_phase_reference.md#10-open-items) | Is any locked reference maintainable inside a potential under (S)? | answered for this model: not under (S) at the kernel's rate; a sea that keeps its rows nearly does (Prop L9) | Prop L6, Thm L7, Prop L9 |
-| [L-SP8](sea_phase_reference.md#10-open-items) | Σ E drifts to 1.0010 in the sea-weighted kernel run although every event deposits ±1. | open | Prop L2 |
+| [L-SP8](sea_phase_reference.md#10-open-items) | Σ E drifts to 1.0010 in the sea-weighted kernel run although every event deposits ±1. | answered: a demo defect, the species mask read at the destination row (step 23 §7) | Prop L2 |
 | [L-SP9](sea_phase_reference.md#10-open-items) | Re-locking against the parent-frame drift, relative size −3V″t²/m: does dark catalysis renew the lock often enough, or is the exact reading (A′) needed? | answered: neither — the drift is capped by the row for the partners a vertex reads, and the limit is the lock (Prop L9) | Thm L8, Thm L5, Prop L9 |
-| [L-SP10](sea_phase_reference.md#10-open-items) | May the sea keep its rows, its momenta blind to the force, against postulate (S)? | open | Prop L9, Thm L4, Thm L8 |
+| [L-SP10](sea_phase_reference.md#10-open-items) | May the sea keep its rows, its momenta blind to the force, against postulate (S)? | answered provisionally: step 23 adopts (S′) | Prop L9, Thm L4, Thm L8 |
+
+### Step 23 — [The force-blind sea](force_blind_sea.md#9-open-items)
+
+| ID | Question | Status | Related |
+|---|---|---|---|
+| [Q-SP1](force_blind_sea.md#9-open-items) | Replace the spectral transport of tags by a positivity-preserving one and confirm Prop Q4 without the ripple correction. | open | Prop Q4 |
+| [Q-SP2](force_blind_sea.md#9-open-items) | Under (S′) the sea's worst cell hovers near zero: does supply for emission become limiting in longer or deeper runs? | open | Prop Q3 |
+| [Q-SP3](force_blind_sea.md#9-open-items) | An aligned pair's energy is not conserved under (S′): does that break any quantity the project has treated as conserved? | open | Post (S′) |
+| [Q-SP4](force_blind_sea.md#9-open-items) | Carry out the corrections to steps 15, 16, 17, 20 and 22 once (S′) is confirmed. | open | Prop Q1 |
 
 ## 8. Defects found in demos
 
@@ -737,6 +765,8 @@ Defects in code or specifications, found in the course of the analysis, whose ef
 | demo_emission_and_absorption.py (Ledger.channels) | The population clamp breaks E: Σ E falls from 1 to 0.8402 in 250 steps (22.0 per cent field error against 3.5 per cent without) and biases f from about 0.64 to 0.52. | open item Y-SP6; proposal J-SP2 (clip caps, repair ringing at transport) | step 20 §8 |
 | Algorithm spec §2.2 (indexed partners) | Under permanent partnership the sea is a consumable with no source, short by about 770 times for the cosine-well parameters. | arithmetic confirmed in step 7; the inference retracted | step 6 §8 |
 | demo_sea_lock.py (Part B) | The dephasing pair sum was correlated with K_res without the −B dp/ℏ of Theorem L1, so the printed correlation had the wrong sign. | repaired; Part B prints the signed value | step 22 §7 |
+| demo_contact_kernel.py (channels_k) | The species of each deposit was chosen by a mask read at the destination row p ± q rather than the parent's row; harmless for kernels whose sign depends on x only, wrong for the sea-weighted kernel of L2(a), and the cause of L-SP8. | repaired | step 23 §7 |
+| demo_dark_sea_and_identity.py (Part E) | Tags were not conserved: an ionisation beyond the local sea released more tag than the pairs held and end-of-step clipping created tag (total up to 2.25 times); spectral transport's negative ripple, once exposed, was pumped into the free tags. | repaired: tags moved only, ripple removed conservatively and reported | step 23 §6 |
 | Splitting note §4 (TV table) | Total-variation figures are functions of the rung grid, not absolute: under a hard horizon the event rate diverges logarithmically and the momentum churn linearly. | erratum in the note; see algorithm spec §4.4 | step 14 §4 |
 
 ## 9. Cited from outside this folder

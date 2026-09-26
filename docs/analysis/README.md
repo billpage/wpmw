@@ -598,6 +598,36 @@ retracts.
     control of 0.89 — but keeping its rows means its momenta ignore the force,
     which (S) does not allow. Sections 5, 8 and 9 carry the figures, and §5 an
     interactive page of the phase field.
+23. **[`force_blind_sea.md`](force_blind_sea.md)** — Postulate (S) gives every
+    world-particle the full classical force, the members of an aligned sea
+    pair included, and nothing in the QLE asks for that: a pair is `W`-null,
+    and the Moyal equation fixes `u+ - u-` and says nothing about `u+ + u-`.
+    This note provisionally adopts **(S′)**: free bodies obey the full force,
+    aligned pairs move inertially — advecting at `p/m` with no drift in `p` —
+    while their clocks still wind with `V`, so the sea is force-blind but
+    potential-sensitive; a motionless pair would need a Hamiltonian clock, and
+    a potential-blind one would leave the kernel nothing to be read from.
+    **Proposition Q1** organises everything: in every ledger of the chain the
+    sea enters an event only as its source or its sink and is never read, so
+    the body fields — and with them `E`, `N` and `f` — are independent of how
+    it moves, verified bitwise; the exceptions are exactly where the sea is
+    read, a throttled rate, a sea-weighted kernel, its phases and identity.
+    **Proposition Q2** gives the kinematics: under (S′) a sea clock stays on
+    its row's plane wave up to the eikonal phase and a same-row pair winds at
+    exactly `U`, so Theorem L8's drift term vanishes; under (S) `d(hbar theta
+    - p x) = -H dt - x dp`, a uniform force keeps the row lock, and the
+    mismatch begins at `V''`, which is the row mixing step 22 measured.
+    **Proposition Q3**: what changes is the sea itself — deficits stay in
+    their rows, Theorem S8's early dip goes but the worst cell hovers near
+    zero, and fast recombination repairs it where slow does not. **Proposition
+    Q4**: with step 20's tags now conserved, tagged bodies cross the Eckart
+    barrier inside dark pairs, through the summit — `T_tag` 0.89 against 0.34
+    at `E0 = V0/2`, with only 9 per cent of the tag above the barrier energy —
+    while `T_E` is unchanged, so individual crossing is still not tunnelling.
+    Two demo defects are repaired: a species mask read at the destination row,
+    the whole of step 22's drift of `Sum E` (L-SP8), and the tag bookkeeping
+    of step 20's Part E. Section 8 lists the corrections to steps 15, 16, 17,
+    20 and 22 that (S′) would require.
 
 ## Index
 
