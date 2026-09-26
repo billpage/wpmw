@@ -143,11 +143,11 @@ retracts.
     coherence horizon of `open_position_space.md` §3 is necessary at all.
     Settles open items 1 and 4 of that note and corrects three of its
     statements. Theorem E1: the reach is a *period*, not an aperture — a
-    momentum lattice exists iff the difference field `D_x(y) = V(x+y) −
-    V(x−y)` is periodic in the half separation `y`, with `Δp = πℏ/period`,
-    and the ring, the periodicity of `V` and the postulated horizon are one
-    mechanism with three sources for that period; a window of finite support
-    does not by itself deliver a lattice. Proposition E1.1: a sharp window
+    momentum lattice exists iff the difference field `D_x(y) = V(x+y) − V(x−y)`
+    is periodic in the half separation `y`, with `Δp = πℏ/period`, and the ring,
+    the periodicity of `V` and the postulated horizon are one mechanism with
+    three sources for that period; a window of finite support does not by itself
+    deliver a lattice. Proposition E1.1: a sharp window
     is exact on the lattice when `2y_max` is a whole number of periods of
     the potential and fails otherwise, so commensuration, not sharpness, is
     what matters, and Theorem E2 makes the fold of a decaying potential's
