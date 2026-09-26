@@ -31,25 +31,29 @@ retracts.
   lemma: pairwise mass action among tracked particles is quadratic in
   occupancy while the QLE generator is linear, so a fully collision-based
   microdynamics needs a species whose density is *pinned*.
-- **3.** **[`sea_dressed_microdynamics.md`](sea_dressed_microdynamics.md)** — Takes the step that lemma leaves open.
+- **3.** **[`sea_dressed_microdynamics.md`](sea_dressed_microdynamics.md)** \
+  Takes the step that lemma leaves open.
   Realises the collision term as sixteen local, two-body,
   momentum-conserving channels against a pinned Dirac sea of positon–negaton
   pairs, exact at pinned sea. Postulates the sea's polarisation: the rate
   field `Γ_q(x)`, its sign structure, and the half-quantum stencil offsets
   all enter as assumptions.
-- **4.** **[`phase_resonance_microdynamics.md`](phase_resonance_microdynamics.md)** — Derives that polarisation rather
+- **4.** **[`phase_resonance_microdynamics.md`](phase_resonance_microdynamics.md)** \
+  Derives that polarisation rather
   than postulating it, by making phase a particle-level property (P0–P5,
   Theorems 1–3). Contains the parity result (fundamental particles occupy
   even momentum sites), the rate-table no-go (Theorem 2: phase-blind
   transition rules cannot reproduce linear rates), and the dark-sea lemma.
-- **5.** **[`phase_alignment_microdynamics.md`](phase_alignment_microdynamics.md)** — A change of variables on the
+- **5.** **[`phase_alignment_microdynamics.md`](phase_alignment_microdynamics.md)** \
+  A change of variables on the
   predecessor: the beat, the grating and the resonance condition are replaced
   by a single scalar, the misalignment `μ` of two transported clock phases.
   No new postulates and no different predictions, but Theorem 4 is stronger
   than what it replaces: requiring `μ` to hold still through a vertex forces
   the vertex to be a **momentum swap**, from which energy conservation and
   the selection rule follow rather than being imposed.
-- **6.** **[`relational_pairing_and_carrier_lock.md`](relational_pairing_and_carrier_lock.md)** — Removes stored partnership
+- **6.** **[`relational_pairing_and_carrier_lock.md`](relational_pairing_and_carrier_lock.md)** \
+  Removes stored partnership
   from the algorithm specification (§2.2), at the cost of one postulate (S),
   the sea carrier lock. Proposition R1 shows a partner index carries no
   relational state; Theorem R4 factorises the vertex weight through a
@@ -58,7 +62,8 @@ retracts.
   formulation concealed — under permanent partnership the sea is a
   consumable resource with no source, short by ≈770× for the cosine-well
   parameters.
-- **7.** **[`permanent_pairing_density_matrix.md`](permanent_pairing_density_matrix.md)** — Reinstates permanent pairing
+- **7.** **[`permanent_pairing_density_matrix.md`](permanent_pairing_density_matrix.md)** \
+  Reinstates permanent pairing
   under a density-matrix reading: a pair is a sampled element of ρ (positon =
   ket leg, negaton = bra leg, μ = arg ρ), an excess particle a diagonal
   sample. Retracts two *inferences* of its predecessor while keeping its
@@ -70,7 +75,8 @@ retracts.
   |W| ≤ 2/h (the same inequality as W' ≥ 0), makes postulate (S)
   unnecessary, and leaves one load-bearing theorem: split pairs mediate with
   the same vertex constant as pump-excited pairs.
-- **8.** **[`coherence_ladder.md`](coherence_ladder.md)** — Indexes ρ by splitting rung and derives the
+- **8.** **[`coherence_ladder.md`](coherence_ladder.md)** \
+  Indexes ρ by splitting rung and derives the
   complete first-order channel table of the pairing vertex from
   stationarity: exact (K3), leg-local ladder, and compound classes. Proves
   the ladder theorem — four leg-local channels (struck leg ket/bra ×
@@ -81,7 +87,8 @@ retracts.
   interior engine) and its erase amplitude (all transfers carry μ₁, by the
   licensing argument). Leaves open: striker back-reaction neutrality and
   compound-channel cancellation.
-- **9.** **[`position_pair_ladder.md`](position_pair_ladder.md)** — The same construction in the *position*
+- **9.** **[`position_pair_ladder.md`](position_pair_ladder.md)** \
+  The same construction in the *position*
   representation, ρ(X, X'), where each leg carries a place and a clock and
   nothing else. The potential and the kinetic operator swap jobs: the
   potential only winds μ, and all motion is four one-leg hops of amplitude
@@ -95,7 +102,8 @@ retracts.
   sweeps arg ρ around the whole circle, so no positon-only sea exists here.
   The observable sector survives as a genuine positive-rate particle process
   guided by sin μ; the coherence sector does not.
-- **10.** **[`fourd_microdynamics.md`](fourd_microdynamics.md)** — The ladder pushed into four-dimensional
+- **10.** **[`fourd_microdynamics.md`](fourd_microdynamics.md)** \
+  The ladder pushed into four-dimensional
   phase space: two particles on a line, and one particle in the plane.
   Everything above generalises under one substitution — the shift operator
   becomes shift-by-`q` for a *vector* wavevector — so the exactness family,
@@ -118,7 +126,8 @@ retracts.
   microdynamics' worst case, since the per-mode injected momentum variance
   is 2mω²ℏ independent of q and the total therefore grows linearly in the
   mode cutoff.
-- **11.** **[`open_position_space.md`](open_position_space.md)** — What happens when position space is not
+- **11.** **[`open_position_space.md`](open_position_space.md)** \
+  What happens when position space is not
   closed. Separates the two jobs the periodic box has been doing: fixing
   the momentum quantum, and keeping worlds in view. Only the first is real,
   and it has three independent sources — ring circumference, coherence
@@ -140,7 +149,8 @@ retracts.
   naively, its constant background having infinite total on non-compact
   phase space.
 
-- **11b.** **[`reach_energy_coupling.md`](reach_energy_coupling.md)** — What the
+- **11b.** **[`reach_energy_coupling.md`](reach_energy_coupling.md)** \
+  What the
   reach actually controls, prompted by the question of whether the
   coherence horizon of `open_position_space.md` §3 is necessary at all.
   Settles open items 1 and 4 of that note and corrects three of its
@@ -171,7 +181,8 @@ retracts.
   with `V′(x) ≠ 0` — linearly for bounded `V`, cubically for the quartic
   double well.
 
-- **12.** **[`interworld_coupling.md`](interworld_coupling.md)** — Why four rules, and why not more. Reads
+- **12.** **[`interworld_coupling.md`](interworld_coupling.md)** \
+  Why four rules, and why not more. Reads
   the potential as a coupling between the two legs of a position pair,
   `U = V(x₁) − V(x₂)`, in midpoint and *full* separation coordinates
   `X = (x₁+x₂)/2`, `Y = x₁−x₂`. Proposition I1: the coupling vanishes at
@@ -233,7 +244,8 @@ retracts.
   *This note replaces an earlier step 13, `species_phase_duality.md`; its
   §0.3 records what changed.*
 
-- **14.** **[`compensated_liouville_splitting.md`](compensated_liouville_splitting.md)** — The classical force as
+- **14.** **[`compensated_liouville_splitting.md`](compensated_liouville_splitting.md)** \
+  The classical force as
   deterministic acceleration. In the variable `s` conjugate to momentum the
   whole potential term is multiplication by
   `M(x,s) = (i/ℏ)[V(x+y) − V(x−y)]` with `y = ℏs/2` the half ket–bra
@@ -284,7 +296,8 @@ retracts.
   and the momentum churn linearly. Read that specification's §4.4 before
   quoting any event budget from §4 below.
 
-- **15.** **[`eckart_barrier_compensated.md`](eckart_barrier_compensated.md)** — The
+- **15.** **[`eckart_barrier_compensated.md`](eckart_barrier_compensated.md)** \
+  The
   first open-line test problem that actually exercises the hop channel
   against a closed form. Theorem E7 rules out polynomials (no jump measure
   without a reach) and Theorem I4 rules out the harmonic and inverted
@@ -326,7 +339,8 @@ retracts.
   is three to ten unpaired bodies against a sea of exactly two pairs per
   Planck cell.
 
-- **16.** **[`sea_population_equilibrium.md`](sea_population_equilibrium.md)** — What
+- **16.** **[`sea_population_equilibrium.md`](sea_population_equilibrium.md)** \
+  What
   the signed residual channel costs the *ledger*, as opposed to the
   observable. Prices open item CLA3 of the compensated specification. The
   Moyal equation fixes `u+ - u-` and says nothing about `u+ + u-`, so the
@@ -354,7 +368,8 @@ retracts.
   therefore needs no tuning — and, for the same reason, says nothing about
   the one dimensionless constant the recombination rate still carries.
 
-- **17.** **[`compensated_ontology.md`](compensated_ontology.md)** — The ladder's
+- **17.** **[`compensated_ontology.md`](compensated_ontology.md)** \
+  The ladder's
   picture stated as a proposed ontology, and bounded. Four postulates: (E)
   the world is a signed counting measure on phase space; (A) only ensembles
   whose expectation is a Wigner function of some `rho >= 0` occur; (S) every
@@ -382,14 +397,16 @@ retracts.
   the coherence reach while the generator converges to 1e-14, so how many
   worlds exist is a property of the regulator. Corrects the framing that
   prompted it — the compensated split eliminates quantum *force*, not
-  quantum *kinematics* — and leaves the split gauge-invariance theorem
+  quantum *kinematics* \
+  and leaves the split gauge-invariance theorem
   (G-SP1) as the load-bearing open item. §8 delimits the scope: `N` bodies
   verbatim, spin not at all, measurement untouched, and states narrowly what
   survives a survey of the signed-particle, Bell-type-QFT, Dirac-sea and
   negative-probability literatures now recorded in
   [`../../references/bibliography.md`](../../references/bibliography.md).
 
-- **18.** **[`stochastic_ledger.md`](stochastic_ledger.md)** — The ledger run as an
+- **18.** **[`stochastic_ledger.md`](stochastic_ledger.md)** \
+  The ledger run as an
   exact Markov jump process on integer counts, rather than as a mean field on a
   mesh. Answers the standing request for a formal stochastic treatment of the
   free-body and sea-pair populations, and corrects the law it was meant to
@@ -428,7 +445,8 @@ retracts.
   is the local regulator — and by N3 no sink could have been, since every sink
   moves `f` off one half.
 
-- **19.** **[`soft_core_coulomb.md`](soft_core_coulomb.md)** — The potential open
+- **19.** **[`soft_core_coulomb.md`](soft_core_coulomb.md)** \
+  The potential open
   item K-LS5 nominated, put through the geometry the Eckart note put
   `V0 sech^2(r/a)` through. Theorem Z1: for `-Z/sqrt(r^2 + eps^2)` the third
   derivative is `(Z/eps^4) u (6u^2 - 9) (1+u^2)^(-7/2)` with `u = r/eps`, so it
@@ -510,7 +528,8 @@ retracts.
   `demo_emission_and_absorption.py` costs 16 per cent of `E` in 250 steps and
   biases `f`.
 
-- **21.** **[`fourd_compensated_ledger.md`](fourd_compensated_ledger.md)** — The
+- **21.** **[`fourd_compensated_ledger.md`](fourd_compensated_ledger.md)** \
+  The
   compensated world form taken out of 1+1 dimensions for the first time: two
   particles on a line, the ledger run on exact integer counts with bodies
   carrying their own sub-cell positions, and the one cell size nothing fixes
@@ -541,7 +560,8 @@ retracts.
   the mesh ledger cannot show. Corollary M10: the cost is a product over
   degrees of freedom — the exponential of step 10's Propositions B2 and B3,
   returned as body inflation now that the sea is no longer a partner.
-- **22.** **[`sea_phase_reference.md`](sea_phase_reference.md)** — Whether the
+- **22.** **[`sea_phase_reference.md`](sea_phase_reference.md)** \
+  Whether the
   residual-kernel weights, which the compensated algorithm reads from the
   potential as a precomputed field, could instead emerge from the
   world-particles themselves, and what the sea would have to be for that to
@@ -590,7 +610,8 @@ retracts.
   0.82 against a control of 0.89 — but keeping its rows means its momenta ignore
   the force, which (S) does not allow. Sections 5, 8 and 9 carry the figures,
   and §5 an interactive page of the phase field.
-- **23.** **[`force_blind_sea.md`](force_blind_sea.md)** — Postulate (S) gives
+- **23.** **[`force_blind_sea.md`](force_blind_sea.md)** \
+  Postulate (S) gives
   every world-particle the full classical force, the members of an aligned sea
   pair included, and nothing in the QLE asks for that: a pair is `W`-null, and
   the Moyal equation fixes `u+ - u-` and says nothing about `u+ + u-`. This note
@@ -624,7 +645,8 @@ retracts.
 
 [`INDEX.md`](INDEX.md) lists every labelled theorem, proposition, lemma,
 corollary, definition, postulate and open item in these notes, each with a
-section reference, a one-line statement and a *standing* — whether a later
+section reference, a one-line statement and a *standing* \
+  whether a later
 note corrected, restricted, superseded or retracted it, or which open item it
 feeds. It also carries the prefix registry (which theorem letters are
 reused), a ledger of what each note corrected, and the open items with their
