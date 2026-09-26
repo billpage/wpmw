@@ -39,14 +39,22 @@ from dataclasses import dataclass
 from pathlib import Path
 
 # Start of a numbered ladder entry, e.g.:
-#   14. **[`compensated_liouville_splitting.md`](compensated_liouville_splitting.md)** -- The classical force ...
+#   14\. **[`compensated_liouville_splitting.md`](compensated_liouville_splitting.md)** -- The classical force ...
 # The step label is digits with an optional letter (``11b``): a note that
 # refines an existing step is filed as its "b" rather than renumbering the
 # ladder, which other notes cite by number.
+# The period after the number is backslash-escaped in the source (``14\.``,
+# not ``14.``) so Markdown never parses the entry as a native ordered-list
+# item -- an ordered-list marker must be pure digits, so a lettered step
+# like ``11b.`` can never be one anyway, and would silently drop out of the
+# list and split it in two. Escaping keeps every entry, lettered or not, a
+# plain paragraph with identical formatting; the backslash is invisible in
+# the rendered page. The escape is optional here so this also parses a
+# not-yet-escaped file without erroring.
 # The filename and link target are usually identical (same-directory
 # link); only the filename is used to locate the target file.
 _ITEM_START = re.compile(
-    r"^(?P<num>\d+[a-z]?)\.\s+\*\*\[`(?P<file>[^`]+)`\]\((?P<link>[^)]+)\)\*\*\s*(?P<rest>.*)$"
+    r"^(?P<num>\d+[a-z]?)\\?\.\s+\*\*\[`(?P<file>[^`]+)`\]\((?P<link>[^)]+)\)\*\*\s*(?P<rest>.*)$"
 )
 _HEADING = re.compile(r"^#{1,6}\s")
 _EM_DASH_PREFIX = re.compile(r"^\u2014\s*")
