@@ -1356,7 +1356,12 @@ see that directory's README for the ladder itself.
   `--lever own|reader`, `--dark-rate`, and two diagnostic sea variants:
   `--sea-p rows` (initial sea momenta at row centres) and
   `--sea-force blind` (aligned pairs keep their rows; breaks (S) for the
-  sea).
+  sea).  Step 23 adds `--wrap-phase` (keep `theta - p x/hbar` continuous
+  across the periodic boundary, so the box is a window on an open line;
+  default off), `--dark reset` (absolute resets to the free plane wave, a
+  diagnostic) and, with `--readers`, `--filter` (the sea-only reading, the
+  regression of the misalignment on `U/hbar`, the quadrature leakage, and
+  the check against the closed-form eikonal).
 - `scan_sea_lock_readers.py` — step 22 section 9, open items L-SP7 and
   L-SP9: runs the particle demo with `--readers` over the maintenance
   regimes of section 6 and faster dark catalysis, and over three sea
@@ -1367,8 +1372,18 @@ see that directory's README for the ladder itself.
   bitwise (the body fields, so E, N and f, are independent of how the sea
   moves), Part B checks Proposition Q2 with SymPy, Part C measures what
   (S′) does to the step 16 sea (Proposition Q3), and `--heavy` adds Part D,
-  Theorem S9's traces under both motions.  About four minutes, fourteen
-  with `--heavy`.  The ledgers of `demo_emission_and_absorption.py` and
+  Theorem S9's traces under both motions.  Part E checks Proposition Q5
+  (what the sea computes): the daughter-row lever identity and the
+  orthogonality of the channels on the reach with SymPy, and
+  `K_q = d(Re z_q)/dt / (B dp dx)` against the code's kernel.  `--parts`
+  selects parts.  About four minutes, fourteen with `--heavy`.
+- `scan_dark_reset.py` — step 23 section 8 (Proposition Q6, dark
+  catalysis as a reset clock): runs the particle demo with `--readers
+  --filter` on the force-blind, row-centred sea, three seeds each, for the
+  box with and without `--wrap-phase`, relative (reach dark catalysis) and
+  absolute resets at 1, 3, 10 and 30 times the kernel's rate, with and
+  without events; prints late means and writes `sea_reset_filter.png`.
+  About six minutes.  The ledgers of `demo_emission_and_absorption.py` and
   `demo_sea_population_equilibrium.py` carry a `sea_force` switch (True,
   the default, is (S) as published); `demo_dark_sea_and_identity.py` and
   `demo_contact_kernel.py` expose it as `--sea S|blind`.

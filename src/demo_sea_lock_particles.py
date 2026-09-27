@@ -47,6 +47,22 @@ indices, free bodies have mate = -1.
               advect and clocks wind at L = p^2/2m - V(x) as before; a body
               feels the force again once ionised.  A diagnostic for step 22
               open item L-SP7, not a proposal: it breaks (S) for the sea.
+  --wrap-phase keep theta - p x / hbar continuous when a body crosses the
+              periodic boundary.  The plane wave exp(ipx/hbar) is not periodic
+              on the box unless p L / hbar is a multiple of 2 pi, which it is
+              not here (dp L / hbar = 12), so without this every wrap leaves a
+              lock defect of p L / hbar.  With it the box is a window on an
+              open line (step 23, force_blind_sea.md section 6).
+  --dark reset  (step 23 diagnostic) each aligned pair fires at the kernel's
+              rate and its clock is set to its row's free plane wave
+              (p x - p^2 t / 2m) / hbar: a reset to an external clock, not a
+              relative one, and so not invariant under V -> V + const.  Use
+              with --wrap-phase.
+  --filter    (with --readers; step 23 section 8) the sea-only reading and
+              its decomposition: the regression slope of the misalignment on
+              U / hbar (the effective reset time), the rms residual, the
+              quadrature leakage, and with no events or dark catalysis the
+              agreement with the eikonal prediction.
   --sea-p     continuous (default): initial sea momenta uniform within each
               row.  rows: initial sea momenta at the row centres, so the
               locked phases p x / hbar agree with every reader in the row at
@@ -68,7 +84,8 @@ ap.add_argument("--mode", choices=("gas", "locked"), default="gas")
 ap.add_argument("--dx-bin", type=float, default=2.0, help="co-location bin in x")
 ap.add_argument("--relock-w", type=float, default=0.0,
                 help="event re-locking window; 0 keeps phase continuity")
-ap.add_argument("--dark", choices=("off", "imprint", "mean", "reach"), default="off")
+ap.add_argument("--dark", choices=("off", "imprint", "mean", "reach", "reset"),
+                default="off")
 ap.add_argument("--no-events", action="store_true", help="streaming (+ dark) only")
 ap.add_argument("--t-end", type=float, default=0.0, help="0: one packet crossing")
 ap.add_argument("--seed", type=int, default=None)
@@ -82,6 +99,10 @@ ap.add_argument("--sea-force", choices=("S", "blind"), default="S",
                 help="whether aligned pairs feel the classical force")
 ap.add_argument("--sea-p", choices=("continuous", "rows"), default="continuous",
                 help="initial sea momenta: uniform, or at row centres")
+ap.add_argument("--wrap-phase", action="store_true",
+                help="keep theta - p x/hbar continuous across the boundary")
+ap.add_argument("--filter", action="store_true",
+                help="with --readers: the reset-filter diagnostics of step 23")
 ARGS = ap.parse_args()
 NU, MODE = ARGS.nu, ARGS.mode
 rng = np.random.default_rng(ARGS.seed if ARGS.seed is not None else 2026 + NU)
@@ -96,6 +117,7 @@ DX_BIN, RELOCK_W, DARK = ARGS.dx_bin, ARGS.relock_w, ARGS.dark
 NOEVENTS, T_END = ARGS.no_events, ARGS.t_end
 READERS, LEVER, DARK_RATE = ARGS.readers, ARGS.lever, ARGS.dark_rate
 SEA_BLIND = ARGS.sea_force == "blind"
+WRAP_PHASE, FILTER = ARGS.wrap_phase, ARGS.filter and ARGS.readers
 
 
 def V(x):
@@ -153,6 +175,8 @@ print(f"nu={NU} mode={MODE}: {n_pairs} aligned pairs, {n_pos} positons +"
 stats = dict(recomb=0, ion=0, fail=0, gray=[], relock=0, noref=0, dark=0, dark_empty=0)
 touched = np.zeros(N, bool)
 last_set = np.zeros(N)                         # time each clock was last set
+x_un0 = x.copy()                               # unwrapped path, for --filter
+x_un = x.copy()
 NOW = [0.0]
 
 
@@ -239,6 +263,13 @@ def dark_catalysis(dt):
         return
     A_all = np.flatnonzero((mate >= 0) & (eps > 0))
     fire = A_all[rng.poisson(DARK_RATE * run.gamma_tot[kidx(x[A_all])] * dt) > 0]
+    if DARK == "reset":                # an external clock: the free plane wave
+        th[fire] = th[mate[fire]] = (p[fire] * x[fire]
+                                     - p[fire] ** 2 * NOW[0] / (2 * MU)) / HBAR
+        touched[fire] = touched[mate[fire]] = True
+        last_set[fire] = last_set[mate[fire]] = NOW[0]
+        stats["dark"] += len(fire)
+        return
     for a in fire:
         if mate[a] < 0:
             continue
@@ -266,6 +297,63 @@ def dark_catalysis(dt):
 
 # ------------------------------------------------------------ measurement
 DBINS = np.linspace(0, 2 * YMAX, 9)
+
+
+def eikonal_integral(k):
+    """int_0^t V(x_k(t')) dt' for a body that has moved inertially since
+    t = 0, in closed form: (G(x(t)) - G(x(0)))/v with G the antiderivative
+    of sech^2 on the periodic line, or V t for v = 0."""
+    L_ = L
+    G = lambda z: np.tanh((z + L_ / 2) % L_ - L_ / 2) + 2.0 * np.floor(
+        (z + L_ / 2) / L_)
+    v = p[k] / MU
+    moving = np.abs(v) > 1e-12
+    out = V(x[k]) * NOW[0]
+    out[moving] = (G(x_un[k][moving]) - G(x_un0[k][moving])) / v[moving]
+    return out
+
+
+def filter_diagnostics(ii, jj, dd, w, c, mu_ref, rate_a, kt, sp_pairs):
+    """Step 23 section 8: the sea-only reading and its reset filter.
+
+    One member per aligned pair (eps > 0).  mu_ref is read with the
+    row-centre lever, so between resets it winds at U/hbar (Theorem L8,
+    inertial reader).  Returns the regression slope tau of mu on U/hbar,
+    the rms residual, the sea-only reading and its mu = 0 control, the
+    fitted quadrature coefficient and, where no clock has been set since
+    t = 0, the agreement with the closed-form eikonal phase."""
+    sel = sp_pairs & (eps[ii] > 0) & (eps[jj] > 0)
+    if sel.sum() < 50:
+        return None
+    i_, j_, d_, w_, c_ = ii[sel], jj[sel], dd[sel], w[sel], c[sel]
+    mu_ = np.angle(np.exp(1j * mu_ref[sel]))
+    r_ = rate_a[sel]
+    u_ = (V(x[j_]) - V(x[i_])) / HBAR
+    tau = float((mu_ * u_).sum() / (u_ * u_).sum())
+    resid = float(np.sqrt(((mu_ - tau * u_) ** 2).mean()))
+    R = np.zeros((12, len(Q)))
+    C0 = np.zeros((12, len(Q)))
+    Kc = np.zeros((12, len(Q)))
+    for q, xq in enumerate(XI):
+        a_ = xq * d_ / HBAR
+        R[:, q] = np.bincount(c_, -r_ * w_ * np.sin(a_ + mu_), minlength=12)[:12]
+        C0[:, q] = np.bincount(c_, -r_ * w_ * np.sin(a_), minlength=12)[:12]
+        Kc[:, q] = np.bincount(c_, -r_ * w_ * np.cos(a_) * u_, minlength=12)[:12]
+    corr = lambda a, b: float(np.corrcoef(a.ravel(), b.ravel())[0, 1])
+    dR = R - C0
+    b = float((dR * Kc).sum() / (Kc * Kc).sum())
+    out = dict(n=int(sel.sum()), tau=tau, resid=resid, read=corr(R, kt),
+               ctrl=corr(C0, kt), leak_b=b, leak_corr=corr(dR, Kc),
+               leak_share=float(np.sqrt(((b * Kc) ** 2).sum() / (dR ** 2).sum())),
+               eik=float("nan"), eik_slope=float("nan"))
+    fresh = (last_set[i_] == 0) & (last_set[j_] == 0) & (~touched[i_]) & (~touched[j_])
+    if fresh.sum() > 50 and WRAP_PHASE:
+        mu_e = -(eikonal_integral(i_) - eikonal_integral(j_)) / HBAR
+        m = fresh
+        mu_ew = np.angle(np.exp(1j * mu_e[m]))
+        out["eik"] = corr(mu_[m], mu_ew)
+        out["eik_slope"] = float((mu_[m] * mu_ew).sum() / (mu_ew ** 2).sum())
+    return out
 
 
 def measure():
@@ -345,6 +433,8 @@ def measure():
             kro[:, q] = np.bincount(c, -u_trap * so_, minlength=12)[:12]
         sea_near = (mate >= 0) & (np.abs(x) < 3.0)
         sp_pairs = (mate[ii] >= 0) & (mate[jj] >= 0) & nm
+        flt = filter_diagnostics(ii, jj, dd, w, c, mu_ref, rate_a, kt,
+                                 sp_pairs) if FILTER else None
         rd = dict(static_parent=corr(kpp, kt), rate_a=corr(kra, kt),
                   rate_own=corr(kro, kt),
                   kin_rel=float(np.sqrt((kin[nm] ** 2).mean()
@@ -353,7 +443,7 @@ def measure():
                   coh_own=float(np.abs(np.exp(1j * mu[near][sp_pairs]).mean())),
                   age=float(np.median(NOW[0] - last_set[sea_near]))
                   if sea_near.any() else float("nan"),
-                  u_rms=float(np.sqrt((ures_raw[nm] ** 2).mean())))
+                  u_rms=float(np.sqrt((ures_raw[nm] ** 2).mean())), flt=flt)
     return out, corr(kp, kt), corr(kpe, kt), corr(kp0, kt), len(i), rd
 
 
@@ -378,6 +468,14 @@ for step in range(nstep + 1):
                   f"{rd['kin_rel']:.4f}  sea coherence parent {rd['coh_ref']:.3f}"
                   f" own {rd['coh_own']:.3f}  median clock age {rd['age']:.2f}"
                   f"  rms U_res {rd['u_rms']:.3f}", flush=True)
+            f_ = rd["flt"]
+            if f_ is not None:
+                print(f"         filter: n {f_['n']}  sea-only reading {f_['read']:6.3f}"
+                      f"  control {f_['ctrl']:6.3f}  tau {f_['tau']:+.4f}"
+                      f"  resid {f_['resid']:.3f}  leak b {f_['leak_b']:+.4f}"
+                      f"  leak corr {f_['leak_corr']:+.3f}  leak share"
+                      f" {f_['leak_share']:.3f}  eikonal corr {f_['eik']:.4f}"
+                      f" slope {f_['eik_slope']:.4f}", flush=True)
         for name, (cc, fl, n) in out.items():
             ratio = " ".join(f"{a/b:5.1f}" for a, b in zip(cc, fl))
             print(f"         {name:9s} C/floor: {ratio}   (C in bin 1:"
@@ -388,8 +486,12 @@ for step in range(nstep + 1):
     kick = np.where(mate >= 0, 0.0, 1.0) if SEA_BLIND else 1.0
     p += 0.5 * dt * F(x) * kick
     x += p / MU * dt
+    x_un += p / MU * dt
     p += 0.5 * dt * F(x) * kick
-    x[:] = (x + L / 2) % L - L / 2
+    xw = (x + L / 2) % L - L / 2
+    if WRAP_PHASE:                     # keep theta - p x / hbar continuous
+        th += p * (xw - x) / HBAR
+    x[:] = xw
     th += (p ** 2 / (2 * MU) - V(x)) * dt / HBAR
     if not NOEVENTS:
         events(dt)

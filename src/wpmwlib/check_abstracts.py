@@ -56,7 +56,10 @@ _ITEM_START = re.compile(
     r"^-\s+\*\*(?P<num>\d+[a-z]?)\.\*\*\s+\*\*\[`(?P<file>[^`]+)`\]\((?P<link>[^)]+)\)\*\*\s*(?P<rest>.*)$"
 )
 _HEADING = re.compile(r"^#{1,6}\s")
-_EM_DASH_PREFIX = re.compile(r"^\u2014\s*")
+# An entry's abstract starts after the linked file name, introduced either
+# by an em dash or by a trailing backslash (a CommonMark hard line break,
+# which gives the bullet list a hanging indent).
+_EM_DASH_PREFIX = re.compile(r"^(?:\u2014|\\)\s*")
 
 
 @dataclass

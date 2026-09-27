@@ -397,8 +397,7 @@ retracts.
   the coherence reach while the generator converges to 1e-14, so how many
   worlds exist is a property of the regulator. Corrects the framing that
   prompted it — the compensated split eliminates quantum *force*, not
-  quantum *kinematics* \
-  and leaves the split gauge-invariance theorem
+  quantum *kinematics* — and leaves the split gauge-invariance theorem
   (G-SP1) as the load-bearing open item. §8 delimits the scope: `N` bodies
   verbatim, spin not at all, measurement untouched, and states narrowly what
   survives a survey of the signed-particle, Bell-type-QFT, Dirac-sea and
@@ -611,42 +610,56 @@ retracts.
   the force, which (S) does not allow. Sections 5, 8 and 9 carry the figures,
   and §5 an interactive page of the phase field.
 - **23.** **[`force_blind_sea.md`](force_blind_sea.md)** \
-  Postulate (S) gives
-  every world-particle the full classical force, the members of an aligned sea
-  pair included, and nothing in the QLE asks for that: a pair is `W`-null, and
-  the Moyal equation fixes `u+ - u-` and says nothing about `u+ + u-`. This note
-  provisionally adopts **(S′)**: free bodies obey the full force, aligned pairs
-  move inertially — advecting at `p/m` with no drift in `p` — while their clocks
-  still wind with `V`, so the sea is force-blind but potential-sensitive; a
-  motionless pair would need a Hamiltonian clock, and a potential-blind one
-  would leave the kernel nothing to be read from. **Proposition Q1** organises
-  everything: in every ledger of the chain the sea enters an event only as its
-  source or its sink and is never read, so the body fields — and with them `E`,
-  `N` and `f` — are independent of how it moves, verified bitwise; the
-  exceptions are exactly where the sea is read, a throttled rate, a sea-weighted
-  kernel, its phases and identity. **Proposition Q2** gives the kinematics:
-  under (S′) a sea clock stays on its row's plane wave up to the eikonal phase
-  and a same-row pair winds at exactly `U`, so Theorem L8's drift term vanishes;
-  under (S) `d(hbar theta - p x) = -H dt - x dp`, a uniform force keeps the row
-  lock, and the mismatch begins at `V''`, which is the row mixing step 22
-  measured. **Proposition Q3**: what changes is the sea itself — deficits stay
-  in their rows, Theorem S8's early dip goes but the worst cell hovers near
-  zero, and fast recombination repairs it where slow does not. **Proposition
-  Q4**: with step 20's tags now conserved, tagged bodies cross the Eckart
-  barrier inside dark pairs, through the summit — `T_tag` 0.89 against 0.34 at
-  `E0 = V0/2`, with only 9 per cent of the tag above the barrier energy — while
-  `T_E` is unchanged, so individual crossing is still not tunnelling. Two demo
-  defects are repaired: a species mask read at the destination row, the whole of
-  step 22's drift of `Sum E` (L-SP8), and the tag bookkeeping of step 20's Part
-  E. Section 8 lists the corrections to steps 15, 16, 17, 20 and 22 that (S′)
+  Postulate (S) gives every world-particle the full classical force, the
+  members of an aligned sea pair included, and nothing in the QLE asks for
+  that: a pair is `W`-null, and the Moyal equation fixes `u+ - u-` and says
+  nothing about `u+ + u-`. This note provisionally adopts **(S′)**: free
+  bodies obey the full force, aligned pairs move inertially — advecting at
+  `p/m` with no drift in `p` — while their clocks still wind with `V`, so the
+  sea is force-blind but potential-sensitive; a motionless pair would need a
+  Hamiltonian clock, and a potential-blind one would leave the kernel nothing
+  to be read from. **Proposition Q1** organises everything: in every ledger of
+  the chain the sea enters an event only as its source or its sink and is
+  never read, so the body fields — and with them `E`, `N` and `f` — are
+  independent of how it moves, verified bitwise; the exceptions are exactly
+  where the sea is read, a throttled rate, a sea-weighted kernel, its phases
+  and identity. **Proposition Q2** gives the kinematics: under (S′) a sea
+  clock stays on its row's plane wave up to the eikonal phase and a same-row
+  pair winds at exactly `U`, so Theorem L8's drift term vanishes; under (S)
+  `d(hbar theta - p x) = -H dt - x dp`, a uniform force keeps the row lock,
+  and the mismatch begins at `V''`, which is the row mixing step 22 measured.
+  **Proposition Q3**: what changes is the sea itself — deficits stay in their
+  rows, Theorem S8's early dip goes but the worst cell hovers near zero, and
+  fast recombination repairs it where slow does not. **Proposition Q4**: with
+  step 20's tags now conserved, tagged bodies cross the Eckart barrier inside
+  dark pairs, through the summit — `T_tag` 0.89 against 0.34 at `E0 = V0/2`,
+  with only 9 per cent of the tag above the barrier energy — while `T_E` is
+  unchanged, so individual crossing is still not tunnelling. **Proposition
+  Q5** says what the sea computes: the Fourier phase of channel `q` is the
+  daughter row's P2 lever, `mu^(p) + xi_q d/hbar = mu^(p + xi_q)`, the jump
+  rate is the rate of change of the row's interference sum read against the
+  daughter, `K_q = d(Re z_q)/dt / (B dp dx)` at re-lock, and the sea's density
+  is the one at which the channel basis is orthogonal on the reach — a
+  Fraunhofer transform formed by superposition, at critical sampling.
+  **Proposition Q6** says what dark catalysis is for: left alone, the
+  force-blind sea relaxes exactly to each row's eikonal wave, and the reading
+  needs the free one; dark catalysis is the reset clock that puts it back, the
+  misalignment it leaves enters the reading as a quadrature term linear in the
+  mean reset time, gauge invariance selects its relative resets over absolute
+  ones, and near the Eckart barrier the kernel's own rate falls a little short
+  (0.863 against a control of 0.880) while three times it nearly suffices;
+  step 22's plateau was the free bodies read as partners, not incomplete
+  resetting. Three demo defects are repaired: a species mask read at the
+  destination row, the whole of step 22's drift of `Sum E` (L-SP8); the tag
+  bookkeeping of step 20's Part E; and the plane-wave lock on a periodic box.
+  Section 10 lists the corrections to steps 15, 16, 17, 20 and 22 that (S′)
   would require.
 
 ## Index
 
 [`INDEX.md`](INDEX.md) lists every labelled theorem, proposition, lemma,
 corollary, definition, postulate and open item in these notes, each with a
-section reference, a one-line statement and a *standing* \
-  whether a later
+section reference, a one-line statement and a *standing* — whether a later
 note corrected, restricted, superseded or retracted it, or which open item it
 feeds. It also carries the prefix registry (which theorem letters are
 reused), a ledger of what each note corrected, and the open items with their

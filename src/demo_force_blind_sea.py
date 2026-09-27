@@ -25,6 +25,16 @@ C  Proposition Q3: what (S') does to the sea itself -- the step 16 ledger
    of Theorem S5.
 D  (--heavy) Theorem S9's attractor traces under both motions, compared
    element by element.
+E  Proposition Q5, what the sea computes: symbolically, the daughter-row
+   lever identity mu^(p) + xi d/hbar = mu^(p+xi) and the orthogonality of
+   the channels sin(2 xi_q y/hbar) on the reach exactly when dp y_max =
+   pi hbar/2, which is Theorem L1's strip identity B dp 2 y_max = 1;
+   numerically, K_q = (1/(B dp dx)) d(Re z_q)/dt at re-lock, with z_q the
+   interference sum of a row's pairs read against the daughter row.
+
+The reset filter of section 8 (Proposition Q6) is measured by
+``src/scan_dark_reset.py``, which runs ``demo_sea_lock_particles.py
+--readers --filter``.
 
 Theorem Y6's rerun uses the step 20 demo with conserved tags:
 
@@ -39,7 +49,8 @@ Usage::
 
     PYTHONPATH=src python3 -u src/demo_force_blind_sea.py [--heavy]
 
-About four minutes; --heavy adds about ten.
+About four minutes; --heavy adds about ten.  ``--parts`` selects parts,
+e.g. ``--parts E``.
 """
 import argparse
 import contextlib
@@ -216,6 +227,53 @@ def part_c():
 
 
 # ----------------------------------------------------------------------
+# E.  Proposition Q5: what the sea computes
+# ----------------------------------------------------------------------
+def part_e():
+    banner("E. Proposition Q5: the kernel as an interference")
+    hb, dp, Y = sp.symbols("hbar dp Y", positive=True)
+    th_i, th_j, p, xi, d = sp.symbols("theta_i theta_j p xi d", real=True)
+    mu = lambda lever: th_i - th_j + lever * d / hb
+    print(f"   lever identity mu^(p) + xi d/hbar - mu^(p+xi) = "
+          f"{sp.simplify(mu(p) + xi * d / hb - mu(p + xi))}")
+    y = sp.Symbol("y", real=True)
+    k = 2 * dp / hb
+    Bs = 1 / (sp.pi * hb)
+    print(f"   strip identity B dp 2 Y = 1  <=>  Y = "
+          f"{sp.solve(sp.Eq(Bs * dp * 2 * Y, 1), Y)[0]}")
+    for label, Yv in (("dp Y = pi hbar/2 (the strip)", sp.pi * hb / (2 * dp)),
+                      ("dp Y = 0.4 pi hbar (shorter)", sp.Rational(2, 5) * sp.pi * hb / dp)):
+        G = sp.Matrix(4, 4, lambda a, b: sp.simplify(sp.integrate(
+            sp.sin((a + 1) * k * y) * sp.sin((b + 1) * k * y), (y, -Yv, Yv))
+            / Yv))
+        off = max(abs(float(G[a, b])) for a in range(4) for b in range(4) if a != b)
+        diag = [float(G[a, a]) for a in range(4)]
+        print(f"   {label}: Gram/Y diagonal {diag}, largest off-diagonal {off:.3e}")
+    # the rate relation, against the code's kernel (the setup of Theorem L1)
+    run = dea.Ledger(v0=1.0, a=1.0, n_r=128, r_half=20.0, n_p=64, dp=0.25)
+    B_, dpn, ymax = dea.B, run.dp, run.y_max
+    i = int(np.argmin(np.abs(run.r - (-0.625))))
+    x0 = run.r[i]
+    yy = np.linspace(0.0, ymax, 200001)
+    w = np.cos(np.pi * yy / (2 * ymax)) ** 2
+    V = lambda z: 1.0 / np.cosh(z) ** 2
+    u_res = V(x0 + yy) - V(x0 - yy) - 2 * yy * run.dv_eff[i]
+    dens = 2 * (B_ * dpn) ** 2          # pairs per unit x per unit y, y > 0
+    eps = 1e-6
+
+    def re_z(q, t):
+        return dens * np.trapezoid(
+            w * np.cos(2 * q * dpn * yy / dea.HBAR + u_res * t / dea.HBAR), yy)
+    print(f"   x = {x0:+.4f}: K_q from d(Re z_q)/dt / (B dp dx) at re-lock,"
+          " against the code's K_q")
+    print(f"   {'q':>3} {'K_q (code)':>12} {'from z_q':>12} {'rel diff':>9}")
+    for q in (1, 2, 3, 4, 6, 8):
+        rate = (re_z(q, eps) - re_z(q, -eps)) / (2 * eps) / (B_ * dpn)
+        kc = run.k[i, q]
+        print(f"   {q:3d} {kc:+12.6f} {rate:+12.6f} {abs(rate - kc) / abs(kc):9.1e}")
+
+
+# ----------------------------------------------------------------------
 # D.  (heavy) Theorem S9's traces under both motions
 # ----------------------------------------------------------------------
 def part_d():
@@ -237,10 +295,13 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--heavy", action="store_true",
                     help="add part D (Theorem S9 traces, about ten minutes)")
+    ap.add_argument("--parts", default="ABCE",
+                    help="which parts to run (D also needs --heavy)")
     args = ap.parse_args()
-    part_a()
-    part_b()
-    part_c()
+    for name, fn in (("A", part_a), ("B", part_b), ("C", part_c),
+                     ("E", part_e)):
+        if name in args.parts:
+            fn()
     if args.heavy:
         part_d()
 

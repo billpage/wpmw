@@ -1,16 +1,27 @@
 # The force-blind sea: aligned pairs move inertially
 
-> Postulate (S) gives every world-particle the full classical force, the members of an aligned sea pair included, and nothing in the QLE asks for that: a pair is `W`-null, and the Moyal equation fixes `u+ - u-` and says nothing about `u+ + u-`. This note provisionally adopts **(S′)**: free bodies obey the full force, aligned pairs move inertially — advecting at `p/m` with no drift in `p` — while their clocks still wind with `V`, so the sea is force-blind but potential-sensitive; a motionless pair would need a Hamiltonian clock, and a potential-blind one would leave the kernel nothing to be read from. **Proposition Q1** organises everything: in every ledger of the chain the sea enters an event only as its source or its sink and is never read, so the body fields — and with them `E`, `N` and `f` — are independent of how it moves, verified bitwise; the exceptions are exactly where the sea is read, a throttled rate, a sea-weighted kernel, its phases and identity. **Proposition Q2** gives the kinematics: under (S′) a sea clock stays on its row's plane wave up to the eikonal phase and a same-row pair winds at exactly `U`, so Theorem L8's drift term vanishes; under (S) `d(hbar theta - p x) = -H dt - x dp`, a uniform force keeps the row lock, and the mismatch begins at `V''`, which is the row mixing step 22 measured. **Proposition Q3**: what changes is the sea itself — deficits stay in their rows, Theorem S8's early dip goes but the worst cell hovers near zero, and fast recombination repairs it where slow does not. **Proposition Q4**: with step 20's tags now conserved, tagged bodies cross the Eckart barrier inside dark pairs, through the summit — `T_tag` 0.89 against 0.34 at `E0 = V0/2`, with only 9 per cent of the tag above the barrier energy — while `T_E` is unchanged, so individual crossing is still not tunnelling. Two demo defects are repaired: a species mask read at the destination row, the whole of step 22's drift of `Sum E` (L-SP8), and the tag bookkeeping of step 20's Part E. Section 8 lists the corrections to steps 15, 16, 17, 20 and 22 that (S′) would require.
+> Postulate (S) gives every world-particle the full classical force, the members of an aligned sea pair included, and nothing in the QLE asks for that: a pair is `W`-null, and the Moyal equation fixes `u+ - u-` and says nothing about `u+ + u-`. This note provisionally adopts **(S′)**: free bodies obey the full force, aligned pairs move inertially — advecting at `p/m` with no drift in `p` — while their clocks still wind with `V`, so the sea is force-blind but potential-sensitive; a motionless pair would need a Hamiltonian clock, and a potential-blind one would leave the kernel nothing to be read from. **Proposition Q1** organises everything: in every ledger of the chain the sea enters an event only as its source or its sink and is never read, so the body fields — and with them `E`, `N` and `f` — are independent of how it moves, verified bitwise; the exceptions are exactly where the sea is read, a throttled rate, a sea-weighted kernel, its phases and identity. **Proposition Q2** gives the kinematics: under (S′) a sea clock stays on its row's plane wave up to the eikonal phase and a same-row pair winds at exactly `U`, so Theorem L8's drift term vanishes; under (S) `d(hbar theta - p x) = -H dt - x dp`, a uniform force keeps the row lock, and the mismatch begins at `V''`, which is the row mixing step 22 measured. **Proposition Q3**: what changes is the sea itself — deficits stay in their rows, Theorem S8's early dip goes but the worst cell hovers near zero, and fast recombination repairs it where slow does not. **Proposition Q4**: with step 20's tags now conserved, tagged bodies cross the Eckart barrier inside dark pairs, through the summit — `T_tag` 0.89 against 0.34 at `E0 = V0/2`, with only 9 per cent of the tag above the barrier energy — while `T_E` is unchanged, so individual crossing is still not tunnelling. **Proposition Q5** says what the sea computes: the Fourier phase of channel `q` is the daughter row's P2 lever, `mu^(p) + xi_q d/hbar = mu^(p + xi_q)`, the jump rate is the rate of change of the row's interference sum read against the daughter, `K_q = d(Re z_q)/dt / (B dp dx)` at re-lock, and the sea's density is the one at which the channel basis is orthogonal on the reach — a Fraunhofer transform formed by superposition, at critical sampling. **Proposition Q6** says what dark catalysis is for: left alone, the force-blind sea relaxes exactly to each row's eikonal wave, and the reading needs the free one; dark catalysis is the reset clock that puts it back, the misalignment it leaves enters the reading as a quadrature term linear in the mean reset time, gauge invariance selects its relative resets over absolute ones, and near the Eckart barrier the kernel's own rate falls a little short (0.863 against a control of 0.880) while three times it nearly suffices; step 22's plateau was the free bodies read as partners, not incomplete resetting. Three demo defects are repaired: a species mask read at the destination row, the whole of step 22's drift of `Sum E` (L-SP8); the tag bookkeeping of step 20's Part E; and the plane-wave lock on a periodic box. Section 10 lists the corrections to steps 15, 16, 17, 20 and 22 that (S′) would require.
 
 *Ladder abstract — see the [full list](README.md#the-ladder).*
 
 **Status.** Analysis note, step 23 of the ladder. **Provisional:** it adopts
 postulate (S′) for aligned pairs in place of (S), to test the consequences
 before the notes of steps 15 to 22 are revised. Companion demo:
-`src/demo_force_blind_sea.py` (§§3–5). Theorem Y6's rerun uses
-`src/demo_dark_sea_and_identity.py --parts E --full --sea S|blind` (§6), and
-Proposition L2(a)'s uses `src/demo_contact_kernel.py 30 --sea S|blind` (§7).
+`src/demo_force_blind_sea.py` (§§3–6). Theorem Y6's rerun uses
+`src/demo_dark_sea_and_identity.py --parts E --full --sea S|blind` (§7),
+Proposition L2(a)'s uses `src/demo_contact_kernel.py 30 --sea S|blind` (§9),
+and §8's scan is `src/scan_dark_reset.py`.
 Every demo keeps (S) as its default, so every published output is unchanged.
+
+**Addendum (September 2026).** §1 now fixes what a partner is and says the
+sea is a random configuration, not a lattice. Proposition Q2 names its
+eikonal (the straight-line, Glauber one, against the optical one that (S)
+clocks carry) and is checked against the particle model. §5, Proposition
+Q5 (what the sea computes: the kernel as an interference), and §8,
+Proposition Q6 (dark catalysis as a reset clock), are new; the sections
+after §4 are renumbered. §9 records a third demo defect, the plane-wave lock
+on a periodic box. Open items Q-SP5 to Q-SP9 are added. Part E of
+`src/demo_force_blind_sea.py` verifies §5, and `src/scan_dark_reset.py` §8.
 
 ---
 
@@ -39,21 +50,32 @@ the force.
   of how the sea moves. Verified bitwise. The exceptions are a rate throttled
   by the sea (Theorem S5) and a kernel weighted by it (Proposition L2(a)).
 - **Proposition Q2.** Under (S′) a sea clock stays on its row's plane wave up
-  to the eikonal phase $`-\int V\,dt/\hbar`$, a same-row pair winds at exactly
-  $`U`$, and Theorem L8's drift term vanishes at all times. Under (S) a body's
-  offset from its row's plane wave begins at $`V''`$, which is the row mixing
-  step 22 measured.
+  to the straight-line (Glauber) eikonal phase $`-\int V\,dt/\hbar`$
+  accumulated along its unbent path, two aligned pairs of one row wind at
+  exactly $`U`$, and Theorem L8's drift term vanishes at all times. Under (S)
+  a body's offset from its row's plane wave begins at $`V''`$, which is the
+  row mixing step 22 measured.
+- **Proposition Q5.** The sea computes the kernel's Fourier transform by
+  interference: the channel's Fourier phase is the daughter row's P2 lever,
+  the jump rate is the rate of change of the row's interference sum read
+  against the daughter, and the sea's density is the one at which the
+  channel basis is orthogonal on the reach (§5).
 - **Proposition Q3.** What (S′) changes is the sea itself: deficits stay in
-  their rows and only translate (§5).
+  their rows and only translate (§6).
 - **Proposition Q4.** Under (S′) a tagged body crosses the Eckart barrier
   inside a dark pair, through the summit. Individual crossing is still not
-  tunnelling (§6).
-- Two demo defects, repaired (§7): the destination-row species mask behind
-  step 22's open item L-SP8, and non-conservation of tags in step 20's
-  Part E.
+  tunnelling (§7).
+- **Proposition Q6.** Left alone, the (S′) sea relaxes to each row's eikonal
+  wave, exactly. Dark catalysis is the reset clock that puts the free
+  reference back: its rate is the bandwidth of the phase reference, gauge
+  invariance selects its relative resets over absolute ones, and near the
+  Eckart barrier three times the kernel's own rate nearly suffices (§8).
+- Three demo defects, repaired (§9): the destination-row species mask behind
+  step 22's open item L-SP8, non-conservation of tags in step 20's Part E,
+  and the plane-wave lock on a periodic box.
 
-**Leaves open** the corrections to steps 15 to 22 listed in §8, to be made
-once (S′) is confirmed, and the items of §9.
+**Leaves open** the corrections to steps 15 to 22 listed in §10, to be made
+once (S′) is confirmed, and the items of §11.
 
 **Inherits.** Postulate (S), (D) and Theorem G1 from step 17; Proposition K8
 from step 15; Theorems S5, S7, S8 and S9 from step 16; Theorems Y5 and Y6
@@ -85,6 +107,19 @@ own row (Proposition K8) or aligns two bodies into one there, and the pair
 keeps that row until it is ionised. Momentum is continuous along every
 worldline between events, as before; what changes is that the stretch a
 body spends in an aligned pair is a straight line in phase space.
+
+**Partners, and what the sea is.** An aligned pair is a positon and a
+negaton at one point, with one momentum and one clock; its members are never
+apart. When a vertex reads the sea it compares *two different aligned pairs*
+on its momentum row, the legs of a chord at $`x \mp y`$. These, as in step
+22, are the *partners*. The sea is not a lattice. It is a random
+configuration of aligned pairs with mean density $`B = 1/\pi\hbar`$ per unit
+area of phase space and local density $`s(x, p, t)`$, which events change
+(an absorption adds a pair on the parent's row, an emission removes one) and
+which under (S′) is carried along rows (Proposition Q3). A chord's
+half-separation $`y`$ is whatever its two partners happen to have: a vertex
+reads every chord its row offers within the reach, and the transform over
+$`y`$ is sampled by the separations present.
 
 Two parts of (S′) are fixed rather than chosen.
 
@@ -130,7 +165,7 @@ needs the partners to accelerate, and under (S′) they do not.
 
 *The lock holds.* Step 22 §9 found that a sea keeping its rows, re-locked at
 the kernel's own rate, reads the kernel at 0.82 against a 0.89 control,
-while under (S) the reading was 0.45. The reason is Proposition Q2: under
+while under (S) the reading was 0.45; §8 refines these numbers. The reason is Proposition Q2: under
 (S) the force fans a row out over its neighbours, and each row gathers
 bodies carrying phases locked to the rows they came from.
 
@@ -138,7 +173,7 @@ bodies carrying phases locked to the rows they came from.
 crosses a potential. It is unobservable, because the pair is $`W`$-null, but
 it is a real departure from Newtonian bookkeeping for paired bodies. And
 identity now passes through classically forbidden regions in the dark
-(§6): a claim about an unobservable, which leaves $`E`$ alone.
+(§7): a claim about an unobservable, which leaves $`E`$ alone.
 
 ---
 
@@ -188,7 +223,7 @@ absorption and is never read. The population clamp acts on $`u_\pm`$ only.
   (Proposition L2(a));
 - any rule that reads the sea's phases (the readings of step 22);
 - anything that follows *identity*: tags riding in pairs move with the sea
-  (§6).
+  (§7).
 
 *Verification.* `demo_force_blind_sea.py` Part A:
 
@@ -214,13 +249,14 @@ plane wave.
 \frac{d}{dt}\Big[\hbar\theta - \hbar\varphi_p(q, t)\Big] = -V(q),
 ```
 
-*so it stays on its row's plane wave up to the eikonal phase
-$`-\hbar^{-1}\int V(q(t'))\,dt'`$ accumulated along its straight path. A
-motionless pair would keep the plane wave only with
+*so it stays on its row's plane wave up to the straight-line (Glauber)
+eikonal phase $`-\hbar^{-1}\int V(q(t'))\,dt'`$ accumulated along its
+unbent path. A motionless pair would keep the plane wave only with
 $`\hbar\dot\theta = -p^2/2m`$, a Hamiltonian clock, not P1's.*
 
-*(b) Two partners on one row keep their separation $`2y`$, and a reader with
-momentum $`P(t)`$ sees them wind at*
+*(b) Any two aligned pairs on one row — each a co-located positon and
+negaton sharing one clock — keep whatever separation $`2y`$ they have, and a
+reader with momentum $`P(t)`$ sees them wind at*
 
 ```math
 \hbar\dot\mu = V(x_j) - V(x_i) + 2y\,\dot P
@@ -250,7 +286,30 @@ equal, constant momenta; the kinetic terms cancel and $`\dot x_j = \dot x_i`$.
 (c) $`\hbar\dot\theta - d(px)/dt = L - p\dot x - x\dot p = -H - x\dot p`$;
 the uniform-force and Taylor statements follow by direct integration and
 expansion. $`\square`$ All three are checked symbolically in Part B of the
-demo.
+demo, and (a) against the particle model in §8.2: the misalignment of every
+chord of untouched sea clocks matches the closed-form eikonal to a
+correlation of 1.0000.
+
+**Which eikonal.** The word has two senses, and (S) and (S′) carry one each.
+In geometrical optics the eikonal is the full phase function $`S`$, with
+$`\lvert\nabla S\rvert^2 = n^2`$ (Bruns 1895); for a particle it is
+Hamilton's principal function along the *true, curved* path, which is what
+P1 clocks carry under (S): Definition L0's phase field $`S/\hbar`$. In
+high-energy scattering the eikonal is the phase a plane wave gains from the
+potential along the *unbent* straight line,
+
+```math
+\psi(\mathbf b, z) \approx e^{ikz}\exp\!\Big[-\frac{i}{\hbar v}\int_{-\infty}^{z} V(\mathbf b, z')\,dz'\Big]
+```
+
+(Molière 1947; Glauber 1959), with $`\mathbf b`$ the impact parameter; with
+$`dz' = v\,dt'`$ this is Q2(a)'s $`-\hbar^{-1}\int V\,dt`$. There it is an
+approximation, valid when $`E \gg \lvert V\rvert`$ so that paths barely
+bend. Under (S′) it is exact for the sea's clocks by postulate, because their
+paths do not bend at all. So (S) clocks carry the optical (Hamilton–Jacobi)
+eikonal along bending trajectories and (S′) clocks the straight-line one:
+the contrast Q2(c) draws between rows that fan out and rows that are
+conserved.
 
 Part (b) is the reason step 22's row-keeping sea held the reading: under
 (S′) the own-frame reading of Theorem L7 becomes the inertial reader and
@@ -260,7 +319,138 @@ did not: a curved potential fans each row out over its neighbours.
 
 ---
 
-## 5. Proposition Q3: what (S′) does to the sea
+## 5. Proposition Q5: what the sea computes
+
+The compensated algorithm sets its jump rates from a Fourier transform of
+the potential (Theorem L1):
+
+```math
+K_q(x) = -\frac{B\,dp}{\hbar}\int_{-y_{\max}}^{y_{\max}} dy\;
+U_{\mathrm{res}}(x,y)\,w(y)\,\sin\!\left(\frac{2\xi_q y}{\hbar}\right),
+```
+
+with $`\xi_q = q\,dp`$ the momentum transfer of channel $`q`$, $`dp`$ the row
+width, $`w`$ the reach horizon and $`B = 1/\pi\hbar`$ the sea density. The
+question is whether the sea computes that transform rather than being
+handed it. It supplies three of the four ingredients directly: the
+quadrature nodes (the partners' positions sample $`y`$), the integrand (the
+partners' clock rates give $`\hbar\dot\mu = U_{\rm res}`$ at re-lock, exactly
+under (S′), Proposition Q2), and, as (a) below shows, the Fourier phase. The
+fourth, the sum over chords, is an interference.
+
+Write $`\mu^{(P)}_{ij} = \theta_i - \theta_j + P\,d/\hbar`$ for the
+misalignment of partners $`i, j`$ read with lever $`P`$, where
+$`d = x_j - x_i = 2y`$.
+
+**Proposition Q5.** *(a) Reading two partners against daughter row
+$`p + \xi_q`$'s plane wave is reading them against the parent's with the
+channel's Fourier phase added:*
+
+```math
+\mu^{(p)}_{ij} + \frac{\xi_q d}{\hbar} = \mu^{(p+\xi_q)}_{ij} .
+```
+
+*(b) Let*
+
+```math
+z_q = \sum_{\text{chords}} w(y)\, e^{\,i\mu^{(p+\xi_q)}_{ij}}
+```
+
+*be the interference sum over the chords of row $`p`$ whose midpoints lie
+in a cell of length $`\Delta x`$ at $`x`$. At re-lock,
+$`\mu^{(p)}_{ij} = 0`$, with the parent-frame rate of Proposition Q2(b),
+and in the continuum limit of a sea of uniform density $`B`$,*
+
+```math
+K_q(x) = \frac{1}{B\,dp\,\Delta x}\,\frac{d}{dt}\,\mathrm{Re}\,z_q .
+```
+
+*(c) The channel functions $`\sin(2\xi_q y/\hbar)`$ are orthogonal on the
+reach $`[-y_{\max}, y_{\max}]`$ for every $`q \ne q'`$ exactly when
+$`dp\,y_{\max}`$ is a whole multiple of $`\pi\hbar/2`$. The shortest such
+reach is Theorem L1's strip, $`B\,dp\,2y_{\max} = 1`$.*
+
+*Proof.* (a) Substitute the definition. (b) Chords with midpoint in
+$`[x, x + \Delta x]`$ and half-separation in $`[y, y + dy]`$, $`y > 0`$,
+number $`2(B\,dp)^2\,\Delta x\,dy`$, the 2 being the Jacobian of
+$`(x_i, x_j) \mapsto (x, y)`$. By (a) the weight of a chord is
+$`\cos(2\xi_q y/\hbar + \mu^{(p)})`$, so at $`\mu^{(p)} = 0`$
+
+```math
+\frac{d}{dt}\,\mathrm{Re}\,z_q
+= -\frac{2(B\,dp)^2\Delta x}{\hbar}\int_0^{y_{\max}} U_{\rm res}\,w\,
+\sin\!\left(\frac{2\xi_q y}{\hbar}\right) dy
+= -\frac{(B\,dp)^2\Delta x}{\hbar}\int_{-y_{\max}}^{y_{\max}} (\cdots)\,dy
+= B\,dp\,\Delta x\,K_q ,
+```
+
+the integrand being even in $`y`$. (c) With $`k = 2\,dp/\hbar`$,
+
+```math
+\int_{-Y}^{Y} \sin(qky)\,\sin(q'ky)\,dy
+= \frac{\sin\big((q - q')kY\big)}{(q - q')k} - \frac{\sin\big((q + q')kY\big)}{(q + q')k},
+```
+
+which vanishes for every $`q \ne q'`$ if $`kY`$ is a multiple of $`\pi`$;
+the pair $`q = 1, q' = 2`$ gives $`3\sin kY = \sin 3kY`$, so $`\sin kY = 0`$
+is also necessary. $`kY = \pi`$ is $`dp\,Y = \pi\hbar/2`$, which with
+$`B = 1/\pi\hbar`$ is $`B\,dp\,2Y = 1`$. $`\square`$
+
+*Verification.* Part E of `demo_force_blind_sea.py`. With SymPy: the
+identity (a) holds exactly; on $`dp\,Y = \pi\hbar/2`$ the Gram matrix of the
+first four channels, divided by $`Y`$, is the identity, and on
+$`dp\,Y = 0.4\pi\hbar`$ its largest off-diagonal element is 0.288.
+Numerically, (b) against the code's kernel at $`x = -0.625`$, with the
+chord sum as a fine quadrature in $`y`$:
+
+| $`q`$ | 1 | 2 | 3 | 4 | 6 | 8 |
+|---|---|---|---|---|---|---|
+| $`K_q`$ (code) | 1.076080 | 0.141430 | −0.174147 | −0.056715 | −0.020788 | −0.002426 |
+| relative difference | $`5.5\times10^{-7}`$ | $`8.4\times10^{-6}`$ | $`1.0\times10^{-5}`$ | $`4.2\times10^{-5}`$ | $`1.8\times10^{-4}`$ | $`2.1\times10^{-3}`$ |
+
+the same discretisation error as Theorem L1's own check.
+
+**Reading it.** The Fourier phase is not an extra factor: channel $`q`$ is
+the sea read against the daughter row's P2 plane wave, which is step 22's
+answer to L-SP6 applied to the daughter as reader. The daughter at
+$`p - \xi_q`$ gives the opposite sign, matching the $`\pm 1`$ deposits. So
+the jump rate of channel $`q`$ is the rate at which the row's interference
+pattern, seen from the daughter row, changes as the potential winds the
+clocks. The Wigner transform itself is built the same way: the density
+matrix read along chords against a reader's own plane wave (step 22 §8).
+
+The analogy is Fraunhofer diffraction, in which the far-field amplitude in
+a direction is the Fourier transform of the illumination across an aperture
+(Goodman 2005, chapter 4). The aperture is the set of partners within the
+reach, the illumination phases are their clocks, the far-field directions
+are the daughter rows, and the potential is a phase screen that modulates
+the aperture in time. A phased-array antenna is the engineering version:
+nobody computes the transform; the superposition does.
+
+**What it does not do.**
+
+- *It is critically sampled, so it is statistical.* By (c) the sea holds, on
+  average, one aligned pair per row in the strip on which the channel basis
+  is orthogonal. Any single reading is one sample of a random configuration
+  (§1), and the transform emerges only in the average: the contact cost of
+  Proposition L2.
+- *It must be normalised by the actual sea.* (b) holds for a sea of uniform
+  density $`B`$. The number of chords at separation $`2y`$ scales as
+  $`s(x - y, p)\,s(x + y, p)`$, so a reading normalised to $`B`$ is biased
+  wherever the sea departs from it: Proposition L2(a)'s weighting, and under
+  (S′) the departure is larger (Proposition Q3, §9).
+- *It needs a fresh reference.* (b) holds at re-lock. Between re-locks the
+  weights carry the misalignment the potential has wound into the clocks,
+  and §8 is about that.
+- *The horizon is imposed, not computed.* Which partners count, and with what
+  taper $`w`$, is a rule (Q-SP6).
+- *Summing amplitudes is a vertex operation.* Superposition is cheaper than a
+  computed transform, but the ontology must still grant it at the vertex, in
+  the spirit of step 4's vertex weight P5.
+
+---
+
+## 6. Proposition Q3: what (S′) does to the sea
 
 Under (S′) a row of sea translates rigidly at its own velocity, so a deficit
 or excess made at a parent's row stays in that row. Under (S) the force
@@ -317,7 +507,7 @@ $`\rho = 1`$ and $`-5.60\,B`$ against $`-1.75\,B`$ at $`\rho = 20`$.
 
 ---
 
-## 6. Proposition Q4: identity crosses in the dark
+## 7. Proposition Q4: identity crosses in the dark
 
 Theorem Y6 followed tagged positons through events by proportional
 allocation and streamed tags riding in pairs with the sea. Under (S′) a tag
@@ -383,7 +573,220 @@ $`T_{\rm tag}`$ by about 0.45.
 
 ---
 
-## 7. Two demo defects
+## 8. Proposition Q6: dark catalysis as a reset clock
+
+Dark catalysis (Theorem L5) is the sea's one E-neutral interaction: an
+aligned pair A fires at the kernel's rate and a partner pair C in A's row
+re-forms aligned, on A's transported phase or on the mean of the two. Under
+(S) step 22 used it to fight three things at once: the within-row beat of
+the initial lock, the tidal row mixing of Proposition Q2(c), and the
+misalignment the potential winds into the clocks. It lost, reading the
+kernel at 0.45 against a control near 0.89 (step 22 §9). Under (S′) rows
+are conserved, so the first two are gone by construction, and a row-centred
+sea has no within-row beat. This section asks what is left for it to do,
+and how fast it must do it.
+
+### 8.1 What it does not do
+
+By Proposition Q1 dark catalysis moves nothing in the ledger under either
+motion: it creates and destroys nothing, and the ledger never reads the
+sea. Its rate is therefore free as far as $`E`$, $`N`$ and $`f`$ are
+concerned. It matters only to the constructive programme of step 22 and of
+Proposition Q5, in which the kernel is read from the sea's clocks instead of
+being precomputed from $`V`$.
+
+### 8.2 What the sea does if left alone
+
+A clock read with its row's lever winds, between resets, at the inertial
+reader's rate of Proposition Q2(b): $`\hbar\dot\mu^{(p)}_{ij} = U(x, y)`$.
+Integrated along the straight paths of (S′), the misalignment of a chord
+whose clocks were last set at $`t = 0`$ is
+
+```math
+\mu^{(p)}_{ij}(t) = -\frac{1}{\hbar}\left[\int_0^t V\big(x_i(t')\big)\,dt' - \int_0^t V\big(x_j(t')\big)\,dt'\right],
+```
+
+the difference of the two partners' straight-line eikonals (Proposition
+Q2(a)). For the Eckart barrier the integral has a closed form,
+$`\int_0^t \mathrm{sech}^2(x_0 + vt')\,dt' = [\tanh x(t) - \tanh x_0]/v`$,
+continued periodically on the box. In the particle model with the sea
+force-blind, row-centred and left alone (`demo_sea_lock_particles.py
+--sea-force blind --sea-p rows --wrap-phase --no-events --readers --filter`,
+seed 11), the misalignment of every chord of untouched sea clocks near the
+barrier matches this closed form with correlation 0.9989 at $`t = 0.1`$,
+0.9999 at $`t = 1`$ and 1.0000 from $`t = 4`$ to $`t = 25`$, and regression
+slope 1.000 within 0.005 throughout.
+
+So a force-blind sea left alone does not stay on the free plane wave: each
+row relaxes to its own eikonal wave. For a row moving at $`v \ne 0`$, a
+chord whose partners entered from far upstream carries
+$`\mu_{ij} = (\hbar v)^{-1}\int_{x_i}^{x_j} V\,dx'`$, bounded by
+$`\int V\,dx/\hbar\lvert v\rvert`$; the row at rest winds at $`U/\hbar`$
+without bound. Read against this eikonal reference, the kernel near the
+barrier reads 0.778 against a control of 0.880 (table below). Proposition
+Q5(b) needs the *free* reference, $`\mu^{(p)} = 0`$. What dark catalysis is
+for, under (S′), is to put it back.
+
+### 8.3 The reset filter
+
+Idealise the resets of a chord as Poisson at rate $`\Gamma_\ell`$, so that
+the time $`\tau`$ since the last reset is distributed as
+$`\Gamma_\ell e^{-\Gamma_\ell\tau}`$, and freeze the winding rate over one
+interval, $`\mu = \omega\tau`$ with $`\omega = U/\hbar`$. A chord enters
+the reading of channel $`q`$ with weight $`\sin(a + \mu)`$,
+$`a = 2\xi_q y/\hbar`$, and
+
+```math
+\big\langle e^{\,i(a + \omega\tau)}\big\rangle = e^{ia}\,\frac{\Gamma_\ell}{\Gamma_\ell - i\omega}
+\quad\Longrightarrow\quad
+\big\langle \sin(a + \omega\tau)\big\rangle
+= \frac{\Gamma_\ell^2\sin a + \Gamma_\ell\,\omega\cos a}{\Gamma_\ell^2 + \omega^2} .
+```
+
+**Proposition Q6(a).** *Under Poisson resets at rate $`\Gamma_\ell`$ the
+sea's reading of $`K_q`$ departs from the kernel in two ways: an amplitude
+compression by $`\Gamma_\ell^2/(\Gamma_\ell^2 + \omega^2)`$, of second order
+in $`\omega/\Gamma_\ell`$, and a quadrature term of first order,*
+
+```math
+\delta K_q \;\propto\; -\,\langle\tau\rangle\sum_{\text{chords}} U_{\rm res}\,w\,\frac{U}{\hbar}\,\cos a ,
+\qquad \langle\tau\rangle = 1/\Gamma_\ell .
+```
+
+*The quadrature term is even in $`\xi_q`$ and its weight $`U\,U_{\rm res}`$
+is not sign-definite.*
+
+It is the phase-interruption mathematics of collision broadening (Van Vleck
+and Weisskopf 1945) and of motional narrowing (Bloembergen, Purcell and
+Pound 1948; Anderson 1954), with one difference that matters: there the
+phase winds at the frequency the line is read at, and interruption broadens
+the line symmetrically, which is a decoherence. Here the clocks wind at
+$`U/\hbar`$ relative to their row while the reading multiplies
+$`U_{\rm res}`$. The product is not sign-definite, so the quadrature term is
+a spurious even (cosine) component of the reading, not a decoherence rate.
+An event realisation that deposits $`\pm 1`$ by construction would take it
+as an error in the odd kernel, $`\pm\delta K_{\lvert q\rvert}`$, whose first
+moment $`2\sum_{q>0}\xi_q\,\delta K_q`$ need not vanish: a spurious force of
+order $`\langle\tau\rangle`$ (Q-SP7).
+
+### 8.4 Relative and absolute resets
+
+The simplest reset is **absolute**: set the clock to its row's free plane
+wave, $`\theta \leftarrow (px - p^2t/2m)/\hbar`$. That needs an external clock
+and the zero of $`V`$. Under $`V \to V + c`$ every P1 clock winds faster by
+$`-c/\hbar`$ while the reset target does not move, so two clocks last reset
+$`\tau_i`$ and $`\tau_j`$ ago acquire the misalignment
+$`c(\tau_j - \tau_i)/\hbar`$: noise that depends on an unobservable constant.
+
+Dark catalysis is **relative**: it compares clocks with clocks. In the
+reach form, C's clock and A's clock transported to C with A's momentum are
+both replaced by their mean. A uniform shift of every clock's rate changes
+neither their difference nor, up to a common phase, their mean, so the reset
+is invariant under $`V \to V + c`$. The price is that it is partial: it
+equalises A and C, and pulls the row toward consensus only on average, as
+gossip averaging does (Boyd et al. 2006).
+
+**Proposition Q6(b).** *Of the two, only relative resets are invariant
+under $`V \to V + c`$.* $`\square`$ (By the two paragraphs above.)
+
+### 8.5 How fast it must be
+
+`src/scan_dark_reset.py` runs the particle model on the force-blind,
+row-centred sea (`--sea-force blind --sea-p rows`), with the lock kept
+continuous across the periodic boundary (`--wrap-phase`, §9), three seeds,
+late means over $`4 \le t \le 25`$. The reading is taken over sea clocks
+only, one member per aligned pair, near the barrier. $`\tau`$ is the
+regression slope of the misalignment on $`U/\hbar`$, the effective reset
+time; $`b`$ is the fitted coefficient of the quadrature term of Q6(a) in
+the difference between the reading and its $`\mu \equiv 0`$ control. The
+dark rate is given as a multiple $`\kappa`$ of the kernel's own rate.
+
+| regime | reading | control | $`\tau`$ | rms residual $`\mu`$ | $`b`$ | coherence | median clock age |
+|---|---|---|---|---|---|---|---|
+| left alone (eikonal sea) | 0.778 ± 0.011 | 0.880 | 0.045 | 0.795 | 0.029 | 0.769 | 14.6 |
+| relative (dark catalysis), $`\kappa = 1`$ | 0.863 ± 0.002 | 0.880 | 0.224 | 0.360 | 0.194 | 0.935 | 0.40 |
+| relative, $`\kappa = 3`$ | 0.875 ± 0.001 | 0.880 | 0.161 | 0.175 | 0.138 | 0.983 | 0.13 |
+| relative, $`\kappa = 10`$ | 0.879 ± 0.001 | 0.880 | 0.075 | 0.071 | 0.069 | 0.997 | 0.04 |
+| relative, $`\kappa = 30`$ | 0.879 ± 0.001 | 0.880 | 0.040 | 0.043 | 0.034 | 0.999 | 0.00 |
+| absolute, $`\kappa = 1`$ | 0.871 ± 0.001 | 0.880 | 0.172 | 0.267 | 0.141 | 0.964 | 0.57 |
+| absolute, $`\kappa = 3`$ | 0.879 ± 0.001 | 0.880 | 0.110 | 0.098 | 0.096 | 0.994 | 0.17 |
+| absolute, $`\kappa = 10`$ | 0.880 ± 0.001 | 0.880 | 0.051 | 0.036 | 0.037 | 0.999 | 0.04 |
+| absolute, $`\kappa = 30`$ | 0.880 ± 0.001 | 0.880 | 0.019 | 0.018 | 0.011 | 1.000 | 0.01 |
+
+With events as well (`--relock-w 3`), the sea-only reading and its control:
+
+| regime | reading | control | $`\tau`$ | rms residual $`\mu`$ | all-bodies reading | all-bodies control |
+|---|---|---|---|---|---|---|
+| no dark catalysis | 0.784 ± 0.012 | 0.836 | 0.108 | 0.517 | 0.803 ± 0.014 | 0.885 |
+| relative, $`\kappa = 1`$ | 0.809 ± 0.010 | 0.833 | 0.149 | 0.375 | 0.828 ± 0.010 | 0.893 |
+| relative, $`\kappa = 3`$ | 0.829 ± 0.007 | 0.837 | 0.141 | 0.242 | 0.844 ± 0.005 | 0.887 |
+| relative, $`\kappa = 10`$ | 0.835 ± 0.007 | 0.838 | 0.070 | 0.156 | 0.850 ± 0.007 | 0.891 |
+| relative, $`\kappa = 30`$ | 0.831 ± 0.009 | 0.832 | 0.035 | 0.152 | 0.845 ± 0.006 | 0.888 |
+
+![The reading and the effective reset time against the dark rate](https://raw.githubusercontent.com/billpage/wpmw/output/figures/sea_reset_filter.png)
+
+*Left: the sea-only reading near the barrier against the dark rate, for
+relative resets without and with events and for absolute resets, with the
+eikonal sea and the two controls. Right: the effective reset time
+$`\tau`$.*
+
+**Proposition Q6(c) (measured).** *(i) Relative resets at the kernel's own
+rate recover most of what the eikonal reference loses (0.863 against 0.778,
+control 0.880); three times the rate leaves 0.005, ten times 0.001. (ii) The
+fitted quadrature coefficient tracks the effective reset time, $`b/\tau`$
+between 0.84 and 0.92 for relative resets without events, as Q6(a)
+predicts to first order; the quadrature term explains 21 to 41 per cent of
+what the reading loses, and the rest is the random residual misalignment. (iii) At equal
+event rate absolute resets do better, with $`\tau`$ smaller by a factor 1.3
+at $`\kappa = 1`$ growing to 2.1 at $`\kappa = 30`$. (iv) With events the
+sea-only reading reaches its own control by $`\kappa = 10`$ (0.835 against
+0.838). What events cost is the control itself, 0.880 falling to about
+0.836, because ionisation removes the pairs the reading samples near the
+barrier.*
+
+Two readings of the numbers. First, $`\tau`$ does not fall as
+$`1/\kappa`$: resets happen at $`\kappa\Gamma(x)`$, and $`\Gamma`$ vanishes
+at the summit and decays away from the barrier, while a chord's partners
+lie up to a reach away. Clocks are reset mainly on the flanks. Second,
+relative resets lag absolute ones increasingly with rate. A consensus
+update smooths the misalignment field as a diffusion does, relaxing short
+wavelengths at about the reset rate; but the eikonal phase of a row that
+has passed over the barrier is a step, $`(\hbar v)^{-1}\int V\,dx`$, and a
+step only spreads. That is the likely reason; it is not separately measured
+(Q-SP8).
+
+**Step 22's plateau.** Step 22 §9 found the row-keeping sea's reading
+saturating near 0.85 against a control near 0.89. The second table
+separates the two causes. The sea-only reading has no plateau: it reaches
+its own control. The all-bodies reading of step 22 includes free bodies as
+partners; they are not sea clocks, they are not reset, and at
+$`\kappa = 10`$ they account for the whole gap (0.850 against 0.891). And
+the sea-only control is lower with events than without, because events thin
+the sea near the barrier.
+
+### 8.6 What dark catalysis is for
+
+Under (S′) dark catalysis is not dynamics but a **reset clock**: the dump
+step of an integrate-and-dump receiver. The potential winds each clock at
+its own position; left alone, the sea integrates that winding into its
+eikonal wave, and the vertex needs the rate, not the integral. Resetting
+turns the sea from an integrator of the potential's phase into a reader of
+its rate. The reset rate is the bandwidth of the phase reference: the
+misalignment it leaves enters the reading linearly in $`\langle\tau\rangle`$
+(Q6(a)). Gauge invariance selects relative resets over absolute ones
+(Q6(b)), at a cost of up to a factor two in $`\langle\tau\rangle`$. By
+Proposition Q1 the rate is free as far as the observable is concerned; near
+the Eckart barrier the kernel's own rate falls a little short and three
+times it nearly suffices (Q6(c)). What fixes the rate, if the ontology is to
+fix it at all, is open (Q-SP9).
+
+---
+
+## 9. Demo defects
+
+Three defects in the demos, found in the course of this note. Each is
+repaired, or switched off by a flag whose default keeps the published
+output.
 
 **The species mask of `channels_k` (step 22 open item L-SP8).** The sea-weighted
 ledger of Proposition L2(a) chose the species of each deposit with a mask
@@ -404,11 +807,33 @@ Proposition L2(a)'s conclusion — weighting contacts by the actual sea moves
 $`E`$ only slightly — stands under either motion. Under (S′) the sea departs
 further from $`B`$, because its deficits are not sheared across rows.
 
-**The tag bookkeeping of step 20's Part E** (§6).
+**The tag bookkeeping of step 20's Part E** (§7).
+
+**The plane-wave lock on a periodic box.** The particle model of step 22
+runs on a periodic box of length $`L = 48`$ with rows at whole multiples of
+$`dp = 0.25`$, and locks each row to $`e^{ipx/\hbar}`$. That plane wave is
+periodic on the box only if $`pL/\hbar`$ is a multiple of $`2\pi`$, and
+$`dp\,L/\hbar = 12`$ is not, so every body that crosses the boundary
+arrives carrying a lock defect of $`pL/\hbar \bmod 2\pi`$. Under (S′) the
+defect sweeps each row as a front, once per crossing time. The flag
+`--wrap-phase` keeps $`\theta - px/\hbar`$ continuous across the boundary,
+which makes the box a window on an open line. On the force-blind,
+row-centred sea (three seeds, late means):
+
+| regime | without `--wrap-phase` | with it |
+|---|---|---|
+| left alone, sea-only reading | 0.739 ± 0.016 | 0.778 ± 0.011 |
+| left alone, all-bodies rate reading (A) | 0.732 ± 0.015 | 0.771 ± 0.010 |
+| events and reach dark catalysis ×10, sea-only | 0.832 ± 0.008 | 0.835 ± 0.007 |
+| the same, all-bodies | 0.851 ± 0.004 | 0.850 ± 0.007 |
+
+Resets heal the defect; without them it costs about 0.04. The step 22 §9
+tables were measured without the flag, under (S) as well as under
+row-keeping; the (S) rows were not re-measured.
 
 ---
 
-## 8. Corrections to make if (S′) is confirmed
+## 10. Corrections to make if (S′) is confirmed
 
 - **Step 15** ([`eckart_barrier_compensated.md`](eckart_barrier_compensated.md)).
   §8's "every member of the created sea alike follows a genuine Newtonian
@@ -424,7 +849,7 @@ further from $`B`$, because its deficits are not sheared across rows.
 - **Step 17** ([`compensated_ontology.md`](compensated_ontology.md)). (S) is
   restated as (S′); G1, G3 and G4 stand (Proposition Q1).
 - **Step 20** ([`dark_sea_and_worldline_identity.md`](dark_sea_and_worldline_identity.md)).
-  Y1 to Y5 stand. Y6's table is replaced by §6's; under (S) its
+  Y1 to Y5 stand. Y6's table is replaced by §7's; under (S) its
   transmissions survive the tag repair to about 0.01, but its kink counts
   were inflated about twofold by the clipping. Under (S′) its mechanism
   ("never through") is withdrawn, and the "dynamically inert" row of the
@@ -432,18 +857,21 @@ further from $`B`$, because its deficits are not sheared across rows.
 - **Step 22** ([`sea_phase_reference.md`](sea_phase_reference.md)). L7's
   negative result is specific to (S) partners; under (S′) the own frame reads
   $`U`$ and L9's drift term is zero (Proposition Q2). L-SP8 is answered as a
-  demo defect (§7), and Proposition L2(a)'s figures change slightly. L-SP10
+  demo defect (§9), and Proposition L2(a)'s figures change slightly. L-SP10
   is answered provisionally by this note. §5's phase-field figure depicts (S)
-  transport.
+  transport. §9's plateau of the row-keeping sea is not incomplete
+  resetting: the sea-only reading reaches its own control, and the gap is
+  the free bodies read as partners (§8.5). Its tables were measured without
+  `--wrap-phase` (§9).
 
 Steps 14, 18, 19 and 21 need nothing: their uses of (S) concern bodies.
 
 ---
 
-## 9. Open items
+## 11. Open items
 
 - **Q-SP1.** Replace the spectral transport of tags by a positivity-preserving
-  one (semi-Lagrangian or particle tags) and confirm §6 without the ripple
+  one (semi-Lagrangian or particle tags) and confirm §7 without the ripple
   correction.
 - **Q-SP2.** Under (S′) the sea's worst cell hovers near zero (Proposition Q3).
   Does supply for emission become limiting in longer or deeper runs, where
@@ -451,17 +879,57 @@ Steps 14, 18, 19 and 21 need nothing: their uses of (S) concern bodies.
 - **Q-SP3.** An aligned pair's energy is not conserved under (S′) while it crosses
   a potential. Is there any ledger quantity, observable or not, that the
   project has treated as conserved and that this breaks?
-- **Q-SP4.** Carry out the corrections of §8 once (S′) is confirmed.
+- **Q-SP4.** Carry out the corrections of §10 once (S′) is confirmed.
+- **Q-SP5.** The frozen comb. Under (S′) a row's sea translates rigidly, so
+  its pattern of separations is frozen between events, and a parent on that
+  row initially co-moves with it and sees the same quadrature nodes for a
+  while. Its sampling noise is then correlated in time instead of averaging
+  step by step. Measure the time correlation of the pair-sum noise under
+  (S′) against (S), and what it does to the contact cost of Proposition L2.
+- **Q-SP6.** The horizon. Proposition Q5 computes the transform over the
+  chords a rule admits, with a taper $`w`$ the rule imposes. Could the
+  horizon emerge instead, for instance from the fall of the lock's coherence
+  with separation?
+- **Q-SP7.** The quadrature leakage of Proposition Q6(a) is a spurious even
+  component of the reading. In an event realisation that deposits
+  $`\pm 1`$ by construction it becomes an error in the odd kernel with
+  first moment $`2\sum_{q>0}\xi_q\,\delta K_q`$: measure that spurious
+  force against $`\langle\tau\rangle`$.
+- **Q-SP8.** Why do relative resets lag absolute ones increasingly with
+  rate (Q6(c)(iii))? Test the diffusion picture of §8.5 by resolving the
+  misalignment field into short and long wavelengths along a row.
+- **Q-SP9.** What fixes the dark rate? By Proposition Q1 the observable does
+  not. Candidates are the kernel's own rate, a multiple of it, or a constant
+  of the ontology; near the Eckart barrier about three times the kernel's
+  rate is needed (Q6(c)).
 
 ---
 
-## 10. Sources
+## 12. Sources
 
 - Aharonov, Y. and Bohm, D. *Significance of electromagnetic potentials in
   the quantum theory*, Phys. Rev. **115** (1959) 485–491.
+- Anderson, P. W. *A mathematical model for the narrowing of spectral lines
+  by exchange or motion*, J. Phys. Soc. Jpn. **9** (1954) 316.
+- Bloembergen, N., Purcell, E. M. and Pound, R. V. *Relaxation effects in
+  nuclear magnetic resonance absorption*, Phys. Rev. **73** (1948) 679–712.
+- Boyd, S., Ghosh, A., Prabhakar, B. and Shah, D. *Randomized gossip
+  algorithms*, IEEE Trans. Inf. Theory **52** (2006) 2508–2530.
+- Bruns, H. *Das Eikonal*, Abh. Kgl. Sächs. Ges. Wiss., Math.-Phys. Classe
+  **21** (1895). The eikonal of geometrical optics: the full phase function
+  along curved rays.
 - Glauber, R. J. *High-energy collision theory*, in Lectures in Theoretical
   Physics, vol. 1, ed. W. E. Brittin and L. G. Dunham, Interscience (1959)
   315–414. The eikonal: a plane wave carried along straight lines,
   accumulating $`-\int V\,dt/\hbar`$.
+- Goodman, J. W. *Introduction to Fourier Optics*, 3rd ed., Roberts & Company
+  (2005), chapter 4: Fraunhofer diffraction as a Fourier transform of the
+  aperture illumination.
+- Molière, G. *Theorie der Streuung schneller geladener Teilchen I.
+  Einzelstreuung am abgeschirmten Coulomb-Feld*, Z. Naturforsch. **2a**
+  (1947) 133. The high-energy (straight-line) approximation for fast
+  charged particles.
 - Moyal, J. E. *Quantum mechanics as a statistical theory*, Proc. Cambridge
   Philos. Soc. **45** (1949) 99–124.
+- Van Vleck, J. H. and Weisskopf, V. F. *On the shape of collision-broadened
+  lines*, Rev. Mod. Phys. **17** (1945) 227–236.
