@@ -1,6 +1,6 @@
 # The force-blind sea: aligned pairs move inertially
 
-> Postulate (S) gives every world-particle the full classical force, the members of an aligned sea pair included, and nothing in the QLE asks for that: a pair is `W`-null, and the Moyal equation fixes `u+ - u-` and says nothing about `u+ + u-`. This note provisionally adopts **(S′)**: free bodies obey the full force, aligned pairs move inertially — advecting at `p/m` with no drift in `p` — while their clocks still wind with `V`, so the sea is force-blind but potential-sensitive; a motionless pair would need a Hamiltonian clock, and a potential-blind one would leave the kernel nothing to be read from. **Proposition Q1** organises everything: in every ledger of the chain the sea enters an event only as its source or its sink and is never read, so the body fields — and with them `E`, `N` and `f` — are independent of how it moves, verified bitwise; the exceptions are exactly where the sea is read, a throttled rate, a sea-weighted kernel, its phases and identity. **Proposition Q2** gives the kinematics: under (S′) a sea clock stays on its row's plane wave up to the eikonal phase and a same-row pair winds at exactly `U`, so Theorem L8's drift term vanishes; under (S) `d(hbar theta - p x) = -H dt - x dp`, a uniform force keeps the row lock, and the mismatch begins at `V''`, which is the row mixing step 22 measured. **Proposition Q3**: what changes is the sea itself — deficits stay in their rows, Theorem S8's early dip goes but the worst cell hovers near zero, and fast recombination repairs it where slow does not. **Proposition Q4**: with step 20's tags now conserved, tagged bodies cross the Eckart barrier inside dark pairs, through the summit — `T_tag` 0.89 against 0.34 at `E0 = V0/2`, with only 9 per cent of the tag above the barrier energy — while `T_E` is unchanged, so individual crossing is still not tunnelling. **Proposition Q5** says what the sea computes: the Fourier phase of channel `q` is the daughter row's P2 lever, `mu^(p) + xi_q d/hbar = mu^(p + xi_q)`, the jump rate is the rate of change of the row's interference sum read against the daughter, `K_q = d(Re z_q)/dt / (B dp dx)` at re-lock, and the sea's density is the one at which the channel basis is orthogonal on the reach — a Fraunhofer transform formed by superposition, at critical sampling. **Proposition Q6** says what dark catalysis is for: left alone, the force-blind sea relaxes exactly to each row's eikonal wave, and the reading needs the free one; dark catalysis is the reset clock that puts it back, the misalignment it leaves enters the reading as a quadrature term linear in the mean reset time, gauge invariance selects its relative resets over absolute ones, and near the Eckart barrier the kernel's own rate falls a little short (0.863 against a control of 0.880) while three times it nearly suffices; step 22's plateau was the free bodies read as partners, not incomplete resetting. Three demo defects are repaired: a species mask read at the destination row, the whole of step 22's drift of `Sum E` (L-SP8); the tag bookkeeping of step 20's Part E; and the plane-wave lock on a periodic box. Section 10 lists the corrections to steps 15, 16, 17, 20 and 22 that (S′) would require.
+> Postulate (S) gives every world-particle the full classical force, the members of an aligned sea pair included, and nothing in the QLE asks for that: a pair is `W`-null, and the Moyal equation fixes `u+ - u-` and says nothing about `u+ + u-`. This note provisionally adopts **(S′)**: free bodies obey the full force, aligned pairs move inertially — advecting at `p/m` with no drift in `p` — while their clocks still wind with `V`, so the sea is force-blind but potential-sensitive; a motionless pair would need a Hamiltonian clock, and a potential-blind one would leave the kernel nothing to be read from. **Proposition Q1** organises everything: in every ledger of the chain the sea enters an event only as its source or its sink and is never read, so the body fields — and with them `E`, `N` and `f` — are independent of how it moves, verified bitwise; the exceptions are exactly where the sea is read, a throttled rate, a sea-weighted kernel, its phases and identity. **Proposition Q2** gives the kinematics: under (S′) a sea clock stays on its row's plane wave up to the eikonal phase and a same-row pair winds at exactly `U`, so Theorem L8's drift term vanishes; under (S) `d(hbar theta - p x) = -H dt - x dp`, a uniform force keeps the row lock, and the mismatch begins at `V''`, which is the row mixing step 22 measured. **Proposition Q3**: what changes is the sea itself — deficits stay in their rows, Theorem S8's early dip goes but the worst cell hovers near zero, and fast recombination repairs it where slow does not. **Proposition Q4**: with step 20's tags now conserved, tagged bodies cross the Eckart barrier inside dark pairs, through the summit — `T_tag` 0.89 against 0.34 at `E0 = V0/2`, with only 9 per cent of the tag above the barrier energy — while `T_E` is unchanged, so individual crossing is still not tunnelling. **Proposition Q5** says what the sea computes: the Fourier phase of channel `q` is the daughter row's P2 lever, `mu^(p) + xi_q d/hbar = mu^(p + xi_q)`, the jump rate is the rate of change of the row's interference sum read against the daughter, `K_q = d(Re z_q)/dt / (B dp dx)` at re-lock, and the sea's density is the one at which the channel basis is orthogonal on the reach — a Fraunhofer transform formed by superposition, at critical sampling. **Proposition Q6** says what dark catalysis is for: left alone, the force-blind sea relaxes exactly to each row's eikonal wave, and the reading needs the free one; dark catalysis is the reset clock that puts it back, the misalignment it leaves enters the reading as a quadrature term linear in the mean reset time, gauge invariance selects its relative resets over absolute ones, and near the Eckart barrier the kernel's own rate falls a little short (0.863 against a control of 0.880) while three times it nearly suffices; step 22's plateau was the free bodies read as partners, not incomplete resetting. **Propositions Q7 and Q8** turn to the sea's population. The `kappa` of the step 16 comparison is the contact sink, which is not in the model, and dark catalysis, with `dS = 0`, cannot touch the population at all; the model's own clocks are the event rate and the rate at which force-feeling bodies slip across force-blind rows, which are of the same order by construction (`Gamma ~ |V'|/dp`), so under (S′) the sea's deficits are shallow but never refilled. An immediate contact sink would be garbage collection — the signed-particle method's same-cell annihilation with a pair ledger added — keeping the ensemble minimal, making absorption redundant for the bodies, and fixing the sea's total at half the growth of `||W||_1`; a pair formed that way is generically gray, and whether it is force-blind on joining or only on alignment is left open. Three demo defects are repaired: a species mask read at the destination row, the whole of step 22's drift of `Sum E` (L-SP8); the tag bookkeeping of step 20's Part E; and the plane-wave lock on a periodic box. Section 10 lists the corrections to steps 15, 16, 17, 20 and 22 that (S′) would require.
 
 *Ladder abstract — see the [full list](README.md#the-ladder).*
 
@@ -22,6 +22,13 @@ Proposition Q6 (dark catalysis as a reset clock), are new; the sections
 after §4 are renumbered. §9 records a third demo defect, the plane-wave lock
 on a periodic box. Open items Q-SP5 to Q-SP9 are added. Part E of
 `src/demo_force_blind_sea.py` verifies §5, and `src/scan_dark_reset.py` §8.
+
+**Second addendum (September 2026).** Proposition Q3's recombination rate
+$`\kappa`$ is named for what it is, step 16's contact sink, which is not in
+the model. §6.1, Proposition Q7 (the clocks of the sea's population), and
+§6.2, Proposition Q8 (immediate contact recombination as garbage
+collection), are new, with open item Q-SP10 on gray pairs. Part F of
+`src/demo_force_blind_sea.py` verifies both.
 
 ---
 
@@ -62,6 +69,16 @@ the force.
   channel basis is orthogonal on the reach (§5).
 - **Proposition Q3.** What (S′) changes is the sea itself: deficits stay in
   their rows and only translate (§6).
+- **Proposition Q7.** The sea's population runs on its own clocks: the event
+  rate and the rate at which force-feeling bodies slip across force-blind
+  rows are of the same order by construction, so under (S′) the sea's
+  deficits are shallow but nothing refills them; dark catalysis, with
+  $`\Delta S = 0`$, cannot touch them (§6.1).
+- **Proposition Q8.** An immediate contact sink is garbage collection: the
+  ensemble stays minimal, $`N = \lvert W\rvert`$, absorption becomes
+  redundant for the bodies, and the sea pays exactly half the growth of
+  $`\lVert W\rVert_1`$ whichever route is taken; only where it pays
+  differs (§6.2).
 - **Proposition Q4.** Under (S′) a tagged body crosses the Eckart barrier
   inside a dark pair, through the summit. Individual crossing is still not
   tunnelling (§7).
@@ -457,8 +474,9 @@ or excess made at a parent's row stays in that row. Under (S) the force
 shears it across rows near the barrier. The step 16 ledger under both
 motions (`demo_force_blind_sea.py` Part C):
 
-Emissive unravelling with recombination rate $`\kappa`$ (Theorems S4 and
-S5's setting, step 16 Part C), worst cell $`s/B`$ at $`T = 6`$:
+Emissive unravelling with step 16's contact sink at rate $`\kappa`$, which
+is not part of the model (§6.1), in Theorems S4 and S5's setting (step 16
+Part C), worst cell $`s/B`$ at $`T = 6`$:
 
 | $`\kappa`$ | (S) | (S′) |
 |---|---|---|
@@ -488,9 +506,10 @@ against the QLE at $`T = 8`$:
 at first and more persistent afterwards. The deep early dip of Theorem S8's
 absorptive run is gone, but the worst cell hovers near zero instead of
 recovering to about $`0.17\,B`$, because a deficit that is not sheared
-across rows is not refilled. Fast recombination ($`\kappa \ge 200`$) keeps
-the worst cell non-negative under (S′), where under (S) it does not; slow
-recombination ($`\kappa = 20`$) does the reverse. A rate throttled by the
+across rows is not refilled. With step 16's contact sink, which is outside
+the model, a fast sink ($`\kappa \ge 200`$) keeps the worst cell
+non-negative under (S′), where under (S) it does not; a slow one
+($`\kappa = 20`$) does the reverse (§6.1 explains both). A rate throttled by the
 sea (Theorem S5) is observable under either motion, somewhat more under
 (S′).*
 
@@ -504,6 +523,216 @@ $`\rho = 1`$, and from a twentyfold padded one, $`\rho = 20`$: the
 attractor is a statement about bodies, as Proposition Q1 requires. The sea's
 final worst cell differs, $`+0.168\,B`$ against $`+0.002\,B`$ at
 $`\rho = 1`$ and $`-5.60\,B`$ against $`-1.75\,B`$ at $`\rho = 20`$.
+
+### 6.1 Proposition Q7: the clocks of the sea's population
+
+*Which recombination.* The $`\kappa`$ of the first table is step 16's
+*contact* recombination: a bilinear sink that removes a positon and a
+negaton together from one cell at rate $`\kappa\,n_+n_-`$ (Theorem S1's
+form). It is not in the model. Postulate (D), with $`f = 1/2`$, is the
+sinkless case (Theorem N3), the model's only pair-forming channel is the
+absorptive event, and the algorithm specification keeps $`\kappa`$ only as
+an optional setting (ORIENTATION §8). What the first table and Proposition
+Q3 say about $`\kappa`$ is therefore about a sink the model does not have.
+Nor can dark catalysis act on the sea's population: by Theorem L5 it has
+$`\Delta E = \Delta N = \Delta S = 0`$. The population and the phase
+reference of §8 are separate ledgers, each with its own clocks.
+
+*The split.* Write the sea as
+
+```math
+s = B - D + C ,
+```
+
+with $`D`$ the cumulative debit (an emission, at the parent's cell) and
+$`C`$ the cumulative credit (an absorption at the parent's cell, or a
+contact recombination where it happens), both carried with the sea's own
+motion. The identity holds to better than $`10^{-12}`$ in every run below
+(`demo_force_blind_sea.py` Part F).
+
+*The clocks at the Eckart flank* ($`dp = 0.25`$, $`x = -0.625`$):
+
+| clock | rate | acts on |
+|---|---|---|
+| event rate $`\Gamma`$ | 3.13 | counts: absorptions credit, emissions debit, both at the parent's row |
+| slip of force-feeling bodies across force-blind rows, $`\lvert V'_{\rm eff}\rvert/dp`$ (zero under (S)) | 3.07 rows per unit time | counts: which sea patch a parent debits |
+| contact sink $`\kappa\lvert E\rvert`$ (outside the model), median over the packet | 1.3, 13, 133 at $`\kappa`$ = 20, 200, 2000 | counts: credit where excess bodies recombine |
+| winding $`\lvert U\rvert/\hbar`$ | at most $`V_0/\hbar = 1`$ | phases (§8) |
+| dark catalysis $`\kappa_d\Gamma`$ | about 9 needed (Q6) | phases only |
+
+**Proposition Q7.** *(a) The event rate and the slip rate are of the same
+order by construction: over the grids and barriers below, the median of
+$`\Gamma/(\lvert V'_{\rm eff}\rvert/dp)`$ where $`\Gamma`$ exceeds a fifth of
+its maximum lies between 0.70 and 1.13, and both scale as $`V`$ and as
+$`1/dp`$. (b) In the model's own, sinkless ledger the sea's excursions are
+therefore never separated in time scale from the traffic that makes them.
+Under (S) a sea patch rides the same flow as the parents above it, is
+debited while partners are scarce and refilled by later absorptions on the
+same patch; under (S′) the parents slide across the rows about as fast as
+they fire, so the debit is spread over many patches and nothing refills
+them. (c) With the contact sink, the sign of the (S′) worst cell follows
+the ratio of $`\kappa\lvert E\rvert`$ to the slip rate.*
+
+| $`n_p`$ | $`dp`$ | $`a`$ | $`V_0`$ | $`y_{\max}`$ | max $`\Gamma`$ | max $`\lvert V'_{\rm eff}\rvert/dp`$ | median ratio |
+|---|---|---|---|---|---|---|---|
+| 64 | 0.25 | 1 | 1 | 6.28 | 3.130 | 3.072 | 1.03 |
+| 128 | 0.125 | 1 | 1 | 12.57 | 6.575 | 6.144 | 1.13 |
+| 32 | 0.5 | 1 | 1 | 3.14 | 1.126 | 1.537 | 0.70 |
+| 64 | 0.25 | 2 | 1 | 6.28 | 1.129 | 1.536 | 0.72 |
+| 64 | 0.25 | 1 | 3 | 6.28 | 9.389 | 9.217 | 1.03 |
+
+The reason for (a): when the reach is long against the potential's width,
+$`V(x \pm y)`$ has decayed over most of it, and the residual
+$`U_{\rm res} = U - 2yV'_{\rm eff}`$ is dominated there by the subtracted
+force term. The compensated event rate is then, to order one, the rate at
+which the classical force would carry a body across one row. This is the
+same growth with the reach as step 11b's Theorem E8.
+
+The worst cell of each run, with its debit and credit and where it sits:
+
+| ledger | sea | worst $`s/B`$ | at $`t`$ | $`D/B`$ | $`C/B`$ | $`x`$ | $`p`$ |
+|---|---|---|---|---|---|---|---|
+| sinkless (the model) | (S) | −0.339 | 1.62 | 1.394 | 0.055 | +1.56 | +1.375 |
+| sinkless (the model) | (S′) | −0.060 | 3.52 | 1.462 | 0.402 | +3.75 | +1.125 |
+| contact, $`\kappa = 20`$ | (S) | +0.006 | 5.82 | 2.532 | 1.538 | +7.19 | +1.375 |
+| contact, $`\kappa = 20`$ | (S′) | −0.673 | 6.00 | 5.674 | 4.001 | −0.31 | +0.125 |
+| contact, $`\kappa = 200`$ | (S) | −0.145 | 5.94 | 1.972 | 0.827 | +7.19 | +1.375 |
+| contact, $`\kappa = 200`$ | (S′) | +0.005 | 5.78 | 2.159 | 1.165 | +4.38 | +0.875 |
+| contact, $`\kappa = 2000`$ | (S) | −0.141 | 5.46 | 1.933 | 0.792 | +6.56 | +1.375 |
+| contact, $`\kappa = 2000`$ | (S′) | +0.073 | 5.46 | 2.107 | 1.181 | +4.06 | +0.875 |
+
+Reading the table. In the sinkless ledger under (S) the worst cell is the
+patch travelling with the packet's momentum peak, debited early (K9's
+bootstrap, when partners are scarce) with almost no credit; later
+absorptions on the same patch refill it to about $`+0.17\,B`$. Under (S′)
+the dip is a sixth as deep, and a quarter of its debit has already been
+credited back, but by other parents. With the contact sink at
+$`\kappa = 20`$, where $`\kappa\lvert E\rvert \approx 1.3`$ is below the
+slip rate of 3, excess bodies slip away before they recombine, and the
+worst cell is the slowest row, $`p = +0.125`$, parked under the emitting
+region: debited $`5.7\,B`$ and credited $`4.0\,B`$. At $`\kappa \ge 200`$,
+where $`\kappa\lvert E\rvert`$ is well above the slip rate, the credit lands
+on the debited patch and the worst cell stays non-negative. Under (S) there
+is no slip at all; the credit lands on the daughter rows, which are other
+flow lines, and the patch under the packet's momentum peak drains at
+$`\tfrac12\big(\Gamma\lvert E\rvert - \lvert K\rvert\ast\lvert E\rvert\big)`$
+for the whole encounter, whatever $`\kappa`$ is. At $`\kappa = 20`$ the slow
+credit rides the same flow as the debit and arrives late but in the right
+place, which is why $`\kappa = 20`$ favours (S) and $`\kappa \ge 200`$
+favours (S′).
+
+The live question in the model's own terms is therefore not whether a sink
+would help but Q-SP2: whether supply for emission becomes limiting in
+longer or deeper runs, where under (S′) nothing refills the shallow
+deficits.
+
+### 6.2 Proposition Q8: immediate contact recombination as garbage collection
+
+Suppose the contact sink were immediate: after every event step each cell
+keeps only its majority species, $`u_\pm = \max(\pm W, 0)`$, and the removed
+pairs are credited to the sea in that cell.
+
+*It does not make every event emissive.* An absorptive event needs
+opposite-species partners at both daughters: the $`+1`$ deposit at
+$`p + \xi`$ is realised by removing a negaton there, the $`-1`$ at
+$`p - \xi`$ by removing a positon (Theorem S6). With only the majority
+species left in each cell, absorption survives exactly where both deposits
+oppose the local sign of $`W`$, so that the event reduces $`\lvert W\rvert`$
+at both ends, and in amounts capped by the smaller $`\lvert W\rvert`$ there.
+Where $`W \ge 0`$ every event is emissive, as it already is at $`t = 0`$ in
+the minimal ensemble without any sink (Theorem K9); as interference makes
+$`W`$ negative in places, absorption returns.
+
+*Nor is absorption needed.* Remove it, keeping only emission and the
+immediate sink, and the sink becomes garbage collection: the same-cell
+annihilation step of the signed-particle Wigner Monte Carlo method
+(Nedjalkov et al. 2004; Sellier 2015), with the sea's pair ledger added.
+
+**Proposition Q8.** *With an immediate contact sink, (a) the ensemble is
+minimal, $`N = \lvert W\rvert`$, at every step, with or without absorption,
+so the growth of the body count that ruined the emissive unravelling
+(Theorems S4 and S8) is gone; (b) the realisation (absorptive first, or emission only) is
+invisible to the bodies and to $`E`$; (c) the sea's total is fixed by the
+pair-count identity $`P = S + N/2`$ (Theorem J1):*
+
+```math
+S_{\rm tot}(t) = S_{\rm tot}(0) - \tfrac12\Big(\lVert W(t)\rVert_1 - \lVert W(0)\rVert_1\Big),
+```
+
+*so the sea pays exactly half the growth of $`W`$'s $`L^1`$ norm, which only
+negativity can make; (d) the realisation decides only where the sea is
+credited. Absorption re-forms the pair on the parent's row; emission
+followed by contact recombination debits the parent's row and credits the
+daughter rows, the relocation of Theorem S4.*
+
+*Proof of (a) to (c).* (a) is the sink's definition. (b) Both routes change
+$`E`$ by the kernel's deposits, and the sink preserves $`E`$ and sets
+$`N = \lvert E\rvert`$. (In a time step that fires the channels in
+sequence with live populations, the two routes see slightly different
+parents after the first channel, so $`E`$ agrees only to the order of the
+step: $`7.8\times10^{-3}`$ against $`8.2\times10^{-3}`$ below.) (c) Every process in the ledger conserves
+$`P = S + N/2`$, the sink included (it removes two bodies and adds one
+pair), so $`\Delta S_{\rm tot} = -\tfrac12\Delta N = -\tfrac12\Delta\lVert W\rVert_1`$. $`\square`$
+
+*Measured* (Part F; step 16's event-resolved ledger, $`T = 6`$):
+
+| events | sea | $`f`$ | $`E`$ against the QLE | $`N/\lvert W\rvert`$ | sink per event | worst $`s/B`$ | final min $`s/B`$ | identity (c) |
+|---|---|---|---|---|---|---|---|---|
+| absorptive first + immediate sink | (S) | 0.347 | $`7.8\times10^{-3}`$ | 1.0001 | 0.20 | −0.169 | −0.130 | $`3\times10^{-7}`$ |
+| absorptive first + immediate sink | (S′) | 0.347 | $`7.8\times10^{-3}`$ | 1.0001 | 0.20 | **+0.401** | +0.455 | $`3\times10^{-7}`$ |
+| emission only + immediate sink | (S) | 0 | $`8.2\times10^{-3}`$ | 1.0001 | 0.90 | −0.186 | −0.186 | $`2\times10^{-7}`$ |
+| emission only + immediate sink | (S′) | 0 | $`8.2\times10^{-3}`$ | 1.0001 | 0.90 | −0.138 | −0.103 | $`2\times10^{-7}`$ |
+
+The sinkless model, for comparison, has $`f = 0.400`$ and $`E`$ against the
+QLE at $`5.8\times10^{-3}`$ (Part F; the worst-cell table of §6.1 has its
+sea). Over the run
+$`\lVert W\rVert_1`$ grows to 1.70 times its initial value; about a fifth of
+it ends up negative.
+
+Two cautions on these numbers. The immediate sink's $`\max(\pm W, 0)`$ has
+kinks, and spectral transport rings them into negative partner caps; the
+runs therefore floor the caps at zero, and without that the absorptive
+fraction comes out negative. The same floored update without the sink does
+not reproduce the published sinkless run ($`f = 0.448`$, with $`E`$ off the
+QLE by 12 per cent), so the sinkless comparison above is the published
+update, not a matched rerun. And the two ledgers of this
+note differ: these rows are event-resolved, while the contact-sink rows of
+§6.1 are step 16's mean-field ledger, so the $`\kappa = 2000`$ row there is
+not the immediate limit of these.
+
+*What garbage collection costs.* By N3's sum rule,
+$`\Gamma_{\rm tot}(1 - 2f) = R_{\rm sink}`$, any sink moves $`f`$ below one
+half, so the absorptive fraction becomes a property of the representation
+and (D)'s $`f = 1/2`$ loses its content. "Immediately" needs a co-location
+rule: on the mesh "same cell" is automatic, but with continuous positions it
+is a matching-cell choice, which step 21 found to be a parameter with costs
+(Proposition M9).
+
+*A join, not an end.* In the conserved-body reading (Theorem Y5's piecewise
+worldlines) a body that meets an opposite-signed body in a cell does not
+end: it joins a pair, and its worldline kinks. Under (S′) the kink has two
+parts: a jump to the common point $`(\bar x, \bar p)`$, at most a cell in
+$`x`$ and in $`p`$, which conserves total momentum; and a change of force
+law, from $`\dot p = -V'`$ to $`\dot p = 0`$, a change of direction in phase
+space with momentum continuous. Under (S) only the jump would remain. What
+is lost is the determinacy of pairing, not continuity: with several bodies
+of each species in a cell, the counts do not say which joins which, nor
+which pair a later ionisation draws from, so identity survives statistically
+(step 20's proportional allocation; Proposition Q4 is this picture
+measured).
+
+*Gray on joining.* A pair formed on contact brings two unrelated clocks and
+is generically gray, not dark: step 22 §5 measured a mean $`\lvert\mu\rvert`$
+of 1.40 to 1.48 for recombination under phase continuity, against
+$`\pi/2`$ for random phases. Darkness needs a phase alignment, by the
+re-lock rule or by dark catalysis. That leaves (S′) ambiguous for gray
+pairs. Its first argument (§2: the force has nothing to act on, a
+$`W`$-null pair) applies to any co-located, equal-momentum pair; its second
+(darkness as a limit) applies only to dark pairs. Whether a pair becomes
+force-blind on joining or only on alignment is open (Q-SP10). With garbage
+collection, pairs form at 0.9 per event, so the first reading would inject
+force-blind gray pairs into the phase reference at the event rate, for dark
+catalysis to clean up.
 
 ---
 
@@ -843,9 +1072,10 @@ row-keeping; the (S) rows were not re-measured.
   classical flow" becomes transport along rows.
 - **Step 16** ([`sea_population_equilibrium.md`](sea_population_equilibrium.md)).
   The results about $`E`$, $`N`$ and $`f`$ stand (Proposition Q1). The sea's
-  own profile changes (Proposition Q3), and S4's "fast recombination does not
-  repair it" does not hold under (S′). The S5 table is stale under either
-  motion. The demo docstring's "unique motion" argument is withdrawn.
+  own profile changes (Proposition Q3). S4's "fast recombination does not
+  repair it" concerns the contact sink, which is outside the model; under
+  (S′) it fails once $`\kappa\lvert E\rvert`$ is well above the slip rate
+  (Proposition Q7). The S5 table is stale under either motion. The demo docstring's "unique motion" argument is withdrawn.
 - **Step 17** ([`compensated_ontology.md`](compensated_ontology.md)). (S) is
   restated as (S′); G1, G3 and G4 stand (Proposition Q1).
 - **Step 20** ([`dark_sea_and_worldline_identity.md`](dark_sea_and_worldline_identity.md)).
@@ -902,6 +1132,11 @@ Steps 14, 18, 19 and 21 need nothing: their uses of (S) concern bodies.
   not. Candidates are the kernel's own rate, a multiple of it, or a constant
   of the ontology; near the Eckart barrier about three times the kernel's
   rate is needed (Q6(c)).
+- **Q-SP10.** Gray pairs. A pair formed on contact is generically gray: its
+  members bring unrelated clocks. Does it become force-blind on joining,
+  by (S′)'s first argument (a $`W`$-null pair), or only on alignment, by its
+  second (darkness as a limit)? The first puts force-blind gray pairs into
+  the phase reference at the rate pairs form (§6.2).
 
 ---
 
@@ -931,5 +1166,11 @@ Steps 14, 18, 19 and 21 need nothing: their uses of (S) concern bodies.
   charged particles.
 - Moyal, J. E. *Quantum mechanics as a statistical theory*, Proc. Cambridge
   Philos. Soc. **45** (1949) 99–124.
+- Nedjalkov, M., Kosina, H., Selberherr, S., Ringhofer, C. and Ferry, D. K.
+  *Unified particle approach to Wigner–Boltzmann transport in small
+  semiconductor devices*, Phys. Rev. B **70** (2004) 115319. The
+  signed-particle method with same-cell annihilation.
+- Sellier, J. M. *A signed particle formulation of non-relativistic quantum
+  mechanics*, J. Comput. Phys. **297** (2015) 254.
 - Van Vleck, J. H. and Weisskopf, V. F. *On the shape of collision-broadened
   lines*, Rev. Mod. Phys. **17** (1945) 227–236.

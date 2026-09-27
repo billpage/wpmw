@@ -1375,8 +1375,13 @@ see that directory's README for the ladder itself.
   Theorem S9's traces under both motions.  Part E checks Proposition Q5
   (what the sea computes): the daughter-row lever identity and the
   orthogonality of the channels on the reach with SymPy, and
-  `K_q = d(Re z_q)/dt / (B dp dx)` against the code's kernel.  `--parts`
-  selects parts.  About four minutes, fourteen with `--heavy`.
+  `K_q = d(Re z_q)/dt / (B dp dx)` against the code's kernel.  Part F
+  checks Propositions Q7 and Q8 (the sea's population): the clocks at the
+  flank and `Gamma ~ |V'|/dp` over grids and barriers, the sea split into
+  debit and credit with the contact sink and in the sinkless ledger, and an
+  immediate contact sink ("garbage collection") with and without
+  absorption, with the pair-count identity for the sea's total.  `--parts`
+  selects parts.  About nine minutes, nineteen with `--heavy`.
 - `scan_dark_reset.py` — step 23 section 8 (Proposition Q6, dark
   catalysis as a reset clock): runs the particle demo with `--readers
   --filter` on the force-blind, row-centred sea, three seeds each, for the

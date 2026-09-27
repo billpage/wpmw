@@ -649,11 +649,22 @@ retracts.
   ones, and near the Eckart barrier the kernel's own rate falls a little short
   (0.863 against a control of 0.880) while three times it nearly suffices;
   step 22's plateau was the free bodies read as partners, not incomplete
-  resetting. Three demo defects are repaired: a species mask read at the
-  destination row, the whole of step 22's drift of `Sum E` (L-SP8); the tag
-  bookkeeping of step 20's Part E; and the plane-wave lock on a periodic box.
-  Section 10 lists the corrections to steps 15, 16, 17, 20 and 22 that (S′)
-  would require.
+  resetting. **Propositions Q7 and Q8** turn to the sea's population. The
+  `kappa` of the step 16 comparison is the contact sink, which is not in the
+  model, and dark catalysis, with `dS = 0`, cannot touch the population at
+  all; the model's own clocks are the event rate and the rate at which
+  force-feeling bodies slip across force-blind rows, which are of the same
+  order by construction (`Gamma ~ |V'|/dp`), so under (S′) the sea's deficits
+  are shallow but never refilled. An immediate contact sink would be garbage
+  collection — the signed-particle method's same-cell annihilation with a pair
+  ledger added — keeping the ensemble minimal, making absorption redundant for
+  the bodies, and fixing the sea's total at half the growth of `||W||_1`; a
+  pair formed that way is generically gray, and whether it is force-blind on
+  joining or only on alignment is left open. Three demo defects are repaired:
+  a species mask read at the destination row, the whole of step 22's drift of
+  `Sum E` (L-SP8); the tag bookkeeping of step 20's Part E; and the plane-wave
+  lock on a periodic box. Section 10 lists the corrections to steps 15, 16,
+  17, 20 and 22 that (S′) would require.
 
 ## Index
 

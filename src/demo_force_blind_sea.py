@@ -32,6 +32,15 @@ E  Proposition Q5, what the sea computes: symbolically, the daughter-row
    numerically, K_q = (1/(B dp dx)) d(Re z_q)/dt at re-lock, with z_q the
    interference sum of a row's pairs read against the daughter row.
 
+F  Propositions Q7 and Q8, the sea's population: the clocks at the flank
+   (event rate, slip of force-feeling bodies across force-blind rows,
+   contact relaxation, winding) and Gamma against |V'_eff|/dp over grids
+   and barriers; the sea split S = B - D + C into debit and credit, with
+   the contact sink (outside the model) and in the model's own sinkless
+   ledger; and an immediate contact sink ("garbage collection") with and
+   without absorption, with the pair-count identity
+   S_tot = S_tot(0) - (||W||_1 - ||W0||_1)/2.
+
 The reset filter of section 8 (Proposition Q6) is measured by
 ``src/scan_dark_reset.py``, which runs ``demo_sea_lock_particles.py
 --readers --filter``.
@@ -49,7 +58,7 @@ Usage::
 
     PYTHONPATH=src python3 -u src/demo_force_blind_sea.py [--heavy]
 
-About four minutes; --heavy adds about ten.  ``--parts`` selects parts,
+About nine minutes; --heavy adds about ten.  ``--parts`` selects parts,
 e.g. ``--parts E``.
 """
 import argparse
@@ -274,6 +283,224 @@ def part_e():
 
 
 # ----------------------------------------------------------------------
+# F.  Propositions Q7 and Q8: the sea's population
+# ----------------------------------------------------------------------
+def _stream_all(run, fields, dt):
+    """Stream bodies with (S) and sea-like fields with the sea's motion."""
+    return [run.stream(f, dt) if kind == "body" else run.stream_sea(f, dt)
+            for kind, f in fields]
+
+
+def split_mesh(run, e0, kappa, T=6.0, dt=0.01):
+    """Step 16's emissive mean-field ledger with the contact sink kappa,
+    the sea split as S = B - D + C: D the cumulative debit (emission, at
+    the parent's cell), C the cumulative credit (contact recombination, at
+    the cell where it happens), both carried with the sea."""
+    B = d16.B
+    e, n = e0.copy(), np.abs(e0)
+    S = np.full_like(e0, B)
+    D, C = np.zeros_like(e0), np.zeros_like(e0)
+    worst = (np.inf,)
+    for step in range(int(round(T / dt))):
+        e, n = run.stream(e, .5 * dt), run.stream(n, .5 * dt)
+        S, D, C = (run.stream_sea(f, .5 * dt) for f in (S, D, C))
+        n = run.clamp(n, e)
+        e, n = run.kick(e, run.sym_e, dt), run.kick(n, run.sym_a, dt)
+        born = 0.5 * run.gamma_tot[:, None] * n
+        n_pre = n.copy()
+        n = run.recombine(n, e, kappa, dt)
+        cr = 0.5 * np.maximum(n_pre - n, 0.0)
+        S, D, C = S - dt * born + cr, D + dt * born, C + cr
+        e, n = run.stream(e, .5 * dt), run.stream(n, .5 * dt)
+        S, D, C = (run.stream_sea(f, .5 * dt) for f in (S, D, C))
+        n = run.clamp(n, e)
+        j = np.unravel_index(np.argmin(S), S.shape)
+        if S[j] < worst[0]:
+            worst = (S[j], (step + 1) * dt, D[j], C[j], run.r[j[0]], run.p[j[1]])
+    chk = np.abs(S - (B - D + C)).max() / B
+    return worst, chk
+
+
+def channels_split(run, up, um, S, D, C, dt, absorb=True, clip_caps=False):
+    """Step 16's Ledger.channels with the absorptive credit (into C) and the
+    emissive debit (into D) recorded, both at the parent's row.  With
+    clip_caps the partner caps are floored at zero, which the immediate
+    sink needs (see part_f); without it the update is the published one."""
+    n_abs = n_emi = 0.0
+    R = lambda f, s: np.roll(f, s, axis=1)
+    for q in range(1, run.n_p // 2):
+        lam = np.abs(run.k[:, q])[:, None]
+        if lam.max() < 1e-14:
+            continue
+        sg = np.sign(run.k[:, q])[:, None]
+        for parent, sp in ((up, 1.0), (um, -1.0)):
+            Dm = lam * (np.maximum(parent, 0.0) if clip_caps else parent) * dt
+            if Dm.max() <= 0.0:
+                continue
+            t = np.broadcast_to(sg * sp, Dm.shape)
+            capA = np.where(t > 0, R(um, -q), R(up, -q))
+            capB = np.where(t > 0, R(up, q), R(um, q))
+            if clip_caps:
+                capA, capB = np.maximum(capA, 0.0), np.maximum(capB, 0.0)
+            A = (np.minimum(Dm, np.minimum(capA, capB)) if absorb
+                 else np.zeros_like(Dm))
+            Em = Dm - A
+            n_abs += float(A.sum())
+            n_emi += float(Em.sum())
+            aq, am = R(A, q), R(A, -q)
+            um -= np.where(t > 0, aq, 0.0)
+            up -= np.where(t > 0, 0.0, aq)
+            up -= np.where(t > 0, am, 0.0)
+            um -= np.where(t > 0, 0.0, am)
+            S += A
+            C += A
+            eq, em_ = R(Em, q), R(Em, -q)
+            up += np.where(t > 0, eq, 0.0)
+            um += np.where(t > 0, 0.0, eq)
+            um += np.where(t > 0, em_, 0.0)
+            up += np.where(t > 0, 0.0, em_)
+            S -= Em
+            D += Em
+            if not clip_caps:
+                np.maximum(up, 0.0, out=up)
+                np.maximum(um, 0.0, out=um)
+    return n_abs, n_emi
+
+
+def event_run(run, e0, absorb=True, immediate=False, T=6.0, dt=0.01):
+    """The event-resolved step 16 ledger, sinkless (published update) or
+    with an immediate contact sink after every event step: each cell keeps
+    only its majority species, u+- = max(+-E, 0), and the removed pairs
+    are credited to the sea in that cell (into C)."""
+    B = d16.B
+    up, um = np.maximum(e0, 0.0).copy(), np.maximum(-e0, 0.0).copy()
+    S = np.full_like(e0, B)
+    D, C = np.zeros_like(e0), np.zeros_like(e0)
+    ref = e0.copy()
+    a_t = e_t = sink_t = 0.0
+    worst = (np.inf,)
+    L1_0, S0 = np.abs(e0).sum(), S.sum()
+    for step in range(int(round(T / dt))):
+        up, um = run.stream(up, .5 * dt), run.stream(um, .5 * dt)
+        S, D, C = (run.stream_sea(f, .5 * dt) for f in (S, D, C))
+        a, em = channels_split(run, up, um, S, D, C, dt, absorb,
+                               clip_caps=immediate)
+        a_t, e_t = a_t + a, e_t + em
+        if immediate:
+            E = up - um
+            keep_p, keep_m = np.maximum(E, 0.0), np.maximum(-E, 0.0)
+            removed = 0.5 * ((up + um) - (keep_p + keep_m))
+            S += removed
+            C += removed
+            sink_t += removed.sum()
+            up, um = keep_p, keep_m
+        up, um = run.stream(up, .5 * dt), run.stream(um, .5 * dt)
+        S, D, C = (run.stream_sea(f, .5 * dt) for f in (S, D, C))
+        ref = run.qle_step(ref, dt)
+        j = np.unravel_index(np.argmin(S), S.shape)
+        if S[j] < worst[0]:
+            worst = (S[j], (step + 1) * dt, D[j], C[j], run.r[j[0]], run.p[j[1]])
+    E = up - um
+    return dict(
+        f=a_t / (a_t + e_t), worst=worst, final=float(S.min()),
+        fid=float(np.linalg.norm(E - ref) / np.linalg.norm(ref)),
+        ratio=float((up + um).sum() / np.abs(E).sum()),
+        sink=sink_t / (a_t + e_t),
+        ident=float((S.sum() - (S0 - 0.5 * (np.abs(E).sum() - L1_0))) / S0),
+        l1=float(np.abs(E).sum() / L1_0),
+        chk=float(np.abs(S - (B - D + C)).max() / B))
+
+
+def event_run_floored_nosink(run, e0, T=6.0, dt=0.01):
+    """The floored update of the immediate-sink runs, with no sink."""
+    B = d16.B
+    up, um = np.maximum(e0, 0.0).copy(), np.maximum(-e0, 0.0).copy()
+    S = np.full_like(e0, B)
+    D, C = np.zeros_like(e0), np.zeros_like(e0)
+    ref = e0.copy()
+    a_t = e_t = 0.0
+    for _ in range(int(round(T / dt))):
+        up, um = run.stream(up, .5 * dt), run.stream(um, .5 * dt)
+        a, em = channels_split(run, up, um, S, D, C, dt, True, clip_caps=True)
+        a_t, e_t = a_t + a, e_t + em
+        up, um = run.stream(up, .5 * dt), run.stream(um, .5 * dt)
+        ref = run.qle_step(ref, dt)
+    E = up - um
+    return a_t / (a_t + e_t), float(np.linalg.norm(E - ref) / np.linalg.norm(ref))
+
+
+def part_f():
+    banner("F. Propositions Q7 and Q8: the sea's population")
+    B = d16.B
+    run = d16.Ledger()
+    e0, _ = quiet(d16.part_b, run)
+    G, slip = run.gamma_tot, np.abs(run.dv_eff) / run.dp
+    i = int(np.argmax(G))
+    ea = np.abs(e0)
+    supp = ea > 0.05 * ea.max()
+    print(f"   clocks at the flank x = {run.r[i]:+.3f}: event rate Gamma"
+          f" {G[i]:.3f}; slip of force-feeling bodies across force-blind"
+          f" rows |V'_eff|/dp {slip[i]:.3f} rows per unit time (zero under (S))")
+    print(f"   contact sink relaxation kappa|E|, median over the packet"
+          f" (|E| > 5% of peak): " + ", ".join(
+              f"{k * np.median(ea[supp]):.1f} at kappa = {k}"
+              for k in (20, 200, 2000)))
+    print(f"   winding |U|/hbar <= V0/hbar = {run.v0 / d16.HBAR:.1f}")
+    print("\n   Proposition Q7: Gamma against |V'_eff|/dp where Gamma > 20% of"
+          " its maximum")
+    print(f"   {'n_p':>4} {'dp':>6} {'a':>4} {'V0':>4} {'y_max':>7}"
+          f" {'max Gamma':>10} {'max slip':>9} {'median ratio':>13}")
+    for n_p, dp, a, v0 in ((64, 0.25, 1.0, 1.0), (128, 0.125, 1.0, 1.0),
+                           (32, 0.5, 1.0, 1.0), (64, 0.25, 2.0, 1.0),
+                           (64, 0.25, 1.0, 3.0)):
+        rr = d16.Ledger(v0=v0, a=a, n_p=n_p, dp=dp)
+        g, s = rr.gamma_tot, np.abs(rr.dv_eff) / rr.dp
+        m = g > 0.2 * g.max()
+        print(f"   {n_p:4d} {dp:6.3f} {a:4.1f} {v0:4.1f} {rr.y_max:7.3f}"
+              f" {g.max():10.3f} {s.max():9.3f}"
+              f" {np.median(g[m] / np.maximum(s[m], 1e-12)):13.3f}")
+
+    lab = lambda force: "(S) " if force else "(S')"
+    print("\n   the sea split S = B - D + C; contact sink at rate kappa, emissive"
+          " mean-field ledger (step 16 Part C), T = 6")
+    print(f"   {'kappa':>6} {'sea':>4} {'worst S/B':>10} {'t':>5} {'D/B':>7}"
+          f" {'C/B':>7} {'x':>7} {'p':>7} {'check':>8}")
+    for kappa in (20.0, 200.0, 2000.0):
+        for force in (True, False):
+            run.sea_force = force
+            (w, tw, dw, cw, xw, pw), chk = split_mesh(run, e0, kappa)
+            print(f"   {kappa:6.0f} {lab(force)} {w / B:+10.4f} {tw:5.2f}"
+                  f" {dw / B:7.3f} {cw / B:7.3f} {xw:+7.3f} {pw:+7.3f} {chk:8.1e}")
+    print("\n   the model's own ledger: absorptive first, no sink (Theorem S8), T = 6")
+    for force in (True, False):
+        run.sea_force = force
+        o = event_run(run, e0)
+        w, tw, dw, cw, xw, pw = o["worst"]
+        print(f"   {'':6s} {lab(force)} {w / B:+10.4f} {tw:5.2f} {dw / B:7.3f}"
+              f" {cw / B:7.3f} {xw:+7.3f} {pw:+7.3f} {o['chk']:8.1e}"
+              f"   f {o['f']:.4f}, |E - QLE|/|QLE| {o['fid']:.2e}")
+    print("\n   Proposition Q8: an immediate contact sink after every event step,"
+          " T = 6")
+    print(f"   {'events':>14} {'sea':>4} {'f':>6} {'|E-QLE|':>9} {'N/|W|':>7}"
+          f" {'sink/ev':>8} {'worst S/B':>10} {'final':>8} {'S_tot check':>12}"
+          f" {'L1(W)/L1(0)':>12}")
+    for absorb in (True, False):
+        for force in (True, False):
+            run.sea_force = force
+            o = event_run(run, e0, absorb=absorb, immediate=True)
+            print(f"   {'absorptive' if absorb else 'emission only':>14}"
+                  f" {lab(force)} {o['f']:6.3f} {o['fid']:9.2e}"
+                  f" {o['ratio']:7.4f} {o['sink']:8.3f} {o['worst'][0] / B:+10.4f}"
+                  f" {o['final'] / B:+8.4f} {o['ident']:12.1e} {o['l1']:12.4f}")
+    run.sea_force = True
+    print("   (S_tot check: S_tot - [S_tot(0) - (L1(W) - L1(W0))/2], relative)")
+    o = event_run_floored_nosink(run, e0)
+    print(f"   caution: the floored update without the sink gives f {o[0]:.3f} and"
+          f" |E - QLE|/|QLE| {o[1]:.3f},\n   so the sinkless comparison is the"
+          " published update above, not a matched rerun")
+
+
+# ----------------------------------------------------------------------
 # D.  (heavy) Theorem S9's traces under both motions
 # ----------------------------------------------------------------------
 def part_d():
@@ -295,11 +522,11 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--heavy", action="store_true",
                     help="add part D (Theorem S9 traces, about ten minutes)")
-    ap.add_argument("--parts", default="ABCE",
+    ap.add_argument("--parts", default="ABCEF",
                     help="which parts to run (D also needs --heavy)")
     args = ap.parse_args()
     for name, fn in (("A", part_a), ("B", part_b), ("C", part_c),
-                     ("E", part_e)):
+                     ("E", part_e), ("F", part_f)):
         if name in args.parts:
             fn()
     if args.heavy:
