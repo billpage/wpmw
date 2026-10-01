@@ -1343,16 +1343,30 @@ see that directory's README for the ladder itself.
 
 - `md_to_pdf.py` — renders a WPMW markdown doc (e.g. anything under `docs/`)
   to PDF with its embedded LaTeX math typeset correctly. Rewrites this
-  project's GitHub math conventions (`` $`...`$ `` inline, ` ```math ` fenced
-  display blocks — see the style guide below) into Pandoc-native `$...$` /
-  `$$...$$` in a temporary copy, then renders with Pandoc + xelatex (with
-  the `tex_math_single_backslash` extension enabled, so GitHub's other two
-  math forms, `\(...\)` and `\[...\]`, would also render correctly if
-  they ever appear, though current WPMW docs don't use them).
-  Equivalent in content to GitHub's preview, though not pixel-identical
-  (LaTeX's own typesetting, not a copy of GitHub's MathJax/KaTeX rendering).
-  Requires `pandoc`, `xelatex`, and `lmodern` on `PATH`
-  (`apt-get install pandoc texlive-xetex lmodern texlive-plain-generic`).
+  project's GitHub math conventions (`` $`...`$ `` inline, including spans
+  that wrap across a line; ` ```math ` fenced display blocks, including those
+  nested in list items and blockquotes — see the style guide below) into
+  Pandoc-native `$...$` / `$$...$$` in a temporary copy, then renders with
+  Pandoc + xelatex (with the `tex_math_single_backslash` extension enabled, so
+  GitHub's other two math forms, `\(...\)` and `\[...\]`, would also render
+  correctly). It also repairs the GitHub-versus-Pandoc differences that have
+  broken real renders: a list directly under a paragraph line gets the blank
+  line Pandoc needs; ` ```mermaid ` blocks are drawn with mermaid-cli when it
+  is available (otherwise left as code; `--no-mermaid` skips the attempt);
+  `--image-map PREFIX=DIR` points image URLs at local files (figures not yet
+  pushed to the `output` branch); relative image paths resolve against the
+  document's own folder; strikethrough uses `ulem`; and ✓ ✗ are mapped to
+  math symbols when `newunicodechar` is installed. Before rendering it refuses
+  a source containing control characters — the signature of a `\a`, `\b`,
+  `\f`, `\v` or `\t` eaten by a non-raw Python string, as in `\approx` →
+  BEL + `pprox` — and lists the lines (`--allow-control-chars` overrides).
+  After rendering it scans the PDF text for math that was not typeset,
+  ignoring syntax the document itself quotes in code. Equivalent in content to
+  GitHub's preview, though not pixel-identical. Requires `pandoc`, `xelatex`,
+  `lmodern` and `ulem`
+  (`apt-get install pandoc texlive-xetex lmodern texlive-plain-generic`, plus
+  `texlive-latex-extra` for the optional glyph mapping). The same script is
+  the github-md-to-pdf skill's script.
 
   ```bash
   python3 src/md_to_pdf.py docs/supplement/emission_and_absorption.md
