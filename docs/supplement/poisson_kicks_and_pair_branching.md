@@ -1,9 +1,9 @@
 # Poisson Kicks and Pair Branching: Local Jump Rules for the Wigner Equation
 
-**A test of D. Cyganski's "virtual-photon" proposal from the call of 29
-September 2026: can the quantum part of the Wigner equation be driven by a
-Poisson clock, with momentum kicks whose size and rate are read off the
-potential at the particle's position? Two answers, one exact and one
+**An evaluation of David Cyganski's "virtual-photon" proposal from the call
+of 29 September 2026: can the quantum part of the Wigner equation be driven
+by a Poisson clock, with momentum kicks whose size and rate are read off
+the potential at the particle's position? Two answers, one exact and one
 numerical. Exactly: a positive one-particle clock always adds momentum
 variance, which shows up both as heating and as decoherence; a *signed*
 two-point kick is exact only for single-mode potentials; and the classical
@@ -13,9 +13,11 @@ error it does have comes from annihilation, not from the clock.**
 
 ---
 
+[PDF](https://github.com/billpage/wpmw/releases/latest/download/poisson_kicks_and_pair_branching.pdf)
+
 ## 0. Status and provenance
 
-On the call of 2026-09-29 Cyganski showed three things:
+On the call of 2026-09-29 David showed three things:
 
 1. **A slide.** The spawning rule for a cosine potential, the shot-noise
    stochastic differential equation of a photodetector, and a proposed
@@ -24,8 +26,8 @@ On the call of 2026-09-29 Cyganski showed three things:
    dp \;=\; \hbar k_0\thinspace\mathrm{sgn}\bigl[\sin k_0x\bigr]\thinspace dN_\lambda,
    \qquad \lambda \propto \lvert\sin k_0 x\rvert .
    ```
-2. **A notebook**, `Virtual_Photon_Pair_Polarization_Wigner_Test`, written
-   with an AI assistant. It evolves a Gaussian in
+2. **A notebook**, `Virtual_Photon_Pair_Polarization_Wigner_Test`.
+   It evolves a Gaussian in
    $`V = \tfrac12 m\omega^2x^2 + V_1\sin k_0x`$, with the quadratic part as
    curved trajectories and the sine as event-driven *pair branching*. Its
    infinite-particle limit matches the QLE to about $`10^{-6}`$, and its
@@ -62,7 +64,7 @@ them.
 
 - Proposition X1: every positive one-particle rule diffuses in momentum,
   cannot carry a quantum correction without diffusing, and cannot create
-  negative regions of $`W`$. Cyganski's general rule diffuses at
+  negative regions of $`W`$. David's general rule diffuses at
   $`M_2 = \hbar\lvert V''\rvert`$.
 - Theorem X2: a single signed two-point kernel is exact at every order iff
   $`V''' = rV'`$ with $`r`$ constant.
@@ -201,7 +203,7 @@ children cancel exactly. It works like a dipole: a net force with no spreading.
 
 ### 2.1 The rule and its infinite-particle limit
 
-Cyganski's slide reads the photon as a kick delivered to *one* particle.
+David's slide reads the photon as a kick delivered to *one* particle.
 Every particle is positive; nothing is born or annihilated. At the times of a
 Poisson counter of rate $`\lambda(x)`$, the particle's momentum jumps by
 $`a\thinspace\mathrm{sgn}F(x)`$, where $`F = -V_1'`$ is the force of the
@@ -229,7 +231,7 @@ directly.
 > 3. A positive kernel maps $`W\ge 0`$ to $`W\ge 0`$. So it can never create
 >    the negative regions of a Wigner function.
 >
-> For Cyganski's general rule — step $`\hbar\lvert V''/V'\rvert`$ along the
+> For David's general rule — step $`\hbar\lvert V''/V'\rvert`$ along the
 > force, at rate $`V'^{2}/(\hbar\lvert V''\rvert)`$ — the moments are, exactly,
 > ```math
 > M_1 = -V', \qquad M_2 = \hbar\thinspace\lvert V''\rvert, \qquad
@@ -251,7 +253,7 @@ $`M_3 = Fa^2`$. The limit is classical Liouville dynamics, not quantum
 mechanics. A positive clock is therefore either diffusive or classical,
 never quantum.
 
-**Cyganski's general rule.** The rate needs the factor $`1/\hbar`$ that the
+**David's general rule.** The rate needs the factor $`1/\hbar`$ that the
 handwritten formula omits: $`V'^2/V''`$ is an energy, not a rate. With it
 restored the drift is right for every $`V`$, and the diffusion is wrong for
 every $`V`$ (Part B). Two cases show how badly:
@@ -435,7 +437,7 @@ requires $`u^{(2s)} = r^s u`$ for all $`s`$.
 
 $`\blacksquare`$
 
-The third row is the "imaginary jump" that Cyganski's *Extended
+The third row is the "imaginary jump" that David's *Extended
 Fokker–Planck* memo contemplated for moment matching. More generally, (3.1)
 makes the step imaginary wherever $`V'''/V' > 0`$. For $`x^4`$ that is
 everywhere: $`a^2 = -3\hbar^2/2x^2`$.
@@ -512,7 +514,7 @@ limit. X3 adds three things:
 - That is the operational content of the question from the call: why remove
   the curved part analytically? The part removed is exactly the member of
   the jump family with zero step and infinite rate, which is the one member a
-  jump code handles worst. Cyganski's 2020 parity trick (quadratic as force,
+  jump code handles worst. David's 2020 parity anzats (quadratic as force,
   sine as spawning) was this split, reached independently.
 
 ---
@@ -529,7 +531,7 @@ $`\lvert\Gamma(x)\rvert = (V_1/\hbar)\lvert\cos kx\rvert`$ (Lemma T1).
 at the same $`x`$: sign $`s\thinspace\mathrm{sgn}\Gamma`$ at $`p - \hbar k/2`$
 and sign $`-s\thinspace\mathrm{sgn}\Gamma`$ at $`p + \hbar k/2`$. In
 [`emission_and_absorption.md`](emission_and_absorption.md)'s vocabulary this is the event channel.
-Cyganski's "virtual photon ionising a sea pair" is its physical reading.
+David's "virtual photon ionising a sea pair" is its physical reading.
 
 **The clock.** The rate changes along each flight, so an exponential waiting
 time drawn at the start of a flight is not the right law. The simulator uses
@@ -661,7 +663,7 @@ $`N_0^{-1/2}`$; with annihilation it plateaus at the pooled bias (dotted).
 
 ## 7. The clock
 
-On the call, Cyganski described drawing an exponential waiting time and then
+On the call, David described drawing an exponential waiting time and then
 flying the particle, which is a rate frozen at the start of the flight. Part L
 implements that literally and compares it with thinning. Both runs are
 without annihilation, to $`t = 4.5`$, rms over 4 seeds:
@@ -705,7 +707,7 @@ Which clock the notebook uses is not known.
    per-mode kernels, which is the compensated split.
 3. The classical force is the zero-step, infinite-rate member of the signed
    family (X3). Removing it analytically is what the compensated split does,
-   and what Cyganski's 2020 code did for its special case.
+   and what David's 2020 code did for its special case.
 4. Event-driven pair branching with a thinning clock is unbiased. With curved
    trajectories, cell annihilation introduces a bias set by $`h_p`$. It is a
    decoherence of range $`\hbar/h_p`$, as Theorem D6 predicts (X5).
@@ -723,7 +725,7 @@ Which clock the notebook uses is not known.
 - **X-SP2 (general potentials).** Extend the event-driven code to a
   reach-limited residual kernel for a non-single-mode potential, with a
   quartic or Eckart benchmark. Theorem X2 says the local rule cannot do this.
-- **X-SP3 (the notebook's overshoot).** This needs Cyganski's code, or the
+- **X-SP3 (the notebook's overshoot).** This needs David's code, or the
   $`N_0`$ and cell-size study of §6 run in it.
 - **X-SP4 (Kapitza–Dirac).** The Skellam distribution (unsigned
   $`\pm\hbar k`$ kicks, $`e^{-2\mu}I_n(2\mu)`$) against the Bessel
