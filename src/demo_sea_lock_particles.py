@@ -40,7 +40,16 @@ indices, free bodies have mate = -1.
   --lever     transport used when a clock is set from others: own (each sea
               clock carried by its own momentum, as in section 6) or reader
               (by the momentum of the body being set, Theorem L8).
-  --dark-rate multiplies the dark-catalysis rate (1 = the kernel's own rate).
+  --dark-rate multiplies the dark-catalysis rate (1 = the kernel's own rate,
+              sum_{q>=1} |K_q(x)| per aligned pair, Theorem L5).
+  --rate-convention  qle (default): a parent fires channel q >= 1 at |K_q(x)|,
+              so its total event rate is sum_{q>=1} |K_q| = gamma_tot / 2.
+              Each firing is ONE event with two legs (+-xi_q), and this is the
+              rate whose generator is the QLE's jump term.  legacy: the
+              published step 22/23 runs, which drew events at gamma_tot =
+              sum_{q != 0} |K_q|, counting the (q, -q) event twice -- every
+              event and dark-catalysis rate doubled (step 23,
+              force_blind_sea.md, third addendum).
   --sea-force S (default): aligned pairs stream under the classical force like
               every body (postulate (S)).  blind: aligned pairs get no
               momentum kick -- they keep their rows -- while positions
@@ -101,6 +110,9 @@ ap.add_argument("--sea-p", choices=("continuous", "rows"), default="continuous",
                 help="initial sea momenta: uniform, or at row centres")
 ap.add_argument("--wrap-phase", action="store_true",
                 help="keep theta - p x/hbar continuous across the boundary")
+ap.add_argument("--rate-convention", choices=("qle", "legacy"), default="qle",
+                help="qle: total event rate sum_{q>=1}|K_q| (default); legacy: "
+                     "gamma_tot, twice that, as in the published runs")
 ap.add_argument("--filter", action="store_true",
                 help="with --readers: the reset-filter diagnostics of step 23")
 ARGS = ap.parse_args()
@@ -113,6 +125,10 @@ PMAX = NP * DP / 2
 YMAX = run.y_max
 Q = np.arange(1, NP // 2)
 XI = Q * DP
+# Per-parent event rate.  run.gamma_tot = sum over ALL q != 0 of |K_q| counts
+# each (q, -q) event twice; channels q >= 1 alone carry the QLE's generator
+# (demo_sea_resonance_clock.py Part A checks this to 1e-16).
+GAMMA_EV = run.gamma_tot / (2.0 if ARGS.rate_convention == "qle" else 1.0)
 DX_BIN, RELOCK_W, DARK = ARGS.dx_bin, ARGS.relock_w, ARGS.dark
 NOEVENTS, T_END = ARGS.no_events, ARGS.t_end
 READERS, LEVER, DARK_RATE = ARGS.readers, ARGS.lever, ARGS.dark_rate
@@ -204,7 +220,7 @@ def find(mask_extra, xc, pc):
 
 def events(dt):
     free = np.flatnonzero(mate < 0)
-    g = run.gamma_tot[kidx(x[free])]
+    g = GAMMA_EV[kidx(x[free])]
     n_ev = rng.poisson(g * dt)
     for par, n in zip(free[n_ev > 0], n_ev[n_ev > 0]):
         for _ in range(n):
@@ -262,7 +278,7 @@ def dark_catalysis(dt):
     if DARK == "off":
         return
     A_all = np.flatnonzero((mate >= 0) & (eps > 0))
-    fire = A_all[rng.poisson(DARK_RATE * run.gamma_tot[kidx(x[A_all])] * dt) > 0]
+    fire = A_all[rng.poisson(DARK_RATE * GAMMA_EV[kidx(x[A_all])] * dt) > 0]
     if DARK == "reset":                # an external clock: the free plane wave
         th[fire] = th[mate[fire]] = (p[fire] * x[fire]
                                      - p[fire] ** 2 * NOW[0] / (2 * MU)) / HBAR

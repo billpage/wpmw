@@ -9,10 +9,17 @@ continuous across the periodic boundary (``--wrap-phase``).
   table 1   the box: streaming only, with and without --wrap-phase, and the
             published step 22 section 9 configuration (events, reach dark
             catalysis x10) with and without it
-  table 2   reach dark catalysis (relative, gauge-invariant resets) at 1, 3,
-            10 and 30 times the kernel's rate, without and with events
+  table 2   reach dark catalysis (relative, gauge-invariant resets) at 1, 2,
+            3, 6, 10 and 30 times the kernel's own rate sum_{q>=1} |K_q|,
+            without and with events
   table 3   absolute resets to the free plane wave (--dark reset, an
             external clock) at the same rates, no events
+
+Rates follow demo_sea_lock_particles.py's default --rate-convention qle.
+The published scan (step 23 section 8, before the rate fix of the third
+addendum) drew every event and every dark firing at twice the kernel's
+rate, so its x1 and x3 are x2 and x6 here; without events those rows are
+the same dynamics, and they reproduce.
 
 Columns: the sea-only reading near the barrier (one member per aligned
 pair) and its mu = 0 control; tau, the regression slope of the
@@ -22,7 +29,7 @@ the share of that difference it explains; the all-bodies rate reading (A)
 of step 22 section 9 and its mu = 0 control; the sea coherence; the median
 clock age.
 
-Writes sea_reset_filter.png.  About six minutes.
+Writes sea_reset_filter.png.  About ten minutes.
 
     PYTHONPATH=src python3 -u src/scan_dark_reset.py
 """
@@ -46,7 +53,7 @@ W = ["--wrap-phase"]
 EV = ["--relock-w", "3"]
 NOEV = ["--no-events"]
 SEEDS = (["--seed", "11"], ["--seed", "12"], [])
-RATES = (1, 3, 10, 30)
+RATES = (1, 2, 3, 6, 10, 30)
 SNAP = re.compile(r"^\s*([\d.]+)\s+\d+\s+[-\d.]+\s+\S+\s+([-\d.]+)")
 FLT = re.compile(
     r"sea-only reading\s+(\S+)\s+control\s+(\S+)\s+tau\s+(\S+)\s+resid\s+(\S+)"
