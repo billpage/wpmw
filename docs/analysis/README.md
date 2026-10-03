@@ -674,13 +674,15 @@ retracts.
   the sea's own live reading it converges open loop, `1 - corr` falling as
   `1/nu`, but fails closed loop: the busy sea reads low before any feedback,
   acting on the reading costs as much again, and at the physical density a
-  reader has 0.08 chords. Four demo defects are repaired: a species mask read
-  at the destination row, the whole of step 22's drift of `Sum E` (L-SP8); the
-  tag bookkeeping of step 20's Part E; the plane-wave lock on a periodic box;
-  and the particle model's event rate, twice the kernel's, which re-measures
-  Q6. Section 11 lists the corrections to steps 15, 16, 17, 20 and 22 that
-  (S′) would require, and those the rate defect makes to step 22 and the
-  algorithm specification.
+  reader has 0.08 chords. A deeper sea at fixed sampling is no remedy: it
+  dilutes the traffic of other bodies but not a reader's own, and leaves the
+  excess firing, so the sea's density stays at `B = 1/(pi hbar)`. Four demo
+  defects are repaired: a species mask read at the destination row, the whole
+  of step 22's drift of `Sum E` (L-SP8); the tag bookkeeping of step 20's Part
+  E; the plane-wave lock on a periodic box; and the particle model's event
+  rate, twice the kernel's, which re-measures Q6. Section 11 lists the
+  corrections to steps 15, 16, 17, 20 and 22 that (S′) would require, and
+  those the rate defect makes to step 22 and the algorithm specification.
 
 ## Index
 

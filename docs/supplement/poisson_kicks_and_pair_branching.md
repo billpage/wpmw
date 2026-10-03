@@ -9,7 +9,9 @@ variance, which shows up both as heating and as decoherence; a *signed*
 two-point kick is exact only for single-mode potentials; and the classical
 force is the zero-step limit of signed kicks. Numerically: an independent
 event-driven re-implementation of his pair branching is unbiased, and the
-error it does have comes from annihilation, not from the clock.**
+error it does have comes from annihilation, not from the clock. A
+deterministic integrate-and-fire clock (step 23, Proposition Q11) is just as
+unbiased and slightly quieter.**
 
 ---
 
@@ -78,13 +80,18 @@ them.
 - Proposition X5 (numerical): in an event-driven run with curved
   trajectories, the bias is set by the momentum width of the annihilation
   cell.
+- Proposition X7 (numerical, §7.1): a deterministic integrate-and-fire
+  clock, step 23's Proposition Q11, is as unbiased as thinning and slightly
+  quieter; the noise of both is the counting noise of the signed
+  population.
 
 Nothing here retracts an earlier result.
 
 Theorem prefix **X**, open items **X-SP**. Companion code:
 [`src/demo_signed_local_kernel.py`](../../src/demo_signed_local_kernel.py) (Parts A–E, SymPy and
 spectral) and [`src/demo_event_driven_branching.py`](../../src/demo_event_driven_branching.py) (Parts F–L, Monte
-Carlo), with the simulator in
+Carlo) and [`src/demo_fire_clock_branching.py`](../../src/demo_fire_clock_branching.py) (Parts M–N, the
+deterministic clock), with the simulator in
 [`src/wpmwlib/event_branching.py`](../../src/wpmwlib/event_branching.py). Units $`\hbar = m = 1`$ in all
 numerical parts. Every number below is an output of those scripts.
 
@@ -688,6 +695,70 @@ acceptance ratio (0.645 in the one-particle run of Part K), so there is no
 reason to use anything else.
 Which clock the notebook uses is not known.
 
+### 7.1 A deterministic clock
+
+Step 23 ([`../analysis/force_blind_sea.md`](../analysis/force_blind_sea.md) §9.3, Proposition Q11)
+replaces the Poisson clock by an integrator. Every particle carries a
+number $`C`$, advanced along its own flight by
+
+```math
+\frac{dC}{dt} = \Gamma\bigl(x(t)\bigr) = \frac{V_1}{\hbar}\cos kx(t) ,
+```
+
+signed, and fires each time $`C`$ crosses an integer, with the direction of
+the crossing as the sign $`\mathrm{sgn}\,\Gamma`$ of the event. The only
+randomness left is the initial phases $`C(0)`$, uniform on $`[0, 1)`$, and the
+fresh phases given to children; a given initial ensemble then evolves
+deterministically. Along any flight the signed number of firings is
+$`\int\Gamma\,dt`$ to within one, and with uniform phases the expected
+firing density is $`\lvert\Gamma(x(t))\rvert\,dt`$ exactly. Parents are
+not changed by their events, so their flights do not depend on their
+firings, and the infinite-$`N_0`$ limit is the QLE. Like thinning, and
+unlike the frozen clock above, the integrator evaluates the rate where the
+kick lands.
+
+The simulator's `clock="fire"` integrates by Simpson's rule on sub-steps of
+0.005 of the exact flow and interpolates crossing times linearly in $`C`$;
+`clock="fire-abs"` integrates $`\lvert\Gamma\rvert`$ instead, a gross
+clock with no back-and-forth crossings where $`\Gamma`$ changes sign. Part M
+compares the three clocks without annihilation at $`t = 4.5`$, rms over
+four seeds, every clock starting from the same initial ensembles:
+
+| $`N_0`$ | thinning, $`e\sqrt{N_0}`$ | fire, $`e\sqrt{N_0}`$ | fire-abs, $`e\sqrt{N_0}`$ | events per particle |
+|---|---|---|---|---|
+| 6 250 | 14.70 | 11.92 | 11.90 | 9.46–9.48 |
+| 25 000 | 13.78 | 13.49 | 13.43 | 9.49–9.55 |
+| 100 000 | 14.15 | 12.53 | 13.37 | 9.50–9.54 |
+
+The sub-steps are converged: at $`N_0 = 25\,000`$ the rms error is 0.080,
+0.084 and 0.085 at 0.02, 0.01 and 0.005. Part N switches annihilation on
+(cell $`0.1\times0.125`$, $`t = 9`$): thinning and the fire clock give 0.0193
+and 0.0180 at $`N_0 = 10^5`$ (four seeds), 0.0122 and 0.0112 at
+$`4\times10^5`$ (two).
+
+> **Proposition X7 (numerical).** Integrate-and-fire clocks are unbiased
+> for pair branching: $`e\sqrt{N_0}`$ stays constant as $`N_0`$ grows, the
+> four-seed mean halves the error as pure noise does, and the events per
+> particle agree with thinning's to 0.5 per cent. Their rms error is about
+> 11 per cent below thinning's, and with annihilation they leave the bias of
+> X5 unchanged.
+
+**Why the gain is small.** The noise is not in when events happen. It is
+the counting noise of the signed population. A particle of sign $`\pm1`$
+adds $`\pm1/(N_0h_x)`$ to its bin, so for $`M`$ independent particles the
+expected squared error is $`M/(N_0^2h_x)`$, and
+
+```math
+e\sqrt{N_0} \;\approx\; \sqrt{\frac{M/N_0}{h_x}} = \sqrt{\frac{20}{0.1}} = 14.1
+```
+
+at $`t = 4.5`$, where the population has grown to $`M = 20N_0`$. That is
+thinning's figure. A deterministic clock fixes how many children are born
+and when, but not the unsigned mass they carry, which is the sign problem
+in another form; only annihilation reduces that, at the price of X5's bias.
+What the clock does show is that the rate needs no randomness: phases and a
+threshold are enough.
+
 ---
 
 ## 8. Summary
@@ -711,6 +782,9 @@ Which clock the notebook uses is not known.
 4. Event-driven pair branching with a thinning clock is unbiased. With curved
    trajectories, cell annihilation introduces a bias set by $`h_p`$. It is a
    decoherence of range $`\hbar/h_p`$, as Theorem D6 predicts (X5).
+5. A deterministic integrate-and-fire clock, with random initial phases
+   only, is as unbiased and slightly quieter (X7). The noise of every clock
+   is the counting noise of the signed population.
 
 ---
 
@@ -753,6 +827,7 @@ Which clock the notebook uses is not known.
 | Branching unbiased | Monte Carlo, $`e\sqrt{N_0}`$ constant | Part H |
 | X5 | Monte Carlo, 3 cells × 4 $`N_0`$, plus $`h_x`$, sync and centroid variants | Parts I, J |
 | Frozen clock | Monte Carlo | Part L |
+| X7 | Monte Carlo, three clocks × 3 $`N_0`$, sub-step convergence, with and without annihilation | Parts M, N |
 
 ---
 

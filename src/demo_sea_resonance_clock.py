@@ -97,6 +97,11 @@ ap.add_argument("--norm", choices=("expected", "local"), default="expected",
 ap.add_argument("--events", nargs="+",
                 default=["poisson", "clock-mesh", "clock-live", "clock-live-h"])
 ap.add_argument("--seeds", type=int, default=2, help="seeds 11, 12, ...")
+ap.add_argument("--sea-depth", type=float, nargs="+", default=[1.0],
+                help="Parts D, E: the sea's density in units of B = 1/(pi hbar), at fixed "
+                     "packet (beta; the ensemble multiplicity nu scales both).  The "
+                     "reading is normalised by the sea actually present, so beta changes "
+                     "its sampling and the ratio of sea to event traffic, not its mean")
 ap.add_argument("--relock-w", type=float, nargs="+", default=[0.0],
                 help="Part E: step 22 section 6 re-locking window W (0 = off).  On "
                      "recombination both members take the circular mean of the "
@@ -323,12 +328,14 @@ def part_c():
 
 # ------------------------------------------------------------------ Parts D, E
 def particle_run(cfg):
-    """One run of the particle model.  cfg: dict(nu, seed, kappa, dX, events[, relock_w])."""
+    """One run of the particle model.
+    cfg: dict(nu, seed, kappa, dX, events[, relock_w, sea_depth])."""
     nu, seed, kappa, dX, events = (cfg["nu"], cfg["seed"], cfg["kappa"], cfg["dX"],
                                    cfg["events"])
     relock_w = cfg.get("relock_w", 0.0)
+    beta = cfg.get("sea_depth", 1.0)
     rng = np.random.default_rng(seed)
-    n_pairs = int(round(nu * B * L * 2 * PMAX))
+    n_pairs = int(round(beta * nu * B * L * 2 * PMAX))
     xs = rng.uniform(-L / 2, L / 2, n_pairs)
     ps = DP * np.clip(np.round(rng.uniform(-PMAX, PMAX, n_pairs) / DP),
                       -(NP // 2) + 1, NP // 2 - 1)
@@ -345,7 +352,7 @@ def particle_run(cfg):
     mate = np.concatenate([np.arange(n_pairs, 2 * n_pairs), np.arange(n_pairs),
                            -np.ones(n_pos + n_neg, int)])
     N = len(x)
-    n_row = nu * B * DP
+    n_row = beta * nu * B * DP
     stats = dict(recomb=0, ion=0, fail=0, relock=0)
     made = np.zeros(N, bool)                    # members of pairs formed by an event
 
@@ -701,7 +708,7 @@ def structure_report(rows, part):
     rows = [r for r in rows if r["events"] in ("none", "shadow")]
     if not rows:
         return
-    group = ("nu", "kappa", "relock_w", "events")
+    group = ("nu", "sea_depth", "kappa", "relock_w", "events")
     keys = sorted({tuple(r.get(g, 0.0) for g in group) for r in rows})
     out = []
     print("\n   sea structure seen from each reader's row (obs / expected): profile at"
@@ -760,28 +767,30 @@ def summarise(rows, group, cols):
 
 def part_d():
     rule("D. Open loop: integrated live reading against the mesh kernel")
-    cfgs = [dict(nu=nu, seed=11 + s, kappa=k, dX=dx, events="none")
-            for nu in ARGS.nu for dx in ARGS.dX for k in ARGS.kappa
-            for s in range(ARGS.seeds)]
+    cfgs = [dict(nu=nu, seed=11 + s, kappa=k, dX=dx, events="none", sea_depth=b)
+            for nu in ARGS.nu for b in ARGS.sea_depth for dx in ARGS.dX
+            for k in ARGS.kappa for s in range(ARGS.seeds)]
     rows = run_jobs(cfgs, "D")
     write_csv(rows, f"sea_resonance_clock_D{ARGS.tag}.csv")
     print("\n   mean +- standard error over seeds (slope, corr, relerr: int Khat against"
           " int K along each body's path;\n   _win: against K averaged over the aperture"
           " window; _ctl: the mu = 0 control; fm_raw_rms: first moment\n   before the"
           " L2(c) projection, against cls_rms, the classical impulse)")
-    summarise(rows, ("nu", "dX", "kappa"),
+    summarise(rows, ("nu", "sea_depth", "dX", "kappa"),
               ("chords", "slope", "corr", "relerr", "slope_win", "corr_ctl", "fm_raw_rms",
                "cls_rms"))
-    summarise(rows, ("nu", "dX", "kappa"), ("slope_ctl", "g_hole", "g_aper", "g_chord"))
+    summarise(rows, ("nu", "sea_depth", "dX", "kappa"),
+              ("slope_ctl", "g_hole", "g_aper", "g_chord"))
     structure_report(rows, "D")
     return rows
 
 
 def part_e():
     rule("E. Closed loop: events triggered by the integrators")
-    cfgs = [dict(nu=nu, seed=11 + s, kappa=k, dX=ARGS.dX[0], events=ev, relock_w=w)
-            for nu in ARGS.nu_closed for k in ARGS.kappa for ev in ARGS.events
-            for w in ARGS.relock_w for s in range(ARGS.seeds)]
+    cfgs = [dict(nu=nu, seed=11 + s, kappa=k, dX=ARGS.dX[0], events=ev, relock_w=w,
+                 sea_depth=b)
+            for nu in ARGS.nu_closed for b in ARGS.sea_depth for k in ARGS.kappa
+            for ev in ARGS.events for w in ARGS.relock_w for s in range(ARGS.seeds)]
     rows = run_jobs(cfgs, "E")
     ref = packet(run, r0=-8.0, p0=1.2, sr=2.0, sp=0.25)
     for _ in range(int(round(ARGS.t_end / DT))):
@@ -792,7 +801,7 @@ def part_e():
     print("   att_*: the trigger's signed firings against the QLE target in (x, q) bins;"
           " real_*: those realised;\n   gross_ratio: all firings over the QLE's gross"
           " rate sum |K_q| dt (1 = no excess)")
-    summarise(rows, ("nu", "kappa", "relock_w", "events"),
+    summarise(rows, ("nu", "sea_depth", "kappa", "relock_w", "events"),
               ("att_slope", "att_corr", "real_corr", "gross_ratio", "made_frac", "ap_coh",
                "ion", "recomb", "fail"))
     sh = [r for r in rows if r["events"] == "shadow"]
@@ -800,10 +809,10 @@ def part_e():
         print("\n   shadow runs: the live reading integrated along every free body's path"
               " while the mesh clock acts\n   (sh_*: int Khat against int K; _ctl: the"
               " mu = 0 control)")
-        summarise(sh, ("nu", "kappa", "relock_w"),
+        summarise(sh, ("nu", "sea_depth", "kappa", "relock_w"),
                   ("sh_slope", "sh_corr", "sh_relerr", "sh_slope_ctl", "sh_corr_ctl",
                    "sh_bodies"))
-        summarise(sh, ("nu", "kappa", "relock_w"), ("g_hole", "g_aper", "g_chord"))
+        summarise(sh, ("nu", "sea_depth", "kappa", "relock_w"), ("g_hole", "g_aper", "g_chord"))
         structure_report(sh, "E")
     return rows, t_mesh
 

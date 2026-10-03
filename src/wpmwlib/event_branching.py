@@ -10,6 +10,22 @@ the global bound lam_max = V1/hbar, accepted with probability
 single-mode amplitude (Lemma T1).  Thinning is exact for a rate that varies
 along the flight; no time step enters the dynamics.
 
+Three clocks are provided for the pair rule:
+
+  thin      Poisson, by thinning (exact; above).
+  frozen    Poisson with the rate frozen at the start of each flight (biased;
+            the supplement's section 7).
+  fire      deterministic integrate-and-fire (step 23, Proposition Q11):
+            every particle carries an integrator C advanced along its own
+            flight by dC/dt = Gamma(x(t)), signed, and fires each time C
+            crosses an integer, with orientation sgn(dC) = sgn Gamma.  Only
+            the initial phases C(0) are random (uniform on [0, 1); children
+            get fresh ones), so a given initial ensemble evolves
+            deterministically.  The integral is Simpson's rule on sub-steps
+            of dt_fire, and crossing times are interpolated linearly in C.
+  fire-abs  the same with dC/dt = |Gamma| (a gross clock, no cancelling
+            back-and-forth crossings where Gamma changes sign).
+
 Two event rules are provided:
 
   pair   signed pair branching (the QLE generator):  the parent persists and
@@ -32,7 +48,7 @@ import numpy as np
 
 class EventBranching:
     def __init__(self, omega, V1, k, rule="pair", step=None, clock="thin",
-                 cell=(0.25, 0.5), annihilation="keep", rng=None):
+                 cell=(0.25, 0.5), annihilation="keep", rng=None, dt_fire=0.005):
         self.om, self.V1, self.k = float(omega), float(V1), float(k)
         self.rule = rule
         self.a = 0.5 * self.k                    # hbar k / 2
@@ -44,6 +60,10 @@ class EventBranching:
         self.lam_max = self.V1 if rule == "pair" else self.V1 * self.k / self.step
         self.n_candidates = 0
         self.n_events = 0
+        self.dt_fire = float(dt_fire)
+        self.C = None              # integrator phases, aligned with the particles (fire clocks)
+        if clock.startswith("fire") and rule != "pair":
+            raise ValueError("the fire clocks are implemented for the pair rule")
 
     # --------------------------------------------------------------
     def rate(self, x):
@@ -59,6 +79,8 @@ class EventBranching:
     # --------------------------------------------------------------
     def advance(self, x, p, sg, t0, t1):
         """Advance all particles from t0 to t1 with event-driven jumps."""
+        if self.clock.startswith("fire"):
+            return self._advance_fire(x, p, sg, t0, t1)
         tcur = np.full(x.shape, t0)
         done_x, done_p, done_s = [], [], []
         while x.size:
@@ -103,6 +125,59 @@ class EventBranching:
             return np.concatenate(done_x), np.concatenate(done_p), np.concatenate(done_s)
         return x, p, sg
 
+    def _advance_fire(self, x, p, sg, t0, t1):
+        """Integrate-and-fire clocks (Proposition Q11 of step 23)."""
+        x, p, sg = x.copy(), p.copy(), sg.copy()
+        if self.C is None or self.C.size != x.size:
+            self.C = self.rng.random(x.size)
+        C = self.C
+        signed = self.clock == "fire"
+        gam = lambda xx: self.V1 * np.cos(self.k * xx)
+        nsub = max(1, int(np.ceil((t1 - t0) / self.dt_fire - 1e-9)))
+        edges = np.linspace(t0, t1, nsub + 1)
+        for Ta, Tb in zip(edges[:-1], edges[1:]):
+            tcur = np.full(x.size, Ta)
+            act = np.ones(x.size, bool)
+            while act.any():
+                i = np.flatnonzero(act)
+                dt = Tb - tcur[i]
+                xm, _ = self.flow(x[i], p[i], 0.5 * dt)
+                x1, p1 = self.flow(x[i], p[i], dt)
+                g = [gam(x[i]), gam(xm), gam(x1)]
+                if not signed:
+                    g = [np.abs(v) for v in g]
+                dC = dt * (g[0] + 4 * g[1] + g[2]) / 6
+                Cn = C[i] + dC
+                fl = np.floor(C[i])
+                cr = np.floor(Cn) != fl
+                ok = ~cr                                   # reach Tb without firing
+                j = i[ok]
+                x[j], p[j], C[j], tcur[j] = x1[ok], p1[ok], Cn[ok], Tb
+                act[j] = False
+                if not cr.any():
+                    break
+                j = i[cr]
+                up = dC[cr] > 0
+                n = np.where(up, fl[cr] + 1, fl[cr])        # the integer crossed
+                frac = np.clip((n - C[j]) / dC[cr], 0.0, 1.0)
+                x[j], p[j] = self.flow(x[j], p[j], frac * dt[cr])
+                tcur[j] += frac * dt[cr]
+                C[j] = n + np.where(up, 1e-12, -1e-12)
+                if signed:
+                    sgam = np.where(up, 1, -1)
+                else:
+                    sgam = np.sign(gam(x[j])).astype(int)
+                self.n_events += j.size
+                xa, pa, sa = x[j], p[j], sg[j]
+                x = np.concatenate([x, xa, xa])
+                p = np.concatenate([p, pa - self.a, pa + self.a])
+                sg = np.concatenate([sg, sa * sgam, -sa * sgam]).astype(np.int8)
+                tcur = np.concatenate([tcur, tcur[j], tcur[j]])
+                C = np.concatenate([C, self.rng.random(2 * j.size)])
+                act = np.concatenate([act, np.ones(2 * j.size, bool)])
+        self.C = C
+        return x, p, sg
+
     # --------------------------------------------------------------
     def annihilate(self, x, p, sg):
         """Cancel opposite signs cell by cell; survivors keep their positions."""
@@ -129,6 +204,8 @@ class EventBranching:
         survive = rank < (gsize[gid] - opp)
         idx = order[survive]
         xo, po, so = x[idx], p[idx], sg[idx]
+        if self.C is not None and self.C.size == x.size:
+            self.C = self.C[idx]
         if self.annihilation == "centroid":
             # shift survivors so each cell's signed first moments are preserved
             xs_, ps_ = x[order], p[order]

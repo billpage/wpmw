@@ -42,7 +42,10 @@ imported by the scripts here.
   exact for a rate that varies along the flight. Two event rules: signed pair
   branching (the QLE generator) and one-particle positive kicks (Cyganski's
   slide, the negative control). A `frozen` clock, with the rate taken at the
-  start of each flight, is kept for comparison. Cell annihilation of opposite
+  start of each flight, is kept for comparison, and the pair rule also takes
+  deterministic integrate-and-fire clocks (`fire`, signed; `fire-abs`), step
+  23's Proposition Q11, used by `demo_fire_clock_branching.py`. Cell
+  annihilation of opposite
   signs at synchronisation times, either keeping survivors in place or
   shifting them to preserve each cell's signed first moments.
 - `wpmwlib/kaggle_batch.py` — runs a script from `src/` on Kaggle as a
@@ -1457,6 +1460,13 @@ see that directory's README for the ladder itself.
   `demo_sea_population_equilibrium.py` carry a `sea_force` switch (True,
   the default, is (S) as published); `demo_dark_sea_and_identity.py` and
   `demo_contact_kernel.py` expose it as `--sea S|blind`.
+- `demo_fire_clock_branching.py` — supplement
+  `poisson_kicks_and_pair_branching.md` §7.1 (Parts M–N): Cyganski's
+  cosine-plus-harmonic pair branching with step 23's deterministic
+  integrate-and-fire clock (`EventBranching(clock="fire")`, and `"fire-abs"`)
+  against thinning, with the same initial ensembles; without annihilation
+  (bias and noise against `N0`, sub-step convergence) and with it.  About
+  forty minutes; `WPMW_QUICK=1` for a smoke test.
 - `demo_sea_resonance_clock.py` — step 23 third addendum: the sea as a
   resonance clock, every body carrying one integrator per channel fed by
   its live reading of the sea.  Part A is exact (SymPy and the mesh
@@ -1470,7 +1480,8 @@ see that directory's README for the ladder itself.
   integrators fed by the mesh `K_q`, by the live reading, and by the live
   reading with hysteresis; `--events shadow` lets the mesh-fed integrators
   act while the live reading is integrated alongside, never firing).
-  `--relock-w W` applies step 22 §6's re-locking to pairs made and bodies
+  `--sea-depth` scales the sea alone, in units of `B`, at fixed packet (step
+  23 §9.4(g)).  `--relock-w W` applies step 22 §6's re-locking to pairs made and bodies
   kinked by events, and the closed loop reports the readers' chord
   coherence.  Open-loop and shadow runs also histogram the sea's structure
   around each reader (`sea_resonance_clock_G<part><tag>.csv`).  Sweeps over
