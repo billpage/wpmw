@@ -578,10 +578,11 @@ $`\Gamma^{\mathrm{res}} \to \Gamma`$, $`y_{\max} \to L/2`$ corner of this one.
   negativity and must not be used for production runs **[normative]** — this
   is the standing project result on the momentum substep, unchanged here.
   The mesh form carries one field and needs nothing from §5.
-- **World ensemble, sampled.** Total rate at $`x`$ is
-  $`R(x) = \sum_{q \ne 0} \lvert K_{\mathrm{res}}(x, \xi_q)\rvert`$. Draw an
-  event time from $`R(x)`$ and draw $`q`$ with probability
-  $`\lvert K_q\rvert / R`$. **What to then do with the drawn event is §5, and
+- **World ensemble, sampled.** The total leg rate at $`x`$ is
+  $`R(x) = \sum_{q \ne 0} \lvert K_{\mathrm{res}}(x, \xi_q)\rvert`$. An
+  event has two legs (§5.2), so a parent fires at $`R(x)/2`$: draw an event
+  time from $`R(x)/2`$ and draw $`q \ge 1`$ with probability
+  $`2\lvert K_q\rvert / R`$. **What to then do with the drawn event is §5, and
   is not obtainable from $`R`$ alone [normative].**
 
 The sign of $`K_q`$ has to go somewhere, and there is no way to make it go
@@ -611,6 +612,14 @@ is the emissive unravelling, and Theorems S4 and S5 show it is the wrong one:
 it drains the worst sea cell without bound, and a sea deep enough to survive
 is a sea whose throttling moves $`W`$ by 40 per cent in the core. §5 is the
 replacement.
+
+**Second erratum (step 23, third addendum).** The world-ensemble rule above
+drew an event time from $`R(x)`$ and a channel from all $`q \ne 0`$. With
+$`(q, -q)`$ one event (§5.2) that fires every event twice as often as the
+jump generator implies; the mesh ledger of §7.3, which applies
+$`\lvert K_q\rvert`$ once per $`q \ge 1`$, was right. The particle model of
+steps 22 and 23 followed the old rule; see §10 of
+[`../analysis/force_blind_sea.md`](../analysis/force_blind_sea.md).
 
 ### 4.4 The horizon profile, and the event budget
 

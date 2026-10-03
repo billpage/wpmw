@@ -40,10 +40,18 @@ fires channel q each time the integrator crosses an integer.
             clock-mesh    integrators fed by the mesh K_q
             clock-live    integrators fed by the live reading
             clock-live-h  the same with a hysteresis band (Schmitt trigger)
+            shadow        clock-mesh acts; the live reading is integrated alongside
+                          along every free body's path but never fires
           and realised as in demo_sea_lock_particles.py.  Reported: the
           trigger's signed firings against the QLE target sum eps K_q dt in
           (x, q) bins, gross firings against the QLE's gross rate, the
           transmission T_E against the mesh QLE, and event counts.
+          Open-loop and shadow runs also report the sea's structure seen from
+          each reader's own row: the profile of sea members at offset s from
+          the reader against the row's mean density, and the separations of
+          the reading's chords against a uniform aperture (g_hole, g_aper,
+          g_chord; histograms pooled over seeds in
+          sea_resonance_clock_G<part><tag>.csv).
 
 Units hbar = m = 1; Eckart barrier V0 = a = 1; dp = 0.25, n_p = 64,
 y_max = 2 pi; box L = 48 with periodic wrap (a window on the open line).
@@ -89,6 +97,11 @@ ap.add_argument("--norm", choices=("expected", "local"), default="expected",
 ap.add_argument("--events", nargs="+",
                 default=["poisson", "clock-mesh", "clock-live", "clock-live-h"])
 ap.add_argument("--seeds", type=int, default=2, help="seeds 11, 12, ...")
+ap.add_argument("--relock-w", type=float, nargs="+", default=[0.0],
+                help="Part E: step 22 section 6 re-locking window W (0 = off).  On "
+                     "recombination both members take the circular mean of the "
+                     "destination row's sea clocks within W, transported to the new "
+                     "pair; a body kinked out of an ionised pair likewise")
 ap.add_argument("--t-end", type=float, default=14.0)
 ap.add_argument("--workers", type=int, default=0, help="0: one per CPU")
 ap.add_argument("--tag", default="")
@@ -107,6 +120,9 @@ KCUM = np.vstack([np.zeros(NQ), np.cumsum(0.5 * (KQ[1:] + KQ[:-1]), axis=0) * ru
 XACT = 8.0                                 # K_q is below 1e-3 of its peak beyond 7.5
 DT = 0.02
 X_SITE = -0.625                            # the Eckart flank site of Q5 and Q7
+S_EDGE = np.linspace(-3 * YMAX, 3 * YMAX, 49)   # structure diagnostic: reader offsets
+S_MID = 0.5 * (S_EDGE[1:] + S_EDGE[:-1])
+D_EDGE = np.linspace(0.0, 2 * YMAX, 17)         # chord separations
 
 
 def V(x):
@@ -281,13 +297,36 @@ def part_c():
             print(f"   x = {xb:5.2f}  nu = {nu:3d}  dX = {dX:4.2f}:  q = 1..4 against K "
                   f"{np.round(est[:4] / K[:4], 3)}  against window-mean K "
                   f"{np.round(est[:4] / Kw[:4], 3)}", flush=True)
+    print("   slope of the mean reading on K over all q, pooled over x = +-1, +-2, +-3"
+          " (dX = 1):\n   normalised by the expected density, and by the count N in"
+          " the aperture (--norm local)")
+    xs_c = np.array([-3.0, -2.0, -1.0, 1.0, 2.0, 3.0])
+    for nu in (32, 64):
+        n = nu * B * DP
+        num, num_l, den, inv_n = 0.0, 0.0, 0.0, []
+        for xb in xs_c:
+            K = interp_rows(KQ, np.array([xb]))[0]
+            dv = np.interp(xb, run.r, run.dv_eff)
+            acc, acc_l = np.zeros(NQ), np.zeros(NQ)
+            for _ in range(200):
+                cnt = rng.poisson(n * (2 * YMAX + 1.0))
+                xs = np.sort(rng.uniform(xb - YMAX - 0.5, xb + YMAX + 0.5, cnt))
+                acc += reading_from(xs, xb, 1.0, n, dv)[0]
+                acc_l += reading_from(xs, xb, 1.0, cnt / (2 * YMAX + 1.0), dv)[0]
+                inv_n.append(1.0 / max(cnt, 1))
+            num += acc @ K / 200
+            num_l += acc_l @ K / 200
+            den += K @ K
+        print(f"   nu = {nu:3d}:  expected {num / den:.3f}   local {num_l / den:.3f}"
+              f"   (1 - <1/N> = {1 - np.mean(inv_n):.3f})", flush=True)
 
 
 # ------------------------------------------------------------------ Parts D, E
 def particle_run(cfg):
-    """One run of the particle model.  cfg: dict(nu, seed, kappa, dX, events)."""
+    """One run of the particle model.  cfg: dict(nu, seed, kappa, dX, events[, relock_w])."""
     nu, seed, kappa, dX, events = (cfg["nu"], cfg["seed"], cfg["kappa"], cfg["dX"],
                                    cfg["events"])
+    relock_w = cfg.get("relock_w", 0.0)
     rng = np.random.default_rng(seed)
     n_pairs = int(round(nu * B * L * 2 * PMAX))
     xs = rng.uniform(-L / 2, L / 2, n_pairs)
@@ -307,7 +346,71 @@ def particle_run(cfg):
                            -np.ones(n_pos + n_neg, int)])
     N = len(x)
     n_row = nu * B * DP
-    stats = dict(recomb=0, ion=0, fail=0)
+    stats = dict(recomb=0, ion=0, fail=0, relock=0)
+    made = np.zeros(N, bool)                    # members of pairs formed by an event
+
+    def reference(excl, xj, pj):
+        """Step 22 section 6: circular mean of the destination row's sea clocks
+        within relock_w of xj, each carried to xj by its own momentum."""
+        m = (mate >= 0) & (np.abs(p - pj) < DP / 2) & (np.abs(x - xj) < relock_w)
+        m[list(excl)] = False
+        if not m.any():
+            return None
+        stats["relock"] += 1
+        return float(np.angle(np.exp(1j * (th[m] + p[m] * (xj - x[m]) / HBAR)).sum()))
+
+    def aperture_diag(bs):
+        """Over the readers' apertures: fraction of chords with an event-made end,
+        and the coherence |<exp(i mu_ref)>| of the chords' readings."""
+        sea = np.flatnonzero((mate >= 0) & (eps > 0))
+        rows = np.round(p[sea] / DP).astype(int)
+        z, n, nm = 0j, 0, 0
+        for b in bs:
+            r = int(np.round(p[b] / DP))
+            m = sea[(rows == r) & (np.abs(x[sea] - x[b]) < YMAX + dX / 2)]
+            if len(m) < 2:
+                continue
+            m = m[np.argsort(x[m])]
+            I, J = np.triu_indices(len(m), 1)
+            d = x[m[J]] - x[m[I]]
+            sel = (d <= 2 * YMAX) & (np.abs(0.5 * (x[m[I]] + x[m[J]]) - x[b]) < dX / 2)
+            if not sel.any():
+                continue
+            i, j, d = m[I[sel]], m[J[sel]], d[sel]
+            z += np.exp(1j * (th[i] - th[j] + r * DP * d / HBAR)).sum()
+            n += len(d)
+            nm += int((made[i] | made[j]).sum())
+        return z, n, nm
+
+    def structure_diag(bs):
+        """Sea structure seen from each reader's own row: counts of sea members at
+        offset s = x - x_b (against the row's mean density over the box), and
+        separations d of the reading's chords (against N(N-1) dX dd / Lw^2,
+        the count for N members placed uniformly in the aperture of length Lw)."""
+        sea = np.flatnonzero((mate >= 0) & (eps > 0))
+        rows = np.round(p[sea] / DP).astype(int)
+        rid, rcnt = np.unique(rows, return_counts=True)
+        dens = dict(zip(rid.tolist(), (rcnt / L).tolist()))
+        lw = 2 * YMAX + dX
+        for b in bs:
+            r = int(np.round(p[b] / DP))
+            if r not in dens:
+                continue
+            cls = 0 if packet_[b] else 1
+            m = sea[rows == r]
+            s_ = (x[m] - x[b] + L / 2) % L - L / 2
+            s_ = s_[np.abs(s_) < S_EDGE[-1]]
+            G_prof[cls, 0] += np.histogram(s_, S_EDGE)[0]
+            G_prof[cls, 1] += dens[r] * np.diff(S_EDGE)
+            a = np.sort(s_[np.abs(s_) < lw / 2])
+            n_ = len(a)
+            if n_ < 2:
+                continue
+            I, J = np.triu_indices(n_, 1)
+            d = a[J] - a[I]
+            sel = (d <= 2 * YMAX) & (np.abs(0.5 * (a[I] + a[J])) < dX / 2)
+            G_chord[cls, 0] += np.histogram(d[sel], D_EDGE)[0]
+            G_chord[cls, 1] += n_ * (n_ - 1) * dX * np.diff(D_EDGE) / lw ** 2
 
     def readings(bs):
         sea = np.flatnonzero((mate >= 0) & (eps > 0))
@@ -366,6 +469,11 @@ def particle_run(cfg):
                 th[j] += p[j] * (xm - x[j]) / HBAR
                 x[j], p[j] = xm, pm
             mate[jn], mate[jp] = jp, jn
+            made[jn] = made[jp] = True
+            if relock_w > 0:
+                ref = reference({jn, jp}, xm, pm)
+                if ref is not None:            # dark AND on the row's lock
+                    th[jn] = th[jp] = ref
             stats["recomb"] += 1
             return True
         j = find((mate >= 0) & (eps > 0), x[par], p[par])
@@ -374,9 +482,14 @@ def particle_run(cfg):
             p[j] += t_ * xi
             p[k] -= t_ * xi
             mate[j] = mate[k] = -1
+            made[j] = made[k] = False
             for b in (j, k):                    # fresh integrators: hidden phases
                 C[b] = rng.uniform(0, 1, NQ)
                 init[b] = False
+                if relock_w > 0:                # the kinked body takes its new row's lock
+                    ref = reference({j, k}, x[b], p[b])
+                    if ref is not None:
+                        th[b] = ref
             stats["ion"] += 1
             return True
         stats["fail"] += 1
@@ -397,8 +510,11 @@ def particle_run(cfg):
     att = np.zeros((16, NQB))
     real = np.zeros((16, NQB))
     gross = [0.0, 0]
+    diag = [0j, 0, 0]
+    G_prof = np.zeros((2, 2, len(S_EDGE) - 1))   # [packet | event-born][obs | expected]
+    G_chord = np.zeros((2, 2, len(D_EDGE) - 1))
     t0 = time.perf_counter()
-    for _ in range(int(round(ARGS.t_end / DT))):
+    for step in range(int(round(ARGS.t_end / DT))):
         kick = np.where(mate >= 0, 0.0, 1.0)                     # postulate (S')
         p += 0.5 * DT * F(x) * kick
         x += p / MU * DT
@@ -410,9 +526,16 @@ def particle_run(cfg):
         free = np.flatnonzero((mate < 0) & (np.abs(x) < XACT))
         if len(free):
             km = interp_rows(KQ, x[free])
-            if events in ("none", "clock-live", "clock-live-h"):
+            if events in ("none", "clock-live", "clock-live-h", "shadow"):
                 kl, kc, fm, nch = readings(free)
                 nch_all.append(nch)
+            if events in ("none", "shadow") and step % 10 == 0:
+                rd = free if len(free) <= 40 else rng.choice(free, 40, replace=False)
+                structure_diag(rd)
+            if events == "shadow":              # read, but let the mesh clock act
+                acc["live"][free] += kl * DT
+                acc["ctl"][free] += kc * DT
+                acc["mesh"][free] += km * DT
             if events == "none":
                 acc["live"][free] += kl * DT
                 acc["ctl"][free] += kc * DT
@@ -432,7 +555,7 @@ def particle_run(cfg):
                             q = rng.choice(NQ, p=g[k] / g[k].sum())
                             fires.append((b, q, np.sign(km[k, q])))
                 else:
-                    rate = km if events == "clock-mesh" else kl
+                    rate = km if events in ("clock-mesh", "shadow") else kl
                     if events == "clock-live-h":
                         new = ~init[free]
                         if new.any():                            # enter the band on the
@@ -452,6 +575,14 @@ def particle_run(cfg):
                     for k, q in zip(*np.nonzero(dn)):
                         fires += [(free[k], q, np.sign(dn[k, q]))] * int(abs(dn[k, q]))
                 gross[1] += len(fires)
+                if step % 10 == 0:
+                    near = free[np.abs(x[free]) < 3.0]
+                    if len(near) > 40:
+                        near = rng.choice(near, 40, replace=False)
+                    z_, n_, nm_ = aperture_diag(near)
+                    diag[0] += z_
+                    diag[1] += n_
+                    diag[2] += nm_
                 for o in rng.permutation(len(fires)):
                     b, q, sgn = fires[o]
                     if mate[b] >= 0:
@@ -472,6 +603,15 @@ def particle_run(cfg):
     nch = np.concatenate(nch_all) if nch_all else np.zeros(1)
     out["chords"] = float(nch.mean())
     out["chords_zero"] = float(np.mean(nch == 0))
+    out["_G"] = (G_prof, G_chord)
+    if events in ("none", "shadow"):
+        pr = G_prof.sum(axis=0)
+        ch = G_chord.sum(axis=0)
+        inner = np.abs(S_MID) < 1.0
+        out.update(g_hole=float(pr[0, inner].sum() / pr[1, inner].sum()),
+                   g_aper=float(pr[0, np.abs(S_MID) < YMAX].sum()
+                                / pr[1, np.abs(S_MID) < YMAX].sum()),
+                   g_chord=float(ch[0].sum() / max(ch[1].sum(), 1e-300)))
     if events == "none":
         m = packet_
         Al, Ac, Am, Aw = (acc[k][m] for k in ("live", "ctl", "mesh", "win"))
@@ -489,7 +629,16 @@ def particle_run(cfg):
                    att_slope=slope(att, tgt), att_corr=corr(att, tgt),
                    real_slope=slope(real, tgt), real_corr=corr(real, tgt),
                    gross_ratio=gross[1] / max(gross[0], 1e-300),
-                   T_E=e_right / float(eps[fr].sum()))
+                   T_E=e_right / float(eps[fr].sum()),
+                   relock_w=relock_w, relocks=stats["relock"],
+                   made_frac=diag[2] / max(diag[1], 1),
+                   ap_coh=abs(diag[0]) / max(diag[1], 1))
+        if events == "shadow":                  # every body that was ever read
+            m = np.abs(acc["mesh"]).sum(axis=1) > 0
+            Al, Ac, Am = acc["live"][m], acc["ctl"][m], acc["mesh"][m]
+            out.update(sh_slope=slope(Al, Am), sh_corr=corr(Al, Am), sh_relerr=rel(Al, Am),
+                       sh_slope_ctl=slope(Ac, Am), sh_corr_ctl=corr(Ac, Am),
+                       sh_bodies=int(m.sum()))
     return out
 
 
@@ -517,14 +666,77 @@ def run_jobs(cfgs, label):
 
 
 def write_csv(rows, name):
-    keys = list(dict.fromkeys(k for r in rows for k in r))
+    keys = list(dict.fromkeys(k for r in rows for k in r if not k.startswith("_")))
     path = output_path(name)
     with open(path, "w", newline="") as fh:
         w = csv.DictWriter(fh, fieldnames=keys)
         w.writeheader()
         for r in sorted(rows, key=lambda r: tuple(str(r.get(k)) for k in
                                                   ("events", "nu", "dX", "kappa", "seed"))):
-            w.writerow(r)
+            w.writerow({k: r.get(k) for k in keys})
+    print(f"   wrote {name}", flush=True)
+
+
+def control_from_chords(g_d):
+    """The mu = 0 reading a chord distribution g(d) (obs / uniform, on D_EDGE)
+    implies, as a slope against the uniform sea's, from Theorem L1's integrand
+    at eight flank positions with chord midpoints at the reader."""
+    dd = np.linspace(0.0, 2 * YMAX, 1601)[1:]
+    gi = np.asarray(g_d)[np.clip((dd / (2 * YMAX) * len(g_d)).astype(int), 0, len(g_d) - 1)]
+    w = np.cos(np.pi * dd / (4 * YMAX)) ** 2
+    proj = lambda a: a - XI * (XI @ a) / (XI @ XI)
+    num = den = 0.0
+    for xb in (-3.0, -2.0, -1.0, -0.5, 0.5, 1.0, 2.0, 3.0):
+        dv = np.interp(xb, run.r, run.dv_eff)
+        f = ((V(xb + dd / 2) - V(xb - dd / 2) - dd * dv) * w)[:, None] * np.sin(
+            XI[None, :] * dd[:, None] / HBAR)
+        k0, kg = proj(f.sum(0)), proj((gi[:, None] * f).sum(0))
+        num += kg @ k0
+        den += k0 @ k0
+    return num / den
+
+
+def structure_report(rows, part):
+    """Pool the sea-structure histograms over seeds; print and write them."""
+    rows = [r for r in rows if r["events"] in ("none", "shadow")]
+    if not rows:
+        return
+    group = ("nu", "kappa", "relock_w", "events")
+    keys = sorted({tuple(r.get(g, 0.0) for g in group) for r in rows})
+    out = []
+    print("\n   sea structure seen from each reader's row (obs / expected): profile at"
+          " offset s from the reader\n   against the row's mean density; chord"
+          " separations d against N(N-1) dX dd / Lw^2 (uniform aperture)")
+    for k in keys:
+        sel = [r for r in rows if tuple(r.get(g, 0.0) for g in group) == k]
+        pr = sum(r["_G"][0] for r in sel)
+        ch = sum(r["_G"][1] for r in sel)
+        for cls, name in ((0, "packet"), (1, "event-born")):
+            if pr[cls, 1].sum() == 0:
+                continue
+            g_s = pr[cls, 0] / np.maximum(pr[cls, 1], 1e-300)
+            g_d = ch[cls, 0] / np.maximum(ch[cls, 1], 1e-300)
+            for kind, mid, obs, exp_ in (("profile", S_MID, pr[cls, 0], pr[cls, 1]),
+                                         ("chord", 0.5 * (D_EDGE[1:] + D_EDGE[:-1]),
+                                          ch[cls, 0], ch[cls, 1])):
+                for c, o, e in zip(mid, obs, exp_):
+                    out.append(dict(zip(group, k), readers=name, kind=kind,
+                                    bin=round(float(c), 4), obs=float(o), exp=float(e)))
+            prof = "  ".join(f"{v:5.3f}" for v in g_s[12:36:2])
+            chrd = "  ".join(f"{v:5.3f}" for v in g_d[::2])
+            print(f"   {str(k):34s} {name:10s}\n      profile s = -Y..Y: {prof}"
+                  f"\n      chords  d = 0..2Y: {chrd}", flush=True)
+        g_all = ch[:, 0].sum(axis=0) / np.maximum(ch[:, 1].sum(axis=0), 1e-300)
+        print(f"      mu = 0 control implied by all readers' chords: "
+              f"{control_from_chords(g_all):.3f} of a uniform sea's", flush=True)
+    write_csv_plain(out, f"sea_resonance_clock_G{part}{ARGS.tag}.csv")
+
+
+def write_csv_plain(rows, name):
+    with open(output_path(name), "w", newline="") as fh:
+        w = csv.DictWriter(fh, fieldnames=list(rows[0]))
+        w.writeheader()
+        w.writerows(rows)
     print(f"   wrote {name}", flush=True)
 
 
@@ -560,14 +772,16 @@ def part_d():
     summarise(rows, ("nu", "dX", "kappa"),
               ("chords", "slope", "corr", "relerr", "slope_win", "corr_ctl", "fm_raw_rms",
                "cls_rms"))
+    summarise(rows, ("nu", "dX", "kappa"), ("slope_ctl", "g_hole", "g_aper", "g_chord"))
+    structure_report(rows, "D")
     return rows
 
 
 def part_e():
     rule("E. Closed loop: events triggered by the integrators")
-    cfgs = [dict(nu=nu, seed=11 + s, kappa=k, dX=ARGS.dX[0], events=ev)
+    cfgs = [dict(nu=nu, seed=11 + s, kappa=k, dX=ARGS.dX[0], events=ev, relock_w=w)
             for nu in ARGS.nu_closed for k in ARGS.kappa for ev in ARGS.events
-            for s in range(ARGS.seeds)]
+            for w in ARGS.relock_w for s in range(ARGS.seeds)]
     rows = run_jobs(cfgs, "E")
     ref = packet(run, r0=-8.0, p0=1.2, sr=2.0, sp=0.25)
     for _ in range(int(round(ARGS.t_end / DT))):
@@ -578,8 +792,19 @@ def part_e():
     print("   att_*: the trigger's signed firings against the QLE target in (x, q) bins;"
           " real_*: those realised;\n   gross_ratio: all firings over the QLE's gross"
           " rate sum |K_q| dt (1 = no excess)")
-    summarise(rows, ("nu", "kappa", "events"),
-              ("att_slope", "att_corr", "real_corr", "gross_ratio", "T_E", "ion", "fail"))
+    summarise(rows, ("nu", "kappa", "relock_w", "events"),
+              ("att_slope", "att_corr", "real_corr", "gross_ratio", "made_frac", "ap_coh",
+               "ion", "recomb", "fail"))
+    sh = [r for r in rows if r["events"] == "shadow"]
+    if sh:
+        print("\n   shadow runs: the live reading integrated along every free body's path"
+              " while the mesh clock acts\n   (sh_*: int Khat against int K; _ctl: the"
+              " mu = 0 control)")
+        summarise(sh, ("nu", "kappa", "relock_w"),
+                  ("sh_slope", "sh_corr", "sh_relerr", "sh_slope_ctl", "sh_corr_ctl",
+                   "sh_bodies"))
+        summarise(sh, ("nu", "kappa", "relock_w"), ("g_hole", "g_aper", "g_chord"))
+        structure_report(sh, "E")
     return rows, t_mesh
 
 

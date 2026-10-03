@@ -45,6 +45,15 @@ imported by the scripts here.
   start of each flight, is kept for comparison. Cell annihilation of opposite
   signs at synchronisation times, either keeping survivors in place or
   shifting them to preserve each cell's signed first moments.
+- `wpmwlib/kaggle_batch.py` — runs a script from `src/` on Kaggle as a
+  private batch kernel: `push SLUG SCRIPT [--commit REF] [--patch FILE |
+  --worktree-diff] -- ARGS` writes `run.py` and `kernel-metadata.json` (clone
+  the public repo, check out the pinned commit, apply the patch if any, set
+  `WPMW_OUTPUT=/kaggle/working`, run and tee `run.log`) and pushes it;
+  `status SLUG` and `fetch SLUG [DEST]` poll it and download its outputs. It
+  refuses a commit no remote branch contains and a patch that does not apply
+  to the commit. Needs the `kaggle` client and an API token in
+  `~/.kaggle/access_token`.
 - `wpmwlib/check_md_math.py` — markdown LaTeX-math linter (see "Markdown
   math linter" below).
 - `wpmwlib/check_abstracts.py` — checks that each numbered ladder entry in
@@ -1459,11 +1468,17 @@ see that directory's README for the ladder itself.
   locked sea, open loop (integrated live reading against `K_q` along each
   body's path) and closed loop (events triggered by Poisson, by
   integrators fed by the mesh `K_q`, by the live reading, and by the live
-  reading with hysteresis).  Sweeps over `--nu`, `--nu-closed`, `--dX`,
-  `--kappa` and `--seeds` run in parallel (`--workers`) and write
-  `sea_resonance_clock_D<tag>.csv`, `sea_resonance_clock_E<tag>.csv` and
-  `sea_resonance_clock<tag>.png`.  About a minute by default; the docstring
-  gives the Kaggle sweeps.
+  reading with hysteresis; `--events shadow` lets the mesh-fed integrators
+  act while the live reading is integrated alongside, never firing).
+  `--relock-w W` applies step 22 §6's re-locking to pairs made and bodies
+  kinked by events, and the closed loop reports the readers' chord
+  coherence.  Open-loop and shadow runs also histogram the sea's structure
+  around each reader (`sea_resonance_clock_G<part><tag>.csv`).  Sweeps over
+  `--nu`, `--nu-closed`, `--dX`, `--kappa`, `--relock-w` and `--seeds` run
+  in parallel (`--workers`) and write `sea_resonance_clock_D<tag>.csv`,
+  `sea_resonance_clock_E<tag>.csv` and `sea_resonance_clock<tag>.png`.
+  A minute or two by default; the docstring gives the Kaggle sweeps, which
+  `wpmwlib/kaggle_batch.py` pushes.
 
 ## Output path convention
 

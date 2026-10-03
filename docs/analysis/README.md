@@ -646,25 +646,41 @@ retracts.
   needs the free one; dark catalysis is the reset clock that puts it back, the
   misalignment it leaves enters the reading as a quadrature term linear in the
   mean reset time, gauge invariance selects its relative resets over absolute
-  ones, and near the Eckart barrier the kernel's own rate falls a little short
-  (0.863 against a control of 0.880) while three times it nearly suffices;
-  step 22's plateau was the free bodies read as partners, not incomplete
-  resetting. **Propositions Q7 and Q8** turn to the sea's population. The
-  `kappa` of the step 16 comparison is the contact sink, which is not in the
-  model, and dark catalysis, with `dS = 0`, cannot touch the population at
-  all; the model's own clocks are the event rate and the rate at which
-  force-feeling bodies slip across force-blind rows, which are of the same
-  order by construction (`Gamma ~ |V'|/dp`), so under (S′) the sea's deficits
-  are shallow but never refilled. An immediate contact sink would be garbage
-  collection — the signed-particle method's same-cell annihilation with a pair
-  ledger added — keeping the ensemble minimal, making absorption redundant for
-  the bodies, and fixing the sea's total at half the growth of `||W||_1`; a
-  pair formed that way is generically gray, and whether it is force-blind on
-  joining or only on alignment is left open. Three demo defects are repaired:
-  a species mask read at the destination row, the whole of step 22's drift of
-  `Sum E` (L-SP8); the tag bookkeeping of step 20's Part E; and the plane-wave
-  lock on a periodic box. Section 10 lists the corrections to steps 15, 16,
-  17, 20 and 22 that (S′) would require.
+  ones, and near the Eckart barrier the kernel's own rate falls short (0.846
+  against a control of 0.880) while six times it nearly suffices; step 22's
+  plateau was the free bodies read as partners, not incomplete resetting.
+  **Propositions Q7 and Q8** turn to the sea's population. The `kappa` of the
+  step 16 comparison is the contact sink, which is not in the model, and dark
+  catalysis, with `dS = 0`, cannot touch the population at all; the model's
+  own clocks are the event rate and the rate at which force-feeling bodies
+  slip across force-blind rows, which are of the same order by construction
+  (`Gamma ~ |V'|/dp`), so under (S′) the sea's deficits are shallow but never
+  refilled. An immediate contact sink would be garbage collection — the
+  signed-particle method's same-cell annihilation with a pair ledger added —
+  keeping the ensemble minimal, making absorption redundant for the bodies,
+  and fixing the sea's total at half the growth of `||W||_1`; a pair formed
+  that way is generically gray, and whether it is force-blind on joining or
+  only on alignment is left open. **Propositions Q9 to Q12** ask what decides
+  when and where an event happens. An absorption is two free bodies crossing
+  at the parent on rows `p ± xi_q` and giving up exactly their relative
+  kinetic energy, within tolerances `dp` and `y_max` whose product is `h/2`;
+  but crossings only realise events, since a crossing-triggered rate is mass
+  action and `E` would no longer close. The trigger is the parent's reading:
+  channel `q` is phase-matched to the residual phase screen at wavenumber `2
+  xi_q/hbar` — the prism removed, the cubic mask of an Airy beam left — and
+  one integrator per channel per body, firing at integer crossings, realises
+  the rate exactly in mean with sub-Poissonian counts, so a rate needs an
+  integrator, not a die. Fed by the kernel it beats Poisson triggering. Fed by
+  the sea's own live reading it converges open loop, `1 - corr` falling as
+  `1/nu`, but fails closed loop: the busy sea reads low before any feedback,
+  acting on the reading costs as much again, and at the physical density a
+  reader has 0.08 chords. Four demo defects are repaired: a species mask read
+  at the destination row, the whole of step 22's drift of `Sum E` (L-SP8); the
+  tag bookkeeping of step 20's Part E; the plane-wave lock on a periodic box;
+  and the particle model's event rate, twice the kernel's, which re-measures
+  Q6. Section 11 lists the corrections to steps 15, 16, 17, 20 and 22 that
+  (S′) would require, and those the rate defect makes to step 22 and the
+  algorithm specification.
 
 ## Index
 
