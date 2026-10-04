@@ -915,9 +915,11 @@ def list_item_block_math(text: str) -> list[tuple[int, str, str]]:
                             "GitHub will not recognise it as math. Fix: "
                             "collapse to a single line, "
                             r"or use $$\begin{aligned}...\end{aligned}$$ on one line, "
-                            "or rewrite as a ```math fenced code block "
-                            "(which is recognised inside list items), "
-                            "or move the block out of the list.",
+                            "or write inline $`...`$ spans, "
+                            "or move the block out of the list. (A ```math "
+                            "fence also works, but only in a list with no "
+                            "inline math: see "
+                            "fence_after_inline_math_in_list_item.)",
                             snippet.replace("\n", " ↵ "),
                         ))
                         break
