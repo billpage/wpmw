@@ -49,6 +49,7 @@ Theorem and open-item labels are shared across the whole of `docs/`. Each note u
 | M | step 21 (M0–M10) | Not to be confused with the symbol M(x, s), the hops M± of the algorithm specification §5.3, or the moments M0 and M2 of step 11b; none of those is a label. |
 | L | step 22 (L0–L9) | Not to be confused with a length L or a Lagrangian; neither is a label. The open-item series is L-SP, not the -LS suffix. |
 | Q | step 23 (Q1–Q8); postulate (S′) in step 23 | Not the channel index q of the kernel, nor the channel set Q of the demos. |
+| V | step 24 (V1–V5); Definition (F) | Not the conditions (V1)–(V4) of step 4 §13, nor the potential V(x); neither is a label. Definition (F) is not the field F of any note. |
 | Z | step 19 (Z1–Z5) | — |
 | Thm 1–4, Lem 0–5, Prop 1–3, Cor 4.x | steps 4 and 5 | Numbered without a letter; later notes cite them as 'Theorem 4', 'Lemma 4', 'Proposition 3'. |
 | F, H, J, T, W | supplement: four_action_foundations (F1–F4), holland_two_fluid_correspondence (H1–H7), emission_and_absorption (J1–J2), takabayasi_1954_stochastic_picture (T-series), limkumnerd_weighted_paths (W1–W5) | Cited from the analysis notes; see §9. |
@@ -129,6 +130,12 @@ Kept apart from the results because a postulate is what everything else assumes,
 | ID | § | Says | Standing |
 |---|---|---|---|
 | [Post (S′)](force_blind_sea.md#1-postulate-s) | 1 | Streaming with a force-blind sea: free bodies obey the full classical force; each member of an aligned pair moves inertially (dq/dt = p/m, dp/dt = 0) while its clock still winds at p²/2m − V. | provisional; replaces (S) of step 17 for aligned pairs |
+
+### Step 24 — [Depletion and excess](sea_depletion.md)
+
+| ID | § | Says | Standing |
+|---|---|---|---|
+| [Def (F)](sea_depletion.md#4-proposition-v3-the-floor) | 4 | The floor: an emission ionises a pair in its parent's cell; if the sea there is short the emission does not happen and its two depositions are lost; absorption and the contact sink's credit unchanged. | S0 read literally; a hypothesis tested, not adopted |
 
 ## 4. Results by note
 
@@ -446,6 +453,16 @@ No labelled results. See the note's own sections.
 | [Prop Q11](force_blind_sea.md#93-proposition-q11-the-resonance-condition-and-its-clock) | 9.3 | The resonance clock: channel q is phase-matched (Bragg) to the residual phase screen at wavenumber 2ξ_q/ℏ; one integrator per channel per body, dC_q/dt = K_q, firing at integer crossings, realises the rate within one count and exactly in mean; the bank must not be reset as a whole; counts are sub-Poissonian (Fano 0.035 one channel, 0.30 all); the integrand must be read from chords (gauge). | Parts A1, B; integrate-and-fire, a sigma–delta modulator; unbiased on the solvable cosine-plus-harmonic problem (supplement X7, fourth addendum); the bank is provisional ontology (Q-SP14) |
 | [Prop Q12](force_blind_sea.md#94-proposition-q12-the-live-reading-as-the-clocks-input) | 9.4 | Measured: integrators fed by the kernel realise the QLE target with no excess and less noise than Poisson; fed by the live sea reading they converge open loop (1 − corr ∝ 1/ν) but fail closed loop (slope 0.37–0.67 at ν = 64, firing 1.7–1.9 times too often); the busy sea reads low before feedback (shadow 0.68–0.84) and acting costs as much again; at ν = 1 a reader has 0.08 chords. (vi), fourth addendum: a deeper sea at fixed sampling dilutes other bodies' traffic but not a reader's own (event-made share 0.27/β + 0.14) and leaves the excess firing, so it is no remedy and B stays. | open items Q-SP11 to Q-SP13 |
 
+### Step 24 — [Depletion and excess](sea_depletion.md)
+
+| ID | § | Says | Standing |
+|---|---|---|---|
+| [Prop V1](sea_depletion.md#2-proposition-v1-admissible-negativity-is-free) | 2 | For deg V ≤ 2 the compensated residual kernel vanishes identically, so free and harmonic evolution make no event and touch no sea pair whatever W is: admissible negativity is free to hold; elsewhere the sea is spent at Γ(x) per body, so a state's fringes cost too (a cat in a well makes events 1.4 times as fast as one packet). | (a) is Thm G2 of step 17; max abs(K)/max abs(V′) = 1.3 × 10⁻¹⁴ on the mesh (Part A) |
+| [Prop V2](sea_depletion.md#3-proposition-v2-the-seas-debt-is-the-negativity-made) | 3 | From a minimal preparation the sea's global debit is at least the growth of the negative mass of W, with equality iff the ensemble stays minimal; the global excess never exceeds M₋(0); body inflation is sea debt. | equality is Q8; verified in the minimal ledger to 3 × 10⁻¹², with the transport's own change of the sampled L1 norm booked apart |
+| [Prop V3](sea_depletion.md#4-proposition-v3-the-floor) | 4 | Under (F) with the sea at depth βB, E equals the unfloored E bit for bit iff β ≥ λ*, the depth the unfloored run needs; below it the norm stays exact while ⟨p⟩, the energy, the negative mass and the transmission move. Measured λ*: Eckart summit 1.10 (S), 0.65 (S′); Pöschl–Teller well 1.29 (S), 0.76 (S′); emissive realisation higher. | answers Q-SP2: λ* grows with time in the bound well (2.2 to 2.9 by t = 96) and with the reach, as G5's census does |
+| [Prop V4](sea_depletion.md#5-proposition-v4-granular-supply) | 5 | The event aperture holds one pair on average at density B (Q9(c)); an integer sea of β pairs per aperture blocks close to e^−β of emissions and moves the expected E by C e^−β, C = 1.4 to 6.8: by 37 to 88 per cent at β = 1. | mean-field expectation; the integer ensemble is V-SP2 |
+| [Prop V5](sea_depletion.md#6-proposition-v5-two-bodies) | 6 | Two bodies with a pair potential from W_cm ⊗ W_rel, W_cm ≥ 0, minimal ensemble: the joint sea deficit is W_cm times the relative problem's, so entanglement made by the pair potential costs exactly the relative motion's negativity, and the joint λ* (against B²) is at most the relative one. | from M1 and V1; the coupled case is V-SP1 |
+
 ## 5. No-go and negative results
 
 Results that say something cannot be done. Each is as valuable as a positive result, and several are the reason a later step exists.
@@ -479,6 +496,7 @@ Results that say something cannot be done. Each is as valuable as a positive res
 | Step 22 — [Prop L2](sea_phase_reference.md#2-proposition-l2-contact-noise-and-the-measure) | Generating kernel weights by sampling sea contacts impulsively: unbiased, but about 10⁵ contacts per unit time are needed. | Phase accumulated continuously along worldlines (§3). |
 | Step 23 — [Prop Q10](force_blind_sea.md#92-proposition-q10-crossings-realise-events-but-cannot-trigger-them) | Triggering absorptions by crossings of free bodies: mass action, so E is no longer closed. | The parent's reading triggers; crossings realise (Q11). |
 | Step 23 — [Prop Q12](force_blind_sea.md#94-proposition-q12-the-live-reading-as-the-clocks-input) | Driving the integrators by the sea's own live reading, closed loop: half the target at best, with excess firing; at the physical density the reading is critically sampled. | Mesh-fed integrators work; Q-SP11 to Q-SP13. |
+| Step 24 — [Prop V4](sea_depletion.md#5-proposition-v4-granular-supply) | A sea at the physical density B that is a strict integer supply: one pair per event aperture blocks about e⁻¹ of emissions and moves E by 37 to 88 per cent. | The sea is a ledger, not a supply, or a supply deep enough to hide (seven to nine pairs per aperture for a part in a thousand). |
 
 ## 6. Corrections and retractions
 
@@ -518,6 +536,8 @@ What each note corrected in an earlier statement, most of which the earlier stat
 | Step 23 (third addendum) | algorithm spec §4.3 (world-ensemble sampling) | Drew an event time from R = Σ_{q≠0}abs(K_q); the per-parent rate is R/2. Erratum in the specification. [§11](force_blind_sea.md#11-corrections). |
 | Step 23 (third addendum) | its own §8.5 and Prop Q6(c); Prop Q7's Γ | Q6(c) re-measured at the corrected rate (kernel's own rate 0.846, not 0.863; six times nearly suffices, not three); Q7's Γ is the leg rate. [§8.5](force_blind_sea.md#85-how-fast-it-must-be). |
 | Step 23 (second addendum) | its own §6 (Proposition Q3) | The κ of Q3's contact-sink table is step 16's contact recombination, which is not in the model (ORIENTATION §8); the statement now says so, and §6.1 explains the sign pattern by the slip rate. [§6.1](force_blind_sea.md#61-proposition-q7-the-clocks-of-the-seas-population). |
+| Step 24 | step 16 S4, S8, S9 (sea profiles and body counts); step 23 Prop Q3's tables and Part F's profiles | Measured with S-SP7's negative-cap leakage, which books transport ringing as sea traffic: over over a quarter of the sea's debits on S8's row have no event behind them. Results about E stand; not re-measured (V-SP5). [§8](sea_depletion.md#8-a-demo-defect-ringing-booked-as-sea-traffic). |
+| Step 24 | step 23 §9.4(g) ("depth is no observable") and Q-SP2 | Holds for every rule that does not read the sea; under a floor, depth is observable below λ* (mean field) and below about ln(C/δ) for an integer sea. Q-SP2 answered: supply becomes limiting below λ*, which grows with time in a bound anharmonic system. [§9](sea_depletion.md#9-corrections). |
 
 ## 7. Open items
 
@@ -687,7 +707,7 @@ Labelled items link to their line; the unlabelled items of the older notes are g
 | [S-SP4](sea_population_equilibrium.md#8-open-items) | Mean-field caps and channel ordering | resolved, with a caveat | ledger is order-dependent |
 | [S-SP5](sea_population_equilibrium.md#8-open-items) | A genuine ensemble against the mesh | open | = CLA2 |
 | [S-SP6](sea_population_equilibrium.md#8-open-items) | S4 on a bound state | vehicle built in step 19 | = Z-LS4 |
-| [S-SP7](sea_population_equilibrium.md#8-open-items) | Negative-cap leakage | open | cf. Y-SP6 |
+| [S-SP7](sea_population_equilibrium.md#8-open-items) | Negative-cap leakage | open; its effect on the sea measured in step 24 §8 | cf. Y-SP6, V-SP5 |
 
 ### Step 17 — [Compensated ontology](compensated_ontology.md#10-open-items)
 
@@ -766,7 +786,7 @@ Labelled items link to their line; the unlabelled items of the older notes are g
 | ID | Question | Status | Related |
 |---|---|---|---|
 | [Q-SP1](force_blind_sea.md#12-open-items) | Replace the spectral transport of tags by a positivity-preserving one and confirm Prop Q4 without the ripple correction. | open | Prop Q4 |
-| [Q-SP2](force_blind_sea.md#12-open-items) | Under (S′) the sea's worst cell hovers near zero: does supply for emission become limiting in longer or deeper runs? | open | Prop Q3 |
+| [Q-SP2](force_blind_sea.md#12-open-items) | Under (S′) the sea's worst cell hovers near zero: does supply for emission become limiting in longer or deeper runs? | answered in step 24 (Prop V3, Part E): under a floor, below λ*, which grows with time in a bound anharmonic system | Prop Q3, Prop V3 |
 | [Q-SP3](force_blind_sea.md#12-open-items) | An aligned pair's energy is not conserved under (S′): does that break any quantity the project has treated as conserved? | open | Post (S′) |
 | [Q-SP4](force_blind_sea.md#12-open-items) | Carry out the corrections to steps 15, 16, 17, 20 and 22 once (S′) is confirmed. | open | Prop Q1 |
 | [Q-SP5](force_blind_sea.md#12-open-items) | The frozen comb: under (S′) a row's pattern of separations is frozen between events, so a co-moving parent's sampling noise is correlated in time; measure it against (S). | open | Prop Q5, Prop L2 |
@@ -779,6 +799,16 @@ Labelled items link to their line; the unlabelled items of the older notes are g
 | [Q-SP12](force_blind_sea.md#12-open-items) | A matched test of the observable for the closed loop, on the exact ledger. | open | Prop Q12, L-SP3 |
 | [Q-SP13](force_blind_sea.md#12-open-items) | Critical sampling: at ν = 1 a reader has about 0.08 chords; can a reading pooled over time or over worlds drive a body's integrators? | open | Prop Q12, Q-SP5 |
 | [Q-SP14](force_blind_sea.md#12-open-items) | The bank of integrators, provisional: can it be the sea's own interference sum rather than per-body memory? | open | Prop Q11 |
+
+### Step 24 — [Depletion and excess](sea_depletion.md#10-open-items)
+
+| ID | Question | Status | Related |
+|---|---|---|---|
+| [V-SP1](sea_depletion.md#10-open-items) | A four-dimensional sea ledger: two particles in a non-quadratic external potential, where Prop V5 does not apply; measure λ* against B² in a minimal ensemble. | open | Prop V5, Cor M10 |
+| [V-SP2](sea_depletion.md#10-open-items) | The integer world ensemble at ν = 1, with sea pairs as points and the aperture of Q9(c), over many seeds: check V4's e^−β and the depletion of an aperture by its own events. | open | Prop V4, Q-SP13 |
+| [V-SP3](sea_depletion.md#10-open-items) | The regulators' laboratory values: until the reach is derived, ε(β) cannot be compared with an experimental resolution. | open | Prop V4, Q-SP6 |
+| [V-SP4](sea_depletion.md#10-open-items) | Which realisation is ontological? Absorptive-first and emissive realisations place the sea's credit differently and change λ*; a floor makes the choice observable in principle. | open | Prop V3, Prop Q8 |
+| [V-SP5](sea_depletion.md#10-open-items) | Re-measure the sea-profile figures of steps 16 and 23 (S4, S8, S9, Q3, Q7) without the negative-cap leakage. | open | S-SP7, Prop Q3 |
 
 ## 8. Defects found in demos
 
@@ -795,6 +825,7 @@ Defects in code or specifications, found in the course of the analysis, whose ef
 | demo_sea_lock_particles.py (the box) | Rows are locked to exp(ipx/ℏ) on a periodic box on which that wave is not periodic (dp L/ℏ = 12), so every body crossing the boundary carries a lock defect of pL/ℏ mod 2π; on the force-blind row-centred sea left alone it costs about 0.04 in the reading (0.739 against 0.778). | flag --wrap-phase keeps θ − px/ℏ continuous; default off, so published outputs are unchanged; step 22's particle tables were measured without it | step 23 §10 |
 | demo_sea_lock_particles.py (event rate) | Events and dark catalysis were drawn at gamma_tot = Σ_{q≠0}abs(K_q), which counts legs; the event (q, −q) has two, so the jump generator's per-parent rate is half (rate 1 × abs(K_q) reproduces it to 3.7 × 10⁻¹⁶, 2 × misses by 1.00). | repaired by default (--rate-convention qle; legacy reproduces the published runs); step 22's particle tables ran at twice the rates | step 23 §10 |
 | Algorithm spec §4.3 (world ensemble) | Same doubled rule: event time from R = Σ_{q≠0}abs(K_q) rather than R/2. | erratum in the specification | step 23 §11 |
+| demo_sea_population_equilibrium.py (Ledger.channels) | Negative partner caps from transport ringing make the absorptive allocation negative, an event run backwards that books two bodies and a sea debit; in a harmonic trap with no events a cat's body count rises from 1.65 to 3.66 in one period and the sea's worst cell falls to 0.58 B; on S8's row over a quarter of the sea's debits. | open (S-SP7, V-SP5); step 24's minimal ledger, which transports only E, avoids it | step 24 §8 |
 | Splitting note §4 (TV table) | Total-variation figures are functions of the rung grid, not absolute: under a hard horizon the event rate diverges logarithmically and the momentum churn linearly. | erratum in the note; see algorithm spec §4.4 | step 14 §4 |
 
 ## 9. Cited from outside this folder

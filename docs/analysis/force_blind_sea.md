@@ -1672,7 +1672,12 @@ To make whatever becomes of (S′), from the fourth defect of §10:
   correction.
 - **Q-SP2.** Under (S′) the sea's worst cell hovers near zero (Proposition Q3).
   Does supply for emission become limiting in longer or deeper runs, where
-  (S) would recover?
+  (S) would recover? *Answered by step 24*
+  ([`sea_depletion.md`](sea_depletion.md), Proposition V3 and Part E):
+  under a floor, supply limits emission once the sea is shallower than
+  the depth $`\lambda^*`$ the run needs, which in a bound anharmonic system
+  keeps growing with time — faster under (S′) than under (S), whose
+  sheared deficits refill.
 - **Q-SP3.** An aligned pair's energy is not conserved under (S′) while it crosses
   a potential. Is there any ledger quantity, observable or not, that the
   project has treated as conserved and that this breaks?

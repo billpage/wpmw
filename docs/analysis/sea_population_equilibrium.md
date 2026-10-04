@@ -604,7 +604,11 @@ population, but it is no longer load-bearing.
   then fires, manufactures bodies, and breaks S7 outright, the two sides of
   the identity parting by $`9\times10^{-2}`$. This is a specification question
   and is left to J-SP2; it is logged here because it is the second independent
-  route to $`f = 1/2`$ and the two should not be confused with each other.
+  route to $`f = 1/2`$ and the two should not be confused with each other. *Step 24*
+  ([`sea_depletion.md`](sea_depletion.md) §8) measures the leakage's effect
+  on the sea: in a harmonic trap with no events it books 0.50 pairs and
+  takes the worst cell to $`0.58\,B`$ over one period of a cat state, and
+  on Theorem S8's row it is over a quarter of the sea's debits.
 
 ---
 
