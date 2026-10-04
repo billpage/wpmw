@@ -1832,11 +1832,17 @@ A short cheat sheet for keeping new docs lint-clean:
 
   The linter's table-pipe pass enforces this.
 
-- **Inline math with two `^*` (complex conjugate) in the same paragraph.**
-  The `*` after `^` is left-flanking per CommonMark and can open
-  emphasis. If TWO `^*` expressions appear in the same paragraph,
-  the first opens an italic span and the second closes it, eating
-  both `$...$` regions between them. The fix is the same:
-  `$`...`$` for any expression containing `^*` when another
-  such expression is nearby. The linter does not yet detect this
-  automatically — watch for it manually.
+- **Inline math with `^*` (complex conjugate) or `^{*}`.** A `*` between
+  punctuation can both open and close emphasis, so two of them in one
+  paragraph -- often the two in `$(x^*, t^*)$` itself -- pair up as
+  `<em>`, the tags land inside the `$...$` span, and GitHub shows the raw
+  source (2026-10-04, `phase_resonance_microdynamics.md`). Use
+  `` $`...`$ `` for any expression containing `*`. The linter's paragraph
+  pass enforces this by emulating CommonMark's delimiter matching, so a
+  lone `^*` beside a balanced `**bold**` is correctly left alone. Checked
+  against cmark-gfm on every note in the repository and on 18,000 random
+  paragraphs, with no disagreement.
+- **A plain `$...$` span wrapped over two source lines** is invisible to the
+  per-expression passes, so the `}_{` trap above went unreported there
+  (`relational_pairing_and_carrier_lock.md`). The paragraph pass checks it;
+  use `` $`...`$ `` here too.

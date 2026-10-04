@@ -130,7 +130,7 @@ is exactly the phase of P2's extended amplitude, so $\Phi$ is a rewriting
 of P2 and not an addition to it.
 
 **Definition (misalignment).** For a pair with partners $a$ (positon) and
-$b$ (negaton), the misalignment at an event $(x^{*}, t^{*})$ is
+$b$ (negaton), the misalignment at an event $`(x^{*}, t^{*})`$ is
 
 ```math
 \mu \;=\; \Phi_a(x^{*}, t^{*}) \;-\; \Phi_b(x^{*}, t^{*}) \pmod{2\pi}.

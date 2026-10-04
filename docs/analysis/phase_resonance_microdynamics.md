@@ -314,7 +314,7 @@ in-leg's carried value, while the *required* out-phase is the in-phase plus
 the pattern phase of the struck beat at the vertex (the beat supplies the
 transfer, so it supplies the phase). The gauge mismatch is therefore
 exactly the beat's pattern phase at the vertex event,
-$\delta = \Lambda_j^s(x^*, t^*)$ — a relational, locally evaluable
+$`\delta = \Lambda_j^s(x^*, t^*)`$ — a relational, locally evaluable
 quantity. The postulate:
 
 ```math

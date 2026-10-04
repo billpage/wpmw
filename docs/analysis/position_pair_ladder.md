@@ -112,8 +112,8 @@ $\mp V(X)/\hbar$ depends on **its own position only**, so $\mu$ is the plain
 difference of two carried numbers. The pump half of the locality burden is
 discharged for free; what remains is the vertex, §6.
 
-**Self-conjugate particles.** Hermiticity, $\rho_{nm} = \rho_{mn}^{*}$, applied
-to a pair with $X = X'$ gives $\rho_{mm} = \rho_{mm}^{*}$: the weight of a
+**Self-conjugate particles.** Hermiticity, $`\rho_{nm} = \rho_{mn}^{*}`$, applied
+to a pair with $X = X'$ gives $`\rho_{mm} = \rho_{mm}^{*}`$: the weight of a
 self-conjugate particle is real. Positivity of $\hat\rho$ gives
 $\rho_{mm} \ge 0$. So a self-conjugate particle is a sample of a real
 non-negative number — a unit of observable probability density, carrying

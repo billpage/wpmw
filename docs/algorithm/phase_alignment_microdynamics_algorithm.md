@@ -292,7 +292,7 @@ candidate mechanism and §10 rung 8 instruments it.
 ### 2.3 Derived quantities
 
 For a pair $k$ with legs $a$ (ket) and $b$ (bra), and any evaluation
-event $(x^{*}, t^{*})$:
+event $`(x^{*}, t^{*})`$:
 
 ```math
 \Phi_j(x,t) \;=\; \theta_j \;+\; \frac{p_j\,(x - x_j) - E_j\,t}{\hbar},

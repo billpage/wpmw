@@ -430,8 +430,8 @@ half-power of $`N`$ in the variance.*
    without the species factor $\varepsilon_j$. Since a mediating pair's
    legs sit on different rows, $\varepsilon$ is constant within a row and
    factors out as a sign; but the general bilinear form
-   $\sum_{\sigma\sigma'} c_{\sigma\sigma'}
-   \mathrm{Re}(Z^{\sigma}_{r+2sq}\overline{Z^{\sigma'}_{r}})$ has not
+   $`\sum_{\sigma\sigma'} c_{\sigma\sigma'}
+   \mathrm{Re}(Z^{\sigma}_{r+2sq}\overline{Z^{\sigma'}_{r}})`$ has not
    been fixed from first principles, only specialised to the case where
    it reduces to the above.
 2. **Phase continuity at the vertex.** §10 above proposes that both legs
