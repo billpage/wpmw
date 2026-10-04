@@ -196,10 +196,7 @@ using the identity $\partial^2 R / R = \partial(\partial R/R) + (\partial R/R)^2
 Given the ensemble $`\mathcal{E}(t) = \{(X_i, X'_i, w_i)\}`$, the procedure each timestep is:
 
 1. **Bin** the weighted pairs onto the $M \times M$ position-pair grid:
-
-   ```math
-   \rho_{\rm bin}(x_m, x'_{m'}) \; = \; \frac{1}{\Delta x^2}\negthinspace\sum_{i \in \mathrm{bin}(m, m')}\negthinspace w_i.
-   ```
+   $`\rho_{\rm bin}(x_m, x'_{m'}) = \frac{1}{\Delta x^2}\sum_{i \in \mathrm{bin}(m, m')} w_i`$.
 
 2. **Smooth** $\rho_{\rm bin}$ with a 2D Gaussian kernel of width $\sigma_s \sim 2\thinspace\Delta x$. Necessary because the empirical $\rho$ is a sum of delta functions and (3.8)–(3.10) take derivatives of $\rho$. **[choice]**
 

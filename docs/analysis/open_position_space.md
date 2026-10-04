@@ -272,12 +272,8 @@ across these notes and the factors of two are easy to lose.
 
 3. *Relation to the momentum quantum.* Combining
    $`\Delta p = \pi\hbar/L_c`$ from §1 with $`L_c = 2y_{\max}`$ gives
-
-   ```math
-   \Delta p \;=\; \frac{\pi\hbar}{2\thinspace y_{\max}} .
-   ```
-
-   Reach and momentum quantum are one parameter, not two: a world that
+   $`\Delta p = \pi\hbar/(2y_{\max})`$. Reach and momentum quantum are one
+   parameter, not two: a world that
    consults $`V`$ only within $`y_{\max}`$ can resolve momentum transfers only
    down to $`\pi\hbar/(2y_{\max})`$. Shortening the reach coarsens the
    momentum lattice, and conversely.

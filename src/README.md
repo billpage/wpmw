@@ -1544,13 +1544,11 @@ actually hit:
   `\tag`, `\intertext`, `\verb`, `\mathds`;
 - multi-line `$$...$$` display blocks placed inside a list item, which
   GitHub silently re-parses as nested bullets;
-- display math (a ```` ```math ```` fence or a `$$` block) whose opening line
-  is not preceded by a blank line (**error**), and display math nested in a
-  list item or blockquote (**warning**; `--strict-nesting` makes it fail).
-  On 2026-10-04 six fenced blocks in
-  `docs/supplement/poisson_kicks_and_pair_branching.md` rendered as raw code;
-  every one was both nested and directly under a prose line. See the render
-  probe below for which property is the cause.
+- display math (a ```` ```math ```` fence or a `$$` block) nested in a list
+  item or blockquote (**warning**; `--strict-nesting` makes it fail). On
+  2026-10-04 ten nested fences rendered as raw code; all had inline math
+  earlier in the same container. The render probes below narrow the cause
+  down; until probe 2 is read, this is a warning.
 
 Optionally it also feeds every expression to KaTeX (strict mode) and to
 MathJax 3 to catch malformed LaTeX (mismatched delimiters, unknown macros,
@@ -1600,84 +1598,107 @@ syntax rules and quotes the broken forms as examples, so it is worth
 keeping under the linter's eye. The module's own defaults are left
 matching upstream `GitHubLinter` rather than being changed here.
 
-### Render probe for nested display math
+### Render probes for nested display math
 
-The 2026-10-04 incident left one question open: is a display block broken
-by being **nested** (in a list item or blockquote), or by having **no blank
-line before it**? Paste the text below into a GitHub issue comment or gist
-*Preview* tab (do not submit) and note which of A–I show typeset math. The
-answer decides whether the nesting warning should become an error or be
-dropped.
+**Incident (2026-10-04).** Ten ```` ```math ```` fences rendered on GitHub as
+raw code: six in `docs/supplement/poisson_kicks_and_pair_branching.md` and
+one in `docs/analysis/open_position_space.md`, with three more of the same
+kind in older docs fixed before they were reported. Every one was nested in
+a list item or blockquote.
+
+**Probe 1 (done).** Nine minimal cases, pasted into a comment's *Preview*
+tab. Results: top level, list item and blockquote fences all typeset,
+**with or without a blank line before them** (cases A–G), and a single-line
+`$$` in a list item typeset (H). So neither nesting nor a missing blank line
+is the cause by itself. The one property that every failing block has and
+probe 1 lacked is **inline math earlier in the same list item or quote**.
+Probe 2 tests that.
+
+**Probe 2.** Paste into a GitHub comment *Preview* tab (do not submit) and
+note which of I–Q typeset. Expected if inline math is the trigger: J, K, L
+fail; I, M, N, O, P, Q show where the boundary lies.
 
 `````markdown
-**A** top level, blank before:
-
-```math
-a = b
-```
-
-**B** top level, no blank before:
-```math
-c = d
-```
-
-**C** list item, blank before:
-
-1. item
-
-   ```math
-   e = f
-   ```
-
-**D** list item, no blank before:
-
-1. item
-   ```math
-   g = h
-   ```
-
-**E** blockquote, blank before:
-
-> text
->
-> ```math
-> i = j
-> ```
-
-**F** blockquote, no blank before:
-
-> text
-> ```math
-> k = l
-> ```
-
-**G** list item inside a blockquote, blank before:
-
-> 1. item
->
->    ```math
->    m = n
->    ```
-
-**H** list item, single-line `$$`:
-
-- item
-
-  $$o = p$$
-
-**I** blockquote, multi-line `$$`:
+**I** blockquote, multi-line `$$`, no inline math:
 
 > text
 >
 > $$
 > q = r
 > $$
+
+**J** list item, inline math, blank, fence:
+
+1. Let $`x = 1`$ here:
+
+   ```math
+   a = b
+   ```
+
+**K** list item, inline math, no blank, fence:
+
+1. Let $`x = 1`$ here:
+   ```math
+   c = d
+   ```
+
+**L** blockquote, inline math, blank, fence:
+
+> Let $`x = 1`$ here:
+>
+> ```math
+> e = f
+> ```
+
+**M** list item, no inline math, real-looking content:
+
+1. Combining the two gives
+
+   ```math
+   \Delta p \;=\; \frac{\pi\hbar}{2\thinspace y_{\max}}, \qquad V'' \ne 0
+   ```
+
+**N** top level, inline math, blank, fence (control):
+
+Let $`x = 1`$ here:
+
+```math
+g = h
+```
+
+**O** list item, inline math, single-line `$$`:
+
+1. Let $`x = 1`$ here:
+
+   $$i = j$$
+
+**P** inline math only in the *previous* list item:
+
+1. Let $`x = 1`$ here.
+2. Next item:
+
+   ```math
+   k = l
+   ```
+
+**Q** inline math only *after* the fence in the same item:
+
+1. Next item:
+
+   ```math
+   m = n
+   ```
+
+   and then $`x = 1`$ afterwards.
 `````
 
-Outcomes: if only B, D and F fail, the cause is the missing blank line
-(drop the nesting warning). If C, E, G, H and I fail too, the cause is
-nesting (make `--strict-nesting` the default and hoist the nine remaining
-nested blocks).
+Outcomes: if J, K, L fail and M, N pass, inline math earlier in the same
+container is the trigger, so the lint rule becomes "nested display math in a
+container that already holds inline math" (O, P, Q fix its exact scope) and
+should be an error. If J fails but L passes, or M fails, the rule is about
+the list item or the content instead. If all of I–Q pass, the cause is
+something else in those documents and the probe should be repeated on a
+bisected copy of `open_position_space.md`.
 
 ### Style guide for math in WPMW markdown
 
@@ -1719,13 +1740,12 @@ A short cheat sheet for keeping new docs lint-clean:
   but see the next rule: display math belongs at the top level.
 - Outside of list items, multi-line `$$...$$` is fine — preferred for long
   derivations.
-- **Display math goes at the top level, with a blank line before and after.**
-  Inside a list item or blockquote, write the equation as one or two inline
-  `` $`...`$ `` spans joined by prose ("... which equals ..."), or close the
-  quote or list, put the display at the top level, and restart. This
-  replaces the earlier advice that fenced blocks "survive" nesting: the
-  2026-10-04 screenshots show that they do not, at least when no blank
-  line precedes them.
+- **Prefer display math at the top level.** Inside a list item or
+  blockquote, write the equation as one or two inline `` $`...`$ `` spans
+  joined by prose ("... which equals ..."), or close the quote or list, put
+  the display at the top level, and restart. This replaces the earlier advice
+  that fenced blocks "survive" nesting: ten of them did not, when inline
+  math came earlier in the same item (see the render probes above).
 - **Alternative display syntax: ```` ```math ```` fenced blocks.**
   GitHub also accepts a fenced-code form for display math:
 
@@ -1748,7 +1768,7 @@ A short cheat sheet for keeping new docs lint-clean:
      `\bigl\{` than with `\thinspace` `\\;` `\bigl\\{`. Switch to a
      fenced block and write the natural TeX.
   2. *Awkward markdown context* — a fence is safer than a multi-line
-     `$$` block next to list markers, **but only at the top level**; see
+     `$$` block next to list markers, **but prefer the top level**; see
      the rule above about nesting.
 
   Trade-offs: extra surrounding syntax, no inline use (display-only),

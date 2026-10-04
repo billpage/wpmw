@@ -613,11 +613,7 @@ is what P2 predicts. Four things follow.
 - *The Wigner transform is built the same way.* Because
   $`\psi_r^*(x+y)\,\psi_r(x-y) = e^{-2ip_{\mathrm{ref}}y/\hbar}`$ for any clock
   and position of the reader,
-
-  ```math
-  W(x,p) = \frac{1}{\pi\hbar}\int dy\;\rho(x+y, x-y)\,\psi_p^*(x+y)\,\psi_p(x-y),
-  ```
-
+  $`W(x,p) = \frac{1}{\pi\hbar}\int dy\;\rho(x+y, x-y)\,\psi_p^*(x+y)\,\psi_p(x-y)`$,
   with $`\psi_p`$ the P2 amplitude of a reader at momentum $`p`$: the Wigner
   function at $`(x,p)`$ is the density matrix read, along the chords centred
   at $`x`$, against that reader's own plane wave.

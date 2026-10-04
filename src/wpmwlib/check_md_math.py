@@ -27,14 +27,16 @@ Catches the rendering pitfalls we have actually hit on GitHub:
    GitHub's markdown preprocessor silently fails to recognise these as math,
    then re-tokenises the indented ``+`` / ``-`` lines as nested bullet items.
    No error message — just garbled output.
-   Two further structural rules cover display math (``\`\`\`math`` fences
-   and ``$$`` blocks) in any context -- see :func:`display_math_context_scan`.
-   *Error:* the opening line is not preceded by a blank line (the
-   2026-10-04 incident: ``docs/supplement/poisson_kicks_and_pair_branching.md``
-   rendered six fenced blocks as raw code; every one sat in a list item or
-   blockquote **and** directly under a prose line). *Warning:* the block is
-   nested in a list item or blockquote, which is the other suspected cause;
-   warnings do not fail the run unless ``--strict-nesting`` is given.
+   A further rule warns about display math (``\`\`\`math`` fences and ``$$``
+   blocks) nested in a list item or blockquote -- see
+   :func:`display_math_context_scan`. Background: on 2026-10-04 ten fenced
+   blocks (``poisson_kicks_and_pair_branching.md`` and
+   ``open_position_space.md``) rendered as raw code. Every one was nested
+   and had inline math earlier in the same list item or quote. The render
+   probes in ``src/README.md`` showed that nesting alone, and a missing
+   blank line alone, are both harmless; the inline-math interaction is
+   still unconfirmed, so this is a warning, which does not fail the run
+   unless ``--strict-nesting`` is given.
 4. **Render (KaTeX, optional)** — every expression is fed to KaTeX in strict
    mode *after* applying GitHub's CommonMark backslash-strip transformation,
    so the engine sees what GitHub actually feeds the renderer rather than
@@ -937,19 +939,17 @@ def display_math_context_scan(text: str) -> list[tuple[int, str, str, str]]:
     """Check every display-math block for its markdown context.
 
     Returns ``(line_no, level, message, snippet)`` with ``level`` either
-    ``"error"`` or ``"warn"``. A *display-math block* is a fenced
-    ``\`\`\`math`` block or a ``$$`` block (single- or multi-line).
+    ``"error"`` or ``"warn"`` (only ``"warn"`` is produced at present). A
+    *display-math block* is a fenced ``\`\`\`math`` block or a ``$$`` block
+    (single- or multi-line).
 
-    * **error** -- the opening line is not preceded by a blank line (after
-      removing blockquote markers). Every failing block in the 2026-10-04
-      incident had this property; a blank line costs nothing.
     * **warn** -- the block is inside a blockquote (``>`` prefix) or is
-      indented two or more spaces (a list item's continuation). All of
-      the incident's failing blocks were also nested; which of the two
-      properties is the cause is not yet isolated (see
-      ``src/README.md``, "Render probe"), so nesting is only a
-      warning. Hoist the block to the top level or use inline
-      ``$`...`$`` spans.
+      indented two or more spaces (a list item's continuation). Every
+      block that failed to render on 2026-10-04 was nested this way and
+      had inline math earlier in the same container; the probe in
+      ``src/README.md`` ("Render probes") showed that nesting by itself is
+      fine. Hoist the block to the top level or use inline ``$`...`$``
+      spans.
 
     Content of *any* other fenced block (for example a ````` ```` ````` example
     that quotes a ``\`\`\`math`` fence) is skipped.
@@ -991,22 +991,15 @@ def display_math_context_scan(text: str) -> list[tuple[int, str, str, str]]:
         if len(pre.replace(">", "").replace("\t", "    ")) >= 4 and ">" not in pre:
             continue
         snippet = stripped[:60]
-        prev = lines[i - 1] if i > 0 else ""
-        prev_blank = re.sub(r"[>\s]", "", prev) == ""
-        if not prev_blank:
-            out.append((i + 1, "error",
-                        "Display math not preceded by a blank line. GitHub "
-                        "left such blocks (inside a list item or blockquote) "
-                        "as raw code. Fix: insert a blank line before it "
-                        "(inside a blockquote, a bare `>` line).", snippet))
         if nested:
             kind = "blockquote" if ">" in pre else "list item"
             out.append((i + 1, "warn",
-                        f"Display math nested in a {kind}. Fenced and $$ "
-                        "blocks nested this way have been seen to render as "
-                        "raw code on GitHub. Fix: hoist it to the top level "
-                        "(close the quote or list, blank lines around), or "
-                        "use inline $`...`$ spans.", snippet))
+                        f"Display math nested in a {kind}. Nested ```math "
+                        f"fences that follow inline math in the same {kind} "
+                        "rendered as raw code on GitHub (2026-10-04). Fix: "
+                        "use inline $`...`$ spans, or close the quote or "
+                        "list and put the display at the top level.",
+                        snippet))
     return out
 
 
