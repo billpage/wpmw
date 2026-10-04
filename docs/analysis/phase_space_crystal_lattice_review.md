@@ -130,6 +130,7 @@ subtracted, and $\star_p$ denotes convolution along $p$.
 
 The convolution kernel $K$ for a sinusoidal component is odd-symmetric. In the simplified 7-element
 example,
+
 $$K = [0,\thinspace-1/16,\thinspace0,\thinspace0,\thinspace0,\thinspace+1/16,\thinspace0]$$
 The action of $K \star W$ on a state with all population at $k = k_0$ is, after reinterpretation on
 the shifted distribution, equivalent to a single positive jump:
@@ -144,6 +145,7 @@ the negaton lattice is never touched dynamically.
 ### General polynomial potentials
 
 The same idea applies, but the jump density $\rho(\xi)$ must satisfy the moment problem
+
 $$
 \eta_\zeta \int \zeta^k\thinspace\rho(\zeta)\thinspace d\zeta
    \\; = \\;  \frac{\hbar^{k-1}}{2^{k-1}\thinspace k!}\thinspace\frac{\partial^k V}{\partial x^k}

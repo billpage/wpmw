@@ -519,11 +519,9 @@ out gives the obstruction.
 
 > **Theorem C9.** Solving the FR generator equation for the compensated target
 > $`M_{\rm res}`$ in place of $`M`$ gives
-> ```math
-> \hat H_{\rm comp}(u) \;=\; \bigl(2 - 2\cos u\bigr)\hat G(u)
-> \;-\; \Gamma\thinspace\frac{\sin u - u}{\sin u}
-> \;=\; \hat H(u) \;+\; \Gamma\thinspace\frac{u}{\sin u} .
-> ```
+> $`\hat H_{\rm comp}(u) = (2 - 2\cos u)\hat G(u)
+> - \Gamma\thinspace\frac{\sin u - u}{\sin u}`$,
+> which equals $`\hat H(u) + \Gamma\thinspace\frac{u}{\sin u}`$.
 > The compensating term $`\Gamma\thinspace u/\sin u`$ is (i) **not periodic**
 > in $`u`$, so it is the symbol of no translation-invariant operator on the
 > momentum lattice; (ii) **singular** at $`u = m\pi`$, $`m \ne 0`$; and

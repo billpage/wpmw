@@ -519,9 +519,7 @@ for $U = V_q\cos(k_q x)$:
 
 > **Proposition F4.** The four-action model with free grid step is *exactly*
 > Moyal evolution with an effective Planck constant
-> ```math
-> \hbar_{\mathrm{eff}} \;=\; \frac{2 q\delta}{k_q} .
-> ```
+> $`\hbar_{\mathrm{eff}} = 2 q\delta/k_q`$.
 > It reduces to the classical Liouville equation as $\delta \to 0$ and equals
 > the true QLE **if and only if** $q\delta = \hbar k_q / 2$ — that is, if and
 > only if the hop transfers exactly one photon of the mode.

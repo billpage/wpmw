@@ -1543,7 +1543,14 @@ actually hit:
   `\newcommand`, `\definecolor`, `\colorbox`, `\label` / `\ref` / `\eqref`,
   `\tag`, `\intertext`, `\verb`, `\mathds`;
 - multi-line `$$...$$` display blocks placed inside a list item, which
-  GitHub silently re-parses as nested bullets.
+  GitHub silently re-parses as nested bullets;
+- display math (a ```` ```math ```` fence or a `$$` block) whose opening line
+  is not preceded by a blank line (**error**), and display math nested in a
+  list item or blockquote (**warning**; `--strict-nesting` makes it fail).
+  On 2026-10-04 six fenced blocks in
+  `docs/supplement/poisson_kicks_and_pair_branching.md` rendered as raw code;
+  every one was both nested and directly under a prose line. See the render
+  probe below for which property is the cause.
 
 Optionally it also feeds every expression to KaTeX (strict mode) and to
 MathJax 3 to catch malformed LaTeX (mismatched delimiters, unknown macros,
@@ -1593,6 +1600,85 @@ syntax rules and quotes the broken forms as examples, so it is worth
 keeping under the linter's eye. The module's own defaults are left
 matching upstream `GitHubLinter` rather than being changed here.
 
+### Render probe for nested display math
+
+The 2026-10-04 incident left one question open: is a display block broken
+by being **nested** (in a list item or blockquote), or by having **no blank
+line before it**? Paste the text below into a GitHub issue comment or gist
+*Preview* tab (do not submit) and note which of A–I show typeset math. The
+answer decides whether the nesting warning should become an error or be
+dropped.
+
+`````markdown
+**A** top level, blank before:
+
+```math
+a = b
+```
+
+**B** top level, no blank before:
+```math
+c = d
+```
+
+**C** list item, blank before:
+
+1. item
+
+   ```math
+   e = f
+   ```
+
+**D** list item, no blank before:
+
+1. item
+   ```math
+   g = h
+   ```
+
+**E** blockquote, blank before:
+
+> text
+>
+> ```math
+> i = j
+> ```
+
+**F** blockquote, no blank before:
+
+> text
+> ```math
+> k = l
+> ```
+
+**G** list item inside a blockquote, blank before:
+
+> 1. item
+>
+>    ```math
+>    m = n
+>    ```
+
+**H** list item, single-line `$$`:
+
+- item
+
+  $$o = p$$
+
+**I** blockquote, multi-line `$$`:
+
+> text
+>
+> $$
+> q = r
+> $$
+`````
+
+Outcomes: if only B, D and F fail, the cause is the missing blank line
+(drop the nesting warning). If C, E, G, H and I fail too, the cause is
+nesting (make `--strict-nesting` the default and hoist the nine remaining
+nested blocks).
+
 ### Style guide for math in WPMW markdown
 
 A short cheat sheet for keeping new docs lint-clean:
@@ -1630,10 +1716,16 @@ A short cheat sheet for keeping new docs lint-clean:
   inside a numbered or bulleted list item. If you need visual line breaks,
   either use `$$\begin{aligned} ... \\ ... \end{aligned}$$` on one line, or
   switch the block to a ```` ```math ```` fenced code block (see below) —
-  fenced code blocks are recognised inside list items even when split over
-  multiple lines.
+  but see the next rule: display math belongs at the top level.
 - Outside of list items, multi-line `$$...$$` is fine — preferred for long
   derivations.
+- **Display math goes at the top level, with a blank line before and after.**
+  Inside a list item or blockquote, write the equation as one or two inline
+  `` $`...`$ `` spans joined by prose ("... which equals ..."), or close the
+  quote or list, put the display at the top level, and restart. This
+  replaces the earlier advice that fenced blocks "survive" nesting: the
+  2026-10-04 screenshots show that they do not, at least when no blank
+  line precedes them.
 - **Alternative display syntax: ```` ```math ```` fenced blocks.**
   GitHub also accepts a fenced-code form for display math:
 
@@ -1655,10 +1747,9 @@ A short cheat sheet for keeping new docs lint-clean:
      spacing or sized-delimiter braces are clearer with `\,` `\;`
      `\bigl\{` than with `\thinspace` `\\;` `\bigl\\{`. Switch to a
      fenced block and write the natural TeX.
-  2. *Awkward markdown context* — fenced blocks survive list-item
-     nesting, blockquote nesting, and `<details>` better than `$$...$$`.
-     The structural pass already suggests this as one fix when a
-     multi-line `$$` block is inside a list item.
+  2. *Awkward markdown context* — a fence is safer than a multi-line
+     `$$` block next to list markers, **but only at the top level**; see
+     the rule above about nesting.
 
   Trade-offs: extra surrounding syntax, no inline use (display-only),
   and visual diff churn if you switch a long-established `$$...$$`

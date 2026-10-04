@@ -82,6 +82,7 @@ For each mode $q$, define
 **The single rule.** A positon at cell $(m, n)$ acts as a *mediator*: with probability $|\Gamma_q(x_m)|\thinspace\Delta t$ per particle per mode per timestep **[choice — Poisson rate is the rigorous form when this is not small]**, it induces a transfer of one particle:
 
 $$\text{if } \Gamma_q(x_m) > 0:\quad (m,\thinspace n + q) \longrightarrow (m,\thinspace n - q)$$
+
 $$\text{if } \Gamma_q(x_m) < 0:\quad (m,\thinspace n - q) \longrightarrow (m,\thinspace n + q)$$
 
 The mediator itself is unchanged. No new particles are created. This is the entire crystal-lattice rule.

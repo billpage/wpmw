@@ -482,6 +482,7 @@ Several asymmetries remain:
 4. **Resampling / population control.** Over time, the weight distribution $\\{|w_i|\\}$ broadens — a small number of pairs end up dominating, others having near-zero weight. Periodic resampling (duplicate high-weight, merge low-weight) is the standard fix. The Schmitz–Stockburger (2019) convex-optimisation variance-reduction approach is more principled.
 
 5. **Adding Nelson noise.** Replacing the deterministic flow (4.1)–(4.2) with a Nelson-style real Itô SDE
+
 ```math
 dX = b_+\thinspace dt + \sqrt{\hbar/m}\thinspace dW_X, \qquad dX' = b_-\thinspace dt + \sqrt{\hbar/m}\thinspace dW_{X'},
 ```

@@ -27,6 +27,14 @@ Catches the rendering pitfalls we have actually hit on GitHub:
    GitHub's markdown preprocessor silently fails to recognise these as math,
    then re-tokenises the indented ``+`` / ``-`` lines as nested bullet items.
    No error message — just garbled output.
+   Two further structural rules cover display math (``\`\`\`math`` fences
+   and ``$$`` blocks) in any context -- see :func:`display_math_context_scan`.
+   *Error:* the opening line is not preceded by a blank line (the
+   2026-10-04 incident: ``docs/supplement/poisson_kicks_and_pair_branching.md``
+   rendered six fenced blocks as raw code; every one sat in a list item or
+   blockquote **and** directly under a prose line). *Warning:* the block is
+   nested in a list item or blockquote, which is the other suspected cause;
+   warnings do not fail the run unless ``--strict-nesting`` is given.
 4. **Render (KaTeX, optional)** — every expression is fed to KaTeX in strict
    mode *after* applying GitHub's CommonMark backslash-strip transformation,
    so the engine sees what GitHub actually feeds the renderer rather than
@@ -920,6 +928,88 @@ def list_item_block_math(text: str) -> list[tuple[int, str, str]]:
     return issues
 
 
+_PREFIX = re.compile(r"^(?P<pre>(?:[ \t]*>)*[ \t]*)(?P<rest>.*)$")
+_FENCE_OPEN = re.compile(r"^(?P<f>`{3,}|~{3,})\s*(?P<info>[^`]*)$")
+_DD_START = re.compile(r"^\$\$")
+
+
+def display_math_context_scan(text: str) -> list[tuple[int, str, str, str]]:
+    """Check every display-math block for its markdown context.
+
+    Returns ``(line_no, level, message, snippet)`` with ``level`` either
+    ``"error"`` or ``"warn"``. A *display-math block* is a fenced
+    ``\`\`\`math`` block or a ``$$`` block (single- or multi-line).
+
+    * **error** -- the opening line is not preceded by a blank line (after
+      removing blockquote markers). Every failing block in the 2026-10-04
+      incident had this property; a blank line costs nothing.
+    * **warn** -- the block is inside a blockquote (``>`` prefix) or is
+      indented two or more spaces (a list item's continuation). All of
+      the incident's failing blocks were also nested; which of the two
+      properties is the cause is not yet isolated (see
+      ``src/README.md``, "Render probe"), so nesting is only a
+      warning. Hoist the block to the top level or use inline
+      ``$`...`$`` spans.
+
+    Content of *any* other fenced block (for example a ````` ```` ````` example
+    that quotes a ``\`\`\`math`` fence) is skipped.
+    """
+    out: list[tuple[int, str, str, str]] = []
+    lines = text.splitlines()
+    open_fence: tuple[str, int] | None = None   # (char, length) of any fence
+    in_dd = False
+    for i, line in enumerate(lines):
+        m = _PREFIX.match(line)
+        pre, rest = m.group("pre"), m.group("rest")
+        stripped = rest.strip()
+        if open_fence is not None:
+            ch, n = open_fence
+            if stripped and set(stripped) == {ch} and len(stripped) >= n:
+                open_fence = None
+            continue
+        if in_dd:
+            if "$$" in stripped:
+                in_dd = False
+            continue
+        start_line = None
+        fm = _FENCE_OPEN.match(stripped)
+        if fm:
+            fch, flen = fm.group("f")[0], len(fm.group("f"))
+            open_fence = (fch, flen)
+            if fm.group("info").strip().split(" ")[0] == "math":
+                start_line = i
+        elif _DD_START.match(stripped):
+            start_line = i
+            body = stripped[2:]
+            if "$$" not in body:        # multi-line block opens here
+                in_dd = True
+        if start_line is None:
+            continue
+        nested = ">" in pre or (len(pre.replace("\t", "    ")) >= 2
+                                and len(pre.replace("\t", "    ")) < 4)
+        # a fence/$$ at indent >= 4 is a code block, not our business
+        if len(pre.replace(">", "").replace("\t", "    ")) >= 4 and ">" not in pre:
+            continue
+        snippet = stripped[:60]
+        prev = lines[i - 1] if i > 0 else ""
+        prev_blank = re.sub(r"[>\s]", "", prev) == ""
+        if not prev_blank:
+            out.append((i + 1, "error",
+                        "Display math not preceded by a blank line. GitHub "
+                        "left such blocks (inside a list item or blockquote) "
+                        "as raw code. Fix: insert a blank line before it "
+                        "(inside a blockquote, a bare `>` line).", snippet))
+        if nested:
+            kind = "blockquote" if ">" in pre else "list item"
+            out.append((i + 1, "warn",
+                        f"Display math nested in a {kind}. Fenced and $$ "
+                        "blocks nested this way have been seen to render as "
+                        "raw code on GitHub. Fix: hoist it to the top level "
+                        "(close the quote or list, blank lines around), or "
+                        "use inline $`...`$ spans.", snippet))
+    return out
+
+
 # --------------------------------------------------------------------------- #
 # 6. Optional render checks via node + katex / mathjax-full.                  #
 # --------------------------------------------------------------------------- #
@@ -1064,7 +1154,7 @@ def _run_engine(items: list[tuple[int, MathExpr]],
 class Issue:
     file: Path
     line: int
-    severity: str         # STATIC, STRUCT, KATEX, MATHJX
+    severity: str         # STATIC, STRUCT, NEST (warning), KATEX, MATHJX
     mode: str             # inline, display, ""
     expr: str
     message: str
@@ -1107,6 +1197,10 @@ def scan_paths(paths: Iterable[Path],
         # structural pass works on the raw text
         for line, msg, snippet in list_item_block_math(text):
             issues.append(Issue(md, line, "STRUCT", "display", snippet, msg))
+        for line, level, msg, snippet in display_math_context_scan(text):
+            issues.append(Issue(md, line,
+                                "STRUCT" if level == "error" else "NEST  ",
+                                "display", snippet, msg))
         for line, expr in unclosed_backtick_math_scan(text):
             msg = (
                 f"Backtick-math span `{expr}` is missing its closing `$`. "
@@ -1299,6 +1393,10 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--node-cwd", type=Path, default=None,
                         help="Directory whose node_modules/ provides "
                              "katex and mathjax-full (default: cwd).")
+    parser.add_argument("--strict-nesting", action="store_true",
+                        help="Treat 'display math nested in a list item or "
+                             "blockquote' warnings as failures "
+                             "(default: report them, exit 0).")
     args = parser.parse_args(argv)
 
     paths = [Path(p) for p in args.paths]
@@ -1322,10 +1420,15 @@ def main(argv: list[str] | None = None) -> int:
     n_gfm = sum(1 for i in issues if i.severity == "GFM   ")
     n_struct = sum(1 for i in issues if i.severity == "STRUCT")
     n_render = sum(1 for i in issues if i.severity in ("KATEX ", "MATHJX"))
-    print(f"Summary: {len(issues)} issue(s) "
+    n_nest = sum(1 for i in issues if i.severity == "NEST  ")
+    failing = len(issues) - (0 if args.strict_nesting else n_nest)
+    print(f"Summary: {failing} issue(s) "
           f"({n_static} static, {n_gfm} gfm, {n_struct} structural, "
-          f"{n_render} render) across {len(all_files)} file(s).")
-    return 0 if not issues else 1
+          f"{n_render} render) across {len(all_files)} file(s)."
+          + (f" Plus {n_nest} nesting warning(s) "
+             "(--strict-nesting makes them fail)."
+             if n_nest and not args.strict_nesting else ""))
+    return 0 if failing == 0 else 1
 
 
 if __name__ == "__main__":

@@ -185,9 +185,7 @@ event, with equal and opposite kicks:
 > For each world, each Fourier mode $q$ of $V_2$, with probability
 > $`|\Gamma^{(2)}_q(r_{12})|\, \Delta t`$:
 >
-> $$(p_1,\\, p_2) \\\;\longrightarrow\\\;
->   \bigl(p_1 + \mathrm{sgn}(\Gamma^{(2)}_q)\\, \hbar k_q,\\\;
->         p_2 - \mathrm{sgn}(\Gamma^{(2)}_q)\\, \hbar k_q\bigr).$$
+> $$(p_1,\\, p_2) \\\;\longrightarrow\\\; \bigl(p_1 + \mathrm{sgn}(\Gamma^{(2)}_q)\\, \hbar k_q,\\\; p_2 - \mathrm{sgn}(\Gamma^{(2)}_q)\\, \hbar k_q\bigr).$$
 
 The total momentum $P = p_1 + p_2$ is exactly conserved per event. In
 $(p_1, p_2)$ phase-space coordinates, every jump is a displacement along the

@@ -23,11 +23,10 @@ On the call of 2026-09-29 David showed three things:
 
 1. **A slide.** The spawning rule for a cosine potential, the shot-noise
    stochastic differential equation of a photodetector, and a proposed
-   one-particle kick equation driven by a Poisson counter $`N_\lambda`$,
-   ```math
-   dp \;=\; \hbar k_0\thinspace\mathrm{sgn}\bigl[\sin k_0x\bigr]\thinspace dN_\lambda,
-   \qquad \lambda \propto \lvert\sin k_0 x\rvert .
-   ```
+   one-particle kick equation
+   $`dp = \hbar k_0\thinspace\mathrm{sgn}[\sin k_0x]\thinspace dN_\lambda`$,
+   driven by a Poisson counter $`N_\lambda`$ of rate
+   $`\lambda \propto \lvert\sin k_0 x\rvert`$.
 2. **A notebook**, `Virtual_Photon_Pair_Polarization_Wigner_Test`.
    It evolves a Gaussian in
    $`V = \tfrac12 m\omega^2x^2 + V_1\sin k_0x`$, with the quadratic part as
@@ -37,10 +36,8 @@ On the call of 2026-09-29 David showed three things:
    finite run with $`N_0 = 1.6\times10^6`$ overshoots both peaks of the
    position marginal by roughly 13%.
 3. **A handwritten formula for a general potential**, not yet tested:
-   ```math
-   dp \;=\; \hbar\left\lvert\frac{V''}{V'}\right\rvert dN_\lambda,
-   \qquad \lambda = \frac{V'^{2}}{V''} .
-   ```
+   $`dp = \hbar\lvert V''/V'\rvert\thinspace dN_\lambda`$ with rate
+   $`\lambda = V'^{2}/V''`$.
 
 This note tests all three. The notebook's code was not available, so §5–§7
 are an **independent re-implementation**, not a replication. Its parameters
@@ -240,10 +237,8 @@ directly.
 >
 > For David's general rule — step $`\hbar\lvert V''/V'\rvert`$ along the
 > force, at rate $`V'^{2}/(\hbar\lvert V''\rvert)`$ — the moments are, exactly,
-> ```math
-> M_1 = -V', \qquad M_2 = \hbar\thinspace\lvert V''\rvert, \qquad
-> M_3 = -\mathrm{sgn}(V')\thinspace\frac{\hbar^{2}\thinspace V''^{\thinspace 2}}{\lvert V'\rvert} .
-> ```
+> $`M_1 = -V'`$, $`M_2 = \hbar\thinspace\lvert V''\rvert`$ and
+> $`M_3 = -\mathrm{sgn}(V')\thinspace\hbar^{2}V''^{\thinspace 2}/\lvert V'\rvert`$.
 
 *Proof.* Parts 1 and 2 are the Cauchy–Schwarz inequality for the measure
 $`K\thinspace d\Delta`$, applied to $`(1,\Delta)`$ and to $`(\Delta,\Delta^2)`$.
@@ -289,10 +284,7 @@ and no friction, so nothing stops the growth.
 > **Proposition X4 (heating law).** Let $`H = p^2/2m + V_0 + V_1`$. Evolve
 > $`V_0`$ as a classical flow and $`V_1`$ by any jump kernel with
 > $`M_1 = -V_1'`$. Then, for every state,
-> ```math
-> \frac{d\langle H\rangle}{dt} \;=\; \frac{\langle M_2(x)\rangle}{2m}
-> \;=\; \frac{\langle D(x)\rangle}{m} .
-> ```
+> $`d\langle H\rangle/dt = \langle M_2(x)\rangle/2m = \langle D(x)\rangle/m`$.
 
 *Proof.* By §1.2 the jumps change $`\langle p^2/2m\rangle`$ at rate
 $`\langle (pM_1 + M_2/2)/m\rangle`$. The flow of $`V_0`$ changes it at rate
@@ -332,12 +324,10 @@ legs a distance $`y`$ apart.
 > 1. For a positive kernel,
 >    $`\mathrm{Re}\thinspace S = \int K\thinspace(\cos(\Delta y/\hbar) - 1)\thinspace d\Delta \le 0`$,
 >    so coherence decays. For a single kick of size $`a`$ at rate $`\lambda`$,
->    ```math
->    \mathrm{Re}\thinspace S(y) = -\lambda\Bigl(1-\cos\frac{a y}{\hbar}\Bigr)
->    = -\frac{D\thinspace y^2}{\hbar^2} + O(y^4),
->    \qquad D = \frac{M_2}{2} = \frac{\lambda a^2}{2} ,
->    ```
->    and legs a distance $`y`$ apart lose coherence as
+>    $`\mathrm{Re}\thinspace S(y) = -\lambda\bigl(1-\cos(ay/\hbar)\bigr)`$,
+>    which is $`-Dy^2/\hbar^2 + O(y^4)`$ with
+>    $`D = M_2/2 = \lambda a^2/2`$.
+>    Legs a distance $`y`$ apart therefore lose coherence as
 >    $`e^{-Dy^2t/\hbar^2}`$ at short separations.
 > 2. For the signed pair, $`S(y) = -2iw\sin(ay/\hbar)`$ is purely imaginary.
 >    It is a pure phase, and no coherence is lost.
@@ -489,10 +479,8 @@ error against the exact rotation falls as $`a^2`$.*
 
 > **Proposition X3 (the force as a dipole of signed kicks).** Fix
 > $`2wa = F(x)`$. Then
-> ```math
-> \frac{F}{2a}\Bigl[W(p+a)-W(p-a)\Bigr]
-> \;=\; F\thinspace\partial_pW \;+\; \frac{Fa^{2}}{6}\thinspace\partial_p^{3}W \;+\; O(a^4),
-> ```
+> $`\frac{F}{2a}\bigl[W(p+a)-W(p-a)\bigr]`$ equals
+> $`F\thinspace\partial_pW + \frac{Fa^{2}}{6}\thinspace\partial_p^{3}W + O(a^4)`$,
 > so the signed kernel tends to the classical force as $`a\to 0`$. The
 > error is a spurious $`M_3 = Fa^2`$. Each body gives birth to children at
 > rate $`\lvert F\rvert/a`$.
