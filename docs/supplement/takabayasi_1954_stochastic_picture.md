@@ -92,8 +92,7 @@ and closes:
 
 > **Lemma T1.** For $`V(x) = V_q\cos(k_q x + \phi_q)`$, Takabayasi's kernel is a
 > pair of opposite-signed point masses,
-> $`J(x,p) = \Gamma_q(x)\thinspace\bigl[\delta(p + \tfrac{\hbar k_q}{2})
-> - \delta(p - \tfrac{\hbar k_q}{2})\bigr]`$, where
+> $`J(x,p) = \Gamma_q(x)\thinspace\bigl[\delta(p + \tfrac{\hbar k_q}{2}) - \delta(p - \tfrac{\hbar k_q}{2})\bigr]`$, where
 > $`\Gamma_q(x) = -\frac{V_q}{\hbar}\sin(k_q x + \phi_q)`$,
 > and therefore his collision operator (3.6) is
 > $`\Lambda[f](x,p) = \Gamma_q(x)\bigl[f(x, p+\tfrac{\hbar k_q}{2}) - f(x, p-\tfrac{\hbar k_q}{2})\bigr]`$.

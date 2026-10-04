@@ -27,16 +27,13 @@ Catches the rendering pitfalls we have actually hit on GitHub:
    GitHub's markdown preprocessor silently fails to recognise these as math,
    then re-tokenises the indented ``+`` / ``-`` lines as nested bullet items.
    No error message — just garbled output.
-   A further rule warns about display math (``\`\`\`math`` fences and ``$$``
-   blocks) nested in a list item or blockquote -- see
-   :func:`display_math_context_scan`. Background: on 2026-10-04 ten fenced
-   blocks (``poisson_kicks_and_pair_branching.md`` and
-   ``open_position_space.md``) rendered as raw code. Every one was nested
-   and had inline math earlier in the same list item or quote. The render
-   probes in ``src/README.md`` showed that nesting alone, and a missing
-   blank line alone, are both harmless; the inline-math interaction is
-   still unconfirmed, so this is a warning, which does not fail the run
-   unless ``--strict-nesting`` is given.
+   Two more structural rules came out of the 2026-10-04 incident (ten
+   fenced blocks and two inline spans rendered as raw code):
+   :func:`fence_after_inline_math_in_list_item` (a ``\`\`\`math`` fence in a
+   list that already has inline math; the probes in ``src/README.md``
+   show that nesting alone, or a missing blank line, is harmless) and
+   :func:`math_span_split_by_block_marker` (a wrapped ``$`...`$`` span whose
+   continuation line starts with ``-``, ``+``, ``1.``, ``#`` ...).
 4. **Render (KaTeX, optional)** — every expression is fed to KaTeX in strict
    mode *after* applying GitHub's CommonMark backslash-strip transformation,
    so the engine sees what GitHub actually feeds the renderer rather than
@@ -930,76 +927,168 @@ def list_item_block_math(text: str) -> list[tuple[int, str, str]]:
     return issues
 
 
-_PREFIX = re.compile(r"^(?P<pre>(?:[ \t]*>)*[ \t]*)(?P<rest>.*)$")
-_FENCE_OPEN = re.compile(r"^(?P<f>`{3,}|~{3,})\s*(?P<info>[^`]*)$")
-_DD_START = re.compile(r"^\$\$")
+_BQ_PREFIX = re.compile(r"^(?P<bq>(?:[ \t]*>)*)(?P<rest>.*)$")
+_FENCE_LINE = re.compile(r"^(?P<f>`{3,}|~{3,})\s*(?P<info>[^`]*)$")
+_LIST_MARKER = re.compile(r"^(?P<ind> *)(?P<mk>[-+*]|\d{1,9}[.)])(?P<sp> +)(?P<txt>\S.*)?$")
+_ANY_INLINE_MATH = re.compile(
+    r"\$`|(?<![$\\])\$(?!\$)[^$\n]+?(?<!\\)\$(?!\$)")
+# a line that starts a new block when it follows a paragraph line
+_BLOCK_START = re.compile(
+    r"^\s*(?:[-+*]\s|\d{1,9}[.)]\s|#{1,6}(?:\s|$)|=+\s*$|-{2,}\s*$|```|~~~)")
 
 
-def display_math_context_scan(text: str) -> list[tuple[int, str, str, str]]:
-    """Check every display-math block for its markdown context.
+def _scan_line(body: str, span_open: bool) -> tuple[bool, bool, str]:
+    """Tokenise one line for backtick-math spans and ordinary code spans.
 
-    Returns ``(line_no, level, message, snippet)`` with ``level`` either
-    ``"error"`` or ``"warn"`` (only ``"warn"`` is produced at present). A
-    *display-math block* is a fenced ``\`\`\`math`` block or a ``$$`` block
-    (single- or multi-line).
-
-    * **warn** -- the block is inside a blockquote (``>`` prefix) or is
-      indented two or more spaces (a list item's continuation). Every
-      block that failed to render on 2026-10-04 was nested this way and
-      had inline math earlier in the same container; the probe in
-      ``src/README.md`` ("Render probes") showed that nesting by itself is
-      fine. Hoist the block to the top level or use inline ``$`...`$``
-      spans.
-
-    Content of *any* other fenced block (for example a ````` ```` ````` example
-    that quotes a ``\`\`\`math`` fence) is skipped.
+    Returns ``(span_open, saw_math, clean)``: whether a ``$`...`$`` math span
+    is still open at end of line, whether any math opened or was open on the
+    line, and the line with ordinary code spans blanked.
     """
-    out: list[tuple[int, str, str, str]] = []
-    lines = text.splitlines()
-    open_fence: tuple[str, int] | None = None   # (char, length) of any fence
-    in_dd = False
-    for i, line in enumerate(lines):
-        m = _PREFIX.match(line)
-        pre, rest = m.group("pre"), m.group("rest")
-        stripped = rest.strip()
+    out: list[str] = []
+    saw = span_open
+    i, n = 0, len(body)
+    while i < n:
+        if span_open:
+            k = body.find("`$", i)
+            if k < 0:
+                out.append(body[i:])
+                i = n
+            else:
+                out.append(body[i:k + 2])
+                i, span_open = k + 2, False
+        elif body.startswith("$`", i):
+            span_open, saw = True, True
+            out.append("$`")
+            i += 2
+        elif body[i] == "`":
+            j = i
+            while j < n and body[j] == "`":
+                j += 1
+            run = body[i:j]
+            k = body.find(run, j)
+            while k >= 0 and k + len(run) < n and body[k + len(run)] == "`":
+                k = body.find(run, k + 1)
+            if k < 0:
+                out.append(run)
+                i = j
+            else:
+                out.append(" " * (k + len(run) - i))
+                i = k + len(run)
+        else:
+            out.append(body[i])
+            i += 1
+    return span_open, saw, "".join(out)
+
+
+def _split_bq(line: str) -> tuple[int, str]:
+    """Return (blockquote depth, text after the ``>`` markers)."""
+    m = _BQ_PREFIX.match(line)
+    depth = m.group("bq").count(">")
+    rest = m.group("rest")
+    if depth and rest.startswith(" "):
+        rest = rest[1:]
+    return depth, rest
+
+
+def fence_after_inline_math_in_list_item(text: str) -> list[tuple[int, str, str]]:
+    """Find ``\`\`\`math`` fences nested in a list that already has inline math.
+
+    Returns ``(line_no, message, snippet)``. On 2026-10-04 GitHub showed a
+    fence as raw code exactly when it sat inside a *list* with inline math
+    earlier in that list: render probe cases J and K, and §0 item 3 of
+    ``poisson_kicks_and_pair_branching.md``, whose own item had no math but
+    whose items 1 and 2 did. The same fence in a blockquote, at top level
+    or in a list with no inline math typesets (probe cases A-G, L-N), and so
+    does a ``$$`` block (H, I, O). Blockquote depth is tracked, so a list
+    inside a quote is still a list.
+    """
+    out: list[tuple[int, str, str]] = []
+    lists: list[list] = []   # [bq_depth, marker_indent, content_indent, has_math]
+    open_fence: tuple[str, int] | None = None
+    for no, line in enumerate(text.splitlines(), start=1):
+        depth, body = _split_bq(line)
+        stripped = body.strip()
         if open_fence is not None:
             ch, n = open_fence
             if stripped and set(stripped) == {ch} and len(stripped) >= n:
                 open_fence = None
             continue
-        if in_dd:
-            if "$$" in stripped:
-                in_dd = False
+        if not stripped:
             continue
-        start_line = None
-        fm = _FENCE_OPEN.match(stripped)
+        indent = len(body) - len(body.lstrip(" "))
+        lm = _LIST_MARKER.match(body)
+        while lists and lists[-1][0] > depth:
+            lists.pop()
+        while (lists and lists[-1][0] == depth and indent < lists[-1][2]
+               and not (lm and indent == lists[-1][1])):
+            lists.pop()
+        if lm:
+            ci = indent + len(lm.group("mk")) + len(lm.group("sp"))
+            if lists and lists[-1][0] == depth and lists[-1][1] == indent:
+                lists[-1][2] = ci                      # next sibling item
+            else:
+                lists.append([depth, indent, ci, False])
+            _, saw, clean = _scan_line(lm.group("txt") or "", False)
+            if saw or _ANY_INLINE_MATH.search(clean):
+                lists[-1][3] = True
+            continue
+        fm = _FENCE_LINE.match(stripped)
         if fm:
-            fch, flen = fm.group("f")[0], len(fm.group("f"))
-            open_fence = (fch, flen)
-            if fm.group("info").strip().split(" ")[0] == "math":
-                start_line = i
-        elif _DD_START.match(stripped):
-            start_line = i
-            body = stripped[2:]
-            if "$$" not in body:        # multi-line block opens here
-                in_dd = True
-        if start_line is None:
+            open_fence = (fm.group("f")[0], len(fm.group("f")))
+            info = fm.group("info").strip().split(" ")[0]
+            if info == "math" and any(L[3] for L in lists):
+                out.append((no,
+                            "```math fence inside a list that already has "
+                            "inline math: GitHub renders it as raw code "
+                            "(render probe cases J, K, 2026-10-04). Fix: write "
+                            "the equation as inline $`...`$ spans, or close the "
+                            "list and put the display at the top level.",
+                            stripped[:60]))
             continue
-        nested = ">" in pre or (len(pre.replace("\t", "    ")) >= 2
-                                and len(pre.replace("\t", "    ")) < 4)
-        # a fence/$$ at indent >= 4 is a code block, not our business
-        if len(pre.replace(">", "").replace("\t", "    ")) >= 4 and ">" not in pre:
+        if lists:
+            _, saw, clean = _scan_line(body, False)
+            if saw or _ANY_INLINE_MATH.search(clean):
+                for L in lists:
+                    L[3] = True
+    return out
+
+
+def math_span_split_by_block_marker(text: str) -> list[tuple[int, str, str]]:
+    """Find backtick-math spans continued onto a line that opens a new block.
+
+    A multi-line ``$`...`$`` span whose continuation line begins with
+    ``- ``, ``+ ``, ``* ``, ``1. ``, ``#``, a setext underline or a fence is
+    cut by markdown: the line becomes a list item, heading or fence, the
+    span never closes, and the whole expression shows as code. A minus sign
+    at the start of a wrapped line is the usual culprit (2026-10-04,
+    Theorem C9 and Lemma T1). Fix: re-wrap so the line starts with another
+    token, or put the span on one line.
+    """
+    out: list[tuple[int, str, str]] = []
+    in_fence = False
+    span_open = False
+    for no, line in enumerate(text.splitlines(), start=1):
+        _, body = _split_bq(line)
+        if re.match(r"^\s*(```|~~~)", body):
+            in_fence = not in_fence
+            span_open = False
             continue
-        snippet = stripped[:60]
-        if nested:
-            kind = "blockquote" if ">" in pre else "list item"
-            out.append((i + 1, "warn",
-                        f"Display math nested in a {kind}. Nested ```math "
-                        f"fences that follow inline math in the same {kind} "
-                        "rendered as raw code on GitHub (2026-10-04). Fix: "
-                        "use inline $`...`$ spans, or close the quote or "
-                        "list and put the display at the top level.",
-                        snippet))
+        if in_fence:
+            continue
+        if not body.strip():
+            span_open = False
+            continue
+        if span_open and _BLOCK_START.match(body):
+            out.append((no,
+                        "A `$`...`$` math span continues onto this line, which "
+                        "starts with a block marker; markdown ends the "
+                        "paragraph here and the span renders as code. Re-wrap "
+                        "the line so it does not start with `-`, `+`, `*`, "
+                        "`N.` or `#`.",
+                        body.strip()[:60]))
+            span_open = False
+        # walk the line's `$` ... `$ delimiters to update the open/closed state
+        span_open, _, _ = _scan_line(body, span_open)
     return out
 
 
@@ -1147,7 +1236,7 @@ def _run_engine(items: list[tuple[int, MathExpr]],
 class Issue:
     file: Path
     line: int
-    severity: str         # STATIC, STRUCT, NEST (warning), KATEX, MATHJX
+    severity: str         # STATIC, STRUCT, KATEX, MATHJX
     mode: str             # inline, display, ""
     expr: str
     message: str
@@ -1190,10 +1279,10 @@ def scan_paths(paths: Iterable[Path],
         # structural pass works on the raw text
         for line, msg, snippet in list_item_block_math(text):
             issues.append(Issue(md, line, "STRUCT", "display", snippet, msg))
-        for line, level, msg, snippet in display_math_context_scan(text):
-            issues.append(Issue(md, line,
-                                "STRUCT" if level == "error" else "NEST  ",
-                                "display", snippet, msg))
+        for line, msg, snippet in fence_after_inline_math_in_list_item(text):
+            issues.append(Issue(md, line, "STRUCT", "display", snippet, msg))
+        for line, msg, snippet in math_span_split_by_block_marker(text):
+            issues.append(Issue(md, line, "STRUCT", "inline", snippet, msg))
         for line, expr in unclosed_backtick_math_scan(text):
             msg = (
                 f"Backtick-math span `{expr}` is missing its closing `$`. "
@@ -1386,10 +1475,6 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--node-cwd", type=Path, default=None,
                         help="Directory whose node_modules/ provides "
                              "katex and mathjax-full (default: cwd).")
-    parser.add_argument("--strict-nesting", action="store_true",
-                        help="Treat 'display math nested in a list item or "
-                             "blockquote' warnings as failures "
-                             "(default: report them, exit 0).")
     args = parser.parse_args(argv)
 
     paths = [Path(p) for p in args.paths]
@@ -1413,15 +1498,10 @@ def main(argv: list[str] | None = None) -> int:
     n_gfm = sum(1 for i in issues if i.severity == "GFM   ")
     n_struct = sum(1 for i in issues if i.severity == "STRUCT")
     n_render = sum(1 for i in issues if i.severity in ("KATEX ", "MATHJX"))
-    n_nest = sum(1 for i in issues if i.severity == "NEST  ")
-    failing = len(issues) - (0 if args.strict_nesting else n_nest)
-    print(f"Summary: {failing} issue(s) "
+    print(f"Summary: {len(issues)} issue(s) "
           f"({n_static} static, {n_gfm} gfm, {n_struct} structural, "
-          f"{n_render} render) across {len(all_files)} file(s)."
-          + (f" Plus {n_nest} nesting warning(s) "
-             "(--strict-nesting makes them fail)."
-             if n_nest and not args.strict_nesting else ""))
-    return 0 if failing == 0 else 1
+          f"{n_render} render) across {len(all_files)} file(s).")
+    return 0 if not issues else 1
 
 
 if __name__ == "__main__":
