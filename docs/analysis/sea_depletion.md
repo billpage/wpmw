@@ -1,6 +1,6 @@
 # Depletion and excess: when the sea could be seen
 
-> Empty space is not empty here: a cell that holds no `W` still holds aligned pairs at density `B`. Could the sea's depletion or excess ever be seen? By Proposition Q1 the observable never reads the sea, so only a rule that reads it could show either; a rule that reads its level, Theorem S5's throttle, is already excluded, so excess is unobservable. **Proposition V1**: admissible negativity is free. For a potential of degree two or less the compensated kernel vanishes identically (Theorem G2), so a cat state held in a harmonic trap makes no event and touches no pair; the sea pays only for the negativity the dynamics makes, where `V''' != 0`, and in an anharmonic well a cat makes events 1.4 times as fast as one packet because its fringes are parents too. **Proposition V2**: from a minimal preparation the sea's debt is at least the growth of the negative mass of `W`, with equality exactly when the ensemble stays minimal; body inflation is sea debt, so a finite sea would make garbage collection a requirement. **Proposition V3**: under a floor — no pair, no ionisation, Proposition S0 read literally — `E` is unchanged bit for bit while the sea is at least as deep as the depth `lambda*` the unfloored run needs, and departs below it through a spurious force, an energy drift and a change of negativity, never through the norm. On the Eckart summit `lambda*` is 1.10 under (S) and 0.65 under (S′); in an anharmonic well it climbs without levelling off, to 2.2 and 2.9 by `t = 96`, and it grows with the reach as Theorem G5's census does, which answers Q-SP2. **Proposition V4**: the sea is granular, and the event aperture of Q9(c) holds one pair on average at the physical density, so an integer sea of `beta` pairs per aperture blocks close to `e^-beta` of emissions and moves `E` by `C e^-beta`, `C` from 1.4 to 6.8 — by 37 to 88 per cent at `beta = 1`. The physical density cannot be a strict supply; a sea that is one must be seven to nine pairs per aperture deep to hide below a part in a thousand, and only an experiment could bound that depth, from below. **Proposition V5**: entanglement made by a pair potential costs the sea exactly the negativity of the relative motion. Where to look is where negativity is made fastest — diffraction, Kerr revivals, tunnelling, collisions — but the model's regulators have no laboratory values, so no bound follows yet; a null result is expected, and says the sea's depth, like its motion and its phases, is not fixed by the observable. Step 16's ledger books transport ringing as sea traffic (S-SP7), over a quarter of the sea's debits on Theorem S8's run; the minimal ledger used here does not.
+> Empty space is not empty here: a cell that holds no `W` still holds aligned pairs at density `B`. Could the sea's depletion or excess ever be seen? By Proposition Q1 the observable never reads the sea, so only a rule that reads it could show either; a rule that reads its level, Theorem S5's throttle, is already excluded, so excess is unobservable. **Proposition V1**: admissible negativity is free. For a potential of degree two or less the compensated kernel vanishes identically (Theorem G2), so a cat state held in a harmonic trap makes no event and touches no pair; the sea pays only for the negativity the dynamics makes, where `V''' != 0`, and in an anharmonic well a cat makes events 1.4 times as fast as one packet because its fringes are parents too. **Proposition V2**: from a minimal preparation the sea's debt is at least the growth of the negative mass of `W`, with equality exactly when the ensemble stays minimal; body inflation is sea debt, so a finite sea would make garbage collection a requirement. **Proposition V3**: under a floor — no pair, no ionisation, Proposition S0 read literally — `E` is unchanged bit for bit while the sea is at least as deep as the depth `lambda*` the unfloored run needs, and departs below it through a spurious force, an energy drift and a change of negativity, never through the norm. On the Eckart summit `lambda*` is 1.10 under (S) and 0.65 under (S′); in an anharmonic well it climbs without levelling off, to 2.2 and 2.9 by `t = 96`, and it grows with the reach as Theorem G5's census does, which answers Q-SP2. **Proposition V4**: the sea is granular, and the event aperture of Q9(c) holds one pair on average at the physical density, so an integer sea of `beta` pairs per aperture blocks close to `e^-beta` of emissions and moves `E` by `C e^-beta`, `C` from 1.4 to 6.8 — by 37 to 88 per cent at `beta = 1`. The physical density cannot be a strict supply; a sea that is one must be seven to nine pairs per aperture deep to hide below a part in a thousand, and only an experiment could bound that depth, from below. **Proposition V6**: integer worlds at the physical density, over many seeds, block emissions as about `0.9 e^-0.55beta`, not `e^-beta`, because body inflation drains the apertures a parent keeps returning to; the observable still follows V4's mean field, but blocking fewer than one emission in a thousand takes about twelve pairs per aperture. **Proposition V5**: entanglement made by a pair potential costs the sea exactly the negativity of the relative motion. **Proposition V7**: when the centre of mass and the relative motion couple, V2 and V3 hold unchanged in four dimensions, and two bodies in an anharmonic well need a deeper sea than one under every realisation; the physical density is short in all three. Where to look is where negativity is made fastest — diffraction, Kerr revivals, tunnelling, collisions — but the model's regulators have no laboratory values, so no bound follows yet; a null result is expected, and says the sea's depth, like its motion and its phases, is not fixed by the observable. Step 16's ledger books transport ringing as sea traffic (S-SP7), over a quarter of the sea's debits on Theorem S8's run; the minimal ledger used here does not.
 
 *Ladder abstract — see the [full list](README.md#the-ladder).*
 
@@ -51,15 +51,23 @@ it.
   of emissions, and the expected $`E`$ departs by $`C e^{-\beta}`$, with
   $`C`$ between 1.4 and 6.8: by 37 to 88 per cent at the physical density
   (§5).
+- **Proposition V6.** The integer sea at the physical density, measured
+  over many seeds: blocking falls as about $`0.9\,e^{-0.55\beta}`$, not
+  $`e^{-\beta}`$, because body inflation drains the apertures, while the
+  observable follows V4's mean field where resolved (§5.1).
 - **Proposition V5.** Two bodies. Entanglement made by a pair potential
   costs the sea exactly the negativity the relative motion makes, and per
   joint cell never more than the one-dimensional problem (§6).
+- **Proposition V7.** Two coupled bodies. V2 and V3 hold in four
+  dimensions, and the depth the floor needs exceeds the one-body value in
+  every realisation (§6.1).
 - What an experiment could and could not see (§7), and a quantification of
   a known demo defect — step 16's ledger books transport ringing as sea
   traffic — that the minimal ledger used here avoids (§8).
 
-**Leaves open** the items of §10, chief among them the integer world
-ensemble at $`\nu = 1`$ (V-SP2) and a four-dimensional sea ledger (V-SP1).
+**Leaves open** the items of §10, chief among them the regulators'
+laboratory values (V-SP3), without which no depth can be compared with an
+experiment. §5.1 and §6.1, added in October 2026, answer V-SP2 and V-SP1.
 
 **Inherits.** Theorems S0, S5 and S7 from step 16; Theorems G2 and G5
 from step 17; Proposition M1 from step 21; Propositions Q1, Q8 and Q9 from step 23, and step 23's picture of the
@@ -403,9 +411,99 @@ ontologically acceptable: if the sea is a supply it is required, and only
 an experiment could bound its depth, and only from below.
 
 This is the integer sea in mean field. The integer world ensemble itself,
-at $`\nu = 1`$ and many seeds, is open item V-SP2.
+at $`\nu = 1`$ and many seeds, is §5.1.
 
 ![The floor in mean field (left) and the integer sea (right) against the depth](https://raw.githubusercontent.com/billpage/wpmw/output/figures/sea_depletion_floor.png)
+
+### 5.1 Proposition V6: the integer sea at the physical density
+
+*Addendum (October 2026), open item V-SP2.* Proposition V4 put the
+granularity in by hand, as Poisson emptiness on top of a mean field. Here
+nothing is averaged before the end. Bodies and sea pairs are points; a
+world at the physical density starts from one positon sampled from
+$`W_0`$ ($`\nu = 1`$); each body fires at its per-parent rate; an event
+is absorptive if a free negaton and a free positon sit in the apertures
+about $`p \pm t\xi_q`$, emissive if a pair sits in the aperture about the
+parent, and under (F) blocked otherwise; a positon and a negaton in one
+mesh cell bind on contact (Q8). The sea is a Poisson configuration of
+$`\beta`$ pairs per aperture, moving under (S) or (S′). The expectation
+is an average over worlds, so only observables linear in $`E`$ mean
+anything: the transmission $`T`$, $`\langle p \rangle`$ and
+$`\langle H \rangle`$.
+
+Each seed runs the world without the floor and the world with it. The
+children of an emission are placed at the parent, as in the mesh
+ledgers, so the bodies never depend on which pair was ionised, and the
+pair is drawn from a separate random stream: the two worlds coincide
+event for event until the first block, and their difference has a small
+variance.
+
+**Proposition V6 (measured).** *(a) Without the floor the integer worlds
+reproduce the QLE in mean, up to the particle model's own baseline.
+(b) Under (F) the share of emissions blocked falls as $`A e^{-\kappa\beta}`$
+with $`\kappa \approx 0.55`$ to 0.6, not $`e^{-\beta}`$: the apertures
+an emission finds hold nearly $`\beta`$ pairs on average, but are empty
+far more often than a Poisson sea of that mean would be, increasingly so
+with depth. (c) The observable departs as Proposition V4's mean field
+predicts where it is resolved. (d) The cause is body inflation: at
+$`\nu = 1`$ partners are scarce, a world inflates to tens of bodies, and
+by V2(ii) every one of them is sea debt drawn near its parent.*
+
+*Verification* (`src/demo_integer_sea.py`, Kaggle batch kernels from
+commit `e916ac4` with that script added; Eckart summit to $`T = 8`$,
+102 000 worlds under (S′) in three seed blocks and 34 000 under (S);
+Pöschl–Teller well to $`T = 12`$, 8000 worlds; $`\Delta t = 0.02`$):
+
+| case | $`\beta`$ | blocked | $`e^{-\beta}`$ | pairs found, mean | $`P(0)`$ over Poisson at that mean | $`\Delta T`$ | V4 mean field |
+|---|---|---|---|---|---|---|---|
+| Eckart, (S′) | 1 | 0.525 | 0.368 | 0.72 | 1.07 | $`-0.021 \pm 0.008`$ | $`-0.031`$ |
+| | 2 | 0.301 | 0.135 | 1.47 | 1.30 | $`-0.011 \pm 0.008`$ | $`-0.013`$ |
+| | 4 | 0.100 | 0.018 | 3.18 | 2.41 | $`-0.001 \pm 0.008`$ | $`-0.002`$ |
+| | 8 | 0.0114 | 0.0003 | 7.02 | 12.7 | $`-0.001 \pm 0.004`$ | 0 |
+| Eckart, (S) | 1 | 0.517 | 0.368 | 0.73 | 1.07 | $`-0.037 \pm 0.014`$ | $`-0.032`$ |
+| | 2 | 0.295 | 0.135 | 1.48 | 1.30 | $`-0.027 \pm 0.014`$ | $`-0.014`$ |
+| | 4 | 0.103 | 0.018 | 3.17 | 2.46 | $`-0.015 \pm 0.013`$ | $`-0.002`$ |
+| | 8 | 0.0126 | 0.0003 | 6.93 | 12.9 | $`-0.015 \pm 0.008`$ | 0 |
+| well, (S′) | 1 | 0.530 | 0.368 | 0.73 | 1.10 | $`-0.04 \pm 0.07`$ | |
+| | 2 | 0.279 | 0.135 | 1.65 | 1.46 | $`-0.06 \pm 0.08`$ | |
+| | 4 | 0.084 | 0.018 | 3.66 | 3.25 | $`-0.03 \pm 0.08`$ | |
+| | 8 | 0.0084 | 0.0003 | 7.72 | 18.8 | $`+0.02 \pm 0.07`$ | |
+
+Least squares on the logarithm give $`0.90\,e^{-0.55\beta}`$ on the
+summit under (S′), $`0.86\,e^{-0.53\beta}`$ under (S) and
+$`0.92\,e^{-0.59\beta}`$ in the well; the local slopes on the summit
+under (S′) are 0.557, 0.549 and 0.544, so the law is clean over two
+decades. The (S) block used the seeds of the first (S′) block, and its
+unfloored worlds are the same worlds bit for bit, as Proposition Q1
+requires of bodies that never read the sea; their floored departures
+agree with that block's ($`-0.035`$, $`-0.013`$, $`-0.016`$, $`-0.008`$),
+so the $`2\sigma`$ value at $`\beta = 8`$ under (S) is that seed
+block's fluctuation, not the motion.
+Without the floor the summit's worlds give $`T = 0.838 \pm 0.008`$,
+$`\langle p \rangle = 1.204 \pm 0.031`$ and
+$`\langle H \rangle = 1.258 \pm 0.038`$, against the mesh QLE's 0.869,
+1.252 and 1.231. The momenta and energy agree; the transmission is
+$`4\sigma`$ low, with no sea involved. Q-SP12 found the particle model's
+classical baseline offset from the mesh's on this coarse momentum grid,
+which is the likely cause; it is not checked here. The paired differences
+share the offset and cancel it. A world on the
+summit ends with 29.9 bodies (131.5 in the well) against a minimal
+$`\lVert W \rVert_1`$ near 1.7, after 35.5 emissions, 9.2 absorptions
+and 11.8 contact recombinations: $`f \approx 0.21`$.
+
+So the mean-field estimate of §5 is right about the observable and wrong
+about the mechanism. Blocking is worse than Poisson, because a parent
+drains the aperture it keeps returning to, and under (S′) the pairs of
+its own row travel with it (the frozen comb of Q-SP5); but most of the
+emissions it blocks are inflation, whose $`\pm`$ deposits would have
+cancelled again, and the departure of $`E`$ follows the mean field.
+Keeping blocked emissions below a part in a thousand takes about twelve
+pairs per aperture ($`\ln(900)/0.55`$), not seven to nine. How far the
+observable's departure follows is resolved only to $`\beta = 2`$ at this
+sample size; beyond it $`\lvert \Delta T \rvert < 0.016`$ (two standard
+errors).
+
+![Blocking against depth (left) and the transmission's paired departure against Proposition V4's mean field (right)](https://raw.githubusercontent.com/billpage/wpmw/output/figures/integer_sea_blocking.png)
 
 ---
 
@@ -436,10 +534,119 @@ negativity costs — the Eckart summit run of §4 *is* such a collision, in
 relative coordinates. What V5 does not cover is the genuinely
 four-dimensional case: a non-quadratic external potential that couples the
 centre of mass to the relative motion, or a preparation entangled across
-them. There the demand on the sea has not been measured (V-SP1), and step
+them. There the demand on the sea is measured in §6.1, and step
 21's body inflation, which grows as a product over degrees of freedom
 (Corollary M10), would by V2(ii) be sea debt unless the ensemble is kept
 minimal.
+
+### 6.1 Proposition V7: two coupled bodies
+
+*Addendum (October 2026), open item V-SP1.* Two particles on a line in
+step 24's Pöschl–Teller well, repelling through a soft Gaussian,
+
+```math
+H = \tfrac12 p_1^2 + \tfrac12 p_2^2 + V(x_1) + V(x_2) + w_0\, e^{-(x_1 - x_2)^2/2s^2},
+\qquad V(x) = -4\,{\rm sech}^2(x/2),
+```
+
+with $`w_0 = 2`$, $`s = 1`$, from a product of two minimal packets at
+rest at $`x = \pm 2`$ ($`\sigma = 0.6`$). The well is not quadratic, so
+the centre of mass and the relative motion couple and V5 does not apply.
+The ledger is §3's minimal ledger in four dimensions: $`E(x_1, x_2, p_1,
+p_2)`$ is transported spectrally, the sea has density $`B^2`$, and by
+Proposition M1 the events fall into three families — $`p_1`$ jumps with
+rates from $`V(x_1)`$, $`p_2`$ jumps from $`V(x_2)`$, and the pair jumps
+$`(p_1, p_2) \to (p_1 \pm \xi, p_2 \mp \xi)`$ from the repulsion at
+$`x_1 - x_2`$ — each with step 16's one-dimensional compensated kernel.
+The mesh is the one-dimensional well's, $`dx = 0.3125`$ and
+$`dp = 0.25`$, at $`48^4 = 5.3\times10^6`$ cells.
+
+**Proposition V7.** *(a) Proposition V2 holds in four dimensions:
+$`D = \Delta M_- - \Delta N_{\rm tr}/2`$, the same under (S) and (S′).
+(b) Proposition V3 holds in four dimensions: under (F), $`E`$ is the
+unfloored $`E`$ bit for bit if $`\beta \ge \lambda^*`$, measured against
+$`B^2`$, and differs from it otherwise. (c) Measured: in every
+realisation the coupled pair needs a deeper sea than one body in the
+same well — $`\lambda^*`$ exceeds 1, the physical density, by $`t = 2`$
+under (S) and emissive (S′) and by $`t = 4`$ under absorptive (S′) — and
+it keeps climbing under (S′), as the one-dimensional long runs of §4 do.*
+
+*Proof of (a) and (b).* The proofs of V2 and V3 use the event structure
+(each event deposits $`\pm\tau`$ at two momenta of one parent), the
+contact sink, and Proposition Q1. None of them refers to the dimension,
+and M1 gives each of the three families exactly that structure.
+$`\square`$
+
+*Verification* (`src/demo_fourd_sea.py`, Kaggle batch kernels on a Tesla
+T4 from commit `e916ac4` with that script added; $`T = 12`$,
+$`\Delta t = 0.02`$; about 35 minutes a run). Proposition V2, with the
+same columns as the table of §3:
+
+| $`t`$ | $`D`$ | $`\Delta M_-`$ | $`\Delta N_{\rm tr}/2`$ | residual, (S) | (S′), absorptive | (S′), emissive |
+|---|---|---|---|---|---|---|
+| 2 | 0.2398 | 0.2496 | 0.0098 | $`1.6\times10^{-10}`$ | $`1.0\times10^{-10}`$ | $`-4\times10^{-11}`$ |
+| 5 | 0.9208 | 1.7699 | 0.8491 | $`3.5\times10^{-10}`$ | $`2.0\times10^{-10}`$ | $`5\times10^{-11}`$ |
+| 12 | 2.8072 | 6.5503 | 3.7430 | $`7.8\times10^{-10}`$ | $`4.2\times10^{-10}`$ | $`2.4\times10^{-10}`$ |
+
+The first three columns are those of absorptive first, identical under
+(S) and (S′); emission only gives $`D = 2.8173`$ at $`t = 12`$. The
+residual is round-off over five million cells. At $`t = 12`$ the
+transport's share of $`\Delta M_-`$ is 57 per cent, the same as the
+one-dimensional well's on the same mesh (0.447 of 0.780, §3), so it is
+the mesh's, and §3's refinement table says how it falls.
+
+The floor, with $`\varepsilon`$ as in §4 and the one-dimensional well at
+$`T = 12`$ for comparison:
+
+| realisation | $`f`$ | $`\lambda^*`$ at $`t = 5`$ | at $`t = 12`$ | 1D well | $`\varepsilon`$ at $`\beta = 0.5`$ | at $`\beta = 1`$ | at $`0.98\,\lambda^*`$ | at $`1.02\,\lambda^*`$ |
+|---|---|---|---|---|---|---|---|---|
+| (S), absorptive first | 0.397 | 1.570 | 1.570 | 1.295 | 0.334 | 0.043 | $`1.6\times10^{-3}`$ | 0 |
+| (S′), absorptive first | 0.397 | 1.312 | 1.859 | 0.765 | 0.131 | 0.031 | $`9.3\times10^{-4}`$ | 0 |
+| (S′), emissive | 0 | 2.736 | 3.982 | 0.994 | 2.21 | 0.41 | $`1.2\times10^{-3}`$ | 0 |
+
+The threshold is as sharp as in one dimension: at $`0.98\,\lambda^*`$ the
+floor blocks $`1.6\times10^{-7}`$ of the emissions and moves $`E`$ by a
+part in a thousand; at $`1.02\,\lambda^*`$ it blocks none. The (S′) runs
+were repeated in a second kernel on another GPU session, which reproduced
+every number to the last digit.
+
+**How far to trust it.** The ledger's $`E`$ is the mesh QLE to a relative
+$`L^2`$ error of 0.05 at $`t = 3`$ and 0.25 at $`t = 12`$, which is
+the τ-leap's first-order error. It is larger than the one-dimensional well's
+0.09 to 0.11 because three families act in each step. The observables
+agree more closely. The purity of one particle's state,
+$`{\rm Tr}\,\rho_1^2 = h \int W_1^2`$, is the mesh QLE's to 0.009 throughout, and
+$`\langle x_1 \rangle`$ at $`t = 12`$ to 0.02. The mesh itself follows the exact
+Schrödinger evolution, computed on the $`(x_1, x_2)`$ grid, only to
+$`t = 5`$. The purity is 0.515 against 0.509 at $`t = 5`$. After that the
+mesh departs by more than 5 per cent, and at $`t = 12`$ it gives 0.218
+against 0.317: $`48^4`$ cells do not resolve the relative motion's fine
+structure. So (a) and (b), which compare the ledger with itself, hold at
+every $`t`$. The values of $`\lambda^*`$ are the mesh model's past
+$`t = 5`$. Every crossing of 1 comes before $`t = 5`$, and so, in all three
+realisations, does $`\lambda^*`$'s excess over the one-dimensional
+value at $`t = 12`$.
+
+The physical density is short in all three realisations. In one
+dimension, absorptive (S′) was the realisation for which $`B`$ sufficed
+(§4); here it does not. At $`\beta = 1`$ the floor moves $`E`$ by
+$`\varepsilon = 0.031`$ in that realisation, and by 0.41 under emissive (S′). Under (S) $`\lambda^*`$ is
+set by a single spike at $`t = 3`$, while under (S′) it keeps climbing.
+That is the pattern of the one-dimensional long runs, where the deficits
+are not sheared away and are not refilled (Q7). Here (S′) overtakes (S)
+by $`t = 7`$, where in one dimension it took until $`t = 48`$ to 64;
+that crossing lies past $`t = 5`$, so it is a property of the mesh model.
+The reason for the extra depth is not separated here. A joint cell is
+debited by three families at once, against a supply of $`B^2`$ per unit
+of four-volume, but the families' shares of the worst cell were not
+recorded (V-SP6). The answer to V-SP1 is
+therefore: the four-dimensional sea obeys the same identities, its
+floor has the same sharp threshold, and the coupled problem needs a
+deeper sea than the one-body problem, under every realisation. V4's
+case against the physical density as a strict supply is stronger in two
+bodies than in one.
+
+![The depth the floor needs for two coupled bodies against one body in the same well (left), and the purity of one particle's state from the ledger, the mesh QLE and Schrödinger (right)](https://raw.githubusercontent.com/billpage/wpmw/output/figures/fourd_sea.png)
 
 ---
 
@@ -531,27 +738,28 @@ profile were measured with the leakage (§9).
   answered for the minimal ledger by Proposition V3 and Part E: supply
   becomes limiting under either motion once the sea is shallower than
   $`\lambda^*`$, and in a bound anharmonic system $`\lambda^*`$ keeps
-  growing with time, faster under (S) than under (S′).
+  growing with time, and after the first few periods faster under (S′)
+  than under (S). (The first version of this note had the motions the
+  wrong way round here; §4's table was right.)
   Proposition Q3's tables and Part F's sea profiles share §8's
   leakage. §9.4(g)'s "depth is no observable" holds for every rule that
   does not read the sea; under the floor, depth is observable below
   $`\lambda^*`$ in mean field and below about $`\ln(C/\delta)`$ for an
   integer sea (Propositions V3 and V4).
+- **This note, §5.** Proposition V4's $`e^{-\beta}`$ is the share of
+  emissions blocked only for a sea that is Poisson at every event. The
+  integer worlds block $`0.9\,e^{-0.55\beta}`$ (Proposition V6), while
+  the observable follows V4's mean field where resolved.
 
 ---
 
 ## 10. Open items
 
-- **V-SP1.** A four-dimensional sea ledger: two particles in a
-  non-quadratic external potential, where the centre of mass and the
-  relative motion couple and Proposition V5 does not apply. Measure
-  $`\lambda^*`$ against $`B^2`$, in a minimal ensemble, on the grids of
-  step 21 (a Kaggle-sized run).
-- **V-SP2.** The integer world ensemble at $`\nu = 1`$: bodies and sea
-  pairs as points, emission by ionising a pair within the aperture of
-  Q9(c), and many seeds, to check Proposition V4's mean-field
-  $`e^{-\beta}`$ and include the depletion of an aperture by its own
-  events.
+- **V-SP1.** *Answered* by Proposition V7 (§6.1): two coupled bodies
+  obey V2 and V3, and need a deeper sea than one, in every realisation.
+- **V-SP2.** *Answered* by Proposition V6 (§5.1): blocking falls as
+  $`0.9\,e^{-0.55\beta}`$, not $`e^{-\beta}`$, because of body
+  inflation; the observable follows V4's mean field where resolved.
 - **V-SP3.** The regulators' laboratory values. Q9(c) fixes the aperture's
   area; until the reach is derived (Q-SP6), $`\varepsilon(\beta)`$ cannot
   be compared with an experimental resolution.
@@ -562,6 +770,14 @@ profile were measured with the leakage (§9).
 - **V-SP5.** Re-measure the sea-profile figures of steps 16 and 23 (S4,
   S8, S9, Q3, Q7) without the leakage of §8, in the minimal ledger or
   with J-SP2's repair.
+- **V-SP6.** The four-dimensional ledger past $`t = 5`$: a finer mesh
+  (the $`48^4`$ run is a T4's limit at about 35 minutes a run), and the
+  three families' shares of the worst cell's debit, which would say why
+  two bodies need more sea than one.
+- **V-SP7.** The integer worlds' transmission on the Eckart summit is
+  $`4\sigma`$ below the mesh QLE's with no floor (§5.1). Check it against
+  Q-SP12's classical-baseline offset by running the worlds and
+  the mesh with events switched off.
 
 ---
 
@@ -581,6 +797,19 @@ one shown is `--parts E --t-long 96 --no-reach`). CSV files:
 `sea_depletion_long.csv`, `sea_depletion_long_T96.csv`,
 `sea_depletion_reach.csv`. The transport check of §3 is Part R, which is not
 in the default set (`--parts R`).
+
+§5.1 and §6.1 ran as private Kaggle batch kernels (`wpmwlib.kaggle_batch`)
+from commit `e916ac4` with the two scripts added. They are too long for one
+core.
+
+- `src/demo_integer_sea.py` (§5.1): one process per core. Five kernels wrote `integer_sea_<case>_<motion>_nu1*.csv`.
+  `--summarise` combines them, weighted by worlds, and draws
+  `integer_sea_blocking.png`.
+- `src/demo_fourd_sea.py --gpu` (§6.1): CuPy on a Tesla T4, 8.6 hours for
+  the three realisations with their floor depths. `--small` runs a
+  $`24^4`$ mesh on one core in minutes, for testing. The script writes
+  `fourd_sea.csv`, `fourd_sea_trace.csv` and `fourd_sea_schroedinger.csv`
+  after every run. `--plot` draws `fourd_sea.png` from the last two.
 
 ---
 

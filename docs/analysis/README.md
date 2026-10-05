@@ -691,35 +691,42 @@ retracts.
   already excluded, so excess is unobservable. **Proposition V1**: admissible
   negativity is free. For a potential of degree two or less the compensated
   kernel vanishes identically (Theorem G2), so a cat state held in a harmonic
-  trap makes no event and touches no pair; the sea pays only for the
-  negativity the dynamics makes, where `V''' != 0`, and in an anharmonic well
-  a cat makes events 1.4 times as fast as one packet because its fringes are
-  parents too. **Proposition V2**: from a minimal preparation the sea's debt
-  is at least the growth of the negative mass of `W`, with equality exactly
-  when the ensemble stays minimal; body inflation is sea debt, so a finite sea
-  would make garbage collection a requirement. **Proposition V3**: under a
-  floor — no pair, no ionisation, Proposition S0 read literally — `E` is
-  unchanged bit for bit while the sea is at least as deep as the depth
-  `lambda*` the unfloored run needs, and departs below it through a spurious
-  force, an energy drift and a change of negativity, never through the norm.
-  On the Eckart summit `lambda*` is 1.10 under (S) and 0.65 under (S′); in an
-  anharmonic well it climbs without levelling off, to 2.2 and 2.9 by `t = 96`,
-  and it grows with the reach as Theorem G5's census does, which answers
-  Q-SP2. **Proposition V4**: the sea is granular, and the event aperture of
-  Q9(c) holds one pair on average at the physical density, so an integer sea
-  of `beta` pairs per aperture blocks close to `e^-beta` of emissions and
-  moves `E` by `C e^-beta`, `C` from 1.4 to 6.8 — by 37 to 88 per cent at
-  `beta = 1`. The physical density cannot be a strict supply; a sea that is
-  one must be seven to nine pairs per aperture deep to hide below a part in a
-  thousand, and only an experiment could bound that depth, from below.
-  **Proposition V5**: entanglement made by a pair potential costs the sea
-  exactly the negativity of the relative motion. Where to look is where
-  negativity is made fastest — diffraction, Kerr revivals, tunnelling,
-  collisions — but the model's regulators have no laboratory values, so no
-  bound follows yet; a null result is expected, and says the sea's depth, like
-  its motion and its phases, is not fixed by the observable. Step 16's ledger
-  books transport ringing as sea traffic (S-SP7), over a quarter of the sea's
-  debits on Theorem S8's run; the minimal ledger used here does not.
+  trap makes no event and touches no pair; the sea pays only for the negativity
+  the dynamics makes, where `V''' != 0`, and in an anharmonic well a cat makes
+  events 1.4 times as fast as one packet because its fringes are parents too.
+  **Proposition V2**: from a minimal preparation the sea's debt is at least the
+  growth of the negative mass of `W`, with equality exactly when the ensemble
+  stays minimal; body inflation is sea debt, so a finite sea would make garbage
+  collection a requirement. **Proposition V3**: under a floor — no pair, no
+  ionisation, Proposition S0 read literally — `E` is unchanged bit for bit while
+  the sea is at least as deep as the depth `lambda*` the unfloored run needs,
+  and departs below it through a spurious force, an energy drift and a change of
+  negativity, never through the norm. On the Eckart summit `lambda*` is 1.10
+  under (S) and 0.65 under (S′); in an anharmonic well it climbs without
+  levelling off, to 2.2 and 2.9 by `t = 96`, and it grows with the reach as
+  Theorem G5's census does, which answers Q-SP2. **Proposition V4**: the sea is
+  granular, and the event aperture of Q9(c) holds one pair on average at the
+  physical density, so an integer sea of `beta` pairs per aperture blocks close
+  to `e^-beta` of emissions and moves `E` by `C e^-beta`, `C` from 1.4 to 6.8 —
+  by 37 to 88 per cent at `beta = 1`. The physical density cannot be a strict
+  supply; a sea that is one must be seven to nine pairs per aperture deep to
+  hide below a part in a thousand, and only an experiment could bound that
+  depth, from below. **Proposition V6**: integer worlds at the physical density,
+  over many seeds, block emissions as about `0.9 e^-0.55beta`, not `e^-beta`,
+  because body inflation drains the apertures a parent keeps returning to; the
+  observable still follows V4's mean field, but blocking fewer than one emission
+  in a thousand takes about twelve pairs per aperture. **Proposition V5**:
+  entanglement made by a pair potential costs the sea exactly the negativity of
+  the relative motion. **Proposition V7**: when the centre of mass and the
+  relative motion couple, V2 and V3 hold unchanged in four dimensions, and two
+  bodies in an anharmonic well need a deeper sea than one under every
+  realisation; the physical density is short in all three. Where to look is
+  where negativity is made fastest — diffraction, Kerr revivals, tunnelling,
+  collisions — but the model's regulators have no laboratory values, so no bound
+  follows yet; a null result is expected, and says the sea's depth, like its
+  motion and its phases, is not fixed by the observable. Step 16's ledger books
+  transport ringing as sea traffic (S-SP7), over a quarter of the sea's debits
+  on Theorem S8's run; the minimal ledger used here does not.
 
 ## Index
 
