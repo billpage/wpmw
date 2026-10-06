@@ -174,6 +174,11 @@ survive as inter-trajectory differences rather than disappearing.
 
 ## Foundational and comparison references
 
+- Andrew, M. — "The evolution of oscillator wave functions." (2015). Closed
+  form for a displaced Gaussian in a harmonic potential; the analytic
+  solution Cyganski's 2020 notebook planned to compare with
+  (`docs/supplement/sinspawn_v1_review.md`).
+  https://arxiv.org/abs/1509.05968
 - Wigner, E. — "On the quantum correction for thermodynamic equilibrium."
   *Phys. Rev.* **40**, 749 (1932).
   https://doi.org/10.1103/PhysRev.40.749

@@ -22,3 +22,12 @@ link to both copies from a markdown doc.
   and [`../../src/demo_emission_and_absorption.py`](../../src/demo_emission_and_absorption.py).
   Rendered copy (outputs and figures intact):
   [`output` branch](https://github.com/billpage/wpmw/blob/output/notebooks/emission_and_absorption.ipynb).
+- **[`sinspawn_v1_fixed.ipynb`](sinspawn_v1_fixed.ipynb)** — Not a tutorial
+  companion: David Cyganski's 2020 notebook `WignerParticlesSinSpawnV1` with
+  the bugs listed in
+  [`../supplement/sinspawn_v1_review.md`](../supplement/sinspawn_v1_review.md)
+  fixed (every changed line marked `FIX`), ported to Python 3, with a fixed
+  seed and a closing comparison against the exact Schrödinger solution.
+  Rendered copy (about 23 MB, too large for GitHub's viewer):
+  [nbviewer](https://nbviewer.org/github/billpage/wpmw/blob/output/notebooks/sinspawn_v1_fixed.ipynb) ·
+  [`output` branch](https://github.com/billpage/wpmw/blob/output/notebooks/sinspawn_v1_fixed.ipynb).

@@ -48,6 +48,17 @@ imported by the scripts here.
   annihilation of opposite
   signs at synchronisation times, either keeping survivors in place or
   shifting them to preserve each cell's signed first moments.
+- `wpmwlib/sinspawn.py` — vectorized version of the signed-particle
+  algorithm of Cyganski's 2020 notebook `WignerParticlesSinSpawnV1` (SI units,
+  electron, `U = q_e V2 x^2 + Vp sin(q x)`), used by
+  `demo_sinspawn_review.py`: exact harmonic rotation per step, spawning with
+  probability `|Gamma(x)| dt`, `Gamma = (Vp/hbar) cos qx`, signed children at
+  `k -/+ q/2`, and pairwise cancellation of opposite signs in each
+  `(dx, dk)` box once per step.  Every bug of
+  `docs/supplement/sinspawn_v1_review.md` that changes the dynamics is a
+  switch (`rectify`, `wrong_array`, `flip_children`, `view_map`,
+  `no_cancel`, `cap`).  Also a split-operator Schrödinger reference
+  (`schroedinger`) and the initial Gaussian Wigner sampler.
 - `wpmwlib/kaggle_batch.py` — runs a script from `src/` on Kaggle as a
   private batch kernel: `push SLUG SCRIPT [--commit REF] [--patch FILE |
   --worktree-diff] -- ARGS` writes `run.py` and `kernel-metadata.json` (clone
@@ -1481,6 +1492,27 @@ see that directory's README for the ladder itself.
   against thinning, with the same initial ensembles; without annihilation
   (bias and noise against `N0`, sub-step convergence) and with it.  About
   forty minutes; `WPMW_QUICK=1` for a smoke test.
+- `demo_sinspawn_review.py` — companion to
+  `docs/supplement/sinspawn_v1_review.md`, the review of Cyganski's 2020
+  curved-trajectory notebook, using `wpmwlib/sinspawn.py`.  A (SymPy): the
+  pair kernel `Gamma(x)[W(k+q/2) - W(k-q/2)]` matches the Moyal series of
+  `Vp sin qx` term by term through `d_k^11`, its mean force is `-U'`, and the
+  notebook's view-aliased rotation has determinant `cos^2(omega dt)` (bug D1)
+  where the exact one has 1.  B: D1 over the notebook's 9999 steps.  C: the
+  reference's norm and convergence.  D: the fixed algorithm at three `N0`,
+  bugs A, B, C and D1 one at a time, and all bugs together, at the
+  notebook's own sine and at one strong enough to matter (16th harmonic,
+  24.9 meV), against Schrödinger.  E: classical trajectories in the full
+  potential.  F: the figures.  About half an hour on two cores;
+  `WPMW_QUICK=1` for a smoke test.
+
+  ![Position marginals against the exact solution](https://raw.githubusercontent.com/billpage/wpmw/output/figures/sinspawn_review_marginals.png)
+
+- `scan_sinspawn_v1_original.py` — the main loop of the original 2020
+  notebook, ported to Python 3 and otherwise unchanged, with counters: it
+  shows that no particle ever changes box in the box lists (bug D2), so
+  nothing is annihilated, and that the kinks at birth move particles that
+  have left the searched box.  Writes no files.  About two minutes.
 - `demo_sea_resonance_clock.py` — step 23 third addendum: the sea as a
   resonance clock, every body carrying one integrator per channel fed by
   its live reading of the sea.  Part A is exact (SymPy and the mesh
