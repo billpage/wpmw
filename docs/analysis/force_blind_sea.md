@@ -167,6 +167,15 @@ keeps that row until it is ionised. Momentum is continuous along every
 worldline between events, as before; what changes is that the stretch a
 body spends in an aligned pair is a straight line in phase space.
 
+> **Amended in step 24** ([§4.1](sea_depletion.md#41-pair-collisions-an-amended-s)
+> of `sea_depletion.md`, October 2026): an aligned pair also changes
+> momentum, and only, in collisions with other aligned pairs (Definition
+> (C) there). Under (S′) as stated here every row's content is conserved
+> by the motion, and the depth the sea needs grows without limit in a
+> bound anharmonic system; with collisions it stops growing (Proposition
+> V10). The rest of this section stands; the clock rule at a collision is
+> open (V-SP8).
+
 **Partners, and what the sea is.** An aligned pair is a positon and a
 negaton at one point, with one momentum and one clock; its members are never
 apart. When a vertex reads the sea it compares *two different aligned pairs*

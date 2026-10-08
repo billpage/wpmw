@@ -612,6 +612,33 @@ Citing Kurtz licenses the first reading and says nothing about the second.
   differing nineteenfold in wall-clock time collapse onto one curve when
   clocked against cumulative events.
 
+## Relaxation of the dark sea: pair collisions
+
+Cited by the second addendum to step 24
+([`../docs/analysis/sea_depletion.md`](../docs/analysis/sea_depletion.md)
+§§4.1 to 4.3), which gives aligned pairs Focus/Defocus collisions
+(Definition (C)) so that sea deficits relax.
+
+- Boltzmann, L. — "Weitere Studien über das Wärmegleichgewicht unter
+  Gasmolekülen." *Sitzungsber. Kais. Akad. Wiss. Wien, Math.-Naturwiss. Cl.*
+  **66**, 275–370 (1872). The H-theorem; Proposition V10(b) is its form for
+  a lattice of momentum rows.
+- Horn, F.; Jackson, R. — "General mass action kinetics." *Arch. Rational
+  Mech. Anal.* **47**, 81–116 (1972). Detailed-balanced mass-action systems
+  have a free energy that never increases; Definition (C) is such a system.
+  https://doi.org/10.1007/BF00251225
+- Kac, M.; van Moerbeke, P. — "On an explicitly soluble system of nonlinear
+  differential equations related to certain Toda lattices." *Adv. Math.*
+  **16**, 160–169 (1975). The Volterra (Kac–van Moerbeke) lattice and its
+  conserved quantities; Proposition V9 uses two of them to show that a
+  Volterra sea cannot repair depletion.
+  https://doi.org/10.1016/0001-8708(75)90148-6
+- Pawula, R. F. — "Approximation of the linear Boltzmann equation by the
+  Fokker–Planck equation." *Phys. Rev.* **162**, 186–188 (1967). A positive
+  jump process truncated beyond second order is inconsistent; why the
+  observable's kernel must be signed, and why the sea's need not be.
+  https://doi.org/10.1103/PhysRev.162.186
+
 ## Soft-core Coulomb as a model atom
 
 Background for [`../docs/analysis/soft_core_coulomb.md`](../docs/analysis/soft_core_coulomb.md).

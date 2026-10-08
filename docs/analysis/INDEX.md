@@ -48,8 +48,8 @@ Theorem and open-item labels are shared across the whole of `docs/`. Each note u
 | Y | step 20 (Y1–Y6) | — |
 | M | step 21 (M0–M10) | Not to be confused with the symbol M(x, s), the hops M± of the algorithm specification §5.3, or the moments M0 and M2 of step 11b; none of those is a label. |
 | L | step 22 (L0–L9) | Not to be confused with a length L or a Lagrangian; neither is a label. The open-item series is L-SP, not the -LS suffix. |
-| Q | step 23 (Q1–Q8); postulate (S′) in step 23 | Not the channel index q of the kernel, nor the channel set Q of the demos. |
-| V | step 24 (V1–V7); Definition (F) | Not the conditions (V1)–(V4) of step 4 §13, nor the potential V(x); neither is a label. Definition (F) is not the field F of any note. |
+| Q | step 23 (Q1–Q12); postulate (S′) in step 23, amended in step 24 | Not the channel index q of the kernel, nor the channel set Q of the demos. |
+| V | step 24 (V1–V10); Definitions (F) and (C); the amendment of (S′) | Not the conditions (V1)–(V4) of step 4 §13, nor the potential V(x); neither is a label. Definition (F) is not the field F of any note, and Definition (C) is not a constant C. |
 | Z | step 19 (Z1–Z5) | — |
 | Thm 1–4, Lem 0–5, Prop 1–3, Cor 4.x | steps 4 and 5 | Numbered without a letter; later notes cite them as 'Theorem 4', 'Lemma 4', 'Proposition 3'. |
 | F, H, J, T, W | supplement: four_action_foundations (F1–F4), holland_two_fluid_correspondence (H1–H7), emission_and_absorption (J1–J2), takabayasi_1954_stochastic_picture (T-series), limkumnerd_weighted_paths (W1–W5) | Cited from the analysis notes; see §9. |
@@ -129,13 +129,15 @@ Kept apart from the results because a postulate is what everything else assumes,
 
 | ID | § | Says | Standing |
 |---|---|---|---|
-| [Post (S′)](force_blind_sea.md#1-postulate-s) | 1 | Streaming with a force-blind sea: free bodies obey the full classical force; each member of an aligned pair moves inertially (dq/dt = p/m, dp/dt = 0) while its clock still winds at p²/2m − V. | provisional; replaces (S) of step 17 for aligned pairs |
+| [Post (S′)](force_blind_sea.md#1-postulate-s) | 1 | Streaming with a force-blind sea: free bodies obey the full classical force; each member of an aligned pair moves inertially (dq/dt = p/m, dp/dt = 0) while its clock still winds at p²/2m − V. | provisional; replaces (S) of step 17 for aligned pairs; amended in step 24 §4.1: aligned pairs also change momentum in pair–pair collisions |
 
 ### Step 24 — [Depletion and excess](sea_depletion.md)
 
 | ID | § | Says | Standing |
 |---|---|---|---|
 | [Def (F)](sea_depletion.md#4-proposition-v3-the-floor) | 4 | The floor: an emission ionises a pair in its parent's cell; if the sea there is short the emission does not happen and its two depositions are lost; absorption and the contact sink's credit unchanged. | S0 read literally; a hypothesis tested, not adopted |
+| [Post (S′)](sea_depletion.md#41-pair-collisions-an-amended-s) | 4.1 | As amended in step 24. Free bodies obey the full classical force; an aligned pair is force-blind, moves inertially between its events with its clock winding by P1, and changes momentum only in a collision with another aligned pair (Definition (C)). | adopted October 2026; the clock rule at a collision is V-SP8 |
+| [Def (C)](sea_depletion.md#41-pair-collisions-an-amended-s) | 4.1 | Pair collisions: two aligned pairs in one position cell, Defocus (two on row n → one each on n ± q) and Focus (the inverse), mass action with detailed balance, J = r_q (s_n² − s_{n−q}s_{n+q}); rate law a choice (kernel rate r_q B = abs(K_q)/2, or uniform between neighbouring rows). | Cyganski's Focus and Defocus moved to the dark pairs; rate law is V-SP9 |
 
 ## 4. Results by note
 
@@ -464,6 +466,9 @@ No labelled results. See the note's own sections.
 | [Prop V5](sea_depletion.md#6-proposition-v5-two-bodies) | 6 | Two bodies with a pair potential from W_cm ⊗ W_rel, W_cm ≥ 0, minimal ensemble: the joint sea deficit is W_cm times the relative problem's, so entanglement made by the pair potential costs exactly the relative motion's negativity, and the joint λ* (against B²) is at most the relative one. | from M1 and V1; the coupled case is V7 |
 | [Prop V6](sea_depletion.md#51-proposition-v6-the-integer-sea-at-the-physical-density) | 5.1 | Measured, integer worlds at ν = 1 (bodies and sea pairs as points, Poisson sea of β pairs per aperture, paired floored and unfloored worlds): without the floor the worlds reproduce the QLE in mean up to the particle model's baseline; under (F) the share of emissions blocked falls as about 0.9 e^−0.55β, not e^−β, because body inflation (f ≈ 0.21, tens of bodies a world) drains the apertures a parent returns to; the observable's departure follows V4's mean field where resolved (β ≤ 2). | 136 000 worlds on the Eckart summit, 8000 in the well, Kaggle; answers V-SP2; about twelve pairs per aperture to block fewer than one emission in a thousand |
 | [Prop V7](sea_depletion.md#61-proposition-v7-two-coupled-bodies) | 6.1 | Two particles in the Pöschl–Teller well with a soft Gaussian repulsion, so the centre of mass and the relative motion couple: V2 and V3 hold in four dimensions (their proofs do not use the dimension), and measured λ* against B² is 1.57 (S), 1.31 → 1.86 (S′), 2.74 → 3.98 (emissive) at t = 5 → 12, above the one-body well's 1.29, 0.76, 0.99 in every realisation; the physical density is short in all three by t = 4. | 48⁴ mesh on a T4 (Kaggle); V2 residual below 10⁻⁹, threshold bit for bit at 1.02 λ*; the mesh follows Schrödinger to t = 5 only; answers V-SP1 |
+| [Prop V8](sea_depletion.md#41-pair-collisions-an-amended-s) | 4.1 | Pair collisions move whole pairs, so in any ledger whose events read only the bodies and the kernel, E, N and f are those of (S′) bit for bit; under a rule that reads the sea, the floor included, they are not, and depth no longer adds a constant. | Q1; max abs(ΔE) = 0 in every run of Part G |
+| [Prop V9](sea_depletion.md#42-proposition-v9-a-reversible-sea-cannot-repair-depletion) | 4.2 | A Volterra lattice on the pair density, any signed channel rates, conserves Σ s and Σ ln s on every row, hence the depletion functional Φ = ∫[s − B − B ln(s/B)] ≥ 0; streaming conserves it too, an empty cell stays empty, and the linearisation conserves the L2 deviation. Measured: halves λ* in the well (1.35 against 2.90 at t = 96) but does not bound it. | SymPy (7 rows, 2 channels); Φ constant to 10 digits on a 64-row test; a no-go for reversible sea dynamics |
+| [Prop V10](sea_depletion.md#43-proposition-v10-collisions-relax-the-sea) | 4.3 | Under Definition (C) pairs and pair momentum are conserved per event and the collision entropy ℋ = ∫[s ln(s/B) − s + B] never increases (Boltzmann; Horn and Jackson 1972), with equality only for a uniform row; the linear symbol is −4 r_q s̄ (1 − cos qθ)². Measured: λ* stops growing below the physical density in every case run — well 0.251 (kernel rate) and 0.468 (uniform, rB = 1) against 2.902 at t = 96; Eckart 0.275 and 0.376; bound holds down to a tenth of the kernel's rate. | SymPy; one-row conservation to round-off; reach dependence and rate law are V-SP9 |
 
 ## 5. No-go and negative results
 
@@ -498,6 +503,7 @@ Results that say something cannot be done. Each is as valuable as a positive res
 | Step 22 — [Prop L2](sea_phase_reference.md#2-proposition-l2-contact-noise-and-the-measure) | Generating kernel weights by sampling sea contacts impulsively: unbiased, but about 10⁵ contacts per unit time are needed. | Phase accumulated continuously along worldlines (§3). |
 | Step 23 — [Prop Q10](force_blind_sea.md#92-proposition-q10-crossings-realise-events-but-cannot-trigger-them) | Triggering absorptions by crossings of free bodies: mass action, so E is no longer closed. | The parent's reading triggers; crossings realise (Q11). |
 | Step 23 — [Prop Q12](force_blind_sea.md#94-proposition-q12-the-live-reading-as-the-clocks-input) | Driving the integrators by the sea's own live reading, closed loop: half the target at best, with excess firing; at the physical density the reading is critically sampled. | Mesh-fed integrators work; Q-SP11 to Q-SP13. |
+| Step 24 — [Prop V9](sea_depletion.md#42-proposition-v9-a-reversible-sea-cannot-repair-depletion) | A reversible (Volterra) dynamics of the pair density repairing sea depletion: it conserves the depletion functional Φ, and an empty cell stays empty. | A dissipative one: pair collisions with detailed balance (V10). |
 | Step 24 — [Prop V4](sea_depletion.md#5-proposition-v4-granular-supply) | A sea at the physical density B that is a strict integer supply: one pair per event aperture blocks about e⁻¹ of emissions and moves E by 37 to 88 per cent. | The sea is a ledger, not a supply, or a supply deep enough to hide (seven to nine pairs per aperture for a part in a thousand in E; about twelve to block fewer than one emission in a thousand, V6). Two coupled bodies need more (V7). |
 
 ## 6. Corrections and retractions
@@ -540,6 +546,7 @@ What each note corrected in an earlier statement, most of which the earlier stat
 | Step 23 (second addendum) | its own §6 (Proposition Q3) | The κ of Q3's contact-sink table is step 16's contact recombination, which is not in the model (ORIENTATION §8); the statement now says so, and §6.1 explains the sign pattern by the slip rate. [§6.1](force_blind_sea.md#61-proposition-q7-the-clocks-of-the-seas-population). |
 | Step 24 | step 16 S4, S8, S9 (sea profiles and body counts); step 23 Prop Q3's tables and Part F's profiles | Measured with S-SP7's negative-cap leakage, which books transport ringing as sea traffic: over a quarter of the sea's debits on S8's row have no event behind them. Results about E stand; not re-measured (V-SP5). [§8](sea_depletion.md#8-a-demo-defect-ringing-booked-as-sea-traffic). |
 | Step 24 | step 23 §9.4(g) ("depth is no observable") and Q-SP2 | Holds for every rule that does not read the sea; under a floor, depth is observable below λ* (mean field) and below about ln(C/δ) for an integer sea. Q-SP2 answered: supply becomes limiting below λ*, which grows with time in a bound anharmonic system. [§9](sea_depletion.md#9-corrections). |
+| Step 24 (second addendum) | step 23 Props Q3, Q7 (deficits stay in their rows, not refilled), Q4 and §§8–9 | Describe (S′) as first stated; under the amendment (pair collisions) deficits relax and the depth the floor needs stops growing (V10). Q4's tagged crossings and the readings of §§8–9 ran with pairs keeping their rows; not re-measured (V-SP8). [§9](sea_depletion.md#9-corrections). |
 
 ## 7. Open items
 
@@ -813,6 +820,9 @@ Labelled items link to their line; the unlabelled items of the older notes are g
 | [V-SP5](sea_depletion.md#10-open-items) | Re-measure the sea-profile figures of steps 16 and 23 (S4, S8, S9, Q3, Q7) without the negative-cap leakage. | open | S-SP7, Prop Q3 |
 | [V-SP6](sea_depletion.md#10-open-items) | The four-dimensional ledger past t = 5, where the 48⁴ mesh leaves Schrödinger: a finer mesh, and the three channel families' shares of the worst cell's debit. | open | Prop V7, Prop M1 |
 | [V-SP7](sea_depletion.md#10-open-items) | The integer worlds' unfloored transmission on the Eckart summit is 4σ below the mesh QLE's: check against Q-SP12's classical-baseline offset with events switched off. | open | Prop V6, Q-SP12 |
+| [V-SP8](sea_depletion.md#10-open-items) | The clock at a pair collision: a rule consistent with Q2's row lock, the misalignment collisions bring against Q6's resets, and §§8–9 of step 23 and Q4 re-measured with collisions on. | open | Post (S′) amended, Prop Q2, Prop Q6 |
+| [V-SP9](sea_depletion.md#10-open-items) | The collision rate: which law (kernel rate, uniform, other) and what fixes its constant; the emissive depth against the reach in long runs; whether the deviation under uniform collisions settles. | open | Def (C), Prop V10, Q-SP9 |
+| [V-SP10](sea_depletion.md#10-open-items) | Collisions in an integer sea: do they refill the apertures that body inflation drains (V6), and how does blocking then fall with β? | open | Prop V6, Prop V10 |
 
 ## 8. Defects found in demos
 

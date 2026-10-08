@@ -35,6 +35,15 @@ D  Proposition V4, granular supply.  At the physical density the event
 E  lambda* over long runs (open item Q-SP2) and against the reach.
 R  (not in the default) the transport's share of dM- in Part B against
    the grid: Part B's minimal ledger on finer meshes, about 25 minutes.
+G  Addendum: pair collisions, the amended (S′) (Propositions V8-V10).  A
+   W-null motion of the sea's pair density on top of (S′) streaming:
+   Definition (C), Focus/Defocus between aligned pairs (mass action with
+   detailed balance), against a reversible Volterra sea and a symmetric
+   pair-diffusion control with the kernel's channels and rates.  SymPy
+   identities (Volterra conserves F, collisions decrease H), lambda*(t),
+   a rate scan, other cases and the reach.  Sub-parts with --g-subs:
+   I exact and invariants, M main comparison, S rate scan, R other cases,
+   X reach ladder.
 F  Demo defect: step 16's ledger books transport ringing as sea traffic.
    In a harmonic trap, with no events at all, it inflates the body count
    and debits the sea; the share of the published Eckart run's traffic
@@ -43,12 +52,12 @@ F  Demo defect: step 16's ledger books transport ringing as sea traffic.
 Run as::
 
     WPMW_OUTPUT=... PYTHONPATH=src python3 -u src/demo_sea_depletion.py \\
-        [--parts ABCDEF] [--quick]
+        [--parts ABCDEFG] [--quick] [--t-long 96] [--g-subs IMSRX]
 
 About forty minutes for all parts on one core (``--parts`` lets them run
 in parallel); ``--quick`` halves the run lengths, for testing only.
-Parts C, D and E write CSV files through ``output_path``, and the floor and
-long-run figures are drawn from those files, so parts may run in separate
+Parts C, D, E and G write CSV files through ``output_path``, and the floor,
+long-run and collision figures are drawn from those files, so parts may run in separate
 processes; run any part last to redraw.
 """
 
@@ -666,6 +675,397 @@ def part_e(q, t_long=24.0, reach_ladder=True):
 
 
 # ----------------------------------------------------------------------
+# G.  Pair collisions: the amended (S′)  (addendum, Propositions V8-V10)
+# ----------------------------------------------------------------------
+class SeaMotion:
+    """A W-null dynamics of the sea's pair density S(x, p), applied once per
+    step after the events, on top of the (S′) streaming.  It moves whole
+    pairs, so E never sees it (Proposition V8).
+
+    kind 'none'      : (S′) as in step 23: rows keep their pairs.
+         'volterra'  : linearised Volterra sea on the PAIR density,
+                       dS/dt = K_res * S, the compensated residual acting on
+                       S.  Antisymmetric, reversible.  Exact step in (x, s):
+                       S_hat <- exp(h sym_e) S_hat.  (Proposition V9.)
+         'diffusion' : symmetric control with the same channels and rates,
+                       dS/dt = sum_q |K_q| (S_{n+q} + S_{n-q} - 2 S_n).
+                       Exact step: S_hat <- exp(h (sym_a - Gamma_tot)) S_hat.
+         'collide-k' : Definition (C), Focus/Defocus between aligned pairs,
+                       mass action with detailed balance, on every channel q
+                       at the kernel's rate: r_q B = scale |K_q(x)| / 2.
+         'collide-u' : Definition (C) between neighbouring rows only (one
+                       momentum step dp), at a rate independent of x and V:
+                       r B = scale.
+    Collisions per channel q, centre n:  J_n = r_q (S_n^2 - S_{n-q} S_{n+q})
+    (defocus minus focus), dS_n/dt = -2 J_n + J_{n-q} + J_{n+q}.  Integrated
+    by Heun's method with enough substeps for the linear symbol's largest
+    rate, 16 r_q B summed over channels.
+    """
+
+    def __init__(self, run, kind="none", scale=1.0):
+        self.kind, self.scale = kind, scale
+        self.run = run
+        if kind == "volterra":
+            self.g_sym = run.sym_e
+        elif kind == "diffusion":
+            self.g_sym = run.sym_a - run.gamma_tot[:, None]
+        elif kind == "collide-k":
+            self.chan = [(q, scale * np.abs(run.k[:, q])[:, None] / (2.0 * B))
+                         for q in range(1, run.n_p // 2)
+                         if np.abs(run.k[:, q]).max() > 1e-14]
+        elif kind == "collide-u":
+            self.chan = [(1, np.full((run.r.size, 1), scale / B))]
+        if kind.startswith("collide"):
+            self.lam = float(sum(16.0 * r.max() * B for _, r in self.chan))
+
+    def rhs(self, S):
+        out = np.zeros_like(S)
+        for q, r in self.chan:
+            J = r * (S * S - np.roll(S, q, axis=1) * np.roll(S, -q, axis=1))
+            out += -2.0 * J + np.roll(J, q, axis=1) + np.roll(J, -q, axis=1)
+        return out
+
+    def step(self, S, h):
+        if self.kind == "none":
+            return S
+        if self.kind in ("volterra", "diffusion"):
+            return np.real(np.fft.ifft(np.exp(h * self.g_sym)
+                                       * np.fft.fft(S, axis=1), axis=1))
+        n = max(1, int(np.ceil(h * self.lam / 0.5)))
+        hs = h / n
+        for _ in range(n):
+            k1 = self.rhs(S)
+            k2 = self.rhs(S + hs * k1)
+            S = S + 0.5 * hs * (k1 + k2)
+        return S
+
+
+def sea_functionals(S, area):
+    """Phi = sum [S - B - B ln(S/B)] (Volterra's invariant, Prop V9) and
+    Hc = sum [S ln(S/B) - S + B] (the collisions' entropy, Prop V10), both
+    in units of B per unit area; nan if any cell is empty or negative."""
+    if S.min() <= 0.0:
+        return float("nan"), float("nan")
+    x = S / B
+    return (float((x - 1.0 - np.log(x)).sum()) * area,
+            float((x * np.log(x) - x + 1.0).sum()) * area)
+
+
+def run_motion(run, e0, t_max, dt, motion, sea_force=False, absorb=True,
+               every=0.5):
+    """``MinimalLedger.run`` with the sea's own motion applied after the
+    events of each step.  Returns the final E and a trace of
+    (t, lambda*(t), worst cell 1 - min S/B, ||S - <S>_row||_2 / B, debt D,
+    Phi, Hc, min S/B)."""
+    run.sea_force = sea_force
+    a = run.area
+    E = e0.copy()
+    S = np.full_like(e0, B)
+    S0 = float(S.sum()) * a
+    smin = [1.0]
+    tr = []
+    n_steps = int(round(t_max / dt))
+    k_every = max(1, int(round(every / dt)))
+    for step in range(n_steps + 1):
+        if step % k_every == 0 or step == n_steps:
+            dev = S - S.mean(axis=1, keepdims=True)
+            Phi, Hc = sea_functionals(S, a)
+            tr.append((step * dt, 1.0 - smin[0], 1.0 - float(S.min()) / B,
+                       float(np.sqrt((dev ** 2).sum() * a)) / B,
+                       S0 - float(S.sum()) * a, Phi, Hc, float(S.min()) / B))
+        if step == n_steps:
+            break
+        for half in (0, 1):
+            if half == 1:
+                up, um = np.maximum(E, 0.0), np.maximum(-E, 0.0)
+                up, um, S, *_ = run.channels_supply(up, um, S, dt, "none",
+                                                    1.0, None, absorb,
+                                                    smin=smin)
+                c = np.minimum(up, um)
+                S += c
+                E = up - um
+                S = motion.step(S, dt)
+            E = run.stream(E, 0.5 * dt)
+            S = run.stream_sea(S, 0.5 * dt)
+    return E, np.array(tr)
+
+
+def g_exact():
+    """SymPy: the identities behind Propositions V9 and V10."""
+    import sympy as sp
+    print("  Exact (SymPy), periodic lattice of N = 7 rows, two channels:")
+    N = 7
+    S = sp.symbols("S0:%d" % N, positive=True)
+    c1, c2, r1, r2, Bs, th = sp.symbols("c1 c2 r1 r2 B theta", positive=True)
+    chans = ((1, c1), (2, c2))
+
+    def volt(n):
+        return S[n] / Bs * sum(c * (S[(n - q) % N] - S[(n + q) % N])
+                               for q, c in chans)
+
+    dsum = sp.simplify(sum(volt(n) for n in range(N)))
+    dlog = sp.simplify(sum(volt(n) / S[n] for n in range(N)))
+    print(f"    Volterra sea:  d/dt sum S = {dsum},  d/dt sum ln S = {dlog}"
+          "  -> Phi = sum [S - B - B ln(S/B)] is conserved")
+
+    def J(n, q, r):
+        return r * (S[n % N] ** 2 - S[(n - q) % N] * S[(n + q) % N])
+
+    def coll(n):
+        return sum(-2 * J(n, q, r) + J(n - q, q, r) + J(n + q, q, r)
+                   for q, r in ((1, r1), (2, r2)))
+
+    msum = sp.expand(sum(coll(n) for n in range(N)))
+    lhs = sum(sp.log(S[n]) * coll(n) for n in range(N))
+    rhs = -sum(J(n, q, r) * (2 * sp.log(S[n]) - sp.log(S[(n - q) % N])
+                             - sp.log(S[(n + q) % N]))
+               for n in range(N) for q, r in ((1, r1), (2, r2)))
+    hid = sp.simplify(sp.expand(lhs - rhs))
+    print(f"    Collisions:    d/dt sum S = {msum};  dHc/dt + sum_n,q J (ln S_n^2"
+          f" - ln S_n-q S_n+q) = {hid}")
+    print("                   each term J (ln a - ln b) with J ∝ a - b is >= 0,"
+          " so dHc/dt <= 0")
+    n_, q_ = sp.symbols("n q", integer=True)
+    print("    one Defocus event (two pairs at n -> n-q, n+q): change of"
+          " sum n =", sp.simplify((n_ - q_) + (n_ + q_) - 2 * n_))
+    # linearise at S = B + d: J ~ r B (2 d_n - d_{n-q} - d_{n+q}); symbol
+    Jsym = r1 * Bs * (2 - 2 * sp.cos(th))
+    sym = sp.simplify((-2 + 2 * sp.cos(th)) * Jsym)
+    print(f"    linearised collision symbol per channel (theta = q x row"
+          f" wavenumber): {sp.factor(sym)}  = -4 r B (1 - cos theta)^2")
+    return dict(dsum=dsum, dlog=dlog, msum=msum, hid=hid)
+
+
+def g_invariants():
+    """Numerical: F conserved by the nonlinear Volterra sea, H decreasing
+    under collisions, pairs and pair momentum conserved."""
+    from scipy.integrate import solve_ivp
+    rng = np.random.default_rng(7)
+    n_p = 64
+    S0 = B * (1.0 + 0.5 * rng.uniform(-1, 1, n_p))
+    S0[10] = 0.05 * B
+    c = rng.normal(size=6)
+
+    def volt(t, S):
+        acc = np.zeros_like(S)
+        for q, cq in enumerate(c, start=1):
+            acc += cq * (np.roll(S, q) - np.roll(S, -q))
+        return S / B * acc
+    sol = solve_ivp(volt, (0, 20), S0, rtol=1e-11, atol=1e-13,
+                    method="DOP853", dense_output=True)
+    Phi = lambda S: float(np.sum(S / B - 1 - np.log(S / B)))  # noqa: E731
+    print("\n  Nonlinear Volterra sea, one row, six channels with random"
+          " signed rates:")
+    for t in (0, 5, 10, 20):
+        S = sol.sol(t)
+        print(f"    t = {t:4.0f}  sum S/B = {S.sum() / B:.10f}  Phi = {Phi(S):.10f}"
+              f"  min S/B = {S.min() / B:.4f}")
+    print("    -> Phi exact to the integrator's tolerance; the deep cell is"
+          " shared out, Phi is not reduced.  An empty cell stays empty"
+          " (dS_n/dt is proportional to S_n).")
+
+    n_row = 1024                  # long enough that the ripple's tails
+    #                               never reach the periodic row's ends,
+    #                               where p jumps from +p_max to -p_max
+
+    class _R:                     # one row, a minimal stand-in for SeaLedger
+        n_p = n_row
+        r = np.zeros(1)
+        k = np.zeros((1, n_row))
+    rr = _R()
+    rr.k[0, 1:4] = (1.0, 0.6, 0.3)
+    mo = SeaMotion(rr, "collide-k", 1.0)
+    pgrid = np.arange(n_row) - n_row / 2
+    S = np.full((1, n_row), B)
+    S[0, 500:524] += B * 0.6 * np.sin(np.arange(24) / 3.0) * np.hanning(24)
+    m0, p0 = S.sum(), (S * pgrid).sum()
+    H0 = sea_functionals(S, 1.0)[1]
+    print("\n  Collisions on one row of 1024 cells (channels 1-3), a ripple"
+          " at its centre:")
+    Hs = [H0]
+    for k in range(1, 401):
+        S = mo.step(S, 0.02)
+        if k % 100 == 0:
+            Hs.append(sea_functionals(S, 1.0)[1])
+            print(f"    t = {k * 0.02:4.1f}  d(sum S)/sum S = "
+                  f"{(S.sum() - m0) / m0:.1e}  d(sum p S) = "
+                  f"{(S * pgrid).sum() - p0:.1e}  Hc = {Hs[-1]:.6f}"
+                  f"  max|S/B - 1| = {np.abs(S / B - 1).max():.4f}")
+    print(f"    -> Hc decreasing at every sample: {all(np.diff(Hs) < 0)}")
+
+
+G_RUNS_MAIN = (("(S′) only", "none", 1.0), ("Volterra sea", "volterra", 1.0),
+               ("pair diffusion", "diffusion", 1.0),
+               ("collisions, kernel rate", "collide-k", 1.0),
+               ("collisions, uniform rB = 1", "collide-u", 1.0))
+G_SCAN = (("collide-k", (0.3, 0.1, 0.03, 0.01)),
+          ("collide-u", (4.0, 0.25)))
+
+
+def part_g(q, t_long=24.0, subs="IMSRX"):
+    banner("G  Pair collisions: the amended (S′) (Propositions V8-V10)")
+    T = 0.5 * t_long if q else t_long
+    dt = 0.02
+    tag = "" if t_long == 24.0 else f"_T{t_long:g}"
+    if "I" in subs:
+        g_exact()
+        g_invariants()
+    rows = []
+    hdr = ["case", "realisation", "label", "kind", "scale", "t",
+           "lambda_star", "worst", "l2dev", "debt", "Phi", "Hc", "smin",
+           "max_dE"]
+
+    def record(case, real, label, kind, scale, E, tr, E_ref):
+        dE = (float(np.abs(E - E_ref).max()) if E_ref is not None
+              else float("nan"))
+        for row in tr:
+            rows.append((case, real, label, kind, scale, *row, dE))
+        return dE
+
+    def flush(name):
+        if rows:
+            write_csv(f"sea_collisions_{name}{tag}.csv", hdr, rows)
+        rows.clear()
+
+    def show(label, tr, dE, ts):
+        vals = [tr[np.argmin(np.abs(tr[:, 0] - t)), 1] for t in ts]
+        print(f"  {label:>28} " + " ".join(f"{v:6.3f}" for v in vals)
+              + f"  {tr[-1, 3]:7.3f} {tr[-1, 4]:6.3f}  {dE:7.1e}",
+              flush=True)
+
+    ts = [T * k / 6.0 for k in range(1, 7)]
+    head = (f"  {'sea motion':>28} " + " ".join(f"{t:6.1f}" for t in ts)
+            + f"  {'L2dev':>7} {'debt':>6}  {'max|dE|':>7}")
+
+    def ladder(case, Vf, prep, absorb, runs, real):
+        run = SeaLedger(Vf())
+        e0 = prep(run)
+        E_ref = None
+        for label, kind, scale in runs:
+            mo = SeaMotion(run, kind, scale)
+            E, tr = run_motion(run, e0, T, dt, mo, False, absorb)
+            if kind == "none":
+                E_ref = E
+            dE = record(case, real, label, kind, scale, E, tr, E_ref)
+            show(label, tr, dE, ts)
+
+    if "M" in subs:
+        print(f"\n  lambda*(t), Pöschl–Teller well, minimal ledger, (S′),"
+              f" absorptive first, to T = {T}; max|dE| against (S′) only:")
+        print(head)
+        ladder("PT well", well, well_packet, True, G_RUNS_MAIN, "abs")
+        flush("main")
+    if "S" in subs:
+        print("\n  Rate scan, same run (rate in units of the kernel's,"
+              " or rB for uniform):")
+        print(head)
+        runs = [("(S′) only", "none", 1.0)]
+        for kind, scales in G_SCAN:
+            runs += [(f"{kind} x {s:g}", kind, s) for s in scales]
+        ladder("PT well", well, well_packet, True, runs, "abs")
+        flush("scan")
+    if "R" in subs:
+        print("\n  Other cases, collisions at the kernel's rate:")
+        print(head)
+        rob = (("(S′) only", "none", 1.0),
+               ("collisions, kernel rate", "collide-k", 1.0))
+        for case, Vf, prep, absorb, real in (
+                ("PT well", well, well_packet, False, "emi"),
+                ("Eckart", eckart, summit_packet, True, "abs"),
+                ("Eckart", eckart, summit_packet, False, "emi")):
+            print(f"  -- {case}, {'absorptive first' if absorb else 'emissive'}")
+            ladder(case, Vf, prep, absorb, rob, real)
+        flush("cases")
+    if "X" in subs:
+        Tr = 4.0 if q else 8.0
+        n_p, dpp = (64, 0.25) if q else (128, 0.125)
+        yhs = (np.pi / 2, np.pi, 2 * np.pi) if q else (np.pi, 2 * np.pi,
+                                                        4 * np.pi)
+        print(f"\n  Against the reach: Eckart, (S′), dp = {dpp}, T = {Tr};"
+              f" lambda* without and with collisions at the kernel's rate:")
+        print(f"  {'y_h/a':>7} {'Gamma_tot max':>14} {'abs':>7} {'abs+C':>7}"
+              f" {'emi':>7} {'emi+C':>7}")
+        reach = []
+        for yh in yhs:
+            run = SeaLedger(eckart(), n_p=n_p, dp=dpp, y_h=yh)
+            e0 = summit_packet(run)
+            vals = []
+            for absorb in (True, False):
+                for kind in ("none", "collide-k"):
+                    _, tr = run_motion(run, e0, Tr, dt,
+                                       SeaMotion(run, kind, 1.0), False,
+                                       absorb)
+                    vals.append(tr[-1, 1])
+            g = float(run.gamma_tot.max())
+            print(f"  {yh:7.3f} {g:14.4f} " + " ".join(f"{v:7.3f}"
+                                                       for v in vals),
+                  flush=True)
+            reach.append((yh, g, *vals))
+        write_csv("sea_collisions_reach.csv",
+                  ["y_h", "gamma_tot_max", "lambda_abs", "lambda_abs_C",
+                   "lambda_emi", "lambda_emi_C"], reach)
+
+
+def fig_collisions():
+    """Drawn from the longest sea_collisions_{main,scan}*.csv present."""
+    import glob
+    import os
+    best = []
+    for part in ("main", "scan"):
+        pick, t_best = None, -1.0
+        for path in glob.glob(output_path(f"sea_collisions_{part}*.csv")):
+            rows = read_csv(os.path.basename(path))
+            t_max = max(float(r["t"]) for r in rows) if rows else -1.0
+            if t_max > t_best:
+                pick, t_best = rows, t_max
+        best += pick or []
+    if not best:
+        return
+    fig, ax = plt.subplots(1, 2, figsize=(12.5, 4.2))
+    pt = [r for r in best if r["case"] == "PT well" and r["realisation"]
+          == "abs"]
+    seen = set()
+    cols = {"none": "k", "volterra": "C1", "diffusion": "C2",
+            "collide-k": "C3", "collide-u": "C0"}
+    for r in pt:
+        key = r["label"]
+        if key in seen:
+            continue
+        seen.add(key)
+        rr = [x for x in pt if x["label"] == key]
+        # a label can recur across sub-parts (the baseline): keep one run
+        rr = rr[:len({x["t"] for x in rr})]
+        t = [float(x["t"]) for x in rr]
+        lam = [float(x["lambda_star"]) for x in rr]
+        l2 = [float(x["l2dev"]) for x in rr]
+        main = (r["label"] in [g[0] for g in G_RUNS_MAIN])
+        style = dict(color=cols[r["kind"]], lw=1.6 if main else 0.9,
+                     ls="-" if main else "--")
+        lab = r["label"] if main else f"{r['kind']} × {float(r['scale']):g}"
+        ax[0].plot(t, lam, label=lab if main else None, **style)
+        ax[1].plot(t, l2, label=lab if main else None, **style)
+        if not main:
+            tag_ = (f"×{float(r['scale']):g}" if r["kind"] == "collide-k"
+                    else f"rB={float(r['scale']):g}")
+            ax[0].text(t[-1] + 1.0, lam[-1], tag_, fontsize=7,
+                       color=style["color"], va="center")
+            ax[1].text(t[-1] + 1.0, l2[-1], tag_, fontsize=7,
+                       color=style["color"], va="center")
+    ax[0].plot([], [], color=cols["collide-k"], ls="--", lw=0.9,
+               label="rate scan, kernel rate × (end label)")
+    ax[0].plot([], [], color=cols["collide-u"], ls="--", lw=0.9,
+               label="rate scan, uniform (end label)")
+    ax[0].axhline(1.0, color="k", lw=0.5, ls=":")
+    ax[0].set_title("Pöschl–Teller well, (S′), absorptive first: λ*(t)")
+    ax[1].set_title("sea deviation from its row means, ‖s − s̄‖₂ / B")
+    for a_ in ax:
+        a_.set_xlabel("t")
+        a_.set_xlim(0, 106)
+    ax[0].legend(fontsize=7)
+    save_fig(fig, "sea_collisions.png")
+
+
+# ----------------------------------------------------------------------
 # R.  The transport's share of dM- against resolution (not in the default)
 # ----------------------------------------------------------------------
 def part_r(q):
@@ -853,7 +1253,7 @@ def fig_long():
 def main():
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawTextHelpFormatter)
-    ap.add_argument("--parts", default="ABCDEF",
+    ap.add_argument("--parts", default="ABCDEFG",
                     help="parts to run; '' redraws the CSV figures only")
     ap.add_argument("--quick", action="store_true",
                     help="halve run lengths (testing only)")
@@ -862,6 +1262,10 @@ def main():
                          " quotes 96)")
     ap.add_argument("--no-reach", action="store_true",
                     help="Part E: skip the reach ladder")
+    ap.add_argument("--g-subs", default="IMSRX",
+                    help="Part G sub-parts: I exact and invariants, M main"
+                         " comparison, S rate scan, R other cases, X reach"
+                         " (its long runs use --t-long)")
     args = ap.parse_args()
     t0 = time.time()
     if "A" in args.parts:
@@ -876,10 +1280,13 @@ def main():
         part_e(args.quick, args.t_long, not args.no_reach)
     if "F" in args.parts:
         part_f(args.quick)
+    if "G" in args.parts:
+        part_g(args.quick, args.t_long, args.g_subs)
     if "R" in args.parts:
         part_r(args.quick)
     fig_floor()                 # from whatever CSVs exist so far
     fig_long()
+    fig_collisions()
     print(f"\nDone in {time.time() - t0:.0f} s.")
 
 

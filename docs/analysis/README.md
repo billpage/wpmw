@@ -720,13 +720,22 @@ retracts.
   the relative motion. **Proposition V7**: when the centre of mass and the
   relative motion couple, V2 and V3 hold unchanged in four dimensions, and two
   bodies in an anharmonic well need a deeper sea than one under every
-  realisation; the physical density is short in all three. Where to look is
-  where negativity is made fastest — diffraction, Kerr revivals, tunnelling,
-  collisions — but the model's regulators have no laboratory values, so no bound
-  follows yet; a null result is expected, and says the sea's depth, like its
-  motion and its phases, is not fixed by the observable. Step 16's ledger books
-  transport ringing as sea traffic (S-SP7), over a quarter of the sea's debits
-  on Theorem S8's run; the minimal ledger used here does not.
+  realisation; the physical density is short in all three. **Propositions V8 to
+  V10** (second addendum) amend (S′): an aligned pair changes momentum only in
+  collisions with other pairs, Cyganski's Focus and Defocus at mass-action rates
+  with detailed balance. Collisions are `W`-null (V8). A reversible sea
+  dynamics, such as a Volterra lattice on the pairs, conserves a depletion
+  functional and cannot repair depletion (V9); collisions obey an H-theorem and
+  relax the sea (V10), and in every case run the depth the floor needs stops
+  growing below the physical density — 0.25 against 2.9 in the well at `t = 96`
+  — whether they run at the kernel's rate or at a uniform rate between
+  neighbouring rows. Where to look is where negativity is made fastest —
+  diffraction, Kerr revivals, tunnelling, collisions — but the model's
+  regulators have no laboratory values, so no bound follows yet; a null result
+  is expected, and says the sea's depth, like its motion and its phases, is not
+  fixed by the observable. Step 16's ledger books transport ringing as sea
+  traffic (S-SP7), over a quarter of the sea's debits on Theorem S8's run; the
+  minimal ledger used here does not.
 
 ## Index
 

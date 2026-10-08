@@ -1,11 +1,11 @@
 # Depletion and excess: when the sea could be seen
 
-> Empty space is not empty here: a cell that holds no `W` still holds aligned pairs at density `B`. Could the sea's depletion or excess ever be seen? By Proposition Q1 the observable never reads the sea, so only a rule that reads it could show either; a rule that reads its level, Theorem S5's throttle, is already excluded, so excess is unobservable. **Proposition V1**: admissible negativity is free. For a potential of degree two or less the compensated kernel vanishes identically (Theorem G2), so a cat state held in a harmonic trap makes no event and touches no pair; the sea pays only for the negativity the dynamics makes, where `V''' != 0`, and in an anharmonic well a cat makes events 1.4 times as fast as one packet because its fringes are parents too. **Proposition V2**: from a minimal preparation the sea's debt is at least the growth of the negative mass of `W`, with equality exactly when the ensemble stays minimal; body inflation is sea debt, so a finite sea would make garbage collection a requirement. **Proposition V3**: under a floor — no pair, no ionisation, Proposition S0 read literally — `E` is unchanged bit for bit while the sea is at least as deep as the depth `lambda*` the unfloored run needs, and departs below it through a spurious force, an energy drift and a change of negativity, never through the norm. On the Eckart summit `lambda*` is 1.10 under (S) and 0.65 under (S′); in an anharmonic well it climbs without levelling off, to 2.2 and 2.9 by `t = 96`, and it grows with the reach as Theorem G5's census does, which answers Q-SP2. **Proposition V4**: the sea is granular, and the event aperture of Q9(c) holds one pair on average at the physical density, so an integer sea of `beta` pairs per aperture blocks close to `e^-beta` of emissions and moves `E` by `C e^-beta`, `C` from 1.4 to 6.8 — by 37 to 88 per cent at `beta = 1`. The physical density cannot be a strict supply; a sea that is one must be seven to nine pairs per aperture deep to hide below a part in a thousand, and only an experiment could bound that depth, from below. **Proposition V6**: integer worlds at the physical density, over many seeds, block emissions as about `0.9 e^-0.55beta`, not `e^-beta`, because body inflation drains the apertures a parent keeps returning to; the observable still follows V4's mean field, but blocking fewer than one emission in a thousand takes about twelve pairs per aperture. **Proposition V5**: entanglement made by a pair potential costs the sea exactly the negativity of the relative motion. **Proposition V7**: when the centre of mass and the relative motion couple, V2 and V3 hold unchanged in four dimensions, and two bodies in an anharmonic well need a deeper sea than one under every realisation; the physical density is short in all three. Where to look is where negativity is made fastest — diffraction, Kerr revivals, tunnelling, collisions — but the model's regulators have no laboratory values, so no bound follows yet; a null result is expected, and says the sea's depth, like its motion and its phases, is not fixed by the observable. Step 16's ledger books transport ringing as sea traffic (S-SP7), over a quarter of the sea's debits on Theorem S8's run; the minimal ledger used here does not.
+> Empty space is not empty here: a cell that holds no `W` still holds aligned pairs at density `B`. Could the sea's depletion or excess ever be seen? By Proposition Q1 the observable never reads the sea, so only a rule that reads it could show either; a rule that reads its level, Theorem S5's throttle, is already excluded, so excess is unobservable. **Proposition V1**: admissible negativity is free. For a potential of degree two or less the compensated kernel vanishes identically (Theorem G2), so a cat state held in a harmonic trap makes no event and touches no pair; the sea pays only for the negativity the dynamics makes, where `V''' != 0`, and in an anharmonic well a cat makes events 1.4 times as fast as one packet because its fringes are parents too. **Proposition V2**: from a minimal preparation the sea's debt is at least the growth of the negative mass of `W`, with equality exactly when the ensemble stays minimal; body inflation is sea debt, so a finite sea would make garbage collection a requirement. **Proposition V3**: under a floor — no pair, no ionisation, Proposition S0 read literally — `E` is unchanged bit for bit while the sea is at least as deep as the depth `lambda*` the unfloored run needs, and departs below it through a spurious force, an energy drift and a change of negativity, never through the norm. On the Eckart summit `lambda*` is 1.10 under (S) and 0.65 under (S′); in an anharmonic well it climbs without levelling off, to 2.2 and 2.9 by `t = 96`, and it grows with the reach as Theorem G5's census does, which answers Q-SP2. **Proposition V4**: the sea is granular, and the event aperture of Q9(c) holds one pair on average at the physical density, so an integer sea of `beta` pairs per aperture blocks close to `e^-beta` of emissions and moves `E` by `C e^-beta`, `C` from 1.4 to 6.8 — by 37 to 88 per cent at `beta = 1`. The physical density cannot be a strict supply; a sea that is one must be seven to nine pairs per aperture deep to hide below a part in a thousand, and only an experiment could bound that depth, from below. **Proposition V6**: integer worlds at the physical density, over many seeds, block emissions as about `0.9 e^-0.55beta`, not `e^-beta`, because body inflation drains the apertures a parent keeps returning to; the observable still follows V4's mean field, but blocking fewer than one emission in a thousand takes about twelve pairs per aperture. **Proposition V5**: entanglement made by a pair potential costs the sea exactly the negativity of the relative motion. **Proposition V7**: when the centre of mass and the relative motion couple, V2 and V3 hold unchanged in four dimensions, and two bodies in an anharmonic well need a deeper sea than one under every realisation; the physical density is short in all three. **Propositions V8 to V10** (second addendum) amend (S′): an aligned pair changes momentum only in collisions with other pairs, Cyganski's Focus and Defocus at mass-action rates with detailed balance. Collisions are `W`-null (V8). A reversible sea dynamics, such as a Volterra lattice on the pairs, conserves a depletion functional and cannot repair depletion (V9); collisions obey an H-theorem and relax the sea (V10), and in every case run the depth the floor needs stops growing below the physical density — 0.25 against 2.9 in the well at `t = 96` — whether they run at the kernel's rate or at a uniform rate between neighbouring rows. Where to look is where negativity is made fastest — diffraction, Kerr revivals, tunnelling, collisions — but the model's regulators have no laboratory values, so no bound follows yet; a null result is expected, and says the sea's depth, like its motion and its phases, is not fixed by the observable. Step 16's ledger books transport ringing as sea traffic (S-SP7), over a quarter of the sea's debits on Theorem S8's run; the minimal ledger used here does not.
 
 *Ladder abstract — see the [full list](README.md#the-ladder).*
 
 **Status.** Analysis note, step 24 of the ladder. Companion demo:
-`src/demo_sea_depletion.py` (Parts A to F). Nothing here depends on
+`src/demo_sea_depletion.py` (Parts A to G). Nothing here depends on
 choosing between (S) and (S′); where a number does, both are given.
 
 ---
@@ -61,17 +61,29 @@ it.
 - **Proposition V7.** Two coupled bodies. V2 and V3 hold in four
   dimensions, and the depth the floor needs exceeds the one-body value in
   every realisation (§6.1).
+- **Postulate (S′), amended, and Propositions V8 to V10.** Under (S′) the
+  motion conserves every row's content, which is why the depth the floor
+  needs keeps growing. Amended, an aligned pair changes momentum only in
+  collisions with other aligned pairs (Definition (C)), which are
+  $`W`$-null (V8). A reversible sea dynamics cannot help: a Volterra
+  lattice conserves a depletion functional (V9). Collisions obey an
+  H-theorem (V10), and the depth the floor needs stops growing, below the
+  physical density, in every case run (§§4.1 to 4.3).
 - What an experiment could and could not see (§7), and a quantification of
   a known demo defect — step 16's ledger books transport ringing as sea
   traffic — that the minimal ledger used here avoids (§8).
 
 **Leaves open** the items of §10, chief among them the regulators'
 laboratory values (V-SP3), without which no depth can be compared with an
-experiment. §5.1 and §6.1, added in October 2026, answer V-SP2 and V-SP1.
+experiment. §5.1 and §6.1, added in October 2026, answer V-SP2 and V-SP1;
+§§4.1 to 4.3, a second addendum, amend (S′) and open V-SP8 to V-SP10.
 
 **Inherits.** Theorems S0, S5 and S7 from step 16; Theorems G2 and G5
-from step 17; Proposition M1 from step 21; Propositions Q1, Q8 and Q9 from step 23, and step 23's picture of the
-sea as a random configuration of aligned pairs (§1 there).
+from step 17; Proposition M1 from step 21; Propositions Q1, Q2, Q6, Q7, Q8 and Q9 from step 23, and step 23's picture of the
+sea as a random configuration of aligned pairs (§1 there). The second
+addendum also inherits Cyganski's Focus and Defocus and the no-go lemma of
+[`four_rule_microdynamics_equivalence.md`](four_rule_microdynamics_equivalence.md),
+and Proposition X1 of the Poisson-kick supplement.
 
 ---
 
@@ -347,6 +359,292 @@ sea read through a floor needs ever more depth as the regulator goes. Only a
 physical reach (Q-SP6) would give the floor a finite threshold.
 
 ![The depth the floor needs, against time](https://raw.githubusercontent.com/billpage/wpmw/output/figures/sea_depletion_long.png)
+
+### 4.1 Pair collisions: an amended (S′)
+
+*Addendum (October 2026).* Part E leaves a problem. Under (S′) the depth
+the floor needs climbs without limit in a bound anharmonic system, so no
+finite sea suffices for ever. The cause is local, not global. The sea's
+global debt is bounded by Proposition V2, and in the well it reaches 0.29
+by $`t = 8`$ and stays below 0.48 to $`t = 96`$, while the worst cell
+keeps falling.
+Under (S′) the sea at fixed momentum is carried along its row,
+
+```math
+\partial_t s + \frac{p}{m}\,\partial_x s = \sigma(x, p, t),
+\qquad\text{so}\qquad
+\frac{d}{dt}\oint s(x, p, t)\,dx = \oint \sigma(x, p, t)\,dx
+```
+
+on the periodic box, with $`\sigma`$ the events' debits and credits
+(emissions at their parents, absorptions and contact recombinations
+where they happen). Every row's content is a conserved quantity of the
+motion, so any imbalance between where a row is debited and where it is
+credited piles up there. Under (S) the force shears rows into one
+another and part of the deficit refills (Proposition Q7), which is why
+$`\lambda^*`$ grows more slowly there.
+
+By Proposition Q1 nothing observable constrains how the sea moves: the
+QLE fixes $`u_+ - u_-`$ and says nothing about the pairs. So the sea may
+be given a dynamics of its own, provided it moves whole pairs. This
+addendum amends (S′) accordingly, after asking what kind of dynamics
+could help.
+
+**Postulate (S′), as amended.** Between events every free body obeys the
+full classical force, as in (S). An aligned pair is force-blind: between
+its events it moves inertially, $`\dot q = p/m`$, $`\dot p = 0`$, its
+clock winding by P1, and it changes momentum only in a collision with
+another aligned pair, by Definition (C).
+
+**Definition (C) — pair collisions.** Two aligned pairs in one cell of
+position collide in one of two ways, on a channel $`q`$ (a momentum
+step $`\xi_q = q\,dp`$):
+
+- **Defocus**: two pairs on row $`n`$ go to one pair on row $`n - q`$
+  and one on row $`n + q`$;
+- **Focus**: one pair on each of rows $`n \mp q`$ go to two pairs on row
+  $`n`$.
+
+The rates are mass action with detailed balance: per unit area, the net
+rate of defocus over focus about row $`n`$ is
+
+```math
+J_{n,q} = r_q(x)\,\bigl(s_n^2 - s_{n-q}\,s_{n+q}\bigr),
+\qquad
+\partial_t s_n\big|_{\rm C} = \sum_q \bigl(-2J_{n,q} + J_{n-q,q} + J_{n+q,q}\bigr),
+```
+
+with $`s_n`$ the pair density on row $`n`$. The rate law $`r_q(x)`$ is a
+**[choice]**. Two are measured here:
+
+- **kernel rate**: every channel, $`r_q B = \lvert K_q(x)\rvert/2`$, so that
+  collisions happen where events do and at their rate;
+- **uniform**: neighbouring rows only ($`q = 1`$), $`r B = \gamma`$,
+  independent of $`x`$ and of $`V`$, a property of the sea alone.
+
+These are Cyganski's Focus and Defocus
+([`four_rule_microdynamics_equivalence.md`](four_rule_microdynamics_equivalence.md))
+moved from the signed occupancy to the dark pairs. There they had to be
+signed and linear in the occupancies to reproduce the QLE, and the no-go
+lemma of §6.2 there excludes mass action. Here nothing has to be linear,
+because nothing observable reads the sea.
+
+**Proposition V8 (collisions are W-null).** *Collisions move whole pairs,
+so in any ledger whose events take their counts from the bodies and the
+kernel alone, $`E`$, $`N`$ and $`f`$ are those of (S′) bit for bit.*
+
+*Proof.* Proposition Q1: the sea enters an event only as its source or
+its sink, and a collision changes neither body field. $`\square`$
+
+Verified: in every run of Part G, $`\max\lvert\Delta E\rvert = 0`$
+against (S′) unamended. Under a rule that reads the sea, Definition (F)
+included, collisions do change $`E`$, and Proposition V3's argument that
+a deeper sea is the same sea plus a constant no longer holds, since the
+collision rates read $`s`$. The statement that survives is the one that
+matters: at the physical depth the floor never binds if $`\lambda^* < 1`$.
+
+### 4.2 Proposition V9: a reversible sea cannot repair depletion
+
+The first candidate for sea dynamics was Cyganski's Volterra sea (call of
+6 October 2026): his copy-left and copy-right actions, in which two
+bodies on one row join two on the next, at mass-action rates. He applied
+them to positons and negatons separately, which changes $`E`$; that is a
+dynamics of the bodies, and in the large-sea limit it reproduces the
+single-mode QLE kick. Applied to whole pairs it is W-null, so it is a
+candidate here. It does not help, and the reason is structural.
+
+**Proposition V9.** *(a) Let the pair density on one row evolve by any
+Volterra lattice*
+
+```math
+\partial_t s_n = \frac{s_n}{B}\sum_q c_q(x)\,\bigl(s_{n-q} - s_{n+q}\bigr),
+```
+
+*with signed rates $`c_q(x)`$ on any set of channels. Then $`\sum_n s_n`$
+and $`\sum_n \ln s_n`$ are conserved on every row, so the depletion
+functional*
+
+```math
+\Phi[s] = \iint \Bigl[s - B - B\ln\frac{s}{B}\Bigr]\,dx\,dp \;\ge\; 0,
+\qquad \Phi = 0 \iff s \equiv B,
+```
+
+*is conserved, and streaming under (S) or (S′) conserves it too. Only
+events change $`\Phi`$, at the rate
+$`\iint \sigma\,(1 - B/s)\,dx\,dp`$, so a debit landing in a depleted cell
+always increases it. An empty cell stays empty, since
+$`\partial_t s_n \propto s_n`$. (b) The linearisation about $`s = B`$
+has an antisymmetric generator and conserves $`\lVert s - B\rVert_2`$.
+(c) Measured, with the compensated residual as the linear rates
+($`c_q B = K_q`$): the depth the floor needs is halved, and still grows.*
+
+*Proof.* (a) $`\sum_n \partial_t \ln s_n = B^{-1}\sum_q c_q \sum_n
+(s_{n-q} - s_{n+q}) = 0`$ on a periodic row, and
+$`\sum_n \partial_t s_n = B^{-1}\sum_q c_q \sum_n (s_n s_{n-q} -
+s_n s_{n+q}) = 0`$ by a shift of $`n`$. $`\Phi`$ is a sum of these two
+over $`x`$, and streaming is measure-preserving, so it conserves the
+integral of any function of $`s`$. (b) $`K_{-q} = -K_q`$. $`\square`$
+(a) is checked exactly with SymPy on a periodic row of seven cells with
+two channels, and numerically on a row of 64 with six channels and random
+signed rates: $`\Phi = 4.8890935456`$ at $`t = 0, 5, 10, 20`$ while the
+deepest cell rose from $`0.05B`$ to between $`0.27B`$ and $`0.34B`$. A Volterra sea shares a
+deficit out among its neighbours as ripples of both signs; it cannot
+remove it.
+
+So the sea needs a dynamics that forgets: a dissipative one. For the
+observable that would be forbidden, since a positive process acting on
+$`W`$ must diffuse (Pawula 1967; Proposition X1 of
+[`../supplement/poisson_kicks_and_pair_branching.md`](../supplement/poisson_kicks_and_pair_branching.md));
+the sea is not $`W`$, and nothing forbids it there.
+
+### 4.3 Proposition V10: collisions relax the sea
+
+**Proposition V10.** *Under Definition (C): (a) every event conserves
+the number of pairs and their total momentum, and keeps both members of
+each pair together; (b) the collision entropy*
+
+```math
+\mathcal{H}[s] = \iint \Bigl[s\ln\frac{s}{B} - s + B\Bigr]\,dx\,dp
+```
+
+*never increases,*
+
+```math
+\frac{d\mathcal{H}}{dt}\bigg|_{\rm C}
+= -\sum_{n,q} r_q\,\bigl(s_n^2 - s_{n-q}s_{n+q}\bigr)
+\ln\frac{s_n^2}{s_{n-q}s_{n+q}} \;\le\; 0,
+```
+
+*with equality iff $`s_n^2 = s_{n-q}s_{n+q}`$ for every active channel,
+that is iff $`\ln s`$ is linear along each row; on a periodic row, or on
+an open one with bounded $`s`$, that means uniform; (c) linearised about
+a uniform row of density $`\bar s`$, each channel acts on a ripple of row
+wavenumber $`\theta`$ with the rate*
+
+```math
+-4\,r_q\,\bar s\,\bigl(1 - \cos q\theta\bigr)^2 \;\le\; 0,
+```
+
+*a hyperdiffusion that damps every non-uniform ripple and keeps the row's
+mean and first moment; (d) measured, the depth the floor needs stops
+growing, and stays below the physical density in every case run.*
+
+*Proof.* (a) A defocus moves momentum $`2n \to (n - q) + (n + q)`$. (b)
+$`d\mathcal{H}/dt = \sum_n \ln(s_n/B)\,\partial_t s_n`$; with
+$`\sum_n \partial_t s_n = 0`$ the constant drops out, and shifting $`n`$
+in the two $`J_{n\mp q}`$ terms gives the sum shown. Each term has the
+form $`(a - b)\ln(a/b) \ge 0`$. This is Boltzmann's H-theorem for
+reversible mass-action kinetics with detailed balance (Horn and Jackson
+1972). (c) Linearise $`J_{n,q}`$ to
+$`r_q\bar s\,(2\delta_n - \delta_{n-q} - \delta_{n+q})`$ and take the
+Fourier symbol of $`-2J_n + J_{n-q} + J_{n+q}`$. $`\square`$
+
+(a), (b) and (c) are checked exactly with SymPy (Part G). Numerically, on a
+row of 1024 cells with a ripple at its centre, pairs and pair momentum are
+conserved to round-off and $`\mathcal{H}`$ falls at every sample. The
+demo's momentum grid is periodic, inherited from step 16's spectral mesh,
+so a collision across its ends does not conserve momentum; the rows there
+stay at $`B`$.
+
+**Measured** (Part G), the Pöschl–Teller well of §4, minimal ledger,
+absorptive first, (S′), $`\Delta t = 0.02`$, to $`t = 96`$. The pair-diffusion
+control uses the same channels and rates as the kernel-rate collisions,
+with a symmetric kernel, $`\partial_t s_n = \sum_q\lvert K_q\rvert
+(s_{n+q} + s_{n-q} - 2s_n)`$; the Volterra sea is (c) of V9. Columns are
+$`\lambda^*(t)`$; $`\lVert s - \bar s\rVert_2`$ is the sea's deviation
+from its row means at $`t = 96`$, in units of $`B`$:
+
+| sea motion | 16 | 32 | 48 | 64 | 80 | 96 | deviation |
+|---|---|---|---|---|---|---|---|
+| (S′) unamended | 0.908 | 1.220 | 1.824 | 2.551 | 2.837 | 2.902 | 4.08 |
+| Volterra sea (V9) | 0.716 | 0.809 | 0.850 | 1.091 | 1.175 | 1.350 | 3.30 |
+| pair diffusion (control) | 0.228 | 0.228 | 0.228 | 0.228 | 0.228 | 0.228 | 0.22 |
+| collisions, kernel rate | 0.251 | 0.251 | 0.251 | 0.251 | 0.251 | 0.251 | 0.24 |
+| collisions, uniform, $`rB = 1`$ | 0.468 | 0.468 | 0.468 | 0.468 | 0.468 | 0.468 | 0.52 |
+
+The global debt is 0.463 at $`t = 96`$ in every row, as V8 requires.
+The unamended row reproduces Part E. Collisions at the kernel's rate hold
+$`\lambda^*`$ at 0.251 from $`t \approx 8`$; collisions between
+neighbouring rows only, at a rate that knows nothing of the potential,
+hold it at 0.468.
+
+How fast collisions must be (same run):
+
+| collisions | rate | $`\lambda^*`$ at 16 | 48 | 96 | deviation |
+|---|---|---|---|---|---|
+| kernel rate | × 1 | 0.251 | 0.251 | 0.251 | 0.24 |
+| | × 0.3 | 0.428 | 0.428 | 0.428 | 0.54 |
+| | × 0.1 | 0.530 | 0.669 | 0.820 | 1.10 |
+| | × 0.03 | 0.650 | 1.117 | 1.670 | 1.99 |
+| | × 0.01 | 0.793 | 1.490 | 2.231 | 2.91 |
+| uniform, neighbouring rows | $`rB = 4`$ | 0.357 | 0.357 | 0.357 | 0.41 |
+| | $`rB = 1`$ | 0.468 | 0.468 | 0.468 | 0.52 |
+| | $`rB = 0.25`$ | 0.541 | 0.541 | 0.541 | 0.61 |
+
+At the kernel's rate the bound holds down to about a tenth of it (0.82,
+flat from $`t \approx 64`$), and not at three hundredths (1.67, still
+rising). Uniform collisions between neighbouring rows hold it down to
+$`rB = 0.25`$, about a twentieth of the well's peak event rate
+($`\max\Gamma_{\rm tot} = 4.5`$), because they act wherever a deficit
+travels and not only where events make it. Under uniform collisions at
+$`rB = 1`$ the sea's deviation creeps from 0.29 at $`t = 60`$ to 0.52 at
+$`t = 96`$ while $`\lambda^*`$ stays at 0.468; whether it settles is not
+shown.
+
+Other cases, collisions at the kernel's rate:
+
+| case | realisation | (S′) unamended at 16 / 48 / 96 | with collisions at 16 / 48 / 96 |
+|---|---|---|---|
+| Pöschl–Teller well | emissive | 1.207 / 2.980 / 4.494 | 0.354 / 0.354 / 0.375 |
+| Eckart, repeated collisions | absorptive first | 0.651 / 1.951 / 2.582 | 0.275 / 0.275 / 0.275 |
+| Eckart, repeated collisions | emissive | 1.096 / 2.289 / 3.640 | 0.361 / 0.376 / 0.376 |
+
+Against the reach (Eckart summit, one collision, $`dp = 0.125`$, $`T = 8`$,
+window cut at $`y_h`$, as in Part E; the unamended columns reproduce Part
+E's):
+
+| $`y_h/a`$ | $`\max\Gamma_{\rm tot}`$ | absorptive first | with collisions | emissive | with collisions |
+|---|---|---|---|---|---|
+| $`\pi`$ | 1.33 | 0.437 | 0.213 | 0.457 | 0.215 |
+| $`2\pi`$ | 3.49 | 0.748 | 0.314 | 1.233 | 0.356 |
+| $`4\pi`$ | 6.58 | 1.148 | 0.318 | 1.754 | 0.446 |
+
+From $`2\pi a`$ to $`4\pi a`$ the absorptive-first depth grows by 1 per
+cent with collisions against 53 without, and the emissive depth by 25 per
+cent against 42. A single collision cannot say whether the emissive
+growth stops; the long runs were made at the default reach only (V-SP9).
+
+![Pair collisions bound the depth the floor needs](https://raw.githubusercontent.com/billpage/wpmw/output/figures/sea_collisions.png)
+
+*Figure. Left: $`\lambda^*(t)`$ in the Pöschl–Teller well under each sea
+motion, with the rate scan dashed. Right: the sea's deviation from its
+row means.*
+
+**What the amendment costs, and what it leaves open.**
+
+- *Energy.* A defocus raises the pairs' kinetic energy and a focus lowers
+  it; only detailed balance makes the uniform sea the equilibrium. The
+  pairs' energy was already not conserved under (S′) (Q-SP3), and it is
+  unobservable either way.
+- *An arrow of time in the dark.* $`\mathcal{H}`$ decreases, so the sea's
+  own dynamics is irreversible, while $`E`$ stays exactly reversible (V8).
+  Dark catalysis (Proposition Q6) is already an irreversible reset of the
+  sea's phases; collisions are its counterpart for the population, which
+  dark catalysis cannot touch (Proposition Q7).
+- *The clock at a collision* (V-SP8). Under (S′) a pair's clock is locked
+  to its row's plane wave (Proposition Q2), and the reading of
+  Proposition Q5 is taken from those clocks. A collision moves two pairs
+  to new rows, so it needs a clock rule, and Q6's resets must keep up with
+  the misalignment collisions bring. Nothing in $`E`$ depends on that rule
+  (V8); the readings of §§8–9 of step 23 do, and were not re-measured.
+- *The rate* (V-SP9). The bound holds at the kernel's rate and at a
+  uniform rate unrelated to the potential, and fails when collisions are
+  much slower than events. Which rate law is the ontology's, and what
+  fixes its constant, is open, as the dark rate is (Q-SP9).
+- *What it does not touch.* Proposition V4's granularity is a property
+  of an integer sea at one pair per aperture, not of a mean deficit, and
+  collisions in mean field say nothing about it (V-SP10). Proposition Q4's
+  tagged crossings ran with pairs that keep their rows.
 
 ---
 
@@ -746,6 +1044,13 @@ profile were measured with the leakage (§9).
   does not read the sea; under the floor, depth is observable below
   $`\lambda^*`$ in mean field and below about $`\ln(C/\delta)`$ for an
   integer sea (Propositions V3 and V4).
+- **Step 23, under the amended (S′)** (§4.1). Proposition Q3's "deficits
+  stay in their rows" and Proposition Q7's "shallow but not refilled"
+  describe (S′) as first stated; with pair collisions deficits relax
+  (Proposition V10). Q-SP2's answer above holds for (S′) unamended;
+  amended, the depth the floor needs stops growing in every case run.
+  Proposition Q4's tagged crossings and the readings of §§8 and 9 ran with
+  pairs that keep their rows, and are not re-measured (V-SP8).
 - **This note, §5.** Proposition V4's $`e^{-\beta}`$ is the share of
   emissions blocked only for a sea that is Poisson at every event. The
   integer worlds block $`0.9\,e^{-0.55\beta}`$ (Proposition V6), while
@@ -778,16 +1083,33 @@ profile were measured with the leakage (§9).
   $`4\sigma`$ below the mesh QLE's with no floor (§5.1). Check it against
   Q-SP12's classical-baseline offset by running the worlds and
   the mesh with events switched off.
+- **V-SP8.** The clock at a collision. Under (S′) a pair's clock is
+  locked to its row's plane wave (Proposition Q2), and Q5's reading is
+  taken from those clocks; a collision moves two pairs to new rows.
+  Specify the clock rule, measure the misalignment collisions bring
+  against Q6's resets, and re-measure §§8 and 9 of step 23 and Q4's tagged
+  crossings with collisions on.
+- **V-SP9.** The collision rate. The bound holds at the kernel's rate down
+  to about a tenth of it, and for uniform collisions between neighbouring
+  rows down to $`rB = 0.25`$ (§4.3). Which rate law is the ontology's, and
+  what fixes its constant (compare Q-SP9)? Does the emissive depth stop
+  growing with the reach in long runs, and does the deviation under
+  uniform collisions settle?
+- **V-SP10.** Collisions in an integer sea. Proposition V6's blocking at
+  $`\nu = 1`$ comes from body inflation draining the apertures a parent
+  returns to. Do collisions between point pairs refill them, and how does
+  blocking then fall with $`\beta`$?
 
 ---
 
 ## 11. Numerical verification
 
-`src/demo_sea_depletion.py`, Parts A to F, on step 16's mesh
+`src/demo_sea_depletion.py`, Parts A to G, on step 16's mesh
 ($`n_r = 128`$, $`r \in [-20, 20)`$, $`n_p = 64`$, $`dp = 0.25`$, reach
 $`2\pi`$; Part E's reach ladder at $`dp = 0.125`$). Parts C, D and E
 write CSV files and the floor and long-run figures are drawn from them.
-About forty minutes on one core; the parts run independently.
+About forty minutes on one core for Parts A to F, and fifteen more for Part
+G at its default length; the parts run independently.
 
 Figures (on the `output` branch): `sea_depletion_free_negativity.png`
 (Part A), `sea_depletion_floor.png` (Parts C and D),
@@ -797,6 +1119,16 @@ one shown is `--parts E --t-long 96 --no-reach`). CSV files:
 `sea_depletion_long.csv`, `sea_depletion_long_T96.csv`,
 `sea_depletion_reach.csv`. The transport check of §3 is Part R, which is not
 in the default set (`--parts R`).
+
+Part G (§§4.1 to 4.3, second addendum) splits into sub-parts with
+`--g-subs`: I, the SymPy identities and the one-row invariants (seconds);
+M, the main comparison; S, the rate scan; R, the other cases; X, the reach
+ladder. The tables were made with `--parts G --t-long 96 --g-subs IMS` and
+`--g-subs RX` in two processes, 23 minutes on two cores, at commit
+`15546a8` plus this change. CSV files: `sea_collisions_main_T96.csv`,
+`sea_collisions_scan_T96.csv`, `sea_collisions_cases_T96.csv`,
+`sea_collisions_reach.csv`. Figure: `sea_collisions.png`, drawn from the
+main and scan files of the longest run present.
 
 §5.1 and §6.1 ran as private Kaggle batch kernels (`wpmwlib.kaggle_batch`)
 from commit `e916ac4` with the two scripts added. They are too long for one
@@ -822,12 +1154,20 @@ core.
 - Bassi, A., Lochan, K., Satin, S., Singh, T. P. and Ulbricht, H.
   *Models of wave-function collapse, underlying theories, and experimental
   tests*, Rev. Mod. Phys. **85** (2013) 471–527.
+- Boltzmann, L. *Weitere Studien über das Wärmegleichgewicht unter
+  Gasmolekülen*, Sitzungsber. Kais. Akad. Wiss. Wien, Math.-Naturwiss. Cl.
+  **66** (1872) 275–370.
 - Fein, Y. Y., Geyer, P., Zwick, P., Kiałka, F., Pedalino, S., Mayor, M.,
   Gerlich, S. and Arndt, M. *Quantum superposition of molecules beyond
   25 kDa*, Nat. Phys. **15** (2019) 1242–1245.
 - Greiner, M., Mandel, O., Hänsch, T. W. and Bloch, I. *Collapse and
   revival of the matter wave field of a Bose–Einstein condensate*, Nature
   **419** (2002) 51–54.
+- Horn, F. and Jackson, R. *General mass action kinetics*, Arch. Rational
+  Mech. Anal. **47** (1972) 81–116.
+- Kac, M. and van Moerbeke, P. *On an explicitly soluble system of
+  nonlinear differential equations related to certain Toda lattices*, Adv.
+  Math. **16** (1975) 160–169.
 - Kenfack, A. and Życzkowski, K. *Negativity of the Wigner function as an
   indicator of non-classicality*, J. Opt. B: Quantum Semiclass. Opt. **6**
   (2004) 396–404.
@@ -835,7 +1175,11 @@ core.
   Ginossar, E., Mirrahimi, M., Frunzio, L., Girvin, S. M. and
   Schoelkopf, R. J. *Observation of quantum state collapse and revival due
   to the single-photon Kerr effect*, Nature **495** (2013) 205–209.
+- Pawula, R. F. *Approximation of the linear Boltzmann equation by the
+  Fokker–Planck equation*, Phys. Rev. **162** (1967) 186–188.
 - Vlastakis, B., Kirchmair, G., Leghtas, Z., Nigg, S. E., Frunzio, L.,
   Girvin, S. M., Mirrahimi, M., Devoret, M. H. and Schoelkopf, R. J.
   *Deterministically encoding quantum information using 100-photon
   Schrödinger cat states*, Science **342** (2013) 607–610.
+- Volterra, V. *Leçons sur la théorie mathématique de la lutte pour la
+  vie*, Gauthier-Villars, Paris (1931).
