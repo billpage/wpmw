@@ -632,7 +632,8 @@ the compensated model.)
 8. [`dark_sea_and_worldline_identity.md`](docs/analysis/dark_sea_and_worldline_identity.md) — what it costs in identity
 
 **If you want the whole argument in order**, read the ladder in
-[`docs/analysis/README.md`](docs/analysis/README.md) from step 1. Steps
+[`docs/analysis/README.md`](docs/analysis/README.md) from step 1 (the list there
+is newest-first, so start at the bottom). Steps
 2–10 are the collision layer; per §10 above, they are context for the
 compensated model rather than input to it.
 
