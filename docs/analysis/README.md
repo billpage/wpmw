@@ -59,10 +59,19 @@ bottom up. Each note states in its §0 what it inherits and what it retracts.
   with detailed balance. Collisions are `W`-null (V8). A reversible sea
   dynamics, such as a Volterra lattice on the pairs, conserves a depletion
   functional and cannot repair depletion (V9); collisions obey an H-theorem and
-  relax the sea (V10), and in every case run the depth the floor needs stops
-  growing below the physical density — 0.25 against 2.9 in the well at `t = 96`
-  — whether they run at the kernel's rate or at a uniform rate between
-  neighbouring rows. Where to look is where negativity is made fastest —
+  relax the sea (V10), and in every case run at the default reach the depth the
+  floor needs stops growing below the physical density — 0.25 against 2.9 in the
+  well at `t = 96` — whether they run at the kernel's rate or at a uniform rate
+  between neighbouring rows. **Propositions V11 to V14** (third addendum) test
+  the amendment. At the kernel's rate the depth stays below one half on the
+  Eckart summit from reach `pi` to `8pi`, where (S′) unamended needs up to 17; a
+  uniform rate, which does not keep pace with the events, fails in the well at
+  `4pi` (V11). Of the clock rules tried at a collision, only whole pairs
+  re-locked to their new row keep the sea dark and the readings live (V12). In
+  an integer sea collisions steepen blocking to about `1.1 e^-0.74beta`, about
+  9.5 pairs per aperture for one emission in a thousand (V13). Two coupled
+  bodies need 0.20 to 0.54 of the physical density with collisions, against 1.86
+  to 3.98 without (V14). Where to look is where negativity is made fastest —
   diffraction, Kerr revivals, tunnelling, collisions — but the model's
   regulators have no laboratory values, so no bound follows yet; a null result
   is expected, and says the sea's depth, like its motion and its phases, is not

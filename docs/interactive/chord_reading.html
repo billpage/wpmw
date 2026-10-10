@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Chord Reading</title>
+<!--
+  Interactive companion to docs/supplement/chord_reading.md: step 23's particle
+  model (docs/analysis/force_blind_sea.md) running in the browser, with a reader,
+  its chords, its reading of K_q against the kernel, its integrators and the
+  events they fire.  Self-contained apart from web fonts (with system fallbacks).
+  The kernel is Theorem L1 by quadrature, within 5e-4 of the code's; the numbers
+  of the tutorial come from src/demo_chord_reading.py, not from this page.
+-->
+<style>[hidden]{display:none!important} :root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)} body{margin:0}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&display=swap">
+<style>
+/* Layout: a working instrument. Phase-space canvas on the left, the reader's
+   instrument panel on the right; the four postulate notes underneath. */
+:root {
+  --bg: #f6f7f9;
+  --panel: #ffffff;
+  --ink: #15181d;
+  --muted: #5b6270;
+  --line: #dde1e8;
+  --row: #eceff4;
+  --accent: #2a78d6;      /* the kernel, K_q */
+  --accent-2: #eb6834;    /* the chord reading */
+  --mark: #15181d;        /* bodies */
+  --flash: #e34948;
+  --phase-l: 50%;
+  --font-display: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #12151a; --panel: #191d24; --ink: #e7eaf0; --muted: #9aa3b2;
+    --line: #2a313c; --row: #1f252e; --accent: #3987e5; --accent-2: #d95926;
+    --mark: #e7eaf0; --flash: #e66767; --phase-l: 62%; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #12151a; --panel: #191d24; --ink: #e7eaf0; --muted: #9aa3b2;
+  --line: #2a313c; --row: #1f252e; --accent: #3987e5; --accent-2: #d95926;
+  --mark: #e7eaf0; --flash: #e66767; --phase-l: 62%; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { background: var(--bg); color: var(--ink); }
+body { font: 15px/1.55 var(--font-body); }
+main { max-width: 1180px; margin: 0 auto; padding-inline: 16px; padding-block: 20px 40px; }
+h1 { font: 600 1.6rem/1.2 var(--font-display); margin: 0 0 .3rem; text-wrap: balance; }
+h2 { font: 600 1.12rem/1.25 var(--font-display); margin: 0 0 .4rem; text-wrap: balance; }
+.lede { color: var(--muted); max-width: 72ch; margin: 0 0 1rem; }
+.mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.controls { display: flex; flex-wrap: wrap; gap: .5rem .75rem; align-items: center; margin: 0 0 .75rem; }
+.controls label { display: inline-flex; gap: .35rem; align-items: center; font-size: .9rem; color: var(--muted); }
+button, select {
+  font: 500 .9rem var(--font-body); color: var(--ink); background: var(--panel);
+  border: 1px solid var(--line); border-radius: 6px; padding: .35rem .7rem; cursor: pointer;
+}
+button:hover, select:hover { border-color: var(--muted); }
+button:focus-visible, select:focus-visible, input:focus-visible, canvas:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+.seg button { border: 0; border-radius: 0; padding: .35rem .75rem; }
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+.stage { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 16px; align-items: start; }
+@media (max-width: 860px) { .stage { grid-template-columns: minmax(0, 1fr); } }
+.canvas-wrap { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 8px; min-width: 0; }
+#ps { width: 100%; display: block; touch-action: none; cursor: crosshair; }
+.legend { display: flex; flex-wrap: wrap; gap: .4rem 1rem; font-size: .82rem; color: var(--muted); padding: .4rem .2rem 0; }
+.legend span { display: inline-flex; align-items: center; gap: .35rem; }
+.sw { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; display: grid; gap: 12px; min-width: 0; }
+.panel h3 { font: 600 .78rem var(--font-body); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin: 0 0 .3rem; }
+.kv { display: grid; grid-template-columns: auto 1fr; gap: .1rem .8rem; font-size: .86rem; }
+.kv dt { color: var(--muted); }
+.kv dd { margin: 0; font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+#bars, #bank { width: 100%; display: block; }
+.chart-legend { display: flex; flex-wrap: wrap; gap: .3rem .9rem; font-size: .8rem; color: var(--muted); }
+.chart-legend i { width: 10px; height: 10px; display: inline-block; border-radius: 2px; margin-right: .3rem; vertical-align: -1px; }
+#log { font: .78rem/1.45 var(--font-mono); color: var(--muted); margin: 0; padding: 0; list-style: none; min-height: 7.5em; }
+#log li.me { color: var(--ink); }
+.tip { position: fixed; pointer-events: none; background: var(--ink); color: var(--bg); font: .78rem var(--font-mono); padding: .3rem .5rem; border-radius: 4px; z-index: 5; }
+.notes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 20px; }
+@media (max-width: 760px) { .notes { grid-template-columns: minmax(0, 1fr); } }
+.note { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; min-width: 0; }
+.note p { margin: .3rem 0; max-width: 65ch; }
+.eq { font-family: var(--font-mono); font-size: .86rem; background: var(--row); border-radius: 4px; padding: .35rem .5rem; overflow-x: auto; white-space: nowrap; }
+.foot { margin-top: 18px; font-size: .85rem; color: var(--muted); max-width: 80ch; }
+a { color: var(--accent); }
+</style>
+</head>
+<body>
+<main>
+  <h1>The chord reading</h1>
+  <p class="lede">Step 23's particle model, running: free bodies feel the force, the sea's aligned pairs drift along their rows with clocks wound by the potential, and a reader adds up the chords of its row to estimate the jump rates K<sub>q</sub>. Eckart barrier V = sech²x, ħ = m = 1, row width dp = 0.25, reach y<sub>max</sub> = 2π.</p>
+
+  <div class="controls" role="group" aria-label="Simulation controls">
+    <button id="play" type="button">Pause</button>
+    <button id="step" type="button">Step</button>
+    <button id="reset" type="button">Reset</button>
+    <span class="seg" role="group" aria-label="Postulate for the sea">
+      <button id="sprime" type="button" aria-pressed="true">(S′) force-blind sea</button>
+      <button id="sfull" type="button" aria-pressed="false">(S) sea feels force</button>
+    </span>
+    <label for="nu">sea density
+      <select id="nu"><option value="1">1 B (physical)</option><option value="4">4 B</option><option value="8" selected>8 B</option><option value="16">16 B</option><option value="32">32 B</option></select>
+    </label>
+    <label for="dark"><input id="dark" type="checkbox" checked> dark catalysis</label>
+    <label for="feed">integrators fed by
+      <select id="feed"><option value="kernel" selected>the kernel K_q</option><option value="live">the live reading</option></select>
+    </label>
+  </div>
+
+  <div class="stage">
+    <div class="canvas-wrap">
+      <canvas id="ps" tabindex="0" aria-label="Phase space: position across, momentum up. Click a body or a pair to make it the reader."></canvas>
+      <div class="legend">
+        <span><i class="sw" style="background: conic-gradient(from 215deg, hsl(215 70% 50%), hsl(305 70% 50%), hsl(35 70% 50%), hsl(125 70% 50%), hsl(215 70% 50%))"></i>aligned pair; hue = its clock's offset from its row's plane wave (blue: on the wave)</span>
+        <span><b class="mono">+</b> free positon</span>
+        <span><b class="mono">−</b> free negaton</span>
+        <span>arcs: the reader's chords; shaded band: its aperture</span>
+      </div>
+    </div>
+
+    <aside class="panel" aria-label="The reader">
+      <div>
+        <h3>Reader</h3>
+        <dl class="kv">
+          <dt>who</dt><dd id="who">—</dd>
+          <dt>vertex</dt><dd id="vtx">—</dd>
+          <dt>chords</dt><dd id="nch">—</dd>
+        </dl>
+      </div>
+      <div>
+        <h3>Jump rates at the vertex</h3>
+        <canvas id="bars" aria-label="Bar chart of K_q and the chord reading for channels 1 to 8"></canvas>
+        <div class="chart-legend">
+          <span><i style="background: var(--accent)"></i>kernel K<sub>q</sub>(x)</span>
+          <span><i style="background: var(--accent-2)"></i>this reading</span>
+          <span><i style="background: var(--ink); border-radius: 50%"></i>mean of fresh seas</span>
+        </div>
+        <button id="avg" type="button" style="margin-top:.5rem">Average 400 fresh seas here</button>
+      </div>
+      <div>
+        <h3>Integrator bank (channels 1–8)</h3>
+        <canvas id="bank" aria-label="Fractional part of each channel's integrator"></canvas>
+      </div>
+      <div>
+        <h3>Ensemble</h3>
+        <dl class="kv">
+          <dt>t</dt><dd id="tt">0</dd>
+          <dt>positons / negatons</dt><dd id="pn">—</dd>
+          <dt>Σε (norm)</dt><dd id="norm">—</dd>
+          <dt>emissions / absorptions</dt><dd id="ea">—</dd>
+          <dt>failed events</dt><dd id="fails">—</dd>
+        </dl>
+      </div>
+      <div>
+        <h3>Events</h3>
+        <ul id="log" aria-live="polite"></ul>
+      </div>
+    </aside>
+  </div>
+
+  <section class="notes">
+    <div class="note">
+      <h2>Postulate (S′)</h2>
+      <p>Free bodies obey the full force. An aligned pair, a positon and a negaton at one point with one clock, moves inertially along its row, but its clock still winds at the Lagrangian rate:</p>
+      <p class="eq">ħ dθ/dt = p²/2m − V(x)</p>
+      <p>So a sea pair keeps its row's plane wave except for the straight-line eikonal −∫V dt it picks up crossing the barrier. Watch the hue change as pairs cross. Switch to (S): pairs near the barrier bend off their rows and mix with their neighbours.</p>
+    </div>
+    <div class="note">
+      <h2>The chord</h2>
+      <p>Two aligned pairs on one row, at x ∓ y. Under (S′) they move together, so 2y never changes, and their clocks drift apart at exactly</p>
+      <p class="eq">ħ dμ/dt = V(x+y) − V(x−y) = U(x, y)</p>
+      <p>That is the phase rate the potential applies to the density-matrix element ρ(x+y, x−y). The chord's two pairs are reference clocks at the two arguments of ρ, not the body's ket and bra.</p>
+    </div>
+    <div class="note">
+      <h2>What the reading estimates</h2>
+      <p>The reader sums its row's chords near the vertex, each weighted by the daughter row's lever:</p>
+      <p class="eq">K̂_q = −(B dp / ħ n² Δx) Σ w(y) · ħμ̇ · sin(ξ_q d/ħ + μ)</p>
+      <p>Its mean is the Wigner–Moyal kernel K<sub>q</sub>(x), the commutator with V sampled at the transfer ξ<sub>q</sub>, with its classical part removed. It reads the operator and never the state. Press “Average” to watch the mean of fresh seas land on the blue bars; one reading at ν = 1 has a chord one time in twelve.</p>
+    </div>
+    <div class="note">
+      <h2>From reading to event</h2>
+      <p>Each free body carries one integrator per channel, advanced by the rate and firing at every integer it crosses. A firing puts +τ at p + ξ and −τ at p − ξ. It is realised as an <b>absorption</b> if free bodies of the right species cross the vertex on those rows, otherwise as an <b>emission</b> that ionises a sea pair in the parent's cell. Feed the integrators from the live reading and they chatter: Q12's closed-loop failure.</p>
+    </div>
+  </section>
+
+  <p class="foot">Companion to <a href="https://github.com/billpage/wpmw/blob/main/docs/supplement/chord_reading.md">docs/supplement/chord_reading.md</a>. The kernel is Theorem L1 by quadrature (801 points in y, compensation by the first moment over channels 1–31), within 5×10⁻⁴ of the code's. Dark catalysis here resets sea clocks to their row's free plane wave at twice the kernel's rate, an absolute reset kept for simplicity; Proposition Q6 prefers relative ones. Pairs made by absorption take the positon's clock.</p>
+</main>
+
+<div class="tip" id="tip" hidden></div>
+
+<script>
+(() => {
+  "use strict";
+  // ------------------------------------------------------------ constants
+  const HBAR = 1, M = 1, DP = 0.25, YMAX = Math.PI * HBAR / (2 * DP), B = 1 / Math.PI;
+  const NQ = 12, NQC = 31, NSHOW = 8, DT = 0.02;
+  const L = 32, XL = -16, NROW = 12;                 // rows n = -12..12, p = n dp
+  const XI = Array.from({ length: NQC }, (_, i) => (i + 1) * DP);
+  const V = x => 1 / Math.cosh(x) ** 2;
+  const Vp = x => -2 * Math.tanh(x) / Math.cosh(x) ** 2;
+  const wrapPhase = a => a - 2 * Math.PI * Math.floor((a + Math.PI) / (2 * Math.PI));
+
+  // ------------------------------------------------------------ kernel table
+  const KX0 = -16, KDX = 0.0625, KN = 513;
+  const KT = new Float64Array(KN * NQ), VEFF = new Float64Array(KN), GAM = new Float64Array(KN);
+  (function buildKernel() {
+    const ny = 801, ys = [], wq = [], wt = [];
+    for (let i = 0; i < ny; i++) { const y = YMAX * i / (ny - 1); ys.push(y); wq.push((YMAX / (ny - 1)) * (i === 0 || i === ny - 1 ? 0.5 : 1)); wt.push(Math.cos(Math.PI * y / (2 * YMAX)) ** 2); }
+    const S = XI.map(xi => ys.map(y => Math.sin(2 * xi * y / HBAR)));
+    const kc = XI.map((_, q) => { let s = 0; for (let i = 0; i < ny; i++) s += S[q][i] * 2 * ys[i] * wt[i] * wq[i]; return -2 * B * DP / HBAR * s; });
+    for (let k = 0; k < KN; k++) {
+      const x = KX0 + k * KDX;
+      const kr = XI.map((_, q) => { let s = 0; for (let i = 0; i < ny; i++) s += S[q][i] * (V(x + ys[i]) - V(x - ys[i])) * wt[i] * wq[i]; return -2 * B * DP / HBAR * s; });
+      let num = 0, den = 0;
+      for (let q = 0; q < NQC; q++) { num += XI[q] * kr[q]; den += XI[q] * kc[q]; }
+      const dv = num / den; VEFF[k] = dv;
+      let g = 0;
+      for (let q = 0; q < NQ; q++) { const v = kr[q] - dv * kc[q]; KT[k * NQ + q] = v; g += Math.abs(v); }
+      GAM[k] = g;
+    }
+  })();
+  const kidx = x => { const f = (x - KX0) / KDX; const i = Math.max(0, Math.min(KN - 2, Math.floor(f))); return [i, f - i]; };
+  const Kq = (x, q) => { const [i, f] = kidx(x); return KT[i * NQ + q] * (1 - f) + KT[(i + 1) * NQ + q] * f; };
+  const Veff = x => { const [i, f] = kidx(x); return VEFF[i] * (1 - f) + VEFF[i + 1] * f; };
+  const Gam = x => { const [i, f] = kidx(x); return GAM[i] * (1 - f) + GAM[i + 1] * f; };
+
+  // ------------------------------------------------------------ random
+  let seed = 7;
+  const rnd = () => { seed = (seed * 1664525 + 1013904223) >>> 0; return (seed + 0.5) / 4294967296; };
+  const gauss = () => Math.sqrt(-2 * Math.log(rnd())) * Math.cos(2 * Math.PI * rnd());
+  const poisson = lam => { let n = 0, p = Math.exp(-lam), s = p, u = rnd(); while (u > s && n < 10000) { n++; p *= lam / n; s += p; } return n; };
+
+  // ------------------------------------------------------------ state
+  let st, nu = 8, mode = "Sprime", dark = true, feed = "kernel", running = !matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let reader = null, autoReader = true, avgK = null, avgAt = null;
+  const wrapX = x => x - L * Math.floor((x - XL) / L);
+
+  function newBody(x, p, th, eps) {
+    const C = new Float64Array(NQ); for (let q = 0; q < NQ; q++) C[q] = rnd();
+    return { x, p, th, eps, C, flash: new Float64Array(NQ), id: st.nextId++ };
+  }
+  function reset() {
+    seed = 7;
+    st = { t: 0, pairs: [], bodies: [], nextId: 1, emi: 0, abs: 0, fail: 0, log: [], fx: [] };
+    const area = L * (2 * NROW + 1) * DP, n = poisson(nu * B * area);
+    for (let i = 0; i < n; i++) {
+      const x = XL + L * rnd(), row = Math.floor(rnd() * (2 * NROW + 1)) - NROW, p = row * DP;
+      st.pairs.push({ x, p, th: p * x / HBAR, id: st.nextId++ });
+    }
+    for (let i = 0; i < 48; i++) {
+      const x = -7 + 1.0 * gauss(), p = 1.3 + 0.5 * gauss();
+      st.bodies.push(newBody(x, p, 1.3 * (x + 7) / HBAR, +1));
+    }
+    reader = null; autoReader = true; avgK = null; render();
+  }
+
+  // ------------------------------------------------------------ events
+  function near(list, x, p, pred) {
+    let best = -1, bd = 1e9;
+    for (let i = 0; i < list.length; i++) {
+      const e = list[i]; if (pred && !pred(e)) continue;
+      let dx = Math.abs(e.x - x); dx = Math.min(dx, L - dx);
+      if (dx < 1 && Math.abs(e.p - p) < DP / 2 && dx < bd) { bd = dx; best = i; }
+    }
+    return best;
+  }
+  function logEvent(text, b) {
+    st.log.unshift({ text: `t ${st.t.toFixed(2)}  ${text}`, me: reader && reader.kind === "body" && reader.ref === b });
+    if (st.log.length > 6) st.log.pop();
+  }
+  function fire(b, q, sgn) {
+    const tau = sgn * b.eps, xi = (q + 1) * DP;
+    const jn = near(st.bodies, b.x, b.p + tau * xi, e => e !== b && e.eps < 0);
+    const jp = near(st.bodies, b.x, b.p - tau * xi, e => e !== b && e.eps > 0);
+    if (jn >= 0 && jp >= 0) {
+      const A = st.bodies[jn], Pp = st.bodies[jp];
+      const xm = A.x + 0.5 * (((Pp.x - A.x + L / 2) % L + L) % L - L / 2), pm = b.p;
+      const th = Pp.th + pm * (xm - Pp.x) / HBAR;
+      st.pairs.push({ x: wrapX(xm), p: Math.round(pm / DP) * DP, th, id: st.nextId++ });
+      st.bodies = st.bodies.filter(e => e !== A && e !== Pp);
+      st.abs++; st.fx.push({ x: xm, p: pm, kind: "abs", age: 0, x1: A.x, p1: A.p, x2: Pp.x, p2: Pp.p });
+      logEvent(`q=${q + 1} absorption at x=${xm.toFixed(2)}`, b);
+      return;
+    }
+    const j = near(st.pairs, b.x, b.p, null);
+    if (j >= 0) {
+      const a = st.pairs[j];
+      st.pairs.splice(j, 1);
+      const bp = newBody(a.x, a.p + tau * xi, a.th, +1), bn = newBody(a.x, a.p - tau * xi, a.th, -1);
+      st.bodies.push(bp, bn);
+      st.emi++; st.fx.push({ x: a.x, p: a.p, kind: "emi", age: 0, x1: bp.x, p1: bp.p, x2: bn.x, p2: bn.p });
+      logEvent(`q=${q + 1} emission: pair at x=${a.x.toFixed(2)} ionised`, b);
+      return;
+    }
+    st.fail++; logEvent(`q=${q + 1} failed: no pair, no partners`, b);
+  }
+
+  // ------------------------------------------------------------ the reading
+  function chordsOf(xr, pr, dX) {
+    const ends = st.pairs.filter(a => Math.abs(a.p - pr) < DP / 2 && Math.abs(a.x - xr) < YMAX + dX / 2).sort((a, b) => a.x - b.x);
+    const out = [];
+    for (let i = 0; i < ends.length; i++) for (let j = i + 1; j < ends.length; j++) {
+      const d = ends[j].x - ends[i].x;
+      if (d <= 2 * YMAX && Math.abs(0.5 * (ends[i].x + ends[j].x) - xr) < dX / 2) out.push([ends[i], ends[j], d]);
+    }
+    return out;
+  }
+  function readingFrom(xr, P, chords, useClocks) {
+    const n = nu * B * DP, dX = 1, dv = Veff(xr), kh = new Float64Array(NQ);
+    for (const [a, b, d] of chords) {
+      const w = Math.cos(Math.PI * d / (4 * YMAX)) ** 2, rate = V(b.x) - V(a.x) - d * dv;
+      const mu = useClocks ? a.th - b.th + P * d / HBAR : 0;
+      for (let q = 0; q < NQ; q++) kh[q] -= B * DP / (HBAR * n * n * dX) * w * rate * Math.sin((q + 1) * DP * d / HBAR + mu);
+    }
+    let s1 = 0, s2 = 0; for (let q = 0; q < NQ; q++) { s1 += XI[q] * kh[q]; s2 += XI[q] * XI[q]; }
+    for (let q = 0; q < NQ; q++) kh[q] -= XI[q] * s1 / s2;
+    return kh;
+  }
+  function averageFresh() {
+    const r = currentReader(); if (!r) return;
+    const xr = r.x, n = nu * B * DP, lw = 2 * YMAX + 1, acc = new Float64Array(NQ), N = 400;
+    for (let k = 0; k < N; k++) {
+      const cnt = poisson(n * lw), ends = [];
+      for (let i = 0; i < cnt; i++) ends.push({ x: xr - lw / 2 + lw * rnd(), th: 0 });
+      ends.sort((a, b) => a.x - b.x);
+      const ch = [];
+      for (let i = 0; i < ends.length; i++) for (let j = i + 1; j < ends.length; j++) {
+        const d = ends[j].x - ends[i].x; if (d <= 2 * YMAX && Math.abs(0.5 * (ends[i].x + ends[j].x) - xr) < 0.5) ch.push([ends[i], ends[j], d]);
+      }
+      const kh = readingFrom(xr, 0, ch, false); for (let q = 0; q < NQ; q++) acc[q] += kh[q] / N;
+    }
+    avgK = acc; avgAt = xr; renderPanel();
+  }
+
+  // ------------------------------------------------------------ the step
+  function step() {
+    const t = st.t;
+    for (const b of st.bodies) {
+      b.p -= 0.5 * DT * Vp(b.x); b.x += b.p / M * DT; b.p -= 0.5 * DT * Vp(b.x);
+      const xw = wrapX(b.x); b.th += b.p * (xw - b.x) / HBAR; b.x = xw;
+      b.th += (b.p * b.p / (2 * M) - V(b.x)) * DT / HBAR;
+    }
+    for (const a of st.pairs) {
+      if (mode === "S") { a.p -= 0.5 * DT * Vp(a.x); a.x += a.p / M * DT; a.p -= 0.5 * DT * Vp(a.x); }
+      else a.x += a.p / M * DT;
+      const xw = wrapX(a.x); a.th += a.p * (xw - a.x) / HBAR; a.x = xw;
+      a.th += (a.p * a.p / (2 * M) - V(a.x)) * DT / HBAR;
+    }
+    // integrators of every free body near the potential
+    const fires = [];
+    for (const b of st.bodies) {
+      if (Math.abs(b.x) > 10) continue;
+      let K;
+      if (feed === "live") {
+        const pr = Math.round(b.p / DP) * DP;
+        K = readingFrom(b.x, pr, chordsOf(b.x, pr, 1), true);
+      }
+      for (let q = 0; q < NQ; q++) {
+        b.flash[q] *= 0.9;
+        const k = feed === "live" ? K[q] : Kq(b.x, q);
+        const old = Math.floor(b.C[q]); b.C[q] += k * DT;
+        const dn = Math.floor(b.C[q]) - old;
+        for (let r = 0; r < Math.abs(dn); r++) fires.push([b, q, Math.sign(dn)]);
+        if (dn) b.flash[q] = 1;
+      }
+    }
+    for (let i = fires.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [fires[i], fires[j]] = [fires[j], fires[i]]; }
+    for (const [b, q, s] of fires) if (st.bodies.includes(b)) fire(b, q, s);
+    // dark catalysis: absolute reset to the row's free plane wave at twice the kernel rate
+    if (dark) for (const a of st.pairs) {
+      if (Math.abs(a.x) < 10 && rnd() < 2 * Gam(a.x) * DT) a.th = (a.p * a.x - a.p * a.p * (t + DT) / (2 * M)) / HBAR;
+    }
+    for (const f of st.fx) f.age += DT;
+    st.fx = st.fx.filter(f => f.age < 0.6);
+    st.t += DT;
+  }
+
+  // ------------------------------------------------------------ reader
+  function currentReader() {
+    if (reader && reader.kind === "body" && !st.bodies.includes(reader.ref)) reader = null;
+    if (reader && reader.kind === "pair" && !st.pairs.includes(reader.ref)) reader = null;
+    if (!reader) {                     // auto: the free body nearest the barrier's flank
+      let best = null, bd = 1e9;
+      for (const b of st.bodies) { const d = Math.abs(b.x + 0.6); if (d < bd) { bd = d; best = b; } }
+      if (best) { reader = { kind: "body", ref: best }; autoReader = true; }
+    }
+    return reader ? reader.ref : null;
+  }
+
+  // ------------------------------------------------------------ drawing
+  const ps = document.getElementById("ps"), ctx = ps.getContext("2d");
+  const bars = document.getElementById("bars"), bctx = bars.getContext("2d");
+  const bank = document.getElementById("bank"), kctx = bank.getContext("2d");
+  let css = {};
+  function readTokens() {
+    const s = getComputedStyle(document.documentElement);
+    for (const k of ["--bg", "--panel", "--ink", "--muted", "--line", "--row", "--accent", "--accent-2", "--mark", "--flash", "--phase-l"]) css[k] = s.getPropertyValue(k).trim();
+  }
+  function sizeCanvas(c, ratio, minH) {
+    const dpr = window.devicePixelRatio || 1, w = c.clientWidth, h = Math.max(minH, Math.round(w * ratio));
+    c.width = Math.round(w * dpr); c.height = Math.round(h * dpr); c.style.height = h + "px";
+    c.getContext("2d").setTransform(dpr, 0, 0, dpr, 0, 0);
+    return [w, h];
+  }
+  let PW = 0, PH = 0, view;
+  function layout() {
+    [PW, PH] = sizeCanvas(ps, 0.66, 300);
+    sizeCanvas(bars, 0.55, 150); sizeCanvas(bank, 0.28, 70);
+    const top = Math.round(PH * 0.16), padL = 34, padB = 22;
+    view = { x0: -12, x1: 12, p0: -(NROW + 0.5) * DP, p1: (NROW + 0.5) * DP, top, padL, padB };
+  }
+  const X = x => view.padL + (x - view.x0) / (view.x1 - view.x0) * (PW - view.padL - 6);
+  const P = p => PH - view.padB - (p - view.p0) / (view.p1 - view.p0) * (PH - view.padB - view.top - 6);
+  // phase wheel, rotated so that zero offset (a freshly locked clock) is blue
+  const hue = a => `hsl(${((((a / (2 * Math.PI)) % 1 + 1) % 1 * 360 + 215) % 360).toFixed(0)} 70% ${css["--phase-l"]})`;
+
+  function render() {
+    if (!view) return;
+    ctx.clearRect(0, 0, PW, PH);
+    // potential strip
+    ctx.strokeStyle = css["--muted"]; ctx.lineWidth = 1.5; ctx.beginPath();
+    for (let i = 0; i <= 200; i++) { const x = view.x0 + (view.x1 - view.x0) * i / 200, y = view.top - 6 - V(x) * (view.top - 14); i ? ctx.lineTo(X(x), y) : ctx.moveTo(X(x), y); }
+    ctx.stroke();
+    ctx.fillStyle = css["--muted"]; ctx.font = `11px ${getComputedStyle(document.body).fontFamily}`;
+    ctx.fillText("V(x) = sech²x", X(1.6), view.top * 0.45);
+    // rows
+    for (let n = -NROW; n <= NROW; n++) {
+      const y = P(n * DP);
+      ctx.strokeStyle = n === 0 ? css["--line"] : css["--row"]; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(view.padL, y); ctx.lineTo(PW - 6, y); ctx.stroke();
+    }
+    ctx.fillStyle = css["--muted"];
+    for (const p of [-3, -2, -1, 0, 1, 2, 3]) ctx.fillText(p.toString(), 6, P(p) + 4);
+    for (const x of [-12, -8, -4, 0, 4, 8]) ctx.fillText(x.toString(), X(x) - 6, PH - 6);
+    ctx.fillText("x →", X(10.4), PH - 6); ctx.fillText("p ↑", 4, view.top - 2);
+    // reader aperture and chords
+    const r = currentReader();
+    if (r) {
+      const pr = reader.kind === "body" ? Math.round(r.p / DP) * DP : r.p;
+      ctx.fillStyle = css["--row"]; ctx.globalAlpha = 0.9;
+      ctx.fillRect(X(r.x - YMAX - 0.5), P(pr + DP / 2), X(r.x + YMAX + 0.5) - X(r.x - YMAX - 0.5), P(pr - DP / 2) - P(pr + DP / 2));
+      ctx.globalAlpha = 1;
+      for (const [a, b, d] of chordsOf(r.x, pr, 1)) {
+        const mu = a.th - b.th + pr * d / HBAR, xa = X(a.x), xb = X(b.x), y = P(pr);
+        ctx.strokeStyle = hue(mu); ctx.lineWidth = 1.6; ctx.beginPath();
+        ctx.moveTo(xa, y); ctx.quadraticCurveTo((xa + xb) / 2, y - Math.min(90, (xb - xa) * 0.45), xb, y); ctx.stroke();
+      }
+    }
+    // sea pairs
+    for (const a of st.pairs) {
+      if (a.x < view.x0 || a.x > view.x1) continue;
+      const off = a.th - (a.p * a.x - a.p * a.p * st.t / (2 * M)) / HBAR;
+      ctx.fillStyle = hue(off); ctx.beginPath(); ctx.arc(X(a.x), P(a.p), 3.2, 0, 2 * Math.PI); ctx.fill();
+    }
+    // bodies
+    ctx.font = `600 13px ${getComputedStyle(document.body).fontFamily}`; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+    for (const b of st.bodies) {
+      if (b.x < view.x0 || b.x > view.x1 || Math.abs(b.p) > view.p1) continue;
+      ctx.fillStyle = css["--mark"]; ctx.fillText(b.eps > 0 ? "+" : "−", X(b.x), P(b.p));
+    }
+    ctx.textAlign = "start"; ctx.textBaseline = "alphabetic";
+    // events
+    for (const f of st.fx) {
+      ctx.globalAlpha = 1 - f.age / 0.6; ctx.strokeStyle = css["--flash"]; ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.moveTo(X(f.x1), P(f.p1)); ctx.lineTo(X(f.x), P(f.p)); ctx.lineTo(X(f.x2), P(f.p2)); ctx.stroke();
+      ctx.beginPath(); ctx.arc(X(f.x), P(f.p), 7, 0, 2 * Math.PI); ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
+    // reader ring
+    if (r) {
+      const pr = reader.kind === "body" ? r.p : r.p;
+      ctx.strokeStyle = css["--accent"]; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(X(r.x), P(pr), 9, 0, 2 * Math.PI); ctx.stroke();
+    }
+    ctx.fillStyle = css["--muted"]; ctx.font = `11px ${getComputedStyle(document.body).fontFamily}`;
+    ctx.fillText(mode === "S" ? "(S): pairs feel the force" : "(S′): pairs drift along their rows", view.padL + 4, 14);
+    renderPanel();
+  }
+
+  let lastReading = null;
+  function renderPanel() {
+    const r = currentReader();
+    const fmt = v => (v >= 0 ? "+" : "") + v.toFixed(3);
+    document.getElementById("tt").textContent = st.t.toFixed(2);
+    const np = st.bodies.filter(b => b.eps > 0).length, nn = st.bodies.length - np;
+    document.getElementById("pn").textContent = `${np} / ${nn}`;
+    document.getElementById("norm").textContent = `${np - nn}`;
+    document.getElementById("ea").textContent = `${st.emi} / ${st.abs}`;
+    document.getElementById("fails").textContent = `${st.fail}`;
+    document.getElementById("log").innerHTML = st.log.map(e => `<li class="${e.me ? "me" : ""}">${e.text}</li>`).join("");
+    let K = null, R = null, nch = 0;
+    if (r) {
+      const pr = reader.kind === "body" ? Math.round(r.p / DP) * DP : r.p;
+      const ch = chordsOf(r.x, pr, 1); nch = ch.length;
+      K = Array.from({ length: NQ }, (_, q) => Kq(r.x, q)); R = readingFrom(r.x, pr, ch, true);
+      document.getElementById("who").textContent = reader.kind === "body" ? (r.eps > 0 ? "free positon (parent)" : "free negaton (parent)") + (autoReader ? ", auto" : "") : "aligned pair (W-null, §7)";
+      document.getElementById("vtx").textContent = `x ${fmt(r.x)}  p ${fmt(r.p)}`;
+      document.getElementById("nch").textContent = `${nch} in the aperture`;
+    }
+    lastReading = { K, R };
+    drawBars(K, R); drawBank(r && reader.kind === "body" ? r : null);
+  }
+  let barGeom = null;
+  function drawBars(K, R) {
+    const w = bars.clientWidth, h = parseFloat(bars.style.height); bctx.clearRect(0, 0, w, h);
+    if (!K) return;
+    const vals = [...K.slice(0, NSHOW), ...R.slice(0, NSHOW), ...(avgK && Math.abs(avgAt - currentReader().x) < 0.05 ? avgK.slice(0, NSHOW) : [])];
+    let m = Math.max(0.3, ...vals.map(Math.abs)); m = Math.min(m, 4);
+    const padL = 30, padB = 18, y0 = (h - padB) / 2, sc = (h - padB) / 2 / m * 0.92, cw = (w - padL) / NSHOW;
+    bctx.strokeStyle = css["--line"]; bctx.lineWidth = 1; bctx.beginPath(); bctx.moveTo(padL, y0); bctx.lineTo(w, y0); bctx.stroke();
+    bctx.fillStyle = css["--muted"]; bctx.font = `10px ${getComputedStyle(document.body).fontFamily}`;
+    bctx.fillText(`+${m.toFixed(2)}`, 0, 10); bctx.fillText(`−${m.toFixed(2)}`, 0, h - padB - 2); bctx.fillText("0", 18, y0 + 3);
+    const bw = Math.max(3, cw * 0.32), clip = v => Math.max(-m, Math.min(m, v));
+    barGeom = { padL, cw, K, R };
+    for (let q = 0; q < NSHOW; q++) {
+      const cx = padL + cw * (q + 0.5);
+      for (const [v, col, dx] of [[K[q], css["--accent"], -bw - 1], [R[q], css["--accent-2"], 1]]) {
+        const y = y0 - clip(v) * sc; bctx.fillStyle = col;
+        const top = Math.min(y, y0), hh = Math.max(1, Math.abs(y - y0));
+        bctx.beginPath(); bctx.roundRect ? bctx.roundRect(cx + dx, top, bw, hh, 2) : bctx.rect(cx + dx, top, bw, hh); bctx.fill();
+      }
+      if (avgK && Math.abs(avgAt - currentReader().x) < 0.05) {
+        bctx.fillStyle = css["--ink"]; bctx.beginPath(); bctx.arc(cx, y0 - clip(avgK[q]) * sc, 3.5, 0, 2 * Math.PI); bctx.fill();
+      }
+      bctx.fillStyle = css["--muted"]; bctx.fillText(`${q + 1}`, cx - 3, h - 4);
+    }
+  }
+  function drawBank(b) {
+    const w = bank.clientWidth, h = parseFloat(bank.style.height); kctx.clearRect(0, 0, w, h);
+    kctx.fillStyle = css["--muted"]; kctx.font = `10px ${getComputedStyle(document.body).fontFamily}`;
+    if (!b) { kctx.fillText("Pick a free body to see its integrators.", 4, 16); return; }
+    const cw = w / NSHOW, hh = h - 16;
+    for (let q = 0; q < NSHOW; q++) {
+      const frac = b.C[q] - Math.floor(b.C[q]), x = cw * q + 4, bw = cw - 8;
+      kctx.fillStyle = css["--row"]; kctx.fillRect(x, 2, bw, hh);
+      kctx.fillStyle = b.flash[q] > 0.15 ? css["--flash"] : css["--accent"];
+      kctx.fillRect(x, 2 + hh * (1 - frac), bw, hh * frac);
+      kctx.fillStyle = css["--muted"]; kctx.fillText(`${q + 1}`, x + bw / 2 - 3, h - 2);
+    }
+  }
+
+  // ------------------------------------------------------------ interaction
+  const tip = document.getElementById("tip");
+  bars.addEventListener("mousemove", e => {
+    if (!barGeom || !barGeom.K) return;
+    const r = bars.getBoundingClientRect(), q = Math.floor((e.clientX - r.left - barGeom.padL) / barGeom.cw);
+    if (q < 0 || q >= NSHOW) { tip.hidden = true; return; }
+    const extra = avgK ? `  mean ${avgK[q].toFixed(3)}` : "";
+    tip.textContent = `q=${q + 1}  K ${barGeom.K[q].toFixed(3)}  reading ${barGeom.R[q].toFixed(3)}${extra}`;
+    tip.style.left = (e.clientX + 12) + "px"; tip.style.top = (e.clientY + 12) + "px"; tip.hidden = false;
+  });
+  bars.addEventListener("mouseleave", () => { tip.hidden = true; });
+  ps.addEventListener("pointerdown", e => {
+    const r = ps.getBoundingClientRect(), mx = e.clientX - r.left, my = e.clientY - r.top;
+    let best = null, bd = 14;
+    for (const b of st.bodies) { const d = Math.hypot(X(b.x) - mx, P(b.p) - my); if (d < bd) { bd = d; best = { kind: "body", ref: b }; } }
+    for (const a of st.pairs) { const d = Math.hypot(X(a.x) - mx, P(a.p) - my); if (d < bd - 4) { bd = d; best = { kind: "pair", ref: a }; } }
+    if (best) { reader = best; autoReader = false; avgK = null; render(); }
+    else { reader = null; autoReader = true; avgK = null; render(); }   // empty click: back to auto
+  });
+  const playBtn = document.getElementById("play");
+  const setPlay = v => { running = v; playBtn.textContent = running ? "Pause" : "Play"; };
+  playBtn.addEventListener("click", () => setPlay(!running));
+  document.getElementById("step").addEventListener("click", () => { setPlay(false); for (let i = 0; i < 5; i++) step(); render(); });
+  document.getElementById("reset").addEventListener("click", () => { reset(); });
+  const sp = document.getElementById("sprime"), sf = document.getElementById("sfull");
+  const setMode = m => { mode = m; sp.setAttribute("aria-pressed", m === "Sprime"); sf.setAttribute("aria-pressed", m === "S"); render(); };
+  sp.addEventListener("click", () => setMode("Sprime")); sf.addEventListener("click", () => setMode("S"));
+  document.getElementById("nu").addEventListener("change", e => { nu = +e.target.value; reset(); });
+  document.getElementById("dark").addEventListener("change", e => { dark = e.target.checked; });
+  document.getElementById("feed").addEventListener("change", e => { feed = e.target.value; });
+  document.getElementById("avg").addEventListener("click", averageFresh);
+  window.addEventListener("resize", () => { layout(); render(); });
+  const mq = matchMedia("(prefers-color-scheme: dark)");
+  (mq.addEventListener ? mq.addEventListener("change", () => { readTokens(); render(); }) : null);
+  new MutationObserver(() => { readTokens(); render(); }).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+
+  // ------------------------------------------------------------ go
+  readTokens(); layout(); reset(); setPlay(running);
+  if (!running) { for (let i = 0; i < 300; i++) step(); render(); }
+  let acc = 0;
+  function frame() {
+    if (running) { for (let i = 0; i < 3; i++) step(); acc++; if (autoReader && acc % 25 === 0) reader = null; render(); }
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>

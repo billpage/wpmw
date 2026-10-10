@@ -250,7 +250,9 @@ class FourD:
 
     # -- one run ----------------------------------------------------------------
     def run(self, E0, t_max, dt, sea_force=True, beta=1.0, rule="none",
-            absorb=True, ref=True, every=1.0):
+            absorb=True, ref=True, every=1.0, motion=None):
+        """``motion``: a ``Collisions4D`` applied to the sea once per step
+        after the events (the amended (S'); Part G of the 1D demo)."""
         xp = self.xp
         E = E0.copy()
         S = xp.full(E0.shape, beta * B4)
@@ -270,7 +272,8 @@ class FourD:
                            dM=self.neg(E) - M0, ntr2=0.5 * n_tr,
                            lam=beta - margin[0],
                            worst=beta - float(S.min()) / B4,
-                           purity=self.purity1(E))
+                           purity=self.purity1(E),
+                           pairs=float(S.sum()) * self.vol)
                 if ref:
                     row["fid"] = float(xp.linalg.norm(E - rE)
                                        / xp.linalg.norm(rE))
@@ -287,6 +290,8 @@ class FourD:
                     S += c
                     E = up - um
                     tot += (x1, x2, x3, float(c.sum()))
+                    if motion is not None:
+                        S = motion.step(S, dt)
                 n0 = self.l1(E)
                 E = self.stream(E, 0.5 * dt)
                 n_tr += self.l1(E) - n0
@@ -303,6 +308,74 @@ class FourD:
                     blocked_frac=tot[2] / max(tot[1] + tot[2], 1e-30),
                     D=S0 - float(S.sum()) * self.vol, dM=self.neg(E) - M0,
                     ntr2=0.5 * n_tr)
+
+
+# ----------------------------------------------------------------------
+class Collisions4D:
+    """Definition (C) of step 24 in four dimensions: Focus/Defocus between
+    aligned pairs at one joint position (x1, x2), along the momentum
+    directions of the three event families (Proposition M1),
+        family 1   v = (q, 0)     rate from V at x1,
+        family 2   v = (0, q)     rate from V at x2,
+        family 3   v = (q, -q)    rate from Wp at x1 - x2,
+    with J_v(n) = r_v (s_n^2 - s_{n-v} s_{n+v}) and
+    ds_n/dt = sum_v (-2 J_v(n) + J_v(n - v) + J_v(n + v)).  Each direction
+    is a one-dimensional lattice of Proposition V10, so pairs and pair
+    momentum are conserved and the collision entropy never increases.
+    kind 'collide-k': every channel, r_v B^2 = scale |K_v| / 2, the family's
+                      kernel at the cell (the 1D kernel rate, density B^2);
+         'collide-u': v = (1, 0) and (0, 1) only, r B^2 = scale.
+    A cell in debt (s < 0, the sea without a floor) holds no pairs to
+    collide: the products use max(s, 0), which changes nothing while s > 0.
+    Heun's method, with substeps for the linear symbol's largest rate."""
+
+    def __init__(self, fd, kind, scale=1.0):
+        xp = fd.xp
+        self.xp, self.kind = xp, kind
+        self.chan = []                      # (shift tuple, rate array)
+        if kind == "collide-k":
+            for j, q in enumerate(fd.Q):
+                q = int(q)
+                r1 = scale * xp.abs(fd.k1[:, j]) / (2.0 * B4)
+                if float(r1.max()) > 1e-14 / B4:
+                    self.chan.append((((2, q),), r1[:, None, None, None]))
+                    self.chan.append((((3, q),), r1[None, :, None, None]))
+                rW = scale * xp.abs(fd.kW[:, :, j]) / (2.0 * B4)
+                if float(rW.max()) > 1e-14 / B4:
+                    self.chan.append((((2, q), (3, -q)),
+                                      rW[:, :, None, None]))
+        elif kind == "collide-u":
+            r = xp.asarray(scale / B4)
+            self.chan = [(((2, 1),), r), (((3, 1),), r)]
+        else:
+            raise ValueError(kind)
+        self.lam = float(sum(16.0 * float(xp.max(r)) * B4
+                             for _, r in self.chan))
+
+    def rhs(self, S):
+        xp = self.xp
+        Sp = xp.maximum(S, 0.0)
+        out = xp.zeros_like(S)
+        for sh, r in self.chan:
+            ax = tuple(a for a, _ in sh)
+            fwd = tuple(k for _, k in sh)
+            bwd = tuple(-k for _, k in sh)
+            # S at n - v and n + v
+            Sm = xp.roll(Sp, fwd, axis=ax)
+            Sq = xp.roll(Sp, bwd, axis=ax)
+            J = r * (Sp * Sp - Sm * Sq)
+            out += -2.0 * J + xp.roll(J, fwd, axis=ax) + xp.roll(J, bwd,
+                                                                 axis=ax)
+        return out
+
+    def step(self, S, h):
+        n = max(1, int(np.ceil(h * self.lam / 0.5)))
+        hs = h / n
+        for _ in range(n):
+            k1 = self.rhs(S)
+            k2 = self.rhs(S + hs * k1)
+            S = S + 0.5 * hs * (k1 + k2)
+        return S
 
 
 # ----------------------------------------------------------------------
@@ -420,6 +493,105 @@ def plot(trace_csv, sch_csv, fig_name="fourd_sea.png"):
           f" Schroedinger by > 5 % at t = {t_res}")
 
 
+def collisions_check(fd, xp):
+    """Collisions alone on a ripple of the sea: pairs and pair momentum
+    conserved, collision entropy decreasing (Proposition V10 in 4D)."""
+    P = np.asarray(fd.p)
+    shape = (fd.n_x, fd.n_x, fd.n_p, fd.n_p)
+    rng = np.random.default_rng(3)
+    S = np.full(shape, B4)
+    core = (np.abs(P) < 1.5)                    # away from the momentum ends
+    bump = rng.uniform(-0.5, 0.5, shape) * core[None, None, :, None] \
+        * core[None, None, None, :]
+    S = xp.asarray(S * (1.0 + bump))
+    p1 = xp.asarray(np.broadcast_to(P[None, None, :, None], shape))
+    p2 = xp.asarray(np.broadcast_to(P[None, None, None, :], shape))
+
+    def stats(S):
+        x = S / B4
+        return (float(S.sum()), float((S * p1).sum()), float((S * p2).sum()),
+                float((x * xp.log(x) - x + 1.0).sum()))
+    for kind in ("collide-k", "collide-u"):
+        mo = Collisions4D(fd, kind)
+        if kind == "collide-k":
+            # the momentum grid is periodic: a long jump from the ripple
+            # would wrap and spoil the momentum sum, so the check keeps the
+            # channels with q <= 2 (pairs and entropy hold for all)
+            full = len(mo.chan)
+            mo.chan = [c for c in mo.chan if max(abs(k) for _, k in c[0])
+                       <= 2]
+            print(f"  collide-k check: {len(mo.chan)} of {full} channels"
+                  " (q <= 2)")
+        S1 = S.copy()
+        s0 = stats(S1)
+        out = [s0]
+        for _ in range(5):
+            S1 = mo.step(S1, 0.02)
+            out.append(stats(S1))
+        o = np.array(out)
+        print(f"  {kind}: {len(mo.chan)} channels; after 5 steps"
+              f" d(pairs)/pairs {(o[-1, 0] - o[0, 0]) / o[0, 0]:+.1e},"
+              f" d(sum p1 S)/pairs {(o[-1, 1] - o[0, 1]) / o[0, 0]:+.1e},"
+              f" d(sum p2 S)/pairs {(o[-1, 2] - o[0, 2]) / o[0, 0]:+.1e},"
+              f" entropy {o[0, 3]:.4g} -> {o[-1, 3]:.4g}, decreasing at every"
+              f" step: {bool(np.all(np.diff(o[:, 3]) < 0))}", flush=True)
+
+
+def collisions_study(fd, E0, a, xp):
+    """lambda*(t) of the two coupled bodies under the amended (S'), for
+    each mode and sea motion; E checked against the run without collisions
+    (Proposition V8)."""
+    collisions_check(fd, xp)
+    modes = {"Sabs": (True, True), "Spabs": (False, True),
+             "Spemi": (False, False)}
+    rows, trows = [], []
+
+    def dump():
+        with open(output_path(f"fourd_sea_collisions{a.tag}.csv"), "w",
+                  newline="") as fh:
+            w = csv.writer(fh)
+            w.writerow(["mode", "motion", "lambda_star", "f", "events",
+                        "D", "dMneg", "max_dE_vs_none", "seconds"])
+            w.writerows(rows)
+        with open(output_path(f"fourd_sea_collisions_trace{a.tag}.csv"), "w",
+                  newline="") as fh:
+            w = csv.writer(fh)
+            w.writerow(["mode", "motion", "t", "lambda_star", "worst", "D",
+                        "pairs", "purity1"])
+            w.writerows(trows)
+
+    for name in a.modes.split(","):
+        force, absorb = modes[name]
+        E_none = None
+        for m in a.motions:
+            kind, _, sc = m.partition(":")
+            mo = None if kind == "none" else Collisions4D(fd, kind,
+                                                         float(sc or 1.0))
+            t1 = time.time()
+            print(f"\n  {name}, sea motion {m}:"
+                  + (f" {len(mo.chan)} channels, {mo.lam:.1f} max rate"
+                     if mo else ""), flush=True)
+            o = fd.run(E0, a.t_max, a.dt, sea_force=force, absorb=absorb,
+                       ref=False, motion=mo)
+            if kind == "none":
+                E_none = o["E"]
+            dE = (float(xp.abs(o["E"] - E_none).max()) if E_none is not None
+                  else float("nan"))
+            wall = time.time() - t1
+            print(f"    lambda* = {o['lam']:.4f}, f = {o['f']:.4f},"
+                  f" D = {o['D']:.5f}, max|E - E(none)| = {dE:.1e}"
+                  f"  ({wall:.0f} s)")
+            print("    t, lambda*(t), worst cell, D, sea pairs:")
+            for r in o["trace"]:
+                print(f"      {r['t']:5.1f} {r['lam']:7.4f} {r['worst']:7.4f}"
+                      f" {r['D']:8.5f} {r['pairs']:10.5f}", flush=True)
+                trows.append([name, m, r["t"], r["lam"], r["worst"], r["D"],
+                              r["pairs"], r["purity"]])
+            rows.append([name, m, o["lam"], o["f"], o["n_ev"], o["D"],
+                         o["dM"], dE, wall])
+            dump()
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawTextHelpFormatter)
@@ -434,6 +606,10 @@ def main():
                     help="floor depths run for every mode, besides the"
                          " threshold check at 0.98 and 1.02 lambda*")
     ap.add_argument("--tag", default="")
+    ap.add_argument("--motions", nargs="+", metavar="KIND[:SCALE]",
+                    help="amended (S'): run each mode under these sea"
+                         " motions (none, collide-k, collide-u) instead of"
+                         " the floor study; writes fourd_sea_collisions*.csv")
     ap.add_argument("--plot", nargs=2, metavar=("TRACE_CSV", "SCHR_CSV"),
                     help="only draw the figure from a finished run's CSVs")
     a = ap.parse_args()
@@ -464,6 +640,10 @@ def main():
           f" max W0 / B^2 = {float(E0.max()) / B4:.4f},"
           f" purity {fd.purity1(E0):.6f}", flush=True)
 
+    if a.motions:
+        collisions_study(fd, E0, a, xp)
+        print(f"\nDone in {time.time() - t0:.0f} s.")
+        return
     sch = schroedinger(fd, xa, xb, sig, a.t_max, 0.005)
     print("\n  Schroedinger (exact on the x grid):  t, <x1>, <x2>, cov,"
           " purity1")

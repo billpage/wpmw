@@ -97,6 +97,7 @@ class Geometry:
         cum = np.cumsum(np.abs(kq), axis=1)
         self.CUM = cum / np.where(cum[:, -1:] > 0, cum[:, -1:], 1.0)
         self.SGN = np.sign(kq)
+        self.KABS = np.abs(kq)                       # |K_q(x)|, q = 1 ...
 
     def ix(self, x):
         return np.clip(np.round((x - self.r0) / self.dr).astype(np.int64),
@@ -119,11 +120,154 @@ class Geometry:
 
 
 # ----------------------------------------------------------------------
+# Pair collisions between point pairs (step 24 Definition (C), V-SP10)
+# ----------------------------------------------------------------------
+def window_pairs(g, xs):
+    """All unordered pairs (i, j) of sea pairs with |x_i - x_j| < y_max on
+    the periodic box: one aperture's reach in position."""
+    n = xs.size
+    if n < 2:
+        e = np.empty(0, np.int64)
+        return e, e
+    order = np.argsort(xs)
+    xo = xs[order]
+    ext = np.concatenate([xo, xo + g.L])
+    hi = np.searchsorted(ext, xo + g.YMAX, side="left")
+    hi = np.minimum(hi, np.arange(n) + n)             # never pair with self
+    cnt = hi - np.arange(n) - 1
+    if cnt.sum() == 0:
+        e = np.empty(0, np.int64)
+        return e, e
+    i = np.repeat(np.arange(n), cnt)
+    start = np.repeat(np.cumsum(cnt) - cnt, cnt)
+    j = (np.arange(i.size) - start) + i + 1
+    return order[i], order[j % n]
+
+
+def collide(g, xs, ps, dt, mode, scale, rng):
+    """Definition (C) between point pairs over one step, in place on ps.
+
+    Two pairs within one aperture's reach (|dx| < y_max) collide.  Rates are
+    chosen so that mass action, J = r_q (s_n^2 - s_{n-q} s_{n+q}), holds in
+    mean: an aperture's position window at density s on a row of width dp
+    holds s / B partners (Q9(c)), so
+        defocus  (both on row n -> rows n - q, n + q): 2 r_q B per unordered
+                 pair, either member going down with probability 1/2;
+        focus    (rows n - q and n + q -> both on n):    r_q B per pair.
+    kernel : r_q B = scale |K_q(x_mid)| / 2, every channel;
+    uniform: r B = scale, neighbouring rows only (q = 1).
+    Each transition and its reverse have equal rates, so a Poisson sea is
+    exactly invariant (detailed balance with respect to the Poisson point
+    process).  Momentum moves by +-q dp: pair number and pair momentum are
+    conserved (up to the periodic momentum box).  The step is a tau-leap,
+    with substeps so that no candidate fires with probability above 0.1,
+    and a pair moves at most once per substep.  Returns the number of
+    defocus and focus events."""
+    nd = nf = 0
+    if xs.size < 2:
+        return nd, nf
+    nq = g.KABS.shape[1]
+    I, J = window_pairs(g, xs)
+    if I.size == 0:
+        return nd, nf
+    rmax = (scale * g.GAM.max() if mode == "kernel" else 2.0 * scale)
+    nsub = max(1, int(np.ceil(rmax * dt / 0.1)))
+    h = dt / nsub
+    if mode == "kernel":                  # positions are fixed in a step
+        ir_all = g.ix(g.wrap_x(xs[I] + 0.5 * g.dx(xs[J], xs[I])))
+    I0, J0 = I, J
+    for _ in range(nsub):
+        rows = np.floor(ps / g.dp).astype(np.int64) % g.n_p
+        dr = (rows[J0] - rows[I0] + g.n_p // 2) % g.n_p - g.n_p // 2
+        # only same-row pairs and pairs an even number of rows apart can
+        # collide; drop the rest before any floating-point work
+        keep = (dr % 2 == 0) if mode == "kernel" else (np.abs(dr) % 2 == 0) & (np.abs(dr) <= 2)
+        I, J, dr = I0[keep], J0[keep], dr[keep]
+        if mode == "kernel":
+            ir = ir_all[keep]
+            dmask = dr == 0
+            fmask = (dr != 0) & (dr % 2 == 0) & (np.abs(dr) // 2 <= nq)
+            rate = np.zeros(I.size)
+            rate[dmask] = scale * g.GAM[ir[dmask]]
+            qf = np.abs(dr[fmask]) // 2
+            rate[fmask] = 0.5 * scale * g.KABS[ir[fmask], qf - 1]
+        else:
+            dmask = dr == 0
+            fmask = np.abs(dr) == 2
+            rate = np.where(dmask, 2.0 * scale, np.where(fmask, scale, 0.0))
+        fire = np.flatnonzero(rng.random(I.size) < -np.expm1(-rate * h))
+        if fire.size == 0:
+            continue
+        fire = fire[rng.permutation(fire.size)]
+        used = np.zeros(xs.size, bool)
+        for k in fire:
+            a, b = I[k], J[k]
+            if used[a] or used[b]:
+                continue
+            used[a] = used[b] = True
+            if dr[k] == 0:
+                if mode == "kernel":
+                    ir_ = ir[k]
+                    q = int(np.searchsorted(g.CUM[ir_], rng.random())) + 1
+                    q = min(q, nq)
+                else:
+                    q = 1
+                xi = q * g.dp
+                if rng.random() < 0.5:
+                    a, b = b, a
+                ps[a] = g.wrap_p(ps[a] - xi)
+                ps[b] = g.wrap_p(ps[b] + xi)
+                nd += 1
+            else:
+                q = abs(int(dr[k])) // 2
+                xi = q * g.dp
+                lo, up = (a, b) if dr[k] > 0 else (b, a)
+                ps[lo] = g.wrap_p(ps[lo] + xi)
+                ps[up] = g.wrap_p(ps[up] - xi)
+                nf += 1
+    return nd, nf
+
+
+def poisson_check(case, beta, t_max, dt, mode, scale, seeds, probes=200):
+    """Collisions alone keep a Poisson sea Poisson: the occupancy of random
+    apertures (|dx| < y_max, |dp| < dp/2) after t_max against Poisson of
+    the same mean, and the start's.  No bodies, no events."""
+    g = Geometry(case)
+    occ0, occ1 = [], []
+    nev = 0
+    for sd_ in seeds:
+        rng = np.random.default_rng((sd_, 31337))
+        n = rng.poisson(beta * B * g.L * g.PW)
+        xs = g.r0 - 0.5 * g.dr + g.L * rng.random(n)
+        ps = -0.5 * g.PW + g.PW * rng.random(n)
+        p0 = ps.copy()
+
+        def probe(ps_):
+            xc = rng.uniform(-8.0, 8.0, probes)    # where the kernel acts
+            pc = rng.uniform(-0.5 * g.PW, 0.5 * g.PW, probes)
+            return [int(((np.abs(g.dx(xs, a)) < g.YMAX)
+                         & (np.abs(g.dpw(ps_, b)) < 0.5 * g.dp)).sum())
+                    for a, b in zip(xc, pc)]
+        occ0 += probe(p0)
+        for _ in range(int(round(t_max / dt))):
+            d, f = collide(g, xs, ps, dt, mode, scale, rng)
+            nev += d + f
+        occ1 += probe(ps)
+    o0, o1 = np.array(occ0), np.array(occ1)
+    return dict(mean0=o0.mean(), p00=(o0 == 0).mean(), mean1=o1.mean(),
+                p01=(o1 == 0).mean(), var1=o1.var(), events=nev / len(seeds))
+
+
+# ----------------------------------------------------------------------
 def run_world(g, seed, t_max, dt, beta, floor, sea_force, nu=1, gc=True,
-              case="eckart"):
-    """One world.  Returns a dict of linear observables and counts."""
+              case="eckart", coll=None):
+    """One world.  Returns a dict of linear observables and counts.
+    ``coll`` = (mode, scale) turns on pair collisions (Definition (C)) in
+    the sea, with a random stream of their own, so the bodies and the
+    sea's initial configuration are those of the world without them."""
     rng = np.random.default_rng(seed)                 # the bodies' stream
     rng_s = np.random.default_rng((seed, 7919, int(round(1000 * beta))))
+    rng_c = np.random.default_rng((seed, 104729, int(round(1000 * beta))))
     # initial packet: nu samples of W0, all positons (W0 > 0)
     if case == "eckart":
         x0, p0, sx = 0.0, 1.0, 1.0
@@ -137,7 +281,8 @@ def run_world(g, seed, t_max, dt, beta, floor, sea_force, nu=1, gc=True,
     n_sea = rng_s.poisson(nu * beta * B * g.L * g.PW) if floor else 0
     xs = g.r0 - 0.5 * g.dr + g.L * rng_s.random(n_sea)
     ps = -0.5 * g.PW + g.PW * rng_s.random(n_sea)
-    cnt = dict(abs=0, emi=0, blocked=0, debt=0, gc=0, nmax=nu)
+    cnt = dict(abs=0, emi=0, blocked=0, debt=0, gc=0, nmax=nu, coll=0,
+               col=0.0)
     occ = np.zeros(NOCC)              # pairs found in the aperture, per attempt
 
     def stream(x, p, h, feel=True):
@@ -194,6 +339,13 @@ def run_world(g, seed, t_max, dt, beta, floor, sea_force, nu=1, gc=True,
                     else:
                         ok = np.empty(0, np.int64)
                     occ[min(ok.size, NOCC - 1)] += 1
+                    # the column: pairs within reach in x on every row,
+                    # per aperture (PW / dp apertures per column).  Pair
+                    # collisions move pairs between rows at fixed x, so
+                    # they can bring an aperture up to this, never above
+                    if n_sea:
+                        cnt["col"] += float((np.abs(g.dx(xs, x[i]))
+                                             < g.YMAX).sum()) / g.n_p
                     if ok.size == 0:
                         cnt["blocked"] += 1
                         continue
@@ -242,6 +394,10 @@ def run_world(g, seed, t_max, dt, beta, floor, sea_force, nu=1, gc=True,
             if not keep.all():
                 x, p, s = x[keep], p[keep], s[keep]
         cnt["nmax"] = max(cnt["nmax"], x.size)
+        # ---- the sea's own motion: pair collisions (amended (S'))
+        if coll is not None and n_sea > 1:
+            d_, f_ = collide(g, xs, ps, dt, coll[0], coll[1], rng_c)
+            cnt["coll"] += d_ + f_
         x, p = stream(x, p, 0.5 * dt)
         if n_sea:
             xs, ps = stream(xs, ps, 0.5 * dt, feel=sea_force)
@@ -254,17 +410,20 @@ def run_world(g, seed, t_max, dt, beta, floor, sea_force, nu=1, gc=True,
 
 # ----------------------------------------------------------------------
 OBS = ("T", "P", "H", "N")
-CNT = ("abs", "emi", "blocked", "debt", "gc", "nmax")
+CNT = ("abs", "emi", "blocked", "debt", "gc", "nmax", "coll", "col")
 
 
 def chunk(args):
-    """A block of seeds; each seed runs the unfloored world and every beta.
-    Returns sums and sums of squares, so nothing per seed is shipped."""
-    case, motion, betas, seeds, t_max, dt, nu, gc = args
+    """A block of seeds; each seed runs the unfloored world and every
+    setting (beta, collisions).  Returns sums and sums of squares, so
+    nothing per seed is shipped.  ``blk`` holds per-world sums of blocked
+    emissions b and attempts a (b, a, b^2, a^2, ab) for the ratio's
+    standard error."""
+    case, motion, settings, seeds, t_max, dt, nu, gc = args
     g = Geometry(case)
     force = motion == "S"
-    nb = len(betas)
-    acc = dict(n=0,
+    nb = len(settings)
+    acc = dict(n=0, blk=np.zeros((nb, 5)),
                ref=np.zeros((len(OBS), 2)),
                val=np.zeros((nb, len(OBS), 2)),
                dif=np.zeros((nb, len(OBS), 2)),
@@ -280,8 +439,11 @@ def chunk(args):
         acc["ref"][:, 1] += r0 ** 2
         acc["cnt"][0] += [o0[k] for k in CNT]
         acc["href"] += o0["hist"]
-        for j, b in enumerate(betas):
-            o = run_world(g, sd_, t_max, dt, b, True, force, nu, gc, case)
+        for j, (b, coll) in enumerate(settings):
+            o = run_world(g, sd_, t_max, dt, b, True, force, nu, gc, case,
+                          coll)
+            bb, aa = o["blocked"], o["blocked"] + o["emi"]
+            acc["blk"][j] += (bb, aa, bb * bb, aa * aa, bb * aa)
             r = np.array([o[k] for k in OBS])
             acc["val"][j, :, 0] += r
             acc["val"][j, :, 1] += r ** 2
@@ -423,20 +585,54 @@ def main():
     ap.add_argument("--no-gc", action="store_true")
     ap.add_argument("--workers", type=int, default=0, help="0: one per CPU")
     ap.add_argument("--chunk", type=int, default=25)
+    ap.add_argument("--collide", nargs="+", default=["none"],
+                    metavar="MODE[:SCALE]",
+                    help="sea motions run for every beta, from the same"
+                         " seeds: none (V6), kernel[:x] (Definition (C),"
+                         " r_q B = x |K_q| / 2), uniform[:rB] (neighbouring"
+                         " rows)")
+    ap.add_argument("--check-poisson", action="store_true",
+                    help="only check that collisions keep a Poisson sea"
+                         " Poisson (no bodies)")
     ap.add_argument("--tag", default="")
     a = ap.parse_args()
     if a.summarise:
         summarise(a.summarise)
         return
+    colls = []
+    for c in a.collide:
+        mode, _, sc = c.partition(":")
+        colls.append(None if mode == "none" else (mode, float(sc or 1.0)))
+    if a.check_poisson:
+        for coll in colls:
+            if coll is None:
+                continue
+            for b in a.betas:
+                t0 = time.time()
+                r = poisson_check(a.case, b, a.t_max or 8.0, a.dt, *coll,
+                                  range(a.seed0, a.seed0 + a.seeds))
+                print(f"  {coll[0]} x{coll[1]:g}  beta {b:g}:  start mean"
+                      f" {r['mean0']:.3f} P(0) {r['p00']:.4f};  after"
+                      f" mean {r['mean1']:.3f} var {r['var1']:.3f}"
+                      f" P(0) {r['p01']:.4f}  (Poisson"
+                      f" {np.exp(-r['mean1']):.4f});  collisions per"
+                      f" world {r['events']:.0f}  ({time.time() - t0:.0f} s)",
+                      flush=True)
+        return
+    settings = [(b, c) for c in colls for b in a.betas]
+
+    def lab(c):
+        return "none" if c is None else f"{c[0]}:{c[1]:g}"
     t_max = a.t_max or (8.0 if a.case == "eckart" else 12.0)
     motion = "S" if a.sea_force == "S" else "Sp"
     seeds = list(range(a.seed0, a.seed0 + a.seeds))
     jobs = [(a.case, a.sea_force.rstrip("'") if a.sea_force == "S" else "Sp",
-             a.betas, seeds[i:i + a.chunk], t_max, a.dt, a.nu, not a.no_gc)
+             settings, seeds[i:i + a.chunk], t_max, a.dt, a.nu, not a.no_gc)
             for i in range(0, len(seeds), a.chunk)]
     workers = a.workers or os.cpu_count() or 1
     print(f"integer sea: case={a.case} motion=({a.sea_force}) nu={a.nu}"
-          f" betas={a.betas} seeds={a.seeds} T={t_max} dt={a.dt}"
+          f" betas={a.betas} collide={[lab(c) for c in colls]}"
+          f" seeds={a.seeds} T={t_max} dt={a.dt}"
           f" gc={not a.no_gc} workers={workers}", flush=True)
     t0 = time.time()
     acc = None
@@ -447,9 +643,12 @@ def main():
             done += part["n"]
             n = acc["n"]
             dT, eT = mean_se(acc["dif"][:, 0, 0], acc["dif"][:, 0, 1], n)
-            print(f"  {done:6d} seeds  {time.time() - t0:7.0f} s   dT(beta) = "
-                  + "  ".join(f"{b:g}: {m:+.4f}±{e:.4f}"
-                              for b, m, e in zip(a.betas, dT, eT)),
+            blk = acc["blk"][:, 0] / np.maximum(acc["blk"][:, 1], 1)
+            print(f"  {done:6d} seeds  {time.time() - t0:7.0f} s   "
+                  + "  ".join(f"{lab(c)} b{b:g}: blk {k:.3f}"
+                              f" dT {m:+.4f}±{e:.4f}"
+                              for (b, c), k, m, e in zip(settings, blk, dT,
+                                                         eT)),
                   flush=True)
     n = acc["n"]
     ref_m, ref_e = mean_se(acc["ref"][:, 0], acc["ref"][:, 1], n)
@@ -461,15 +660,19 @@ def main():
                                        for k, v in zip(CNT, c0)))
     href = acc["href"] / n
     hn = np.linalg.norm(href)
-    print(f"\n  {'beta':>6} {'blocked':>9} {'e^-b':>8} {'<k>':>7}"
-          f" {'P(0)/Pois':>9} {'dT':>16} {'d<p>':>16}"
-          f" {'dH':>16} {'eps(E)':>16}")
-    for j, b in enumerate(a.betas):
+    print(f"\n  {'collide':>10} {'beta':>5} {'blocked':>16} {'e^-b':>7}"
+          f" {'<k>':>6} {'P(0)/Pois':>9} {'dT':>16} {'d<p>':>16}"
+          f" {'dH':>16} {'eps(E)':>16} {'coll/w':>7}")
+    for j, (b, coll) in enumerate(settings):
         dm, de = mean_se(acc["dif"][j, :, 0], acc["dif"][j, :, 1], n)
         vm, ve = mean_se(acc["val"][j, :, 0], acc["val"][j, :, 1], n)
         c = acc["cnt"][j + 1] / n
-        att = c[CNT.index("emi")] + c[CNT.index("blocked")]
-        blk = c[CNT.index("blocked")] / att if att else 0.0
+        sb, sa, sbb, saa, sab = acc["blk"][j] / n
+        blk = sb / sa if sa else 0.0
+        # delta-method standard error of a ratio of means
+        vr = (sbb - 2 * blk * sab + blk * blk * saa
+              - (sb - blk * sa) ** 2) / max(sa * sa, 1e-30)
+        blk_se = float(np.sqrt(max(vr, 0.0) / max(n - 1, 1)))
         hd = acc["hval"][j] / n - href
         hd_se = np.sqrt(np.maximum(acc["hdif2"][j] / n - hd ** 2, 0.0)
                         / max(n - 1, 1))
@@ -480,26 +683,28 @@ def main():
         kmean = (oc * kk).sum() / max(oc.sum(), 1)
         p0 = oc[0] / max(oc.sum(), 1)
         rat = p0 / np.exp(-kmean) if kmean < 50 else float("nan")
-        print(f"  {b:6g} {blk:9.4f} {np.exp(-b):8.4f} {kmean:7.3f}"
+        print(f"  {lab(coll):>10} {b:5g} {blk:8.4f}±{blk_se:.4f}"
+              f" {np.exp(-b):7.4f} {kmean:6.3f}"
               f" {rat:9.3f}"
               f" {dm[0]:+8.4f}±{de[0]:.4f} {dm[1]:+8.4f}±{de[1]:.4f}"
-              f" {dm[2]:+8.4f}±{de[2]:.4f} {eps:8.4f}±{eps_se:.4f}")
+              f" {dm[2]:+8.4f}±{de[2]:.4f} {eps:8.4f}±{eps_se:.4f}"
+              f" {c[CNT.index('coll')]:7.0f}")
         rows.append([a.case, a.sea_force, a.nu, b, n, blk, np.exp(-b),
                      kmean, p0,
                      *dm, *de, *vm, *ve, eps, eps_se,
-                     *c])
+                     *c, lab(coll), blk_se])
     hdr = (["case", "motion", "nu", "beta", "worlds", "blocked_share",
             "exp_minus_beta", "aperture_mean", "aperture_p0"]
            + [f"d{k}" for k in OBS] + [f"d{k}_se" for k in OBS]
            + list(OBS) + [f"{k}_se" for k in OBS] + ["eps_E", "eps_E_se"]
-           + [f"per_world_{k}" for k in CNT])
+           + [f"per_world_{k}" for k in CNT] + ["collide", "blocked_se"])
     name = f"integer_sea_{a.case}_{motion}_nu{a.nu}{a.tag}"
     with open(output_path(name + ".csv"), "w", newline="") as fh:
         w = csv.writer(fh)
         w.writerow(hdr)
         w.writerow([a.case, a.sea_force, a.nu, "inf", n, 0.0, 0.0, "", ""]
                    + [0.0] * (2 * len(OBS)) + list(ref_m) + list(ref_e)
-                   + [0.0, 0.0] + list(c0))
+                   + [0.0, 0.0] + list(c0) + ["", ""])
         w.writerows(rows)
     np.savez(output_path(name + ".npz"), href=href, occ=acc["occ"],
              hval=acc["hval"] / n, betas=np.array(a.betas), xb=XB, pb=PB,

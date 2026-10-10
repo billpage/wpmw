@@ -65,6 +65,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import os
 import time
 
 import numpy as np
@@ -719,6 +720,10 @@ class SeaMotion:
             self.lam = float(sum(16.0 * r.max() * B for _, r in self.chan))
 
     def rhs(self, S):
+        # a cell in debt (S < 0, the sea without a floor) holds no pairs to
+        # collide; unguarded, S^2 would keep defocusing it and the hole
+        # would deepen without limit.  Changes nothing while S > 0.
+        S = np.maximum(S, 0.0)
         out = np.zeros_like(S)
         for q, r in self.chan:
             J = r * (S * S - np.roll(S, q, axis=1) * np.roll(S, -q, axis=1))
@@ -732,6 +737,11 @@ class SeaMotion:
             return np.real(np.fft.ifft(np.exp(h * self.g_sym)
                                        * np.fft.fft(S, axis=1), axis=1))
         n = max(1, int(np.ceil(h * self.lam / 0.5)))
+        # the rates grow with S: where the sea is far above B, keep Heun's
+        # step inside its stability bound (h lambda <= 2) with a margin of
+        # two.  Inactive below about 2.8 B at the default settings, so runs
+        # that never reach it are unchanged bit for bit.
+        n = max(n, int(np.ceil(h * self.lam * float(S.max()) / B)))
         hs = h / n
         for _ in range(n):
             k1 = self.rhs(S)
@@ -1066,6 +1076,73 @@ def fig_collisions():
 
 
 # ----------------------------------------------------------------------
+# H.  The reach in long runs, with collisions (third addendum, V-SP9)
+# ----------------------------------------------------------------------
+H_GRIDS = {"coarse": (128, 0.125), "fine": (256, 0.0625)}
+H_CASES = {"Eckart": (eckart, summit_packet), "PT well": (well, well_packet)}
+
+
+def h_job(job):
+    """One long run of Part H: lambda*(t) to T with the given sea motion.
+    Returns the trace rows and the run's wall time."""
+    case, real, grid, yh_pi, dt, kind, scale, T = job
+    import time as _t
+    t0 = _t.time()
+    n_p, dpp = H_GRIDS[grid]
+    Vf, prep = H_CASES[case]
+    run = SeaLedger(Vf(), n_p=n_p, dp=dpp, y_h=yh_pi * np.pi)
+    e0 = prep(run)
+    mo = SeaMotion(run, kind, scale)
+    _, tr = run_motion(run, e0, T, dt, mo, False, real == "abs")
+    g = float(run.gamma_tot.max())
+    rows = [(case, real, grid, dpp, yh_pi, dt, kind, scale, g, *r)
+            for r in tr]
+    return rows, _t.time() - t0
+
+
+def part_h(q, t_long=96.0, grid="coarse", reaches=(1, 2, 4),
+           cases=("Eckart", "PT well"), reals=("abs", "emi"),
+           motions=("none:1", "collide-k:1"), dt=0.02, workers=0, tag=""):
+    """lambda*(t) over long runs against the reach (y_h in units of pi,
+    a = 1 for Eckart, absolute for the well), without and with collisions.
+    Jobs run in parallel, one per core; the CSV is rewritten as each one
+    finishes, so a kernel stopped by its time limit keeps what it ran."""
+    import multiprocessing as mp
+    banner("H  The reach in long runs, with collisions (V-SP9)")
+    T = 0.5 * t_long if q else t_long
+    jobs = []
+    for case in cases:
+        for real in reals:
+            for yh in reaches:
+                for m in motions:
+                    kind, _, sc = m.partition(":")
+                    jobs.append((case, real, grid, float(yh), dt, kind,
+                                 float(sc or 1.0), T))
+    # longest first: finer reach and collisions cost most
+    jobs.sort(key=lambda j: (-j[3], j[5] == "none"))
+    workers = workers or os.cpu_count() or 1
+    print(f"  grid {grid} {H_GRIDS[grid]}, dt {dt}, T {T}, {len(jobs)} runs"
+          f" on {workers} workers")
+    hdr = ["case", "realisation", "grid", "dp", "y_h_over_pi", "dt", "kind",
+           "scale", "gamma_tot_max", "t", "lambda_star", "worst", "l2dev",
+           "debt", "Phi", "Hc", "smin"]
+    rows = []
+    marks = [8.0, 16.0, 32.0, 48.0, 64.0, 96.0]
+    with mp.Pool(workers) as pool:
+        for out, wall in pool.imap_unordered(h_job, jobs):
+            rows += out
+            r0 = out[0]
+            tr = np.array([o[9:] for o in out], dtype=float)
+            vals = [tr[np.argmin(np.abs(tr[:, 0] - t)), 1] for t in marks
+                    if t <= T + 1e-9]
+            print(f"  {r0[0]:>7} {r0[1]} y_h={r0[4]:g}pi dp={r0[3]:g}"
+                  f" dt={r0[5]:g} {r0[6]:>9} x{r0[7]:g} Gmax={r0[8]:6.3f}"
+                  f"  lambda* " + " ".join(f"{v:6.3f}" for v in vals)
+                  + f"  dev {tr[-1, 3]:6.3f}  ({wall:.0f} s)", flush=True)
+            write_csv(f"sea_collisions_reachlong_{grid}{tag}.csv", hdr, rows)
+
+
+# ----------------------------------------------------------------------
 # R.  The transport's share of dM- against resolution (not in the default)
 # ----------------------------------------------------------------------
 def part_r(q):
@@ -1266,6 +1343,20 @@ def main():
                     help="Part G sub-parts: I exact and invariants, M main"
                          " comparison, S rate scan, R other cases, X reach"
                          " (its long runs use --t-long)")
+    ap.add_argument("--h-grid", choices=tuple(H_GRIDS), default="coarse",
+                    help="Part H: momentum grid, coarse (dp 0.125, reach to"
+                         " 4 pi) or fine (dp 0.0625, to 8 pi)")
+    ap.add_argument("--h-reach", type=float, nargs="+", default=[1, 2, 4],
+                    help="Part H: window cuts y_h, in units of pi")
+    ap.add_argument("--h-cases", default="Eckart,PT well")
+    ap.add_argument("--h-real", default="abs,emi")
+    ap.add_argument("--h-motions", nargs="+",
+                    default=["none:1", "collide-k:1"],
+                    help="Part H: sea motions KIND:SCALE (SeaMotion kinds)")
+    ap.add_argument("--h-dt", type=float, default=0.02)
+    ap.add_argument("--workers", type=int, default=0,
+                    help="Part H: processes (0: one per CPU)")
+    ap.add_argument("--tag", default="", help="Part H: CSV name suffix")
     args = ap.parse_args()
     t0 = time.time()
     if "A" in args.parts:
@@ -1282,6 +1373,10 @@ def main():
         part_f(args.quick)
     if "G" in args.parts:
         part_g(args.quick, args.t_long, args.g_subs)
+    if "H" in args.parts:
+        part_h(args.quick, args.t_long, args.h_grid, args.h_reach,
+               args.h_cases.split(","), args.h_real.split(","),
+               args.h_motions, args.h_dt, args.workers, args.tag)
     if "R" in args.parts:
         part_r(args.quick)
     fig_floor()                 # from whatever CSVs exist so far
