@@ -80,9 +80,11 @@ wave,
 \frac{d}{dt}\Big[\hbar\theta - \hbar\varphi_p\big(x(t), t\big)\Big] \;=\; -V\big(x(t)\big),
 ```
 
-so a pair that crosses the potential comes out shifted by the straight-line
-(Glauber) eikonal $`-\hbar^{-1}\int V\,dt`$ and otherwise stays on its row's
-wave. In the interactive page this offset is the hue of each sea pair: a pair
+so a pair that crosses the potential comes out shifted by the *eikonal*, the
+phase a wave gains from a potential along its path, and otherwise stays on its
+row's wave. Here it is the straight-line (Glauber) eikonal,
+$`-\hbar^{-1}\int V\,dt`$, and it is exact, because under (S′) the pair's path
+does not bend ([glossary](../GLOSSARY.md#eikonal)). In the interactive page this offset is the hue of each sea pair: a pair
 changes hue while it crosses the barrier and keeps the new hue afterwards.
 
 **(b) Two pairs on one row keep their separation, and their clocks drift

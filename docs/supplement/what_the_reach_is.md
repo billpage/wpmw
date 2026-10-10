@@ -177,7 +177,7 @@ linear in $`V_q`$.
 A sea pair is invisible, not still. A self-conjugate carrier is the reverse:
 fully visible in the density, and flux-free. Collapsing the two into one idea
 is what made the ladder and the ledger notes look inconsistent, and it is the
-*pair* collision of §7 doing its work.
+*pair* collision (see [pair](../GLOSSARY.md#pair)) doing its work.
 
 **One caution, and it is the open one.** The two $`\mu`$'s belong to two
 formulations that are exactly equivalent as generators — see
@@ -487,26 +487,22 @@ What can be cleared up is the rest of it, and the cleaned-up statement is:
 
 ## 7. Words that mislead
 
-A glossary of the terms most likely to import the wrong picture. The right
-column is what the term actually denotes here.
-
-| term | what it suggests | what it is |
-|---|---|---|
-| **particle** | a body with a position and a velocity | in the compound *world-particle*, a signed sample of $`W`$. Bare "particle" in a single-body note almost always means *world*, and where it means *leg* it is doubly wrong |
-| **pair** | two bodies | **two things in this project.** A *ket–bra pair* is a relation between two worlds about one body. A *sea pair* is two world-particles, a positon and a negaton, bound together. Different in kind; R-SP6 below |
-| **separation** $`2y`$ | distance between two objects | a path difference between two branches. Nothing is at both ends at once |
-| **arm**, **leg** | a limb of something | one end of a ket–bra pair: a place and a clock. *Leg* is the project's term and the better one |
-| **reach** | how far something can see or act | the **period** of the leg separation. Not an aperture, not a distance a world "consults" over — that wording is retracted by E1 and survives in Definition (R) only with a superseding note |
-| **coherence horizon** | a distance past which coherence is lost | a distance past which coherences become *indistinguishable*. Nothing is lost; §2 |
-| **reach ceiling** | one number | **two numbers**, and the tighter one is not a bound on the theory; §5 |
-| **self-conjugate particle** | an ordinary classical particle | a carrier with coincident legs. It holds the full probability density and no current — *still*, which is not the same as *dark*; §1.1, §1.3 |
-| **carrier** | a thing that conveys cargo | a matrix element $`\rho_{nm}`$. It conveys nothing; the word names an index pair |
-| **momentum** | something a body carries | the misalignment $`\bar p = \hbar\mu/a`$ of a pair of legs. Nothing carries it |
-| **mu** | one quantity | **two quantities.** Ladder $`\mu = \arg\rho(X,X')`$ winds at $`p/\hbar`$; pair $`\mu = \Phi_a - \Phi_b`$ winds at $`\Delta p/\hbar`$. §1.2 |
-| **dark** | absent, or destroyed | present, streaming, and contributing exactly zero — by cancellation in $`E`$, or by interference at $`\mu \equiv 0`$. A dark pair has a definite momentum and a Newtonian worldline; §1.3 |
-| **population** | the world-particle count $`N`$ of the ledger notes | **also** the standard name for a diagonal element of $`\rho`$, in the sense of Bloch and Fano. Written out here rather than used |
-| **absorbing boundary** | a sponge that eats worlds | the statement that beyond the horizon a world is exactly free (Proposition O4) |
-| **truncation** | an approximation to be refined away | for an unbounded $`V`$, constitutive: there is nothing to refine towards (E7) |
+The table that stood here has moved to the [glossary](../GLOSSARY.md), which
+now serves every directory of `docs/`. The entries for the words this tutorial
+is most about are:
+[particle](../GLOSSARY.md#particle),
+[pair](../GLOSSARY.md#pair),
+[separation](../GLOSSARY.md#separation),
+[leg and arm](../GLOSSARY.md#leg-arm) (including the self-conjugate carrier),
+[reach](../GLOSSARY.md#reach) (including the two reach ceilings),
+[coherence horizon](../GLOSSARY.md#coherence-horizon),
+[world-particle and carrier](../GLOSSARY.md#world-particle-world-carrier),
+[momentum](../GLOSSARY.md#momentum-in-the-ladder-notes),
+[the two $`\mu`$](../GLOSSARY.md#mu-the-two),
+[dark](../GLOSSARY.md#dark),
+[population](../GLOSSARY.md#population),
+[absorbing boundary](../GLOSSARY.md#absorbing-boundary) and
+[truncation](../GLOSSARY.md#truncation).
 
 ---
 

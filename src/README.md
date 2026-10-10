@@ -77,6 +77,13 @@ imported by the scripts here.
   notes: every labelled theorem-like result and labelled open item has a row,
   and every relative link in the index resolves. `--suggest` prints skeleton
   rows for whatever is missing.
+- `wpmwlib/where_used.py` — a concordance over the project's markdown: for a
+  term, every file, heading and sentence that uses it, definitional uses
+  first, with a working GitHub anchor for each. It is the uncurated companion
+  of `docs/GLOSSARY.md` and cannot drift. `--candidates N` ranks the words used
+  in at least N files by how much more the notes use them than English does
+  (needs `pip install wordfreq`), and marks those the glossary already has.
+  Run `PYTHONPATH=src python3 -m wpmwlib.where_used eikonal`.
 
 ## Runnable scripts
 

@@ -49,7 +49,8 @@ references/     bibliography.md (links to papers; PDFs are NOT committed)
 
 See [`ORIENTATION.md`](ORIENTATION.md) for a conceptual guide to the
 project — what the central idea is, what the vocabulary means, and what is
-established as against postulated, open, or retracted — and
+established as against postulated, open, or retracted —
+[`docs/GLOSSARY.md`](docs/GLOSSARY.md) for the terms the notes use, and
 [`docs/README.md`](docs/README.md) for a guide to what's in each
 documentation subdirectory and where to start reading.
 

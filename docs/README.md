@@ -46,6 +46,13 @@ reading.
   notebooks they add no claims: each page names the note and the demo whose
   computation it repeats.
 
+## Reading aids
+
+- **[`GLOSSARY.md`](GLOSSARY.md)** — the terms the notes in `algorithm/`,
+  `analysis/` and `supplement/` use, with what each means *here*, where it is
+  defined, and what not to confuse it with. For where a word is used, run
+  `PYTHONPATH=src python3 -m wpmwlib.where_used WORD`.
+
 ## How they relate
 
 `algorithm/` is self-contained — read it alone to implement or run the

@@ -1,7 +1,8 @@
 # docs/supplement
 
 Extended analysis and discussion that supports, but is not part of, the
-algorithm specifications in `docs/algorithm/`.
+algorithm specifications in `docs/algorithm/`. Terms used across these notes
+are defined in the [glossary](../GLOSSARY.md).
 
 ## Contents
 
@@ -232,9 +233,10 @@ algorithm specifications in `docs/algorithm/`.
   ceiling that bounds the theory and a convergence ceiling `R(x)` that bounds
   only the semiclassical reading of it — measured by crossing `R` deliberately
   on sech², where the moments do not notice, against pure Coulomb, where a
-  real-axis pole ends the model. §7 is a glossary of the words most likely to
+  real-axis pole ends the model. §7 points to the words most likely to
   import the wrong picture, including the two incompatible senses of *pair*
-  and the two distinct quantities called `μ`. §1.1 gives the exact identity
+  and the two distinct quantities called `μ`, which are now entries in the
+  [glossary](../GLOSSARY.md). §1.1 gives the exact identity
   behind the informal claim — the probability current is the first
   `y`-derivative of the density matrix at zero separation, equal to the
   `p`-moment of `W` — and §1.2 separates the ladder's `μ`, which winds at

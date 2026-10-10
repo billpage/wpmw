@@ -25,6 +25,7 @@ This index lists every labelled result (theorem, proposition, lemma, corollary, 
 - **Says** paraphrases the statement in a line. **Standing** is `—` when nothing is recorded, and otherwise says what a later (or the same) note did to it, or which open item it feeds.
 - **Open-item status** is what the notes themselves say. `open` means no note claims to have closed it; it does not mean someone has checked that it is still open.
 - Symbols are as in the notes. `abs(x)` stands for the modulus, to keep the tables valid.
+- **Words** are defined in the [glossary](../GLOSSARY.md), not here. To find where a word is used, run `PYTHONPATH=src python3 -m wpmwlib.where_used WORD`.
 
 ## 2. Prefix registry
 
@@ -64,7 +65,7 @@ Open-item ID series, all of the form `<note prefix><suffix><n>`. The suffixes `S
 | CLA | docs/algorithm/compensated_liouville_algorithm.md |
 | bare numbers | steps 2 to 13 and 11b: an ordered list, cited as 'open item 3 of the phase-alignment note' |
 
-Vocabulary that misleads (particle, pair, reach, mu, dark, population) is tabulated in [`../supplement/what_the_reach_is.md`](../supplement/what_the_reach_is.md) §7 and is not repeated here.
+Vocabulary, including the words that mislead (particle, pair, reach, mu, dark, population), is in the [glossary](../GLOSSARY.md) and is not repeated here.
 
 ## 3. Postulates and definitions
 

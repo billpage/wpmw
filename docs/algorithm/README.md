@@ -11,6 +11,8 @@ Specifications here should be precise enough that someone reading them could
 re-implement the algorithm in another language. Background discussion and
 extended derivations belong in `docs/supplement/` and `docs/analysis/`.
 
+Terms are defined in the [glossary](../GLOSSARY.md).
+
 ## Contents
 
 - **[`phase_space_crystal_lattice_algorithm.md`](phase_space_crystal_lattice_algorithm.md)** — The canonical 1+1-D

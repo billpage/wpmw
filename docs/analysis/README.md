@@ -10,6 +10,9 @@ under polynomial potentials. Most of it is now a **derivation ladder**: a
 sequence of notes, each taking as input something its predecessor postulated,
 and each ending with the open items that motivate the next.
 
+Terms are defined in the [glossary](../GLOSSARY.md); to look up a theorem or
+open item by its label, use [`INDEX.md`](INDEX.md).
+
 ## The ladder
 
 Newest first: the most recent step is at the top, and the list runs back to

@@ -3,7 +3,7 @@
 **A conceptual guide to WPMW for a reader arriving with no prior context:
 what the project is trying to do, what the one central idea is, which words
 mean what, and what is established as against postulated, open, or
-retracted.**
+retracted.** Words are defined in the [glossary](docs/GLOSSARY.md).
 
 ---
 
@@ -111,7 +111,7 @@ by the reach (§6). A **Planck cell** is a phase-space area $`h`$.
   space with a sign.
 - A **positon** carries $`+1`$ and a **negaton** $`-1`$. (That is their
   meaning in the compensated layer; the words have a second meaning
-  elsewhere — §9.3.)
+  elsewhere; see [positon, negaton](docs/GLOSSARY.md#positon-negaton).)
 - A **body** is an unpaired positon or negaton: one that contributes to the
   observable.
 - A **sea pair** is a co-located positon–negaton pair. It contributes zero
@@ -437,64 +437,28 @@ $`f`$ off one half.
 
 ## 9. The vocabulary, including the trap
 
-### 9.1 Dictionary
+The dictionary of terms, the table of the two $`\mu`$ and the notes on words
+that are used in more than one sense have moved to the
+[glossary](docs/GLOSSARY.md), which serves the whole of `docs/`. Five traps
+are worth knowing before reading anything else; each has an entry.
 
-| Term | Mathematical role | What it means |
-|---|---|---|
-| **World / world-particle / carrier** | a signed atom of a counting measure on $`(x,p)`$ | has a position *and* a momentum |
-| **Positon / negaton** | sign of the carrier (ensemble E1), or ket/bra leg (ensemble E2) | **two different meanings** — see §9.3 |
-| **Body** | an unpaired positon or negaton | contributes to the observable |
-| **Leg** | one end of a ket–bra pair, carrying "a place and a clock" | the two positions $`x \pm y`$ are two *branches'* answers to where the one particle is, not two particles |
-| **Reach $`y_{\max}`$** | $`y_{\max} = L_c/2`$; period giving $`\Delta p = \pi\hbar/2y_{\max}`$ | greatest half ket–bra separation instantiated |
-| **Sea pair** | background neutral pair population | the partner population residual events consume and return |
-| **Dark / aligned** | *pair* $`\mu = 0`$ (§9.2) | a *relational* state of a pair, not a species |
-| **Residual channel** | compensated odd kernel $`\mathcal{R}`$ | what is left of the QLE after the classical force is removed |
-| **Ionisation** | sea pair $`\to`$ two visible daughters | the microscopic realisation of a residual event |
-| **Recombination** | two bodies $`\to`$ sea pair | in the model, the absorptive realisation of an event (§4); see §9.3 for an older use |
-| **Four actions** | focus, defocus, left hop, right hop | the collision rules of step 2 (§2.1) |
-| **Admissibility** | $`\rho \ge 0`$ after reconstruction | the constraint (A) selecting physical ensembles |
-| **$`\mathcal{E}`$ (the observable map)** | ensemble $`\to`$ $`W`$ | what is measurable; the ledger lives in its kernel |
-
-### 9.2 The two $`\mu`$ — the trap
-
-There are **two distinct quantities written $`\mu`$** in this repository,
-and conflating them produces a picture that looks coherent and is wrong.
-
-| | **Pair $`\mu`$** (step 5) | **Ladder $`\mu`$** (step 9) |
-|---|---|---|
-| Definition | $`\mu = \Phi_a - \Phi_b \pmod{2\pi}`$, the misalignment of the transported clock phases of a pair's two members $`a`$, $`b`$ | $`\mu = \arg\rho(X,X')`$, the phase of the density matrix between two leg positions $`X`$, $`X'`$ |
-| Lives in | the phase-resonance / phase-alignment formulation, steps 4–8 | the position-pair ladder of step 9 — the name refers to that note, not to the ladder of notes |
-| Obeys | $`\partial_x\mu = \Delta p/\hbar`$ with $`\Delta p = p_a - p_b`$; along a path of velocity $`v`$, $`d\mu/dt = \Delta p\,(v - \bar v_{\mathrm{pair}})/\hbar`$ | $`\bar p = \hbar\mu/a`$ with $`a`$ the position spacing — momentum *is* the misalignment |
-| Conjugate to | — | the separation $`y`$ the compensated kernel integrates over |
-
-[`what_the_reach_is.md`](docs/supplement/what_the_reach_is.md) §1 exists
-specifically to keep these apart. If a summary runs
-"reach $`\to \Delta p \to \mu`$-winding $`\to`$ dark sea $`\to`$ residual
-ionisation" as one chain, it has crossed between the two.
-
-### 9.3 Other collisions
-
-- **Positon** has two meanings, because step 13 separates two ensembles:
-  E1 draws carriers from $`W`$, with species the sign of $`W`$ (the meaning
-  used in this document); E2 draws them from the density matrix, with
-  positon and negaton naming the ket and bra legs of a pair. **Theorem D0**: the Weyl transform relates the represented
-  objects but *not* the ensembles — the species censuses are anti-correlated
-  and no carrier-level map exists. The word is a homonym across the two
-  layers.
-- **"Bound pair"**, in notes before step 20, means a sea pair. Step 20
-  argues the word is wrong — nothing holds the pair together; the relation
-  is alignment — and open item Y-SP8 proposes "aligned" instead. No note has
-  been renamed yet.
-- **"Recombination"**, in the model, is the absorptive realisation of an
-  event, at the parent's row (§4). But where steps 3, 13, 16 and 18 speak
-  of a recombination channel or rate, they mean the sink of §8 — two bodies
-  in one cell combining, with no parent. It was essential in the collision
-  layer; in the compensated model it is optional, and not part of
-  postulate (D). Step 20 separates the two as *catalysed* and *contact*
-  recombination.
-- **"Sea"** describes what a pair is doing in the population dynamics;
-  **"dark"** describes its internal phase relation. A dark sea pair is
-  both; neither word implies the other.
+- **Two quantities are written $`\mu`$**: the misalignment of the two members
+  of a sea pair (step 5) and the phase of the density matrix between the two
+  legs of a ket–bra pair (step 9). Conflating them produces a picture that
+  looks coherent and is wrong. If a summary runs "reach $`\to \Delta p \to
+  \mu`$-winding $`\to`$ dark sea $`\to`$ residual ionisation" as one chain, it
+  has crossed between the two. See [$`\mu`$, the two](docs/GLOSSARY.md#mu-the-two).
+- **Two kinds of pair**: a ket–bra pair is a relation between two worlds about
+  one body, a sea pair is two world-particles. See
+  [pair](docs/GLOSSARY.md#pair).
+- **Two meanings of positon**: the sign of a carrier (ensemble E1), or a ket or
+  bra leg (ensemble E2). See [positon, negaton](docs/GLOSSARY.md#positon-negaton).
+- **Two kinds of recombination**: catalysed (the absorptive realisation of an
+  event) and contact (two bodies in one cell, no parent). See
+  [recombination](docs/GLOSSARY.md#recombination).
+- **Sea and dark are different words**: a pair can be dark, aligned and in the
+  sea, and no one of these implies the others. See
+  [aligned pair](docs/GLOSSARY.md#aligned-pair) and [dark](docs/GLOSSARY.md#dark).
 
 ---
 
@@ -528,7 +492,7 @@ $`K(\lambda V) = \lambda K(V)`$ to machine precision. Step 4's Theorem 2
 says an event rule blind to phase cannot be linear in the potential; that
 no-go does not reach the compensated kernel *because* the phase it needs
 is already integrated into the kernel, as the ladder $`\mu`$ conjugate to
-the separation $`y`$ (§9.2). **Corollary Y1.1**: a particle-level phase
+the separation $`y`$ ([glossary](docs/GLOSSARY.md#mu-the-two)). **Corollary Y1.1**: a particle-level phase
 can therefore never be *necessary* for the observable $`\mathcal{E}`$; any
 phase rule lives in the kernel of the observable map, where the emissive /
 absorptive choice already lives.
