@@ -1043,9 +1043,9 @@ for a polynomial $`V`$ there is no jump measure without a reach (Theorem E7).
 
 ### vertex
 
-The point at which a world's momentum changes, where the constant-momentum
-legs of a worldline join. The word has **two senses**, one in the collision
-layer and one in the compensated model, and whether they describe the same
+The point at which a world's momentum changes discontinuously, where the continuous
+classical momentum legs of a worldline join. The word has **two senses**, one in the
+collision layer and one in the compensated model, and whether they describe the same
 event is open.
 
 - **Collision layer, steps 4 to 8: the swap.** An excess particle sharing a
