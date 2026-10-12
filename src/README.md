@@ -82,7 +82,7 @@ imported by the scripts here.
   first, with a working GitHub anchor for each. It is the uncurated companion
   of `docs/GLOSSARY.md` and cannot drift. `--candidates N` ranks the words used
   in at least N files by how much more the notes use them than English does
-  (needs `pip install wordfreq`), and marks those the glossary already has.
+  (needs `wordfreq`, in a virtual environment where pip refuses to touch the system Python; see the module docstring), and marks those the glossary already has.
   Run `PYTHONPATH=src python3 -m wpmwlib.where_used eikonal`.
 
 ## Runnable scripts

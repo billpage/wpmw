@@ -652,15 +652,29 @@ are conserved in exact integers (Theorem N1).
 
 ### leg, arm
 
-One end of a ket–bra pair: a place and a clock. The two positions
-$`x \pm y`$ are two *branches'* answers to where the one particle is, not two
-particles. *Leg* is the project's term; *arm* is older and worse, since it
-suggests a limb. A **self-conjugate carrier** is a carrier with coincident
-legs: it holds the full probability density and no current, which is *still*,
-not the same as [dark](#dark).
+*Leg* has three senses in the notes, and context decides.
 
-- **Defined:** [`what_the_reach_is.md` §1](supplement/what_the_reach_is.md#1-first-what-is-separated)
-  (its heading is "First, what is separated").
+1. **A leg of a ket–bra pair** (steps 7 to 13 and the current notes): one end
+   of the pair, a place and a clock. The two positions $`x \pm y`$ are two
+   *branches'* answers to where the one particle is, not two particles. In
+   ensemble E2 the positon is the ket leg and the negaton the bra leg. A
+   **self-conjugate carrier** is a carrier with coincident legs: it holds the
+   full probability density and no current, which is *still*, not the same as
+   [dark](#dark).
+2. **A leg of a worldline** (step 4): a maximal constant-momentum segment of a
+   worldline, ended at each end by a [vertex](#vertex). A worldline is a chain
+   of legs, and a pair is two worldlines, one per species, each currently on
+   some leg. The phase-alignment specification's "both legs at row $`r'`$" is
+   in this sense.
+3. **The legs of one event** (`emission_and_absorption.md` §3): the two
+   co-located deposits of one residual event, $`+1`$ at $`p + \xi_q`$ and
+   $`-1`$ at $`p - \xi_q`$. They are not two events.
+
+*Arm* is older and worse than *leg*, since it suggests a limb.
+
+- **Defined:** (1) [`what_the_reach_is.md` §1](supplement/what_the_reach_is.md#1-first-what-is-separated);
+  (2) [`phase_resonance_microdynamics.md` §3](analysis/phase_resonance_microdynamics.md#3-kinematics-pairs-beats-and-the-parity-theorem);
+  (3) [`emission_and_absorption.md` §3](supplement/emission_and_absorption.md#3-what-an-event-is).
 - **Not to confuse with:** a leg of a journey or a graph; the *members* of a
   sea pair (two world-particles, not two branches).
 
@@ -1026,6 +1040,46 @@ for a polynomial $`V`$ there is no jump measure without a reach (Theorem E7).
 ---
 
 ## V
+
+### vertex
+
+The point at which a world's momentum changes, where the constant-momentum
+legs of a worldline join. The word has **two senses**, one in the collision
+layer and one in the compensated model, and whether they describe the same
+event is open.
+
+- **Collision layer, steps 4 to 8: the swap.** An excess particle sharing a
+  cell with a sea partner exchanges momentum with it. Requiring the pair's
+  misalignment $`\mu`$ to hold still during the exchange forces it to be a
+  *swap* (Theorem 4 of step 5): the particle takes the struck partner's
+  momentum, the partner takes its mate's, and the pair exits aligned. Momentum
+  and energy are conserved because a swap permutes momenta among worldlines.
+  In absorption (K3) the excess particle's in-leg meets the excited partner of
+  a beating pair, leaves at a lower momentum, and the pair exits dark; emission
+  (K4) is the time reverse. The *vertex midpoint* $`n`$ is the row halfway
+  between the two rows exchanged.
+- **Open line and compensated model, steps 11 on: the mediated jump.** The
+  *vertex rate* is the rate of residual events, read from $`V`$ at the world's
+  own $`x`$ (so it needs no boundary, Proposition O4), and each vertex
+  changes a momentum by an integer multiple of $`\pi\hbar/a`$ for an
+  $`a`$-periodic potential (Theorem O5). In the compensated model the parent
+  does not recoil; the event ionises or recombines a pair on the parent's row.
+  From step 22, "what a vertex reads" is the sea: the chords around the
+  parent, which acts as the reader.
+- **Open:** the K3 vertex has the excess particle exit at a different
+  momentum, the mediated-jump vertex does not. The two formulations are
+  equivalent as generators, but whether the phase machinery of steps 4 to 8
+  transplants onto the mediated-jump vertex is unresolved (J-SP4).
+
+- **Defined:** [`phase_alignment_microdynamics.md` §1.5](analysis/phase_alignment_microdynamics.md#15-the-vertex-is-a-momentum-exchange)
+  and [`phase_resonance_microdynamics.md` §4](analysis/phase_resonance_microdynamics.md#4-vertices-absorption-emission-resonance)
+  for the swap; [`phase_alignment_microdynamics_algorithm.md` §5](algorithm/phase_alignment_microdynamics_algorithm.md#5-the-vertex)
+  for the specification; [`open_position_space.md` §3](analysis/open_position_space.md#3-the-coherence-horizon)
+  for the vertex rate; the open question in
+  [`emission_and_absorption.md`](supplement/emission_and_absorption.md#j-sp4--two-vertices-are-called-absorption).
+- **Not to confuse with:** a vertex of a mesh or lattice, a point of the grid.
+  See also [leg](#leg-arm), [four actions](#four-actions) and
+  [residual event](#residual-residual-event).
 
 ### Volterra lattice
 

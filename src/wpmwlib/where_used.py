@@ -21,8 +21,13 @@ Run as::
     PYTHONPATH=src python3 -m wpmwlib.where_used --candidates 3    # ranked word list
 
 ``--candidates N`` prints words that occur in at least N files, ranked by how
-much more the notes use them than English does (needs ``pip install
-wordfreq``), with a mark for those the glossary already has.  It is a menu to
+much more the notes use them than English does, with a mark for those the
+glossary already has.  It needs ``wordfreq``.  Where pip refuses to touch the
+system Python (``externally-managed-environment``, as on Linux Mint 22 and
+Ubuntu 24.04), use a virtual environment::
+
+    python3 -m venv ~/.venvs/wpmw && ~/.venvs/wpmw/bin/pip install wordfreq
+    PYTHONPATH=src ~/.venvs/wpmw/bin/python -m wpmwlib.where_used --candidates 4  It is a menu to
 prune by hand, not a verdict.  It cannot see a term used once, in a
 specialised sense, in one tutorial: those are for readers to suggest.
 
@@ -131,7 +136,8 @@ def candidates(min_files: int, top: int) -> int:
     try:
         from wordfreq import zipf_frequency
     except ImportError:
-        print("--candidates needs the wordfreq package: pip install wordfreq")
+        print("--candidates needs the wordfreq package: pip install wordfreq\n"
+              "(in a virtual environment if pip says externally-managed-environment; see the module docstring)")
         return 2
     files = [p for p in markdown_files(False) if p.name != "INDEX.md"
              and "GLOSSARY" not in p.name]
