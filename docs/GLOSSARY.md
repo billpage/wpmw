@@ -614,6 +614,24 @@ and is a Fourier sum over chord separations.
 - **Not to confuse with:** a kernel in the sense of probability or an integral
   transform in general; here it is always the residual of the potential term.
 
+### kink
+
+A body's momentum changes discontinuously at an event: its worldline, drawn in
+space-time with momentum as slope, changes slope. In the piecewise-worldline
+reading of the compensated model (Theorem Y5), conserving world-particles
+forces kinks: the two members of an ionised pair kink from $`p`$ to
+$`p \pm \xi_q`$ together, co-located, of opposite species, so momentum is
+conserved event by event. The extended phase of a kinked body changes by a
+ramp (Theorem Y4). A *fork* is the other drawing of the same event, in which a
+new pair appears and no body changes slope; a *hop*, one body carried from one
+row to another, would be a single kink, and is excluded.
+
+- **Defined:** [`dark_sea_and_worldline_identity.md` §5](analysis/dark_sea_and_worldline_identity.md#5-theorem-y4-the-kink-and-its-phase-ramp)
+  and [§6](analysis/dark_sea_and_worldline_identity.md#6-theorem-y5-two-clocks-force-piecewise-worldlines);
+  the pictures in [`emission_and_absorption.md` §§4, 9](supplement/emission_and_absorption.md).
+- **Not to confuse with:** a kink in a field or a soliton; here a change of
+  slope on a worldline. See [vertex](#vertex).
+
 ---
 
 ## L
@@ -661,9 +679,10 @@ are conserved in exact integers (Theorem N1).
    **self-conjugate carrier** is a carrier with coincident legs: it holds the
    full probability density and no current, which is *still*, not the same as
    [dark](#dark).
-2. **A leg of a worldline** (step 4): a maximal constant-momentum segment of a
-   worldline, ended at each end by a [vertex](#vertex). A worldline is a chain
-   of legs, and a pair is two worldlines, one per species, each currently on
+2. **A leg of a worldline** (step 4): a maximal segment of a worldline along
+   which the momentum is continuous, ended at each end by a [vertex](#vertex).
+   In step 4 it is a constant-momentum segment; in the compensated notes it is
+   a classical arc between [kinks](#kink). A worldline is a chain of legs, and a pair is two worldlines, one per species, each currently on
    some leg. The phase-alignment specification's "both legs at row $`r'`$" is
    in this sense.
 3. **The legs of one event** (`emission_and_absorption.md` §3): the two
@@ -1058,20 +1077,25 @@ event is open.
   a beating pair, leaves at a lower momentum, and the pair exits dark; emission
   (K4) is the time reverse. The *vertex midpoint* $`n`$ is the row halfway
   between the two rows exchanged.
-- **Open line and compensated model, steps 11 on: the mediated jump.** The
-  *vertex rate* is the rate of residual events, read from $`V`$ at the world's
-  own $`x`$ (so it needs no boundary, Proposition O4), and each vertex
-  changes a momentum by an integer multiple of $`\pi\hbar/a`$ for an
-  $`a`$-periodic potential (Theorem O5). In the compensated model the parent
-  does not recoil; the event ionises or recombines a pair on the parent's row.
-  From step 22, "what a vertex reads" is the sea: the chords around the
-  parent, which acts as the reader.
+- **Open line and compensated model, steps 11 on: the kink.** By default an
+  event in the compensated model is a birth or a death, and no body changes
+  momentum. A vertex exists there only under the *piecewise-worldline*
+  reading (Theorem Y5), which keeps every world-particle and reads an
+  ionisation or a recombination as two bodies [kinking](#kink) at once, to
+  $`p \pm \xi_q`$. A one-body hop is not available, because the kernel is
+  signed. The *vertex rate* is the rate of residual events, read from $`V`$ at
+  the world's own $`x`$ (so it needs no boundary, Proposition O4), and each
+  vertex changes a momentum by an integer multiple of $`\pi\hbar/a`$ for an
+  $`a`$-periodic potential (Theorem O5). From step 22, "what a vertex reads"
+  is the sea: the chords around the parent, which acts as the reader.
 - **Open:** the K3 vertex has the excess particle exit at a different
-  momentum, the mediated-jump vertex does not. The two formulations are
+  momentum, while the compensated event moves a momentum only by the paired
+  kinks of the piecewise reading. The two formulations are
   equivalent as generators, but whether the phase machinery of steps 4 to 8
   transplants onto the mediated-jump vertex is unresolved (J-SP4).
 
-- **Defined:** [`phase_alignment_microdynamics.md` §1.5](analysis/phase_alignment_microdynamics.md#15-the-vertex-is-a-momentum-exchange)
+- **Defined:** [`dark_sea_and_worldline_identity.md` §6](analysis/dark_sea_and_worldline_identity.md#6-theorem-y5-two-clocks-force-piecewise-worldlines)
+  for the piecewise reading; [`phase_alignment_microdynamics.md` §1.5](analysis/phase_alignment_microdynamics.md#15-the-vertex-is-a-momentum-exchange)
   and [`phase_resonance_microdynamics.md` §4](analysis/phase_resonance_microdynamics.md#4-vertices-absorption-emission-resonance)
   for the swap; [`phase_alignment_microdynamics_algorithm.md` §5](algorithm/phase_alignment_microdynamics_algorithm.md#5-the-vertex)
   for the specification; [`open_position_space.md` §3](analysis/open_position_space.md#3-the-coherence-horizon)
