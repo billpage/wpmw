@@ -697,6 +697,49 @@ are conserved in exact integers (Theorem N1).
 - **Not to confuse with:** a leg of a journey or a graph; the *members* of a
   sea pair (two world-particles, not two branches).
 
+### lever
+
+The momentum $`P`$ used to carry two clocks to a common point before they are
+compared. Two partners $`i, j`$ at separation $`d = x_j - x_i = 2y`$ have the
+misalignment
+
+```math
+\mu^{(P)}_{ij} = \theta_i - \theta_j + \frac{P\,d}{\hbar},
+```
+
+where $`Pd/\hbar`$ is the phase a plane wave of momentum $`P`$ gains across the
+chord. The lever is therefore the wavevector at which a clock is extrapolated
+over the chord. The clocks do not fix it: P2 gives each body an extended phase
+at its *own* wavevector, but a comparison of two bodies needs one choice, and
+whoever makes it is the [reader](#reading-reader) (Theorem L8). Three readers
+are distinguished:
+
+| reader | lever | reads at re-lock |
+|---|---|---|
+| inertial | the row's momentum | the full $`U`$: the uncompensated split |
+| parent | the parent's momentum, which streams under (S) | $`U_{\rm res}`$ exactly: the compensated split |
+| partners' own | each partner's own momentum, $`\bar p = (p_i + p_j)/2`$ | $`U`$ less the trapezoid rule's share: no split at all |
+
+So the compensated split is the choice of the parent as reader. Two further
+uses: reading a chord against the daughter row $`p + \xi_q`$ instead of its own
+shifts the lever by $`\xi_q`$ and adds $`\xi_q d/\hbar`$, which is the
+channel's Fourier phase (Proposition Q5(a)); and in the Wigner transform the
+lever $`2py`$ belongs to the Wigner point.
+
+- **Defined:** [`sea_phase_reference.md` §8](analysis/sea_phase_reference.md#8-theorem-l8-the-readers-frame),
+  Theorem L8; as a parameter of the chord in
+  [`chord_reading.md` §3](supplement/chord_reading.md#3-the-chord).
+- **Origin:** the word enters the notes in the step 22 addendum of September
+  2026 that adds Theorem L8; the earlier sections "used each partner's own
+  momentum without saying so". The notes give no etymology. The image is a
+  lever arm, with the chord as the arm and $`P`$ setting how far the phase
+  moves across it; it is loose, since nothing is balanced and no force is
+  transmitted.
+- **Not to confuse with:** a mechanical lever, or the ordinary idiom in step
+  13 ("broken detailed balance is not the lever either"), which means only the
+  cause. Nor with *momentum* as a thing a body carries: the lever is a choice
+  of reference, and may be the parent's, not the partners'.
+
 ---
 
 ## M
@@ -879,8 +922,9 @@ rows. $`y_{\max} = L_c/2`$, half the [coherence horizon](#coherence-horizon).
 
 ### reading, reader
 
-A **reader** is a free body. Its **reading** is the sum over the chords of the
-sea around it, which estimates the kernel $`K_q`$ at its position: the sea
+A **reader** is whoever supplies the [lever](#lever): so far a free body (a
+sea pair as a reader is proposed and open, V-SP13). Its **reading** is the sum
+over the chords of the sea around it, which estimates the kernel $`K_q`$ at its position: the sea
 computes the Fourier transform of the kernel by interference (Theorem L1,
 Proposition Q5). A reading is a rate estimate, not a measurement outcome.
 
