@@ -1206,6 +1206,34 @@ see that directory's README for the ladder itself.
   centre-of-mass bisector at `A = inf` and `A = h`; (d) the within-cell bias
   against the body count as the matching cell is refined.
 
+- `demo_world_clocks.py` — companion to `docs/analysis/world_clocks.md`
+  (step 25): where a reading lives in a world of two particles.  Two unit
+  masses with the Pöschl–Teller pair potential `-6 sech^2(x1 - x2)` and a free
+  centre of mass, carried as `W(P, r, p_r)`.  The residual is read three
+  ways: by the world on the joint chord (W), by each particle on its own chord
+  with its clock carrying the whole interaction (B1), or half of it (B2).
+  Part A (SymPy) proves the readings differ from third order, that B1's
+  relative motion is the QLE at `hbar/2` exactly, that B1 leaves the
+  `P`-marginal alone, the clocks' Lagrangian bookkeeping, and the pair-bank
+  sum for three particles.  Part H builds the exact `hbar/2` von Neumann
+  reference; Part M runs the three readings on the mesh (W separable to
+  `7e-15`, B1's defect 0.2; B1 on the `hbar/2` reference, 0.18 from QM);
+  Part R varies the reach; Part T the Eckart collision (B1 transmits 0.517,
+  W 0.549 at reach `8 pi`; exact 0.5120 and 0.5441; about 18 minutes).
+  Part C runs signed worlds with integrate-and-fire banks, one per world or
+  one per particle, with `--seeds`, `--nu`, `--Tc`, `--Tb1` for a sweep (one
+  CSV row per variant, seed and time); it is the part run on Kaggle.
+
+  ![Worlds, particles and clocks](https://raw.githubusercontent.com/billpage/wpmw/output/figures/world_clocks.png)
+
+  (a) The ground state's relative Wigner function: W at the mesh's error, B1
+  on the exact `hbar/2` reference; (b) separability of centre of mass and
+  relative motion; (c) Eckart transmission against the reach; (d)
+  `cov(P^2, v)`, particles against the mesh; (e) the cost of the banks; (f)
+  `<v>`, particles against the mesh (the contact sink's bias).
+
+  ![VLBI against WPMW](https://raw.githubusercontent.com/billpage/wpmw/output/figures/world_clocks_vlbi.png)
+
 - `demo_signed_local_kernel.py` — exact (SymPy) and spectral companion to
   `docs/supplement/poisson_kicks_and_pair_branching.md`, Parts A–E.  A: the
   Kramers–Moyal targets `M_{2s+1} = (-1)^{s+1} (hbar/2)^{2s} V^{(2s+1)}`,

@@ -146,7 +146,9 @@ only $`n_+ - n_-`$.
 - **Defined:** [`ORIENTATION.md` §2.3](../ORIENTATION.md#23-the-cast).
 - **Not to confuse with:** the multi-particle notes (steps 21 and 24,
   V5, V7, V14), where "two bodies" are two *physical* particles whose joint
-  $`W`$ is carried, each by its own world-particles. Context decides.
+  $`W`$ is carried, each by its own world-particles. Context decides. Step 25
+  writes [particle](#particle) for that sense and proposes keeping *body* for
+  this one (open item WC-SP1).
 
 ### body inflation
 
@@ -162,6 +164,20 @@ $`0.9\,e^{-0.55\beta}`$ rather than $`e^{-\beta}`$ (Proposition V6). The
   [`fourd_compensated_ledger.md` §8](analysis/fourd_compensated_ledger.md#8-corollary-m10-what-the-cost-scales-with).
 
 ---
+
+### bond
+
+In a world of several particles, one term of its potential: for a pair
+potential, an interacting pair. The world's residual is a sum over its bonds,
+each a family of exchange channels that move both particles of the bond at
+once, so a world carries one bank of [integrators](#integrate-and-fire) per
+bond and none per particle: $`N(N-1)/2`$ for $`N`$ fully coupled particles, as
+an array of $`N`$ stations has $`N(N-1)/2`$ baselines.
+
+- **Defined:** [`world_clocks.md` §5.4](analysis/world_clocks.md#54-proposition-wc4-banks-live-on-bonds),
+  Proposition WC4.
+- **Not to confuse with:** a bound state, or the withdrawn *bound pair*; a bond
+  is a term of the potential, not a binding.
 
 ## C
 
@@ -195,6 +211,25 @@ a row, and a body at the chord's midpoint can read it.
 - **Not to confuse with:** a chord of a circle or a graph; the *separation*
   $`2y`$ of a ket–bra pair, a path difference between two branches
   (see [separation](#separation)).
+
+### clock
+
+Two different things. The **phase clock** $`\theta`$ of postulate P1 winds
+along a world's worldline at the Lagrangian rate, $`\dot\theta = \mathcal L/\hbar`$;
+its absolute value is a gauge, and what is physical is the misalignment of two
+clocks carried to a common point by a [lever](#lever). It belongs to the
+world, not to a particle: an interaction's energy is the configuration's, and
+particle clocks either count it twice or each carry only a share
+(Proposition WC1). The **counting clock** of Proposition Q11 is an
+[integrate-and-fire](#integrate-and-fire) integrator: it counts, it does not
+wind. The two are linked through chords: phase clocks, then misalignments
+across chords, then a reader's interference sum, then a rate, then a count.
+
+- **Defined:** P1 in [`phase_resonance_microdynamics.md` §2](analysis/phase_resonance_microdynamics.md#2-postulates);
+  Q11 in [`force_blind_sea.md` §9.3](analysis/force_blind_sea.md#93-proposition-q11-the-resonance-condition-and-its-clock);
+  the two told apart in [`world_clocks.md` §3](analysis/world_clocks.md#3-what-is-a-clock).
+- **Not to confuse with:** the *reset clock* of dark catalysis (Q6) and the
+  *resonance clock* of step 23's demo, which are uses of the counting sense.
 
 ### coboundary
 
@@ -569,6 +604,9 @@ passing the reader.
   a sigma–delta modulator; the Poisson clock is the same construction with
   independent exponential thresholds. What it costs is ontology: every body
   carries hidden initial phases, accepted provisionally (Q-SP14).
+- **In several particles:** the bank belongs to a [bond](#bond) of the world,
+  not to a particle; a bank per particle realises a different generator
+  ([`world_clocks.md` §7.2](analysis/world_clocks.md#72-what-q11-becomes)).
 
 ### interworld coupling
 
@@ -863,6 +901,11 @@ the older notes use the bare word for either.
 In the compound *world-particle*, a signed sample of $`W`$. Bare "particle" in
 a single-body note almost always means *world*, and where it means *leg* it is
 doubly wrong. See [world-particle](#world-particle-world-carrier).
+
+In a multi-particle note (step 25, Definition WC0), a **constituent**: the
+projection of a world onto one particle's coordinates. It carries no sign,
+[clock](#clock) or bank of its own; those belong to the world and its
+[bonds](#bond).
 
 ### population
 
@@ -1185,7 +1228,9 @@ older notes, *carrier*.
 - **Not to confuse with:** a particle with a position and a velocity: the
   world-particle is a signed sample of $`W`$. *Carrier* also has a
   density-matrix sense, a matrix element $`\rho_{nm}`$; it conveys nothing, and
-  the word names an index pair.
+  the word names an index pair. With several particles a world is a point of
+  the whole configuration's phase space, and its projection on one constituent
+  is a [particle](#particle) (Definition WC0).
 
 ---
 

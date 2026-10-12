@@ -662,3 +662,25 @@ lobes (Corollary Z1.1).
   note's test problem; listed here for the contrast drawn in §4 between a
   barrier, where the packet width is free, and a well, where it is not.
   https://doi.org/10.1103/PhysRev.35.1303
+
+## Interferometry: clocks, baselines and correlators (step 25)
+
+The analogy of `docs/analysis/world_clocks.md` §4: stations that keep their
+own clocks, information carried only by pairs (baselines), and an image that
+is the Fourier transform of what the pairs record.
+
+- van Cittert, P. H. — "Die wahrscheinliche Schwingungsverteilung in einer
+  von einer Lichtquelle direkt oder mittels einer Linse beleuchteten Ebene."
+  *Physica* **1**, 201–210 (1934). https://doi.org/10.1016/S0031-8914(34)90026-4
+- Zernike, F. — "The concept of degree of coherence and its application to
+  optical problems." *Physica* **5**, 785–795 (1938). With van Cittert's, the
+  theorem that the visibilities are the Fourier transform of the source's
+  brightness. https://doi.org/10.1016/S0031-8914(38)80203-2
+- Jennison, R. C. — "A phase sensitive interferometer technique for the
+  measurement of the Fourier transforms of spatial brightness distributions
+  of small angular extent." *Mon. Not. R. Astron. Soc.* **118**, 276 (1958).
+  Closure phase: station clock errors cancel round a triangle of baselines.
+- Thompson, A. R.; Moran, J. M.; Swenson, G. W. — *Interferometry and
+  Synthesis in Radio Astronomy*, 3rd ed. Springer (2017), open access. VLBI,
+  correlators, delay and fringe-rate models, closure relations.
+  https://doi.org/10.1007/978-3-319-44431-4

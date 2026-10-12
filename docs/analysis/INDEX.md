@@ -52,6 +52,7 @@ Theorem and open-item labels are shared across the whole of `docs/`. Each note u
 | Q | step 23 (Q1–Q12); postulate (S′) in step 23, amended in step 24 | Not the channel index q of the kernel, nor the channel set Q of the demos. |
 | V | step 24 (V1–V10); Definitions (F) and (C); the amendment of (S′) | Not the conditions (V1)–(V4) of step 4 §13, nor the potential V(x); neither is a label. Definition (F) is not the field F of any note, and Definition (C) is not a constant C. |
 | Z | step 19 (Z1–Z5) | — |
+| WC | step 25 (WC0–WC5) | The first two-letter prefix: every single letter is taken. "World clock". |
 | Thm 1–4, Lem 0–5, Prop 1–3, Cor 4.x | steps 4 and 5 | Numbered without a letter; later notes cite them as 'Theorem 4', 'Lemma 4', 'Proposition 3'. |
 | F, H, J, T, W | supplement: four_action_foundations (F1–F4), holland_two_fluid_correspondence (H1–H7), emission_and_absorption (J1–J2), takabayasi_1954_stochastic_picture (T-series), limkumnerd_weighted_paths (W1–W5) | Cited from the analysis notes; see §9. |
 
@@ -59,7 +60,7 @@ Open-item ID series, all of the form `<note prefix><suffix><n>`. The suffixes `S
 
 | Suffix | Where used |
 |---|---|
-| -SP | G-SP (step 17), S-SP (16), N-SP (18), Y-SP (20), M-SP (21), L-SP (22), Q-SP (23); supplement: J-SP, H-SP, W-SP, R-SP |
+| -SP | G-SP (step 17), S-SP (16), N-SP (18), Y-SP (20), M-SP (21), L-SP (22), Q-SP (23), V-SP (24), WC-SP (25); supplement: J-SP, H-SP, W-SP, R-SP |
 | -LS | K-LS (step 15), Z-LS (step 19) |
 | CLS | step 14 |
 | CLA | docs/algorithm/compensated_liouville_algorithm.md |
@@ -139,6 +140,12 @@ Kept apart from the results because a postulate is what everything else assumes,
 | [Def (F)](sea_depletion.md#4-proposition-v3-the-floor) | 4 | The floor: an emission ionises a pair in its parent's cell; if the sea there is short the emission does not happen and its two depositions are lost; absorption and the contact sink's credit unchanged. | S0 read literally; a hypothesis tested, not adopted |
 | [Post (S′)](sea_depletion.md#41-pair-collisions-an-amended-s) | 4.1 | As amended in step 24. Free bodies obey the full classical force; an aligned pair is force-blind, moves inertially between its events with its clock winding by P1, and changes momentum only in a collision with another aligned pair (Definition (C)). | adopted October 2026; the clock rule at a collision is V-SP8 |
 | [Def (C)](sea_depletion.md#41-pair-collisions-an-amended-s) | 4.1 | Pair collisions: two aligned pairs in one position cell, Defocus (two on row n → one each on n ± q) and Focus (the inverse), mass action with detailed balance, J = r_q (s_n² − s_{n−q}s_{n+q}); rate law a choice (kernel rate r_q B = abs(K_q)/2, or uniform between neighbouring rows). | Cyganski's Focus and Defocus moved to the dark pairs; rate law is V-SP9 |
+
+### Step 25 — [Worlds, particles and clocks](world_clocks.md)
+
+| ID | § | Says | Standing |
+|---|---|---|---|
+| [Def WC0](world_clocks.md#1-three-words) | 1 | A world is a signed point of the whole configuration's phase space with one phase clock; world-particle is the same object; a particle is a constituent, the projection of a world on one particle's coordinates, with no sign, clock or bank of its own; body stays the ledger's unpaired world. | the vocabulary is WC-SP1 |
 
 ## 4. Results by note
 
@@ -414,7 +421,7 @@ No labelled results. See the note's own sections.
 
 | ID | § | Says | Standing |
 |---|---|---|---|
-| [Prop M1](fourd_compensated_ledger.md#21-proposition-m1-the-pair-kernel-moves-relative-momentum-only) | 2.1 | For a pair potential the residual symbol depends on s only through s1 − s2: every event transfers (ξ, −ξ), moves p_r, and leaves X, P and r unchanged. | compensated counterpart of step 10's A2 and §4.4 |
+| [Prop M1](fourd_compensated_ledger.md#21-proposition-m1-the-pair-kernel-moves-relative-momentum-only) | 2.1 | For a pair potential the residual symbol depends on s only through s1 − s2: every event transfers (ξ, −ξ), moves p_r, and leaves X, P and r unchanged. | compensated counterpart of step 10's A2 and §4.4; pair by pair for N particles in Prop WC4 |
 | [Thm M2](fourd_compensated_ledger.md#22-theorem-m2-every-event-is-momentum-neutral) | 2.2 | Under (S) every event leaves every momentum functional unchanged; all exchange with the field goes through the force. | collapses step 10's A3 to its neutral half |
 | [Cor M3](fourd_compensated_ledger.md#31-corollary-m3-the-quadratic-sectors-are-free) | 3.1 | Quadratic sectors carry no events, so step 10's Theorem D and its §5.4 and §5.6 obstructions do not arise. | from G2 and I4 |
 | [Prop M4](fourd_compensated_ledger.md#32-proposition-m4-the-event-budget-depends-on-the-reach) | 3.2 | Measured on a common lattice at y_max = 2π: residual over uncompensated maximal rate is 0 (harmonic), 0.834 (cosine), 2.825 (Pöschl–Teller). | as step 14's C4 predicts; M-SP4 |
@@ -453,7 +460,7 @@ No labelled results. See the note's own sections.
 | [Prop Q6](force_blind_sea.md#8-proposition-q6-dark-catalysis-as-a-reset-clock) | 8 | Dark catalysis as a reset clock. Left alone, the (S′) sea relaxes exactly to each row's eikonal wave (reading 0.778 against a 0.880 control). (a) Poisson resets leave an amplitude compression of second order and a quadrature term linear in ⟨τ⟩, weighted by U·U_res, not sign-definite, so not a decoherence; (b) only relative resets are invariant under V → V + c; (c) measured: relative resets at the kernel's rate read 0.846, twice it 0.863, six times 0.875, ten times the control; with events the sea-only reading reaches its own control. | (c) re-measured in the third addendum at the corrected event rate (the first version's κ were half the rates run); step 22 §9's plateau was the free bodies read as partners; open items Q-SP7 to Q-SP9 |
 | [Prop Q9](force_blind_sea.md#91-proposition-q9-where-an-event-can-happen) | 9.1 | One event changes the kinetic energy of all world-particles by (ξ²/2m)ΔN and the W-weighted kinetic energy by 2pτξ/m for either realisation; an absorption is two free bodies crossing on rows p ± ξ and giving up their relative kinetic energy ξ²/m; the tolerances are dp and y_max, conjugate on L1's strip (dp·2y_max = h/2); q = 0 is the contact sink. | checked with SymPy (demo Part A2) |
 | [Prop Q10](force_blind_sea.md#92-proposition-q10-crossings-realise-events-but-cannot-trigger-them) | 9.2 | A crossing-triggered absorption gives dE_a/dt = κ(N_a E_b − E_a N_b)/2: mass action, so E is not closed and S2 fails. Crossings realise events; the parent's reading must trigger them. | checked with SymPy (Part A3); step 2's no-go lemma at the level of one event |
-| [Prop Q11](force_blind_sea.md#93-proposition-q11-the-resonance-condition-and-its-clock) | 9.3 | The resonance clock: channel q is phase-matched (Bragg) to the residual phase screen at wavenumber 2ξ_q/ℏ; one integrator per channel per body, dC_q/dt = K_q, firing at integer crossings, realises the rate within one count and exactly in mean; the bank must not be reset as a whole; counts are sub-Poissonian (Fano 0.035 one channel, 0.30 all); the integrand must be read from chords (gauge). | Parts A1, B; integrate-and-fire, a sigma–delta modulator; unbiased on the solvable cosine-plus-harmonic problem (supplement X7, fourth addendum); the bank is provisional ontology (Q-SP14) |
+| [Prop Q11](force_blind_sea.md#93-proposition-q11-the-resonance-condition-and-its-clock) | 9.3 | The resonance clock: channel q is phase-matched (Bragg) to the residual phase screen at wavenumber 2ξ_q/ℏ; one integrator per channel per body, dC_q/dt = K_q, firing at integer crossings, realises the rate within one count and exactly in mean; the bank must not be reset as a whole; counts are sub-Poissonian (Fano 0.035 one channel, 0.30 all); the integrand must be read from chords (gauge). | Parts A1, B; integrate-and-fire, a sigma–delta modulator; unbiased on the solvable cosine-plus-harmonic problem (supplement X7, fourth addendum); the bank is provisional ontology (Q-SP14); in several particles one bank per bond, not per body (Prop WC4) |
 | [Prop Q12](force_blind_sea.md#94-proposition-q12-the-live-reading-as-the-clocks-input) | 9.4 | Measured: integrators fed by the kernel realise the QLE target with no excess and less noise than Poisson; fed by the live sea reading they converge open loop (1 − corr ∝ 1/ν) but fail closed loop (slope 0.37–0.67 at ν = 64, firing 1.7–1.9 times too often); the busy sea reads low before feedback (shadow 0.68–0.84) and acting costs as much again; at ν = 1 a reader has 0.08 chords. (vi), fourth addendum: a deeper sea at fixed sampling dilutes other bodies' traffic but not a reader's own (event-made share 0.27/β + 0.14) and leaves the excess firing, so it is no remedy and B stays. | open items Q-SP11 to Q-SP13 |
 
 ### Step 24 — [Depletion and excess](sea_depletion.md)
@@ -474,6 +481,16 @@ No labelled results. See the note's own sections.
 | [Prop V12](sea_depletion.md#45-proposition-v12-the-clock-at-a-collision) | 4.5 | The clock at a collision: whole pairs keep each misalignment, exchange gives the products the chord's misalignment with μ₁ + μ₂ = μ_C + μ_D + o 2ξd/ℏ (exact); in step 23's particle model whole pairs keep the sea dark but drop the lock (0.40 → 0.09), exchange keeps neither, and only whole pairs re-locked to the destination row keep dark, lock (0.70) and live reading; an aligned pair that fires and takes a partner from its own row or row n + 2tq realises Definition (C) as a two-body event in detailed balance, a catalysed three-body realisation does not. | SymPy; ν = 32, κ = 0, 2, 6, four seeds (Kaggle); chord-level firing would run 8.6 to 16.2 times the kernel; answers V-SP8 in part; re-locking not derived |
 | [Prop V13](sea_depletion.md#52-proposition-v13-collisions-in-an-integer-sea) | 5.2 | Collisions between point pairs keep a Poisson sea Poisson and, in the floored integer worlds, steepen blocking from 0.91 e^−0.55β to about 1.10 e^−0.74β (kernel rate; 1.06 e^−0.72β uniform), about 9.5 pairs per aperture for one emission in a thousand; the column about a parent is 5 per cent short, the aperture on its row 28 per cent, so the deficit is between rows and collisions refill it in part; the observable's departure is unchanged within errors. Without the contact sink a world inflates to 54 bodies instead of 31 and blocks more; the sea's net debit is (N − 1)/2 either way. | 12 000, 3000 and 4000 worlds (Kaggle); answers V-SP10; the sink's scale is V-SP12 |
 | [Prop V14](sea_depletion.md#62-proposition-v14-two-coupled-bodies-with-collisions) | 6.2 | Two coupled bodies with Definition (C) along the three families' momentum directions: E unchanged bit for bit; λ* against B² is 0.198 (absorptive first) and 0.540 (emissive) at the kernel's rate, against 1.859 and 3.982 without; uniform collisions give 0.342 and 2.379, the latter set by t = 4. | 48⁴ on a T4 (Kaggle); with collisions the physical density suffices for two bodies as for one |
+
+### Step 25 — [Worlds, particles and clocks](world_clocks.md)
+
+| ID | § | Says | Standing |
+|---|---|---|---|
+| [Prop WC1](world_clocks.md#34-proposition-wc1-the-phase-clock-belongs-to-the-world) | 3.4 | The P1 clock belongs to the world. Particle clocks sum to it only without interaction; for a pair potential particle clocks either count the interaction Lagrangian twice (each with the whole v) or each wind with a share α_i, and a particle's own misalignment winds at α_i U, not U. Clocks split along the Lagrangian's additive sectors (centre of mass, relative motion), not along particles. | — |
+| [Thm WC2](world_clocks.md#52-theorem-wc2-what-a-particle-reads) | 5.2 | Pair potential, three readings: the joint chord (W), each particle's own chord with the whole v (B1), with v split (B2). B1 agrees with W only at linear order (difference −a₃y₁y₂(y₁ − y₂) + O(y⁵)); B2 reads half the force. B1's relative marginal obeys the QLE with ℏ → ℏ/2 in the residual, exactly; B1 leaves the P-marginal alone and adds 3∂_P²∂_pr ℏ²v‴/24, a centre-of-mass–relative coupling QM lacks. | extends Prop M1 |
+| [Cor WC3](world_clocks.md#53-corollary-wc3-what-b1-does-to-a-state-quantum-mechanics-keeps-fixed) | 5.3 | From g(P) ⊗ W_χ: W keeps the product; B1's relative marginal is the ℏ/2 von Neumann evolution of ρ′(a, b) = χ((3a − b)/2)χ*((3b − a)/2); B1 correlates P with the relative motion. Measured: separability 7×10⁻¹⁵ (W) against 0.2 (B1); B1 follows the exact ℏ/2 reference within the mesh's error and sits 0.17–0.18 from QM; Eckart transmission 0.517 (B1) against 0.549 (W) at reach 8π, exact 0.5120 and 0.5441. | — |
+| [Prop WC4](world_clocks.md#54-proposition-wc4-banks-live-on-bonds) | 5.4 | For pair potentials the world's residual is a sum of pair-exchange symbols, so a world carries one bank per bond (N(N − 1)/2 for N fully coupled particles), none per particle; a three-body term's bank lives on the triple, a general V's on the joint chord. | restates Prop Q11 for several particles (§7.2) |
+| [Prop WC5](world_clocks.md#73-proposition-wc5-banks-in-the-particle-ensemble-part-c) | 7.3 | Measured with Q11's integrate-and-fire banks (8 seeds, ν = 10⁵ and 10⁶): world banks never move a daughter off its parent's P, particle banks always do; each realises its own generator up to the contact sink's bias (B1's cov(P², v) −0.472 ± 0.003 against −0.501 on the mesh at t = 0.25; W's 0.002 ± 0.001 against 0); particle banks carry more worlds and heat the unsigned ⟨P²⟩ (76 against 2.1 at t = 1, ν = 10⁵) while the signed marginal stays exact; the sink biases ⟨v⟩ by +0.19 to +0.28 at t = 4 (M9). | — |
 
 ## 5. No-go and negative results
 
@@ -512,6 +529,7 @@ Results that say something cannot be done. Each is as valuable as a positive res
 | Step 24 — [Prop V4](sea_depletion.md#5-proposition-v4-granular-supply) | A sea at the physical density B that is a strict integer supply: one pair per event aperture blocks about e⁻¹ of emissions and moves E by 37 to 88 per cent. | The sea is a ledger, not a supply, or a supply deep enough to hide (seven to nine pairs per aperture for a part in a thousand in E; about twelve to block fewer than one emission in a thousand, V6). Two coupled bodies need more (V7). |
 | Step 24 — [Prop V12](sea_depletion.md#45-proposition-v12-the-clock-at-a-collision) | Pair collisions realised as catalysed three-body events (a third pair fires the kernel, two others donate): no allocation gives zero flux on a uniform row, and absorptive first clumps the sea. Also a chord firing its own event one for one, which runs 8.6 to 16.2 times the kernel. | A two-body sea reader: the firing pair moves itself and one partner (V12(c)); the kernel is the chords' interference sum, not their gross count. |
 | Step 24 — [Prop V11](sea_depletion.md#44-proposition-v11-the-reach-in-long-runs) | Uniform pair collisions, at a rate that does not grow with the event rate, bounding the sea's depth at large reach in a bound system. | Collisions at the kernel's rate, which keeps pace by construction. |
+| Step 25 — [Thm WC2](world_clocks.md#52-theorem-wc2-what-a-particle-reads), [Prop WC4](world_clocks.md#54-proposition-wc4-banks-live-on-bonds) | A bank (or reading) owned by a particle cannot realise a pair potential's residual beyond linear order, under any split of the interaction between particle clocks. | Banks belong to the world's bonds; readings to the world's joint chord. |
 
 ## 6. Corrections and retractions
 
@@ -815,7 +833,7 @@ Labelled items link to their line; the unlabelled items of the older notes are g
 | [Q-SP11](force_blind_sea.md#12-open-items) | The closed-loop shortfall: under the traffic it triggers the live reading reads low before feedback, and acting on it costs as much again; find the repair. | open | Prop Q12 |
 | [Q-SP12](force_blind_sea.md#12-open-items) | A matched test of the observable for the closed loop, on the exact ledger. | open | Prop Q12, L-SP3 |
 | [Q-SP13](force_blind_sea.md#12-open-items) | Critical sampling: at ν = 1 a reader has about 0.08 chords; can a reading pooled over time or over worlds drive a body's integrators? | open | Prop Q12, Q-SP5 |
-| [Q-SP14](force_blind_sea.md#12-open-items) | The bank of integrators, provisional: can it be the sea's own interference sum rather than per-body memory? | open | Prop Q11 |
+| [Q-SP14](force_blind_sea.md#12-open-items) | The bank of integrators, provisional: can it be the sea's own interference sum rather than per-body memory? | open; restated by step 25 §7.2, continues as WC-SP3 | Prop Q11, Prop WC4 |
 
 ### Step 24 — [Depletion and excess](sea_depletion.md#10-open-items)
 
@@ -834,6 +852,17 @@ Labelled items link to their line; the unlabelled items of the older notes are g
 | [V-SP11](sea_depletion.md#10-open-items) | The well beyond 2π: the ledger's explicit event step grows errors at ω²Δt/2 and at 4π the debt still moves with Δt at 0.0025; a higher-order or exponential step, or Δt ≲ 10⁻³ with a convergence check, then 8π. | open | Prop V11, §8.1 |
 | [V-SP12](sea_depletion.md#10-open-items) | The contact sink's scale: one mesh cell now; would a sink at the aperture's scale keep the worlds' mean and cut blocking, and how should its products' clocks be set, given gray pairs? | open | Prop V13, Prop Q8, Q-SP10 |
 | [V-SP13](sea_depletion.md#10-open-items) | Aligned pairs as readers: build the sea reader of V12(c) in the particle model; which frame (U or U_res) it integrates, whether it fires at the kernel's rate, and whether critical sampling allows it at ν = 1. | open | Prop V12, Prop Q11, Q-SP13, Q-SP14 |
+
+### Step 25 — [Worlds, particles and clocks](world_clocks.md#11-open-items)
+
+| ID | Question | Status | Related |
+|---|---|---|---|
+| [WC-SP1](world_clocks.md#11-open-items) | Vocabulary: keep body for an unpaired world and particle for a constituent across the glossary and steps 21 and 24? | open | Def WC0 |
+| [WC-SP2](world_clocks.md#11-open-items) | The live reading in four dimensions: can a sea whose chords lie along the relative direction feed a bond's bank at a usable density (Q12 for two particles)? | open | Prop Q12, Q-SP13 |
+| [WC-SP3](world_clocks.md#11-open-items) | Where a bank's memory is held: by the reader, or by the chords it reads; would the latter remove Q11's hidden initial phases? | open | Q-SP14 |
+| [WC-SP4](world_clocks.md#11-open-items) | Three-body and general potentials: channels indexed by joint transfers; how do the channel count and cost scale with the order of the interaction? | open | Prop WC4 |
+| [WC-SP5](world_clocks.md#11-open-items) | Is B1, or its ℏ/2 relative motion, the Wigner image of a recognised mean-field approximation? | open | Thm WC2 |
+| [WC-SP6](world_clocks.md#11-open-items) | The particle-bank ensemble's cost at longer times, with an absorptive ledger in place of emission and a contact sink. | open | Prop WC5 |
 
 ## 8. Defects found in demos
 

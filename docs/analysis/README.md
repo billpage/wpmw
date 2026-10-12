@@ -19,6 +19,48 @@ Newest first: the most recent step is at the top, and the list runs back to
 step 1 at the bottom. To follow the argument from its beginning, read from the
 bottom up. Each note states in its §0 what it inherits and what it retracts.
 
+- **25.** **[`world_clocks.md`](world_clocks.md)** \
+  Is the reader — its lever, chords and bank of integrators — a property of a
+  particle, or a relation between worlds that a particle inherits? With two
+  particles and a pair potential the question has an answer. **Definition
+  WC0** fixes the words: a *world* (the repository's *world-particle*) is a
+  signed point of the whole configuration's phase space with one clock, and a
+  *particle* is its projection on one constituent, with no sign, clock or bank
+  of its own. Two things are called a clock: the phase clock of P1, which
+  winds at the Lagrangian rate and is a gauge except in misalignments across
+  chords, and Q11's counting clock, an integrate-and-fire counter; they are
+  linked through chords, so the counter is the accumulator of a reading,
+  located where a chord's midpoint is. **Proposition WC1**: the phase clock
+  belongs to the world — particle clocks count an interaction twice or each
+  carry a share of it, and clocks split along the Lagrangian's sectors (centre
+  of mass, relative motion), not along particles. Unlike Poirier's labelled
+  trajectories or Hall, Deckert and Wiseman's sorted worlds, WPMW asks of the
+  set of worlds only midpoints and difference vectors, plus a phase per world;
+  the VLBI analogy (stations with their own clocks, information only on
+  baselines, a correlator per pair, closure phases) is set out term by term.
+  **Theorem WC2**: reading the joint chord (W) and reading each particle's own
+  chord with its clock carrying the whole interaction (B1) agree only at
+  linear order; exactly and to all orders, B1's relative motion is the QLE at
+  `hbar/2`, and B1 adds a coupling `3 d_P^2 d_pr` between centre of mass and
+  relative motion that QM lacks; splitting the interaction between the clocks
+  (B2) halves both and reads half the force. **Corollary WC3**, measured on a
+  `(P, r, p_r)` mesh from a product state QM keeps stationary and separable: W
+  stays separable to `7e-15` while B1's defect is 0.2 by `t = 0.5`; B1 follows
+  the exact `hbar/2` von Neumann reference within the mesh's error and sits
+  0.17 to 0.18 from QM at every reach; in the Eckart pair collision B1
+  transmits 0.517 against W's 0.549 at reach `8 pi`, exact 0.5120 and 0.5441.
+  **Proposition WC4**: for pair potentials a world carries one bank per bond,
+  `N(N - 1)/2` for `N` particles like the baselines of an array, and none per
+  particle; Q11's bank per body is the one-particle case. **Proposition WC5**,
+  particle runs with integrate-and-fire banks on Kaggle: the world bank never
+  moves a daughter off its parent's centre-of-mass momentum, the particle
+  banks always do; each realises its own generator up to the contact sink's
+  bias (B1's covariance of `P^2` with `v` is -0.472 ± 0.003 against -0.501 on
+  the mesh at `t = 0.25`, W's 0.002 ± 0.001 against 0); at `nu = 1e5` the
+  particle banks carry 2.8 times the worlds and 36 times the unsigned `<P^2>`
+  by `t = 1`, heating the ensemble's centre of mass while the signed marginal
+  stays exact. A reader is a world, reading the chords of its own
+  configuration along the directions in which its potential has terms.
 - **24.** **[`sea_depletion.md`](sea_depletion.md)** \
   Empty space is not empty here: a cell that holds no `W` still holds aligned
   pairs at density `B`. Could the sea's depletion or excess ever be seen? By
@@ -802,7 +844,7 @@ late section. In ascending step order: `src/demo_four_rule_equivalence.py`,
 `src/demo_eckart_barrier_compensated.py`,
 `src/demo_compensated_ontology.py`,
 `src/demo_stochastic_ledger.py`,
-`src/demo_soft_core_coulomb.py`. All
+`src/demo_soft_core_coulomb.py`, `src/demo_world_clocks.py`. All
 non-trivial claims in these notes are verified numerically before inclusion.
 
 ## Related
