@@ -36,7 +36,7 @@ links to. Words that are common in the notes only because they are common in
 physics (*wavepacket*, *potential*, *momentum* in its ordinary sense) are not
 listed; *momentum* is, for its one special sense.
 
-[A](#a) · [B](#b) · [C](#c) · [D](#d) · [E](#e) · [F](#f) · [G](#g) · [H](#h) · [I](#i) · [K](#k) · [L](#l) · [M](#m) · [O](#o) · [P](#p) · [Q](#q) · [R](#r) · [S](#s) · [T](#t) · [V](#v) · [W](#w)
+[A](#a) · [B](#b) · [C](#c) · [D](#d) · [E](#e) · [F](#f) · [G](#g) · [H](#h) · [I](#i) · [K](#k) · [L](#l) · [M](#m) · [O](#o) · [P](#p) · [Q](#q) · [R](#r) · [S](#s) · [T](#t) · [U](#u) · [V](#v) · [W](#w)
 
 ---
 
@@ -139,16 +139,10 @@ depth $`\beta`$.
 
 ### body
 
-An unpaired positon or negaton: one that contributes to the observable. The
-body count $`N = n_+ + n_-`$ is what the ledger counts; the observable reads
-only $`n_+ - n_-`$.
-
-- **Defined:** [`ORIENTATION.md` §2.3](../ORIENTATION.md#23-the-cast).
-- **Not to confuse with:** the multi-particle notes (steps 21 and 24,
-  V5, V7, V14), where "two bodies" are two *physical* particles whose joint
-  $`W`$ is carried, each by its own world-particles. Context decides. Step 25
-  writes [particle](#particle) for that sense and proposes keeping *body* for
-  this one (open item WC-SP1).
+**Retired** (step 25, October 2026). In the ledger and sea notes it meant an
+[unpaired world](#unpaired-world); in the multi-particle notes (steps 21 and
+24) a physical [particle](#particle). Older commits and quotations keep it;
+current text uses the two words.
 
 ### body inflation
 
@@ -171,7 +165,7 @@ In a world of several particles, one term of its potential: for a pair
 potential, an interacting pair. The world's residual is a sum over its bonds,
 each a family of exchange channels that move both particles of the bond at
 once, so a world carries one bank of [integrators](#integrate-and-fire) per
-bond and none per particle: $`N(N-1)/2`$ for $`N`$ fully coupled particles, as
+bond and none per world-particle: $`N(N-1)/2`$ for $`N`$ fully coupled particles, as
 an array of $`N`$ stations has $`N(N-1)/2`$ baselines.
 
 - **Defined:** [`world_clocks.md` §5.4](analysis/world_clocks.md#54-proposition-wc4-banks-live-on-bonds),
@@ -194,7 +188,7 @@ it as withdrawn or unnecessary
 - **Not to confuse with:** the other postulate called (S), streaming
   ([streaming postulates](#streaming-postulates-s-s)); the *sea lock* of step 22
   ([sea lock](#sea-lock)); a *carrier* in the sense of
-  [world-particle](#world-particle-world-carrier).
+  [world](#world-carrier).
 
 ### chord
 
@@ -218,8 +212,8 @@ Two different things. The **phase clock** $`\theta`$ of postulate P1 winds
 along a world's worldline at the Lagrangian rate, $`\dot\theta = \mathcal L/\hbar`$;
 its absolute value is a gauge, and what is physical is the misalignment of two
 clocks carried to a common point by a [lever](#lever). It belongs to the
-world, not to a particle: an interaction's energy is the configuration's, and
-particle clocks either count it twice or each carry only a share
+world, not to a [world-particle](#world-particle): an interaction's energy is the
+configuration's, and world-particle clocks either count it twice or each carry only a share
 (Proposition WC1). The **counting clock** of Proposition Q11 is an
 [integrate-and-fire](#integrate-and-fire) integrator: it counts, it does not
 wind. The two are linked through chords: phase clocks, then misalignments
@@ -605,7 +599,7 @@ passing the reader.
   independent exponential thresholds. What it costs is ontology: every body
   carries hidden initial phases, accepted provisionally (Q-SP14).
 - **In several particles:** the bank belongs to a [bond](#bond) of the world,
-  not to a particle; a bank per particle realises a different generator
+  not to a world-particle; a bank per world-particle realises a different generator
   ([`world_clocks.md` §7.2](analysis/world_clocks.md#72-what-q11-becomes)).
 
 ### interworld coupling
@@ -898,14 +892,17 @@ the older notes use the bare word for either.
 
 ### particle
 
-In the compound *world-particle*, a signed sample of $`W`$. Bare "particle" in
-a single-body note almost always means *world*, and where it means *leg* it is
-doubly wrong. See [world-particle](#world-particle-world-carrier).
+A **particle** $`i`$ is the identity that recurs in every world, with its
+mass and couplings (Definition WC0). It has no state of its own: what can be
+said of it is the marginal of the signed ensemble over worlds, its reduced
+Wigner function. Particle $`i`$ in one world is a
+[world-particle](#world-particle).
 
-In a multi-particle note (step 25, Definition WC0), a **constituent**: the
-projection of a world onto one particle's coordinates. It carries no sign,
-[clock](#clock) or bank of its own; those belong to the world and its
-[bonds](#bond).
+- **Defined:** [`world_clocks.md` §1](analysis/world_clocks.md#1-worlds-world-particles-and-particles).
+- **Not to confuse with:** a world. In the one-particle notes bare
+  "particle" almost always means *world* (a one-particle world has one
+  world-particle), and where it means *leg* it is doubly wrong. The signed
+  objects of the signed-particle Monte Carlo literature are worlds.
 
 ### population
 
@@ -917,9 +914,11 @@ Bloch and Fano. The notes write the second out rather than use the word.
 
 ### positon, negaton
 
-In the ledger and sea notes: a world-particle of sign $`+1`$
-(positon) or $`-1`$ (negaton), drawn from the signed $`W`$. The observable is
-$`n_+ - n_-`$.
+In the ledger and sea notes: a [world](#world-carrier) of sign $`+1`$
+(positon) or $`-1`$ (negaton); *positon* is short for *positon world*. A
+world's sign is permanent: no event changes it (Proposition WC6). Neither is
+a particle, a hole or a charge. The observable is $`n_+ - n_-`$, counted over
+[unpaired worlds](#unpaired-world).
 
 - **Not to confuse with:** the second sense, from step 13's density-matrix
   ensemble E2, in which positon and negaton name the *ket and bra legs of a pair*
@@ -1145,6 +1144,25 @@ for a polynomial $`V`$ there is no jump measure without a reach (Theorem E7).
 
 ---
 
+## U
+
+### unpaired world
+
+A world that is not half of an [aligned pair](#aligned-pair): an unpaired
+positon or negaton, one that contributes to the observable. The ledger
+counts unpaired worlds per cell, $`n_+`$ and $`n_-`$, with
+$`N = n_+ + n_-`$; the observable reads only $`n_+ - n_-`$. Under (S′) an
+unpaired world feels the full classical force and an aligned pair does not.
+
+- **Defined:** [`ORIENTATION.md` §2.3](../ORIENTATION.md#23-the-cast);
+  [`world_clocks.md` §1](analysis/world_clocks.md#1-worlds-world-particles-and-particles).
+- **Not to confuse with:** a free particle. The older notes call an unpaired
+  world a *body* or a *free body*; "free" there meant unpaired, not
+  force-free, and under (S′) it is exactly the unpaired worlds that feel the
+  force.
+
+---
+
 ## V
 
 ### vertex
@@ -1213,24 +1231,45 @@ functional, so a Volterra sea cannot repair depletion (Proposition V9). Cyganski
 The phase-space quasi-probability $`W(x,p)`$ of a state with density matrix
 $`\rho`$: the Fourier transform of $`\rho(x+y, x-y)`$ in the half-separation
 $`y`$. It has the right marginals in $`x`$ and $`p`$ and can be negative. The
-notes carry it as the expectation of a signed ensemble of world-particles.
+notes carry it as the expectation of a signed ensemble of worlds.
 
 - **Defined:** [`ORIENTATION.md` §1](../ORIENTATION.md#1-what-the-project-is-trying-to-do).
 - **Source:** Wigner, *Phys. Rev.* **40** (1932) 749.
 
-### world-particle (world, carrier)
+### world (carrier)
 
-A point in phase space with a sign: a signed atom of a counting measure on
-$`(x,p)`$ that has a position *and* a momentum. Also *world*, and, in the
-older notes, *carrier*.
+A point of the whole configuration's phase space with a sign and a clock:
+for $`N`$ particles in three dimensions, $`(\mathbf x, \mathbf p) \in \mathbb R^{6N}`$
+with $`\varepsilon = \pm1`$ and a phase $`\theta`$ winding at the Lagrangian
+rate. A signed atom of the counting measure whose expectation is $`W`$. A
+[positon](#positon-negaton) is a world of sign $`+1`$, a negaton one of sign
+$`-1`$. The older notes say *carrier*; the one-particle notes also say
+*world-particle*, which for one particle names the same point.
 
-- **Defined:** [`ORIENTATION.md` §2.3](../ORIENTATION.md#23-the-cast).
-- **Not to confuse with:** a particle with a position and a velocity: the
-  world-particle is a signed sample of $`W`$. *Carrier* also has a
-  density-matrix sense, a matrix element $`\rho_{nm}`$; it conveys nothing, and
-  the word names an index pair. With several particles a world is a point of
-  the whole configuration's phase space, and its projection on one constituent
-  is a [particle](#particle) (Definition WC0).
+- **Defined:** [`ORIENTATION.md` §2.3](../ORIENTATION.md#23-the-cast);
+  [`world_clocks.md` §1](analysis/world_clocks.md#1-worlds-world-particles-and-particles),
+  Definition WC0, with its history under (S′) in Proposition WC6.
+- **Not to confuse with:** a particle with a position and a velocity: a world
+  is a signed sample of $`W`$. *Carrier* also has a density-matrix sense, a
+  matrix element $`\rho_{nm}`$; it conveys nothing, and the word names an
+  index pair.
+
+### world-particle
+
+One [particle](#particle) as it appears in one [world](#world-carrier):
+particle $`i`$ in world $`w`$, the point
+$`(\mathbf x_i^w, \mathbf p_i^w) \in \mathbb R^6`$. It has no sign, clock or
+bank of its own; the $`N`$ world-particles of a world share its sign and its
+clock. World-particles are never created or destroyed singly. Within its
+world every world-particle moves on Newtonian arcs while the world is
+unpaired and inertial arcs while it is dark, kinked only at events and only
+along a bond (Proposition WC6).
+
+- **Defined:** [`world_clocks.md` §1](analysis/world_clocks.md#1-worlds-world-particles-and-particles),
+  Definition WC0 (October 2026).
+- **Not to confuse with:** a world. Until step 25 the repository used
+  *world-particle* for the world itself, which is the same thing only when
+  $`N = 1`$; the one-particle ladder reads correctly either way.
 
 ---
 

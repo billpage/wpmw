@@ -107,19 +107,27 @@ by the reach (§6). A **Planck cell** is a phase-space area $`h`$.
 
 ### 2.3 The cast
 
-- A **world-particle** (or **world**, or **carrier**) is a point in phase
-  space with a sign.
-- A **positon** carries $`+1`$ and a **negaton** $`-1`$. (That is their
-  meaning in the compensated layer; the words have a second meaning
-  elsewhere; see [positon, negaton](docs/GLOSSARY.md#positon-negaton).)
-- A **body** is an unpaired positon or negaton: one that contributes to the
-  observable.
-- A **sea pair** is a co-located positon–negaton pair. It contributes zero
-  to the observable and is live in the dynamics.
+- A **world** (or, in the older notes, **carrier**) is a point in the phase
+  space of the whole configuration with a sign and a clock: for $`N`$
+  particles in three dimensions, a point of $`\mathbb R^{6N}`$. For one
+  particle it is a point $`(x, p)`$, and the one-particle notes also call it
+  a **world-particle**.
+- A **world-particle** is one particle as it appears in one world. It has no
+  sign or clock of its own; it shares its world's. A **particle** is the
+  identity that recurs in every world; its state is a marginal of the
+  ensemble.
+- A **positon** is a world of sign $`+1`$ and a **negaton** a world of sign
+  $`-1`$. (That is their meaning in the compensated layer; the words have a
+  second meaning elsewhere; see [positon, negaton](docs/GLOSSARY.md#positon-negaton).)
+- An **unpaired world** is a positon or negaton that is not half of a sea
+  pair: one that contributes to the observable. (The older notes say
+  *body*.)
+- A **sea pair** is a co-located, aligned positon–negaton pair of worlds. It
+  contributes zero to the observable and is live in the dynamics.
 
-The **ledger** counts them. Per cell: $`n_+`$ positon bodies, $`n_-`$
-negaton bodies, and $`S`$ sea pairs, with $`N = n_+ + n_-`$ the body count.
-The observable is $`n_+ - n_-`$; the ledger is everything else (§8).
+The **ledger** counts them. Per cell: $`n_+`$ unpaired positons, $`n_-`$
+unpaired negatons, and $`S`$ sea pairs, with $`N = n_+ + n_-`$ the
+unpaired-world count. The observable is $`n_+ - n_-`$; the ledger is everything else (§8).
 
 ---
 

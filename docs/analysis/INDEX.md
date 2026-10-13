@@ -52,7 +52,7 @@ Theorem and open-item labels are shared across the whole of `docs/`. Each note u
 | Q | step 23 (Q1–Q12); postulate (S′) in step 23, amended in step 24 | Not the channel index q of the kernel, nor the channel set Q of the demos. |
 | V | step 24 (V1–V10); Definitions (F) and (C); the amendment of (S′) | Not the conditions (V1)–(V4) of step 4 §13, nor the potential V(x); neither is a label. Definition (F) is not the field F of any note, and Definition (C) is not a constant C. |
 | Z | step 19 (Z1–Z5) | — |
-| WC | step 25 (WC0–WC5) | The first two-letter prefix: every single letter is taken. "World clock". |
+| WC | step 25 (WC0–WC6) | The first two-letter prefix: every single letter is taken. "World clock". |
 | Thm 1–4, Lem 0–5, Prop 1–3, Cor 4.x | steps 4 and 5 | Numbered without a letter; later notes cite them as 'Theorem 4', 'Lemma 4', 'Proposition 3'. |
 | F, H, J, T, W | supplement: four_action_foundations (F1–F4), holland_two_fluid_correspondence (H1–H7), emission_and_absorption (J1–J2), takabayasi_1954_stochastic_picture (T-series), limkumnerd_weighted_paths (W1–W5) | Cited from the analysis notes; see §9. |
 
@@ -145,7 +145,7 @@ Kept apart from the results because a postulate is what everything else assumes,
 
 | ID | § | Says | Standing |
 |---|---|---|---|
-| [Def WC0](world_clocks.md#1-three-words) | 1 | A world is a signed point of the whole configuration's phase space with one phase clock; world-particle is the same object; a particle is a constituent, the projection of a world on one particle's coordinates, with no sign, clock or bank of its own; body stays the ledger's unpaired world. | the vocabulary is WC-SP1 |
+| [Def WC0](world_clocks.md#1-worlds-world-particles-and-particles) | 1 | For N particles in three dimensions: a world is a point of R^6N with a sign and one phase clock (and its banks, one per bond); a positon or negaton is a world of sign ±1; a world-particle is particle i in world w, with no sign, clock or bank of its own; a particle is the identity recurring in every world, its state a marginal; an unpaired world is one not half of an aligned pair. | amended October 2026 (world-particle redefined; body retired, WC-SP1) |
 
 ## 4. Results by note
 
@@ -486,11 +486,12 @@ No labelled results. See the note's own sections.
 
 | ID | § | Says | Standing |
 |---|---|---|---|
-| [Prop WC1](world_clocks.md#34-proposition-wc1-the-phase-clock-belongs-to-the-world) | 3.4 | The P1 clock belongs to the world. Particle clocks sum to it only without interaction; for a pair potential particle clocks either count the interaction Lagrangian twice (each with the whole v) or each wind with a share α_i, and a particle's own misalignment winds at α_i U, not U. Clocks split along the Lagrangian's additive sectors (centre of mass, relative motion), not along particles. | — |
-| [Thm WC2](world_clocks.md#52-theorem-wc2-what-a-particle-reads) | 5.2 | Pair potential, three readings: the joint chord (W), each particle's own chord with the whole v (B1), with v split (B2). B1 agrees with W only at linear order (difference −a₃y₁y₂(y₁ − y₂) + O(y⁵)); B2 reads half the force. B1's relative marginal obeys the QLE with ℏ → ℏ/2 in the residual, exactly; B1 leaves the P-marginal alone and adds 3∂_P²∂_pr ℏ²v‴/24, a centre-of-mass–relative coupling QM lacks. | extends Prop M1 |
+| [Prop WC1](world_clocks.md#34-proposition-wc1-the-phase-clock-belongs-to-the-world) | 3.4 | The P1 clock belongs to the world. World-particle clocks sum to it only without interaction; for a pair potential world-particle clocks either count the interaction Lagrangian twice (each with the whole v) or each wind with a share α_i, and a world-particle's own misalignment winds at α_i U, not U. Clocks split along the Lagrangian's additive sectors (centre of mass, relative motion), not along particles. | — |
+| [Thm WC2](world_clocks.md#52-theorem-wc2-what-a-world-particle-reads) | 5.2 | Pair potential, three readings: the joint chord (W), each world-particle's own chord with the whole v (B1), with v split (B2). B1 agrees with W only at linear order (difference −a₃y₁y₂(y₁ − y₂) + O(y⁵)); B2 reads half the force. B1's relative marginal obeys the QLE with ℏ → ℏ/2 in the residual, exactly; B1 leaves the P-marginal alone and adds 3∂_P²∂_pr ℏ²v‴/24, a centre-of-mass–relative coupling QM lacks. | extends Prop M1 |
 | [Cor WC3](world_clocks.md#53-corollary-wc3-what-b1-does-to-a-state-quantum-mechanics-keeps-fixed) | 5.3 | From g(P) ⊗ W_χ: W keeps the product; B1's relative marginal is the ℏ/2 von Neumann evolution of ρ′(a, b) = χ((3a − b)/2)χ*((3b − a)/2); B1 correlates P with the relative motion. Measured: separability 7×10⁻¹⁵ (W) against 0.2 (B1); B1 follows the exact ℏ/2 reference within the mesh's error and sits 0.17–0.18 from QM; Eckart transmission 0.517 (B1) against 0.549 (W) at reach 8π, exact 0.5120 and 0.5441. | — |
-| [Prop WC4](world_clocks.md#54-proposition-wc4-banks-live-on-bonds) | 5.4 | For pair potentials the world's residual is a sum of pair-exchange symbols, so a world carries one bank per bond (N(N − 1)/2 for N fully coupled particles), none per particle; a three-body term's bank lives on the triple, a general V's on the joint chord. | restates Prop Q11 for several particles (§7.2) |
-| [Prop WC5](world_clocks.md#73-proposition-wc5-banks-in-the-particle-ensemble-part-c) | 7.3 | Measured with Q11's integrate-and-fire banks (8 seeds, ν = 10⁵ and 10⁶): world banks never move a daughter off its parent's P, particle banks always do; each realises its own generator up to the contact sink's bias (B1's cov(P², v) −0.472 ± 0.003 against −0.501 on the mesh at t = 0.25; W's 0.002 ± 0.001 against 0); particle banks carry more worlds and heat the unsigned ⟨P²⟩ (76 against 2.1 at t = 1, ν = 10⁵) while the signed marginal stays exact; the sink biases ⟨v⟩ by +0.19 to +0.28 at t = 4 (M9). | — |
+| [Prop WC4](world_clocks.md#54-proposition-wc4-banks-live-on-bonds) | 5.4 | For pair potentials the world's residual is a sum of pair-exchange symbols, so a world carries one bank per bond (N(N − 1)/2 for N fully coupled particles), none per world-particle; a three-body term's bank lives on the triple, a general V's on the joint chord. | restates Prop Q11 for several particles (§7.2) |
+| [Prop WC5](world_clocks.md#73-proposition-wc5-banks-in-the-world-ensemble-part-c) | 7.3 | Measured with Q11's integrate-and-fire banks (8 seeds, ν = 10⁵ and 10⁶): world banks never move a daughter off its parent's P, world-particle banks always do; each realises its own generator up to the contact sink's bias (B1's cov(P², v) −0.472 ± 0.003 against −0.501 on the mesh at t = 0.25; W's 0.002 ± 0.001 against 0); world-particle banks carry more worlds and heat the unsigned ⟨P²⟩ (76 against 2.1 at t = 1, ν = 10⁵) while the signed marginal stays exact; the sink biases ⟨v⟩ by +0.19 to +0.28 at t = 4 (M9). | — |
+| [Prop WC6](world_clocks.md#11-proposition-wc6-a-worlds-history) | 1.1 | Under (E), (S′) as amended in step 24 and (D) read with persistent identity: worlds and their signs are conserved (ΔN + 2ΔS = 0); between events every world-particle is Newtonian while its world is unpaired and inertial while it is dark, its clock winding by P1; at an event positions are continuous and momenta jump only along the event's term (a bond: ±ξ, ∓ξ, total momentum unchanged), moving the members of an aligned pair (emission) or two unpaired worlds (absorption), never the parent; all worlds share one time. | — |
 
 ## 5. No-go and negative results
 
@@ -529,7 +530,7 @@ Results that say something cannot be done. Each is as valuable as a positive res
 | Step 24 — [Prop V4](sea_depletion.md#5-proposition-v4-granular-supply) | A sea at the physical density B that is a strict integer supply: one pair per event aperture blocks about e⁻¹ of emissions and moves E by 37 to 88 per cent. | The sea is a ledger, not a supply, or a supply deep enough to hide (seven to nine pairs per aperture for a part in a thousand in E; about twelve to block fewer than one emission in a thousand, V6). Two coupled bodies need more (V7). |
 | Step 24 — [Prop V12](sea_depletion.md#45-proposition-v12-the-clock-at-a-collision) | Pair collisions realised as catalysed three-body events (a third pair fires the kernel, two others donate): no allocation gives zero flux on a uniform row, and absorptive first clumps the sea. Also a chord firing its own event one for one, which runs 8.6 to 16.2 times the kernel. | A two-body sea reader: the firing pair moves itself and one partner (V12(c)); the kernel is the chords' interference sum, not their gross count. |
 | Step 24 — [Prop V11](sea_depletion.md#44-proposition-v11-the-reach-in-long-runs) | Uniform pair collisions, at a rate that does not grow with the event rate, bounding the sea's depth at large reach in a bound system. | Collisions at the kernel's rate, which keeps pace by construction. |
-| Step 25 — [Thm WC2](world_clocks.md#52-theorem-wc2-what-a-particle-reads), [Prop WC4](world_clocks.md#54-proposition-wc4-banks-live-on-bonds) | A bank (or reading) owned by a particle cannot realise a pair potential's residual beyond linear order, under any split of the interaction between particle clocks. | Banks belong to the world's bonds; readings to the world's joint chord. |
+| Step 25 — [Thm WC2](world_clocks.md#52-theorem-wc2-what-a-world-particle-reads), [Prop WC4](world_clocks.md#54-proposition-wc4-banks-live-on-bonds) | A bank (or reading) owned by a world-particle cannot realise a pair potential's residual beyond linear order, under any split of the interaction between particle clocks. | Banks belong to the world's bonds; readings to the world's joint chord. |
 
 ## 6. Corrections and retractions
 
@@ -573,6 +574,7 @@ What each note corrected in an earlier statement, most of which the earlier stat
 | Step 24 | step 23 §9.4(g) ("depth is no observable") and Q-SP2 | Holds for every rule that does not read the sea; under a floor, depth is observable below λ* (mean field) and below about ln(C/δ) for an integer sea. Q-SP2 answered: supply becomes limiting below λ*, which grows with time in a bound anharmonic system. [§9](sea_depletion.md#9-corrections). |
 | Step 24 (second addendum) | step 23 Props Q3, Q7 (deficits stay in their rows, not refilled), Q4 and §§8–9 | Describe (S′) as first stated; under the amendment (pair collisions) deficits relax and the depth the floor needs stops growing (V10). Q4's tagged crossings and the readings of §§8–9 ran with pairs keeping their rows; not re-measured (V-SP8). [§9](sea_depletion.md#9-corrections). |
 | Step 24 (third addendum) | its own §4.3 (4π row of the reach table), §0 and V10(d) ("every case run"), §6.1 ("short in all three") | The 4π row ran at Δt = 0.02, about 5 per cent off (0.426, not 0.446, emissive with collisions; §8.1). "Every case run" holds at the default reach; at 4π in the well uniform collisions fail (V11). The physical density is short for two coupled bodies only under (S′) unamended (V14). [§9](sea_depletion.md#9-corrections). |
+| Step 25 (amendment) | ORIENTATION §2.3 and the glossary (world-particle = world); the word *body* in all notes | A world-particle is one particle in one world, not the world; the two coincide only for one particle, so no one-particle result changes. *Body* is retired: *unpaired world* in the ledger sense, *particle* in steps 21 and 24 (Def WC0, WC-SP1). |
 
 ## 7. Open items
 
@@ -857,12 +859,12 @@ Labelled items link to their line; the unlabelled items of the older notes are g
 
 | ID | Question | Status | Related |
 |---|---|---|---|
-| [WC-SP1](world_clocks.md#11-open-items) | Vocabulary: keep body for an unpaired world and particle for a constituent across the glossary and steps 21 and 24? | open | Def WC0 |
+| [WC-SP1](world_clocks.md#11-open-items) | Vocabulary: keep body for an unpaired world and particle for a constituent across the glossary and steps 21 and 24? | answered: body retired for unpaired world and particle; world-particle redefined (Def WC0, October 2026) | Def WC0 |
 | [WC-SP2](world_clocks.md#11-open-items) | The live reading in four dimensions: can a sea whose chords lie along the relative direction feed a bond's bank at a usable density (Q12 for two particles)? | open | Prop Q12, Q-SP13 |
 | [WC-SP3](world_clocks.md#11-open-items) | Where a bank's memory is held: by the reader, or by the chords it reads; would the latter remove Q11's hidden initial phases? | open | Q-SP14 |
 | [WC-SP4](world_clocks.md#11-open-items) | Three-body and general potentials: channels indexed by joint transfers; how do the channel count and cost scale with the order of the interaction? | open | Prop WC4 |
 | [WC-SP5](world_clocks.md#11-open-items) | Is B1, or its ℏ/2 relative motion, the Wigner image of a recognised mean-field approximation? | open | Thm WC2 |
-| [WC-SP6](world_clocks.md#11-open-items) | The particle-bank ensemble's cost at longer times, with an absorptive ledger in place of emission and a contact sink. | open | Prop WC5 |
+| [WC-SP6](world_clocks.md#11-open-items) | The world-particle-bank ensemble's cost at longer times, with an absorptive ledger in place of emission and a contact sink. | open | Prop WC5 |
 
 ## 8. Defects found in demos
 
