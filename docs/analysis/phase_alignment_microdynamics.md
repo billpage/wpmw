@@ -501,7 +501,7 @@ of the 1924 thesis *Recherches sur la théorie des quanta* (Ann. de Phys.
 (10) **3**, 22, 1925; English translation by Kracklauer, linked in
 `references/bibliography.md`). De Broglie sets an internal periodic
 phenomenon of rest frequency $\nu_0 = m_0c^2/h$ against the
-quantum-relation frequency of the moving body, observes that the two
+quantum-relation frequency of the moving particle, observes that the two
 disagree, and resolves it by requiring that the internal phenomenon stay
 constantly in phase with an accompanying wave. That is a
 carried-phase-versus-transported-phase agreement condition, which is the

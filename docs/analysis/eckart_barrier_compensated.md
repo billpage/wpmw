@@ -1,6 +1,6 @@
 # The Eckart barrier: tunnelling as an imbalance in separatrix traffic
 
-> The first open-line test problem that actually exercises the hop channel against a closed form. Theorem E7 rules out polynomials (no jump measure without a reach) and Theorem I4 rules out the harmonic and inverted harmonic alike (no jump channel at all), which between them had left the project without one. The Eckart pair barrier `V₀ sech²(r/a)` is bounded, asymptotically free on both sides, has a non-vanishing third derivative, and has an exact transmission coefficient. Theorem K1 generalises C6: the reach ceiling is the distance to the nearest *complex* singularity of `V`, so Coulomb's real-axis pole is the special case, sech² has the uniform ceiling `y_max < πa/2`, and for a soft core the softening length **is** the ceiling — with the corollary that `Δp > ℏ/a`, so fewer than `β` rungs span the barrier's own momentum scale and a reach-limited lattice cannot resolve the packet at all. Theorem K2 gives the exact far-field law, the hyperbolic continuation of Lemma C0, and corrects §5.1 of the splitting note: for an exponential tail the reach *rescales* the interaction profile rather than translating it. Theorem K3: weighted by the potential's own spectrum the budget ratio saturates at 1 from below, so on the open line compensation never loses — the opposite of the ring, where §6.3 pins it at 1. Theorems K4–K6 are the point. The classical outcome functional is exactly invariant under streaming plus deterministic acceleration, so the entire quantum correction to the transmission is delivered by the residual channel (0.044475 measured against a closed-form 0.044134); that correction arrives as a small imbalance between two large opposed flows of positon–negaton pairs across the classical separatrix, net/gross = 0.19; and the cancellation tightens as `1/β`, because a packet centred on the barrier kills the slope term and leaves only the Jacobian `dp/dE` across the tunnelling window — so resolving `T` to fixed relative accuracy costs `β²` particles, and the semiclassical limit is the expensive one. Extended after the fact with §8.4, which prices the classical-trajectory ontology on this barrier: Proposition K8 shows momentum conservation forces the emitted pair to be an *ionised* neutral pair co-located with the parent, and that `Gamma` is a horizon parameter rather than a property of the potential. Theorem K9 gives the supply condition `min(u+, u-) >= (dt/2)(|K| * N)` for the ledger to close with every trajectory Newtonian; it fails only where the minority species is exactly zero, which for a positive initial `W` is everywhere at `t=0`, so the ensemble must bootstrap. A standing dressed population `rho` of 3 to 10 at reach `4 pi a` is the usable window, and in world-particles that is three to ten unpaired bodies against a sea of exactly two pairs per Planck cell.
+> The first open-line test problem that actually exercises the hop channel against a closed form. Theorem E7 rules out polynomials (no jump measure without a reach) and Theorem I4 rules out the harmonic and inverted harmonic alike (no jump channel at all), which between them had left the project without one. The Eckart pair barrier `V₀ sech²(r/a)` is bounded, asymptotically free on both sides, has a non-vanishing third derivative, and has an exact transmission coefficient. Theorem K1 generalises C6: the reach ceiling is the distance to the nearest *complex* singularity of `V`, so Coulomb's real-axis pole is the special case, sech² has the uniform ceiling `y_max < πa/2`, and for a soft core the softening length **is** the ceiling — with the corollary that `Δp > ℏ/a`, so fewer than `β` rungs span the barrier's own momentum scale and a reach-limited lattice cannot resolve the packet at all. Theorem K2 gives the exact far-field law, the hyperbolic continuation of Lemma C0, and corrects §5.1 of the splitting note: for an exponential tail the reach *rescales* the interaction profile rather than translating it. Theorem K3: weighted by the potential's own spectrum the budget ratio saturates at 1 from below, so on the open line compensation never loses — the opposite of the ring, where §6.3 pins it at 1. Theorems K4–K6 are the point. The classical outcome functional is exactly invariant under streaming plus deterministic acceleration, so the entire quantum correction to the transmission is delivered by the residual channel (0.044475 measured against a closed-form 0.044134); that correction arrives as a small imbalance between two large opposed flows of positon–negaton pairs across the classical separatrix, net/gross = 0.19; and the cancellation tightens as `1/β`, because a packet centred on the barrier kills the slope term and leaves only the Jacobian `dp/dE` across the tunnelling window — so resolving `T` to fixed relative accuracy costs `β²` particles, and the semiclassical limit is the expensive one. Extended after the fact with §8.4, which prices the classical-trajectory ontology on this barrier: Proposition K8 shows momentum conservation forces the emitted pair to be an *ionised* neutral pair co-located with the parent, and that `Gamma` is a horizon parameter rather than a property of the potential. Theorem K9 gives the supply condition `min(u+, u-) >= (dt/2)(|K| * N)` for the ledger to close with every trajectory Newtonian; it fails only where the minority species is exactly zero, which for a positive initial `W` is everywhere at `t=0`, so the ensemble must bootstrap. A standing dressed population `rho` of 3 to 10 at reach `4 pi a` is the usable window, and in world-particles that is three to ten unpaired worlds against a sea of exactly two pairs per Planck cell.
 
 *Ladder abstract — see the [full list](README.md#the-ladder).*
 
@@ -466,7 +466,7 @@ now fixes them against their sources: a **jump** is the mediated transfer of
 [`../algorithm/phase_space_crystal_lattice_algorithm.md`](../algorithm/phase_space_crystal_lattice_algorithm.md)
 §3b, in which the mediator is unchanged; a **hop** is Right-Hop or Left-Hop of
 [`four_rule_microdynamics_equivalence.md`](four_rule_microdynamics_equivalence.md)
-§2, in which one body is carried from momentum cell $`n - q`$ to $`n + q`$.
+§2, in which one unpaired world is carried from momentum cell $`n - q`$ to $`n + q`$.
 The argument below is unchanged and the labels are now the right way round.
 
 The same argument is made pictorially in §4 and §9 of [`../supplement/emission_and_absorption.md`](../supplement/emission_and_absorption.md), where the two
@@ -491,7 +491,7 @@ Two refinements of that sentence, both established after this note was first
 written and both needed before the ensemble can actually be run.
 
 **Proposition K8 (the pair is ionised, not created).** If the event conserves
-body momentum and the parent streams on undisturbed, the pair it produces must
+unpaired-world momentum and the parent streams on undisturbed, the pair it produces must
 come from a bound sea pair sitting at the parent's *own* momentum row.
 
 *Proof.* The children carry $`(p + \xi_q) + (p - \xi_q) = 2p`$. A neutral
@@ -603,8 +603,8 @@ identity is exactly what the ontology has not yet fixed. It holds as written
 under birth and death. Under the piecewise reading of
 [`dark_sea_and_worldline_identity.md`](dark_sea_and_worldline_identity.md) §6,
 where world-particles are conserved and kinks come in opposite-species pairs,
-no body is ever in a classically forbidden place either — but individual
-bodies do cross the separatrix, in both directions, at a rate set by the
+no unpaired world is ever in a classically forbidden place either — but individual
+unpaired worlds do cross the separatrix, in both directions, at a rate set by the
 momentum diffusion of Theorem Y6, which no observable records. The demographic
 account of `E` is untouched by the choice; the sentence about *a world* is not.
 
@@ -644,9 +644,9 @@ as integration error rather than as variance.
 **The repair keeps every trajectory classical.** A deposition of $`-1`$ at a
 cell can be realised by *removing a positon* there instead of adding a negaton;
 the two are identical in $`E`$. Run that way the event consumes two unpaired
-bodies of opposite species from the two daughter rows and binds them into a
+worlds of opposite species from the two daughter rows and binds them into a
 neutral pair at the parent row — the exact reverse of Proposition K8, and
-equally free of any momentum jump. Bodies are still only ever created and
+equally free of any momentum jump. Unpaired worlds are still only ever created and
 destroyed in pairs, never moved. With absorptive fraction $`f`$ over
 $`n_{\rm ev}`$ events the ledger reads $`\Delta N = 2(1-2f)n_{\rm ev}`$ and
 $`\Delta S = (2f-1)n_{\rm ev}`$, so $`f = 1/2`$ closes the population and the
@@ -708,7 +708,7 @@ up to the $`D/2`$ the ledger needs, so the reserve is not eaten:
 
 The shortfall falls roughly as $`\rho^{-2/3}`$ and does not stop, so there is
 no finite $`\rho`$ at which the ledger closes exactly — but there is no
-obstruction either. The cost is not the bodies, it is the amplification again:
+obstruction either. The cost is not the unpaired worlds, it is the amplification again:
 by $`\rho = 100`$ the QLE fidelity has degraded by a factor of 25 at fixed
 $`\Delta t`$, because $`E`$ is once more a difference of two nearly equal
 populations. **$`\rho \approx 3`$ to 10 at $`y_{\max} = 4\pi a`$ is the
@@ -728,7 +728,7 @@ is 2 per $`h`$-cell and the unpaired population is $`2\rho`$ per $`h`$-cell:
 | 10 | 11 : 9 | 1/10 |
 
 At one world-particle per unit of net weight, the whole ontological content of
-a tunnelling event on this barrier is **three to ten unpaired bodies**, two
+a tunnelling event on this barrier is **three to ten unpaired worlds**, two
 positons to one negaton at $`\rho = 3`$, moving through a sea of two pairs per
 Planck cell. Every one of them Newtonian for its entire life.
 
@@ -875,7 +875,7 @@ $`\beta`$ on log axes against $`0.55/\beta`$.
   Unmeasured.
 - **K-LS8 (the box).** The sea is uniform at two pairs per $`h`$-cell, so its
   total scales with the phase-space volume of the simulation, while the
-  unpaired population does not: the sea outnumbers the bodies of §8.4 by
+  unpaired population does not: the sea outnumbers the unpaired worlds of §8.4 by
   40 to 140 to one in the §5 domain, and by more if the domain is widened. On
   a closed system that ratio would be physics; on the open line it is a
   boundary choice. Presumably only the sea within the packet's support ever

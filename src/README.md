@@ -931,7 +931,7 @@ see that directory's README for the ladder itself.
   `docs/analysis/sea_population_equilibrium.md`, which prices the
   positon/negaton unravelling that the compensated specification recommends
   but leaves uncosted (open item CLA3).  Three fields per cell: the observable
-  `E = u+ - u-`, the body count `N = u+ + u-`, and the bound sea `S` against
+  `E = u+ - u-`, the unpaired-world count `N = u+ + u-`, and the bound sea `S` against
   the background `B = 2/h`.  Parts A–C establish that the Moyal equation
   constrains only `E`, that any `E`-preserving sink is bilinear, and that the
   `N` equation runs under the *absolute-value* kernel with the closed-form
@@ -940,7 +940,7 @@ see that directory's README for the ladder itself.
   pure-positon ensemble.  Part C measures what the specification's rate
   `R = sum_q |K_res|` actually does: it debits the sea at the parent momentum
   row and credits it at the daughter rows, so the mean occupancy is conserved
-  while the worst cell drains without bound.  Part D is the body-momentum
+  while the worst cell drains without bound.  Part D is the unpaired-world-momentum
   table that forbids a mixed realisation, and hence forces the emissive /
   absorptive choice to be made per event rather than per leg.  Part E verifies
   the ledger identity `dN = 2(1-2f) n_ev`, `dS = (2f-1) n_ev` to 1.5e-14 and
@@ -954,7 +954,7 @@ see that directory's README for the ladder itself.
   ensemble with +- pairs to a ratio rho = N0/|E| spanning a factor twenty and
   traces the instantaneous absorptive fraction, which converges on 1/2 from
   above and from below (0.816 -> 0.527 at rho = 20; 0.458 -> 0.427 at rho = 1)
-  — so the ledger closes with no tuning, though the body count keeps its
+  — so the ledger closes with no tuning, though the unpaired-world count keeps its
   preparation memory.  I re-runs the tau-leap under five channel orderings:
   the observable moves by 3e-3 against a splitting error of 1e-2, but N(T)
   moves by ~14%, so the ledger figures carry a method uncertainty the fidelity
@@ -984,7 +984,7 @@ see that directory's README for the ladder itself.
 
   ![Emissive against absorptive](https://raw.githubusercontent.com/billpage/wpmw/output/figures/sea_population_unravelling.png)
 
-  The body count and the worst-cell sea occupancy for the two unravellings on
+  The unpaired-world count and the worst-cell sea occupancy for the two unravellings on
   log axes, and the fidelity of each against the exact mesh QLE as dt falls.
 
   ![The ledger identity](https://raw.githubusercontent.com/billpage/wpmw/output/figures/sea_population_ledger_identity.png)
@@ -995,7 +995,7 @@ see that directory's README for the ladder itself.
   ![The attractor](https://raw.githubusercontent.com/billpage/wpmw/output/figures/sea_population_attractor.png)
 
   Left: the instantaneous absorptive fraction from four initial ratios,
-  converging on f = 1/2 from both sides.  Right: the body count for the same
+  converging on f = 1/2 from both sides.  Right: the unpaired-world count for the same
   four runs, which does not converge — only f is preparation-independent.
 
   ![The horizon ladder](https://raw.githubusercontent.com/billpage/wpmw/output/figures/sea_population_horizon_ladder.png)
@@ -1064,10 +1064,10 @@ see that directory's README for the ladder itself.
   null direction of the observable map.  Part B is the note's centre: the
   stationary sum rule `Gamma_tot (1 - 2f) = R_sink`, verified to between
   1e-4 and 9e-3 relative over `kappa` from 0.05 to 2, so `f = 1/2` is the
-  sinkless special case and every body sink moves `f` below it by exactly
+  sinkless special case and every unpaired world sink moves `f` below it by exactly
   half its share of the event rate.  Part C holds the mixing rate fixed and
   varies `gamma` over 32x: `f` stays between 0.49977 and 0.50013 throughout,
-  and the mean body count per cell reads 2.4487 at the well-mixed end against
+  and the mean unpaired-world count per cell reads 2.4487 at the well-mixed end against
   the closure's 2.4559.  Part D scans the channel count `Q` from 1 to 12 and
   finds the standing population flat to half a per cent, as a closure with no
   channel index in it requires.  Part E scans `M` from 8 to 128 and confirms
@@ -1089,7 +1089,7 @@ see that directory's README for the ladder itself.
   ![Relaxation](https://raw.githubusercontent.com/billpage/wpmw/output/figures/stochastic_ledger_relaxation.png)
 
   One exact trajectory started at four times the equilibrium population,
-  against the closure's derived `2 lam* = 2.4559` bodies per cell.  Nothing in
+  against the closure's derived `2 lam* = 2.4559` unpaired worlds per cell.  Nothing in
   the run is told where to go.
 
 - `demo_soft_core_coulomb.py` — verification companion to
@@ -1140,8 +1140,8 @@ see that directory's README for the ladder itself.
   the first `y`-derivative of `rho(x+y, x-y)` at zero separation -- against
   `|psi|^2 p0 / m`, to five figures.  Part A2 measures the two quantities both
   called `mu` side by side: the ladder's, winding at `p / hbar` between the two
-  legs of one body, and the sea pair's, winding at `(p_a - p_b) / hbar` between
-  two bodies, with the pair amplitude `2 |sin(mu/2)|` that makes a co-moving
+  legs of one particle, and the sea pair's, winding at `(p_a - p_b) / hbar` between
+  two worlds, with the pair amplitude `2 |sin(mu/2)|` that makes a co-moving
   pair dark for all time.  Part C runs the
   measurement that separates aperture from period on `V = cos(2 pi x / 4)`:
   sharp and commensurate is exact, sharp and incommensurate is off by 6.2x,
@@ -1180,7 +1180,7 @@ see that directory's README for the ladder itself.
 - `demo_fourd_compensated_ledger.py` — verification companion to
   `docs/analysis/fourd_compensated_ledger.md` (step 21): the compensated
   world form taken into the 4D phase space of two particles on a line, with
-  the ledger on exact integer counts and bodies carrying their own sub-cell
+  the ledger on exact integer counts and unpaired worlds carrying their own sub-cell
   positions.  The pair potential is the attractive Pöschl–Teller well
   `-6 sech^2(r)` (exact bound states), the centre of mass sits in a harmonic
   trap that costs no events, and the bin area `A` in the centre-of-mass
@@ -1188,23 +1188,23 @@ see that directory's README for the ladder itself.
   as an exact 4D reference (transmission 0.544134 against 0.544156 closed
   form; out-state entropy 0.976 nats).  Part K compares the residual kernel
   with the uncompensated one on the same lattice (event-rate ratio 0, 0.834,
-  2.825 for harmonic, cosine, Pöschl–Teller).  Part S is the scan: the body
+  2.825 for harmonic, cosine, Pöschl–Teller).  Part S is the scan: the unpaired-world
   count follows the occupied joint cells at 2.4 to 4.6 per cell, and
   `A = h` and `h/4` multiply the saturated count by 4.8 and 13.2.  Part X
   doubles the window and the count rises again.  Part B shows that at
   `A = inf` partners from the wrong centre-of-mass component shift the
   conditional `<V>` by about 4 within a quarter time unit.  Part W finds the
   same trade-off inside the 1D cell: a `<V>` bias of +0.133 at `t = 1`,
-  reduced by finer matching cells at up to 4.2 times the bodies.  Parts run
+  reduced by finer matching cells at up to 4.2 times the unpaired worlds.  Parts run
   separately (`... demo_fourd_compensated_ledger.py S`); the whole takes
   about five minutes.
 
   ![The compensated ledger in four dimensions](https://raw.githubusercontent.com/billpage/wpmw/output/figures/fourd_compensated_ledger.png)
 
-  (a) Body count against time for each `A`; (b) body count against occupied
+  (a) Unpaired-world count against time for each `A`; (b) unpaired-world count against occupied
   cells, one line for every run; (c) conditional `<V>` on each side of the
   centre-of-mass bisector at `A = inf` and `A = h`; (d) the within-cell bias
-  against the body count as the matching cell is refined.
+  against the unpaired-world count as the matching cell is refined.
 
 - `demo_world_clocks.py` — companion to `docs/analysis/world_clocks.md`
   (step 25): where a reading lives in a world of two particles.  Two unit
@@ -1423,19 +1423,19 @@ see that directory's README for the ladder itself.
 
 - `demo_dark_sea_and_identity.py` — verification companion to
   `docs/analysis/dark_sea_and_worldline_identity.md`, on what makes the sea
-  dark and what stays the same body through an event.  Part A is the note's
+  dark and what stays the same unpaired world through an event.  Part A is the note's
   sharpest test, run first: `K(lam V) = lam K(V)` to machine precision over
   `lam` from `1e-3` to `-1`, so the compensated vertex reads the potential
   itself and the phase-blind no-go does not reach it.  Part B settles the
   integer books for the four ways to source a catalysed recombination's two
   legs, all of which move `E` identically, and exhibits the sea-eligible
   realisations whose count signature is exactly the excluded hop.  Part C
-  shows the two consumed bodies are a winding pair centred on the parent's
+  shows the two consumed unpaired worlds are a winding pair centred on the parent's
   row — `| |Psi| - 2|sin(mu/2)| |` at `4e-15`, node spacing `h/|dp|`,
   envelope velocity equal to the parent's — and that binding with continuous
   phases leaves a permanently gray pair.  Part D verifies the phase ramp a
   kink carries: slope `xi/hbar`, zero at the pivot, and a node-located kink
-  equal to a reset of `mu(x*)/2` per body.  Part E tags the incident
+  equal to a reset of `mu(x*)/2` per unpaired world.  Part E tags the incident
   positons and follows them through both processes: zero mean kick,
   `Gamma(0) = 0` at the summit, and a crossing fraction that tracks neither
   the classical nor the quantum transmission.  `--full` reproduces the
@@ -1469,7 +1469,7 @@ see that directory's README for the ladder itself.
 
 - `demo_sea_lock_particles.py` — step 22 sections 5 and 6: world-particles
   with Lagrangian clocks at the Eckart barrier, with the compensated
-  kernel's events, optional re-locking of kinked bodies (`--relock-w`) and
+  kernel's events, optional re-locking of kinked unpaired worlds (`--relock-w`) and
   dark catalysis (`--dark imprint|mean|reach`).  Measures same-row
   sea-clock coherence and the correlation of the pair-sum kernel with `K`.
   The note's commands reproduce its tables; a few seconds per run.  Step 22
@@ -1495,7 +1495,7 @@ see that directory's README for the ladder itself.
   `sea_lock_readers_scan.png`.  About three minutes.
 - `demo_force_blind_sea.py` — step 23 (`force_blind_sea.md`), postulate
   (S′): aligned pairs move inertially.  Part A checks Proposition Q1
-  bitwise (the body fields, so E, N and f, are independent of how the sea
+  bitwise (the unpaired-world fields, so E, N and f, are independent of how the sea
   moves), Part B checks Proposition Q2 with SymPy, Part C measures what
   (S′) does to the step 16 sea (Proposition Q3), and `--heavy` adds Part D,
   Theorem S9's traces under both motions.  Part E checks Proposition Q5
@@ -1549,7 +1549,7 @@ see that directory's README for the ladder itself.
   nothing is annihilated, and that the kinks at birth move particles that
   have left the searched box.  Writes no files.  About two minutes.
 - `demo_sea_resonance_clock.py` — step 23 third addendum: the sea as a
-  resonance clock, every body carrying one integrator per channel fed by
+  resonance clock, every unpaired world carrying one integrator per channel fed by
   its live reading of the sea.  Part A is exact (SymPy and the mesh
   generator): the gauge argument for chords, the kinetic bookkeeping of an
   event, why a crossing cannot trigger an absorption, and the per-parent
@@ -1557,12 +1557,12 @@ see that directory's README for the ladder itself.
   and the Fano factor of deterministic clocks.  Part C: the live reading on
   a static Poisson sea.  Parts D and E: the particle model on the (S′)
   locked sea, open loop (integrated live reading against `K_q` along each
-  body's path) and closed loop (events triggered by Poisson, by
+  unpaired world's path) and closed loop (events triggered by Poisson, by
   integrators fed by the mesh `K_q`, by the live reading, and by the live
   reading with hysteresis; `--events shadow` lets the mesh-fed integrators
   act while the live reading is integrated alongside, never firing).
   `--sea-depth` scales the sea alone, in units of `B`, at fixed packet (step
-  23 §9.4(g)).  `--relock-w W` applies step 22 §6's re-locking to pairs made and bodies
+  23 §9.4(g)).  `--relock-w W` applies step 22 §6's re-locking to pairs made and unpaired worlds
   kinked by events, and the closed loop reports the readers' chord
   coherence.  Open-loop and shadow runs also histogram the sea's structure
   around each reader (`sea_resonance_clock_G<part><tag>.csv`).  Sweeps over

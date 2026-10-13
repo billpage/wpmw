@@ -1,6 +1,6 @@
 # Worlds, particles and clocks: where a reading lives
 
-> Is the reader — its lever, chords and bank of integrators — a property of a particle, or a relation between worlds that a particle inherits? With two particles and a pair potential the question has an answer. **Definition WC0** fixes the words, for `N` particles in three dimensions: a *world* is a signed point of the whole configuration's phase space `R^6N` with one clock; a *world-particle* is one particle as it appears in one world, with no sign, clock or bank of its own; a *particle* is the identity that recurs in every world, whose only state is the marginal of the signed ensemble; a *positon* or *negaton* is a world of sign +1 or -1, and an *unpaired world* is one that is not half of an aligned pair. **Proposition WC6** gives a world's history under (S′) with persistent identity: worlds and their signs are conserved, every world-particle moves on Newtonian arcs while its world is unpaired and on inertial arcs while it is dark, momenta kink only at events and only along a bond, the parent of an event never kinks, and all worlds share one time. Two things are called a clock: the phase clock of P1, which winds at the Lagrangian rate and is a gauge except in misalignments across chords, and Q11's counting clock, an integrate-and-fire counter; they are linked through chords, so the counter is the accumulator of a reading, located where a chord's midpoint is. **Proposition WC1**: the phase clock belongs to the world — world-particle clocks count an interaction twice or each carry a share of it, and clocks split along the Lagrangian's sectors (centre of mass, relative motion), not along particles. Unlike Poirier's labelled trajectories or Hall, Deckert and Wiseman's sorted worlds, WPMW asks of the set of worlds only midpoints and difference vectors, plus a phase per world; the VLBI analogy (stations with their own clocks, information only on baselines, a correlator per pair, closure phases) is set out term by term. **Theorem WC2**: reading the joint chord (W) and reading each world-particle's own chord with its clock carrying the whole interaction (B1) agree only at linear order; exactly and to all orders, B1's relative motion is the QLE at `hbar/2`, and B1 adds a coupling `3 d_P^2 d_pr` between centre of mass and relative motion that QM lacks; splitting the interaction between the clocks (B2) halves both and reads half the force. **Corollary WC3**, measured on a `(P, r, p_r)` mesh from a product state QM keeps stationary and separable: W stays separable to `7e-15` while B1's defect is 0.2 by `t = 0.5`; B1 follows the exact `hbar/2` von Neumann reference within the mesh's error and sits 0.17 to 0.18 from QM at every reach; in the Eckart pair collision B1 transmits 0.517 against W's 0.549 at reach `8 pi`, exact 0.5120 and 0.5441. **Proposition WC4**: for pair potentials a world carries one bank per bond, `N(N - 1)/2` for `N` particles like the baselines of an array, and none per world-particle; Q11's bank per free body is the one-particle case. **Proposition WC5**, ensemble runs with integrate-and-fire banks on Kaggle: the world bank never moves a daughter off its parent's centre-of-mass momentum, the world-particle banks always do; each realises its own generator up to the contact sink's bias (B1's covariance of `P^2` with `v` is -0.472 ± 0.003 against -0.501 on the mesh at `t = 0.25`, W's 0.002 ± 0.001 against 0); at `nu = 1e5` the world-particle banks carry 2.8 times the worlds and 36 times the unsigned `<P^2>` by `t = 1`, heating the ensemble's centre of mass while the signed marginal stays exact. A reader is a world, reading the chords of its own configuration along the directions in which its potential has terms.
+> Is the reader — its lever, chords and bank of integrators — a property of a particle, or a relation between worlds that a particle inherits? With two particles and a pair potential the question has an answer. **Definition WC0** fixes the words, for `N` particles in three dimensions: a *world* is a signed point of the whole configuration's phase space `R^6N` with one clock; a *world-particle* is one particle as it appears in one world, with no sign, clock or bank of its own; a *particle* is the identity that recurs in every world, whose only state is the marginal of the signed ensemble; a *positon* or *negaton* is a world of sign +1 or -1, and an *unpaired world* is one that is not half of an aligned pair. **Proposition WC6** gives a world's history under (S′) with persistent identity: worlds and their signs are conserved, every world-particle moves on Newtonian arcs while its world is unpaired and on inertial arcs while it is dark, momenta kink only at events and only along a bond, the parent of an event never kinks, and all worlds share one time. Two things are called a clock: the phase clock of P1, which winds at the Lagrangian rate and is a gauge except in misalignments across chords, and Q11's counting clock, an integrate-and-fire counter; they are linked through chords, so the counter is the accumulator of a reading, located where a chord's midpoint is. **Proposition WC1**: the phase clock belongs to the world — world-particle clocks count an interaction twice or each carry a share of it, and clocks split along the Lagrangian's sectors (centre of mass, relative motion), not along particles. Unlike Poirier's labelled trajectories or Hall, Deckert and Wiseman's sorted worlds, WPMW asks of the set of worlds only midpoints and difference vectors, plus a phase per world; the VLBI analogy (stations with their own clocks, information only on baselines, a correlator per pair, closure phases) is set out term by term. **Theorem WC2**: reading the joint chord (W) and reading each world-particle's own chord with its clock carrying the whole interaction (B1) agree only at linear order; exactly and to all orders, B1's relative motion is the QLE at `hbar/2`, and B1 adds a coupling `3 d_P^2 d_pr` between centre of mass and relative motion that QM lacks; splitting the interaction between the clocks (B2) halves both and reads half the force. **Corollary WC3**, measured on a `(P, r, p_r)` mesh from a product state QM keeps stationary and separable: W stays separable to `7e-15` while B1's defect is 0.2 by `t = 0.5`; B1 follows the exact `hbar/2` von Neumann reference within the mesh's error and sits 0.17 to 0.18 from QM at every reach; in the Eckart pair collision B1 transmits 0.517 against W's 0.549 at reach `8 pi`, exact 0.5120 and 0.5441. **Proposition WC4**: for pair potentials a world carries one bank per bond, `N(N - 1)/2` for `N` particles like the baselines of an array, and none per world-particle; Q11's bank per unpaired world is the one-particle case. **Proposition WC5**, ensemble runs with integrate-and-fire banks on Kaggle: the world bank never moves a daughter off its parent's centre-of-mass momentum, the world-particle banks always do; each realises its own generator up to the contact sink's bias (B1's covariance of `P^2` with `v` is -0.472 ± 0.003 against -0.501 on the mesh at `t = 0.25`, W's 0.002 ± 0.001 against 0); at `nu = 1e5` the world-particle banks carry 2.8 times the worlds and 36 times the unsigned `<P^2>` by `t = 1`, heating the ensemble's centre of mass while the signed marginal stays exact. A reader is a world, reading the chords of its own configuration along the directions in which its potential has terms.
 
 *Ladder abstract — see the [full list](README.md#the-ladder).*
 
@@ -24,8 +24,8 @@ were described for one degree of freedom, where a world and a particle are
 the same thing and nothing forces a choice of words. Step 21 took the world
 form to two particles, but in centre-of-mass and relative coordinates and
 with Poisson events, so it never had to say who carries a clock or an
-integrator. Step 23's Proposition Q11 gave "every free body" a bank of
-integrators, and Q-SP14 asked whether the bank could instead be the sea's
+integrator. Step 23's Proposition Q11 gave every unpaired world ("every free body",
+in the word of the time) a bank of integrators, and Q-SP14 asked whether the bank could instead be the sea's
 own state. This note asks the question behind both: in a world of several
 particles, which object owns a clock, which reads a chord, and which carries
 a bank?
@@ -95,7 +95,7 @@ only) and its Pöschl–Teller and Eckart references; step 22's chord reading
 (Theorems L1, L8) and step 23's Propositions Q5, Q11 and Q12.
 
 **Corrects.** Nothing in an earlier note is withdrawn. Two readings are
-sharpened and one word is retired. Q11's "every free body carries a bank"
+sharpened and one word is retired. Q11's "every unpaired world carries a bank"
 is the one-particle case of "every world carries one bank per bond"
 (§7.2). The repository's *world-particle* was defined as a world (glossary,
 ORIENTATION §2.3), which is right only for one particle; §1 redefines it.
@@ -143,8 +143,8 @@ one per bond) belong to the world. Then:
   22, L0); it is *dark*, contributing nothing to the observable. An
   **unpaired world** is a world that is not half of an aligned pair. The
   ledger counts unpaired positons and negatons, $`n_+`$ and $`n_-`$, per
-  joint cell. The ledger notes call an unpaired world a *body*, and steps 21
-  and 24 also used *body* for a particle; the word is retired.
+  joint cell. Earlier versions of the ledger notes called an unpaired world a *body*,
+  and steps 21 and 24 also used *body* for a particle; the word is retired.
 
 The state of particle $`i`$ is its reduced Wigner function, read at the
 resolution of a cell:
@@ -731,7 +731,7 @@ as an observation.
 
 ### 7.2 What Q11 becomes
 
-Proposition Q11 placed a bank on "every free body", and the one-particle
+Proposition Q11 placed a bank on every unpaired world, and the one-particle
 ladder could not tell a world-particle's bank from its world's. Theorem WC2 can:
 the bank that realises the generator is indexed by the channels of the
 world's joint chord, and for a pair potential those are exchanges, so it
@@ -740,7 +740,7 @@ world-particle and realises B1. Read in four dimensions, Q11 says: *every world
 carries one bank per bond; each bank's integrators advance by the bond's
 exchange rates and a firing moves both particles of the bond*. For one
 degree of freedom the only bond is the particle's coupling to the external
-potential, which is why "free body" (now *unpaired world*) and "world" gave the same bank.
+potential, which is why "unpaired world" and "world" gave the same bank.
 
 Q-SP14 asked whether the bank could be the sea's own state. §3.3 sharpens
 the question: the integrand is a reading, located at a chord's midpoint, so

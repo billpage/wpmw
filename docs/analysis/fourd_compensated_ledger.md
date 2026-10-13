@@ -1,6 +1,6 @@
 # The compensated ledger in four dimensions: what a cell costs
 
-> The compensated world form taken out of 1+1 dimensions for the first time: two particles on a line, the ledger run on exact integer counts with bodies carrying their own sub-cell positions, and the one cell size nothing fixes — the bin area `A` in the centre-of-mass directions — scanned. Proposition M1: for a pair potential the residual symbol depends on the ket–bra separation only through `y1 - y2`, so every event moves relative momentum and leaves `P` untouched, and Theorem M2 collapses step 10's leak law: under (S) every event is momentum-neutral in every direction and the field's share goes wholly through the force. Corollary M3 turns step 10's worst case into a free one — the harmonic sector carries no events, so Theorem D and the ring-seam obstruction do not arise — while Proposition M4 records that the residual is not always cheaper than the uncompensated kernel on the same lattice (0.83 for a cosine, 2.8 for the attractive Poeschl–Teller well at the ledger runs' reach, as Theorem C4 of step 14 predicts). **Proposition M5 is the note's centre**: the equilibrium body count is proportional to the number of occupied joint cells, 2.4 to 4.6 bodies per cell, so shrinking `A` from infinity to `h` and `h/4` multiplies it by 4.8 and 13.2, with fidelity error growing as its square root. Proposition M6: the cells filled are those escaped bodies reach, not the state's support, and doubling the window raises the count again. Proposition M7 restricts N4 and N5: under real streaming, partner availability is structural, 0.55 to 0.74 whether the mean occupancy of a requested cell is 1.3 or 10.3. Proposition M8 answers step 10's open item 1 for this layer: at `A` infinite, partners drawn from the wrong centre-of-mass component move the conditional potential energy by 4 within a quarter time unit, so co-location in the centre of mass is not a gauge choice. Proposition M9 finds the same trade-off inside the 1D cell, which the mesh ledger cannot show. Corollary M10: the cost is a product over degrees of freedom — the exponential of step 10's Propositions B2 and B3, returned as body inflation now that the sea is no longer a partner.
+> The compensated world form taken out of 1+1 dimensions for the first time: two particles on a line, the ledger run on exact integer counts with unpaired worlds carrying their own sub-cell positions, and the one cell size nothing fixes — the bin area `A` in the centre-of-mass directions — scanned. Proposition M1: for a pair potential the residual symbol depends on the ket–bra separation only through `y1 - y2`, so every event moves relative momentum and leaves `P` untouched, and Theorem M2 collapses step 10's leak law: under (S) every event is momentum-neutral in every direction and the field's share goes wholly through the force. Corollary M3 turns step 10's worst case into a free one — the harmonic sector carries no events, so Theorem D and the ring-seam obstruction do not arise — while Proposition M4 records that the residual is not always cheaper than the uncompensated kernel on the same lattice (0.83 for a cosine, 2.8 for the attractive Poeschl–Teller well at the ledger runs' reach, as Theorem C4 of step 14 predicts). **Proposition M5 is the note's centre**: the equilibrium unpaired-world count is proportional to the number of occupied joint cells, 2.4 to 4.6 unpaired worlds per cell, so shrinking `A` from infinity to `h` and `h/4` multiplies it by 4.8 and 13.2, with fidelity error growing as its square root. Proposition M6: the cells filled are those escaped unpaired worlds reach, not the state's support, and doubling the window raises the count again. Proposition M7 restricts N4 and N5: under real streaming, partner availability is structural, 0.55 to 0.74 whether the mean occupancy of a requested cell is 1.3 or 10.3. Proposition M8 answers step 10's open item 1 for this layer: at `A` infinite, partners drawn from the wrong centre-of-mass component move the conditional potential energy by 4 within a quarter time unit, so co-location in the centre of mass is not a gauge choice. Proposition M9 finds the same trade-off inside the 1D cell, which the mesh ledger cannot show. Corollary M10: the cost is a product over degrees of freedom — the exponential of step 10's Propositions B2 and B3, returned as unpaired-world inflation now that the sea is no longer a partner.
 
 *Ladder abstract — see the [full list](README.md#the-ladder).*
 
@@ -23,7 +23,7 @@ that matter here: that excess worlds essentially never meet once the joint
 lattice has two or more degrees of freedom (Proposition B2), and that the sea,
 present at density $`B`$ in every joint cell, is therefore the only collision
 partner there is. The compensated model has since removed the sea from that
-role. A catalysed recombination consumes two *bodies*, one at each daughter
+role. A catalysed recombination consumes two *unpaired worlds*, one at each daughter
 row, and binds them into a pair at the parent's own row (Proposition S0/K8 of
 the algorithm specification); the sea is a counter, never a partner. Step 10's
 dilution therefore comes back, and this note measures what it costs.
@@ -51,10 +51,10 @@ dilution therefore comes back, and this note measures what it costs.
   population has filled the cells it can reach.
 - **Theorem S9 of [`sea_population_equilibrium.md`](sea_population_equilibrium.md)**,
   sharpened. The attractor holds, but its approach runs through §4's filling,
-  so the body count at which it is reached depends on the window (§5.1).
+  so the unpaired-world count at which it is reached depends on the window (§5.1).
 - **Proposition C4 of step 10** does not transfer (§6). It was stated for a
   transversally uniform sea; the compensated ledger's partners are
-  state-dependent bodies, and the freedom it called invisible corrupts a
+  state-dependent unpaired worlds, and the freedom it called invisible corrupts a
   correlated state within a quarter time unit.
 - **The readiness review's scaling argument**, corrected in mechanism. It
   predicted a per-cell occupancy fixed at $`\lambda^*`$ inside the state's
@@ -64,7 +64,7 @@ dilution therefore comes back, and this note measures what it costs.
 
 What this note does not touch: §8 of
 [`compensated_ontology.md`](compensated_ontology.md) states that the
-compensated symbol carries over to $`N`$ bodies unchanged, and that remains
+compensated symbol carries over to $`N`$ particles unchanged, and that remains
 true of the symbol (Proposition M1 is an instance). What is measured here is
 the world form's cost, which that section does not address.
 
@@ -172,10 +172,10 @@ force.*
 
 *Proof.* An event deposits $`+1`$ at $`\mathbf p + \pmb{\xi}`$ and $`-1`$ at
 $`\mathbf p - \pmb{\xi}`$ and binds or ionises a pair at $`\mathbf p`$
-itself (S0/K8). Counting the created or removed bodies with their momenta,
+itself (S0/K8). Counting the created or removed unpaired worlds with their momenta,
 the displacement is
 $`(\mathbf p + \pmb{\xi} - \mathbf p) + (\mathbf p - \pmb{\xi} - \mathbf p) = 0`$.
-The hops, which would move one body by $`2\pmb{\xi}`$, are excluded by
+The hops, which would move one unpaired world by $`2\pmb{\xi}`$, are excluded by
 (S) (specification §5.3). $`\square`$
 
 Step 10's leak law, Theorem A3, had Focus and Defocus neutral and the hops
@@ -196,14 +196,14 @@ unforced (N-SP2). The $`(X, P)`$ bin is unforced and is the scanned parameter.
 
 ### 2.4 The implementation
 
-Bodies are signed points $`(X, P, r, p_r)`$, each with its own sub-cell
+Unpaired worlds are signed points $`(X, P, r, p_r)`$, each with its own sub-cell
 position. Postulate (S): exact rotation in the centre-of-mass trap, velocity
-Verlet in $`r`$ under the kernel's own first moment. Postulate (D): each body
+Verlet in $`r`$ under the kernel's own first moment. Postulate (D): each unpaired world
 parents Poisson events at rate $`\Gamma(r) = \sum_{q\ge1}\lvert K_q(r)\rvert`$
 per unit time, channel drawn in proportion to $`\lvert K_q\rvert`$, processed
 sequentially in random order with live partner counts (specification §5.5).
 The box is periodic in $`r`$ and in $`p_r`$, as the mesh reference is. The
-initial ensemble samples $`\lvert W\rvert`$ with $`\nu = 4000`$ signed bodies
+initial ensemble samples $`\lvert W\rvert`$ with $`\nu = 4000`$ signed unpaired worlds
 per unit of $`\lVert W\rVert_1`$ and is padded with co-located $`\pm`$ pairs to
 $`\rho = 3`$, which leaves $`E`$ unchanged in every cell under any binning.
 $`\Delta t = 0.01`$. Counts are integers, and Theorem S7's
@@ -223,7 +223,7 @@ every run.
 | leak law | A3: hops leak $`2(u\cdot\vec q)\Delta p`$ | M2: no event leaks |
 | pair-mode geometry | $`(q, -q)`$ chains (A2) | $`(\xi, -\xi)`$ (M1) |
 | harmonic potential | worst case (Theorem D) | no events (M3) |
-| partners at $`N > 1`$ | the sea, density $`B`$ in every joint cell (B2) | bodies at both daughters |
+| partners at $`N > 1`$ | the sea, density $`B`$ in every joint cell (B2) | unpaired worlds at both daughters |
 | transverse freedom | invisible at uniform sea (C4) | visible and destructive (M8) |
 
 ### 3.1 Corollary M3: the quadratic sectors are free
@@ -268,7 +268,7 @@ Theorem A1's exactness family, the four-action form, and Proposition B1 on
 the crystal shift have no counterpart: the compensated observable carries no
 background. Proposition B2's arithmetic carries over exactly, and B3's
 conclusion — the sign problem traded for a noise problem, neither removed —
-reappears in §4 as body inflation instead of sea shot noise. Theorem C1's
+reappears in §4 as unpaired-world inflation instead of sea shot noise. Theorem C1's
 transverse family is §6's subject.
 
 ---
@@ -276,7 +276,7 @@ transverse family is §6's subject.
 ## 4. Proposition M5: the population fills cells
 
 The scan (Part S), with $`\bar n = 0`$ unless stated. "Saturated" means the
-windowed absorptive fraction has returned to $`f \approx 1/2`$ and the body
+windowed absorptive fraction has returned to $`f \approx 1/2`$ and the unpaired-world
 count has levelled.
 
 | $`A`$ | $`t`$ | $`N`$ | occupied cells | $`N`$/cell | $`f`$ | error |
@@ -290,8 +290,8 @@ count has levelled.
 The error is the relative $`L^2`$ distance of the $`(r, p_r)`$ marginal from
 the reference; its sampling floor at $`t = 0`$ is $`0.194`$.
 
-**Proposition M5 (measured).** *The body count is proportional to the number
-of occupied joint cells, at $`2.4`$ to $`4.6`$ bodies per cell for every $`A`$
+**Proposition M5 (measured).** *The unpaired-world count is proportional to the number
+of occupied joint cells, at $`2.4`$ to $`4.6`$ unpaired worlds per cell for every $`A`$
 from $`t = 1`$ on, while it grows and after it saturates. Shrinking $`A`$ from $`\infty`$ to $`h`$
 and $`h/4`$ multiplies the saturated count by $`4.8`$ and $`13.2`$, while the
 occupied joint cells grow by $`5.9`$ and $`15.0`$,
@@ -309,11 +309,11 @@ against $`152\thinspace712`$ at $`t = 2`$.
 
 ![The compensated ledger in four dimensions](https://raw.githubusercontent.com/billpage/wpmw/output/figures/fourd_compensated_ledger.png)
 
-*(a) Body count against time for each $`A`$, and with the $`r`$-window doubled
-at $`A = \infty`$. (b) Body count against occupied joint cells: one line for
+*(a) Unpaired-world count against time for each $`A`$, and with the $`r`$-window doubled
+at $`A = \infty`$. (b) Unpaired-world count against occupied joint cells: one line for
 every run. (c) Conditional $`\langle V(r)\rangle`$ on each side of the
 centre-of-mass bisector for §6's two-component state; thick lines are the
-reference. (d) §7's $`\langle V\rangle`$ bias at $`t = 1`$ against the body
+reference. (d) §7's $`\langle V\rangle`$ bias at $`t = 1`$ against the unpaired-world
 count, as the matching cell is refined; the grey band is classical streaming
 alone.*
 
@@ -324,10 +324,10 @@ alone.*
 ### 5.1 Proposition M6: the cells are the window's
 
 **Proposition M6 (measured).** *The occupied cells are those the escaped
-bodies reach, not the state's support. At $`A = \infty`$, 34 per cent of the
-bodies sit where $`\Gamma(r)`$ is below one per cent of its maximum at
+unpaired worlds reach, not the state's support. At $`A = \infty`$, 34 per cent of the
+unpaired worlds sit where $`\Gamma(r)`$ is below one per cent of its maximum at
 $`t = 4`$; doubling the $`r`$-window to $`[-20, 20)`$ raises that to 63 per
-cent and the body count to $`50\thinspace732`$ at $`t = 7`$ against
+cent and the unpaired-world count to $`50\thinspace732`$ at $`t = 7`$ against
 $`29\thinspace482`$, still rising slowly, with $`13\thinspace811`$ of
 $`16\thinspace384`$ cells occupied.*
 
@@ -338,7 +338,7 @@ periodic box returns them to the well, which is how the ledger closes here at
 all. On an open line the escaped flux does not return, and the bound problem
 is expected to have no equilibrium (M-SP1). This is CLA8's observation that
 the sea scales with the window, made now for the unpaired population. The
-escaped bodies arrive in both species in roughly equal numbers, so a
+escaped unpaired worlds arrive in both species in roughly equal numbers, so a
 contact-recombination sink would remove them where catalysed recombination
 cannot. [`../../ORIENTATION.md`](../../ORIENTATION.md) §8 records that such
 a sink is not part of the model, because Theorem S9 holds the ledger closed
@@ -398,7 +398,7 @@ The two sides do not relax toward their average, $`-3.6`$; they pass each
 other. That is what would follow if each side received the other's residual
 corrections, and it is a stronger effect than mixing. At $`A = h`$ the bins
 separate the components and the conditional energies stay within noise until
-the body count, and with it the noise, grows (panel c).
+the unpaired-world count, and with it the noise, grows (panel c).
 
 So for this layer step 10's open item 1 is answered: partners must share the
 parent's centre-of-mass cell, to a resolution finer than any correlation
@@ -409,7 +409,7 @@ that correlation is the state.
 
 ## 7. Proposition M9: sub-cell positions
 
-Bodies here carry positions and momenta below cell resolution, which is the
+Unpaired worlds here carry positions and momenta below cell resolution, which is the
 premise of open item Y-SP1, and absorption removes whichever partner sits in
 the cell, not one at the parent's own point. The mesh ledger cannot show the
 consequence, because there a cell is a point.
@@ -420,7 +420,7 @@ $`+0.133 \pm 0.013`$ at $`t = 1`$ (six seeds), against $`+0.011 \pm 0.003`$ for
 classical streaming alone. Refining only the matching cell, with the kernel's
 mesh unchanged, reduces the bias to $`+0.066 \pm 0.020`$ (four sub-bins in
 $`r`$), $`+0.043 \pm 0.009`$ (four in $`p_r`$) and $`+0.034 \pm 0.013`$ (both),
-at $`1.7`$, $`1.7`$ and $`4.2`$ times the body count.*
+at $`1.7`$, $`1.7`$ and $`4.2`$ times the unpaired-world count.*
 
 It is §6's trade-off one level down, and it makes N-SP2 concrete: the cell is
 not a unit of the mesh but a parameter of the demography, with an error on one
@@ -442,7 +442,7 @@ correlations, so the product cannot be kept small by coarse binning.*
 For one added centre-of-mass pair the measured factor is $`5.9`$ at $`A = h`$
 and $`15.0`$ at $`A = h/4`$; §5.1 adds a factor set by the window. This is the
 exponential of step 10's Propositions B2 and B3, which the sea absorbed there
-and which returns here as body inflation. It is the concrete form of what the
+and which returns here as unpaired-world inflation. It is the concrete form of what the
 readiness review expected, with the mechanism corrected: cell filling, not a
 Poisson occupancy fixed inside the support.
 
@@ -470,9 +470,9 @@ the scan alone.
 ## 10. Open items
 
 - **M-SP1.** The open line. Does the bound problem have any ledger equilibrium
-  when escaped bodies cannot return? A series of growing windows, or an
+  when escaped unpaired worlds cannot return? A series of growing windows, or an
   absorbing boundary, would settle it.
-- **M-SP2.** Contact recombination. §5.1's escaped bodies are the population
+- **M-SP2.** Contact recombination. §5.1's escaped unpaired worlds are the population
   a contact sink would remove. Whether that justifies revisiting the exclusion
   recorded in ORIENTATION §8 is an ontology decision.
 - **M-SP3.** Run the Eckart pair collision of §1.2 through the ledger and
@@ -486,7 +486,7 @@ the scan alone.
   multiplying the population? Connects Y-SP1 and N-SP2.
 - **M-SP7.** Fidelity per unit cost: how the error at saturation depends on
   $`\nu`$ once the population is set by the cells rather than by the sample.
-- **M-SP8.** Event-ordering sensitivity (S-SP4) of the body counts in §4.
+- **M-SP8.** Event-ordering sensitivity (S-SP4) of the unpaired-world counts in §4.
 - **Step 10, open item 1** is answered for this layer by M8. **N-SP2** is
   sharpened by M9, **N-SP4** answered in part by M7, and **Y-SP1** has a
   measured consequence in M9.

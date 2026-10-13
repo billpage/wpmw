@@ -1,6 +1,6 @@
 # The sea as a phase reference
 
-> Whether the residual-kernel weights, which the compensated algorithm reads from the potential as a precomputed field, could instead emerge from the world-particles themselves, and what the sea would have to be for that to work. Theorem L1 writes each weight as a sum over contacts, `K_q(x) = -(B dp/hbar) int dy U_res(x,y) w(y) sin(2 xi_q y/hbar)`, in which the prefactor `B = 1/(pi hbar)` is the sea's own density and the strip the kernel sweeps holds exactly one aligned pair, `B dp 2 y_max = 1`; but by Proposition L2 sampling those contacts impulsively costs about `10^5` contacts per unit time to match the exact kernel, because each weight is a signed interference sum whose cancellations are the point, while replacing the pinned density `B` by the actual ledger sea costs almost nothing. Theorem L3 shows why per-world phases are the natural carrier: at their midpoint two bodies' extended phases wind apart at their energy difference, which for partners in one momentum row is the kernel's own `U(x,y)`. Theorem L4 is the obstacle it meets: with species signs, every aligned pair cancels exactly in any pair sum, so the sea can serve only as a set of unsigned clocks — a phase reference, invisible as amplitude. Definition L0 makes the required relation precise: the **sea lock**, each aligned pair's clock sampling its row's plane wave, which classical flow carries as a smooth phase field `theta = S/hbar` over phase space that folds only when projected onto position. A gas of random phases never locks under the event rules; a locked sea largely persists. Theorem L5 introduces **dark catalysis**, an interaction between aligned pairs at the kernel's own rate in which both members of a pair fire together and their deposits cancel exactly, so it moves phase and nothing else; by Proposition L6 it couples nearly the whole sea near the barrier, makes created pairs dark, and at reach scale maintains the lock against the damage events do — 0.470 against 0.461 with no events at all and 0.395 with co-located coupling. **Theorem L7 is the negative result.** A freshly locked sea dephases at a rate that is a force-free pair sum linear in `V`, reproduced to correlation 0.999, but the force it subtracts is the partners' rather than the parent's: it is the trapezoid rule's error for `U = int V' dx'` over the chord where the compensated kernel is the midpoint rule's, so its third moment — the leading quantum correction — is about `-2` times the kernel's. **Theorem L8 removes the obstacle.** Comparing two clocks at a distance needs a lever momentum, and whoever supplies it is the reader: an inertial reader reads the full `U`, each partner's own lever reads the trapezoid residual, and a reader streaming with the parent under (S) reads `U_res` exactly at re-lock, to all orders in `y`. The compensated split is therefore the choice of the parent as reader, the sea at the vertex is a set of clocks at positions, the leg-force term is how fast the lever mismatch grows, not a postulate, and the reader's lever is P2 applied to the reader, not a new rule. **Proposition L9** caps the drift of that reading by the row for the partners a vertex actually reads, so in the particle model the limit is the lock itself: more than half of the ceiling near 0.46 came from the continuous momenta within each row of the initial lock, and a sea that keeps its rows, re-locked at the kernel's own rate, reads 0.82 against a control of 0.89 — but keeping its rows means its momenta ignore the force, which (S) does not allow. Sections 5, 8 and 9 carry the figures, and §5 an interactive page of the phase field.
+> Whether the residual-kernel weights, which the compensated algorithm reads from the potential as a precomputed field, could instead emerge from the world-particles themselves, and what the sea would have to be for that to work. Theorem L1 writes each weight as a sum over contacts, `K_q(x) = -(B dp/hbar) int dy U_res(x,y) w(y) sin(2 xi_q y/hbar)`, in which the prefactor `B = 1/(pi hbar)` is the sea's own density and the strip the kernel sweeps holds exactly one aligned pair, `B dp 2 y_max = 1`; but by Proposition L2 sampling those contacts impulsively costs about `10^5` contacts per unit time to match the exact kernel, because each weight is a signed interference sum whose cancellations are the point, while replacing the pinned density `B` by the actual ledger sea costs almost nothing. Theorem L3 shows why per-world phases are the natural carrier: at their midpoint two unpaired worlds' extended phases wind apart at their energy difference, which for partners in one momentum row is the kernel's own `U(x,y)`. Theorem L4 is the obstacle it meets: with species signs, every aligned pair cancels exactly in any pair sum, so the sea can serve only as a set of unsigned clocks — a phase reference, invisible as amplitude. Definition L0 makes the required relation precise: the **sea lock**, each aligned pair's clock sampling its row's plane wave, which classical flow carries as a smooth phase field `theta = S/hbar` over phase space that folds only when projected onto position. A gas of random phases never locks under the event rules; a locked sea largely persists. Theorem L5 introduces **dark catalysis**, an interaction between aligned pairs at the kernel's own rate in which both members of a pair fire together and their deposits cancel exactly, so it moves phase and nothing else; by Proposition L6 it couples nearly the whole sea near the barrier, makes created pairs dark, and at reach scale maintains the lock against the damage events do — 0.470 against 0.461 with no events at all and 0.395 with co-located coupling. **Theorem L7 is the negative result.** A freshly locked sea dephases at a rate that is a force-free pair sum linear in `V`, reproduced to correlation 0.999, but the force it subtracts is the partners' rather than the parent's: it is the trapezoid rule's error for `U = int V' dx'` over the chord where the compensated kernel is the midpoint rule's, so its third moment — the leading quantum correction — is about `-2` times the kernel's. **Theorem L8 removes the obstacle.** Comparing two clocks at a distance needs a lever momentum, and whoever supplies it is the reader: an inertial reader reads the full `U`, each partner's own lever reads the trapezoid residual, and a reader streaming with the parent under (S) reads `U_res` exactly at re-lock, to all orders in `y`. The compensated split is therefore the choice of the parent as reader, the sea at the vertex is a set of clocks at positions, the leg-force term is how fast the lever mismatch grows, not a postulate, and the reader's lever is P2 applied to the reader, not a new rule. **Proposition L9** caps the drift of that reading by the row for the partners a vertex actually reads, so in the particle model the limit is the lock itself: more than half of the ceiling near 0.46 came from the continuous momenta within each row of the initial lock, and a sea that keeps its rows, re-locked at the kernel's own rate, reads 0.82 against a control of 0.89 — but keeping its rows means its momenta ignore the force, which (S) does not allow. Sections 5, 8 and 9 carry the figures, and §5 an interactive page of the phase field.
 
 *Ladder abstract — see the [full list](README.md#the-ladder).*
 
@@ -144,10 +144,10 @@ contact is one term of a Fourier series.
 
 ## 3. Theorem L3: what two clocks carry
 
-With P1, each body's clock winds at the Lagrangian rate, and by P2 its
+With P1, each unpaired world's clock winds at the Lagrangian rate, and by P2 its
 extended phase is $`\Phi_j(x) = \theta_j + p_j(x - x_j)/\hbar`$.
 
-**Theorem L3.** *(a) For bodies $`i, j`$ at $`x \mp y`$,*
+**Theorem L3.** *(a) For unpaired worlds $`i, j`$ at $`x \mp y`$,*
 
 ```math
 \frac{d}{dt}(\theta_i - \theta_j) = \frac{1}{\hbar}\left[\frac{p_i^2 - p_j^2}{2m} + U(x,y)\right],
@@ -165,9 +165,9 @@ an inertial reader sees. Part (b) says it is visible only
 when the kinetic difference does not swamp it, that is, for partners in one
 momentum row: the kernel's own strip, $`B\,dp`$.
 
-**Cost.** Accumulating a clock is one multiply–add per body per step
-(0.13 ms at $`10^4`$ bodies, 17 ms at $`10^6`$). Using it needs pairs within
-the reach: $`2n_p\nu`$ partners per body, so the cost grows as $`\nu^2`$.
+**Cost.** Accumulating a clock is one multiply–add per unpaired world per step
+(0.13 ms at $`10^4`$ unpaired worlds, 17 ms at $`10^6`$). Using it needs pairs within
+the reach: $`2n_p\nu`$ partners per unpaired world, so the cost grows as $`\nu^2`$.
 Binning pairs by vertex and separation and transforming over separation gives
 all channels at once: 0.11 s per step at $`\nu = 8`$ and 0.46 s at
 $`\nu = 16`$ on one core. The physical sea in the Eckart window is only 244
@@ -177,7 +177,7 @@ aligned pairs; $`\nu`$ is the ensemble multiplicity.
 
 ## 4. Theorem L4: darkness annihilates signed pair sums
 
-A pair sum over partner bodies with weights
+A pair sum over partner unpaired worlds with weights
 $`\sin(\xi_q d/\hbar + \mu_{ij})`$ reproduces $`K_q`$ when every
 $`\mu_{ij} = 0`$ — the kernel is the $`\mu \equiv 0`$ limit of the sum over a
 uniform spread of separations. Including the species signs:
@@ -185,13 +185,13 @@ uniform spread of separations. Including the species signs:
 **Theorem L4.** *Any pair sum weighted by $`\varepsilon_i\varepsilon_j`$
 vanishes identically on aligned pairs: the two members of a pair share
 $`x`$, $`p`$ and $`\theta`$ and carry opposite $`\varepsilon`$, so they
-cancel term by term against every third body.*
+cancel term by term against every third unpaired world.*
 
 The sea can therefore contribute to the kernel only as **unsigned clocks**: a
 phase reference that is invisible as amplitude. The analogy is a receiver's
 local oscillator, absent from the output and supplying the timing every beat
 is measured against (§8 refines it: the sea supplies the phase samples, the
-parent's momentum the carrier). In the kernel the two legs are one body's ket and bra,
+parent's momentum the carrier). In the kernel the two legs are one particle's ket and bra,
 both entering with a plus sign; in the world picture the partner must play
 the bra, a reference phase, not a contribution to $`W`$. Theorem L8 sharpens
 this: a partner enters a vertex through its clock and its position only, and
@@ -233,7 +233,7 @@ The [interactive page](https://billpage.github.io/wpmw/interactive/sea_lock.html
 with time, potential and sea as controls.
 
 **Does a lock emerge, and does it persist?** `demo_sea_lock_particles.py`
-evolves bodies with $`(x, p, \theta, \varepsilon)`$ — classical streaming,
+evolves unpaired worlds with $`(x, p, \theta, \varepsilon)`$ — classical streaming,
 Lagrangian clocks, ionisation and recombination from the compensated kernel,
 kinks keeping clocks continuous — and measures the correlation of the unsigned
 same-row pair-sum kernel with $`K`$ near the barrier, against a
@@ -254,14 +254,14 @@ at the barrier.
 
 ## 6. Theorem L5: dark catalysis, and maintenance
 
-**Re-locking on kinks.** When a body kinks into a new row, set its clock to
+**Re-locking on kinks.** When an unpaired world kinks into a new row, set its clock to
 the circular mean of that row's sea clocks within a window $`W`$, transported
 to its position; on recombination both members take the parent row's value.
-This is injection locking of each body to the sea (Adler 1946), and it
+This is injection locking of each unpaired world to the sea (Adler 1946), and it
 makes dark creation and lock maintenance a single rule: created pairs go from
 random (mean $`|\mu|`$ of 1.48) to aligned (0.19 at $`W = 3`$, and 0.02 at
-$`\nu = 16`$), which answers Y-SP2 in part. But a sea body is re-locked only
-when an event near a free body picks it, at roughly
+$`\nu = 16`$), which answers Y-SP2 in part. But a sea world is re-locked only
+when an event near an unpaired world picks it, at roughly
 $`\Gamma \times`$ (free density / sea density): at most 12 per cent of the sea
 near the barrier is ever touched, and the kernel correlation stays at noise.
 
@@ -272,9 +272,9 @@ deposits cancel in $`E`$; cancelling in $`E`$ does not mean nothing happens.
 rate $`|K_q(x)|`$ with both members together: the positon member, orientation
 $`t = \mathrm{sign}(K_q)`$, realised as ionisation of a partner pair C in A's
 row, $`C^+ \to p + t\xi_q`$, $`C^- \to p - t\xi_q`$; the negaton member,
-orientation $`-t`$, realised as recombination of exactly those two bodies back
+orientation $`-t`$, realised as recombination of exactly those two unpaired worlds back
 to $`p`$. Then $`\Delta E = \Delta N = \Delta S = 0`$ in every realisation,
-body momentum is conserved event by event, the kinks are simultaneous
+unpaired-world momentum is conserved event by event, the kinks are simultaneous
 opposite-species pairs of $`\pm\xi_q`$, and C leaves aligned. The event lies
 in the kernel of the observable map (Theorem N2).*
 
@@ -529,7 +529,7 @@ postulate about the potential:
   momentum only puts them in the row. Exact at re-lock, drifting afterwards.
 - **(A′) The parent's lever and the drift term.** The vertex also reads the
   partners' momenta and subtracts the last term of L8. Exact at all times, and
-  the potential enters only where each body is: in each partner's clock, at
+  the potential enters only where each unpaired world is: in each partner's clock, at
   the partner, and in the parent's force, at the parent.
 - **(B) The partners' own levers and the leg-force term.** Exact at all times,
   but the vertex must know $`V'`$ at both partners: the potential at the legs,
@@ -581,11 +581,11 @@ each sample against its own transmitter's Doppler-shifted carrier removes the
 shift one set out to measure; the own-frame reading does that with the
 partners' accelerations.
 
-*The lever is P2 applied to the reader.* P2 gives every body an extended
+*The lever is P2 applied to the reader.* P2 gives every unpaired world an extended
 amplitude whose phase at $`x`$ is $`\varphi_k(x) = \theta_k + p_k(x - x_k)/\hbar`$,
 and Lemma 0 of step 4 ([`phase_resonance_microdynamics.md`](phase_resonance_microdynamics.md#2-postulates))
 says what it is for. With P1 the extended amplitude is the plane wave
-$`e^{i(p_kx - E_kt)/\hbar}`$, so the phase a body predicts at a place is the
+$`e^{i(p_kx - E_kt)/\hbar}`$, so the phase an unpaired world predicts at a place is the
 phase it carries on arriving there, and relative phases are defined at
 meetings. Reading (b) is two such meetings. With the reader $`r`$ at momentum
 $`p_{\mathrm{ref}}`$,
@@ -604,7 +604,7 @@ is what P2 predicts. Four things follow.
   never enters, beyond putting it in the row, which is why the sea can be
   clocks at positions (Theorem L4) and why its lever does not matter.
 - *The only extended amplitude used is the reader's.* P2 is applied to one
-  body, the one doing the comparing, at the places it compares.
+  unpaired world, the one doing the comparing, at the places it compares.
 - *One vertex needs one lever.* A vertex sums over many pairs. Extending each
   pair's partners with their own momenta, as the own frame does, gives every
   pair its own lever; that is the $`y`$-dependent "force" of the second reason
@@ -759,10 +759,10 @@ one row with momenta differing by $`\Delta p`$ agree with a row-centre reader
 only within a beat length $`\hbar/\Delta p`$ of the anchor $`x = 0`$. With
 $`\Delta p \sim dp`$ that length is the reach itself, because the strip of
 Theorem L1 holds one aligned pair, $`B\,dp\,2y_{\max} = 1`$ with
-$`B = 1/\pi\hbar`$, so $`dp\,y_{\max} = \pi\hbar/2`$. Sea bodies that stream
+$`B = 1/\pi\hbar`$, so $`dp\,y_{\max} = \pi\hbar/2`$. Sea worlds that stream
 in from afar arrive with phases that are wrong at the kernel's own scale.
 
-*Row mixing by the force.* Under (S) the force carries sea bodies from row to
+*Row mixing by the force.* Under (S) the force carries sea worlds from row to
 row near the barrier, and each arrives with a phase locked to the row it left.
 
 Three sea variants separate the two (three seeds each, rate reading (A)):

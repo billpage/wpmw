@@ -1,7 +1,7 @@
 # Emission and Absorption: the Two Ways to Settle One Event
 
 **A tutorial introduction to the mechanism by which the compensated Liouville
-algorithm keeps its sea and its body population in balance. Self-contained: it
+algorithm keeps its sea and its unpaired-world population in balance. Self-contained: it
 assumes no prior reading in this project, and builds the signed ensemble, the
 sea, and the event from scratch.**
 
@@ -34,7 +34,7 @@ of this tutorial is also available, typeset from this same source (see
 new:
 
 - **Theorem J1/J2.** The quantity $`P = S + N/2`$ — bound pairs plus half the
-  free bodies — is conserved *exactly* by the event channel, at any absorptive
+  unpaired worlds — is conserved *exactly* by the event channel, at any absorptive
   fraction, but only **globally**. Cell by cell it is violated by nine orders
   of magnitude more. §5 works out what each half of that means.
 Two open items are logged in §12 rather than argued in the body, because
@@ -98,7 +98,7 @@ E \;=\; u^{+} - u^{-}, \qquad N \;=\; u^{+} + u^{-} ,
 ```
 
 and the identification is $`E = W`$. The observable is the **difference** of two
-populations. The sum $`N`$ — how many bodies are actually present — is not
+populations. The sum $`N`$ — how many unpaired worlds are actually present — is not
 constrained by quantum mechanics at all. Two ensembles with wildly different
 $`N`$ can represent the very same $`W`$, so long as their difference matches.
 
@@ -152,7 +152,7 @@ bookkeeping that the observable must not see.
 trip a careful reader later, so state it now. A bound sea pair is a single
 neutral object. Its constituents do not have separate worldlines, separate
 momenta, or separate identities while bound. They acquire them at the moment
-the pair is broken, and they lose them at the moment two free bodies are bound.
+the pair is broken, and they lose them at the moment two unpaired worlds are bound.
 Birth and death, not motion. §9.1 returns to why this matters.
 
 ---
@@ -209,13 +209,13 @@ specification's own verbs are the right ones, and they are the verbs of
 ionisation chemistry rather than of accounting:
 
 **Emissive — a bound pair is *ionised*.** Add a positon at $`p + \xi_q`$ and a
-negaton at $`p - \xi_q`$. The two new bodies come from somewhere: a bound sea
+negaton at $`p - \xi_q`$. The two new unpaired worlds come from somewhere: a bound sea
 pair at the parent row $`p`$ comes apart, and its two constituents are the two
-new bodies. One bound pair is consumed; two free bodies enter circulation.
+new unpaired worlds. One bound pair is consumed; two unpaired worlds enter circulation.
 
-**Absorptive — two free bodies are *bound*.** Remove a negaton at
-$`p + \xi_q`$ and a positon at $`p - \xi_q`$. The two removed bodies do not
-vanish; they bind into a neutral pair at the parent row $`p`$. Two free bodies
+**Absorptive — two unpaired worlds are *bound*.** Remove a negaton at
+$`p + \xi_q`$ and a positon at $`p - \xi_q`$. The two removed unpaired worlds do not
+vanish; they bind into a neutral pair at the parent row $`p`$. Two unpaired worlds
 leave circulation; one bound pair is created.
 
 These are the two directions of a single exchange between the bound population
@@ -266,19 +266,19 @@ it is $`O(\Delta t)`$ and converges away. The ledger columns do not agree at
 all: $`\Delta N`$ and $`\Delta S`$ have opposite signs. And the ratio
 $`\Delta N / \Delta S = -2`$ is exact in both cases.
 
-That $`-2`$ is the stoichiometry of the exchange — one bound pair for two free
-bodies — and it is the hinge of everything that follows.
+That $`-2`$ is the stoichiometry of the exchange — one bound pair for two unpaired
+worlds — and it is the hinge of everything that follows.
 
 **Vocabulary.** The specification calls this a *jump* — a mediated transfer, in
-which no body's momentum changes discontinuously. It reserves *hop* for the
-excluded variant in which a body is physically moved between momentum rows.
+which no unpaired world's momentum changes discontinuously. It reserves *hop* for the
+excluded variant in which an unpaired world is physically moved between momentum rows.
 §10.
 
 ---
 
 ## 5. Three populations, and the one identity
 
-Three populations are now in play: the bound pairs $`S`$, the free bodies
+Three populations are now in play: the bound pairs $`S`$, the unpaired worlds
 $`N`$, and the signed difference $`E`$. It is tempting to think of these as
 three independent stocks that must each be kept in balance. They are not.
 
@@ -315,7 +315,7 @@ everywhere.
 
 This is worth pausing on because it simplifies the picture enormously. There is
 **one** conserved quantity here, the total pair count, counting a bound pair as
-one and two free bodies as one. Emission and absorption neither create nor
+one and two unpaired worlds as one. Emission and absorption neither create nor
 destroy pairs; they only move them across the bound/free boundary. The
 absorptive fraction $`f`$ is not a rate constant in a two-population system. It
 is the **partition parameter** of a single population — what fraction of a
@@ -329,7 +329,7 @@ value of it holds both halves stationary at once.
 
 Now the correction, and it matters.
 
-An event debits the sea at the **parent** row $`p`$ and credits bodies at the
+An event debits the sea at the **parent** row $`p`$ and credits unpaired worlds at the
 **daughter** rows $`p \pm \xi_q`$. Those are different cells. So pair count
 *flows* between momentum rows, and the identity of §5.1 is a statement about
 the sum over all cells, not about any one of them.
@@ -342,7 +342,7 @@ Part D, same substep, measured cell by cell:
    ratio                                4.2e+09
 ```
 
-Nine orders of magnitude. Locally the sea and the bodies are two genuinely
+Nine orders of magnitude. Locally the sea and the unpaired worlds are two genuinely
 independent fields with transport between them.
 
 ![The ledger identity](https://raw.githubusercontent.com/billpage/wpmw/output/figures/emission_absorption_ledger.png)
@@ -384,7 +384,7 @@ about the potential, the reach, the packet, or the depth of the sea. It is
 arithmetic on $`\pm 1`$.
 
 The most useful way to say it: whichever species is locally in the **minority**
-gains exactly one body per emissive event and loses exactly one per absorptive
+gains exactly one unpaired world per emissive event and loses exactly one per absorptive
 event. Its population is stationary precisely when the two are equally
 frequent.
 
@@ -404,17 +404,17 @@ The rule the algorithm follows is local and blind:
 Nothing anywhere measures $`f`$, targets $`f`$, or adjusts anything to reach
 $`f = 1/2`$. And yet:
 
-- absorption **consumes** minority-species bodies — that is what "remove a
+- absorption **consumes** minority-species unpaired worlds — that is what "remove a
   partner" means;
 - emission **produces** them — every emissive event makes one of each species,
   and where the majority is already abundant it is the minority that has been
   added to;
-- so a shortage of minority bodies forces emission, which manufactures the very
+- so a shortage of minority unpaired worlds forces emission, which manufactures the very
   thing that was short, and an abundance permits absorption, which eats it.
 
 A thermostat, built out of nothing but supply. If the mix runs too emissive,
-bodies accumulate, partners become easy to find, and $`f`$ rises. If it runs too
-absorptive, bodies drain, partners become scarce, and $`f`$ falls. The fixed
+unpaired worlds accumulate, partners become easy to find, and $`f`$ rises. If it runs too
+absorptive, unpaired worlds drain, partners become scarce, and $`f`$ falls. The fixed
 point is where production equals consumption, which by §6 is $`f = 1/2`$.
 
 The claim that this is genuinely a *local* mechanism, and not something the
@@ -501,7 +501,7 @@ comes from.
 > *If no world-particle ever changes its momentum discontinuously, how can
 > ionising a sea pair at row $`p`$ put its two constituents at rows
 > $`p \pm \xi_q`$? Surely that is exactly a discontinuous momentum change — and
-> for two bodies at once.*
+> for two unpaired worlds at once.*
 
 It certainly looks like one. The bound pair sits at row $`p`$; its two constituents
 end up at rows $`p \pm \xi_q`$. If those constituents were world-particles
@@ -514,8 +514,8 @@ $`p + \xi_q`$ and $`p - \xi_q`$ respectively. A worldline that begins at a
 momentum has not moved to that momentum. Birth is not a velocity change.
 
 Symmetrically, at an absorptive event two worldlines **end**, and a neutral
-object appears at the parent row. The bodies were not carried to $`p`$; they
-ceased to be bodies.
+object appears at the parent row. The unpaired worlds were not carried to $`p`$; they
+ceased to be unpaired worlds.
 
 This is why the space-time figure of §4 is the one to trust and the phase-space
 cartoon is the one to be careful with. In space-time the two lines fork out of a
@@ -539,12 +539,12 @@ no separate worldlines to be joined along.
 
 Two further readings are available and both are ruled out.
 
-**Settling the two legs differently.** Pay one leg by creating a body and the
+**Settling the two legs differently.** Pay one leg by creating an unpaired world and the
 other by removing one. The deposition in $`E`$ is still correct. But count the
-bodies: one has appeared at one daughter row and one has disappeared at the
+unpaired worlds: one has appeared at one daughter row and one has disappeared at the
 other, and the difference has to have been carried between two momentum rows
 separated by $`2\xi_q`$. Nothing can carry it. A world-particle would have had
-to move — a **hop**, not a jump — and individual body-momentum conservation
+to move — a **hop**, not a jump — and individual unpaired-world-momentum conservation
 fails. The realisation is therefore a property of the **event**, not of a leg.
 
 In space-time the reason is immediate: a mixed realisation would have one
@@ -552,11 +552,11 @@ worldline beginning at one daughter row and another ending at the other, with
 nothing connecting them, and the momentum books would not close. A pair is
 either coming apart or coming together. It cannot do half of each.
 
-**Relocating a body instead of pairing.** The third channel, in which a body is
+**Relocating an unpaired world instead of pairing.** The third channel, in which an unpaired world is
 simply moved from one row to another, is genuinely available and is analysed
 elsewhere in the project. It relaxes the "both daughters" requirement of §8
 from a conjunction to a disjunction, which helps the supply problem — at the
-cost of individual body-momentum conservation, which is the thing the ontology
+cost of individual unpaired-world-momentum conservation, which is the thing the ontology
 exists to protect. It is not part of the specified algorithm.
 
 ---
@@ -619,7 +619,7 @@ With the clamp on, J1 degrades from machine precision to $`10^{-7}`$ and the
 two species stop moving together at $`10^{-4}`$.
 
 Part G is the sharper measurement. It prepares the same $`W`$ at $`\rho = 1`$
-and $`\rho = 20`$ — twenty times as many bodies, identical $`E`$ — and asks how
+and $`\rho = 20`$ — twenty times as many unpaired worlds, identical $`E`$ — and asks how
 far apart the two observables have drifted at $`t = 2`$:
 
 ```
@@ -683,11 +683,11 @@ in total — is not addressed by this note.
 ### J-SP3 — the sea depth is an initial condition, not a theorem
 
 §14.2. Pathwise conservation of $`P`$ fixes the attainable sea depth from the
-initial free-body count, so a bootstrap that starts with no sea needs
-$`N_{\rm free}(0) \ge 6.455894`$ unpaired bodies per Planck cell to reach the
+initial unpaired-world count, so a bootstrap that starts with no sea needs
+$`N_{\rm free}(0) \ge 6.455894`$ unpaired worlds per Planck cell to reach the
 $`B = 2/h`$ that §2 derives as the tightest admissible shift. That converts a
 derived bound into a tuning requirement. Three things would settle it: a check
-that $`\lambda^{*}`$ really is the right per-cell body count to use against a
+that $`\lambda^{*}`$ really is the right per-cell unpaired-world count to use against a
 continuum $`B`$ — which is open item N-SP2 of
 [`../analysis/stochastic_ledger.md`](../analysis/stochastic_ledger.md) and the
 weakest link here; a simulation of the ledger-rich transient from $`S = 0`$,
@@ -698,8 +698,8 @@ requirement relaxes.
 
 ### J-SP4 — two vertices are called absorption
 
-§14.3. The ledger absorption of §4 consumes bodies from the two daughter rows
-and binds them at the parent row with no body changing momentum. The K3 vertex
+§14.3. The ledger absorption of §4 consumes unpaired worlds from the two daughter rows
+and binds them at the parent row with no unpaired world changing momentum. The K3 vertex
 of `../analysis/phase_resonance_microdynamics.md` has the excess particle exit
 at a different momentum. The two formulations are exactly equivalent as
 generators, but the property at issue — that the created pair is dark, and
@@ -722,7 +722,7 @@ never be necessary for `E` here (Corollary Y1.1), and a phase rule can only
 live where the realisation choice already lives, in the kernel of the
 observable map. The two vertices are *not* the same event — the swap is
 elastic and permutes labels, this one is perfectly inelastic and relies on
-bodies beginning and ending — but the phase account of darkness does
+unpaired worlds beginning and ending — but the phase account of darkness does
 transplant (Theorem Y3), at the price of piecewise worldlines (Theorem Y5).
 One thing above is withdrawn: dark creation is not a consequence "there"
 either; §6 of the phase-alignment note imposes it. What remains open is the
@@ -752,7 +752,7 @@ than one would expect.
 
 ### 14.1 The bootstrap, and its direction
 
-Absorption converts two unpaired bodies of opposite species into one bound
+Absorption converts two unpaired worlds of opposite species into one bound
 pair; emission does the reverse. So a universe that begins with no sea at all
 can build one, *provided* absorption can fire — and absorption needs a negaton
 at the upper daughter and a positon at the lower. Two opposite starting
@@ -792,7 +792,7 @@ $`\Delta S = -1, \Delta N = +2`$, absorption and recombination
 $`\Delta S = +1, \Delta N = -2`$, and transport moves both together. So $`P`$
 is fixed once, by the initial condition, and no dynamics can change it.
 
-Start with no sea. Then $`P = N_{\rm free}(0)/2`$, and at equilibrium the body
+Start with no sea. Then $`P = N_{\rm free}(0)/2`$, and at equilibrium the unpaired-world
 count settles at $`N \to 2\lambda^{*}`$ per cell with
 $`\lambda^{*} = -\ln(1 - 2^{-1/2}) = 1.227947`$ by Theorem N5, so
 
@@ -809,14 +809,14 @@ Requiring $`S_{\rm eq} \ge 2`$ gives
 
 ```math
 N_{\rm free}(0) \;\ge\; 2\bigl(2 + \lambda^{*}\bigr) \;=\; 6.455894
-\qquad\text{unpaired bodies per Planck cell.}
+\qquad\text{unpaired worlds per Planck cell.}
 ```
 
 **This is the cost, and it should be stated plainly.** In §2 the value
 $`B = 2/h`$ is *derived*, as the tightest uniform shift compatible with the
 parity bound. Under the ledger-rich bootstrap it becomes instead a *constraint
-on the initial free-body density*: a universe that starts below 6.456 unpaired
-bodies per Planck cell can never accumulate a sea deep enough to represent a
+on the initial unpaired-world density*: a universe that starts below 6.456 unpaired
+worlds per Planck cell can never accumulate a sea deep enough to represent a
 state that saturates $`|W| \le 2/h`$, because $`P`$ forbids it. The number is
 not large and nothing rules it out, but it is a tuning requirement where the
 project currently has a theorem, and it is the kind of thing better noticed
@@ -844,7 +844,7 @@ That is good news for the bootstrap, and it is *stable*. Proposition 3 of the
 same note gives $`\partial\mu/\partial x = \Delta p/\hbar`$, so a pair whose
 members are co-located and co-moving has $`\Delta p = 0`$ and its misalignment
 never winds: set to zero at creation, it stays dark for all time under
-classical streaming. A creation rule — absorption always binds its two bodies
+classical streaming. A creation rule — absorption always binds its two unpaired worlds
 with matched phase — therefore does not have to be re-imposed, and the K3
 vertex of the phase-resonance note already delivers it, the struck partner
 exiting "at its mate's momentum with gauge-matched phase" and the pair exiting
@@ -853,7 +853,7 @@ dark.
 **The problem is that these may not be the same vertex.** Ledger absorption,
 as defined in §4 above, consumes a positon and a negaton from the two
 *daughter* rows $`p \pm \xi_q`$ and binds them at the *parent* row $`p`$, with
-no body changing momentum. The phase-resonance K3 vertex has the excess
+no unpaired world changing momentum. The phase-resonance K3 vertex has the excess
 particle exit at $`p_{lo} = p_{hi} - \sigma\,2q\,\delta p`$ — the particle
 changes momentum, which §8.1 of the Eckart note forbids. The two formulations
 are exactly equivalent as generators, by

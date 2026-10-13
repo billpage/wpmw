@@ -30,7 +30,7 @@ Schrödinger equation and against Ehrenfest's theorem, which is exact.
    force into deterministic streaming and keeps only the residual kernel
    ([`../analysis/compensated_liouville_splitting.md`](../analysis/compensated_liouville_splitting.md)).
    [`../analysis/compensated_ontology.md`](../analysis/compensated_ontology.md)
-   §8 states that the compensated *symbol* carries over to $`N`$ bodies
+   §8 states that the compensated *symbol* carries over to $`N`$ particles
    unchanged; the compensated *world form*, with the ledger of
    [`compensated_liouville_algorithm.md`](compensated_liouville_algorithm.md)
    §5, has not been extended to more than one degree of freedom.
@@ -94,11 +94,11 @@ Schrödinger equation and against Ehrenfest's theorem, which is exact.
    the compensated ledger closes only when an event finds both partners in
    its own cell (Theorem N4 of
    [`../analysis/stochastic_ledger.md`](../analysis/stochastic_ledger.md),
-   about $`1.23`$ bodies of each sign per cell), which in the joint
+   about $`1.23`$ unpaired worlds of each sign per cell), which in the joint
    $`2dN`$-dimensional phase space asks for a population that grows with the
    number of cells in the state's support. Measured since in
    [`../analysis/fourd_compensated_ledger.md`](../analysis/fourd_compensated_ledger.md)
-   (step 21): the body count follows the number of occupied joint cells, and
+   (step 21): the unpaired-world count follows the number of occupied joint cells, and
    the cells filled are the window's rather than the support's.
 
 **What survives.** The single-particle mesh form of §§2–3 is the 1+1D

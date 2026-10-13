@@ -100,7 +100,7 @@ a correction and not a clarification.
 
 **The demography is now closed, and the vocabulary is fixed.** An event has
 exactly two realisations, emissive and absorptive, chosen by supply. The two
-body-moving realisations that would close the ledger exactly — Cyganski's
+unpaired-world-moving realisations that would close the ledger exactly — Cyganski's
 Right-Hop and Left-Hop — are excluded, because they return the discontinuous
 momentum change postulate (S) exists to deny, and Proposition L1 in §5.7 shows
 there is no variant of them that avoids it. So the residual ledger leak of one
@@ -109,7 +109,7 @@ ontology, and nothing in §9 offers a flag to turn it off.
 
 Earlier drafts of this document called §4 "the hop channel". That was wrong in
 the project's own terms: §4 is the crystal-lattice **mediated-jump** rule, and
-a **hop** is the four-action rule that moves one body between momentum cells,
+a **hop** is the four-action rule that moves one unpaired world between momentum cells,
 which is precisely the thing this algorithm does not do. §4.0 states both
 definitions and flags the one note that still has them inverted.
 
@@ -170,9 +170,9 @@ four postulates of
 
 | | postulate | what the code owes it |
 |---|---|---|
-| (E) | a world is a locally finite *signed* counting measure | two body fields, §5.1 |
+| (E) | a world is a locally finite *signed* counting measure | two unpaired-world fields, §5.1 |
 | (A) | admissible ensembles are those whose mean is a Wigner transform of some $`\rho \succeq 0`$ | an initial-state check and a diagnostic; nothing in the step enforces it |
-| (S) | between events every world streams under the **full** classical force, momentum continuous without exception — **including sea pairs**, whose two members are co-located and share a trajectory, so the charge-blind force carries a pair without separating it | §3.1, §3.2, and §5.3 — jumps only, no hops: no code path may move a body between momentum rows |
+| (S) | between events every world streams under the **full** classical force, momentum continuous without exception — **including sea pairs**, whose two members are co-located and share a trajectory, so the charge-blind force carries a pair without separating it | §3.1, §3.2, and §5.3 — jumps only, no hops: no code path may move an unpaired world between momentum rows |
 | (D) | superimposed on (S), a birth-and-death process against a sea of neutral bound pairs | §4, §5 |
 
 Theorem G1 assembles C1–C3, K4, K8 and S7 into the statement that (E), (S),
@@ -462,12 +462,12 @@ round produces code that is a correct solver and a wrong ontology.
 
 | term | what it names | established in |
 |---|---|---|
-| **jump** | the *mediated* transfer: a world at $`(x, p)`$ mediates while momentum $`\pm\xi_q`$ is delivered at $`p \pm \xi_q`$. The mediator is unchanged. Under the compensated reading of §5 no body moves at all — a pair is ionised or bound. | [`phase_space_crystal_lattice_algorithm.md`](phase_space_crystal_lattice_algorithm.md) title and §3b, "single-rule mediated-jump process" |
-| **hop** | one body moved from momentum cell $`n - q`$ to $`n + q`$. Right-Hop and Left-Hop, two of Cyganski's four actions. | [`../analysis/four_rule_microdynamics_equivalence.md`](../analysis/four_rule_microdynamics_equivalence.md) §2; used in this sense in [`../analysis/reach_energy_coupling.md`](../analysis/reach_energy_coupling.md) §4, where each hop changes $`T`$ by $`2p_n\xi_q/m`$ |
+| **jump** | the *mediated* transfer: a world at $`(x, p)`$ mediates while momentum $`\pm\xi_q`$ is delivered at $`p \pm \xi_q`$. The mediator is unchanged. Under the compensated reading of §5 no unpaired world moves at all — a pair is ionised or bound. | [`phase_space_crystal_lattice_algorithm.md`](phase_space_crystal_lattice_algorithm.md) title and §3b, "single-rule mediated-jump process" |
+| **hop** | one unpaired world moved from momentum cell $`n - q`$ to $`n + q`$. Right-Hop and Left-Hop, two of Cyganski's four actions. | [`../analysis/four_rule_microdynamics_equivalence.md`](../analysis/four_rule_microdynamics_equivalence.md) §2; used in this sense in [`../analysis/reach_energy_coupling.md`](../analysis/reach_energy_coupling.md) §4, where each hop changes $`T`$ by $`2p_n\xi_q/m`$ |
 
 **This algorithm is a jump algorithm and contains no hops.** §4 is the jump
 channel, reusing the crystal-lattice rule verbatim; §5.3 excludes the two hop
-realisations because a hop moves a body between momentum rows, which postulate
+realisations because a hop moves an unpaired world between momentum rows, which postulate
 (S) forbids. That the two coincide at the level of *mean-field occupancy* —
 the mediated-jump rule is the pure-hop member of the four-rule family, §4 of
 the four-rule note — is exactly why the distinction has to be made at the
@@ -721,7 +721,7 @@ and it is the most recently settled part of the algorithm.
 | field | meaning | what constrains it |
 |---|---|---|
 | $`E = u^+ - u^-`$ | signed density; **the observable**, $`E \equiv W`$ | the QLE, exactly |
-| $`N = u^+ + u^-`$ | body density | the unravelling rule, and nothing else |
+| $`N = u^+ + u^-`$ | unpaired-world density | the unravelling rule, and nothing else |
 | $`S`$ | bound sea pairs per cell, background $`B = 2/h`$ | the same rule |
 
 **Theorem S2, first half.** The $`E`$ equation is closed and is exactly the
@@ -793,7 +793,7 @@ Both realisations are identical in $`E`$ and opposite in the ledger. **These
 two are the whole of the algorithm's demography [normative].**
 
 Two further realisations are arithmetically available and are excluded. They
-are the **hops** of §4.0 — Cyganski's Right-Hop and Left-Hop, one body carried
+are the **hops** of §4.0 — Cyganski's Right-Hop and Left-Hop, one unpaired world carried
 from momentum cell $`n - q`$ to $`n + q`$:
 
 | | at $`p+\xi_q`$ | at $`p-\xi_q`$ | $`\Delta N`$ | $`\Delta S`$ | what moves |
@@ -802,12 +802,12 @@ from momentum cell $`n - q`$ to $`n + q`$:
 | $`M^-`$ | remove $`-`$ | create $`-`$ | 0 | 0 | one negaton, by $`-2\xi_q`$ |
 
 Each is neutral in *both* ledgers, which is exactly why they are tempting; and
-each moves a body between momentum rows, which is exactly why they are not
+each moves an unpaired world between momentum rows, which is exactly why they are not
 available under postulate (S). §5.7 records what they would have bought and why
 the price is not payable.
 
 **Theorem S6 (the mode is per event, not per leg).** A mixed realisation — one
-leg created and the other removed — is one of $`M^\pm`$, and changes body
+leg created and the other removed — is one of $`M^\pm`$, and changes unpaired-world
 momentum by $`2\xi_q`$, which nothing can supply. Hence an event is wholly
 emissive or wholly absorptive, and absorption needs a partner of the right
 species at **both** daughters. Absorption is therefore supply limited; when
@@ -827,13 +827,13 @@ is*. Only the first is available.
 \Delta S = (2f - 1)\, n_{\rm ev},
 ```
 
-so $`f = 1/2`$ closes the body ledger and the sea ledger **simultaneously**.
+so $`f = 1/2`$ closes the unpaired-world ledger and the sea ledger **simultaneously**.
 Not two problems with two knobs: one problem with one number. Verified here to
 $`2\times10^{-14}`$ and $`5\times10^{-12}`$ respectively.
 
 **Theorem S9.** $`f`$ is an attractor near $`1/2`$, reached from both sides and
 independent of the initial ensemble. The mechanism is S7 read as feedback: if
-$`f > 1/2`$ bodies drain, partners grow scarce, and $`f`$ falls; if
+$`f > 1/2`$ unpaired worlds drain, partners grow scarce, and $`f`$ falls; if
 $`f < 1/2`$, the reverse. Padding the initial ensemble with $`\pm`$ pairs to
 $`\rho = N_0/\lvert E\rvert = 1`$ and $`20`$ — which leaves $`E`$ untouched —
 gives $`f = 0.462`$ and $`0.836`$ at $`t = 0.5`$, agreeing to within $`0.015`$
@@ -868,8 +868,8 @@ $`D = \lvert K_q(x)\rvert\thinspace u^{\rm parent}\thinspace\Delta t`$:
    *opposite* species to the sign the event deposits there.
 2. $`A = \min(D,\; \mathrm{cap}_A,\; \mathrm{cap}_B)`$ absorptive events;
    $`\mathrm{Em} = D - A`$ emissive.
-3. Apply both: absorptive removes one body from each daughter and credits
-   $`S`$ at the parent row; emissive adds one body to each daughter and debits
+3. Apply both: absorptive removes one unpaired world from each daughter and credits
+   $`S`$ at the parent row; emissive adds one unpaired world to each daughter and debits
    $`S`$ at the parent row.
 4. Clamp $`u^\pm \ge 0`$.
 
@@ -887,7 +887,7 @@ order-dependent. Open item S-SP4 measures it: the observable moves by
 $`3.0`$ to $`3.5\times10^{-3}`$ against a splitting error of
 $`1.0\times10^{-2}`$, and $`f`$ from $`0.431`$ to $`0.442`$ — both inside the
 error the method already carries. But $`N(T)`$ spreads by about 14 per cent
-across orderings, so **every body count and sea-depth figure carries an
+across orderings, so **every unpaired-world count and sea-depth figure carries an
 $`O(15\text{ per cent})`$ method uncertainty that the fidelity figures do not**.
 
 ### 5.6 The sea is a per-cell counter, not a particle list **[normative]**
@@ -897,14 +897,14 @@ area $`h`$ holds exactly two bound sea pairs, independent of any grid. That
 number is not a parameter and not a discretisation artefact.
 
 It is also why the sea must not be carried as particles. With a Monte-Carlo
-multiplier $`\nu`$ the sea scales as $`4\nu`$ bodies per $`h`$-cell times the
+multiplier $`\nu`$ the sea scales as $`4\nu`$ unpaired worlds per $`h`$-cell times the
 phase-space volume of the window, so at $`\nu = 10^6`$ it is
-$`\mathcal{O}(10^8)`$ bodies for the Eckart problem — and it *grows if the
+$`\mathcal{O}(10^8)`$ unpaired worlds for the Eckart problem — and it *grows if the
 window is merely widened*, which is not physics. The sea is uniform, dark,
 inert, and analytically known everywhere, so it should be a scalar counter per
 $`(x, p)`$ cell, materialised only when an event touches it. Only the unpaired
 population needs an explicit list, and at $`\nu = 10^6`$, $`\rho = 3`$ that is
-three million bodies — ordinary.
+three million unpaired worlds — ordinary.
 
 This also relocates the cost. It is not storage; it is the partner lookup in
 two momentum rows that every event of §5.5 performs. The per-cell occupancy
@@ -944,7 +944,7 @@ window**:
 1 to 2.5 per cent residual imbalance at essentially unchanged fidelity. In
 world-particles, $`\rho = 3`$ is four positons and two negatons per
 $`h`$-cell against the sea's two pairs — the entire ontological content of a
-tunnelling event is a handful of bodies.
+tunnelling event is a handful of unpaired worlds.
 
 **The residual leak is accepted, and is not a defect of the implementation.**
 The shortfall $`1/2 - f`$ never quite reaches zero, so the sea slowly loses
@@ -957,7 +957,7 @@ negotiated down.
 demand $`D`$ be allocated as $`a`$ absorptive, $`e`$ emissive, and $`m_\pm`$
 of the excluded $`M^\pm`$ realisations, with $`a = e`$ for ledger closure.
 
-1. If $`m_+ = m_-`$, so that body momentum is conserved event by event, the
+1. If $`m_+ = m_-`$, so that unpaired-world momentum is conserved event by event, the
    partner demand on each leg is $`a + m_\pm/2 = D/2`$, **independent of
    $`m`$**. Momentum-balanced hops relieve the supply constraint of S6 by
    exactly nothing.
@@ -972,7 +972,7 @@ $`a + m_-`$ and $`a + m_+`$. In case 1 both equal $`D/2`$; in case 2 their sum
 is $`D`$. $`\square`$
 
 So the alternatives are a leaky ledger with every trajectory Newtonian, or a
-closed ledger with body momentum conserved only in the mean. There is no exact
+closed ledger with unpaired-world momentum conserved only in the mean. There is no exact
 middle, and no amount of care in the allocation manufactures one.
 
 **This specification takes the first, and does not implement the second
@@ -1340,7 +1340,7 @@ carries state the mesh form has no analogue of (§5.1):
 
 ```python
 class SignedLedger:
-    """World-form state: two body fields and a per-cell sea counter (5.1).
+    """World-form state: two unpaired-world fields and a per-cell sea counter (5.1).
 
     Parameters
     ----------
@@ -1348,12 +1348,12 @@ class SignedLedger:
     rho  : float                  standing population N_0/|E| (5.7).  1 is the
                                   minimal ensemble; 3 to 10 is the usable
                                   window on a barrier; large rho costs
-                                  fidelity, not bodies.
+                                  fidelity, not unpaired worlds.
     kappa: float or None          optional bilinear recombination sink; must
                                   scale as Gamma_tot(x) if used at all (5.4).
 
     There is deliberately no option to enable the M+/M- realisations of 5.3.
-    They would close the ledger and they move a body between momentum rows,
+    They would close the ledger and they move an unpaired world between momentum rows,
     which postulate (S) forbids; Proposition L1 shows there is no variant that
     does the first without the second.
     """

@@ -62,7 +62,7 @@ so the strip of one row and width $`2y_{\max}`$ holds one aligned pair on
 average. With $`dp = 0.25`$ and $`\hbar = 1`$, $`y_{\max} = 2\pi`$.
 
 **Postulate (S′)** (step 23 §1, as amended in step 24 §4.1): between events,
-every free body obeys the full classical force; an aligned pair is
+every unpaired world obeys the full classical force; an aligned pair is
 force-blind, moving inertially while its clock still winds with $`V`$, and it
 changes momentum only in a collision with another aligned pair.
 
@@ -140,11 +140,11 @@ $`p + \xi_q`$ instead of its own, it carries the channel's Fourier phase
 ```
 
 **What the two ends are, and are not.** In the Wigner transform the points
-$`x \pm y`$ are the two arguments of one body's density matrix,
+$`x \pm y`$ are the two arguments of one particle's density matrix,
 $`\rho(x+y, x-y)`$: the ket and the bra, two worlds' answers to where the one
-body is ([`what_the_reach_is.md`](what_the_reach_is.md) §1). A chord's ends
-are not that body's ket and bra. They are two reference clocks that happen
-to sit at those two places. A body has no off-diagonal clock of its own to
+particle is ([`what_the_reach_is.md`](what_the_reach_is.md) §1). A chord's ends
+are not that particle's ket and bra. They are two reference clocks that happen
+to sit at those two places. A particle has no off-diagonal clock of its own to
 read, so the sea supplies one: by Theorem L4 the sea enters only as unsigned
 clocks, a phase reference that contributes nothing to $`W`$, as a receiver's
 local oscillator contributes nothing to its output.
@@ -297,9 +297,9 @@ and in $`W`$:
 | the phase rate $`(V(x+y) - V(x-y))/\hbar`$ that the potential applies to that element | $`U`$ inside $`J`$ | the chord's winding, $`\hbar\dot\mu = U`$ (§2(b)) |
 | the Fourier factor $`e^{-2ipy/\hbar}`$ | the lever in $`\sin(2\xi y/\hbar)`$ | the daughter row's plane wave (Q5(a)) |
 | the measure $`dy/\pi\hbar`$ | $`B = 1/\pi\hbar`$ | the sea's density: chords per unit $`y`$ |
-| the state, $`\rho`$ | $`W`$ | the bodies, which are the parents, not the sea |
+| the state, $`\rho`$ | $`W`$ | the unpaired worlds, which are the parents, not the sea |
 
-The sea reads the operator; the bodies carry the state; an event is their
+The sea reads the operator; the unpaired worlds carry the state; an event is their
 product. An event fires at $`\lvert K_q(x)\rvert`$ per parent, and the
 parents are distributed as $`W`$, so the expected traffic is
 $`\sum_q K_q\,[W(p - \xi_q) - W(p + \xi_q)]`$, the last equation above.
@@ -308,7 +308,7 @@ The analogy is a diffraction grating in a spectrometer (Q5 used Fraunhofer
 diffraction, which is the same thing). The grating and the phase plate in
 front of it decide how strongly each order $`q`$ is diffracted; the light
 decides how much there is to diffract. The sea and the potential are the
-grating and the plate. The bodies are the light.
+grating and the plate. The unpaired worlds are the light.
 
 Two consequences follow.
 
@@ -330,8 +330,8 @@ Two consequences follow.
 
 ## 6. From a reading to an event
 
-**What cannot trigger an event.** Not a crossing. An absorption is two free
-bodies crossing at the parent on rows $`p \pm \xi_q`$, and that is how it is
+**What cannot trigger an event.** Not a crossing. An absorption is two unpaired
+worlds crossing at the parent on rows $`p \pm \xi_q`$, and that is how it is
 *realised* (Q9(b)); but a rate triggered by crossings is mass action in
 $`u_\pm`$, and $`E`$ would no longer close (Q10). Not a single chord either:
 fired one chord at a time, at the size of each chord's own contribution to
@@ -357,7 +357,7 @@ for each step dt:
     for a in sea_pairs:                                   # force-blind
         a.x += a.p / m * dt
         a.theta += (a.p**2 / (2 * m) - V(a.x)) * dt / hbar
-    # 2. read and integrate (Q11): one integrator per channel per body
+    # 2. read and integrate (Q11): one integrator per channel per unpaired world
     for b in free_bodies:
         K = read(b, sea, dX)            # the live reading, or the kernel K_q(b.x)
         for q in channels:
@@ -379,7 +379,7 @@ def fire(b, q, s):
 
 "Near" means within the row width $`dp`$ in momentum and a cell in position.
 Both realisations move $`W`$ identically; they differ in the kinetic energy
-$`\xi_q^2/m`$ that passes between the bodies and the sea (Q9(a)).
+$`\xi_q^2/m`$ that passes between the unpaired worlds and the sea (Q9(a)).
 
 **What is measured** (Q12). Integrators fed by the kernel realise the QLE's
 target with no excess firing and less noise than Poisson triggering. Fed by
@@ -426,7 +426,7 @@ $`\varphi = o\,\xi d/\hbar`$, so flipping the orientation $`o`$ leaves their
 darkness unchanged, and no orientation bias was measured.
 
 **(b) An aligned pair can be a reader too.** The same chords, read by an
-aligned pair at the vertex instead of a free body, give the same reading and
+aligned pair at the vertex instead of an unpaired world, give the same reading and
 the same rate, Theorem L5's. Its firing is $`W`$-null, and it is realised by
 what is in the aperture:
 
@@ -456,7 +456,7 @@ are at rest relative to each other (§2(b)): nothing geometric marks the
 moment they should separate, and the only thing about them that changes in
 time is $`\mu`$, at $`U/\hbar`$. If crossings alone triggered focus, focus
 would run in free space where defocus cannot, and the sea would condense in
-momentum. So, as for bodies, realisation is geometric (a crossing realises a
+momentum. So, as for unpaired worlds, realisation is geometric (a crossing realises a
 focus, a chord a defocus) and triggering is spectral, for both.
 
 ---
@@ -467,7 +467,7 @@ focus, a chord a defocus) and triggering is spectral, for both.
   correctly when acted on.
 - **Critical sampling**: at the physical density a reading is a sample, not
   a measurement (§4).
-- **Integrator banks** (Q-SP14): Q11 gives them to free bodies,
+- **Integrator banks** (Q-SP14): Q11 gives them to unpaired worlds,
   provisionally; §7(b) would give them to aligned pairs too.
 - **The reader's frame.** An inertial pair reads $`U`$, not
   $`U_{\rm res}`$. Removing the reading's first moment (Proposition L2(c))

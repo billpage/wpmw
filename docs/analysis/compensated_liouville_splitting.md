@@ -45,7 +45,7 @@ the four channels and the exactness family.
 
 **Downstream.** The split derived here is what leaves a residual channel to be
 unravelled at all. What that channel *does* once it exists — the two
-realisations of an event, and how they hold the sea and body populations in
+realisations of an event, and how they hold the sea and unpaired-world populations in
 balance — is treated as a tutorial, self-contained and assuming none of the
 machinery below, in [`../supplement/emission_and_absorption.md`](../supplement/emission_and_absorption.md).
 
@@ -563,13 +563,13 @@ $`|\Gamma|`$ per mediator, the transfer of one positon from $`n+q`$ to
 $`n-q`$; the mediator is unchanged. The same arithmetic is realised quite
 differently once the force has been removed and the demography of
 [`../supplement/emission_and_absorption.md`](../supplement/emission_and_absorption.md)
-supplies the events: the rate at row $`n`$ is set by the signed body occupancy
+supplies the events: the rate at row $`n`$ is set by the signed unpaired-world occupancy
 there, the material comes from a neutral sea pair on that row, and two
 worldlines *begin* at $`n \pm q`$. Nothing is transferred.
 
 Two roles that the lattice rule held in one object are now held by two:
 
-- the **parent** body at row $`n`$, which sets the rate and is unchanged by the
+- the **parent** unpaired world at row $`n`$, which sets the rate and is unchanged by the
   event — a catalyst in the strict sense;
 - the **sea pair** on the same row, which is consumed (emissive) or created
   (absorptive) — the participant.
@@ -577,7 +577,7 @@ Two roles that the lattice rule held in one object are now held by two:
 The word *mediator* should be retired here, for two reasons. First, there is
 nothing to mediate: a mediator stands between two states that a quantum moves
 between, and under the compensated demography nothing moves. Second, the word
-names both roles at once, and they come apart — the bodies and the sea can be
+names both roles at once, and they come apart — the unpaired worlds and the sea can be
 independently short of supply, which is exactly the rationing that makes the
 absorptive fraction an attractor rather than a tuned constant. *Parent* and
 *sea pair* are the specification's own words and they are the right ones.
@@ -587,7 +587,7 @@ pure-hop rule that its rate is weighted by the occupancy of a cell the event
 does not visit. Under the compensated reading that cell **is** visited: the sea
 pair there is destroyed or created. So the objection is weakened. It is not
 dissolved, and it would be wrong to claim otherwise: what weights the rate is
-still the *body* occupancy, and the body is still a spectator. Whether the
+still the *unpaired world* occupancy, and the unpaired world is still a spectator. Whether the
 distinction between "the event touches this cell" and "the event consumes the
 object whose density sets its rate" has any content is CLS8.
 
@@ -992,7 +992,7 @@ not as a home for the ontology.
   for the two-body kernel of the interworld coupling notes, or is that a
   different mechanism?
 - **CLS8.** §3.2. Under the compensated demography the rate at a row is
-  weighted by the body occupancy there while the object consumed is the sea
+  weighted by the unpaired-world occupancy there while the object consumed is the sea
   pair on the same row. FR's locality objection to a rate that reads a
   non-participating cell is thereby weakened but not dissolved. Is there a
   formulation of momentum-space locality that distinguishes "the event touches

@@ -515,8 +515,8 @@ ledger the identification is
 | Kurtz | the ledger |
 |---|---|
 | system size `Omega` | `M`, the number of momentum cells |
-| intensive density `z` | `lam = Lambda / 2M`, bodies per species per cell |
-| jump `l` | `+-2` bodies, or `+-1` per species per cell touched |
+| intensive density `z` | `lam = Lambda / 2M`, unpaired worlds per species per cell |
+| jump `l` | `+-2` unpaired worlds, or `+-1` per species per cell touched |
 | rate `Omega beta` | `gamma M Q` for events, `nu Lambda` for hops, `kappa sum n+ n-` for recombination |
 
 Each of the three channels is of that form: the event rate is `M` times a
@@ -537,7 +537,7 @@ Citing Kurtz licenses the first reading and says nothing about the second.
   the mean-field mesh ledger of `sea_population_equilibrium.md` §4 as the
   large-system limit of the counting process at all — the two-field split
   written there is `F(z)` for this generator.  It also underwrites the drift
-  used in Theorem N3: the sum rule is `F(z) = 0` in the body coordinate,
+  used in Theorem N3: the sum rule is `F(z) = 0` in the unpaired-world coordinate,
   which is why N3 needs no closure and no assumption about the potential.
   What the theorem does *not* give is uniformity in time, so it says nothing
   about the stationary state directly; §5's `lam*` is the fixed point of

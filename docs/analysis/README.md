@@ -60,7 +60,7 @@ bottom up. Each note states in its §0 what it inherits and what it retracts.
   reach `8 pi`, exact 0.5120 and 0.5441. **Proposition WC4**: for pair
   potentials a world carries one bank per bond, `N(N - 1)/2` for `N` particles
   like the baselines of an array, and none per world-particle; Q11's bank per
-  free body is the one-particle case. **Proposition WC5**, ensemble runs with
+  unpaired world is the one-particle case. **Proposition WC5**, ensemble runs with
   integrate-and-fire banks on Kaggle: the world bank never moves a daughter
   off its parent's centre-of-mass momentum, the world-particle banks always
   do; each realises its own generator up to the contact sink's bias (B1's
@@ -83,7 +83,7 @@ bottom up. Each note states in its §0 what it inherits and what it retracts.
   events 1.4 times as fast as one packet because its fringes are parents too.
   **Proposition V2**: from a minimal preparation the sea's debt is at least the
   growth of the negative mass of `W`, with equality exactly when the ensemble
-  stays minimal; body inflation is sea debt, so a finite sea would make garbage
+  stays minimal; unpaired-world inflation is sea debt, so a finite sea would make garbage
   collection a requirement. **Proposition V3**: under a floor — no pair, no
   ionisation, Proposition S0 read literally — `E` is unchanged bit for bit while
   the sea is at least as deep as the depth `lambda*` the unfloored run needs,
@@ -100,13 +100,13 @@ bottom up. Each note states in its §0 what it inherits and what it retracts.
   hide below a part in a thousand, and only an experiment could bound that
   depth, from below. **Proposition V6**: integer worlds at the physical density,
   over many seeds, block emissions as about `0.9 e^-0.55beta`, not `e^-beta`,
-  because body inflation drains the apertures a parent keeps returning to; the
+  because unpaired-world inflation drains the apertures a parent keeps returning to; the
   observable still follows V4's mean field, but blocking fewer than one emission
   in a thousand takes about twelve pairs per aperture. **Proposition V5**:
   entanglement made by a pair potential costs the sea exactly the negativity of
   the relative motion. **Proposition V7**: when the centre of mass and the
   relative motion couple, V2 and V3 hold unchanged in four dimensions, and two
-  bodies in an anharmonic well need a deeper sea than one under every
+  particles in an anharmonic well need a deeper sea than one under every
   realisation; the physical density is short in all three. **Propositions V8 to
   V10** (second addendum) amend (S′): an aligned pair changes momentum only in
   collisions with other pairs, Cyganski's Focus and Defocus at mass-action rates
@@ -124,7 +124,7 @@ bottom up. Each note states in its §0 what it inherits and what it retracts.
   re-locked to their new row keep the sea dark and the readings live (V12). In
   an integer sea collisions steepen blocking to about `1.1 e^-0.74beta`, about
   9.5 pairs per aperture for one emission in a thousand (V13). Two coupled
-  bodies need 0.20 to 0.54 of the physical density with collisions, against 1.86
+  particles need 0.20 to 0.54 of the physical density with collisions, against 1.86
   to 3.98 without (V14). Where to look is where negativity is made fastest —
   diffraction, Kerr revivals, tunnelling, collisions — but the model's
   regulators have no laboratory values, so no bound follows yet; a null result
@@ -137,14 +137,14 @@ bottom up. Each note states in its §0 what it inherits and what it retracts.
   Postulate (S) gives every world-particle the full classical force, the
   members of an aligned sea pair included, and nothing in the QLE asks for
   that: a pair is `W`-null, and the Moyal equation fixes `u+ - u-` and says
-  nothing about `u+ + u-`. This note provisionally adopts **(S′)**: free
-  bodies obey the full force, aligned pairs move inertially — advecting at
+  nothing about `u+ + u-`. This note provisionally adopts **(S′)**: unpaired
+  worlds obey the full force, aligned pairs move inertially — advecting at
   `p/m` with no drift in `p` — while their clocks still wind with `V`, so the
   sea is force-blind but potential-sensitive; a motionless pair would need a
   Hamiltonian clock, and a potential-blind one would leave the kernel nothing
   to be read from. **Proposition Q1** organises everything: in every ledger of
   the chain the sea enters an event only as its source or its sink and is
-  never read, so the body fields — and with them `E`, `N` and `f` — are
+  never read, so the unpaired-world fields — and with them `E`, `N` and `f` — are
   independent of how it moves, verified bitwise; the exceptions are exactly
   where the sea is read, a throttled rate, a sea-weighted kernel, its phases
   and identity. **Proposition Q2** gives the kinematics: under (S′) a sea
@@ -155,7 +155,7 @@ bottom up. Each note states in its §0 what it inherits and what it retracts.
   **Proposition Q3**: what changes is the sea itself — deficits stay in their
   rows, Theorem S8's early dip goes but the worst cell hovers near zero, and
   fast recombination repairs it where slow does not. **Proposition Q4**: with
-  step 20's tags now conserved, tagged bodies cross the Eckart barrier inside
+  step 20's tags now conserved, tagged unpaired worlds cross the Eckart barrier inside
   dark pairs, through the summit — `T_tag` 0.89 against 0.34 at `E0 = V0/2`,
   with only 9 per cent of the tag above the barrier energy — while `T_E` is
   unchanged, so individual crossing is still not tunnelling. **Proposition
@@ -172,34 +172,34 @@ bottom up. Each note states in its §0 what it inherits and what it retracts.
   mean reset time, gauge invariance selects its relative resets over absolute
   ones, and near the Eckart barrier the kernel's own rate falls short (0.846
   against a control of 0.880) while six times it nearly suffices; step 22's
-  plateau was the free bodies read as partners, not incomplete resetting.
+  plateau was the unpaired worlds read as partners, not incomplete resetting.
   **Propositions Q7 and Q8** turn to the sea's population. The `kappa` of the
   step 16 comparison is the contact sink, which is not in the model, and dark
   catalysis, with `dS = 0`, cannot touch the population at all; the model's
-  own clocks are the event rate and the rate at which force-feeling bodies
+  own clocks are the event rate and the rate at which force-feeling unpaired worlds
   slip across force-blind rows, which are of the same order by construction
   (`Gamma ~ |V'|/dp`), so under (S′) the sea's deficits are shallow but never
   refilled. An immediate contact sink would be garbage collection — the
   signed-particle method's same-cell annihilation with a pair ledger added —
-  keeping the ensemble minimal, making absorption redundant for the bodies,
+  keeping the ensemble minimal, making absorption redundant for the unpaired worlds,
   and fixing the sea's total at half the growth of `||W||_1`; a pair formed
   that way is generically gray, and whether it is force-blind on joining or
   only on alignment is left open. **Propositions Q9 to Q12** ask what decides
-  when and where an event happens. An absorption is two free bodies crossing
+  when and where an event happens. An absorption is two unpaired worlds crossing
   at the parent on rows `p ± xi_q` and giving up exactly their relative
   kinetic energy, within tolerances `dp` and `y_max` whose product is `h/2`;
   but crossings only realise events, since a crossing-triggered rate is mass
   action and `E` would no longer close. The trigger is the parent's reading:
   channel `q` is phase-matched to the residual phase screen at wavenumber `2
   xi_q/hbar` — the prism removed, the cubic mask of an Airy beam left — and
-  one integrator per channel per body, firing at integer crossings, realises
+  one integrator per channel per unpaired world, firing at integer crossings, realises
   the rate exactly in mean with sub-Poissonian counts, so a rate needs an
   integrator, not a die. Fed by the kernel it beats Poisson triggering. Fed by
   the sea's own live reading it converges open loop, `1 - corr` falling as
   `1/nu`, but fails closed loop: the busy sea reads low before any feedback,
   acting on the reading costs as much again, and at the physical density a
   reader has 0.08 chords. A deeper sea at fixed sampling is no remedy: it
-  dilutes the traffic of other bodies but not a reader's own, and leaves the
+  dilutes the traffic of other unpaired worlds but not a reader's own, and leaves the
   excess firing, so the sea's density stays at `B = 1/(pi hbar)`. Four demo
   defects are repaired: a species mask read at the destination row, the whole
   of step 22's drift of `Sum E` (L-SP8); the tag bookkeeping of step 20's Part
@@ -221,7 +221,7 @@ bottom up. Each note states in its §0 what it inherits and what it retracts.
   per unit time to match the exact kernel, because each weight is a signed
   interference sum whose cancellations are the point, while replacing the pinned
   density `B` by the actual ledger sea costs almost nothing. Theorem L3 shows
-  why per-world phases are the natural carrier: at their midpoint two bodies'
+  why per-world phases are the natural carrier: at their midpoint two unpaired worlds'
   extended phases wind apart at their energy difference, which for partners in
   one momentum row is the kernel's own `U(x,y)`. Theorem L4 is the obstacle it
   meets: with species signs, every aligned pair cancels exactly in any pair sum,
@@ -262,7 +262,7 @@ bottom up. Each note states in its §0 what it inherits and what it retracts.
 - **21.** **[`fourd_compensated_ledger.md`](fourd_compensated_ledger.md)** \
   The
   compensated world form taken out of 1+1 dimensions for the first time: two
-  particles on a line, the ledger run on exact integer counts with bodies
+  particles on a line, the ledger run on exact integer counts with unpaired worlds
   carrying their own sub-cell positions, and the one cell size nothing fixes
   — the bin area `A` in the centre-of-mass directions — scanned. Proposition
   M1: for a pair potential the residual symbol depends on the ket–bra
@@ -275,11 +275,11 @@ bottom up. Each note states in its §0 what it inherits and what it retracts.
   records that the residual is not always cheaper than the uncompensated
   kernel on the same lattice (0.83 for a cosine, 2.8 for the attractive
   Poeschl–Teller well at the ledger runs' reach, as Theorem C4 of step 14
-  predicts). **Proposition M5 is the note's centre**: the equilibrium body
+  predicts). **Proposition M5 is the note's centre**: the equilibrium unpaired-world
   count is proportional to the number of occupied joint cells, 2.4 to 4.6
-  bodies per cell, so shrinking `A` from infinity to `h` and `h/4` multiplies
+  unpaired worlds per cell, so shrinking `A` from infinity to `h` and `h/4` multiplies
   it by 4.8 and 13.2, with fidelity error growing as its square root.
-  Proposition M6: the cells filled are those escaped bodies reach, not the
+  Proposition M6: the cells filled are those escaped unpaired worlds reach, not the
   state's support, and doubling the window raises the count again.
   Proposition M7 restricts N4 and N5: under real streaming, partner
   availability is structural, 0.55 to 0.74 whether the mean occupancy of a
@@ -290,7 +290,7 @@ bottom up. Each note states in its §0 what it inherits and what it retracts.
   choice. Proposition M9 finds the same trade-off inside the 1D cell, which
   the mesh ledger cannot show. Corollary M10: the cost is a product over
   degrees of freedom — the exponential of step 10's Propositions B2 and B3,
-  returned as body inflation now that the sea is no longer a partner.
+  returned as unpaired-world inflation now that the sea is no longer a partner.
 
 - **20.** **[`dark_sea_and_worldline_identity.md`](dark_sea_and_worldline_identity.md)**
   — Whether the phase machinery transplants from the phase-resonance formulation
@@ -312,7 +312,7 @@ bottom up. Each note states in its §0 what it inherits and what it retracts.
   conserved throughout — so ineligibility, not arithmetic, is what gives
   postulate (S) and Proposition K8 their content, and with it every event
   carries `|dS| = 1`. Theorems Y3 and Y4 supply the phase account darkness was
-  missing: the two bodies a catalysed recombination consumes are a winding pair
+  missing: the two unpaired worlds a catalysed recombination consumes are a winding pair
   whose midpoint is the parent's own row, with `|Psi| = 2|sin(mu/2)|` and an
   envelope drifting at the parent's velocity, and a momentum kink of `+-xi`
   carries a phase ramp pinned at the point where it happens, so the created
@@ -379,7 +379,7 @@ bottom up. Each note states in its §0 what it inherits and what it retracts.
   The ledger run as an
   exact Markov jump process on integer counts, rather than as a mean field on a
   mesh. Answers the standing request for a formal stochastic treatment of the
-  free-body and sea-pair populations, and corrects the law it was meant to
+  unpaired-world and sea-pair populations, and corrects the law it was meant to
   confirm. Theorem N1 strengthens J1: `P = S + N/2` is conserved *pathwise*, in
   exact integers, on every trajectory and not merely in expectation — a
   deterministic invariant of the generator, not a martingale. Theorem N2 is why
@@ -391,9 +391,9 @@ bottom up. Each note states in its §0 what it inherits and what it retracts.
   Nelson's sense: trajectories are exactly Newtonian by (S), the diffusion in
   the phase variables is identically zero, and the whole stochastic content is
   demographic. **Theorem N3 is the note's centre and a correction to S7.**
-  Stationarity of the body count gives `Gamma_tot (1 - 2f) = R_sink` with no
+  Stationarity of the unpaired-world count gives `Gamma_tot (1 - 2f) = R_sink` with no
   closure and nothing about the potential, where `R_sink` is the total rate of
-  every *other* body-removing channel — so `f = 1/2` is the sinkless special
+  every *other* unpaired-world-removing channel — so `f = 1/2` is the sinkless special
   case and not the law, and any `kappa > 0` forces `f < 1/2` by a computable
   amount, verified to between 0.01 and 0.9 per cent over a fortyfold range of
   `kappa`. That invalidates the argument S-SP3 used to rule out a floor — that a
@@ -401,12 +401,12 @@ bottom up. Each note states in its §0 what it inherits and what it retracts.
   source, and their difference changes sign freely. Theorems N4 and N5 close the
   availability question: `f` is the probability that both legs find a partner,
   which under an independent-occupancy closure is `(1 - e^-lam)^2`, so `f = 1/2`
-  pins `lam* = -ln(1 - 2^-1/2) = 1.227947` bodies per species per cell,
+  pins `lam* = -ln(1 - 2^-1/2) = 1.227947` unpaired worlds per species per cell,
   `f'(lam*) = sqrt2 - 1` exactly, `Var(Lambda)/M = 1/f' = 2.414214`, and a Fano
   factor `0.983028`, slightly sub-Poissonian — five numbers carrying no free
   constant, measured at 2.4487 against 2.4559 in the well-mixed limit and flat
   across `Q = 1` to `12`, as a closure with no channel index in it requires. In
-  world-particles that is 2.456 bodies against exactly two sea pairs per Planck
+  world-particles that is 2.456 unpaired worlds against exactly two sea pairs per Planck
   cell, the low end of K9's empirical window. Theorem N6 reassigns a role the
   project had given to recombination: with transport off, per-cell occupancy is
   a reflected critical random walk whose spread grows without bound, `kappa`
@@ -445,7 +445,7 @@ bottom up. Each note states in its §0 what it inherits and what it retracts.
   worlds exist is a property of the regulator. Corrects the framing that
   prompted it — the compensated split eliminates quantum *force*, not
   quantum *kinematics* — and leaves the split gauge-invariance theorem
-  (G-SP1) as the load-bearing open item. §8 delimits the scope: `N` bodies
+  (G-SP1) as the load-bearing open item. §8 delimits the scope: `N` particles
   verbatim, spin not at all, measurement untouched, and states narrowly what
   survives a survey of the signed-particle, Bell-type-QFT, Dirac-sea and
   negative-probability literatures now recorded in
@@ -468,13 +468,13 @@ bottom up. Each note states in its §0 what it inherits and what it retracts.
   a deposition of `-1` realised by removing a positon rather than adding a
   negaton — is identical in the observable and opposite in the ledger, so
   debit and credit both land on row `p`. It is per event and not per leg
-  (S6, body momentum), hence supply limited. Theorem S7 is the note's
+  (S6, unpaired-world momentum), hence supply limited. Theorem S7 is the note's
   centre: with absorptive fraction `f`, `dN = 2(1-2f) n_ev` and
   `dS = (2f-1) n_ev`, so `f = 1/2` closes both ledgers at once. Measured
   `f = 0.434`, and absorption already restores QLE fidelity by four orders
   at fixed `dt` — the emissive gap being the sign problem showing up as
   integration error rather than variance. S9 then shows `f` is an
-  *attractor*: `f > 1/2` drains bodies and so removes partners, `f < 1/2`
+  *attractor*: `f > 1/2` drains unpaired worlds and so removes partners, `f < 1/2`
   does the reverse, and a twentyfold padding of the initial ensemble and the
   minimal one converge on the same value from opposite sides. Closure
   therefore needs no tuning — and, for the same reason, says nothing about
@@ -520,7 +520,7 @@ bottom up. Each note states in its §0 what it inherits and what it retracts.
   is exactly zero, which for a positive initial `W` is everywhere at `t=0`,
   so the ensemble must bootstrap. A standing dressed population `rho` of 3
   to 10 at reach `4 pi a` is the usable window, and in world-particles that
-  is three to ten unpaired bodies against a sea of exactly two pairs per
+  is three to ten unpaired worlds against a sea of exactly two pairs per
   Planck cell.
 
 - **14.** **[`compensated_liouville_splitting.md`](compensated_liouville_splitting.md)** \

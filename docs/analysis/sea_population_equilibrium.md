@@ -1,6 +1,6 @@
 # Sea population equilibrium: what a signed channel costs the ledger
 
-> What the signed residual channel costs the *ledger*, as opposed to the observable. Prices open item CLA3 of the compensated specification. The Moyal equation fixes `u+ - u-` and says nothing about `u+ + u-`, so the population is extra structure; S1 shows any `E`-preserving sink is bilinear, which is exactly the class Proposition U1 left open. Momentum conservation forces the consumed sea pair to sit on the parent's own row (S0), making "ionisation" a derivation rather than a metaphor. The spec's rate `R = sum_q |K_res|` silently selects the **emissive** realisation of every event, and that choice is ruinous: the sea is relocated, not consumed, with the worst-cell deficit growing without bound (S4), and throttling by a finite sea moves `W` by 40 per cent in the core while leaving norm and `<p>` exact (S5). The **absorptive** realisation — a deposition of `-1` realised by removing a positon rather than adding a negaton — is identical in the observable and opposite in the ledger, so debit and credit both land on row `p`. It is per event and not per leg (S6, body momentum), hence supply limited. Theorem S7 is the note's centre: with absorptive fraction `f`, `dN = 2(1-2f) n_ev` and `dS = (2f-1) n_ev`, so `f = 1/2` closes both ledgers at once. Measured `f = 0.434`, and absorption already restores QLE fidelity by four orders at fixed `dt` — the emissive gap being the sign problem showing up as integration error rather than variance. S9 then shows `f` is an *attractor*: `f > 1/2` drains bodies and so removes partners, `f < 1/2` does the reverse, and a twentyfold padding of the initial ensemble and the minimal one converge on the same value from opposite sides. Closure therefore needs no tuning — and, for the same reason, says nothing about the one dimensionless constant the recombination rate still carries.
+> What the signed residual channel costs the *ledger*, as opposed to the observable. Prices open item CLA3 of the compensated specification. The Moyal equation fixes `u+ - u-` and says nothing about `u+ + u-`, so the population is extra structure; S1 shows any `E`-preserving sink is bilinear, which is exactly the class Proposition U1 left open. Momentum conservation forces the consumed sea pair to sit on the parent's own row (S0), making "ionisation" a derivation rather than a metaphor. The spec's rate `R = sum_q |K_res|` silently selects the **emissive** realisation of every event, and that choice is ruinous: the sea is relocated, not consumed, with the worst-cell deficit growing without bound (S4), and throttling by a finite sea moves `W` by 40 per cent in the core while leaving norm and `<p>` exact (S5). The **absorptive** realisation — a deposition of `-1` realised by removing a positon rather than adding a negaton — is identical in the observable and opposite in the ledger, so debit and credit both land on row `p`. It is per event and not per leg (S6, unpaired-world momentum), hence supply limited. Theorem S7 is the note's centre: with absorptive fraction `f`, `dN = 2(1-2f) n_ev` and `dS = (2f-1) n_ev`, so `f = 1/2` closes both ledgers at once. Measured `f = 0.434`, and absorption already restores QLE fidelity by four orders at fixed `dt` — the emissive gap being the sign problem showing up as integration error rather than variance. S9 then shows `f` is an *attractor*: `f > 1/2` drains unpaired worlds and so removes partners, `f < 1/2` does the reverse, and a twentyfold padding of the initial ensemble and the minimal one converge on the same value from opposite sides. Closure therefore needs no tuning — and, for the same reason, says nothing about the one dimensionless constant the recombination rate still carries.
 
 *Ladder abstract — see the [full list](README.md#the-ladder).*
 
@@ -67,9 +67,9 @@ of the constraints on the recombination rule. Theorem N3 of
 \Gamma_{\rm tot}\,\bigl(1 - 2f\bigr) \;=\; R_{\rm sink},
 ```
 
-where $`R_{\rm sink}`$ is the total rate of every body-removing channel other
+where $`R_{\rm sink}`$ is the total rate of every unpaired-world-removing channel other
 than absorption. The derivation is arithmetic on $`\pm2`$ — each emissive
-event changes the body count by $`+2`$, each absorptive event and each
+event changes the unpaired-world count by $`+2`$, each absorptive event and each
 coincident-pair removal by $`-2`$ — and it uses nothing about the potential,
 the reach or the closure. The sea ledger gives the same equation, which is why
 one number still closes both.
@@ -79,7 +79,7 @@ Three consequences for what follows.
 1. S7's numerics are unaffected: `run_traced`, which produces every $`f`$
    quoted in §S9 and Part J, carries no recombination, so $`R_{\rm sink} = 0`$
    and $`f = 1/2`$ is the right target there.
-2. §7's constraint table should read "$`f = 1/2`$ **when the only body sink is
+2. §7's constraint table should read "$`f = 1/2`$ **when the only unpaired world sink is
    absorption**". Any $`\kappa > 0`$ forces $`f < 1/2`$ strictly, by
    $`\tfrac12 - f = R_{\rm sink}/2\Gamma_{\rm tot}`$, measured to within
    0.9 per cent over a fortyfold range of $`\kappa`$ in Part B of
@@ -122,8 +122,8 @@ Part J carry the corrected account.
 - **CLA3.** The emissive unravelling is not merely expensive. It drains the
   sea without bound (S4), and if the sea is finite the resulting throttle
   moves $`W`$ by 40 per cent in the core (S5). The **absorptive** unravelling
-  — realising a deposition by removing a body of the opposite species rather
-  than adding one — costs nothing in the observable, bounds the body count,
+  — realising a deposition by removing an unpaired world of the opposite species rather
+  than adding one — costs nothing in the observable, bounds the unpaired-world count,
   and shrinks the deficit by two to three orders of magnitude (S8).
 - **Whether a recombination rule is needed.** Yes, necessarily, and it is not
   derivable from the Moyal equation: the equation fixes $`u^+ - u^-`$ and says
@@ -155,7 +155,7 @@ Three fields per phase-space cell, in Wigner units:
 | field | meaning |
 |---|---|
 | $`E = u^+ - u^-`$ | the signed density; the observable, $`E \equiv W`$ |
-| $`N = u^+ + u^-`$ | the body density |
+| $`N = u^+ + u^-`$ | the unpaired-world density |
 | $`S`$ | bound sea pairs, background $`B = 2/h`$ |
 
 The Moyal equation constrains $`E`$ and nothing else. Any redistribution of
@@ -167,7 +167,7 @@ whole content of this note is what constrains that choice.
 for arbitrary ensembles if and only if it removes positons and negatons in
 coincident pairs.
 
-*Proof.* A per-body death rate $`\mu`$ applied to both species sends
+*Proof.* A per-world death rate $`\mu`$ applied to both species sends
 $`E \to e^{-\mu t}E`$, which changes the observable. Species-selective removal
 changes $`E`$ directly. Only removal in $`\pm`$ pairs at the same cell leaves
 $`u^+ - u^-`$ invariant, and pair removal is quadratic in the local
@@ -208,7 +208,7 @@ $`+1`$ at $`p + \xi_q`$ and $`-1`$ at $`p - \xi_q`$, since $`K_{-q} = -K_q`$.
 The $`(q, -q)`$ pair is therefore **one event with two legs of opposite sign**,
 not two separate channels.
 
-**Proposition S0 (co-location is forced).** If the event conserves body
+**Proposition S0 (co-location is forced).** If the event conserves unpaired-world
 momentum and the parent streams on undisturbed, the bound pair it consumes
 must sit at the parent's own momentum row.
 
@@ -284,7 +284,7 @@ reach side rather than the cost side.
 **Theorem S4 (the sea is relocated, without bound).** Under the emissive
 unravelling $`S`$ is debited at the parent row $`p`$ and credited at the
 daughter rows $`p \pm \xi_q`$, where the pair eventually recombines. The mean
-occupancy is conserved — bodies are conserved — while the worst cell drains
+occupancy is conserved — unpaired worlds are conserved — while the worst cell drains
 monotonically:
 
 | $`t`$ | 2 | 4 | 8 | 12 | 16 | 20 |
@@ -328,14 +328,14 @@ Every deposition has two realisations, identical in $`E`$:
 | $`-1`$ at a cell | add a negaton | remove a positon |
 
 They differ entirely in the ledger. An emissive event splits a bound pair at
-the parent row: bodies $`+2`$, $`S`$ debited at $`p`$. An absorptive event
-binds the two removed bodies into a pair at the parent row: bodies $`-2`$,
+the parent row: unpaired worlds $`+2`$, $`S`$ debited at $`p`$. An absorptive event
+binds the two removed unpaired worlds into a pair at the parent row: unpaired worlds $`-2`$,
 $`S`$ **credited at $`p`$**. Both debit and credit now land on the same row, so
 the transport asymmetry of S4 disappears by construction.
 
 **Theorem S6 (the mode is per event, not per leg).** A mixed realisation —
-one leg created, the other removed — moves a body from $`p - \xi_q`$ to
-$`p + \xi_q`$ and so changes body momentum by $`2\xi_q`$. Nothing can supply
+one leg created, the other removed — moves an unpaired world from $`p - \xi_q`$ to
+$`p + \xi_q`$ and so changes unpaired-world momentum by $`2\xi_q`$. Nothing can supply
 it (Proposition S0). Hence an event is wholly emissive or wholly absorptive,
 and absorption requires a partner of the right species at **both** daughters.
 Absorption is therefore supply limited, and when supply fails the event falls
@@ -350,7 +350,7 @@ $`n_{\rm ev}`$ events,
 \Delta S = (2f - 1)\, n_{\rm ev},
 ```
 
-so $`f = 1/2`$ closes the body ledger and the sea ledger **simultaneously**.
+so $`f = 1/2`$ closes the unpaired-world ledger and the sea ledger **simultaneously**.
 Part E verifies both to $`1.5\times10^{-14}`$ and $`1.7\times10^{-11}`$
 respectively, at a measured $`f = 0.4344`$.
 
@@ -397,7 +397,7 @@ attractor near $`1/2`$, approached from both sides and independent of the
 initial ensemble.
 
 The mechanism is Theorem S7 read as a feedback law. If $`f > 1/2`$ then
-$`\Delta N < 0`$: bodies drain, partners become scarcer, and $`f`$ falls. If
+$`\Delta N < 0`$: unpaired worlds drain, partners become scarcer, and $`f`$ falls. If
 $`f < 1/2`$ then $`\Delta N > 0`$ and the reverse. Part H measures it by
 padding the initial ensemble with $`\pm`$ pairs — which leaves $`E`$ untouched
 — to a ratio $`\rho = N_0/|E|`$:
@@ -591,7 +591,7 @@ population, but it is no longer load-bearing.
   populations behind through ringing — worst cell $`-6\times10^{-3}`$ at
   $`\Delta p = 0.25`$, about two per cent of the packet peak — and the
   allocation $`A = \min(D, {\rm cap}_A, {\rm cap}_B)`$ inherits their sign. A
-  negative $`A`$ is an event run backwards: it credits bodies where it should
+  negative $`A`$ is an event run backwards: it credits unpaired worlds where it should
   debit them and debits the sea where it should credit it. The damage is
   concentrated in one channel, because $`q = 1`$ carries about 56 per cent of
   all demand and its measured $`f_q`$ is nonsensical wherever the negative caps
@@ -601,7 +601,7 @@ population, but it is no longer load-bearing.
   clipping the caps *and* moving the ringing repair out of the event loop
   keeps S7 at machine precision and cuts the shortfall from 0.0440 to 0.0079.
   Clipping the caps alone is worse than doing nothing — the population clamp
-  then fires, manufactures bodies, and breaks S7 outright, the two sides of
+  then fires, manufactures unpaired worlds, and breaks S7 outright, the two sides of
   the identity parting by $`9\times10^{-2}`$. This is a specification question
   and is left to J-SP2; it is logged here because it is the second independent
   route to $`f = 1/2`$ and the two should not be confused with each other. *Step 24*
@@ -622,7 +622,7 @@ population, but it is no longer load-bearing.
 | A | S1 stated; S2 closed form to $`\sim 10^{-13}`$ from both directions, five $`\kappa`$ |
 | B | S3, the $`2/(\kappa t)`$ asymptote; the packet peak against $`2/h`$; three preparations |
 | C | S4, the unbounded worst-cell drain at conserved mean |
-| D | S6, the body-momentum table for the three realisations |
+| D | S6, the unpaired-world-momentum table for the three realisations |
 | E | S7, both ledger identities to $`1.5\times10^{-14}`$ and $`1.7\times10^{-11}`$ |
 | F | S8, the fidelity and deficit tables, first-order in $`\Delta t`$ |
 | G | reach dependence of $`f`$ and of $`N_{\rm eq}`$; the $`\kappa \propto \Gamma`$ scaling |
@@ -640,7 +640,7 @@ barrier with the three K7 quiet points marked.
 
 [![Emissive against absorptive](https://raw.githubusercontent.com/billpage/wpmw/output/figures/sea_population_unravelling.png)](https://raw.githubusercontent.com/billpage/wpmw/output/figures/sea_population_unravelling.png)
 
-The body count and the worst-cell sea occupancy for the two unravellings, and
+The unpaired-world count and the worst-cell sea occupancy for the two unravellings, and
 the fidelity of each against the exact mesh QLE as $`\Delta t`$ falls.
 
 [![The ledger identity](https://raw.githubusercontent.com/billpage/wpmw/output/figures/sea_population_ledger_identity.png)](https://raw.githubusercontent.com/billpage/wpmw/output/figures/sea_population_ledger_identity.png)
@@ -652,7 +652,7 @@ marked, and the residual deficit alongside it.
 
 Left: the instantaneous absorptive fraction from four initial ratios spanning
 a factor twenty, converging on $`f = 1/2`$ from above and below. Right: the
-body count for the same four runs, which does not converge — only $`f`$ is
+unpaired-world count for the same four runs, which does not converge — only $`f`$ is
 preparation-independent.
 
 [![The horizon ladder](https://raw.githubusercontent.com/billpage/wpmw/output/figures/sea_population_horizon_ladder.png)](https://raw.githubusercontent.com/billpage/wpmw/output/figures/sea_population_horizon_ladder.png)

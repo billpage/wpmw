@@ -1,6 +1,6 @@
 # Darkness and identity: what the compensated vertex can carry
 
-> Whether the phase machinery transplants from the phase-resonance formulation onto the compensated one, and what the sea's darkness is a statement about. Theorem Y1 answers the sharpest test first, negatively for the no-go: the compensated kernel is read from the potential directly, `K(lam V) = lam K(V)` to machine precision, so the phase-blind no-go (Theorem 2) does not reach it, and the phase it needs is not absent: the potential acts on the density matrix only by winding its phase, the ladder `mu = arg rho`, and the Wigner transform turns that winding into the real, signed kernel `K`, while `arg rho` itself survives as the sign structure of `W`. By Corollary Y1.1 a particle-level phase can therefore never be *necessary* for `E`, and any phase rule lives in the kernel of the observable map — where, by Theorem N2, the realisation choice already lives. Theorem Y2 asks what the sea's ineligibility for recombination is worth, since all four ways of settling the two legs move `E` identically: with the sea eligible there are realisations with `dN = dS = 0` whose effect on the counts is exactly the excluded hop, and which conserve momentum by shifting one aligned pair a row, while `P = S + N/2` stays conserved throughout — so ineligibility, not arithmetic, is what gives postulate (S) and Proposition K8 their content, and with it every event carries `|dS| = 1`. Theorems Y3 and Y4 supply the phase account darkness was missing: the two bodies a catalysed recombination consumes are a winding pair whose midpoint is the parent's own row, with `|Psi| = 2|sin(mu/2)|` and an envelope drifting at the parent's velocity, and a momentum kink of `+-xi` carries a phase ramp pinned at the point where it happens, so the created pair's misalignment freezes at `mu(x_k)` and is dark exactly when the kink sits at a node — a node-located kink and a phase reset at the parent's position being one freedom seen twice, not two rules. **Theorem Y5 is the cost.** If world-particles are conserved and none ever changes momentum at an event, per-row species counts are event-invariant and the residual channel can do nothing; so the two-clock reading forces piecewise worldlines, and the alternative is birth and death. Theorem Y6 prices that choice with tagged positons at the Eckart barrier: the individual momentum walk is driftless (`sum_q xi_q K_q = 0`) with diffusion `D_p = (1/2) sum_q xi_q^2 |K_q|`, an *unsigned* moment `E` never feels; `Gamma(0) = 0`, so no kink ever happens at the summit and an individual crosses by flank activation and classical passage, never through; and the measured crossing of tagged positons — 0.327 against 0.213 for `E` and 0.069 classically at `E_0 = V_0/2` — tracks neither the classical nor the quantum transmission, falling *below* both above the barrier, and is insensitive to the sea's momentum profile. Tunnelling therefore survives as a demographic account of `E` and not as a statement about identity, which corrects `eckart_barrier_compensated.md` §8.3 and the ledger note's "the diffusion in the phase variables is identically zero". Section 8 records a defect found along the way: the population clamp in `demo_emission_and_absorption.py` costs 16 per cent of `E` in 250 steps and biases `f`.
+> Whether the phase machinery transplants from the phase-resonance formulation onto the compensated one, and what the sea's darkness is a statement about. Theorem Y1 answers the sharpest test first, negatively for the no-go: the compensated kernel is read from the potential directly, `K(lam V) = lam K(V)` to machine precision, so the phase-blind no-go (Theorem 2) does not reach it, and the phase it needs is not absent: the potential acts on the density matrix only by winding its phase, the ladder `mu = arg rho`, and the Wigner transform turns that winding into the real, signed kernel `K`, while `arg rho` itself survives as the sign structure of `W`. By Corollary Y1.1 a particle-level phase can therefore never be *necessary* for `E`, and any phase rule lives in the kernel of the observable map — where, by Theorem N2, the realisation choice already lives. Theorem Y2 asks what the sea's ineligibility for recombination is worth, since all four ways of settling the two legs move `E` identically: with the sea eligible there are realisations with `dN = dS = 0` whose effect on the counts is exactly the excluded hop, and which conserve momentum by shifting one aligned pair a row, while `P = S + N/2` stays conserved throughout — so ineligibility, not arithmetic, is what gives postulate (S) and Proposition K8 their content, and with it every event carries `|dS| = 1`. Theorems Y3 and Y4 supply the phase account darkness was missing: the two unpaired worlds a catalysed recombination consumes are a winding pair whose midpoint is the parent's own row, with `|Psi| = 2|sin(mu/2)|` and an envelope drifting at the parent's velocity, and a momentum kink of `+-xi` carries a phase ramp pinned at the point where it happens, so the created pair's misalignment freezes at `mu(x_k)` and is dark exactly when the kink sits at a node — a node-located kink and a phase reset at the parent's position being one freedom seen twice, not two rules. **Theorem Y5 is the cost.** If world-particles are conserved and none ever changes momentum at an event, per-row species counts are event-invariant and the residual channel can do nothing; so the two-clock reading forces piecewise worldlines, and the alternative is birth and death. Theorem Y6 prices that choice with tagged positons at the Eckart barrier: the individual momentum walk is driftless (`sum_q xi_q K_q = 0`) with diffusion `D_p = (1/2) sum_q xi_q^2 |K_q|`, an *unsigned* moment `E` never feels; `Gamma(0) = 0`, so no kink ever happens at the summit and an individual crosses by flank activation and classical passage, never through; and the measured crossing of tagged positons — 0.327 against 0.213 for `E` and 0.069 classically at `E_0 = V_0/2` — tracks neither the classical nor the quantum transmission, falling *below* both above the barrier, and is insensitive to the sea's momentum profile. Tunnelling therefore survives as a demographic account of `E` and not as a statement about identity, which corrects `eckart_barrier_compensated.md` §8.3 and the ledger note's "the diffusion in the phase variables is identically zero". Section 8 records a defect found along the way: the population clamp in `demo_emission_and_absorption.py` costs 16 per cent of `E` in 250 steps and biases `f`.
 
 *Ladder abstract — see the [full list](README.md#the-ladder).*
 
@@ -25,15 +25,15 @@ carry opposite sign: darkness is arithmetic. In the phase formulation a pair
 is dark because its two transported clocks are aligned, $`\mu \equiv 0`$, so
 its broadcast amplitude vanishes: darkness is interference. The first is
 sufficient for every numerical result the project has, and says nothing about
-the two bodies; the second says something about them but was built on a vertex
-in which a body changes momentum.
+the two unpaired worlds; the second says something about them but was built on a vertex
+in which an unpaired world changes momentum.
 
 **Settles.**
 
 - **Whether the no-go reaches the compensated model.** It does not (§2). The
   compensated vertex consults the potential itself, which is the exception
   Theorem 2 names. The phase the no-go demands is present, but as the ladder
-  $`\mu`$ integrated into the kernel, not as an attribute of a body.
+  $`\mu`$ integrated into the kernel, not as an attribute of an unpaired world.
 - **What darkness has to be a statement about.** Not $`E`$ (§3). Every way of
   settling a recombination's two legs moves $`E`$ identically, so the sea's
   exclusion is a claim about identity, and it is what keeps the excluded hop
@@ -58,8 +58,8 @@ in which a body changes momentum.
   supplement, not a consequence.
 - **[`eckart_barrier_compensated.md`](eckart_barrier_compensated.md) §8.3.**
   "A world does not pass through the barrier" survives in the narrow sense —
-  no body is ever in a classically forbidden place — but under piecewise
-  worldlines individual bodies cross the separatrix in both directions at a
+  no unpaired world is ever in a classically forbidden place — but under piecewise
+  worldlines individual unpaired worlds cross the separatrix in both directions at a
   rate set by $`D_p`$ (§7).
 - **[`stochastic_ledger.md`](stochastic_ledger.md) §1.** "The diffusion in the
   phase variables is identically zero" holds under birth and death. Under
@@ -98,7 +98,7 @@ exchange momenta, and the pair leaves aligned.
 
 So the honest difference is not that one bends a worldline. It is that the
 swap is elastic and relabels, while the ledger vertex is perfectly inelastic —
-relative momentum $`2\xi`$ goes to zero — and relies on bodies beginning and
+relative momentum $`2\xi`$ goes to zero — and relies on unpaired worlds beginning and
 ending. The $`\xi^2/m`$ is where a plasma's binding energy would sit; here
 nothing receives it and no observable records it. It is a second resident of
 the kernel of the observable map.
@@ -133,7 +133,7 @@ momentum shift and hence Newton's force — is handed to streaming. What the
 kernel holds is the potential's *rule* for winding $`\mu`$, not $`\mu`$ itself;
 the value of $`\arg\rho`$ in a given state survives as the sign structure of
 $`W`$, which the compensated model carries as the local balance of positons
-and negatons. The model is phase-blind in its bodies — a body carries a sign,
+and negatons. The model is phase-blind in its unpaired worlds — an unpaired world carries a sign,
 not a phase — and not in its signed field or its kernel. The pair $`\mu`$ at
 issue in this note is contained in neither. *(Wording corrected in step 22,
 [`sea_phase_reference.md`](sea_phase_reference.md); the earlier text said the
@@ -145,7 +145,7 @@ kernel of the observable map — the same place Theorem N2 puts the choice
 between the two realisations.*
 
 That is not a demotion. The question this note asks — what makes the sea dark,
-and what stays the same body through an event — lives in that kernel by
+and what stays the same unpaired world through an event — lives in that kernel by
 construction.
 
 ---
@@ -153,7 +153,7 @@ construction.
 ## 3. Theorem Y2: what the sea's ineligibility buys
 
 Take one cell, rows $`p-\xi`$, $`p`$, $`p+\xi`$, and settle each leg of a
-catalysed recombination from either a free body or an aligned pair. Part B of
+catalysed recombination from either an unpaired world or an aligned pair. Part B of
 the demo:
 
 ```
@@ -177,7 +177,7 @@ momentum, which the hop does not, by shifting one aligned pair a row.*
 Two consequences.
 
 - **Exclusion is what gives postulate (S) content.** If the sea could be
-  recombined from, every hop would have a legal representation, and "no body
+  recombined from, every hop would have a legal representation, and "no unpaired world
   changes momentum" would be a choice of labels rather than a law. Note that
   $`\Delta S = 0`$ is invisible if the sea is carried as a per-cell scalar
   held uniform, as the demos do.
@@ -198,9 +198,9 @@ world-particles" (§2). That is a definition. §4 supplies a reason.
 
 ---
 
-## 4. Theorem Y3: the consumed bodies are a pair
+## 4. Theorem Y3: the consumed unpaired worlds are a pair
 
-**Theorem Y3.** *The two bodies a catalysed recombination consumes — a positon
+**Theorem Y3.** *The two unpaired worlds a catalysed recombination consumes — a positon
 at $`p - \xi_q`$ and a negaton at $`p + \xi_q`$, co-located at the vertex —
 are a winding pair in the sense of Lemma 4, with splitting $`\Delta p =
 2\xi_q`$ and midpoint exactly the parent's row. Its amplitude obeys
@@ -212,7 +212,7 @@ two times, the node spacing matches $`h/|\Delta p|`$ to the grid resolution,
 and the envelope velocity equals $`p/m`$ exactly.
 
 Two things follow. First, the transport worry is answered: $`\mu`$ is defined
-at the vertex by Lemma 4 for any two co-located bodies, and needs no standing
+at the vertex by Lemma 4 for any two co-located unpaired worlds, and needs no standing
 partnership. Second, the phase formulation's selection rule — that the
 absorbed excitation comes from a pair on the particle's own row — is the
 ledger's geometry restated, since the consumed pair's midpoint *is* the parent
@@ -236,7 +236,7 @@ cannot subtract their sound from the room, because there is none.
 If the created pair's members carry their clocks continuously through the
 event, is the pair dark?
 
-**Theorem Y4.** *Let a body kink from $`p \mp \xi`$ to $`p`$ at the event
+**Theorem Y4.** *Let an unpaired world kink from $`p \mp \xi`$ to $`p`$ at the event
 $`(x_k, t_k)`$ with its clock continuous there. Its extended phase changes by
 a ramp*
 
@@ -252,19 +252,19 @@ only if the kink happens at a node of the consumed pair's envelope.*
 
 **Corollary Y4.1.** *A phase reset at the parent's position and a node-located
 kink are the same freedom. Pivoting at a node is equivalent to pivoting at
-$`x^*`$ together with a reset of $`\mu(x^*)/2`$ per body, applied oppositely
+$`x^*`$ together with a reset of $`\mu(x^*)/2`$ per unpaired world, applied oppositely
 to the two.*
 
 *Verification.* Part D: the ramp has slope $`\xi/\hbar`$ exactly and vanishes
 at the pivot; pivoting at the parent's position leaves $`|\Psi| = 1.84`$,
 uniform and unchanged at $`t = 3`$, while pivoting at the node leaves
 $`|\Psi| < 3.4\times10^{-15}`$; and the two descriptions differ by
-$`-1.1636`$ rad per body, twice which is $`2.3271 = \mu(x^*)`$.
+$`-1.1636`$ rad per unpaired world, twice which is $`2.3271 = \mu(x^*)`$.
 
 So alignment at creation is not a separate phase postulate. It is one choice:
-where the kink happens. **But a body can only kink where it is.** If a
+where the kink happens. **But an unpaired world can only kink where it is.** If a
 world-particle carries a position below cell resolution, then $`x_k`$ is
-forced to the bodies' own position and the node condition is a measure-zero
+forced to the unpaired worlds' own position and the node condition is a measure-zero
 coincidence, which returns the creation rule to a gate or a postulate. If
 position below cell resolution is not an attribute, the node-located kink
 makes darkness forced. That is a question about the ontology of the lattice,
@@ -277,18 +277,18 @@ not about phase; it is open item Y-SP1.
 Suppose an aligned pair is two co-moving clocks rather than one object, so
 that recombination and ionisation neither create nor destroy world-particles.
 
-**Theorem Y5.** *If world-particles are conserved and no body ever changes
+**Theorem Y5.** *If world-particles are conserved and no unpaired world ever changes
 momentum at an event, then the count of each species on each momentum row is
 event-invariant, so $`E`$ evolves by classical transport alone and the
 residual channel can do nothing. Hence conservation of world-particles forces
 kinks.*
 
 *Proof.* $`E = u^+ - u^-`$ is exactly that count. An event that neither
-creates, destroys, nor moves a body in $`p`$ leaves every such count fixed.
+creates, destroys, nor moves an unpaired world in $`p`$ leaves every such count fixed.
 $`\square`$
 
 The phase-alignment model escapes this only because its observable is a
-*label* count — which body wears the "excess" label — not a species count.
+*label* count — which unpaired world wears the "excess" label — not a species count.
 That escape is unavailable in the compensated model.
 
 The kinks are well-behaved: simultaneous, co-located, opposite-species, equal
@@ -296,7 +296,7 @@ and opposite $`\pm\xi_q`$, so momentum is conserved event by event.
 Proposition K8 is untouched, and §8.1's objection to a one-body Markov jump
 (the kernel is signed) does not apply to a two-body kink at rate $`|K|`$. Each
 aligned pair holds exactly one positon, so identity carries through both
-processes unambiguously — cleaner than the swap, where two same-species bodies
+processes unambiguously — cleaner than the swap, where two same-species unpaired worlds
 make identity a matter of labelling.
 
 **Vocabulary.** "Bound" is wrong: nothing holds the pair together (Lemma 1).
@@ -306,8 +306,8 @@ the bilinear $`\kappa`$ sink of §1 of the ledger note. The two differ:
 
 | | catalysed recombination | contact recombination |
 |---|---|---|
-| trigger | a parent's event, rate $`\|K_q\|`$ | two free bodies in one cell |
-| consumed bodies | at $`p \pm \xi_q`$ | already at the same $`p`$ |
+| trigger | a parent's event, rate $`\|K_q\|`$ | two unpaired worlds in one cell |
+| consumed unpaired worlds | at $`p \pm \xi_q`$ | already at the same $`p`$ |
 | kinks required | $`\mp\xi_q`$ | none, $`\Delta p = 0`$ already |
 | effect on $`f`$ | defines it | drives it below $`1/2`$ (Theorem N3) |
 
@@ -323,7 +323,7 @@ which creates and destroys nothing (Theorem L5 of
 
 ## 7. Theorem Y6: who crosses the barrier
 
-Under piecewise worldlines an individual body can be carried across the
+Under piecewise worldlines an individual unpaired world can be carried across the
 Eckart summit. Part E tags every free positon of the incident packet and
 follows the tags through both processes by proportional allocation, streaming
 tagged pairs classically, as postulate (S) requires of the sea.
@@ -354,13 +354,13 @@ Reading the table.
 
 - **Individual crossing is not tunnelling.** $`T_{tag}`$ bears no fixed
   relation to $`T`$: it exceeds $`T`$ below the barrier and falls below both
-  $`T`$ and $`T_{cl}`$ above it, because kicks also turn back bodies that
+  $`T`$ and $`T_{cl}`$ above it, because kicks also turn back unpaired worlds that
   would have passed. It is diffusive traffic across the separatrix in both
   directions, of which $`E`$ records only the net signed result.
 - **The size matches the diffusion.** The tagged mean energy rises by
   $`\Delta H \approx 0.9`$ at $`p_0 = 1`$, against the free estimate
   $`D_p \tau/\mu \approx 1`$ for a flank passage of $`\tau \approx 2`$. Each
-  body takes about two kinks per passage, and
+  unpaired world takes about two kinks per passage, and
   $`\sqrt{2 D_p \tau} \approx 1.4 \approx p_b`$: at these parameters one
   passage randomises a positon's momentum on the barrier's own scale.
 - **It is not the sea's doing.** Narrowing the sea's momentum profile to a
@@ -368,10 +368,10 @@ Reading the table.
   0.2126. An earlier conjecture that the flat sea acts as an
   infinite-temperature reservoir driving the heating is thereby refuted.
 - **It depends on the allocation rule**, which the demo takes to be a uniform
-  choice among eligible bodies. A phase-gated rule (§5) would change
+  choice among eligible unpaired worlds. A phase-gated rule (§5) would change
   $`T_{tag}`$ and leave $`E`$ alone — open item Y-SP7.
 
-The picture is Kramers' escape without friction (Kramers 1940): a body is
+The picture is Kramers' escape without friction (Kramers 1940): an unpaired world is
 shoved at random on the approach slope, never passes through the hill, and
 sometimes is shoved hard enough to go over.
 
@@ -422,7 +422,7 @@ item Y-SP6.
   cell-level matching).
 - **Y-SP2.** Decide the creation rule: forced (node-located kink) or free
   (alignment imposed, as in the phase formulation). *Answered in part by step
-  22 §6:* re-locking each kinked body to its destination row's sea clocks
+  22 §6:* re-locking each kinked unpaired world to its destination row's sea clocks
   makes dark creation and the maintenance of a sea lock one rule; it is the
   free branch, counted as a postulate.
 - **Y-SP3.** The $`\pm\xi^2/m`$ of unsigned kinetic energy per event. It is

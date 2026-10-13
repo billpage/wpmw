@@ -482,7 +482,7 @@ error against the exact rotation falls as $`a^2`$.*
 > $`\frac{F}{2a}\bigl[W(p+a)-W(p-a)\bigr]`$ equals
 > $`F\thinspace\partial_pW + \frac{Fa^{2}}{6}\thinspace\partial_p^{3}W + O(a^4)`$,
 > so the signed kernel tends to the classical force as $`a\to 0`$. The
-> error is a spurious $`M_3 = Fa^2`$. Each body gives birth to children at
+> error is a spurious $`M_3 = Fa^2`$. Each unpaired world gives birth to children at
 > rate $`\lvert F\rvert/a`$.
 
 The symbol is $`iF\sin(\kappa a)/a = iF\kappa - iF\kappa^3a^2/6 + \dots`$
@@ -495,7 +495,7 @@ $`a = 0.1 \to 0.025`$ scales with exponent 2.006:
 | $`a`$ | 0.4 | 0.2 | 0.1 | 0.05 | 0.025 | 0 (force) |
 |---|---|---|---|---|---|---|
 | $`L^2`$ error | 0.293 | 0.102 | 0.0257 | 0.0064 | 0.0016 | $`2.3\times10^{-6}`$ |
-| births per body per unit time at $`x=2.5`$ | 6.2 | 12.5 | 25 | 50 | 100 | — |
+| births per unpaired world per unit time at $`x=2.5`$ | 6.2 | 12.5 | 25 | 50 | 100 | — |
 
 Proposition F4 already showed that shrinking the jump is the classical
 limit. X3 adds three things:
@@ -504,7 +504,7 @@ limit. X3 adds three things:
   family (Theorem X2, $`r=0`$), not an approximation.
 - The cost of approaching it by events diverges like $`1/a`$, while the error
   falls only like $`a^2`$. Reaching accuracy $`\epsilon`$ by kicks costs
-  $`\propto\epsilon^{-1/2}`$ births per body per unit time. Doing it as a flow
+  $`\propto\epsilon^{-1/2}`$ births per unpaired world per unit time. Doing it as a flow
   costs none.
 - That is the operational content of the question from the call: why remove
   the curved part analytically? The part removed is exactly the member of

@@ -132,7 +132,7 @@ are defined in the [glossary](../GLOSSARY.md).
   two-population system but the partition parameter of a single one, which is
   why one value of it closes both ledgers. Theorem J2: that identity is
   **global only**; cell by cell it is violated 4e9 times more strongly,
-  because an event debits the sea at the parent row and credits bodies at the
+  because an event debits the sea at the parent row and credits unpaired worlds at the
   daughters, so no degree-of-freedom argument from J1 constrains the local
   dynamics. §7 gives the thermostat reading of the `f = 1/2` attractor and
   tests it by re-clocking the relaxation against cumulative events, which
@@ -202,7 +202,7 @@ are defined in the [glossary](../GLOSSARY.md).
   through a bank of integrators. §5 answers what the sum over chords estimates:
   the Wigner representation of the commutator with V, sampled at the channel
   transfers with its classical part removed — the generator, not the state.
-  The sea reads the operator; the bodies carry the state; an event is their
+  The sea reads the operator; the unpaired worlds carry the state; an event is their
   product. §7 records proposals not yet in the ladder (the re-lock clock rule
   at a collision; aligned pairs as readers, with Focus and Defocus as two-body
   events). Companion demo `src/demo_chord_reading.py`; interactive page
@@ -211,7 +211,7 @@ are defined in the [glossary](../GLOSSARY.md).
   parameter the compensated split depends on, written around the questions a
   reader actually asks and in the order they ask them. §1 answers the first
   one: what is separated by `2y` is two *legs* of one ket–bra pair — two
-  worlds' answers about one body — and not two bodies, the working analogy
+  worlds' answers about one particle — and not two particles, the working analogy
   being an interferometer's two arms carrying one photon. The position-pair
   ladder has already proved the point harder, in that momentum is the
   misalignment `p̄ = ħμ/a` of a pair of legs and the self-conjugate pair, which
@@ -240,8 +240,8 @@ are defined in the [glossary](../GLOSSARY.md).
   behind the informal claim — the probability current is the first
   `y`-derivative of the density matrix at zero separation, equal to the
   `p`-moment of `W` — and §1.2 separates the ladder's `μ`, which winds at
-  `p/ħ` between two legs of one body, from the sea pair's, which winds at
-  `Δp/ħ` between two bodies; §1.3 tabulates the three distinct ways of
+  `p/ħ` between two legs of one particle, from the sea pair's, which winds at
+  `Δp/ħ` between two worlds; §1.3 tabulates the three distinct ways of
   contributing nothing, the self-conjugate carrier being *still* and the dark
   sea pair *invisible*. §5.1 shows the convergence ceiling is **tighter** in
   three dimensions, `R = sqrt(|x|²/2 + ε²)` against the one-dimensional

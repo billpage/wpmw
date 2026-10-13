@@ -120,7 +120,7 @@ by the reach (§6). A **Planck cell** is a phase-space area $`h`$.
   $`-1`$. (That is their meaning in the compensated layer; the words have a
   second meaning elsewhere; see [positon, negaton](docs/GLOSSARY.md#positon-negaton).)
 - An **unpaired world** is a positon or negaton that is not half of a sea
-  pair: one that contributes to the observable. (The older notes say
+  pair: one that contributes to the observable. (Earlier versions of the notes said
   *body*.)
 - A **sea pair** is a co-located, aligned positon–negaton pair of worlds. It
   contributes zero to the observable and is live in the dynamics.
@@ -218,8 +218,8 @@ exactly two ways to realise that
 ([`stochastic_ledger.md`](docs/analysis/stochastic_ledger.md) §1):
 
 - **emissive** — **ionise** a sea pair at the parent's row: its positon
-  appears as a body at $`p+\xi_q`$ and its negaton at $`p-\xi_q`$;
-- **absorptive** — remove a negaton body at $`p+\xi_q`$ and a positon body
+  appears as an unpaired world at $`p+\xi_q`$ and its negaton at $`p-\xi_q`$;
+- **absorptive** — remove an unpaired negaton at $`p+\xi_q`$ and an unpaired positon
   at $`p-\xi_q`$, and a new sea pair appears at the parent's row. The notes
   call this **catalysed recombination**.
 
@@ -228,7 +228,7 @@ exactly two ways to realise that
 *How to read it.* The top row shows the momentum rows at the event's
 position, before and after; a hollow marker is something that ceases to
 exist. The bottom row shows the same processes as worldlines in space-time,
-where momentum is **slope** — a faster body leans further from vertical —
+where momentum is **slope** — a faster unpaired world leans further from vertical —
 so nothing is drawn travelling between rows: at an event some worldlines
 end and others begin. The dashed line is the parent, which passes through
 both events unchanged. The two columns have identical effects on the
@@ -253,8 +253,8 @@ Two things about the sea that are easy to get wrong:
    quadratic in occupancy while the Wigner generator is linear, so some
    species' density has to be pinned.
 2. **Pairs are split and combined, never made from nothing.** Every event
-   and every recombination either splits a sea pair into two bodies or
-   combines two bodies into a sea pair; streaming only moves them. So,
+   and every recombination either splits a sea pair into two unpaired worlds or
+   combines two unpaired worlds into a sea pair; streaming only moves them. So,
    summed over all cells, positon number $`S + n_+`$ and negaton number
    $`S + n_-`$ are each exactly conserved, and so is their mean, the pair
    count $`P = S + N/2`$ — on every trajectory, in exact integers (Theorem
@@ -375,7 +375,7 @@ how they move. Giving it a particle-level statement is open item G-SP2.
 ## 8. The ledger, and why it is invisible
 
 The **observable map** $`\mathcal{E}`$ takes the signed ensemble to
-$`W`$, and it sees only the difference of the two body populations,
+$`W`$, and it sees only the difference of the two unpaired-world populations,
 
 ```math
 W \;\propto\; n_+ - n_- ,
@@ -401,7 +401,7 @@ Write $`f`$ for the absorptive fraction. **Theorem N3** is the current law:
 
 where $`\Gamma_{\mathrm{tot}}`$ is the total event rate and
 $`R_{\mathrm{sink}}`$ the total rate of every *other* channel that removes
-bodies. So:
+unpaired worlds. So:
 
 - $`f = 1/2`$ is the **sinkless special case**, not a universal law — this
   is an explicit correction to the earlier Theorem S7;
@@ -410,12 +410,12 @@ bodies. So:
 - population closure is a dynamical problem in its own right.
 
 **Is there any such sink? Not in the model as postulated.** Theorem S1
-fixes what one would have to be: the only way to remove bodies without
+fixes what one would have to be: the only way to remove unpaired worlds without
 changing the observable is to remove a positon and a negaton together from
 the same cell, at a rate $`\kappa\,n_+n_-`$. The project has carried
 exactly this channel since the collision layer — step 3's recombination
 channel, step 13's annihilation substep — because without it unpaired
-bodies accumulate, and step 16 took it into the compensated ledger as the
+worlds accumulate, and step 16 took it into the compensated ledger as the
 $`\kappa`$ sink. Step 20 names it *contact* recombination, to distinguish
 it from the catalysed kind of §4. In the compensated model it proved
 unnecessary: the absorptive event is itself a pair-removal channel of S1's
@@ -426,11 +426,11 @@ constant nothing fixes (open item S-SP1).
 
 Under an independent-occupancy closure $`f(\lambda) = (1-e^{-\lambda})^2`$,
 and the sinkless value pins
-$`\lambda_* = -\ln(1 - 2^{-1/2}) = 1.227947`$ bodies of each sign per cell
-— 2.456 bodies per cell against exactly two sea pairs per Planck cell,
-measured 2.4487 against 2.4559 when bodies are spread uniformly (Theorems
-N4, N5). Here $`\lambda`$ is the mean number of bodies of one sign in a
-cell, and $`f`$ is the probability that an event finds both bodies it needs
+$`\lambda_* = -\ln(1 - 2^{-1/2}) = 1.227947`$ unpaired worlds of each sign per cell
+— 2.456 unpaired worlds per cell against exactly two sea pairs per Planck cell,
+measured 2.4487 against 2.4559 when unpaired worlds are spread uniformly (Theorems
+N4, N5). Here $`\lambda`$ is the mean number of unpaired worlds of one sign in a
+cell, and $`f`$ is the probability that an event finds both unpaired worlds it needs
 to settle absorptively.
 
 **Theorem N6** removes the last role the $`\kappa`$ sink might have had:
@@ -457,12 +457,12 @@ are worth knowing before reading anything else; each has an entry.
   \mu`$-winding $`\to`$ dark sea $`\to`$ residual ionisation" as one chain, it
   has crossed between the two. See [$`\mu`$, the two](docs/GLOSSARY.md#mu-the-two).
 - **Two kinds of pair**: a ket–bra pair is a relation between two worlds about
-  one body, a sea pair is two world-particles. See
+  one particle, a sea pair is two world-particles. See
   [pair](docs/GLOSSARY.md#pair).
 - **Two meanings of positon**: the sign of a carrier (ensemble E1), or a ket or
   bra leg (ensemble E2). See [positon, negaton](docs/GLOSSARY.md#positon-negaton).
 - **Two kinds of recombination**: catalysed (the absorptive realisation of an
-  event) and contact (two bodies in one cell, no parent). See
+  event) and contact (two unpaired worlds in one cell, no parent). See
   [recombination](docs/GLOSSARY.md#recombination).
 - **Sea and dark are different words**: a pair can be dark, aligned and in the
   sea, and no one of these implies the others. See

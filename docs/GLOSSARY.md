@@ -59,9 +59,9 @@ that leaves the active region keeps streaming; nothing eats it.
 The two ways to realise one residual event. Both put $`+1`$ at row
 $`p + \xi_q`$ and $`-1`$ at row $`p - \xi_q`$ in the observable, so they agree in
 $`W`$ and differ only in the ledger. **Emissive:** ionise a sea pair at the
-parent's row; its positon becomes a body at $`p + \xi_q`$ and its negaton one
+parent's row; its positon becomes an unpaired world at $`p + \xi_q`$ and its negaton one
 at $`p - \xi_q`$ (sea $`-1`$ pair, $`N`$ up by 2). **Absorptive:** remove a
-negaton body at $`p + \xi_q`$ and a positon body at $`p - \xi_q`$, and a new sea
+unpaired negaton at $`p + \xi_q`$ and an unpaired positon at $`p - \xi_q`$, and a new sea
 pair appears at the parent's row (sea $`+1`$ pair, $`N`$ down by 2). The
 absorptive fraction is $`f`$; $`f = 1/2`$ is the sinkless case, not a law
 (Theorem N3).
@@ -115,7 +115,7 @@ Each word is true of an aligned sea pair, and none implies the others.
   (the relation, step 22); [`what_the_reach_is.md` §1.3](supplement/what_the_reach_is.md#13-three-ways-of-contributing-nothing).
 - **Not to confuse with:** a *bound pair*, the older word for the same thing,
   withdrawn because nothing binds the members (step 20, open item Y-SP8); a
-  *ket–bra pair*, which is a relation between two worlds about one body (see
+  *ket–bra pair*, which is a relation between two worlds about one particle (see
   [pair](#pair)); a [gray pair](#gray-pair).
 
 ### aperture
@@ -141,14 +141,15 @@ depth $`\beta`$.
 
 **Retired** (step 25, October 2026). In the ledger and sea notes it meant an
 [unpaired world](#unpaired-world); in the multi-particle notes (steps 21 and
-24) a physical [particle](#particle). Older commits and quotations keep it;
-current text uses the two words.
+24) a physical [particle](#particle). Earlier commits keep it; current text
+uses the two words, and keeps *-body* only in compounds such as *two-body*
+that count a potential's arguments.
 
-### body inflation
+### unpaired-world inflation
 
-The growth of the body count $`N`$ beyond $`\lVert W\rVert_1`$: bodies of
+The growth of the unpaired-world count $`N`$ beyond $`\lVert W\rVert_1`$: unpaired worlds of
 opposite sign in one cell that could be removed without changing $`W`$. Each
-body beyond the minimal ensemble is half a pair of sea debt. It also drains
+unpaired world beyond the minimal ensemble is half a pair of sea debt. It also drains
 the apertures a parent keeps returning to, so blocking falls as about
 $`0.9\,e^{-0.55\beta}`$ rather than $`e^{-\beta}`$ (Proposition V6). The
 [contact sink](#contact-sink-garbage-collection) removes it.
@@ -199,7 +200,7 @@ transfer $`\xi`$ is $`\propto U_{\rm res}\sin(2\xi y/\hbar + \mu)`$, with $`U_{\
 potential difference across the chord, $`V(x+y) - V(x-y)`$, less its part linear
 in $`y`$. A chord is a relation
 between two sea pairs, not an object: it exists whenever two aligned pairs share
-a row, and a body at the chord's midpoint can read it.
+a row, and an unpaired world at the chord's midpoint can read it.
 
 - **Defined:** [`supplement/chord_reading.md` §3](supplement/chord_reading.md#3-the-chord).
 - **Not to confuse with:** a chord of a circle or a graph; the *separation*
@@ -317,7 +318,7 @@ The statistical regime of a reading at the physical density. A reader's
 aperture holds on average $`\nu^2 B\,dp\,\Delta x`$ chords, where $`\nu`$ is
 the sea's multiplicity (density in units of the physical one); at
 $`\nu = 1`$ that is about $`0.08`$. The reading is unbiased, but one reading
-is a sample, not an average: a body cannot drive its own clock from its own
+is a sample, not an average: an unpaired world cannot drive its own clock from its own
 reading, and the estimate converges only when many worlds are read at once.
 
 - **Defined:** [`force_blind_sea.md` §9.4](analysis/force_blind_sea.md#94-proposition-q12-the-live-reading-as-the-clocks-input),
@@ -351,7 +352,7 @@ momentum and a Newtonian worldline. It is neither absent nor destroyed.
 Theorem L5: an aligned pair $`A`$ at $`(x,p)`$ fires channel $`q`$ at the
 kernel's own rate, $`\lvert K_q(x)\rvert`$, with both members together. Its
 positon member is realised as ionisation of a partner pair $`C`$ in $`A`$'s
-row, its negaton member as recombination of exactly those two bodies back to
+row, its negaton member as recombination of exactly those two unpaired worlds back to
 $`p`$. Then $`\Delta E = \Delta N = \Delta S = 0`$ in every realisation, and
 $`C`$ leaves aligned. It moves phase and nothing else: the sea's one
 $`E`$-neutral interaction.
@@ -444,7 +445,7 @@ and the notes use both.
 
 - **Optical (Hamilton–Jacobi).** The full phase function $`S`$ of geometrical
   optics, $`\lvert\nabla S\rvert^2 = n^2`$; for a particle, Hamilton's principal
-  function along the true, *curved* path. This is what a body's clock carries
+  function along the true, *curved* path. This is what an unpaired world's clock carries
   under postulate (S).
 - **Straight-line (Glauber).** The phase a plane wave gains from the potential
   along the *unbent* line, $`-\hbar^{-1}\int V\,dt`$. In scattering it is an
@@ -574,7 +575,7 @@ The sea as it is, a random configuration of whole aligned pairs, rather than a
 density. At the physical density an aperture holds one pair on average, so an
 emission is blocked by a floor with probability about $`e^{-\beta}`$ when the
 aperture holds $`\beta`$ pairs (Proposition V4). With world-particle dynamics
-(body inflation) blocking falls as about $`0.9\,e^{-0.55\beta}`$ (V6); with
+(unpaired-world inflation) blocking falls as about $`0.9\,e^{-0.55\beta}`$ (V6); with
 collisions, about $`1.1\,e^{-0.74\beta}`$ (V13).
 
 - **Defined:** [`sea_depletion.md` §5](analysis/sea_depletion.md#5-proposition-v4-granular-supply).
@@ -584,7 +585,7 @@ collisions, about $`1.1\,e^{-0.74\beta}`$ (V13).
 ### integrate-and-fire
 
 A deterministic clock for an event rate (Proposition Q11). Each channel of
-each body carries an integrator, with a hidden initial phase, fed by the
+each unpaired world carries an integrator, with a hidden initial phase, fed by the
 channel's rate; when it passes a unit threshold the channel fires. The count follows the rate with error bounded by one,
 instead of growing as the square root, so the clock is *quieter* than a
 Poisson one. A firing is one fringe of the daughter row's interference pattern
@@ -596,7 +597,7 @@ passing the reader.
   (Proposition X7).
 - **Borrowed from:** the neuron model of that name. In signal processing it is
   a sigma–delta modulator; the Poisson clock is the same construction with
-  independent exponential thresholds. What it costs is ontology: every body
+  independent exponential thresholds. What it costs is ontology: every unpaired world
   carries hidden initial phases, accepted provisionally (Q-SP14).
 - **In several particles:** the bank belongs to a [bond](#bond) of the world,
   not to a world-particle; a bank per world-particle realises a different generator
@@ -618,7 +619,7 @@ no force and does no work.
 
 ### ionisation
 
-A sea pair splits into two bodies: the positon appears at $`p + \xi_q`$ and
+A sea pair splits into two unpaired worlds: the positon appears at $`p + \xi_q`$ and
 the negaton at $`p - \xi_q`$, both from the parent's row. It is the
 microscopic realisation of an emissive event, and it is why the sea is not
 optional bookkeeping: the daughters' momentum $`2p`$ has to come from
@@ -635,7 +636,7 @@ something already at $`p`$.
 ### kernel
 
 The compensated residual kernel $`K_q`$: what is left of the QLE's potential term once
-the classical force is subtracted. $`K_q(x)`$ is the signed rate, per body at
+the classical force is subtracted. $`K_q(x)`$ is the signed rate, per unpaired world at
 $`x`$, for a momentum transfer $`\xi_q = q\,dp`$; its modulus is the event rate.
 It is odd in $`q`$, vanishes identically for a potential of degree two or less,
 and is a Fourier sum over chord separations.
@@ -648,14 +649,14 @@ and is a Fourier sum over chord separations.
 
 ### kink
 
-A body's momentum changes discontinuously at an event: its worldline, drawn in
+An unpaired world's momentum changes discontinuously at an event: its worldline, drawn in
 space-time with momentum as slope, changes slope. In the piecewise-worldline
 reading of the compensated model (Theorem Y5), conserving world-particles
 forces kinks: the two members of an ionised pair kink from $`p`$ to
 $`p \pm \xi_q`$ together, co-located, of opposite species, so momentum is
-conserved event by event. The extended phase of a kinked body changes by a
+conserved event by event. The extended phase of a kinked unpaired world changes by a
 ramp (Theorem Y4). A *fork* is the other drawing of the same event, in which a
-new pair appears and no body changes slope; a *hop*, one body carried from one
+new pair appears and no unpaired world changes slope; a *hop*, one unpaired world carried from one
 row to another, would be a single kink, and is excluded.
 
 - **Defined:** [`dark_sea_and_worldline_identity.md` §5](analysis/dark_sea_and_worldline_identity.md#5-theorem-y4-the-kink-and-its-phase-ramp)
@@ -688,8 +689,8 @@ momentum value, which is the same as a [row](#row).
 
 ### ledger
 
-The census of world-particles, per cell: $`n_+`$ positon bodies, $`n_-`$
-negaton bodies, and $`S`$ sea pairs, with body count $`N = n_+ + n_-`$. The
+The census of world-particles, per cell: $`n_+`$ unpaired positons, $`n_-`$
+unpaired negatons, and $`S`$ sea pairs, with unpaired-world count $`N = n_+ + n_-`$. The
 observable $`W \propto n_+ - n_-`$; the QLE says nothing about $`n_+ + n_-`$ or
 $`S`$, and the ledger is everything the observable does not read. Pairs are
 split and combined, never made from nothing, so $`S + n_+`$ and $`S + n_-`$
@@ -741,8 +742,8 @@ misalignment
 
 where $`Pd/\hbar`$ is the phase a plane wave of momentum $`P`$ gains across the
 chord. The lever is therefore the wavevector at which a clock is extrapolated
-over the chord. The clocks do not fix it: P2 gives each body an extended phase
-at its *own* wavevector, but a comparison of two bodies needs one choice, and
+over the chord. The clocks do not fix it: P2 gives each unpaired world an extended phase
+at its *own* wavevector, but a comparison of two unpaired worlds needs one choice, and
 whoever makes it is the [reader](#reading-reader) (Theorem L8). Three readers
 are distinguished:
 
@@ -769,7 +770,7 @@ lever $`2py`$ belongs to the Wigner point.
   transmitted.
 - **Not to confuse with:** a mechanical lever, or the ordinary idiom in step
   13 ("broken detailed balance is not the lever either"), which means only the
-  cause. Nor with *momentum* as a thing a body carries: the lever is a choice
+  cause. Nor with *momentum* as a thing an unpaired world carries: the lever is a choice
   of reference, and may be the parent's, not the partners'.
 
 ---
@@ -805,7 +806,7 @@ rate assignments with the same average.
 ### minimal ensemble
 
 A world-particle ensemble with $`N = \lVert W\rVert_1`$: no cell holds both a
-positon and a negaton body, so nothing can be removed without changing $`W`$.
+positon and an unpaired negaton, so nothing can be removed without changing $`W`$.
 Its debt is exactly the growth of negative mass, $`\Delta\delta/2`$ in terms of
 Kenfack and Życzkowski's negativity indicator $`\delta = \lVert W\rVert_1 - 1`$.
 The [contact sink](#contact-sink-garbage-collection) keeps an ensemble minimal.
@@ -815,7 +816,7 @@ The [contact sink](#contact-sink-garbage-collection) keeps an ensemble minimal.
 
 ### momentum, in the ladder notes
 
-In the position-pair ladder (step 9), momentum is not a quantity a body
+In the position-pair ladder (step 9), momentum is not a quantity an unpaired world
 carries: it is the misalignment $`\bar p = \hbar\mu/a`$ of a pair of legs,
 with $`\mu`$ the ladder $`\mu`$. In the world-particle notes, by contrast, a
 world has a momentum as a coordinate, and the sea's rows are values of it.
@@ -836,7 +837,7 @@ picture that looks coherent and is wrong.
 | | **Pair $`\mu`$** (step 5) | **Ladder $`\mu`$** (step 9) |
 |---|---|---|
 | Definition | $`\mu = \Phi_a - \Phi_b \pmod{2\pi}`$, the misalignment of the transported clock phases of a pair's two members $`a`$, $`b`$ | $`\mu = \arg\rho(X,X')`$, the phase of the density matrix between two leg positions $`X`$, $`X'`$ |
-| Between | two **members** of a sea pair: two world-particles, two clocks | two **legs** of a ket–bra pair: one body, two branches |
+| Between | two **members** of a sea pair: two worlds, two clocks | two **legs** of a ket–bra pair: one particle, two branches |
 | Lives in | the phase-resonance and phase-alignment formulation, steps 4–8 | the position-pair ladder, step 9 |
 | Winds at | $`\partial_x\mu = \Delta p/\hbar`$, the *splitting* $`\Delta p = p_a - p_b`$; along a path of velocity $`v`$, $`d\mu/dt = \Delta p\,(v - \bar v_{\rm pair})/\hbar`$ | $`\partial\mu/\partial X = p/\hbar`$, the *total* momentum; $`\bar p = \hbar\mu/a`$ with $`a`$ the position spacing |
 | $`\mu = 0`$ means | $`\lvert\Psi\rvert = 2\lvert\sin(\mu/2)\rvert = 0`$: **dark** | $`p = 0`$: no current |
@@ -863,7 +864,7 @@ ionisation" as one chain, it has crossed between the two.
 ### observable map
 
 The map $`\mathcal E`$ from an ensemble to $`W`$. It reads $`n_+ - n_-`$ and
-nothing else. What it cannot see (the body count $`N`$, the sea $`S`$, which
+nothing else. What it cannot see (the unpaired-world count $`N`$, the sea $`S`$, which
 realisation of an event happened) lies in its kernel, and that is where the
 [ledger](#ledger) lives: the two realisations of an event move the observable
 identically (Theorem N2).
@@ -880,7 +881,7 @@ identically (Theorem N2).
 ### pair
 
 **Two different things in this project.** A *ket–bra pair* is a relation
-between two worlds about one body, with separation $`2y`$. A *sea pair* is two
+between two worlds about one particle, with separation $`2y`$. A *sea pair* is two
 world-particles, a positon and a negaton, aligned or not. Different in kind;
 the older notes use the bare word for either.
 
@@ -888,7 +889,7 @@ the older notes use the bare word for either.
   [`ORIENTATION.md` §3](../ORIENTATION.md#3-the-one-central-idea-the-compensated-split);
   the sea pair in [`ORIENTATION.md` §2.3](../ORIENTATION.md#23-the-cast) and
   at [aligned pair](#aligned-pair).
-- **Not to confuse with:** two bodies. Neither kind is.
+- **Not to confuse with:** two unpaired worlds. Neither kind is.
 
 ### particle
 
@@ -964,7 +965,7 @@ rows. $`y_{\max} = L_c/2`$, half the [coherence horizon](#coherence-horizon).
 
 ### reading, reader
 
-A **reader** is whoever supplies the [lever](#lever): so far a free body (a
+A **reader** is whoever supplies the [lever](#lever): so far an unpaired world (a
 sea pair as a reader is proposed and open, V-SP13). Its **reading** is the sum
 over the chords of the sea around it, which estimates the kernel $`K_q`$ at its position: the sea
 computes the Fourier transform of the kernel by interference (Theorem L1,
@@ -980,9 +981,9 @@ Proposition Q5). A reading is a rate estimate, not a measurement outcome.
 Two senses, both in the notes.
 
 - **Catalysed recombination:** the absorptive realisation of one residual event
-  (see [absorptive, emissive](#absorptive-emissive)): a body of each sign
+  (see [absorptive, emissive](#absorptive-emissive)): an unpaired world of each sign
   combines into a sea pair at its *parent's* row.
-- **Contact recombination:** two bodies in one cell combining with no
+- **Contact recombination:** two unpaired worlds in one cell combining with no
   parent: the sink of the ledger. The collision layer (steps 3, 13, 16 and 18)
   carried it as a *recombination channel* or $`\kappa`$ *sink*. It is not part
   of the postulates ([contact sink](#contact-sink-garbage-collection)).
@@ -993,7 +994,7 @@ Step 20 separates the two as *catalysed* and *contact*.
 
 ### re-locking
 
-The rule that a body or pair, on joining a row, sets its clock to that row's
+The rule that an unpaired world or pair, on joining a row, sets its clock to that row's
 plane wave: to the circular mean of the row's sea clocks within a window, or,
 for a whole pair that collides into a new row, to the new row's wave. On
 recombination both members take the parent row's value. Only whole pairs
@@ -1070,7 +1071,7 @@ branches. Nothing is at both ends at once.
 The curve in phase space that divides trajectories which cross a barrier from
 those that do not: the classical boundary between transmission and reflection.
 In the Eckart-barrier notes tunnelling appears as an imbalance in separatrix
-traffic, and bodies cross it in both directions.
+traffic, and unpaired worlds cross it in both directions.
 
 - **Defined:** [`eckart_barrier_compensated.md`](analysis/eckart_barrier_compensated.md);
   who crosses, in [`dark_sea_and_worldline_identity.md` §7](analysis/dark_sea_and_worldline_identity.md).
@@ -1078,7 +1079,7 @@ traffic, and bodies cross it in both directions.
 
 ### sinkless
 
-The case in which no channel other than the residual events removes bodies:
+The case in which no channel other than the residual events removes unpaired worlds:
 $`R_{\rm sink} = 0`$. Theorem N3, $`\Gamma_{\rm tot}(1-2f) = R_{\rm sink}`$,
 then gives the absorptive fraction $`f = 1/2`$. It is a special case, not a
 universal law; any sink forces $`f < 1/2`$.
@@ -1092,7 +1093,7 @@ The letter (S) is used for **two** postulates in the notes.
 
 - **(S), streaming (step 17):** between events every world-particle obeys
   $`\dot q = p/m`$, $`\dot p = -\nabla V`$: the full classical force.
-- **(S′), force-blind sea (step 23):** free bodies as in (S); each member of an
+- **(S′), force-blind sea (step 23):** unpaired worlds as in (S); each member of an
   aligned pair instead moves inertially, $`\dot p = 0`$, while its clock still
   winds. **Amended in step 24:** an aligned pair also changes momentum, and
   only, in collisions with other aligned pairs ([defocus, focus](#defocus-focus)).
@@ -1156,9 +1157,9 @@ unpaired world feels the full classical force and an aligned pair does not.
 
 - **Defined:** [`ORIENTATION.md` §2.3](../ORIENTATION.md#23-the-cast);
   [`world_clocks.md` §1](analysis/world_clocks.md#1-worlds-world-particles-and-particles).
-- **Not to confuse with:** a free particle. The older notes call an unpaired
-  world a *body* or a *free body*; "free" there meant unpaired, not
-  force-free, and under (S′) it is exactly the unpaired worlds that feel the
+- **Not to confuse with:** a free particle. Earlier versions of the notes
+  called an unpaired world a *body* or a *free body*; "free" there meant
+  unpaired, not force-free, and under (S′) it is exactly the unpaired worlds that feel the
   force.
 
 ---
@@ -1183,10 +1184,10 @@ event is open.
   (K4) is the time reverse. The *vertex midpoint* $`n`$ is the row halfway
   between the two rows exchanged.
 - **Open line and compensated model, steps 11 on: the kink.** By default an
-  event in the compensated model is a birth or a death, and no body changes
+  event in the compensated model is a birth or a death, and no unpaired world changes
   momentum. A vertex exists there only under the *piecewise-worldline*
   reading (Theorem Y5), which keeps every world-particle and reads an
-  ionisation or a recombination as two bodies [kinking](#kink) at once, to
+  ionisation or a recombination as two unpaired worlds [kinking](#kink) at once, to
   $`p \pm \xi_q`$. A one-body hop is not available, because the kernel is
   signed. The *vertex rate* is the rate of residual events, read from $`V`$ at
   the world's own $`x`$ (so it needs no boundary, Proposition O4), and each

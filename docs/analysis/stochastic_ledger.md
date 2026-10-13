@@ -1,6 +1,6 @@
 # The stochastic ledger: a jump process, a sum rule, and a standing population
 
-> The ledger run as an exact Markov jump process on integer counts, rather than as a mean field on a mesh. Answers the standing request for a formal stochastic treatment of the free-body and sea-pair populations, and corrects the law it was meant to confirm. Theorem N1 strengthens J1: `P = S + N/2` is conserved *pathwise*, in exact integers, on every trajectory and not merely in expectation — a deterministic invariant of the generator, not a martingale. Theorem N2 is why the ledger is invisible: both realisations of an event move `E` by `+1` at the upper daughter and `-1` at the lower, so the Bernoulli(`f`) choice between them lies entirely in the kernel of the observable map, and the only noise `W` ever sees is Poisson event-timing noise common to both branches. The framing consequence is worth stating plainly — this is not a stochastic mechanics in Nelson's sense: trajectories are exactly Newtonian by (S), the diffusion in the phase variables is identically zero, and the whole stochastic content is demographic. **Theorem N3 is the note's centre and a correction to S7.** Stationarity of the body count gives `Gamma_tot (1 - 2f) = R_sink` with no closure and nothing about the potential, where `R_sink` is the total rate of every *other* body-removing channel — so `f = 1/2` is the sinkless special case and not the law, and any `kappa > 0` forces `f < 1/2` by a computable amount, verified to between 0.01 and 0.9 per cent over a fortyfold range of `kappa`. That invalidates the argument S-SP3 used to rule out a floor — that a systematic leak cannot change sign — because S-SP7 identifies a sink *and* a source, and their difference changes sign freely. Theorems N4 and N5 close the availability question: `f` is the probability that both legs find a partner, which under an independent-occupancy closure is `(1 - e^-lam)^2`, so `f = 1/2` pins `lam* = -ln(1 - 2^-1/2) = 1.227947` bodies per species per cell, `f'(lam*) = sqrt2 - 1` exactly, `Var(Lambda)/M = 1/f' = 2.414214`, and a Fano factor `0.983028`, slightly sub-Poissonian — five numbers carrying no free constant, measured at 2.4487 against 2.4559 in the well-mixed limit and flat across `Q = 1` to `12`, as a closure with no channel index in it requires. In world-particles that is 2.456 bodies against exactly two sea pairs per Planck cell, the low end of K9's empirical window. Theorem N6 reassigns a role the project had given to recombination: with transport off, per-cell occupancy is a reflected critical random walk whose spread grows without bound, `kappa` damps it only partly and drags `f` to 0.32, and turning streaming on instead holds the spread flat and leaves `f` at 0.5005. Streaming, not recombination, is the local regulator — and by N3 no sink could have been, since every sink moves `f` off one half.
+> The ledger run as an exact Markov jump process on integer counts, rather than as a mean field on a mesh. Answers the standing request for a formal stochastic treatment of the unpaired-world and sea-pair populations, and corrects the law it was meant to confirm. Theorem N1 strengthens J1: `P = S + N/2` is conserved *pathwise*, in exact integers, on every trajectory and not merely in expectation — a deterministic invariant of the generator, not a martingale. Theorem N2 is why the ledger is invisible: both realisations of an event move `E` by `+1` at the upper daughter and `-1` at the lower, so the Bernoulli(`f`) choice between them lies entirely in the kernel of the observable map, and the only noise `W` ever sees is Poisson event-timing noise common to both branches. The framing consequence is worth stating plainly — this is not a stochastic mechanics in Nelson's sense: trajectories are exactly Newtonian by (S), the diffusion in the phase variables is identically zero, and the whole stochastic content is demographic. **Theorem N3 is the note's centre and a correction to S7.** Stationarity of the unpaired-world count gives `Gamma_tot (1 - 2f) = R_sink` with no closure and nothing about the potential, where `R_sink` is the total rate of every *other* unpaired-world-removing channel — so `f = 1/2` is the sinkless special case and not the law, and any `kappa > 0` forces `f < 1/2` by a computable amount, verified to between 0.01 and 0.9 per cent over a fortyfold range of `kappa`. That invalidates the argument S-SP3 used to rule out a floor — that a systematic leak cannot change sign — because S-SP7 identifies a sink *and* a source, and their difference changes sign freely. Theorems N4 and N5 close the availability question: `f` is the probability that both legs find a partner, which under an independent-occupancy closure is `(1 - e^-lam)^2`, so `f = 1/2` pins `lam* = -ln(1 - 2^-1/2) = 1.227947` unpaired worlds per species per cell, `f'(lam*) = sqrt2 - 1` exactly, `Var(Lambda)/M = 1/f' = 2.414214`, and a Fano factor `0.983028`, slightly sub-Poissonian — five numbers carrying no free constant, measured at 2.4487 against 2.4559 in the well-mixed limit and flat across `Q = 1` to `12`, as a closure with no channel index in it requires. In world-particles that is 2.456 unpaired worlds against exactly two sea pairs per Planck cell, the low end of K9's empirical window. Theorem N6 reassigns a role the project had given to recombination: with transport off, per-cell occupancy is a reflected critical random walk whose spread grows without bound, `kappa` damps it only partly and drags `f` to 0.32, and turning streaming on instead holds the spread flat and leaves `f` at 0.5005. Streaming, not recombination, is the local regulator — and by N3 no sink could have been, since every sink moves `f` off one half.
 
 *Ladder abstract — see the [full list](README.md#the-ladder).*
 
@@ -35,7 +35,7 @@ Ornstein–Uhlenbeck law is checked against exact Gillespie trajectories.
   in Kurtz's sense, with a deterministic law of large numbers and a Gaussian
   fluctuation theorem (§6). No new mathematics is required, and the literature
   to cite is population-process literature, not quantum literature.
-- **The standing population.** $`\lambda^* = 1.227947`$ bodies per species per
+- **The standing population.** $`\lambda^* = 1.227947`$ unpaired worlds per species per
   cell, with no free constant (§5). This is the self-consistency condition
   S-SP1 said would be needed to fix $`\kappa`$.
 - **What regulates the local ledger.** Transport, not recombination (§7).
@@ -77,7 +77,7 @@ n^+_c, \qquad n^-_c, \qquad S_c ,
 ```
 
 the positon count, the negaton count, and the bound sea-pair count. Write
-$`N_c = n^+_c + n^-_c`$ for the body count, $`E_c = n^+_c - n^-_c`$ for the
+$`N_c = n^+_c + n^-_c`$ for the unpaired-world count, $`E_c = n^+_c - n^-_c`$ for the
 observable, and $`\Lambda = \sum_c N_c`$ for the total.
 
 Three channels.
@@ -103,7 +103,7 @@ settle absorptively iff $`n^-_A \ge 1`$ **and** $`n^+_B \ge 1`$; otherwise
 emissively, if the parent cell has a sea pair to ionise. Nothing measures
 $`f`$ and nothing targets it.
 
-**Hop.** Each body moves to another cell at rate $`\nu`$, destination uniform
+**Hop.** Each unpaired world moves to another cell at rate $`\nu`$, destination uniform
 on the ring. This is the caricature of postulate (S). It carries no force law
 and no geometry — the point of §7 is that its *presence* is what matters, not
 its details — and uniform destinations are the well-mixed idealisation under
@@ -112,7 +112,7 @@ which the closure of §5 is supposed to hold.
 **Recombination.** At each cell, at rate $`\kappa\, n^+_c n^-_c`$:
 $`n^+_c\!-\!\!=\!1`$, $`n^-_c\!-\!\!=\!1`$, $`S_c\!+\!\!=\!1`$. This is the
 bilinear coincident-pair sink Theorem S1 forces, and it returns a bound pair
-rather than destroying two bodies, so that the pair count is preserved.
+rather than destroying two unpaired worlds, so that the pair count is preserved.
 
 That is the whole generator. It is simulated exactly — Gillespie (1977), no
 time discretisation and no tau-leap — so nothing below is a stepping artefact.
@@ -126,7 +126,7 @@ every state visited by every trajectory of the process.
 
 *Proof.* Emissive: $`\Delta S = -1`$, $`\Delta N = +2`$. Absorptive:
 $`\Delta S = +1`$, $`\Delta N = -2`$. Recombination: $`\Delta S = +1`$,
-$`\Delta N = -2`$. Hopping moves a body between cells and changes neither sum.
+$`\Delta N = -2`$. Hopping moves an unpaired world between cells and changes neither sum.
 Each gives $`\Delta P = 0`$. $`\square`$
 
 This is stronger than Theorem J1, which is the same statement about
@@ -200,7 +200,7 @@ sum is taken. That is an argument for the prediction, not merely a hope.
 ```
 
 where $`\Gamma_{\rm tot}`$ is the total event rate, $`f`$ the absorptive
-fraction, and $`R_{\rm sink}`$ the total rate of every body-removing channel
+fraction, and $`R_{\rm sink}`$ the total rate of every unpaired-world-removing channel
 *other than* absorption. The same equation follows from stationarity of the
 sea.
 
@@ -253,7 +253,7 @@ sink, the shortfall reports its rate. That is a diagnostic, not an error term:
 instrument the sink and the identity closes or it does not.
 
 **A measured *excess* reports a source.** $`f > 1/2`$ means
-$`R_{\rm sink} < 0`$, which is a channel manufacturing bodies.
+$`R_{\rm sink} < 0`$, which is a channel manufacturing unpaired worlds.
 
 ![The sum rule, the closure, and the local regulator](https://raw.githubusercontent.com/billpage/wpmw/output/figures/stochastic_ledger_summary.png)
 
@@ -273,7 +273,7 @@ Open item **S-SP3** of the sea note reads, of the reach ladder's shortfall:
 The premise is right and the inference is not. A single systematic leak cannot
 change sign. But **S-SP7**, in the same list, identifies two channels of
 opposite sign in the same code: the negative caps, which run events backwards
-and act as a sink, and the population clamp, which "manufactures bodies" and
+and act as a sink, and the population clamp, which "manufactures unpaired worlds" and
 acts as a source. By N3 the shortfall reports their *difference*, and a
 difference changes sign as soon as the two cross. The sign change is therefore
 consistent with a floor as well as with truncation, and cannot discriminate.
@@ -283,7 +283,7 @@ not challenged here; the monotone reach ladder is separate evidence and it
 stands. What is withdrawn is one of the two arguments offered for it.
 
 **The measurement that would settle it.** N3 is an identity, so instrument it.
-Accumulate, per step of the mesh demo, the total body count destroyed by
+Accumulate, per step of the mesh demo, the total unpaired-world count destroyed by
 clipped caps and created by the clamp, form $`R_{\rm sink}`$, and check
 $`\Gamma_{\rm tot}(1-2f) = R_{\rm sink}`$ directly. If it closes, the
 shortfall is fully accounted for by identified channels and S-SP3 is settled
@@ -377,7 +377,7 @@ $`\gamma/\nu = 1/32`$: **2.4487 against 2.4559 predicted, 0.3 per cent.**
 
 ### 5.3 What the number means
 
-$`2\lambda^* = 2.455894`$ bodies per cell, against a sea of exactly two pairs
+$`2\lambda^* = 2.455894`$ unpaired worlds per cell, against a sea of exactly two pairs
 per cell — the crystal shift $`B = 2/h`$ of §2 of the sea note. So the
 theory's standing unpaired population is
 
@@ -398,7 +398,7 @@ candidate is the requirement that $`N_{\rm eq}`$ equal the standing population
 S9's feedback actually sustains, which would be a self-consistency condition."
 §5 supplies the standing population. What it does not supply is the dictionary
 between a continuum $`N_{\rm eq}`$ in Wigner units and a lattice occupancy in
-bodies per cell. **N-SP2.**
+unpaired worlds per cell. **N-SP2.**
 
 ![The ledger relaxing onto the derived standing population](https://raw.githubusercontent.com/billpage/wpmw/output/figures/stochastic_ledger_relaxation.png)
 
@@ -413,7 +413,7 @@ against the closure's $`2\lambda^*`$. Nothing in the run is told where to go.
 
 The process is density-dependent in Kurtz's sense: rates depend on the state
 through the per-cell densities. Its Kramers–Moyal expansion truncates at
-second order in the usual way (van Kampen ch. X), giving for the total body
+second order in the usual way (van Kampen ch. X), giving for the total unpaired-world
 count
 
 ```math
@@ -462,7 +462,7 @@ equation for quantum mechanics" points at a large and different literature.
 **Qualification, step 20.** What follows holds under birth and death, the
 ontology this note assumes. Under the piecewise reading of
 [`dark_sea_and_worldline_identity.md`](dark_sea_and_worldline_identity.md) the
-phase-variable diffusion is not zero: bodies take momentum kicks of
+phase-variable diffusion is not zero: unpaired worlds take momentum kicks of
 $`\pm\xi_q`$ with no mean drift and diffusion
 $`D_p = \tfrac{1}{2}\sum_q \xi_q^2 |K_q|`$ (Theorem Y6). It is still not a
 Nelson diffusion — that one acts in position — and it is still invisible to
@@ -499,7 +499,7 @@ N1 and J2 leave the ledger globally constrained and locally free. What happens
 locally is worth stating as a result, because the project has been assuming
 the wrong answer.
 
-Consider a cell with transport switched off. Bodies of one species arrive by
+Consider a cell with transport switched off. Unpaired worlds of one species arrive by
 emission at rate $`\gamma_{\rm cell}(1-f)`$ and leave by absorption at rate
 $`\gamma_{\rm cell}f`$, gated below at zero. At the global fixed point
 $`f = 1/2`$ those rates are equal: the per-cell occupancy performs a
@@ -515,7 +515,7 @@ damping at a cost of exactly $`R_{\rm sink}/2\Gamma_{\rm tot}`$ in absorptive
 fraction. Transport repairs it at no cost in $`f`$ at all, because hopping is
 not a sink.
 
-Part F, variance of the per-cell body count across $`M = 32`$ cells:
+Part F, variance of the per-cell unpaired-world count across $`M = 32`$ cells:
 
 ```
      nu   kappa      t=25      t=50     t=100     t=200     t=400       f
@@ -541,7 +541,7 @@ own thermostat fails, not because the thermostat is wrong but because it is
 global and the supply it regulates is local.
 
 **Practically**, it explains the size of the improvement from the `stream()`
-repair recorded in the sea note's erratum. That bug left bodies unable to move
+repair recorded in the sea note's erratum. That bug left unpaired worlds unable to move
 in $`p`$, which is exactly the $`\nu = 0`$ column. The repair moved the note's
 floor at $`\Delta t = 0.01`$ from $`-1.2353`$ to $`-0.3386`$ and turned the
 absorptive trace positive. N6 predicts an improvement of that character before
@@ -580,13 +580,13 @@ same quantity **J-SP1** asks about, now with a sign attached.
 
 - **N-SP1 (instrument the sum rule in the mesh demo).** N3 is an identity, so
   the shortfall in `demo_sea_population_equilibrium.py` can be attributed
-  rather than extrapolated. Accumulate the body count destroyed by clipped
+  rather than extrapolated. Accumulate the unpaired-world count destroyed by clipped
   caps and created by the population clamp, form $`R_{\rm sink}`$, and test
   $`\Gamma_{\rm tot}(1-2f) = R_{\rm sink}`$ per step. Closing it settles
   S-SP3 exactly; failing to close it locates a third channel nobody has
   named. This is the highest-value item on the list.
 - **N-SP2 (the dictionary, and hence $`\kappa`$).** $`\lambda^*`$ is an
-  occupancy in bodies per cell; $`N_{\rm eq}(\kappa)`$ of Theorem S2 is a
+  occupancy in unpaired worlds per cell; $`N_{\rm eq}(\kappa)`$ of Theorem S2 is a
   density in Wigner units. Matching them would turn §5 into a determination
   of $`\kappa`$. The obstruction is that the mesh has no cell size in the
   relevant sense — the lattice's $`\Delta p`$ is set by the reach and its

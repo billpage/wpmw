@@ -662,6 +662,6 @@ Figures: `species_phase_duality.png`, `sea_identity_darkness.png`,
 6. **Amplitude of the near-dark tail.** D4 gives the shape and $`X`$-dependence
    of a finite-$`\epsilon`$ background's activity but not the amplitude of any
    such tail in the physical sea, which remains the sea-dressed note's Level 3.
-7. **Many bodies.** D2 is dimension-independent as an operator statement, but
+7. **Many particles.** D2 is dimension-independent as an operator statement, but
    how $`\mathbb{1}\otimes\mathbb{1}`$ interacts with a two-particle
    annihilation stencil has not been checked.

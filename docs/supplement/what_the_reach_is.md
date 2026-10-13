@@ -40,11 +40,11 @@ writing, more than once — is to read
 
 > the ket arm sits at $`x+y`$, the bra arm at $`x-y`$, separated by $`2y`$
 
-as two bodies at two places. There is one body.
+as two particles at two places. There is one particle.
 
 **Step 20 adds one line to this.** The separation $`y`$ — the ladder $`\mu`$'s
 conjugate — is what the compensated kernel integrates over, so the
-compensated formulation is phase-blind in its *bodies* and not in its
+compensated formulation is phase-blind in its *unpaired worlds* and not in its
 *kernel*: see Theorem Y1 of
 [`../analysis/dark_sea_and_worldline_identity.md`](../analysis/dark_sea_and_worldline_identity.md).
 Keeping that $`\mu`$ apart from the pair $`\mu`$ of the phase formulation is
@@ -57,7 +57,7 @@ W(x,p) \;=\; \frac{1}{\pi\hbar}\int \rho(x+y,\;x-y)\;e^{-2ipy/\hbar}\,dy ,
 ```
 
 so $`y`$ is the off-diagonal coordinate of the density matrix. The two
-positions $`x \pm y`$ are two *worlds'* answers to where the one body is. The
+positions $`x \pm y`$ are two *worlds'* answers to where the one particle is. The
 quantity $`2y`$ is a distance in configuration space between branches, not a
 distance between objects.
 
@@ -85,7 +85,7 @@ The position-pair ladder's central result is
 \qquad \mu \;=\; \arg\rho(X, X') ,
 ```
 
-so momentum is not something a body carries. It is the *misalignment* of a
+so momentum is not something a particle carries. It is the *misalignment* of a
 pair of legs. The current between neighbouring legs is
 $`J|\rho_1|\sin\mu/\hbar`$, and a **self-conjugate** carrier — legs
 coincident, $`\mu = 0`$ — carries the full probability density and no current
@@ -147,7 +147,7 @@ this project.**
 |---|---|---|
 | source | `../analysis/position_pair_ladder.md` | `../analysis/phase_alignment_microdynamics.md`, Def. (misalignment) |
 | $`\mu =`$ | $`\arg\rho(X, X')`$ | $`\Phi_a(x^*,t^*) - \Phi_b(x^*,t^*)`$ |
-| between | two **legs** of a ket–bra pair — one body, two branches | two **members** of a sea pair — two world-particles, two clocks |
+| between | two **legs** of a ket–bra pair — one particle, two branches | two **members** of a sea pair — two worlds, two clocks |
 | winds at | $`\partial\mu/\partial X = p/\hbar`$, the *total* momentum | $`\partial\mu/\partial x = \Delta p/\hbar`$, the *splitting* |
 | $`\mu = 0`$ means | $`p = 0`$: no current | $`\lvert\Psi\rvert = 2\lvert\sin(\mu/2)\rvert = 0`$: dark |
 
@@ -481,7 +481,7 @@ What can be cleared up is the rest of it, and the cleaned-up statement is:
 - Its two ceilings are different, only one bounds the theory, and the other
   is four times tighter in three dimensions than in one (§5, §5.1).
 - What is separated by $`2y`$ is two legs, and the misalignment of a pair of
-  legs is not the misalignment of a pair of bodies (§1.2).
+  legs is not the misalignment of a pair of worlds (§1.2).
 
 ---
 
@@ -552,7 +552,7 @@ is most about are:
 - **R-SP7 (the sea side of Theorem N6 is untested).** N6 of
   [`../analysis/stochastic_ledger.md`](../analysis/stochastic_ledger.md) finds
   that transport, not recombination, regulates the local ledger. But the hop
-  channel in its companion demo moves free bodies only; $`S`$ is a per-cell
+  channel in its companion demo moves unpaired worlds only; $`S`$ is a per-cell
   integer that never moves. Theorem S4 of
   [`../analysis/sea_population_equilibrium.md`](../analysis/sea_population_equilibrium.md)
   says the *unbounded* failure is on the sea side — the sea is relocated
@@ -578,7 +578,7 @@ is most about are:
   *N-particle* and similar — runs 19 in `position_pair_ladder.md`, 17 in
   `relational_pairing_and_carrier_lock.md`, 16 in `sea_dressed_microdynamics.md`
   and 27 in `phase_resonance_microdynamics.md`, all single-body notes where it
-  cannot mean a body. The multi-body and 4-D documents score higher still but
+  cannot mean one particle among several. The multi-body and 4-D documents score higher still but
   there the word is earned. If a rename is ever undertaken, *leg* for the end
   of a ket–bra pair is the term to standardise on, and the two senses of
   *pair* are the more urgent problem.

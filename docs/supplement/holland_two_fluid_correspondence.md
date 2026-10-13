@@ -234,7 +234,7 @@ $`P = S + N/2`$ (Theorem J1) — so that conversion has a stock to draw on.
 In the bi-HJ system the leak $`(2r-1)(\hbar/2m)\partial_{ii}\rho`$ that one flow
 sheds and the other absorbs sit at the **same** $`x`$. They cancel pointwise, not
 merely in the integral. The event channel does not have this property: it debits
-the sea at the parent momentum row and credits bodies at the daughter rows
+the sea at the parent momentum row and credits unpaired worlds at the daughter rows
 $`p \pm \xi_q`$, so pair count flows between rows and cancellation is global
 only (Theorem J2).
 

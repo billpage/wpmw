@@ -1,6 +1,6 @@
 # Depletion and excess: when the sea could be seen
 
-> Empty space is not empty here: a cell that holds no `W` still holds aligned pairs at density `B`. Could the sea's depletion or excess ever be seen? By Proposition Q1 the observable never reads the sea, so only a rule that reads it could show either; a rule that reads its level, Theorem S5's throttle, is already excluded, so excess is unobservable. **Proposition V1**: admissible negativity is free. For a potential of degree two or less the compensated kernel vanishes identically (Theorem G2), so a cat state held in a harmonic trap makes no event and touches no pair; the sea pays only for the negativity the dynamics makes, where `V''' != 0`, and in an anharmonic well a cat makes events 1.4 times as fast as one packet because its fringes are parents too. **Proposition V2**: from a minimal preparation the sea's debt is at least the growth of the negative mass of `W`, with equality exactly when the ensemble stays minimal; body inflation is sea debt, so a finite sea would make garbage collection a requirement. **Proposition V3**: under a floor — no pair, no ionisation, Proposition S0 read literally — `E` is unchanged bit for bit while the sea is at least as deep as the depth `lambda*` the unfloored run needs, and departs below it through a spurious force, an energy drift and a change of negativity, never through the norm. On the Eckart summit `lambda*` is 1.10 under (S) and 0.65 under (S′); in an anharmonic well it climbs without levelling off, to 2.2 and 2.9 by `t = 96`, and it grows with the reach as Theorem G5's census does, which answers Q-SP2. **Proposition V4**: the sea is granular, and the event aperture of Q9(c) holds one pair on average at the physical density, so an integer sea of `beta` pairs per aperture blocks close to `e^-beta` of emissions and moves `E` by `C e^-beta`, `C` from 1.4 to 6.8 — by 37 to 88 per cent at `beta = 1`. The physical density cannot be a strict supply; a sea that is one must be seven to nine pairs per aperture deep to hide below a part in a thousand, and only an experiment could bound that depth, from below. **Proposition V6**: integer worlds at the physical density, over many seeds, block emissions as about `0.9 e^-0.55beta`, not `e^-beta`, because body inflation drains the apertures a parent keeps returning to; the observable still follows V4's mean field, but blocking fewer than one emission in a thousand takes about twelve pairs per aperture. **Proposition V5**: entanglement made by a pair potential costs the sea exactly the negativity of the relative motion. **Proposition V7**: when the centre of mass and the relative motion couple, V2 and V3 hold unchanged in four dimensions, and two bodies in an anharmonic well need a deeper sea than one under every realisation; the physical density is short in all three. **Propositions V8 to V10** (second addendum) amend (S′): an aligned pair changes momentum only in collisions with other pairs, Cyganski's Focus and Defocus at mass-action rates with detailed balance. Collisions are `W`-null (V8). A reversible sea dynamics, such as a Volterra lattice on the pairs, conserves a depletion functional and cannot repair depletion (V9); collisions obey an H-theorem and relax the sea (V10), and in every case run at the default reach the depth the floor needs stops growing below the physical density — 0.25 against 2.9 in the well at `t = 96` — whether they run at the kernel's rate or at a uniform rate between neighbouring rows. **Propositions V11 to V14** (third addendum) test the amendment. At the kernel's rate the depth stays below one half on the Eckart summit from reach `pi` to `8pi`, where (S′) unamended needs up to 17; a uniform rate, which does not keep pace with the events, fails in the well at `4pi` (V11). Of the clock rules tried at a collision, only whole pairs re-locked to their new row keep the sea dark and the readings live (V12). In an integer sea collisions steepen blocking to about `1.1 e^-0.74beta`, about 9.5 pairs per aperture for one emission in a thousand (V13). Two coupled bodies need 0.20 to 0.54 of the physical density with collisions, against 1.86 to 3.98 without (V14). Where to look is where negativity is made fastest — diffraction, Kerr revivals, tunnelling, collisions — but the model's regulators have no laboratory values, so no bound follows yet; a null result is expected, and says the sea's depth, like its motion and its phases, is not fixed by the observable. Step 16's ledger books transport ringing as sea traffic (S-SP7), over a quarter of the sea's debits on Theorem S8's run; the minimal ledger used here does not.
+> Empty space is not empty here: a cell that holds no `W` still holds aligned pairs at density `B`. Could the sea's depletion or excess ever be seen? By Proposition Q1 the observable never reads the sea, so only a rule that reads it could show either; a rule that reads its level, Theorem S5's throttle, is already excluded, so excess is unobservable. **Proposition V1**: admissible negativity is free. For a potential of degree two or less the compensated kernel vanishes identically (Theorem G2), so a cat state held in a harmonic trap makes no event and touches no pair; the sea pays only for the negativity the dynamics makes, where `V''' != 0`, and in an anharmonic well a cat makes events 1.4 times as fast as one packet because its fringes are parents too. **Proposition V2**: from a minimal preparation the sea's debt is at least the growth of the negative mass of `W`, with equality exactly when the ensemble stays minimal; unpaired-world inflation is sea debt, so a finite sea would make garbage collection a requirement. **Proposition V3**: under a floor — no pair, no ionisation, Proposition S0 read literally — `E` is unchanged bit for bit while the sea is at least as deep as the depth `lambda*` the unfloored run needs, and departs below it through a spurious force, an energy drift and a change of negativity, never through the norm. On the Eckart summit `lambda*` is 1.10 under (S) and 0.65 under (S′); in an anharmonic well it climbs without levelling off, to 2.2 and 2.9 by `t = 96`, and it grows with the reach as Theorem G5's census does, which answers Q-SP2. **Proposition V4**: the sea is granular, and the event aperture of Q9(c) holds one pair on average at the physical density, so an integer sea of `beta` pairs per aperture blocks close to `e^-beta` of emissions and moves `E` by `C e^-beta`, `C` from 1.4 to 6.8 — by 37 to 88 per cent at `beta = 1`. The physical density cannot be a strict supply; a sea that is one must be seven to nine pairs per aperture deep to hide below a part in a thousand, and only an experiment could bound that depth, from below. **Proposition V6**: integer worlds at the physical density, over many seeds, block emissions as about `0.9 e^-0.55beta`, not `e^-beta`, because unpaired-world inflation drains the apertures a parent keeps returning to; the observable still follows V4's mean field, but blocking fewer than one emission in a thousand takes about twelve pairs per aperture. **Proposition V5**: entanglement made by a pair potential costs the sea exactly the negativity of the relative motion. **Proposition V7**: when the centre of mass and the relative motion couple, V2 and V3 hold unchanged in four dimensions, and two particles in an anharmonic well need a deeper sea than one under every realisation; the physical density is short in all three. **Propositions V8 to V10** (second addendum) amend (S′): an aligned pair changes momentum only in collisions with other pairs, Cyganski's Focus and Defocus at mass-action rates with detailed balance. Collisions are `W`-null (V8). A reversible sea dynamics, such as a Volterra lattice on the pairs, conserves a depletion functional and cannot repair depletion (V9); collisions obey an H-theorem and relax the sea (V10), and in every case run at the default reach the depth the floor needs stops growing below the physical density — 0.25 against 2.9 in the well at `t = 96` — whether they run at the kernel's rate or at a uniform rate between neighbouring rows. **Propositions V11 to V14** (third addendum) test the amendment. At the kernel's rate the depth stays below one half on the Eckart summit from reach `pi` to `8pi`, where (S′) unamended needs up to 17; a uniform rate, which does not keep pace with the events, fails in the well at `4pi` (V11). Of the clock rules tried at a collision, only whole pairs re-locked to their new row keep the sea dark and the readings live (V12). In an integer sea collisions steepen blocking to about `1.1 e^-0.74beta`, about 9.5 pairs per aperture for one emission in a thousand (V13). Two coupled particles need 0.20 to 0.54 of the physical density with collisions, against 1.86 to 3.98 without (V14). Where to look is where negativity is made fastest — diffraction, Kerr revivals, tunnelling, collisions — but the model's regulators have no laboratory values, so no bound follows yet; a null result is expected, and says the sea's depth, like its motion and its phases, is not fixed by the observable. Step 16's ledger books transport ringing as sea traffic (S-SP7), over a quarter of the sea's debits on Theorem S8's run; the minimal ledger used here does not.
 
 *Ladder abstract — see the [full list](README.md#the-ladder).*
 
@@ -34,12 +34,12 @@ it.
   degree two or less the compensated residual kernel vanishes identically
   (Theorem G2), so free and harmonic evolution make no event and touch no
   pair, whatever the state. A cat state held in a harmonic trap costs the sea nothing; the
-  sea is spent only on what $`V'''`$ does, in proportion to the bodies it
+  sea is spent only on what $`V'''`$ does, in proportion to the unpaired worlds it
   acts on (§2).
 - **Proposition V2.** The sea's debt is the negativity the dynamics makes:
   from a minimal preparation, its global debit is at least the growth of the
   negative mass of $`W`$, with equality exactly when the ensemble stays
-  minimal. Body inflation is sea debt (§3).
+  minimal. Unpaired-world inflation is sea debt (§3).
 - **Proposition V3.** The floor. If an emission must find a pair in its
   parent's cell, $`E`$ is unchanged bit for bit while the sea is deep
   enough, $`\beta \ge \lambda^*`$, and departs below it — through a
@@ -54,12 +54,12 @@ it.
   (§5).
 - **Proposition V6.** The integer sea at the physical density, measured
   over many seeds: blocking falls as about $`0.9\,e^{-0.55\beta}`$, not
-  $`e^{-\beta}`$, because body inflation drains the apertures, while the
+  $`e^{-\beta}`$, because unpaired-world inflation drains the apertures, while the
   observable follows V4's mean field where resolved (§5.1).
-- **Proposition V5.** Two bodies. Entanglement made by a pair potential
+- **Proposition V5.** Two particles. Entanglement made by a pair potential
   costs the sea exactly the negativity the relative motion makes, and per
   joint cell never more than the one-dimensional problem (§6).
-- **Proposition V7.** Two coupled bodies. V2 and V3 hold in four
+- **Proposition V7.** Two coupled particles. V2 and V3 hold in four
   dimensions, and the depth the floor needs exceeds the one-body value in
   every realisation (§6.1).
 - **Postulate (S′), amended, and Propositions V8 to V10.** Under (S′) the
@@ -77,7 +77,7 @@ it.
   only clock rule tried that keeps the sea dark and the reading live
   (V12, §4.5). Collisions steepen an integer sea's blocking to about
   $`1.1\,e^{-0.74\beta}`$ (V13, §5.2), and bring the depth two coupled
-  bodies need below the physical density (V14, §6.2).
+  particles need below the physical density (V14, §6.2).
 - What an experiment could and could not see (§7), and a quantification of
   a known demo defect — step 16's ledger books transport ringing as sea
   traffic — that the minimal ledger used here avoids (§8). §8.1 records two
@@ -145,9 +145,9 @@ the compensated residual kernel vanishes identically, for every reach and
 every horizon window. (b) Hence under free or harmonic evolution no event
 happens and no sea pair is touched, whatever $`W`$ is: the negativity of an
 admissible state costs nothing to hold. (c) Where $`V''' \ne 0`$ the sea is
-spent at the per-parent rate $`\Gamma(x)`$, so in proportion to the bodies
+spent at the per-parent rate $`\Gamma(x)`$, so in proportion to the unpaired worlds
 there; in the minimal ensemble these number $`\lVert W \rVert_1`$, and a
-state's fringes are bodies too.*
+state's fringes are unpaired worlds too.*
 
 *Proof.* (a) is Theorem G2 of step 17, which measured the channel empty
 at every reach; the reason is short. For such $`V`$,
@@ -158,7 +158,7 @@ compensation, the ratio of their discrete first moments (specification
 3.2), returns $`V'_{\rm eff} = V'`$ and the residual
 $`i s w (V' - V'_{\rm eff})`$ is zero. (b) Events fire at $`\lvert K_q
 \rvert`$ per parent. (c) The rate is per parent, and the minimal ensemble
-has $`N = \lVert W \rVert_1 = 1 + 2M_-`$ bodies, $`M_-`$ the negative
+has $`N = \lVert W \rVert_1 = 1 + 2M_-`$ unpaired worlds, $`M_-`$ the negative
 mass of $`W`$. $`\square`$
 
 *Verification* (Part A). On the mesh, $`\max\lvert K \rvert / \max\lvert
@@ -177,7 +177,7 @@ In the trap the cat's $`E`$ agrees with the QLE to $`1.2\times10^{-14}`$
 and the sea is untouched; its negative mass drifts by 0.011, which is the
 discrete transport's own (§3). In the well the cat makes events 1.4 times
 as fast as a single packet with the same width and offset — its fringes
-are bodies, and every body is a parent — and its negative mass nearly
+are unpaired worlds, and every unpaired world is a parent — and its negative mass nearly
 triples.
 
 ![An even cat at t = 0, after one period in the harmonic trap and in the Pöschl–Teller well](https://raw.githubusercontent.com/billpage/wpmw/output/figures/sea_depletion_free_negativity.png)
@@ -208,14 +208,14 @@ D(t) \;\ge\; M_-(t) - M_-(0),
 *with equality at all times exactly when the ensemble stays minimal,
 $`N = \lVert W \rVert_1`$ — that is, under garbage collection
 (Proposition Q8). Corollaries: (i) the sea's global excess never exceeds
-$`M_-(0)`$; (ii) any body beyond the minimal ensemble is half a pair of
+$`M_-(0)`$; (ii) any unpaired world beyond the minimal ensemble is half a pair of
 sea debt, so a sea that is a finite supply makes garbage collection a
 requirement rather than an economy; (iii) in terms of the negativity
 indicator $`\delta = \lVert W \rVert_1 - 1`$ of Kenfack and Życzkowski
 (2004), the minimal ensemble's debt is $`\Delta\delta/2`$.*
 
 *Proof.* Event by event $`\Delta S = -\Delta N/2`$ (Theorem S7), and a
-contact recombination removes two bodies and adds one pair, so the same
+contact recombination removes two unpaired worlds and adds one pair, so the same
 holds for the sink; hence $`D = (N - N_0)/2`$. In every cell $`u_+ + u_-
 \ge \lvert u_+ - u_- \rvert`$, so $`N \ge \lVert W \rVert_1`$, with
 equality iff no cell holds both species. Since $`\int W = 1`$,
@@ -405,7 +405,7 @@ be given a dynamics of its own, provided it moves whole pairs. This
 addendum amends (S′) accordingly, after asking what kind of dynamics
 could help.
 
-**Postulate (S′), as amended.** Between events every free body obeys the
+**Postulate (S′), as amended.** Between events every unpaired world obeys the
 full classical force, as in (S). An aligned pair is force-blind: between
 its events it moves inertially, $`\dot q = p/m`$, $`\dot p = 0`$, its
 clock winding by P1, and it changes momentum only in a collision with
@@ -445,11 +445,11 @@ lemma of §6.2 there excludes mass action. Here nothing has to be linear,
 because nothing observable reads the sea.
 
 **Proposition V8 (collisions are W-null).** *Collisions move whole pairs,
-so in any ledger whose events take their counts from the bodies and the
+so in any ledger whose events take their counts from the unpaired worlds and the
 kernel alone, $`E`$, $`N`$ and $`f`$ are those of (S′) bit for bit.*
 
 *Proof.* Proposition Q1: the sea enters an event only as its source or
-its sink, and a collision changes neither body field. $`\square`$
+its sink, and a collision changes neither unpaired-world field. $`\square`$
 
 Verified: in every run of Part G, $`\max\lvert\Delta E\rvert = 0`$
 against (S′) unamended. Under a rule that reads the sea, Definition (F)
@@ -462,9 +462,9 @@ matters: at the physical depth the floor never binds if $`\lambda^* < 1`$.
 
 The first candidate for sea dynamics was Cyganski's Volterra sea (call of
 6 October 2026): his copy-left and copy-right actions, in which two
-bodies on one row join two on the next, at mass-action rates. He applied
+unpaired worlds on one row join two on the next, at mass-action rates. He applied
 them to positons and negatons separately, which changes $`E`$; that is a
-dynamics of the bodies, and in the large-sea limit it reproduces the
+dynamics of the unpaired worlds, and in the large-sea limit it reproduces the
 single-mode QLE kick. Applied to whole pairs it is W-null, so it is a
 candidate here. It does not help, and the reason is structural.
 
@@ -749,7 +749,7 @@ large reach.
 ### 4.5 Proposition V12: the clock at a collision
 
 *Third addendum (October 2026), open item V-SP8.* Definition (C) moves
-pair density. Bodies carry clocks (step 23, P1 and P2), so a collision
+pair density. Unpaired worlds carry clocks (step 23, P1 and P2), so a collision
 of two aligned pairs needs a rule for four clocks. A pair whose positon
 is at $`x_+`$ and negaton at $`x_-`$ on row $`p`$ has misalignment
 $`\mu = \theta_+ - \theta_- + p(x_- - x_+)/\hbar`$ and grayness
@@ -821,9 +821,9 @@ kernel's own rate, and collisions at the kernel rate of Definition (C)
 in each realisation. Four seeds to $`t = 14`$, mean ± standard error.
 *Gray* is the mean $`\sin^2(\mu/2)`$ of the sea's pairs near the barrier
 at the end. *Lock* is the chord coherence
-$`\lvert\sum e^{i\mu^{(P)}}\rvert / n`$ over the chords about free bodies
+$`\lvert\sum e^{i\mu^{(P)}}\rvert / n`$ over the chords about unpaired worlds
 near the barrier. *Live reading* is the slope and correlation of the live
-reading, integrated along free bodies, against the mesh kernel (Q12(e)).
+reading, integrated along unpaired worlds, against the mesh kernel (Q12(e)).
 *Gray per collision* is the grayness made per collision.
 
 | $`\kappa`$ | realisation | gray | lock | live reading: slope | correlation | gray per collision |
@@ -854,7 +854,7 @@ Re-locking restores it, above the value without collisions at every
 $`\kappa`$ (0.70 against 0.40 with no dark catalysis), because each
 re-lock is itself a reset of the kind dark catalysis makes. The live
 reading follows: its slope is 0.53 against 0.13 at $`\kappa = 0`$, and
-at $`\kappa = 2`$ and 6 it is as good as without collisions. The bodies' observables are those of whole pairs (V8):
+at $`\kappa = 2`$ and 6 it is as good as without collisions. The unpaired worlds' observables are those of whole pairs (V8):
 the event and failure counts of the whole and relock runs agree bit for
 bit. The orientation of an exchange averages to zero within its error
 in every run, so nothing chiral is selected. The exchange identity of
@@ -936,9 +936,9 @@ at $`\nu = 1`$ and many seeds, is §5.1.
 
 *Addendum (October 2026), open item V-SP2.* Proposition V4 put the
 granularity in by hand, as Poisson emptiness on top of a mean field. Here
-nothing is averaged before the end. Bodies and sea pairs are points; a
+nothing is averaged before the end. Unpaired worlds and sea pairs are points; a
 world at the physical density starts from one positon sampled from
-$`W_0`$ ($`\nu = 1`$); each body fires at its per-parent rate; an event
+$`W_0`$ ($`\nu = 1`$); each unpaired world fires at its per-parent rate; an event
 is absorptive if a free negaton and a free positon sit in the apertures
 about $`p \pm t\xi_q`$, emissive if a pair sits in the aperture about the
 parent, and under (F) blocked otherwise; a positon and a negaton in one
@@ -950,7 +950,7 @@ $`\langle H \rangle`$.
 
 Each seed runs the world without the floor and the world with it. The
 children of an emission are placed at the parent, as in the mesh
-ledgers, so the bodies never depend on which pair was ionised, and the
+ledgers, so the unpaired worlds never depend on which pair was ionised, and the
 pair is drawn from a separate random stream: the two worlds coincide
 event for event until the first block, and their difference has a small
 variance.
@@ -962,8 +962,8 @@ with $`\kappa \approx 0.55`$ to 0.6, not $`e^{-\beta}`$: the apertures
 an emission finds hold nearly $`\beta`$ pairs on average, but are empty
 far more often than a Poisson sea of that mean would be, increasingly so
 with depth. (c) The observable departs as Proposition V4's mean field
-predicts where it is resolved. (d) The cause is body inflation: at
-$`\nu = 1`$ partners are scarce, a world inflates to tens of bodies, and
+predicts where it is resolved. (d) The cause is unpaired-world inflation: at
+$`\nu = 1`$ partners are scarce, a world inflates to tens of unpaired worlds, and
 by V2(ii) every one of them is sea debt drawn near its parent.*
 
 *Verification* (`src/demo_integer_sea.py`, Kaggle batch kernels from
@@ -992,7 +992,7 @@ $`0.92\,e^{-0.59\beta}`$ in the well; the local slopes on the summit
 under (S′) are 0.557, 0.549 and 0.544, so the law is clean over two
 decades. The (S) block used the seeds of the first (S′) block, and its
 unfloored worlds are the same worlds bit for bit, as Proposition Q1
-requires of bodies that never read the sea; their floored departures
+requires of unpaired worlds that never read the sea; their floored departures
 agree with that block's ($`-0.035`$, $`-0.013`$, $`-0.016`$, $`-0.008`$),
 so the $`2\sigma`$ value at $`\beta = 8`$ under (S) is that seed
 block's fluctuation, not the motion.
@@ -1004,7 +1004,7 @@ $`4\sigma`$ low, with no sea involved. Q-SP12 found the particle model's
 classical baseline offset from the mesh's on this coarse momentum grid,
 which is the likely cause; it is not checked here. The paired differences
 share the offset and cancel it. A world on the
-summit ends with 29.9 bodies (131.5 in the well) against a minimal
+summit ends with 29.9 unpaired worlds (131.5 in the well) against a minimal
 $`\lVert W \rVert_1`$ near 1.7, after 35.5 emissions, 9.2 absorptions
 and 11.8 contact recombinations: $`f \approx 0.21`$.
 
@@ -1034,7 +1034,7 @@ partners (Q9(c)), so mass action holds in mean. At the kernel's rate
 $`r_qB = \lvert K_q \rvert/2`$ at the pair's midpoint; uniform
 collisions join neighbouring rows at $`rB = 1`$. A transition and its
 reverse have equal rates, so a Poisson sea is invariant. Collisions draw
-on a random stream of their own, so the bodies, the initial sea and the
+on a random stream of their own, so the unpaired worlds, the initial sea and the
 unfloored worlds are §5.1's.
 
 **Proposition V13 (measured).** *(a) Collisions alone keep a Poisson sea
@@ -1086,7 +1086,7 @@ $`\beta = 1`$, 2 and 4, against $`-0.014`$, $`-0.014`$ and $`-0.041`$
 without, with standard errors 0.023 at $`\beta \le 2`$ and 0.046 at
 $`\beta = 4`$.
 
-(a) was checked with no bodies on twenty seas over 4000 random
+(a) was checked with no unpaired worlds on twenty seas over 4000 random
 apertures. At $`\beta = 1`$, after $`T = 8`$ at the kernel's rate, the
 mean is 1.005, the variance 1.08 and $`P(0) = 0.379`$, against 0.366
 for Poisson. At $`\beta = 4`$, $`P(0)`$ is 0.022 against 0.018, within
@@ -1098,16 +1098,16 @@ every row, per aperture. That count is $`0.956\beta`$ at $`\beta = 1`$
 and $`0.951\beta`$ at $`\beta = 2`$, while the aperture on the parent's
 row holds $`0.72\beta`$. Collisions move pairs between rows at fixed
 position, so they can bring an aperture up to its column, never above
-it. Body inflation drains the parent's own row, which a parent keeps
+it. Unpaired-world inflation drains the parent's own row, which a parent keeps
 returning to, and leaves the column nearly full.
 
 *The contact sink.* The same local runs without the contact sink, 1000
-worlds each, show what it does. A world ends with 54.4 bodies instead of
+worlds each, show what it does. A world ends with 54.4 unpaired worlds instead of
 31.5. Absorption takes over part of the sink's work, with 28.3
 absorptions a world instead of 9.9. Blocking at $`\beta = 1`$ rises from
 0.523 to 0.576 (0.512 to 0.557 with collisions). In both cases the
 sea's net debit per world is $`(N - 1)/2`$ exactly — 15.23 and 26.72 —
-because each emission makes two bodies and debits one pair, and each
+because each emission makes two unpaired worlds and debits one pair, and each
 absorption or recombination removes two and credits one. So the contact
 sink is not needed for the bookkeeping to close. It is needed to keep
 inflation down, and with it blocking. Its scale — one mesh cell here —
@@ -1116,7 +1116,7 @@ clocks happen to agree (Q-SP10; V-SP12).
 
 ---
 
-## 6. Proposition V5: two bodies
+## 6. Proposition V5: two particles
 
 **Proposition V5.** *Two particles on a line, $`H = P^2/2M + p^2/2\mu +
 V(r)`$, from a state $`W_0 = W_{\rm cm} \otimes W_{\rm rel}`$ with
@@ -1131,7 +1131,7 @@ $`B^2`$, is at most the relative one.*
 by V1 the centre of mass, which is free, makes none. The event rate, both
 absorptive caps and the contact sink are each homogeneous of degree one in
 the local populations, so on $`W_{\rm cm} \otimes W_{\rm rel}`$ every
-allocation is $`W_{\rm cm}`$ times the relative one. Bodies and pairs of
+allocation is $`W_{\rm cm}`$ times the relative one. Unpaired worlds and pairs of
 the centre of mass move freely under either (S) or (S′), so deficits made
 at $`(X, P)`$ are carried by the same flow as $`W_{\rm cm}`$. Pure states
 obey $`\lvert W \rvert \le B`$ (step 16 §2), so $`W_{\rm cm}/B \le 1`$.
@@ -1144,11 +1144,11 @@ relative coordinates. What V5 does not cover is the genuinely
 four-dimensional case: a non-quadratic external potential that couples the
 centre of mass to the relative motion, or a preparation entangled across
 them. There the demand on the sea is measured in §6.1, and step
-21's body inflation, which grows as a product over degrees of freedom
+21's unpaired-world inflation, which grows as a product over degrees of freedom
 (Corollary M10), would by V2(ii) be sea debt unless the ensemble is kept
 minimal.
 
-### 6.1 Proposition V7: two coupled bodies
+### 6.1 Proposition V7: two coupled particles
 
 *Addendum (October 2026), open item V-SP1.* Two particles on a line in
 step 24's Pöschl–Teller well, repelling through a soft Gaussian,
@@ -1175,7 +1175,7 @@ $`D = \Delta M_- - \Delta N_{\rm tr}/2`$, the same under (S) and (S′).
 (b) Proposition V3 holds in four dimensions: under (F), $`E`$ is the
 unfloored $`E`$ bit for bit if $`\beta \ge \lambda^*`$, measured against
 $`B^2`$, and differs from it otherwise. (c) Measured: in every
-realisation the coupled pair needs a deeper sea than one body in the
+realisation the coupled pair needs a deeper sea than one particle in the
 same well — $`\lambda^*`$ exceeds 1, the physical density, by $`t = 2`$
 under (S) and emissive (S′) and by $`t = 4`$ under absorptive (S′) — and
 it keeps climbing under (S′), as the one-dimensional long runs of §4 do.*
@@ -1253,11 +1253,11 @@ therefore: the four-dimensional sea obeys the same identities, its
 floor has the same sharp threshold, and the coupled problem needs a
 deeper sea than the one-body problem, under every realisation. V4's
 case against the physical density as a strict supply is stronger in two
-bodies than in one.
+particles than in one.
 
-![The depth the floor needs for two coupled bodies against one body in the same well (left), and the purity of one particle's state from the ledger, the mesh QLE and Schrödinger (right)](https://raw.githubusercontent.com/billpage/wpmw/output/figures/fourd_sea.png)
+![The depth the floor needs for two coupled particles against one particle in the same well (left), and the purity of one particle's state from the ledger, the mesh QLE and Schrödinger (right)](https://raw.githubusercontent.com/billpage/wpmw/output/figures/fourd_sea.png)
 
-### 6.2 Proposition V14: two coupled bodies with collisions
+### 6.2 Proposition V14: two coupled particles with collisions
 
 *Third addendum (October 2026).* §6.1's runs with Definition (C) in four
 dimensions. Collisions act at one joint position $`(x_1, x_2)`$ along the
@@ -1274,7 +1274,7 @@ to collide (§8.1).
 collisions bit for bit (V8). (b) At the kernel's rate, $`\lambda^*`$ is
 0.198 absorptive first and 0.540 emissive at $`t = 12`$, set by
 $`t = 2`$ to 8, against 1.859 and 3.982 without. The physical density
-suffices for two coupled bodies, as it does for one. (c) Uniform
+suffices for two coupled particles, as it does for one. (c) Uniform
 collisions hold the absorptive-first depth at 0.342. The emissive depth
 reaches 2.379 by $`t = 4`$, before they catch up, and the worst cell
 then refills to $`0.49\,B`$ by $`t = 12`$.*
@@ -1297,7 +1297,7 @@ Schrödinger (§6.1).
 
 So V7's case against the physical density as a strict supply is a case
 against (S′) unamended. With collisions at the kernel's rate, two
-coupled bodies need a fifth to a half of the physical density. A uniform
+coupled particles need a fifth to a half of the physical density. A uniform
 rate does not suffice: its emissive depth, 2.4, is set in the first four
 time units, while the events outrun it, as in the one-dimensional well
 at large reach (§4.4).
@@ -1349,7 +1349,7 @@ spectrally. Each is the positive part of $`E`$, kinked wherever $`E`$
 changes sign, so each rings, and its undershoots are negative densities.
 The allocation $`A = \min(D, {\rm cap}_A, {\rm cap}_B)`$ then goes
 negative where a partner field does: it "absorbs" a negative partner,
-which adds a pair of bodies and debits the sea with no event behind it.
+which adds a pair of unpaired worlds and debits the sea with no event behind it.
 This is S-SP7's negative-cap leakage, diagnosed in J-SP2 of the
 supplement, where its effect on $`f`$ was measured. Part F measures its
 effect on the sea, which matters here because §§4 and 5 read the sea's
@@ -1358,9 +1358,9 @@ worst cell.
 In a harmonic trap there are no events at all
 ($`\max\lvert K \rvert = 3\times10^{-13}`$). Over one period of the cat
 of §2, step 16's ledger nevertheless books 0.503 negative absorptions,
-the body count rises from 1.652 to 3.664, and the worst cell of the sea
+the unpaired-world count rises from 1.652 to 3.664, and the worst cell of the sea
 falls to $`0.581\,B`$. The minimal ledger, on the same run, keeps the sea
-at $`B`$ everywhere; its body count, $`\lVert E \rVert_1`$, moves by the
+at $`B`$ everywhere; its unpaired-world count, $`\lVert E \rVert_1`$, moves by the
 transport's 0.022.
 
 On Theorem S8's row (Eckart summit, $`\Delta t = 0.01`$, $`T = 6`$)
@@ -1421,7 +1421,7 @@ before the guard was added are not used.
 ## 9. Corrections
 
 - **Step 16** ([`sea_population_equilibrium.md`](sea_population_equilibrium.md)).
-  The worst-cell figures of Theorems S4 and S8, and the body counts of S8
+  The worst-cell figures of Theorems S4 and S8, and the unpaired-world counts of S8
   and S9, include sea debits booked from transport ringing (§8); results
   about $`E`$ stand. Not re-measured here; S-SP7 carries it.
 - **Step 23** ([`force_blind_sea.md`](force_blind_sea.md)). Q-SP2 is
@@ -1461,10 +1461,10 @@ before the guard was added are not used.
 
 ## 10. Open items
 
-- **V-SP1.** *Answered* by Proposition V7 (§6.1): two coupled bodies
+- **V-SP1.** *Answered* by Proposition V7 (§6.1): two coupled particles
   obey V2 and V3, and need a deeper sea than one, in every realisation.
 - **V-SP2.** *Answered* by Proposition V6 (§5.1): blocking falls as
-  $`0.9\,e^{-0.55\beta}`$, not $`e^{-\beta}`$, because of body
+  $`0.9\,e^{-0.55\beta}`$, not $`e^{-\beta}`$, because of unpaired-world
   inflation; the observable follows V4's mean field where resolved.
 - **V-SP3.** The regulators' laboratory values. Q9(c) fixes the aperture's
   area; until the reach is derived (Q-SP6), $`\varepsilon(\beta)`$ cannot
@@ -1479,7 +1479,7 @@ before the guard was added are not used.
 - **V-SP6.** The four-dimensional ledger past $`t = 5`$: a finer mesh
   (the $`48^4`$ run is a T4's limit at about 35 minutes a run), and the
   three families' shares of the worst cell's debit, which would say why
-  two bodies need more sea than one.
+  two particles need more sea than one.
 - **V-SP7.** The integer worlds' transmission on the Eckart summit is
   $`4\sigma`$ below the mesh QLE's with no floor (§5.1). Check it against
   Q-SP12's classical-baseline offset by running the worlds and
@@ -1506,7 +1506,7 @@ before the guard was added are not used.
   The emissive deviation keeps creeping under either law. Which law is
   the ontology's, and what fixes its constant, is still open.
 - **V-SP10.** Collisions in an integer sea. Proposition V6's blocking at
-  $`\nu = 1`$ comes from body inflation draining the apertures a parent
+  $`\nu = 1`$ comes from unpaired-world inflation draining the apertures a parent
   returns to. Do collisions between point pairs refill them, and how does
   blocking then fall with $`\beta`$? *Answered* by Proposition V13
   (§5.2): collisions keep a Poisson sea Poisson and refill a parent's row
@@ -1518,7 +1518,7 @@ before the guard was added are not used.
   convergence check, then $`8\pi`$; and whether the emissive depth at
   $`4\pi`$ stays at 0.79 under the kernel's rate.
 - **V-SP12.** The contact sink's scale. It binds a positon and a negaton
-  in one mesh cell. Without it a world inflates to twice the bodies and
+  in one mesh cell. Without it a world inflates to twice the unpaired worlds and
   blocks more (§5.2). Would a sink at the aperture's scale (Q9(c)) keep the
   worlds' mean and cut blocking? A sink that binds on contact makes gray
   pairs unless the clocks agree (Q-SP10), so how should its products'
