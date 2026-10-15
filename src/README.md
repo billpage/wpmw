@@ -1220,6 +1220,10 @@ see that directory's README for the ladder itself.
   `7e-15`, B1's defect 0.2; B1 on the `hbar/2` reference, 0.18 from QM);
   Part R varies the reach; Part T the Eckart collision (B1 transmits 0.517,
   W 0.549 at reach `8 pi`; exact 0.5120 and 0.5441; about 18 minutes).
+  Part G (addendum) checks with SymPy that world clocks suffice: the
+  action–force no-go for world-particle clocks, separable potentials,
+  locality from chords, permutation symmetry, and the generator as the
+  world-clock misalignment rate.
   Part C runs signed worlds with integrate-and-fire banks, one per world or
   one per particle, with `--seeds`, `--nu`, `--Tc`, `--Tb1` for a sweep (one
   CSV row per variant, seed and time); it is the part run on Kaggle.

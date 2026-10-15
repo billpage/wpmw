@@ -214,8 +214,10 @@ along a world's worldline at the Lagrangian rate, $`\dot\theta = \mathcal L/\hba
 its absolute value is a gauge, and what is physical is the misalignment of two
 clocks carried to a common point by a [lever](#lever). It belongs to the
 world, not to a [world-particle](#world-particle): an interaction's energy is the
-configuration's, and world-particle clocks either count it twice or each carry only a share
-(Proposition WC1). The **counting clock** of Proposition Q11 is an
+configuration's, and world-particle clocks either count it twice (reading the
+Newtonian force) or each carry only a share (reading a fraction of it); no
+shares give both (Proposition WC1(d)). A world clock gives both, and with the
+world's banks it is all the generator reads (Proposition WC8). The **counting clock** of Proposition Q11 is an
 [integrate-and-fire](#integrate-and-fire) integrator: it counts, it does not
 wind. The two are linked through chords: phase clocks, then misalignments
 across chords, then a reader's interference sum, then a rate, then a count.
@@ -616,6 +618,11 @@ no force and does no work.
 - **Defined:** [`interworld_coupling.md`](analysis/interworld_coupling.md).
 - **Not to confuse with:** the interworld potential of many-interacting-worlds
   models, which is what makes a free packet spread there. This one does not.
+- **In the world ontology:** the chord is the first of the relations between
+  worlds that carry all the quantum dynamics, with readings, emission,
+  absorption, pair collisions, dark catalysis and admissibility
+  ([`world_clocks.md` §8.1](analysis/world_clocks.md#81-addendum-worlds-suffice),
+  Definition WC7).
 
 ### ionisation
 

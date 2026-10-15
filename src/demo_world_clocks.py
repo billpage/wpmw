@@ -38,10 +38,17 @@ T  The Eckart pair collision of step 21: transmission under W and B1
 C  Particle runs with Proposition Q11's integrator banks: one bank per world
    (W) against one bank per particle (B1), emission plus a contact sink.
    ``--seeds N`` runs a sweep, one CSV row per (variant, seed).
+G  Exact (SymPy), addendum of October 2026: worlds suffice.  G1 the
+   action-force no-go for world-particle clocks (WC1(d)); G2 separable
+   potentials, where world-particle clocks are a redundant decomposition of
+   the world clock; G3 locality from the geometry of chords (Corollary
+   WC8.1), for three particles with one-, two- and three-body terms; G4 the
+   permutation of identical particles as a symmetry of the generator
+   (WC-SP7); G5 the generator as the world-clock misalignment rate.
 F  The two figures, from the JSON that M, H, T and C save (every Part C
    file present is overlaid; --fig-nu picks the one panel (e) shows).
 
-Run:  WPMW_OUTPUT=... PYTHONPATH=src python3 -u src/demo_world_clocks.py [A K H M R T C F]
+Run:  WPMW_OUTPUT=... PYTHONPATH=src python3 -u src/demo_world_clocks.py [A K H M R T C G F]
 Sweep (Kaggle):  ... demo_world_clocks.py C --nu 100000 --seeds 8 --Tc 4 --Tb1 1 --workers 4
 """
 import argparse
@@ -1011,12 +1018,96 @@ def schematic(plt):
     plt.close(fig)
 
 
+
+# ======================================================================
+# Part G -- worlds suffice (addendum, October 2026)
+# ======================================================================
+def part_G():
+    import itertools
+    import sympy as sp
+
+    rule("Part G. Exact: world clocks suffice; world-particle phases are redundant or wrong")
+    out = {}
+    # G1 -- the action-force no-go (WC1(d)): two world-particles, pair potential v(r)
+    T1, T2, vr, a1, a2, hb, y1 = sp.symbols("T1 T2 v alpha1 alpha2 hbar y1", real=True)
+    c = sp.symbols("c0:8", real=True)                     # c_k = v^(k)(r)
+    vt = lambda z: sum(c[k] * z**k / sp.factorial(k) for k in range(8))
+    action_gap = sp.simplify((T1 - a1 * vr) + (T2 - a2 * vr) - (T1 + T2 - vr))
+    # world-particle 1's clocks across its own chord x1 -> x1 +- y1 (equal momenta):
+    # misalignment rate -alpha1 [v(r+y1) - v(r-y1)] / hbar; the force read is
+    # -(hbar/2) d(rate)/dy1 at y1 = 0
+    rate1 = -a1 * (vt(y1) - vt(-y1)) / hb
+    force1 = sp.simplify(hb / 2 * sp.diff(rate1, y1).subs(y1, 0))
+    sol = sp.solve([sp.Eq(a1 + a2, 1), sp.Eq(a1, 1), sp.Eq(a2, 1)], [a1, a2], dict=True)
+    print(f"  G1  sum of world-particle Lagrangians minus the world's: {action_gap}")
+    print(f"      force read by world-particle 1 from its own clock: {force1}   (Newton: -c1)")
+    print(f"      shares with both (action: a1 + a2 = 1; forces: a1 = a2 = 1): {sol}")
+    out["G1"] = dict(action_gap=str(action_gap), force=str(force1), solutions=str(sol))
+
+    # three particles on a line; chords y_i; the world's misalignment rate
+    x = sp.symbols("x1:4", real=True)
+    y = sp.symbols("y1:4", real=True)
+    F = {k: sp.Function(k) for k in ("V1", "V2", "V3", "v12", "v13", "v23", "w123")}
+
+    def delta(V, yy):                       # V(X + Y) - V(X - Y)
+        return sp.expand(V([xi + yi for xi, yi in zip(x, yy)]) - V([xi - yi for xi, yi in zip(x, yy)]))
+
+    # G2 -- separable: world misalignment = sum of world-particle misalignments
+    Vsep = lambda q: F["V1"](q[0]) + F["V2"](q[1]) + F["V3"](q[2])
+    parts = sum(delta(lambda q, i=i: [F["V1"], F["V2"], F["V3"]][i](q[i]), y) for i in range(3))
+    g2 = sp.simplify(delta(Vsep, y) - parts)
+    print(f"  G2  separable V: world chord misalignment minus the sum of world-particle ones: {g2}")
+    out["G2"] = str(g2)
+
+    # G3 -- locality from chords: a chord on particle 1 alone reads only the terms with x1
+    Vfull = lambda q: (F["V1"](q[0]) + F["V2"](q[1]) + F["V3"](q[2]) + F["v12"](q[0] - q[1])
+                       + F["v13"](q[0] - q[2]) + F["v23"](q[1] - q[2]) + F["w123"](q[0], q[1], q[2]))
+    d1 = delta(Vfull, (y[0], 0, 0))
+    present = sorted({f.func.__name__ for f in d1.atoms(sp.Function)})
+    d12 = delta(Vfull, (y[0], y[1], 0))
+    present12 = sorted({f.func.__name__ for f in d12.atoms(sp.Function)})
+    print(f"  G3  chord on particle 1 only: terms read = {present}")
+    print(f"      chord on particles 1 and 2: terms read = {present12}")
+    out["G3"] = dict(chord1=present, chord12=present12)
+
+    # G4 -- identical particles: a permutation of (x_i, sigma_i) together is a symmetry
+    # of the compensated symbol when V is symmetric (one-body f, even pair g, symmetric h)
+    f_, g_ = sp.Function("f"), sp.Function("g")
+    Vsym = lambda q: (sum(f_(qi) for qi in q)
+                      + sum(g_((q[i] - q[j]) ** 2) for i, j in ((0, 1), (0, 2), (1, 2))))
+    S0 = delta(Vsym, y)
+    ok = all(sp.simplify(S0.subs(dict(zip(x + y, [x[i] for i in perm] + [y[i] for i in perm])),
+                                 simultaneous=True) - S0) == 0
+             for perm in itertools.permutations(range(3)))
+    print(f"  G4  symmetric V: compensated symbol invariant under all 6 joint permutations: {ok}")
+    out["G4"] = bool(ok)
+
+    # G5 -- the generator is the world-clock misalignment rate: two worlds at X +- Y on one
+    # momentum row, clocks by P1, misalignment carried by the lever P (P2); the kinetic
+    # windings and the lever's drift cancel, and i*hbar*d(mu)/dt is -[V(X+Y) - V(X-Y)]
+    p = sp.symbols("p1:4", real=True)
+    m = sp.symbols("m1:4", positive=True)
+    t = sp.symbols("t", real=True)
+    Xs = [sp.Function(f"X{i}")(t) for i in range(1, 4)]
+    L = lambda q: sum(pi**2 / (2 * mi) for pi, mi in zip(p, m)) - Vfull(q)
+    plus = [Xi + yi for Xi, yi in zip(Xs, y)]
+    minus = [Xi - yi for Xi, yi in zip(Xs, y)]
+    # d/dt of theta(+) - theta(-) + P.(x(-) - x(+))/hbar: both worlds move at p/m, so the
+    # lever term's derivative is P.(p/m - p/m) = 0 for any lever P
+    P = sp.symbols("P1:4", real=True)
+    lever_rate = sum(Pi * (pi / mi - pi / mi) for Pi, pi, mi in zip(P, p, m)) / hb
+    mudot = (L(plus) - L(minus)) / hb + lever_rate
+    g5 = sp.simplify(sp.expand(mudot * hb + (Vfull(plus) - Vfull(minus))))
+    print(f"  G5  hbar dmu/dt + [V(X+Y) - V(X-Y)] for two worlds on one row: {g5}")
+    out["G5"] = str(g5)
+    return out
+
 # ======================================================================
 # main
 # ======================================================================
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[1])
-    ap.add_argument("parts", nargs="*", default=["A", "K", "H", "M", "R", "T", "F"])
+    ap.add_argument("parts", nargs="*", default=["A", "K", "G", "H", "M", "R", "T", "F"])
     ap.add_argument("--T", type=float, default=4.0, help="mesh run length (Part M)")
     ap.add_argument("--dt", type=float, default=0.01)
     ap.add_argument("--seeds", type=int, default=1, help="seeds per variant (Part C)")
@@ -1032,6 +1123,8 @@ def main():
         dump(part_A(), "world_clocks_A.json")
     if "K" in parts:
         dump(part_K(), "world_clocks_K.json")
+    if "G" in parts:
+        dump(part_G(), "world_clocks_G.json")
     if "M" in parts or "H" in parts:
         times = [round(0.05 * i, 6) for i in range(int(round(args.T / 0.05)) + 1)]
         h = part_H(times)

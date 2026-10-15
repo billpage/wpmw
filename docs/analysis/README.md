@@ -60,16 +60,29 @@ bottom up. Each note states in its §0 what it inherits and what it retracts.
   reach `8 pi`, exact 0.5120 and 0.5441. **Proposition WC4**: for pair
   potentials a world carries one bank per bond, `N(N - 1)/2` for `N` particles
   like the baselines of an array, and none per world-particle; Q11's bank per
-  unpaired world is the one-particle case. **Proposition WC5**, ensemble runs with
-  integrate-and-fire banks on Kaggle: the world bank never moves a daughter
-  off its parent's centre-of-mass momentum, the world-particle banks always
-  do; each realises its own generator up to the contact sink's bias (B1's
-  covariance of `P^2` with `v` is -0.472 ± 0.003 against -0.501 on the mesh at
-  `t = 0.25`, W's 0.002 ± 0.001 against 0); at `nu = 1e5` the world-particle
-  banks carry 2.8 times the worlds and 36 times the unsigned `<P^2>` by `t =
-  1`, heating the ensemble's centre of mass while the signed marginal stays
-  exact. A reader is a world, reading the chords of its own configuration
-  along the directions in which its potential has terms.
+  unpaired world is the one-particle case. **Proposition WC5**, ensemble runs
+  with integrate-and-fire banks on Kaggle: the world bank never moves a
+  daughter off its parent's centre-of-mass momentum, the world-particle banks
+  always do; each realises its own generator up to the contact sink's bias
+  (B1's covariance of `P^2` with `v` is -0.472 ± 0.003 against -0.501 on the
+  mesh at `t = 0.25`, W's 0.002 ± 0.001 against 0); at `nu = 1e5` the
+  world-particle banks carry 2.8 times the worlds and 36 times the unsigned
+  `<P^2>` by `t = 1`, heating the ensemble's centre of mass while the signed
+  marginal stays exact. A reader is a world, reading the chords of its own
+  configuration along the directions in which its potential has terms.
+  **Addendum (October 2026).** **Definition WC7** states the ontology as
+  worlds alone — each carrying its point, sign, clock and banks, with
+  world-particles, centre of mass and relative coordinates derived from the
+  point — and a list of relations between worlds that carries all the quantum
+  dynamics: chords, readings, emission, absorption, pair collisions, dark
+  catalysis and admissibility. **Proposition WC8**: the generator reads only
+  world-clock misalignments across chords, so a world-particle phase is either
+  redundant (separable potentials) or wrong (shared terms, where WC1(d) shows
+  no shares give both the action and the forces). **Corollary WC8.1**: a chord
+  that moves only some particles reads only the terms of the potential that
+  act on them, so locality comes from the geometry of chords, not from phases
+  attached to particles. Identical particles and spin are left as relations
+  between worlds still to be specified (WC-SP7, WC-SP8).
 - **24.** **[`sea_depletion.md`](sea_depletion.md)** \
   Empty space is not empty here: a cell that holds no `W` still holds aligned
   pairs at density `B`. Could the sea's depletion or excess ever be seen? By
