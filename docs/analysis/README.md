@@ -83,6 +83,28 @@ bottom up. Each note states in its §0 what it inherits and what it retracts.
   act on them, so locality comes from the geometry of chords, not from phases
   attached to particles. Identical particles and spin are left as relations
   between worlds still to be specified (WC-SP7, WC-SP8).
+  **Second addendum (October 2026): three and four particles.** Particles in
+  a harmonic trap are quenched by a pair interaction. **Proposition WC9**: the
+  compensated residual is a sum over bonds of one two-variable function, so
+  every bond's bank reads one kernel table, and a quadratic interaction (the
+  Moshinsky model) entangles with no events at all; worlds reproduce its
+  exact purity to `3e-3` for three and four particles. For a Gaussian pair
+  interaction, the bond-sum generator on a 4D Jacobi mesh converges to the
+  exact three-particle Schrödinger dynamics as `1/y_max^2` (purity error at
+  `t = 3`: -0.117, -0.039, -0.009 at reach `2 pi`, `4 pi`, `8 pi`). The world
+  ensemble follows it early and falls below it late. **Proposition WC10**: the
+  contact sink keeps each cell's net weight but not the shape of `W` inside
+  it, so it removes interference finer than a cell and decoheres the
+  ensemble. The global purity at a fixed resolution falls below the mesh's,
+  and the one-body purity falls toward classical streaming. The deficit does
+  not depend on the time step or on how often the sink acts, does not vanish
+  as `nu` grows at a fixed cell, and in six relative dimensions (four
+  particles) leaves only 15 per cent of the quantum correction at `t = 1`.
+  The note compares the results with the exact Moshinsky solution, the grid
+  TDSE and MCTDH(B), and with the signed-particle Wigner methods of Sellier
+  and Dimov and of Shao and Xiong, whose histogram annihilation has the same
+  limit. It closes with what an `N`-particle algorithm specification needs;
+  population control is the part still open (WC-SP9 to WC-SP12).
 - **24.** **[`sea_depletion.md`](sea_depletion.md)** \
   Empty space is not empty here: a cell that holds no `W` still holds aligned
   pairs at density `B`. Could the sea's depletion or excess ever be seen? By

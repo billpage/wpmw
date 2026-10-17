@@ -1238,6 +1238,32 @@ see that directory's README for the ladder itself.
 
   ![VLBI against WPMW](https://raw.githubusercontent.com/billpage/wpmw/output/figures/world_clocks_vlbi.png)
 
+- `demo_three_worlds.py` — companion to `docs/analysis/world_clocks.md` §8.2
+  (step 25, second addendum): three and four particles in many worlds. Unit
+  masses on a line in a harmonic trap, quenched by a pair interaction: problem
+  Q (Moshinsky, `k = 2`, exact) and problem G (Gaussian, `g = 2`, `s = 0.7`).
+  Part S checks that the residual is a sum over bonds (Proposition WC9); Part K
+  gives the bond kernel and its rate against the reach and the width; Part E
+  is the exact reference, a grid TDSE in particle coordinates (`64^3`, `96^3`;
+  `40^4`, `48^4` with `--N 4`) with purity by SVD, plus classical streaming;
+  Part Q is the Moshinsky quench (covariance flow, TDSE, worlds with no
+  events); Part M runs the bond-sum generator on the 4D Jacobi relative mesh
+  at several reaches (`--mesh-reach`); Part W runs the worlds, one
+  integrate-and-fire bank per bond, emission and the contact sink
+  (`--reach --cell --nu --seeds --T --dt --sink-every --levels --N`); Part X
+  tabulates worlds minus mesh for every saved run, with the share `q` of the
+  quantum correction kept and the global purity at resolution 0.25
+  (Proposition WC10); Part F draws the figure. Parts M at `8 pi` and W at
+  `nu = 1e6` take about half an hour each.
+
+  ![Three particles in many worlds](https://raw.githubusercontent.com/billpage/wpmw/output/figures/three_worlds.png)
+
+  (a) One-body purity, (b) pair energy: exact, classical, the generator on the
+  mesh at three reaches, worlds; (c) global purity at resolution 0.25, mesh
+  against worlds; (d) the Moshinsky quench for three and four particles, no
+  events; (e) worlds minus mesh against the sink cell at `t = 3`; (f) four
+  particles.
+
 - `demo_signed_local_kernel.py` — exact (SymPy) and spectral companion to
   `docs/supplement/poisson_kicks_and_pair_branching.md`, Parts A–E.  A: the
   Kramers–Moyal targets `M_{2s+1} = (-1)^{s+1} (hbar/2)^{2s} V^{(2s+1)}`,

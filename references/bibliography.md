@@ -684,3 +684,52 @@ is the Fourier transform of what the pairs record.
   Synthesis in Radio Astronomy*, 3rd ed. Springer (2017), open access. VLBI,
   correlators, delay and fringe-rate models, closure relations.
   https://doi.org/10.1007/978-3-319-44431-4
+
+## Few-body benchmarks and signed-particle population control (step 25 §8.2)
+
+The test problems and comparators of `docs/analysis/world_clocks.md` §8.2:
+an exactly solvable entangling model, the regularised contact interaction of
+few-boson studies, the standard many-body wave-function method, and the
+signed-particle Wigner methods whose annihilation step faces the same
+resolution limit as the contact sink.
+
+- Moshinsky, M. — "How good is the Hartree–Fock approximation." *Am. J.
+  Phys.* **36**, 52 (1968). Harmonically coupled particles in a harmonic
+  trap; problem Q. https://doi.org/10.1119/1.1974410
+- Bouvrie, P. A.; Majtey, A. P.; Plastino, A. R.; Sánchez-Moreno, P.;
+  Dehesa, J. S. — "Quantum entanglement in exactly soluble atomic models:
+  the Moshinsky model with three electrons, and with two electrons in a
+  uniform magnetic field." *Eur. Phys. J. D* **66**, 15 (2012).
+  https://epjd.epj.org/articles/epjd/abs/2012/01/d110417/d110417.html
+- Zöllner, S.; Meyer, H.-D.; Schmelcher, P. — "Ultracold few-boson systems in
+  a double-well trap." *Phys. Rev. A* **74**, 053612 (2006).
+  https://doi.org/10.1103/PhysRevA.74.053612
+- Zöllner, S.; Meyer, H.-D.; Schmelcher, P. — "Few-boson dynamics in double
+  wells: from single-atom to correlated pair tunneling." *Phys. Rev. Lett.*
+  **100**, 040401 (2008). The contact interaction mollified to a Gaussian of
+  width 0.05; problem G is the same form at width 0.7.
+  https://arxiv.org/abs/0709.3163
+- Beck, M. H.; Jäckle, A.; Worth, G. A.; Meyer, H.-D. — "The
+  multiconfiguration time-dependent Hartree (MCTDH) method." *Phys. Rep.*
+  **324**, 1 (2000). https://doi.org/10.1016/S0370-1573(99)00047-2
+- Alon, O. E.; Streltsov, A. I.; Cederbaum, L. S. — "Multiconfigurational
+  time-dependent Hartree method for bosons." *Phys. Rev. A* **77**, 033613
+  (2008). https://doi.org/10.1103/PhysRevA.77.033613
+- McGuire, J. B. — "Study of exactly soluble one-dimensional N-body
+  problems." *J. Math. Phys.* **5**, 622 (1964). https://doi.org/10.1063/1.1704156
+- Calogero, F. — "Ground state of a one-dimensional N-body system." *J. Math.
+  Phys.* **10**, 2197 (1969). https://doi.org/10.1063/1.1664821
+- Sellier, J. M.; Dimov, I. — "The many-body Wigner Monte Carlo method for
+  time-dependent ab-initio quantum simulations." *J. Comput. Phys.* **273**,
+  589 (2014). Signed particles for several interacting particles, with
+  annihilation on a phase-space grid.
+- Shao, S.; Xiong, Y. — "A branching random walk method for many-body Wigner
+  quantum dynamics." *Numer. Math. Theor. Meth. Appl.* **12**, 21 (2019).
+  arXiv:1603.00159. https://arxiv.org/abs/1603.00159
+- Xiong, Y.; Shao, S. — "The Wigner branching random walk: efficient
+  implementation and performance evaluation." *Commun. Comput. Phys.* **25**,
+  871 (2019). Resampling by annihilation on a uniform histogram: a
+  deterministic error bounded by a power of the bin diameter (Theorem 4.1),
+  about ten particles per bin needed, a four-dimensional helium-like test
+  with 10^8 bins and more than 10^9 particles.
+  https://www.global-sci.org/intro/article_detail/cicp/12832.html

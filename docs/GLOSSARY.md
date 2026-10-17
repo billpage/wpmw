@@ -171,6 +171,10 @@ an array of $`N`$ stations has $`N(N-1)/2`$ baselines.
 
 - **Defined:** [`world_clocks.md` §5.4](analysis/world_clocks.md#54-proposition-wc4-banks-live-on-bonds),
   Proposition WC4.
+- **For N particles:** all the bonds of identical particles read one kernel
+  table, and a bond event moves its two momenta by $`\pm\xi_q`$, $`\mp\xi_q`$
+  ([`world_clocks.md` §8.2](analysis/world_clocks.md#82-addendum-three-and-four-particles-in-many-worlds),
+  Proposition WC9).
 - **Not to confuse with:** a bound state, or the withdrawn *bound pair*; a bond
   is a term of the potential, not a binding.
 
@@ -301,6 +305,13 @@ part of the postulates.
   absorptive realisation of one residual event at its parent's row
   ([recombination](#recombination)). Whether the sink makes
   [gray pairs](#gray-pair) when the clocks disagree is open (Q-SP10).
+- **What it costs in accuracy:** it conserves each cell's net weight but not
+  the shape of $`W`$ inside a cell, so it removes interference finer than a
+  cell and decoheres the ensemble: with three particles the one-body purity
+  falls toward classical streaming and the deficit has a nonzero limit as
+  $`\nu`$ grows at a fixed cell
+  ([`world_clocks.md` §8.2](analysis/world_clocks.md#82-addendum-three-and-four-particles-in-many-worlds),
+  Proposition WC10; step 21's M9).
 
 ### coset invariant
 

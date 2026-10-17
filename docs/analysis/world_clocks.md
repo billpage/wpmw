@@ -1,11 +1,12 @@
 # Worlds, particles and clocks: where a reading lives
 
-> Is the reader — its lever, chords and bank of integrators — a property of a particle, or a relation between worlds that a particle inherits? With two particles and a pair potential the question has an answer. **Definition WC0** fixes the words, for `N` particles in three dimensions: a *world* is a signed point of the whole configuration's phase space `R^6N` with one clock; a *world-particle* is one particle as it appears in one world, with no sign, clock or bank of its own; a *particle* is the identity that recurs in every world, whose only state is the marginal of the signed ensemble; a *positon* or *negaton* is a world of sign +1 or -1, and an *unpaired world* is one that is not half of an aligned pair. **Proposition WC6** gives a world's history under (S′) with persistent identity: worlds and their signs are conserved, every world-particle moves on Newtonian arcs while its world is unpaired and on inertial arcs while it is dark, momenta kink only at events and only along a bond, the parent of an event never kinks, and all worlds share one time. Two things are called a clock: the phase clock of P1, which winds at the Lagrangian rate and is a gauge except in misalignments across chords, and Q11's counting clock, an integrate-and-fire counter; they are linked through chords, so the counter is the accumulator of a reading, located where a chord's midpoint is. **Proposition WC1**: the phase clock belongs to the world — world-particle clocks count an interaction twice or each carry a share of it, and clocks split along the Lagrangian's sectors (centre of mass, relative motion), not along particles. Unlike Poirier's labelled trajectories or Hall, Deckert and Wiseman's sorted worlds, WPMW asks of the set of worlds only midpoints and difference vectors, plus a phase per world; the VLBI analogy (stations with their own clocks, information only on baselines, a correlator per pair, closure phases) is set out term by term. **Theorem WC2**: reading the joint chord (W) and reading each world-particle's own chord with its clock carrying the whole interaction (B1) agree only at linear order; exactly and to all orders, B1's relative motion is the QLE at `hbar/2`, and B1 adds a coupling `3 d_P^2 d_pr` between centre of mass and relative motion that QM lacks; splitting the interaction between the clocks (B2) halves both and reads half the force. **Corollary WC3**, measured on a `(P, r, p_r)` mesh from a product state QM keeps stationary and separable: W stays separable to `7e-15` while B1's defect is 0.2 by `t = 0.5`; B1 follows the exact `hbar/2` von Neumann reference within the mesh's error and sits 0.17 to 0.18 from QM at every reach; in the Eckart pair collision B1 transmits 0.517 against W's 0.549 at reach `8 pi`, exact 0.5120 and 0.5441. **Proposition WC4**: for pair potentials a world carries one bank per bond, `N(N - 1)/2` for `N` particles like the baselines of an array, and none per world-particle; Q11's bank per unpaired world is the one-particle case. **Proposition WC5**, ensemble runs with integrate-and-fire banks on Kaggle: the world bank never moves a daughter off its parent's centre-of-mass momentum, the world-particle banks always do; each realises its own generator up to the contact sink's bias (B1's covariance of `P^2` with `v` is -0.472 ± 0.003 against -0.501 on the mesh at `t = 0.25`, W's 0.002 ± 0.001 against 0); at `nu = 1e5` the world-particle banks carry 2.8 times the worlds and 36 times the unsigned `<P^2>` by `t = 1`, heating the ensemble's centre of mass while the signed marginal stays exact. A reader is a world, reading the chords of its own configuration along the directions in which its potential has terms. **Addendum (October 2026).** **Definition WC7** states the ontology as worlds alone — each carrying its point, sign, clock and banks, with world-particles, centre of mass and relative coordinates derived from the point — and a list of relations between worlds that carries all the quantum dynamics: chords, readings, emission, absorption, pair collisions, dark catalysis and admissibility. **Proposition WC8**: the generator reads only world-clock misalignments across chords, so a world-particle phase is either redundant (separable potentials) or wrong (shared terms, where WC1(d) shows no shares give both the action and the forces). **Corollary WC8.1**: a chord that moves only some particles reads only the terms of the potential that act on them, so locality comes from the geometry of chords, not from phases attached to particles. Identical particles and spin are left as relations between worlds still to be specified (WC-SP7, WC-SP8).
+> Is the reader — its lever, chords and bank of integrators — a property of a particle, or a relation between worlds that a particle inherits? With two particles and a pair potential the question has an answer. **Definition WC0** fixes the words, for `N` particles in three dimensions: a *world* is a signed point of the whole configuration's phase space `R^6N` with one clock; a *world-particle* is one particle as it appears in one world, with no sign, clock or bank of its own; a *particle* is the identity that recurs in every world, whose only state is the marginal of the signed ensemble; a *positon* or *negaton* is a world of sign +1 or -1, and an *unpaired world* is one that is not half of an aligned pair. **Proposition WC6** gives a world's history under (S′) with persistent identity: worlds and their signs are conserved, every world-particle moves on Newtonian arcs while its world is unpaired and on inertial arcs while it is dark, momenta kink only at events and only along a bond, the parent of an event never kinks, and all worlds share one time. Two things are called a clock: the phase clock of P1, which winds at the Lagrangian rate and is a gauge except in misalignments across chords, and Q11's counting clock, an integrate-and-fire counter; they are linked through chords, so the counter is the accumulator of a reading, located where a chord's midpoint is. **Proposition WC1**: the phase clock belongs to the world — world-particle clocks count an interaction twice or each carry a share of it, and clocks split along the Lagrangian's sectors (centre of mass, relative motion), not along particles. Unlike Poirier's labelled trajectories or Hall, Deckert and Wiseman's sorted worlds, WPMW asks of the set of worlds only midpoints and difference vectors, plus a phase per world; the VLBI analogy (stations with their own clocks, information only on baselines, a correlator per pair, closure phases) is set out term by term. **Theorem WC2**: reading the joint chord (W) and reading each world-particle's own chord with its clock carrying the whole interaction (B1) agree only at linear order; exactly and to all orders, B1's relative motion is the QLE at `hbar/2`, and B1 adds a coupling `3 d_P^2 d_pr` between centre of mass and relative motion that QM lacks; splitting the interaction between the clocks (B2) halves both and reads half the force. **Corollary WC3**, measured on a `(P, r, p_r)` mesh from a product state QM keeps stationary and separable: W stays separable to `7e-15` while B1's defect is 0.2 by `t = 0.5`; B1 follows the exact `hbar/2` von Neumann reference within the mesh's error and sits 0.17 to 0.18 from QM at every reach; in the Eckart pair collision B1 transmits 0.517 against W's 0.549 at reach `8 pi`, exact 0.5120 and 0.5441. **Proposition WC4**: for pair potentials a world carries one bank per bond, `N(N - 1)/2` for `N` particles like the baselines of an array, and none per world-particle; Q11's bank per unpaired world is the one-particle case. **Proposition WC5**, ensemble runs with integrate-and-fire banks on Kaggle: the world bank never moves a daughter off its parent's centre-of-mass momentum, the world-particle banks always do; each realises its own generator up to the contact sink's bias (B1's covariance of `P^2` with `v` is -0.472 ± 0.003 against -0.501 on the mesh at `t = 0.25`, W's 0.002 ± 0.001 against 0); at `nu = 1e5` the world-particle banks carry 2.8 times the worlds and 36 times the unsigned `<P^2>` by `t = 1`, heating the ensemble's centre of mass while the signed marginal stays exact. A reader is a world, reading the chords of its own configuration along the directions in which its potential has terms. **Addendum (October 2026).** **Definition WC7** states the ontology as worlds alone — each carrying its point, sign, clock and banks, with world-particles, centre of mass and relative coordinates derived from the point — and a list of relations between worlds that carries all the quantum dynamics: chords, readings, emission, absorption, pair collisions, dark catalysis and admissibility. **Proposition WC8**: the generator reads only world-clock misalignments across chords, so a world-particle phase is either redundant (separable potentials) or wrong (shared terms, where WC1(d) shows no shares give both the action and the forces). **Corollary WC8.1**: a chord that moves only some particles reads only the terms of the potential that act on them, so locality comes from the geometry of chords, not from phases attached to particles. Identical particles and spin are left as relations between worlds still to be specified (WC-SP7, WC-SP8). **Second addendum (October 2026): three and four particles.** **Proposition WC9**: for particles in a harmonic trap with a pair potential the compensated residual is a sum over bonds of one two-variable function, so every bond reads one kernel table, and a quadratic interaction (the Moshinsky model) entangles with no events at all, which worlds reproduce to `3e-3`. For a Gaussian interaction the bond-sum generator on a 4D Jacobi mesh converges to the exact three-particle Schrödinger dynamics as `1/y_max^2`. The world ensemble follows it early and falls below it late. **Proposition WC10**: the contact sink keeps each cell's net weight but not the shape of `W` inside a cell, so it removes interference finer than a cell and decoheres the ensemble: the global purity at a fixed resolution drops below the mesh's, and the one-body purity falls toward classical streaming. The deficit has a nonzero limit as `nu` grows at a fixed cell, and with four particles (six relative dimensions) little of the quantum correction survives. The note compares the results with the exact Moshinsky solution, the grid TDSE and MCTDH(B), and the signed-particle Wigner methods, and lists what an `N`-particle specification needs; population control is the part still open.
 
 *Ladder abstract — see the [full list](README.md#the-ladder).*
 
 **Status.** Analysis note, step 25 of the ladder. Companion demo:
-`src/demo_world_clocks.py` (Parts A, K, H, M, R, T, C, F). Prompted by a
+`src/demo_world_clocks.py` (Parts A, K, H, M, R, T, C, F); for the second
+addendum (§8.2), `src/demo_three_worlds.py`. Prompted by a
 question of October 2026: the reader, its integrators and its chords are a
 lot of ontology to ask of a *particle*; are they better understood as a
 relation between *worlds*, which a particle inherits from its world? The
@@ -1020,6 +1021,352 @@ is a relation between worlds, but none is worked out here.
   and not a numerical parameter. Its cost has been measured (V7, V14, Q12)
   but not fixed (V-SP3, Q-SP13).
 
+### 8.2 Addendum: three and four particles in many worlds
+
+*Second addendum, October 2026.* Sections 5 to 7 tested the world ontology
+with two particles, where a pair potential has one bond and the interaction
+reads one relative coordinate. This section asks whether Definition WC7 and
+Proposition WC8 are enough for three or more particles, where every world
+carries several banks and the bonds share particles; what the worlds do with
+entanglement; and how the result compares with three-particle problems whose
+answers are known. Companion demo: `src/demo_three_worlds.py` (Parts S, K, E,
+Q, M, W, X, F).
+
+**Setting.** $`N`$ particles of unit mass on a line, $`\hbar = 1`$, in a
+harmonic trap of unit frequency, every pair coupled by the same potential
+$`v`$:
+
+```math
+V(\mathbf x) = \sum_{i=1}^{N}\tfrac12 x_i^2 + \sum_{i<j} v(x_i - x_j).
+```
+
+At $`t = 0`$ the state is the product of trap ground states, the ground state
+for $`v = 0`$, and the interaction is switched on (a quench). One dimension
+per particle keeps the references exact; the structure below holds in three
+dimensions (WC8.1). Two pair potentials:
+
+- **Q**, $`v(r) = \tfrac12 k r^2`$ with $`k = 2`$: the Moshinsky model
+  (Moshinsky 1968), whose three-particle entanglement Bouvrie *et al.*
+  (2012) computed in closed form. Quadratic, so solvable exactly by the flow
+  of the covariance matrix.
+- **G**, $`v(r) = g\,e^{-r^2/2s^2}/(\sqrt{2\pi}\,s)`$ with $`g = 2`$,
+  $`s = 0.7`$: a contact interaction of strength $`g`$ smoothed to width
+  $`s`$, the form used in multiconfigurational studies of few bosons in traps
+  (Zöllner, Meyer and Schmelcher 2006, 2008, there with $`s = 0.05`$). No
+  closed form.
+
+The initial state and $`V`$ are both symmetric under exchange, so G is a
+three-boson (and four-boson) problem of that kind, and the one-body purity
+below measures fragmentation as well as entanglement.
+
+**Proposition WC9 (bonds suffice for $`N`$ particles).** *For $`V`$ as above
+and a chord $`\mathbf y = \hbar\pmb\sigma/2`$, the compensated residual*
+
+```math
+R(\mathbf x, \mathbf y) = V(\mathbf x + \mathbf y) - V(\mathbf x - \mathbf y) - 2\,\mathbf y\cdot\nabla V(\mathbf x)
+```
+
+*is a sum over the $`N(N-1)/2`$ bonds $`b = (i, j)`$ of one function of two
+variables,*
+
+```math
+R(\mathbf x, \mathbf y) = \sum_{i<j}\rho_v(r_b, \eta_b), \qquad
+r_b = x_i - x_j,\quad \eta_b = y_i - y_j,\qquad
+\rho_v(r, \eta) = v(r + \eta) - v(r - \eta) - 2\eta\,v'(r),
+```
+
+*and the trap contributes nothing. Hence:*
+
+*(a) a world carries one bank per bond, and every bank reads the same kernel
+table $`K_q(r)`$: the Fourier coefficients in $`\eta`$ of
+$`(i/\hbar)\rho_v(r, \eta)`$ times the raised-cosine horizon at the reach
+$`y_{\max}`$, with channels $`\xi_q = q\,\Delta p`$,
+$`\Delta p = \pi\hbar/2y_{\max}`$;*
+
+*(b) a firing of channel $`q`$ on bond $`(i, j)`$ moves $`(p_i, p_j)`$ by
+$`(\pm\xi_q, \mp\xi_q)`$, leaving the total momentum and the centre of mass
+alone; in orthonormal Jacobi coordinates the transfer is $`\xi_q\mathbf u_b`$,
+with $`\mathbf u_b`$ the bond's relative direction and $`\lvert\mathbf u_b\rvert^2 = 2`$;*
+
+*(c) if $`v`$ is quadratic every $`K_q`$ vanishes (Theorem G2): no world ever
+fires, and the exact evolution, entanglement included, is classical
+streaming of the initial Wigner function.*
+
+*Proof.* The quadratic terms of $`V`$ have a zero third difference and drop
+out of $`R`$. A pair term $`v(x_i - x_j)`$ at $`\mathbf x \pm \mathbf y`$ has
+argument $`r_b \pm \eta_b`$, and its part of $`\mathbf y\cdot\nabla V`$ is
+$`y_i v'(r_b) - y_j v'(r_b) = \eta_b v'(r_b)`$. The Fourier transform in
+$`\pmb\sigma`$ of a function of $`\sigma_i - \sigma_j`$ alone is supported on
+transfers along $`\mathbf e_i - \mathbf e_j`$, which gives (a) and (b). For (c),
+$`\rho_v = 0`$ when $`v`$ is quadratic. $`\square`$
+
+Part S checks the decomposition at 2000 random chords (largest difference
+$`6.7\times10^{-15}`$ for three particles and $`1.0\times10^{-14}`$ for four,
+against residuals up to 16 and 19), and that a bond event conserves $`P`$ and
+moves the Jacobi momenta by $`\xi\mathbf u_b`$. WC9 makes WC4 specific: Q11's
+bank per unpaired world becomes $`N(N-1)/2`$ banks per world sharing one
+table. The generator reads a world's point and its banks and nothing that
+belongs to a world-particle, as WC8 requires.
+
+**The kernel (Part K).** At reach $`2\pi`$, $`4\pi`$, $`8\pi`$ the table has 31,
+63 and 127 channels ($`\Delta p = 0.25`$, $`0.125`$, $`0.0625`$). The largest
+rate per bond, $`\Gamma_{\max} = \max_r\sum_q\lvert K_q(r)\rvert`$, is $`2.03`$,
+$`4.25`$, $`8.32`$, proportional to the reach as G5 says; summed over the
+bonds and averaged over the initial state it is $`3.8`$, $`8.1`$, $`15.7`$ per
+world per unit time for three particles and twice that for four. Narrowing
+the Gaussian toward a contact interaction at fixed $`g`$ raises
+$`\Gamma_{\max}`$ as $`s^{-2}`$: $`4.25`$, $`16.6`$, $`50.1`$, $`196`$ for
+$`s = 0.7`$, $`0.35`$, $`0.2`$, $`0.1`$ at reach $`4\pi`$. The mean over the
+initial state grows more slowly ($`8.1`$ to $`88`$).
+
+**References (Parts E, Q).** For G, the time-dependent Schrödinger equation
+on a grid in particle coordinates (split operator, $`\Delta t = 0.005`$):
+$`64^3`$ points on $`[-7, 7)^3`$ and $`96^3`$ on $`[-8, 8)^3`$ agree to
+$`4.7\times10^{-10}`$ in the purity; for four particles, $`40^4`$ on
+$`[-6, 6)^4`$ and $`48^4`$ on $`[-6.5, 6.5)^4`$ agree to $`6.1\times10^{-8}`$.
+For Q the covariance flow is exact and the grid reproduces it to
+$`3.6\times10^{-5}`$. A *classical control* streams the initial, positive
+Wigner function under the full force with no events.
+
+**Entanglement.** The measure is the purity of particle 1's reduced state
+and its Rényi entropy,
+
+```math
+P_1 = \mathrm{Tr}\,\rho_1^2 = 2\pi\hbar\int W_1(x_1, p_1)^2\,dx_1\,dp_1,
+\qquad S_2 = -\ln P_1 ,
+```
+
+where $`W_1`$ is the marginal of the Wigner function on particle 1;
+$`P_1 = 1`$ exactly when particle 1 is not entangled with the rest. For the
+worlds, $`W_1`$ is estimated by projecting the relative ensemble on
+$`x_1 = \mathbf a\cdot\pmb\rho`$, $`p_1 = \mathbf a\cdot\pmb\pi`$ ($`\pmb\rho`$,
+$`\pmb\pi`$ orthonormal Jacobi coordinates, $`\mathbf a = (1/\sqrt2, 1/\sqrt6)`$
+for three particles) and convolving with the centre of mass's exact
+Gaussian, which no event touches (WC9(b)). Pairs of a world with itself are
+removed, so the estimator is unbiased.
+
+A second measure tests the whole state rather than one particle. Unitary
+evolution conserves $`(2\pi\hbar)^{N-1}\int W_{\rm rel}^2 = 1`$, where
+$`W_{\rm rel}`$ is the Wigner function of the relative motion. A finite
+ensemble cannot resolve that integral, but it can resolve it at a fixed
+resolution $`a`$:
+
+```math
+P_a = (2\pi\hbar)^{N-1}\int (W_{\rm rel} * G_a)^2 ,
+```
+
+with $`G_a`$ a Gaussian of width $`a`$ in every Jacobi coordinate. For the
+mesh, $`P_a`$ is computed spectrally and exactly. For the worlds it is
+computed by cloud-in-cell deposition with the self-pairs removed. $`P_a`$
+falls as the true $`W`$ develops structure finer than $`a`$, so only the
+difference between worlds and mesh at the same reach is meaningful. Here
+$`a = 0.25`$.
+
+**Three answers.**
+
+*1. Entanglement without events (problem Q).* No event fires (largest rate
+$`1.1\times10^{-13}`$). Positive worlds streamed by Verlet reproduce the exact
+purity within $`1.5\times10^{-3}`$ (three particles, $`10^6`$ worlds) and
+$`2.5\times10^{-3}`$ (four). The purity falls to $`0.683`$ ($`S_2 = 0.38`$) and
+$`0.655`$ ($`S_2 = 0.42`$), and revives with period $`\pi/\sqrt{1 + Nk}`$, the
+half-period of the relative modes. A quadratic interaction entangles by
+classical streaming alone, so entanglement is not by itself a sign of the
+quantum events: the worlds carry it as a correlation between their
+coordinates.
+
+*2. The generator is right (problem G, Part M).* The bond-sum generator of
+WC9 was run without sampling on a mesh of the four-dimensional Jacobi
+relative phase space: $`40^2`$ points on $`[-5, 5)^2`$ in $`\pmb\rho`$, with the
+$`\pmb\pi`$ grid chosen so that the bond chords fit it. It converges to the
+exact three-particle dynamics as $`1/y_{\max}^2`$:
+
+| reach | purity error, $`t = 1`$ | $`t = 2`$ | $`t = 3`$ | $`\langle\sum v\rangle`$ error, $`t = 3`$ |
+|---|---|---|---|---|
+| $`2\pi`$ | $`-0.016`$ | $`-0.054`$ | $`-0.117`$ | $`-0.185`$ |
+| $`4\pi`$ | $`-0.004`$ | $`-0.015`$ | $`-0.039`$ | $`-0.074`$ |
+| $`8\pi`$ | $`-0.001`$ | $`-0.004`$ | $`-0.009`$ | $`-0.020`$ |
+
+The exact purity falls to $`0.800`$ at $`t = 2`$ and recovers to $`0.879`$ by
+$`t = 3`$. Classical streaming falls to $`0.606`$ and is still at $`0.663`$
+at $`t = 3`$. Classical dynamics therefore over-entangles, and the events
+have to undo that excess; at reach $`8\pi`$ the generator does so to within
+$`0.01`$. The mesh also conserves $`(2\pi\hbar)^2\int W_{\rm rel}^2`$, to
+$`2\times10^{-3}`$ at reach $`2\pi`$ by $`t = 3`$.
+
+*3. The worlds realise the generator early and lose it late (Parts W, X).*
+The realisation uses integrate-and-fire banks per bond and emission events,
+followed after each step by the contact sink on cells of side $`c`$ in the
+Jacobi relative phase space. The worlds follow the mesh at the same reach
+while the quantum correction is small, then fall below it. The share of the
+quantum correction they keep is
+
+```math
+q(t) = \frac{P_1^{\rm worlds}(t) - P_1^{\rm classical}(t)}{P_1^{\rm mesh}(t) - P_1^{\rm classical}(t)} ,
+```
+
+which is $`1`$ when the worlds realise the generator and $`0`$ when they do no
+better than classical streaming. Worlds minus mesh at the same reach:
+
+| reach | cell $`c`$ | $`\nu`$ | variant | $`N/\nu`$ at $`t = 3`$ | $`\Delta P_1`$: $`t = 1`$ | $`t = 2`$ | $`t = 3`$ | $`q(1)`$ | $`q(2)`$ | $`\Delta\langle\sum v\rangle`$, $`t = 3`$ | $`\Delta P_{0.25}`$, $`t = 3`$ |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| $`2\pi`$ | 0.35 | $`10^5`$ (2 seeds) | — | 2.27 | $`-0.025`$ | $`-0.060`$ | $`-0.090`$ | 0.79 | 0.57 | $`-0.086`$ | $`-0.145`$ |
+| $`2\pi`$ | 0.35 | $`10^6`$ | — | 1.23 | $`-0.019`$ | $`-0.054`$ | $`-0.078`$ | 0.84 | 0.61 | $`-0.084`$ | $`-0.139`$ |
+| $`2\pi`$ | 0.5 | $`10^5`$ (2 seeds) | — | 1.34 | $`-0.036`$ | $`-0.088`$ | $`-0.124`$ | 0.69 | 0.37 | $`-0.133`$ | $`-0.187`$ |
+| $`2\pi`$ | 0.5 | $`10^6`$ | — | 1.07 | $`-0.034`$ | $`-0.081`$ | $`-0.115`$ | 0.71 | 0.42 | $`-0.132`$ | $`-0.184`$ |
+| $`2\pi`$ | 0.7 | $`10^5`$ (2 seeds) | — | 1.12 | $`-0.041`$ | $`-0.103`$ | $`-0.141`$ | 0.65 | 0.27 | $`-0.183`$ | $`-0.207`$ |
+| $`2\pi`$ | 0.7 | $`10^6`$ | — | 1.03 | $`-0.043`$ | $`-0.099`$ | $`-0.135`$ | 0.64 | 0.30 | $`-0.182`$ | $`-0.207`$ |
+| $`2\pi`$ | 0.35 | $`10^5`$ | $`\Delta t = 0.005`$ | 2.19 | $`-0.020`$ | $`-0.059`$ | $`-0.080`$ | 0.83 | 0.58 | $`-0.082`$ | |
+| $`2\pi`$ | 0.35 | $`10^5`$ | sink every 4 steps | 3.16 | $`-0.022`$ | $`-0.060`$ | $`-0.077`$ | 0.81 | 0.57 | $`-0.086`$ | |
+| $`2\pi`$ | 0.35 | $`10^5`$ | sink levels $`c/4, c/2, c`$ | 2.28 | $`-0.018`$ | $`-0.043`$ | $`-0.070`$ | 0.84 | 0.69 | $`-0.048`$ | |
+| $`2\pi`$ | 0.7 | $`10^5`$ | five sink levels | 1.11 | $`-0.041`$ | $`-0.086`$ | $`-0.118`$ | 0.65 | 0.39 | $`-0.103`$ | |
+| $`4\pi`$ | 0.25 | $`2\times10^5`$ | — | 8.21 | $`-0.015`$ | $`-0.047`$ | $`-0.100`$ | 0.88 | 0.74 | $`-0.071`$ | |
+| $`4\pi`$ | 0.35 | $`10^5`$ (2 seeds) | — | 4.05 | $`-0.019`$ | $`-0.063`$ | $`-0.121`$ | 0.85 | 0.65 | $`-0.113`$ | |
+| $`4\pi`$ | 0.35 | $`3\times10^5`$ | — | 2.19 | $`-0.009`$ | $`-0.050`$ | $`-0.100`$ | 0.93 | 0.72 | $`-0.108`$ | |
+| $`4\pi`$ | 0.5 | $`10^5`$ | — | 1.70 | $`-0.018`$ | $`-0.076`$ | $`-0.144`$ | 0.86 | 0.58 | $`-0.162`$ | |
+| $`4\pi`$ | 0.7 | $`10^5`$ | — | 1.21 | $`-0.000`$ | $`-0.072`$ | $`-0.165`$ | 1.00 | 0.60 | $`-0.249`$ | |
+
+$`\Delta`$ is worlds minus mesh at the same reach. Seed-to-seed scatter is
+about $`0.005`$ in $`P_1`$. $`q(3)`$ is left out because at reach $`2\pi`$ the
+mesh and classical streaming differ by only $`0.10`$ at $`t = 3`$, which
+makes the ratio unstable. The global purity was added to the demo after the
+reach-$`4\pi`$ runs and the diagnostics.
+
+Six things follow from the table:
+
+- *The time step is not the cause.* Halving $`\Delta t`$ moves the
+  deficit at $`t = 3`$ from $`-0.090`$ to $`-0.080`$, and at $`t = 1`$ and $`2`$ by
+  less than $`0.005`$, which is about one seed-to-seed scatter.
+- *How often the sink acts is not the cause either.* Running it every fourth
+  step moves the deficit by similar amounts ($`-0.077`$ at $`t = 3`$), even
+  though the population then rises to $`3.2\nu`$.
+- *The kernel is not the cause.* It reproduces the bond symbol to
+  $`7\times10^{-4}`$ at reach $`2\pi`$ and $`2\times10^{-4}`$ at $`4\pi`$.
+- *More worlds help only a little.* At a fixed cell, going from
+  $`\nu = 10^5`$ to $`10^6`$ moves the purity at $`t = 3`$ from $`-0.090`$ to
+  $`-0.078`$ (reach $`2\pi`$, $`c = 0.35`$), while $`N/\nu`$ falls from
+  $`2.3`$ to $`1.2`$.
+- *The cell sets the limit.* At $`\nu = 10^6`$ the deficit at reach $`2\pi`$
+  is close to linear in the cell: a straight line through $`c = 0.35`$,
+  $`0.5`$, $`0.7`$ extrapolates to $`+0.002`$, $`-0.014`$, $`-0.027`$ in
+  $`P_1`$ at $`t = 1`$, $`2`$, $`3`$ and to $`+0.011`$ in
+  $`\langle\sum v\rangle`$, but only to $`-0.079`$ in $`P_{0.25}`$. A fit in
+  $`c^2`$ leaves $`-0.068`$ in $`P_1`$ at $`t = 3`$. The bias is first order
+  in the cell, so a cell² extrapolation is the wrong model. Three cells,
+  one seed each, do not establish convergence.
+- *Pairing finer cells first helps the energy more than the purity.* Running
+  the sink at $`c/4`$, then $`c/2`$, then $`c`$ halves the bias in
+  $`\langle\sum v\rangle`$ but removes only about a fifth of the purity's.
+
+The whole state shows the same deficit: $`P_{0.25}`$ at $`t = 3`$ is $`0.14`$
+below the mesh at $`c = 0.35`$ and $`0.21`$ below at $`c = 0.7`$ (reach
+$`2\pi`$, $`\nu = 10^5`$). The world ensemble has lost purity that the mesh
+keeps.
+
+**Proposition WC10 (the contact sink decoheres).** *Let $`\Pi_c`$ remove, in
+every cell of side $`c`$ of the relative phase space, as many positons and
+negatons as it can, in equal numbers and chosen at random.*
+
+*(a) $`\Pi_c`$ leaves every cell's net weight unchanged, so it commutes with
+averaging over cells: it changes $`W`$ only below the resolution of a cell.*
+
+*(b) In a cell that holds both signs, the survivors are a random subset of
+the majority sign, so the shape of $`W`$ inside the cell becomes the
+majority's. Sign structure finer than $`c`$ — interference fringes — is
+removed.*
+
+*(c) (Measured, three particles.) The realised evolution is not unitary:
+its $`P_{0.25}`$ falls below the mesh's at the same reach and does not
+return. The one-body purity falls with it, toward classical streaming.*
+
+*(d) (Measured.) The deficit does not depend on the time step or on how
+often the sink acts. At fixed $`c`$ it approaches a nonzero limit as $`\nu`$
+grows, and that limit is roughly linear in $`c`$. Driving the one-body
+purity's error to zero therefore requires $`\nu \to \infty`$ first and then
+$`c \to 0`$, at a population that grows like the number of occupied cells,
+$`c^{-2(N-1)}`$ on a line.*
+
+*Proof of (a) and (b).* By construction. $`\square`$
+
+The analogy: $`\Pi_c`$ acts like an environment that records which cell each
+world is in. Like any which-path record, it destroys the interference it can
+resolve, and it pushes the reduced state toward the classical one, as
+decoherence does. The quantity the sink is meant to conserve, the signed
+ensemble's $`W`$, it conserves only at the resolution of its cells.
+
+This is step 21's Proposition M9 seen through the observables. There,
+matching inside a cell biased $`\langle V\rangle`$, and finer matching cut
+the bias at a price in unpaired worlds. Here the bias shows up as lost
+global purity and over-estimated entanglement, and it is first order in the
+cell. It is also the deterministic error that Xiong and Shao
+(2019, Theorem 4.1) bound for annihilation on a uniform histogram, and their
+remedy, about ten samples per occupied bin, is the population cost of
+Corollary M10.
+
+*Four particles.* Six bonds per world and a six-dimensional relative phase
+space. At reach $`2\pi`$, $`c = 0.7`$, $`\nu = 5\times10^4`$, the worlds give
+$`P_1 = 0.854`$, $`0.692`$, $`0.581`$ at $`t = 0.5`$, $`1`$, $`1.5`$. The exact
+values are $`0.907`$, $`0.814`$, $`0.762`$, and classical streaming gives
+$`0.670`$ at $`t = 1`$. Meanwhile $`N/\nu`$ climbs from $`2.7`$ to $`11.9`$,
+because few cells in six dimensions hold both signs. The generator is the
+same bond sum (Part S). A six-dimensional mesh to check it independently is
+beyond this container. The realisation keeps almost none of the quantum
+correction: $`q(1) = 0.15`$. This is Corollary M10 in its plainest form: at a
+fixed population, the contact sink's resolution worsens with every relative
+degree of freedom added.
+
+**Comparison with known solutions and with the best simulations.**
+
+- *Exactly solvable problems.* The Moshinsky model (Q) is reproduced to
+  sampling error for three and four particles, entanglement included, with
+  no events. The integrable models of particles on a line with contact
+  (McGuire 1964) or inverse-square (Calogero 1969) interactions are
+  singular. By Part K the largest event rate of a smoothed contact grows as
+  $`s^{-2}`$, so those models can be reached only as limits of smooth
+  potentials. Zöllner *et al.*'s $`s = 0.05`$ would cost about 200 times the
+  rate used here.
+- *The best simulations.* For $`N \le 4`$ on a line, the direct grid TDSE
+  used here is numerically exact (purity to $`10^{-9}`$ for three particles).
+  For more particles the standard tools are MCTDH and its bosonic form
+  MCTDHB (Beck *et al.* 2000; Alon, Streltsov and Cederbaum 2008), which
+  Zöllner, Meyer and Schmelcher applied to this regularised interaction for
+  a few bosons. The bond-sum generator on the mesh matches the grid TDSE as
+  closely as the reach allows. The world ensemble does not yet.
+- *Other signed-particle methods.* The closest algorithms are the many-body
+  Wigner Monte Carlo of Sellier and Dimov (2014) and the branching random
+  walk of Shao and Xiong (2019; Xiong and Shao 2019). Both use signed
+  particles, events drawn from the Wigner kernel, and population control by
+  annihilation on a phase-space histogram. Xiong and Shao's
+  four-dimensional helium-like test used $`10^8`$ bins and more than
+  $`10^9`$ particles. The deficit measured here is the same annihilation
+  error at a population $`10^3`$ to $`10^4`$ times smaller.
+
+**What an algorithm specification for $`N`$ particles needs.** Each of the
+pieces has now been tested at least once:
+
+1. *State.* A world is $`(\mathbf x, \mathbf p) \in \mathbb R^{dN}`$, a sign, and
+   one bank of $`N_q`$ integrators per term of the potential (WC7, WC9). The
+   clock is needed for chords, not for the generator.
+2. *Tables.* One kernel table per distinct term (one for all the bonds of
+   identical particles), built from the term's compensated symbol with the
+   horizon at the reach; channels $`\xi_q = q\Delta p`$; transfers along the
+   term's direction (WC9(a), (b)).
+3. *Streaming.* The full classical force for unpaired worlds, inertial
+   motion for dark pairs ((S′), WC6).
+4. *Events.* Integrate-and-fire on each (world, term, channel), realised as
+   emission or absorption (specification §5.3), or as emission followed by a
+   sink.
+5. *Population control.* This is the open part. A specification must name a
+   rule with a measured error budget. The contact sink on cells of the
+   relative phase space has an error that does not vanish with $`\nu`$ at
+   fixed cell (WC10) and a cost exponential in the $`2d(N-1)`$ relative
+   dimensions (M10).
+6. *Observables.* Marginals; energies; the one-body purity with self-pairs
+   removed and the centre of mass convolved exactly where it separates; and
+   $`P_a`$ as the test of unitarity.
+7. *Validation.* Structure (S); a quadratic interaction with no events (Q);
+   the mesh at the same reach (M), which separates the generator's error
+   from the realisation's; the worlds (W) against both, with $`P_a`$.
+
 ## 9. Figures
 
 ![Mesh, ensemble and transmission results](https://raw.githubusercontent.com/billpage/wpmw/output/figures/world_clocks.png)
@@ -1035,6 +1382,20 @@ ensembles (mean ± standard error, 8 seeds; filled $`\nu = 10^5`$, open
 $`\nu = 10^6`$) against the mesh. (e) Worlds per unit $`\nu`$ and the unsigned $`\langle P^2\rangle`$,
 one line per seed, $`\nu = 10^5`$. (f) $`\langle v\rangle`$, worlds
 against the mesh: the contact sink's bias, smaller at $`\nu = 10^6`$.*
+
+![Three and four particles in many worlds](https://raw.githubusercontent.com/billpage/wpmw/output/figures/three_worlds.png)
+
+*Second addendum (§8.2), problem G unless stated. (a) One-body purity
+$`P_1`$ of particle 1: exact (grid TDSE), classical streaming, the bond-sum
+generator on the Jacobi mesh at reach $`2\pi`$, $`4\pi`$, $`8\pi`$, and the
+worlds at the two smaller reaches (cell $`0.35`$). (b) The pair energy,
+likewise. (c) The global purity $`P_{0.25}`$ of the relative state, mesh
+against worlds at reach $`2\pi`$: the mesh conserves it at full resolution,
+and the worlds lose it (WC10). (d) Problem Q, three and four particles:
+covariance flow, grid TDSE and worlds with no events. (e) Worlds minus mesh
+at the same reach, purity at $`t = 3`$, against the sink cell; stars
+$`\nu = 10^6`$, with the straight line through them extended to $`c = 0`$. (f) Four particles: exact, classical streaming and
+worlds at reach $`2\pi`$, cell $`0.7`$, $`\nu = 5\times10^4`$.*
 
 ## 10. Numerical verification
 
@@ -1072,6 +1433,30 @@ run is seeded, so rerunning Part C with those arguments reproduces it.
   $`0`$.
 - **Part F.** The two figures.
 
+The second addendum's outputs are from `src/demo_three_worlds.py`, run in the
+container in October 2026 at commit `d802996` with the demo applied, seeds
+fixed in the code (seed $`k`$ for the $`k`$-th seed of a run):
+
+- **Part S.** The bond-sum identity at 2000 random chords for $`N = 3`$ and
+  $`4`$ (largest difference $`6.7\times10^{-15}`$ and $`1.0\times10^{-14}`$); bond
+  events in Jacobi coordinates.
+- **Part K.** Channels and rates at three reaches; the width scan.
+- **Part E.** `E` and `E --N 4`: grid TDSE on two grids each (about 16
+  minutes for four particles), classical control with $`4\times10^5`$ samples.
+- **Part Q.** `Q` and `Q --N 4`, $`10^6`$ worlds.
+- **Part M.** `M --mesh-reach 2 4 8` (the $`8\pi`$ mesh about 30 minutes).
+- **Part W.** Reach $`2\pi`$: cells $`0.35`$, $`0.5`$, $`0.7`$ at
+  $`\nu = 10^5`$ (2 seeds) and $`10^6`$ (1 seed); at $`0.35`$ also `--dt 0.005`,
+  `--sink-every 4`, `--levels 3`, `--levels 5`, and `--levels 5` at cell
+  $`0.7`$. Reach $`4\pi`$: cells $`0.35`$ ($`\nu = 10^5`$, 2 seeds;
+  $`3\times10^5`$), $`0.25`$ ($`2\times10^5`$), $`0.5`$ and $`0.7`$ ($`10^5`$).
+  Four particles: `W --N 4 --reach 2 --cell 0.7 --nu 50000 --T 1.5`. The runs at
+  $`\nu = 10^6`$ take about half an hour each. The 4π runs and the 2π
+  diagnostics predate the global-purity observable, so their $`P_a`$ is not
+  recorded.
+- **Part X.** The table of §8.2 from all saved runs.
+- **Part F.** The figure.
+
 ---
 
 ## 11. Open items
@@ -1108,6 +1493,22 @@ run is seeded, so rerunning Part C with those arguments reproduces it.
   between spin components carried by chords between worlds whose labels
   differ (§8.1). Does the compensated split extend to the Pauli term, and
   what is a bond for a spin–spin interaction?
+- **WC-SP9.** A population-control rule that conserves $`W`$ below the
+  cell's resolution (§8.2, WC10). Candidates: annihilating only
+  near-coincident pairs; moment-preserving resampling within a cell; or the
+  absorptive ledger, which joins two unpaired worlds at the parent's row
+  rather than at random in a cell. The test of any of them is $`P_a`$ at a
+  fixed resolution against the mesh. This continues M-SP6.
+- **WC-SP10.** Population control in high relative dimension: six for four
+  particles on a line, twelve for three in space. Cells on bond coordinates,
+  or a partition that factorises over Jacobi pairs, instead of cells of the
+  joint relative phase space (Corollary M10)?
+- **WC-SP11.** The contact limit. The largest rate of a Gaussian of width
+  $`s`$ grows as $`s^{-2}`$ (Part K). Is there a compensated form of the delta
+  interaction — a boundary condition on the bond — with a finite rate?
+- **WC-SP12.** An independent check of the four-particle generator (a 6D
+  Jacobi mesh, or MCTDHB), to separate its error from the realisation's in
+  §8.2.
 - **Q-SP14** is restated in §7.2 and continues as WC-SP3. **M-SP5** (bins in
   particle coordinates) is the setting of Part C.
 
@@ -1146,3 +1547,32 @@ run is seeded, so rerunning Part C with those arguments reproduces it.
   Oszillators*, Z. Phys. **83** (1933) 143–151. The bound problem of §6.
 - Eckart, C. *The penetration of a potential barrier by electrons*, Phys.
   Rev. **35** (1930) 1303–1309. The collision of §7.4.
+- Moshinsky, M. *How good is the Hartree–Fock approximation*, Am. J. Phys.
+  **36** (1968) 52. Problem Q of §8.2.
+- Bouvrie, P. A.; Majtey, A. P.; Plastino, A. R.; Sánchez-Moreno, P.;
+  Dehesa, J. S. *Quantum entanglement in exactly soluble atomic models: the
+  Moshinsky model with three electrons, and with two electrons in a uniform
+  magnetic field*, Eur. Phys. J. D **66** (2012) 15.
+- Zöllner, S.; Meyer, H.-D.; Schmelcher, P. *Ultracold few-boson systems in a
+  double-well trap*, Phys. Rev. A **74** (2006) 053612; *Few-boson dynamics in
+  double wells: from single-atom to correlated pair tunneling*, Phys. Rev.
+  Lett. **100** (2008) 040401. The Gaussian-regularised contact interaction.
+- Beck, M. H.; Jäckle, A.; Worth, G. A.; Meyer, H.-D. *The multiconfiguration
+  time-dependent Hartree (MCTDH) method*, Phys. Rep. **324** (2000) 1–105.
+- Alon, O. E.; Streltsov, A. I.; Cederbaum, L. S. *Multiconfigurational
+  time-dependent Hartree method for bosons*, Phys. Rev. A **77** (2008)
+  033613.
+- McGuire, J. B. *Study of exactly soluble one-dimensional N-body problems*,
+  J. Math. Phys. **5** (1964) 622.
+- Calogero, F. *Ground state of a one-dimensional N-body system*, J. Math.
+  Phys. **10** (1969) 2197.
+- Sellier, J. M.; Dimov, I. *The many-body Wigner Monte Carlo method for
+  time-dependent ab-initio quantum simulations*, J. Comput. Phys. **273**
+  (2014) 589.
+- Shao, S.; Xiong, Y. *A branching random walk method for many-body Wigner
+  quantum dynamics*, Numer. Math. Theor. Meth. Appl. **12** (2019) 21;
+  arXiv:1603.00159.
+- Xiong, Y.; Shao, S. *The Wigner branching random walk: efficient
+  implementation and performance evaluation*, Commun. Comput. Phys. **25**
+  (2019) 871. Annihilation on a uniform histogram, its deterministic error
+  (Theorem 4.1) and its sample requirement.
