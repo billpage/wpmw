@@ -657,7 +657,7 @@ $`V = \sum_{i<j} v_{ij}(x_i - x_j)`$, the world's residual symbol is a sum
 of pair-exchange symbols,*
 
 ```math
-S_W(\pmb\sigma) = \sum_{i<j} m_{ij}(\sigma_i - \sigma_j),
+S_W(\pmb\sigma) = \sum_{i < j} m_{ij}(\sigma_i - \sigma_j),
 ```
 
 *so every world event is an exchange of momentum between one pair, and the
@@ -1037,7 +1037,7 @@ harmonic trap of unit frequency, every pair coupled by the same potential
 $`v`$:
 
 ```math
-V(\mathbf x) = \sum_{i=1}^{N}\tfrac12 x_i^2 + \sum_{i<j} v(x_i - x_j).
+V(\mathbf x) = \sum_{i=1}^{N}\tfrac12 x_i^2 + \sum_{i < j} v(x_i - x_j).
 ```
 
 At $`t = 0`$ the state is the product of trap ground states, the ground state
@@ -1070,7 +1070,7 @@ R(\mathbf x, \mathbf y) = V(\mathbf x + \mathbf y) - V(\mathbf x - \mathbf y) - 
 variables,*
 
 ```math
-R(\mathbf x, \mathbf y) = \sum_{i<j}\rho_v(r_b, \eta_b), \qquad
+R(\mathbf x, \mathbf y) = \sum_{i < j}\rho_v(r_b, \eta_b), \qquad
 r_b = x_i - x_j,\quad \eta_b = y_i - y_j,\qquad
 \rho_v(r, \eta) = v(r + \eta) - v(r - \eta) - 2\eta\,v'(r),
 ```

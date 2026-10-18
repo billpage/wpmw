@@ -1896,6 +1896,14 @@ A short cheat sheet for keeping new docs lint-clean:
 
   The linter's GFM pass enforces this.
 
+- **Never write `<` directly before a letter in math (`\sum_{i<j}`); write `i < j`.**
+  GitHub's HTML sanitiser, which is separate from the CommonMark pass,
+  reads `<j} ...` as the start of a tag and drops the text up to the next
+  `>`, which unbalances the braces: "Extra open brace or missing close
+  brace". Fenced `math` blocks and `$...$`/`$$...$$` are affected;
+  `$`...`$` spans are not. KaTeX and MathJax accept `i<j`, so only the
+  linter's HTML pass (`html_tag_scan`) catches it (found 2026-10-18 in
+  `world_clocks.md` §5.4 and §8.2).
 - **Never put `$...$` inside a `*...*` or `_..._` emphasis span.** GitHub
   renders the markdown to HTML *first* and only then scans for `$...$`
   pairs to hand to MathJax. Math that has ended up inside the resulting

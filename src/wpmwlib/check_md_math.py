@@ -319,6 +319,32 @@ def static_scan(expr: str) -> list[str]:
 
 
 # --------------------------------------------------------------------------- #
+# 3b. HTML-tag scan: ``<`` that GitHub's HTML sanitiser reads as a tag start.  #
+# --------------------------------------------------------------------------- #
+# GitHub runs an HTML sanitiser over the rendered page *in addition to* the
+# CommonMark pass, and it sees ``<j} m_{ij}(...),`` in ``\sum_{i<j} m_{ij}...``
+# as the start of an (unknown) tag.  The tag, and with it the text up to the
+# next ``>``, is dropped before MathJax runs, which leaves unbalanced braces:
+# "Extra open brace or missing close brace" (``docs/analysis/world_clocks.md``,
+# sections 5.4 and 8.2, 2026-10).  Fenced ``math`` blocks and ``$``/``$$``
+# spans are both affected; backtick-guarded ``$`...`$`` spans are not (verified
+# on the rendered page).  KaTeX and MathJax accept ``i<j`` happily, so the
+# render passes cannot see this, and the CommonMark-escape scan does not look
+# at ``<``.  A ``<`` followed by a space (``i < j``) or a ``\`` is safe.
+_HTML_TAG_START = re.compile(r"<(?=[A-Za-z/!?])")
+
+
+def html_tag_scan(expr: str) -> list[str]:
+    hits = sorted({expr[m.start():m.start() + 4].strip() for m in _HTML_TAG_START.finditer(expr)})
+    if not hits:
+        return []
+    return [f"`<` directly followed by a letter or `/`, `!`, `?` ({', '.join(f'`{h}`' for h in hits)}) "
+            "is read by GitHub's HTML sanitiser as a tag start and the text up to the next `>` is dropped, "
+            "which unbalances braces (\"Extra open brace or missing close brace\"). "
+            "Write `<` with spaces around it, e.g. `i < j`, or guard inline math with `$`...`$`."]
+
+
+# --------------------------------------------------------------------------- #
 # 4. GFM scan: backslash-escapes that GitHub's markdown preprocessor strips.  #
 # --------------------------------------------------------------------------- #
 # GitHub's markdown preprocessor applies CommonMark backslash-escape rules
@@ -1435,7 +1461,7 @@ def _run_engine(items: list[tuple[int, MathExpr]],
 class Issue:
     file: Path
     line: int
-    severity: str         # STATIC, STRUCT, KATEX, MATHJX
+    severity: str         # STATIC, GFM, HTML, STRUCT, KATEX, MATHJX
     mode: str             # inline, display, ""
     expr: str
     message: str
@@ -1609,6 +1635,11 @@ def scan_paths(paths: Iterable[Path],
             # config blocks the same set of macros either way.
             for hit in static_scan(me.expr):
                 issues.append(Issue(md, me.line, "STATIC", me.mode, me.expr, hit))
+            # HTML-tag pass: GitHub's sanitiser is separate from the CommonMark
+            # pass, so fenced ```math is *not* exempt; only $`...`$ is.
+            if me.source != "backtick":
+                for hit in html_tag_scan(me.expr):
+                    issues.append(Issue(md, me.line, "HTML  ", me.mode, me.expr, hit))
             # GFM and emphasis-trap passes apply *only* to dollar-delimited
             # math. Both fenced ```math and $`...`$ forms are protected
             # from GitHub's CommonMark inline processing.
@@ -1713,10 +1744,11 @@ def main(argv: list[str] | None = None) -> int:
         print(report)
     n_static = sum(1 for i in issues if i.severity == "STATIC")
     n_gfm = sum(1 for i in issues if i.severity == "GFM   ")
+    n_html = sum(1 for i in issues if i.severity == "HTML  ")
     n_struct = sum(1 for i in issues if i.severity == "STRUCT")
     n_render = sum(1 for i in issues if i.severity in ("KATEX ", "MATHJX"))
     print(f"Summary: {len(issues)} issue(s) "
-          f"({n_static} static, {n_gfm} gfm, {n_struct} structural, "
+          f"({n_static} static, {n_gfm} gfm, {n_html} html, {n_struct} structural, "
           f"{n_render} render) across {len(all_files)} file(s).")
     return 0 if not issues else 1
 

@@ -63,4 +63,21 @@ for name, ok in PARA_CASES.items():
     bad2 += not r
     print(("ok   " if r else "FAIL ") + name)
 print("paragraph-pass failures:", bad2)
-raise SystemExit(1 if (bad or bad2) else 0)
+
+# --- HTML-tag pass: `<` + letter is eaten by GitHub's sanitiser (2026-10-18) ---
+from wpmwlib.check_md_math import html_tag_scan as H
+HTML_CASES = {
+ "i<j is a tag start":       lambda: len(H(r"\sum_{i<j} m_{ij}")) == 1,
+ "i < j is safe":            lambda: H(r"\sum_{i < j} m_{ij}") == [],
+ "\\lt is safe":              lambda: H(r"\sum_{i \lt j} m") == [],
+ "< digit is safe":          lambda: H("x<1") == [],
+ "< backslash is safe":      lambda: H(r"a<\alpha") == [],
+ "</ is a tag start":        lambda: len(H("a</b")) == 1,
+}
+bad3 = 0
+for name, ok in HTML_CASES.items():
+    r = ok()
+    bad3 += not r
+    print(("ok   " if r else "FAIL ") + name)
+print("html-pass failures:", bad3)
+raise SystemExit(1 if (bad or bad2 or bad3) else 0)
