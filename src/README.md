@@ -1264,6 +1264,31 @@ see that directory's README for the ladder itself.
   events; (e) worlds minus mesh against the sink cell at `t = 3`; (f) four
   particles.
 
+- `demo_population_control.py` — companion to
+  `docs/analysis/population_control.md` (step 26): population control below
+  the cell for the three-particle worlds of `demo_three_worlds.py`, whose
+  world algorithm, observables and mesh it imports. Sinks: `contact`, the
+  contact sink; `K1`, moment-preserving resampling with each pair at the cell
+  centre; `K1b`, with each pair at its dipole centre and the grid shifted every
+  step; `K1f`, dipole centre on a fixed grid; `K1sN`, dipole centre with the
+  grid shifted every `N` steps (`K1s10` is the rule of Proposition PC6); `K1uN`,
+  the same with the centre not clipped; `none`. Absorption is added with a
+  tolerance: `--config sink:cell:delta:mode`, mode `P` (paired), `S` (single)
+  or `D` (paired, dipole-matched). Part T tests that K1 keeps `M0` and `M1` of
+  every cell, Lemma PC4 and the absorption bookkeeping; Part P applies each
+  sink once to worlds sampled from the mesh; Part R runs the worlds (`--config
+  --nu --seeds --T --cap`), saving snapshots at `t = 1, 2, 3`; Part C computes
+  the cross-seed and self estimators of `P_a` and `P1` from them (Lemma PC1);
+  Part F draws the figure. Parts C and F need `three_worlds_M2.json`
+  (`demo_three_worlds.py M --mesh-reach 2`) in the output directory. A run at
+  `nu = 1e5` takes five to fifteen minutes, at `1e6` about an hour.
+
+  ![Population control below the cell](https://raw.githubusercontent.com/billpage/wpmw/output/figures/population_control.png)
+
+  (a) Global purity at resolution 0.25, worlds minus mesh, against time; (b)
+  worlds per `nu`; (c) every rule at `t = 3`, cross-seed deficit against
+  population.
+
 - `demo_signed_local_kernel.py` — exact (SymPy) and spectral companion to
   `docs/supplement/poisson_kicks_and_pair_branching.md`, Parts A–E.  A: the
   Kramers–Moyal targets `M_{2s+1} = (-1)^{s+1} (hbar/2)^{2s} V^{(2s+1)}`,

@@ -19,6 +19,37 @@ Newest first: the most recent step is at the top, and the list runs back to
 step 1 at the bottom. To follow the argument from its beginning, read from the
 bottom up. Each note states in its §0 what it inherits and what it retracts.
 
+- **26.** **[`population_control.md`](population_control.md)** \
+  Population control for the world ensemble of step 25 without the contact
+  sink's decoherence (open item WC-SP9). The contact sink keeps only each
+  cell's net count, the zeroth moment of the signed worlds in it.
+  **Proposition PC2**: a sink that keeps the moments up to order `K` changes a
+  smooth observable by at most the cell to the power `K + 1`, so the contact
+  sink's error is first order in the cell, as WC10 measured. **Definition
+  PC3**, K1 resampling: in each cell keep the majority sign's net worlds and
+  add ± pairs that carry the first moment of the removed worlds. **Lemma PC4**
+  places each pair at the *dipole centre*, the unique point at which it also
+  matches the removed worlds' second moment along the dipole, so a lone pair
+  is returned unchanged and a dipole moves with the flow instead of being
+  pinned to its cell. **Lemma PC1**: the overlap of two independently seeded
+  ensembles estimates the purity of the mean ensemble with no variance term;
+  it agrees with the self estimator of step 25 to 0.012. **Proposition PC5**,
+  absorption with a tolerance `delta` (a daughter realised by removing a world
+  of the other sign within `delta` of it), measured with three particles: the
+  absorbed share stays at 0.31 to 0.44, below the one half Theorem N3
+  requires, so absorption alone does not hold the population, and its bias is
+  at least that of a contact sink of cell `2 delta`. Matching the
+  event's dipole does not help, because the error left is the event's dipole
+  moved by up to `delta`, on the scale of the fringes the events write. The
+  ledger's absorptive branch is exact only where a mesh puts partners on the
+  targets. **Proposition PC6**, measured on problem G of step 25 at reach `2
+  pi` against the 4D mesh: K1 at cell 0.7, with the grid shifted every ten
+  steps, leaves a global-purity deficit of -0.020 at `t = 3` and `nu = 1e6`,
+  against -0.143 for the contact sink at cell 0.35, at 1.37 against 1.22
+  worlds per `nu`; the one-body purity is held to -0.012 against -0.082. The
+  deficit is -0.022 at `nu = 1e5`, so it is the rule's limit at that cell, and
+  it shrinks with the cell to -0.014 at cell 0.5. With too few worlds per cell
+  K1 makes the ensemble too pure (PC-SP1).
 - **25.** **[`world_clocks.md`](world_clocks.md)** \
   Is the reader — its lever, chords and bank of integrators — a property of a
   particle, or a relation between worlds that a particle inherits? With two
@@ -888,7 +919,8 @@ late section. In ascending step order: `src/demo_four_rule_equivalence.py`,
 `src/demo_eckart_barrier_compensated.py`,
 `src/demo_compensated_ontology.py`,
 `src/demo_stochastic_ledger.py`,
-`src/demo_soft_core_coulomb.py`, `src/demo_world_clocks.py`. All
+`src/demo_soft_core_coulomb.py`, `src/demo_world_clocks.py`,
+`src/demo_three_worlds.py`, `src/demo_population_control.py`. All
 non-trivial claims in these notes are verified numerically before inclusion.
 
 ## Related

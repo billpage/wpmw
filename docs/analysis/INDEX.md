@@ -53,6 +53,7 @@ Theorem and open-item labels are shared across the whole of `docs/`. Each note u
 | V | step 24 (V1–V10); Definitions (F) and (C); the amendment of (S′) | Not the conditions (V1)–(V4) of step 4 §13, nor the potential V(x); neither is a label. Definition (F) is not the field F of any note, and Definition (C) is not a constant C. |
 | Z | step 19 (Z1–Z5) | — |
 | WC | step 25 (WC0–WC10) | The first two-letter prefix: every single letter is taken. "World clock". |
+| PC | step 26 (PC1–PC6) | "Population control". Not the PC of particle-in-cell codes cited in that note. |
 | Thm 1–4, Lem 0–5, Prop 1–3, Cor 4.x | steps 4 and 5 | Numbered without a letter; later notes cite them as 'Theorem 4', 'Lemma 4', 'Proposition 3'. |
 | F, H, J, T, W | supplement: four_action_foundations (F1–F4), holland_two_fluid_correspondence (H1–H7), emission_and_absorption (J1–J2), takabayasi_1954_stochastic_picture (T-series), limkumnerd_weighted_paths (W1–W5) | Cited from the analysis notes; see §9. |
 
@@ -60,7 +61,7 @@ Open-item ID series, all of the form `<note prefix><suffix><n>`. The suffixes `S
 
 | Suffix | Where used |
 |---|---|
-| -SP | G-SP (step 17), S-SP (16), N-SP (18), Y-SP (20), M-SP (21), L-SP (22), Q-SP (23), V-SP (24), WC-SP (25); supplement: J-SP, H-SP, W-SP, R-SP |
+| -SP | G-SP (step 17), S-SP (16), N-SP (18), Y-SP (20), M-SP (21), L-SP (22), Q-SP (23), V-SP (24), WC-SP (25), PC-SP (26); supplement: J-SP, H-SP, W-SP, R-SP |
 | -LS | K-LS (step 15), Z-LS (step 19) |
 | CLS | step 14 |
 | CLA | docs/algorithm/compensated_liouville_algorithm.md |
@@ -147,6 +148,12 @@ Kept apart from the results because a postulate is what everything else assumes,
 |---|---|---|---|
 | [Def WC0](world_clocks.md#1-worlds-world-particles-and-particles) | 1 | For N particles in three dimensions: a world is a point of R^6N with a sign and one phase clock (and its banks, one per bond); a positon or negaton is a world of sign ±1; a world-particle is particle i in world w, with no sign, clock or bank of its own; a particle is the identity recurring in every world, its state a marginal; an unpaired world is one not half of an aligned pair. | amended October 2026 (world-particle redefined; *body* retired, WC-SP1) |
 | [Def WC7](world_clocks.md#81-addendum-worlds-suffice) | 8.1 | The world ontology (addendum): the only carriers are worlds, each with its point in R^6N, sign, clock and one bank per term of the potential; world-particles, centre of mass, total momentum, relative coordinates and energy are derived from the point (sector clocks only where the Lagrangian separates); the quantum content is a list of relations between worlds — chord (2), reading (reader and chords), emission and absorption (3), pair collision (4), dark catalysis (4), admissibility (all). | October 2026 |
+
+### Step 26 — [Population control below the cell](population_control.md)
+
+| ID | § | Says | Standing |
+|---|---|---|---|
+| [Def PC3](population_control.md#3-k1-resampling-and-the-dipole-centre) | 3 | K1 resampling: in each cell holding both signs keep abs(m) random worlds of the majority sign and add k = ceil(abs(R)_inf / c) ± pairs carrying the removed worlds' first moment R, centred at the dipole centre (Lemma PC4); M0 and M1 of every cell are unchanged and the cell keeps abs(m) + 2k worlds. | October 2026; answers WC-SP9 in part |
 
 ## 4. Results by note
 
@@ -496,7 +503,17 @@ No labelled results. See the note's own sections.
 | [Prop WC8](world_clocks.md#81-addendum-worlds-suffice) | 8.1 | Worlds suffice: the compensated symbol on R^6N, every kernel and every bank's integrand is a function of world-clock misalignment rates across chords (ħμ̇ = −[V(X+Y) − V(X−Y)] for two worlds on one row, any lever); world-particle clocks are a redundant decomposition for separable V and cannot be right for shared terms (WC1(d), WC2); so no world-particle phase enters the generator. | — |
 | [Cor WC8.1](world_clocks.md#81-addendum-worlds-suffice) | 8.1 | Locality from chords: a chord that moves only the particles of a set A reads exactly the terms of V that involve a particle of A; every other term cancels. | — |
 | [Prop WC9](world_clocks.md#82-addendum-three-and-four-particles-in-many-worlds) | 8.2 | Bonds suffice for N particles: with a pair potential and a harmonic trap the compensated residual is a sum over bonds of one function ρ_v(r_b, η_b), η_b = y_i − y_j, the trap contributing nothing; one kernel table serves every bond, a bond event moves (p_i, p_j) by (±ξ_q, ∓ξ_q) and leaves P and the centre of mass alone, and a quadratic v gives no events, its entanglement coming from classical streaming alone. Checked to 1e-14 (N = 3, 4); Moshinsky worlds match the exact purity to 3e-3 with no events; the bond-sum generator on the 4D Jacobi mesh converges to the exact three-particle TDSE as 1/y_max² (purity error at t = 3: −0.117, −0.039, −0.009 at 2π, 4π, 8π). | makes Prop WC4 specific |
-| [Prop WC10](world_clocks.md#82-addendum-three-and-four-particles-in-many-worlds) | 8.2 | The contact sink decoheres: it keeps each cell's net weight but replaces the sub-cell shape of W by the majority sign's, removing interference finer than a cell. Measured with three particles: the ensemble's global purity at resolution 0.25 falls below the mesh's (−0.14 at c = 0.35, −0.21 at c = 0.7, t = 3) and the one-body purity falls toward classical streaming; the deficit is independent of Δt and sink frequency, has a nonzero limit as ν grows at fixed cell, and shrinks slowly with the cell. Four particles at ν = 5e4, c = 0.7: the worlds keep 15 per cent of the quantum correction at t = 1 while N/ν reaches 12 by t = 1.5. | sharpens Prop M9, M-SP6; Cor M10 |
+| [Prop WC10](world_clocks.md#82-addendum-three-and-four-particles-in-many-worlds) | 8.2 | The contact sink decoheres: it keeps each cell's net weight but replaces the sub-cell shape of W by the majority sign's, removing interference finer than a cell. Measured with three particles: the ensemble's global purity at resolution 0.25 falls below the mesh's (−0.14 at c = 0.35, −0.21 at c = 0.7, t = 3) and the one-body purity falls toward classical streaming; the deficit is independent of Δt and sink frequency, has a nonzero limit as ν grows at fixed cell, and shrinks slowly with the cell. Four particles at ν = 5e4, c = 0.7: the worlds keep 15 per cent of the quantum correction at t = 1 while N/ν reaches 12 by t = 1.5. | sharpens Prop M9, M-SP6; Cor M10; explained by Prop PC2 and remedied in part by K1 resampling, Prop PC6 (step 26) |
+
+### Step 26 — [Population control below the cell](population_control.md)
+
+| ID | § | Says | Standing |
+|---|---|---|---|
+| [Lem PC1](population_control.md#1-setting-observables-and-the-yardstick) | 1 | The cross-seed estimator: the product of two independently seeded ensembles estimates the purity of the mean ensemble with no variance term; the self estimator with self-pairs removed is unbiased only for independent worlds. Measured, the two differ by at most 0.012 in the global purity. | confirms the step 25 figures |
+| [Prop PC2](population_control.md#2-proposition-pc2-what-a-sink-keeps-decides-its-error) | 2 | A sink that keeps a cell's signed moments to order K changes any C^(K+1) observable by at most (4r)^(K+1)/(K+1)! times the largest (K+1)-th derivative times the worlds touched; the contact sink keeps only M0, so its error is first order in the cell. | explains Prop WC10's roughly linear deficit |
+| [Lem PC4](population_control.md#3-k1-resampling-and-the-dipole-centre) | 3 | The dipole centre: the unique centre at which a pair of moment R matches the removed worlds' second moment A along R, c'.R = R^T A R / (2 abs(R)^2), c' = (A R − R (c'.R)) / abs(R)^2; a lone pair is returned unchanged, so a dipole moves with the flow instead of being pinned. | — |
+| [Prop PC5](population_control.md#4-proposition-pc5-absorption-with-a-tolerance) | 4 | Absorption with a tolerance δ (a daughter realised by removing a world of the other sign within δ): its error is the event's dipole moved by up to δ; measured, the absorbed share stays at 0.31 to 0.44, below the 1/2 of Theorem N3, and the bias is at least that of a contact sink of cell 2δ; matching the event's dipole does not help. | answers the absorptive candidate of WC-SP9 (negative off a mesh) |
+| [Prop PC6](population_control.md#5-results) | 5 | Measured, problem G at reach 2π against the 4D mesh: K1 at cell 0.7, dipole centre, grid shifted every ten steps, leaves a global-purity deficit of −0.020 at t = 3 and ν = 1e6 (−0.022 at 1e5) against −0.143 for the contact sink at cell 0.35, at N/ν = 1.37 against 1.22; one-body purity −0.012 against −0.082; at ν = 1e6 the deficit shrinks with the cell (−0.099, −0.020, −0.014 at c = 1.0, 0.7, 0.5). | too few worlds per cell make K1 too pure (PC-SP1) |
 
 ## 5. No-go and negative results
 
@@ -538,6 +555,7 @@ Results that say something cannot be done. Each is as valuable as a positive res
 | Step 25 — [Thm WC2](world_clocks.md#52-theorem-wc2-what-a-world-particle-reads), [Prop WC4](world_clocks.md#54-proposition-wc4-banks-live-on-bonds) | A bank (or reading) owned by a world-particle cannot realise a pair potential's residual beyond linear order, under any split of the interaction between particle clocks. | Banks belong to the world's bonds; readings to the world's joint chord. |
 | Step 25 — [Prop WC1](world_clocks.md#34-proposition-wc1-the-phase-clock-belongs-to-the-world)(d), [Prop WC8](world_clocks.md#81-addendum-worlds-suffice) | Clocks owned by world-particles that both sum to the world's action and read the Newtonian force, for any potential with a shared term. | The world clock, read across joint chords, gives both; world-particle phases are dropped from the ontology. |
 | Step 25 — [Prop WC10](world_clocks.md#82-addendum-three-and-four-particles-in-many-worlds) | Population control by contact annihilation on cells of the relative phase space, as a route to the generator's dynamics: at a fixed cell the deficit in entanglement does not vanish as ν grows, and the cost of refining the cell is exponential in the relative dimension. | A rule that conserves W below cell resolution, or a resolution test (the global purity at fixed resolution) in every run (WC-SP9). |
+| Step 26 — [Prop PC5](population_control.md#4-proposition-pc5-absorption-with-a-tolerance) | Absorption off a mesh, with a tolerance δ, as population control: the absorbed share stays below one half, so the population grows, and the bias is at least that of a contact sink of cell 2δ; dipole matching does not remove it. | K1 resampling (Prop PC6); exact absorption needs partners on the targets, as on a mesh (PC-SP4). |
 
 ## 6. Corrections and retractions
 
@@ -874,10 +892,19 @@ Labelled items link to their line; the unlabelled items of the older notes are g
 | [WC-SP6](world_clocks.md#11-open-items) | The world-particle-bank ensemble's cost at longer times, with an absorptive ledger in place of emission and a contact sink. | open | Prop WC5 |
 | [WC-SP7](world_clocks.md#11-open-items) | Identical particles as a relation between a world and its permutations: which relation gives Bose and Fermi statistics, how chords between w and πw carry it, and what it costs the sea. | open | Def WC7, Prop WC8 |
 | [WC-SP8](world_clocks.md#11-open-items) | Spin as discrete labels on world-particles, with phases between spin components carried by chords between worlds whose labels differ; the Pauli term in the compensated split; bonds for spin–spin interactions. | open | Def WC7 |
-| [WC-SP9](world_clocks.md#11-open-items) | A population-control rule that conserves W below the cell's resolution — annihilating only near-coincident pairs, moment-preserving resampling, or the absorptive ledger at the parent's row — tested by the global purity at fixed resolution. | open | Prop WC10, M-SP6 |
+| [WC-SP9](world_clocks.md#11-open-items) | A population-control rule that conserves W below the cell's resolution — annihilating only near-coincident pairs, moment-preserving resampling, or the absorptive ledger at the parent's row — tested by the global purity at fixed resolution. | partly answered (step 26: K1 resampling, Prop PC6; absorption off a mesh fails, Prop PC5) | Prop WC10, M-SP6, Prop PC6 |
 | [WC-SP10](world_clocks.md#11-open-items) | Population control in high relative dimension (6 for four particles on a line, 12 for three in space): cells on bond coordinates, or on a factorised partition, instead of the joint relative phase space? | open | Prop WC10, Cor M10 |
 | [WC-SP11](world_clocks.md#11-open-items) | The contact limit: the largest rate of a Gaussian of width s grows as s⁻²; is there a compensated form of the delta interaction, a boundary condition on the bond, with finite rate? | open | Prop WC9 |
 | [WC-SP12](world_clocks.md#11-open-items) | An independent check of the four-particle generator (a 6D Jacobi mesh, or MCTDHB) to separate its error from the realisation's. | open | Prop WC9 |
+
+### Step 26 — [Population control below the cell](population_control.md#9-open-items)
+
+| ID | Question | Status | Related |
+|---|---|---|---|
+| [PC-SP1](population_control.md#9-open-items) | K1 makes the ensemble slightly too pure early on (+0.010 at t = 1, cell 0.7) and markedly too pure when cells hold few worlds (cell 0.5 at ν = 1e5); only under repeated application. The second moment across the dipole (a K2 rule), the integrator phases reset on every new pair, or noise in R carried as signal? How many worlds per cell are enough? | open | Prop PC6 |
+| [PC-SP2](population_control.md#9-open-items) | K1 costs up to 2k worlds per cell holding both signs: is that affordable in six or twelve relative dimensions, and should the cells be on bond coordinates? | open | WC-SP10, Cor M10 |
+| [PC-SP3](population_control.md#9-open-items) | A principled schedule for shifting the grid (every ten steps is empirical): shift when a dipole would cross a face? | open | Def PC3 |
+| [PC-SP4](population_control.md#9-open-items) | Exact absorption off a mesh: can events be kept on a momentum lattice so that daughters and partners coincide? | open | Prop PC5, Thm N3 |
 
 ## 8. Defects found in demos
 

@@ -733,3 +733,17 @@ resolution limit as the contact sink.
   about ten particles per bin needed, a four-dimensional helium-like test
   with 10^8 bins and more than 10^9 particles.
   https://www.global-sci.org/intro/article_detail/cicp/12832.html
+
+## Moment-preserving resampling (step 26)
+
+- Vranic, M.; Grismayer, T.; Martins, J. L.; Fonseca, R. A.; Silva, L. O. —
+  "Particle merging algorithm for PIC codes." *Comput. Phys. Commun.*
+  **191**, 65 (2015). Merging macroparticles in a phase-space cell while
+  conserving charge, momentum and energy; positive weights only.
+  arXiv:1411.2248. https://doi.org/10.1016/j.cpc.2015.01.020
+- Faghihi, D.; Carey, V.; Michoski, C.; Hager, R.; Janhunen, S.; Chang,
+  C. S.; Moser, R. D. — "Moment preserving constrained resampling with
+  applications to particle-in-cell methods." *J. Comput. Phys.* **409**,
+  109317 (2020). Resampling that keeps chosen moments exactly, by a
+  constrained optimisation. arXiv:1702.05198.
+  https://doi.org/10.1016/j.jcp.2020.109317

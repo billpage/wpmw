@@ -311,7 +311,9 @@ part of the postulates.
   falls toward classical streaming and the deficit has a nonzero limit as
   $`\nu`$ grows at a fixed cell
   ([`world_clocks.md` §8.2](analysis/world_clocks.md#82-addendum-three-and-four-particles-in-many-worlds),
-  Proposition WC10; step 21's M9).
+  Proposition WC10; step 21's M9). Keeping each cell's first moment as
+  well, by [K1 resampling](#k1-resampling), cuts that deficit sevenfold
+  ([`population_control.md`](analysis/population_control.md), Proposition PC6).
 
 ### coset invariant
 
@@ -324,6 +326,17 @@ rows fall into sectors that never mix.
 - **Defined:** [`open_position_space.md` §4.2](analysis/open_position_space.md#42-the-coset-invariant).
 - **Not to confuse with:** a coset in group theory beyond this: the residue
   classes of $`p`$ modulo $`\pi\hbar/a`$.
+
+### cross-seed estimator
+
+The purity of an ensemble computed as the overlap of two independently
+seeded runs, $`(2\pi\hbar)^2\int(\hat W_1 * G_a)(\hat W_2 * G_a)`$, instead of
+one run with itself. It estimates the purity of the mean ensemble with no
+variance term, which the self estimator has whenever worlds are correlated
+(the two daughters of an event, the pairs a sink places).
+
+- **Defined:** [`population_control.md` §1](analysis/population_control.md#1-setting-observables-and-the-yardstick),
+  Lemma PC1.
 
 ### critical sampling
 
@@ -448,6 +461,17 @@ $`\mathcal H = \int[s\ln(s/B) - s + B]`$ never increases (an *H-theorem*; see
   Horn and Jackson, *Arch. Rational Mech. Anal.* **47** (1972) 81.
 
 ---
+
+### dipole centre
+
+Where K1 resampling puts the $`\pm`$ pair that carries a cell's first moment
+$`\mathbf R`$: the unique point at which the pair also matches the removed
+worlds' second moment along $`\mathbf R`$. A lone pair is returned where it
+was, so a dipole moves with the flow instead of being pinned to the cell.
+
+- **Defined:** [`population_control.md` §3](analysis/population_control.md#3-k1-resampling-and-the-dipole-centre),
+  Lemma PC4.
+- **See:** [K1 resampling](#k1-resampling).
 
 ## E
 
@@ -650,6 +674,21 @@ something already at $`p`$.
 ---
 
 ## K
+
+### K1 resampling
+
+Population control that keeps, in every cell of the relative phase space,
+the signed count $`M_0`$ and the first moment $`M_1`$ of the worlds in it: the
+majority sign's net worlds stay, and the removed worlds' first moment is
+carried by $`\pm`$ pairs at their [dipole centre](#dipole-centre). The
+[contact sink](#contact-sink-garbage-collection) is the case that keeps only
+$`M_0`$. Its error is second order in the cell where the contact sink's is
+first order.
+
+- **Defined:** [`population_control.md` §3](analysis/population_control.md#3-k1-resampling-and-the-dipole-centre),
+  Definition PC3; measured in Proposition PC6.
+- **Not to confuse with:** the channel index $`q`$ or the kernel table
+  $`K_q`$; the "1" is the order of the moments kept.
 
 ### kernel
 
