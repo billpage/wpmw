@@ -54,6 +54,7 @@ Theorem and open-item labels are shared across the whole of `docs/`. Each note u
 | Z | step 19 (Z1–Z5) | — |
 | WC | step 25 (WC0–WC10) | The first two-letter prefix: every single letter is taken. "World clock". |
 | PC | step 26 (PC1–PC6) | "Population control". Not the PC of particle-in-cell codes cited in that note. |
+| CX | supplement/world_crossings.md (CX1–CX5) | "Crossing". Cited from step 26 (PC-SP4); see §9. |
 | Thm 1–4, Lem 0–5, Prop 1–3, Cor 4.x | steps 4 and 5 | Numbered without a letter; later notes cite them as 'Theorem 4', 'Lemma 4', 'Proposition 3'. |
 | F, H, J, T, W | supplement: four_action_foundations (F1–F4), holland_two_fluid_correspondence (H1–H7), emission_and_absorption (J1–J2), takabayasi_1954_stochastic_picture (T-series), limkumnerd_weighted_paths (W1–W5) | Cited from the analysis notes; see §9. |
 
@@ -61,7 +62,7 @@ Open-item ID series, all of the form `<note prefix><suffix><n>`. The suffixes `S
 
 | Suffix | Where used |
 |---|---|
-| -SP | G-SP (step 17), S-SP (16), N-SP (18), Y-SP (20), M-SP (21), L-SP (22), Q-SP (23), V-SP (24), WC-SP (25), PC-SP (26); supplement: J-SP, H-SP, W-SP, R-SP |
+| -SP | G-SP (step 17), S-SP (16), N-SP (18), Y-SP (20), M-SP (21), L-SP (22), Q-SP (23), V-SP (24), WC-SP (25), PC-SP (26); supplement: CX-SP, J-SP, H-SP, W-SP, R-SP |
 | -LS | K-LS (step 15), Z-LS (step 19) |
 | CLS | step 14 |
 | CLA | docs/algorithm/compensated_liouville_algorithm.md |
@@ -904,7 +905,7 @@ Labelled items link to their line; the unlabelled items of the older notes are g
 | [PC-SP1](population_control.md#9-open-items) | K1 makes the ensemble slightly too pure early on (+0.010 at t = 1, cell 0.7) and markedly too pure when cells hold few worlds (cell 0.5 at ν = 1e5); only under repeated application. The second moment across the dipole (a K2 rule), the integrator phases reset on every new pair, or noise in R carried as signal? How many worlds per cell are enough? | open | Prop PC6 |
 | [PC-SP2](population_control.md#9-open-items) | K1 costs up to 2k worlds per cell holding both signs: is that affordable in six or twelve relative dimensions, and should the cells be on bond coordinates? | open | WC-SP10, Cor M10 |
 | [PC-SP3](population_control.md#9-open-items) | A principled schedule for shifting the grid (every ten steps is empirical): shift when a dipole would cross a face? | open | Def PC3 |
-| [PC-SP4](population_control.md#9-open-items) | Exact absorption off a mesh: can events be kept on a momentum lattice so that daughters and partners coincide? | open | Prop PC5, Thm N3 |
+| [PC-SP4](population_control.md#9-open-items) | Exact absorption off a mesh: can events be kept on a momentum lattice so that daughters and partners coincide? | open; see supplement/world_crossings.md (CX3: no chance crossings for n ≥ 2; CX5: vertex kin meet by construction) | Prop PC5, Thm N3 |
 
 ## 8. Defects found in demos
 
@@ -936,6 +937,7 @@ Labels that analysis notes cite but that are defined in [`../supplement/`](../su
 | F3 | supplement/four_action_foundations.md | Endpoint locality selects the symmetric member of the FR family: the four-action model. | cited in step 10 (A1) |
 | T3 | supplement/takabayasi_1954_stochastic_picture.md | No one-body Markov reading: a generator with a signed off-diagonal kernel is not a Markov jump generator. | reappears unweakened in the residual channel (splitting §2.2) |
 | X7 | supplement/poisson_kicks_and_pair_branching.md §7.1 | Measured: integrate-and-fire clocks with random initial phases only are unbiased for pair branching on the cosine-plus-harmonic problem and about 11 per cent quieter than thinning; the noise is the signed population's counting noise. | cited in step 23 §9.3 (Prop Q11) |
+| CX3, CX5 | supplement/world_crossings.md §§4, 6 | Exact chance crossings of worlds have probability zero unless n = d(N − 1) = 1 with momenta on a lattice; worlds that shared an event's vertex meet by construction, but kin partners for both daughters are rare (under one event in a hundred). | cited in step 26 (PC-SP4) |
 | J-SP3 | supplement/emission_and_absorption.md | The sea depth is an initial condition, not a theorem. | cited in step 23 §9.4(g): depth is also no remedy for the closed loop |
 
 Open items. Those marked `=` are the same question as an analysis-note item under another ID.

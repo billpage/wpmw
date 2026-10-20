@@ -1289,6 +1289,23 @@ see that directory's README for the ladder itself.
   worlds per `nu`; (c) every rule at `t = 3`, cross-seed deficit against
   population.
 
+- `demo_world_crossings.py` — companion to
+  `docs/supplement/world_crossings.md`: crossings of worlds in configuration
+  space-time, for three particles (problem G of step 25). Part A checks
+  Lemma CX2 (a delayed realisation is a translated one) on the flow of
+  problem G; Part B the codimension of a chance crossing (Lemma CX3) by Monte
+  Carlo in `n = 1, 2, 3`; Part C counts partners per absorption target in
+  PC5's box and in the crossing tube, on an absorption-only and a K1s10
+  ensemble (Proposition CX4); Part D records vertex kin and re-absorption
+  opportunities in an emission-only run (Proposition CX5); Part F draws the
+  figure. About two minutes in all.
+
+  ![Crossings of worlds](https://raw.githubusercontent.com/billpage/wpmw/output/figures/world_crossings.png)
+
+  (a) An absorption vertex in configuration space-time; (b) the crossing tube
+  for three particles on a line; (c) partners in the tube as a share of those
+  in PC5's box, against the step, for three impact parameters.
+
 - `demo_signed_local_kernel.py` — exact (SymPy) and spectral companion to
   `docs/supplement/poisson_kicks_and_pair_branching.md`, Parts A–E.  A: the
   Kramers–Moyal targets `M_{2s+1} = (-1)^{s+1} (hbar/2)^{2s} V^{(2s+1)}`,

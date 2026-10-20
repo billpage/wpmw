@@ -506,7 +506,11 @@ rerunning a part with the arguments above reproduces it.
   every ten steps.
 - **PC-SP4.** Absorption off a mesh needs $`\delta \ll \Delta p`$ and then
   finds too few partners. Can events be kept on a momentum lattice, so that
-  daughters and partners coincide as on the mesh?
+  daughters and partners coincide as on the mesh? *See
+  [`../supplement/world_crossings.md`](../supplement/world_crossings.md):*
+  worlds do not cross by chance for three or more particles (Lemma CX3),
+  but worlds that shared an event's vertex do meet, by construction
+  (Proposition CX5).
 
 ## 10. Sources
 

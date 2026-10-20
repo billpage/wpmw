@@ -327,6 +327,27 @@ rows fall into sectors that never mix.
 - **Not to confuse with:** a coset in group theory beyond this: the residue
   classes of $`p`$ modulo $`\pi\hbar/a`$.
 
+### crossing
+
+Two senses.
+
+- **Crossing of worlds:** two worlds at the same configuration point at the
+  same time. In one dimension it is how an absorption looks: two unpaired
+  worlds on rows $`p \pm \xi_q`$ crossing at the parent and binding at its row
+  (step 23, Proposition Q9(b)); crossings realise events but cannot trigger
+  them (Proposition Q10). For $`N`$ particles an absorption is a vertex in
+  configuration space-time where the parent's world-line meets two partners
+  approaching along the bond; a chance crossing has probability zero unless
+  the relative configuration space is one-dimensional, but worlds that shared
+  an event's vertex meet by construction
+  ([`supplement/world_crossings.md`](supplement/world_crossings.md),
+  Definition CX1, Lemma CX3, Proposition CX5).
+- **Barrier crossing:** a tagged world passing a barrier, as in the
+  transmission of step 20 (Theorem Y6).
+
+- **Not to confuse with:** two trajectories of the classical flow meeting in
+  *phase space*, which they never do between events.
+
 ### cross-seed estimator
 
 The purity of an ensemble computed as the overlap of two independently
