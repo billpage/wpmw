@@ -694,6 +694,29 @@ something already at $`p`$.
 
 ---
 
+## J
+
+### Jordan lifting
+
+The representation of a signed generator $`L = A - B`$ ($`A`$ Metzler,
+$`B \ge 0`$) by a positive two-species process: $`W = u^+ - u^-`$ obeys
+$`L`$ exactly and $`S = u^+ + u^-`$ obeys $`A + B`$. Taking $`A`$ and $`B`$ to
+be the positive and negative parts of the Hahn–Jordan decomposition of the
+kernel is the cheapest choice: the unpaired-world count then grows at
+exactly $`\lVert J\rVert_{TV}`$, and no positive linear lifting grows more
+slowly. For Takabayasi's kernel it is the emissive realisation of every event
+with no sea in it.
+
+- **Defined:** [`jordan_lifting_and_pair_chemistry.md` §§2–3](supplement/jordan_lifting_and_pair_chemistry.md#2-theorem-hj1-the-lifting),
+  Theorems HJ1 and HJ2.
+- **Not to confuse with:** the Hahn–Jordan split of the residual *field*
+  $`\mathcal R[W]`$ on phase space, which always exists
+  ([`limkumnerd_weighted_paths.md`](supplement/limkumnerd_weighted_paths.md),
+  Proposition W2); the lifting splits the *kernel*, which exists only when
+  it is a finite measure.
+
+---
+
 ## K
 
 ### K1 resampling

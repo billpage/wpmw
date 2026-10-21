@@ -55,6 +55,7 @@ Theorem and open-item labels are shared across the whole of `docs/`. Each note u
 | WC | step 25 (WC0–WC10) | The first two-letter prefix: every single letter is taken. "World clock". |
 | PC | step 26 (PC1–PC6) | "Population control". Not the PC of particle-in-cell codes cited in that note. |
 | CX | supplement/world_crossings.md (CX1–CX5) | "Crossing". Cited from step 26 (PC-SP4); see §9. |
+| HJ | supplement/jordan_lifting_and_pair_chemistry.md (HJ1–HJ5) | "Hahn–Jordan". Not H (Holland supplement) or J (emission and absorption supplement). |
 | Thm 1–4, Lem 0–5, Prop 1–3, Cor 4.x | steps 4 and 5 | Numbered without a letter; later notes cite them as 'Theorem 4', 'Lemma 4', 'Proposition 3'. |
 | F, H, J, T, W | supplement: four_action_foundations (F1–F4), holland_two_fluid_correspondence (H1–H7), emission_and_absorption (J1–J2), takabayasi_1954_stochastic_picture (T-series), limkumnerd_weighted_paths (W1–W5) | Cited from the analysis notes; see §9. |
 
@@ -62,7 +63,7 @@ Open-item ID series, all of the form `<note prefix><suffix><n>`. The suffixes `S
 
 | Suffix | Where used |
 |---|---|
-| -SP | G-SP (step 17), S-SP (16), N-SP (18), Y-SP (20), M-SP (21), L-SP (22), Q-SP (23), V-SP (24), WC-SP (25), PC-SP (26); supplement: CX-SP, J-SP, H-SP, W-SP, R-SP |
+| -SP | G-SP (step 17), S-SP (16), N-SP (18), Y-SP (20), M-SP (21), L-SP (22), Q-SP (23), V-SP (24), WC-SP (25), PC-SP (26); supplement: CX-SP, J-SP, H-SP, W-SP, R-SP, HJ-SP |
 | -LS | K-LS (step 15), Z-LS (step 19) |
 | CLS | step 14 |
 | CLA | docs/algorithm/compensated_liouville_algorithm.md |

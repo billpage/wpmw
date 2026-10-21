@@ -282,6 +282,12 @@ absorbing one whole photon $`\hbar k_q`$; a focus moves two particles by
 $`\pm q`$ cells each, absorbing none. No event transfers half a photon to
 anything.
 
+Moves 1 and 2 need no sea. [`jordan_lifting_and_pair_chemistry.md`](jordan_lifting_and_pair_chemistry.md)
+(Theorem HJ1) makes them a theorem about any signed generator, and Theorem
+HJ2 prices them: a positive representation pays at least
+$`\lVert J\rVert_{TV}`$ new unpaired worlds per world per unit time, and
+only a nonlinear sink can take them back. The sea's part is that payment.
+
 ### 5.3 Honest accounting
 
 Three qualifications, so the claim is not overstated.

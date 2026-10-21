@@ -1306,6 +1306,28 @@ see that directory's README for the ladder itself.
   for three particles on a line; (c) partners in the tube as a share of those
   in PC5's box, against the step, for three impact parameters.
 
+- `demo_jordan_lifting.py` — companion to
+  `docs/supplement/jordan_lifting_and_pair_chemistry.md`, Parts A–F. A:
+  SymPy check of the lifting (Theorem HJ1) and of the single-mode moments of
+  `J` and `|J|` (Corollary HJ3). B: three cosine modes on a periodic momentum
+  lattice — the Jordan lifting reproduces `exp(tL) W0` to 1e-14 and grows `S`
+  at exactly `2 x` the negative mass, and 2000 random positive splits never
+  grow more slowly (Theorem HJ2). C: the lifted branching process in phase
+  space for `V = cos x` with free streaming and no force, against a
+  split-operator Schrödinger solution (density, `<p>`, `<p^2>`, with errors
+  from 20 lineage groups) and against the HJ2 rate integrated along the run.
+  D: `PP + NN <-> 2PN` and `P + N <-> PN` equilibria and their inflation
+  asymptotics, a mass-action relaxation with its Horn–Jackson free energy,
+  and the energetics of H2 + I2 and C2 + O2 (Proposition HJ5). E: the four-
+  action defocus against independent up and down actions (Proposition HJ4).
+  F: the figure. About fifteen seconds.
+
+  ![The Jordan lifting and pair chemistry](https://raw.githubusercontent.com/billpage/wpmw/output/figures/jordan_lifting.png)
+
+  Left: the signed count of the positive process against Schrödinger;
+  centre: its world count against the HJ2 rate; right: equilibrium inflation
+  against `eps/kT`.
+
 - `demo_signed_local_kernel.py` — exact (SymPy) and spectral companion to
   `docs/supplement/poisson_kicks_and_pair_branching.md`, Parts A–E.  A: the
   Kramers–Moyal targets `M_{2s+1} = (-1)^{s+1} (hbar/2)^{2s} V^{(2s+1)}`,

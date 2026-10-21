@@ -747,3 +747,45 @@ resolution limit as the contact sink.
   109317 (2020). Resampling that keeps chosen moments exactly, by a
   constrained optimisation. arXiv:1702.05198.
   https://doi.org/10.1016/j.jcp.2020.109317
+
+## Positive liftings of signed kernels, and pair chemistry as a sink
+
+Cited by `docs/supplement/jordan_lifting_and_pair_chemistry.md` (Theorems HJ1,
+HJ2; Proposition HJ5; §7). Pawula, Horn–Jackson, Hudson, Kac–van Moerbeke
+and Spencer–Blunt–Foulkes are listed above.
+
+- Ikeda, N.; Nagasawa, M.; Watanabe, S. — "Branching Markov processes I, II,
+  III." *J. Math. Kyoto Univ.* **8**, 233–278 and 365–410 (1968); **9**,
+  95–160 (1969). The general theory of processes in which a parent persists
+  and emits; the class Theorem HJ1 lives in.
+- Wagner, W. — "A random cloud model for the Wigner equation." *Kinet. Relat.
+  Models* **9**, 217–235 (2016); WIAS Preprint 2083 (2015). A piecewise
+  deterministic Markov process of weighted particles whose functionals solve
+  the weak Wigner equation.
+  https://oa.tib.eu/renate/items/67423cdb-e80c-46a9-8e0d-63d291056fc2
+- Muscato, O.; Wagner, W. — "A class of stochastic algorithms for the Wigner
+  equation." *SIAM J. Sci. Comput.* **38**, A1483–A1507 (2016). The family of
+  signed-particle algorithms derived from pure jump processes on a general
+  state space. https://doi.org/10.1137/16M105798X
+- Shao, S.; Xiong, Y. — "A branching random walk method for many-body Wigner
+  quantum dynamics." *Numer. Math. Theor. Meth. Appl.* **12**, 21–71 (2019).
+  The Hahn–Jordan split of the Wigner kernel into two positive branches; the
+  variance grows at the rate set by the positive parts, the sign problem of
+  Theorem HJ2.
+  https://ojs.global-sci.org/index.php/nmtma/article/view/14223
+- Spekkens, R. W. — "Negativity and contextuality are equivalent notions of
+  nonclassicality." *Phys. Rev. Lett.* **101**, 020401 (2008). Every
+  quasi-probability representation of quantum theory has negativity; with
+  Hudson and Theorem T5, why the sign can be relocated but never removed.
+  https://doi.org/10.1103/PhysRevLett.101.020401 (arXiv:0710.5549)
+- Booth, G. H.; Thom, A. J. W.; Alavi, A. — "Fermion Monte Carlo without fixed
+  nodes: a game of life, death, and annihilation in Slater determinant space."
+  *J. Chem. Phys.* **131**, 054106 (2009). Signed walkers, annihilation on
+  coincidence. https://doi.org/10.1063/1.3193710
+- Morse, P. M. — "Diatomic molecules according to the wave mechanics. II.
+  Vibrational levels." *Phys. Rev.* **34**, 57–64 (1929). The binding well of
+  Cyganski's bound-pair chemistry. https://doi.org/10.1103/PhysRev.34.57
+- Sullivan, J. H. — "Mechanism of the 'bimolecular' hydrogen–iodine reaction."
+  *J. Chem. Phys.* **46**, 73–78 (1967). The rate follows the iodine-atom
+  concentration: H₂ + I₂ ⇌ 2HI, the call's example of pair exchange, is not
+  an elementary four-centre reaction.
