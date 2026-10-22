@@ -28,7 +28,11 @@
 > per `nu`; the one-body purity is held to -0.012 against -0.082. The deficit is
 > -0.022 at `nu = 1e5`, so it is the rule's limit at that cell, and it shrinks
 > with the cell to -0.014 at cell 0.5. With too few worlds per cell K1 makes the
-> ensemble too pure (PC-SP1).
+> ensemble too pure (PC-SP1). **Proposition PC7**, recorded for completeness:
+> retaining part of each cell's opposite-sign pairs for absorption, and
+> absorbing within the K1 cell with the first-moment error credited to K1,
+> raises the absorbed share past one half but never improves on K1s10
+> (-0.054 to -0.064 against -0.022); without the credit it is a contact sink.
 
 1. [What this note asks, settles and leaves open](#0-what-this-note-asks-settles-and-leaves-open)
 2. [Setting, observables and the yardstick](#1-setting-observables-and-the-yardstick)
@@ -87,6 +91,11 @@ emission, absorption and any other sink.
   population, and the deficit does not change between $`\nu = 10^5`$ and
   $`10^6`$. At $`\nu = 10^6`$ the deficit shrinks steadily with the cell
   ($`-0.099`$, $`-0.020`$, $`-0.014`$ at $`c = 1.0`$, $`0.7`$, $`0.5`$).
+- **Proposition PC7** (§5.1). Leaving part of each cell's opposite-sign
+  population to absorption, with K1 correcting the first moment, does not
+  help. Credited absorption followed by K1 keeps every cell's $`M_0`$ and
+  $`M_1`$ exactly as emission followed by K1 does, yet more than doubles
+  K1s10's deficit; uncredited, it is a contact sink.
 
 **Leaves open.** A small early excess of purity under K1, and a larger one
 when a cell holds too few worlds (PC-SP1); K1's cost in higher relative
@@ -426,6 +435,95 @@ Four more things the table shows:
   in $`W`$. A smaller early excess is part of the rule: at $`c = 0.7`$, $`P_a`$
   is $`+0.010`$ above the mesh at $`t = 1`$ at both $`\nu`$.
 
+### 5.1 Proposition PC7: retention and credited absorption
+
+*Recorded for completeness; the rule of §6 does not use it.*
+
+**The question.** K1 is a first-moment correction. Could it remove *less*
+than all of a cell's opposite-sign population, leaving a tunable unpaired
+signed population for events to absorb, so that the ontology's absorptive
+realisation does part of the work and K1 corrects what it gets wrong?
+
+**Retention.** K1sN$`r`$X: in a cell holding $`m`$ opposite-sign pairs, keep
+$`\lfloor X m + U\rfloor`$ of them ($`U`$ uniform on $`[0, 1)`$) as unpaired
+worlds and remove the rest. The pairs K1 adds carry only the removed worlds'
+first moment, so $`M_0`$ and $`M_1`$ of every cell are still kept (Part T:
+$`\max\lvert\Delta M_1\rvert \le 6.3\times10^{-13}`$ at $`X = 0.25`$ and $`0.5`$).
+
+**Absorption within the cell.** An event's two daughters are realised by
+absorbing, for each, the nearest unused world of the opposite sign in the
+daughter's own K1 cell (on the grid of the K1 step that follows), or both are
+created: the paired form, so the ledger's absorptive branch, admissible under
+Theorem S6. A daughter of sign $`s`$ due at $`z_t`$, realised by removing a
+partner of sign $`-s`$ at $`z_p`$, changes the cell's first moment by $`s z_p`$
+where emission would have changed it by $`s z_t`$. *Mode C* credits the
+difference: the virtual points $`+s`$ at $`z_t`$ and $`-s`$ at $`z_p`$ are added to
+the moments $`R`$ and $`A`$ of the worlds K1 removes in that cell (Definition
+PC3, Lemma PC4), and then discarded. *Mode W* does not.
+
+**Proposition PC7.** *(a) In every cell, mode C followed by K1 leaves $`M_0`$
+and $`M_1`$ exactly as emission followed by K1 does. (b) (Measured.) Neither
+retention nor credited absorption improves on K1s10; without the credit,
+absorption within the cell is a contact sink at that cell.*
+
+*Proof of (a).* Fix a cell, and let the K1 step remove the real set $`G`$ and
+add pairs carrying $`R = \sum_G \varepsilon z + \sum_v \varepsilon z`$, the sum
+over $`v`$ running over the virtual points. After it,
+$`M_1 = M_1^{\rm before} - \sum_G\varepsilon z + R = M_1^{\rm before} + \sum_v\varepsilon z`$.
+For one absorbed daughter, $`M_1^{\rm before}`$ holds $`+s z_p`$ (the partner
+removed) where emission holds $`+s z_t`$, and the virtual points add
+$`s(z_t - z_p)`$, which closes the difference. K1 keeps the cell's $`M_1`$ on
+the emission side, so the two agree. $`M_0`$: removing a world of sign $`-s`$
+and creating one of sign $`s`$ both add $`s`$, and the virtual points are
+balanced. Daughter and partner lie in the same cell of the same grid, so no
+moment crosses a face. $`\square`$
+
+Part T checks (a) on $`2\times10^4`$ worlds, one step, fixed grid: mode C
+against emission, $`\max\lvert\Delta M_0\rvert = 0`$ and
+$`\max\lvert\Delta M_1\rvert = 1.4\times10^{-13}`$ over all cells; mode W,
+$`6.9`$.
+
+*Measured* (problem G, reach $`2\pi`$, cell $`0.7`$, $`\nu = 10^5`$, two seeds,
+$`t = 3`$; $`f`$ is the absorbed share of daughters, $`\lvert d\rvert`$ the mean
+Chebyshev distance from a daughter to its partner; cross estimator):
+
+| rule | $`f`$ | $`\lvert d\rvert`$ | $`P_a`$ | $`P_1`$ | $`N/\nu`$ |
+|---|---|---|---|---|---|
+| **K1s10** (PC6) | — | — | **−0.022** | **+0.000** | 2.94 |
+| K1s10, retain 0.25 | — | — | −0.029 | −0.006 | 3.30 |
+| K1s10, retain 0.5 | — | — | −0.046 | −0.027 | 5.20 |
+| K1s10 + mode C | 0.377 | 0.28 | −0.054 | −0.019 | 2.88 |
+| K1s10, retain 0.25 + mode C | 0.466 | 0.27 | −0.057 | −0.028 | 3.14 |
+| K1s10, retain 0.5 + mode C | 0.568 | 0.27 | −0.064 | −0.022 | 4.35 |
+| K1s10, retain 0.25 + mode W | 0.353 | 0.26 | −0.206 | −0.140 | 1.97 |
+| contact sink (for comparison) | — | — | −0.211 | −0.139 | 1.12 |
+
+Four things follow.
+
+- *The credit is what matters.* Without it, mode W lands on the contact sink
+  at the same cell ($`-0.206`$ against $`-0.211`$): partners about $`0.4`$ of a
+  cell away carry the error PC5 described, and nothing restores it.
+- *With the credit, the first two moments are not enough.* Mode C agrees with
+  emission plus K1 in every cell's $`M_0`$ and $`M_1`$, yet its deficit is
+  two and a half times K1s10's. The two differ only in which worlds leave:
+  absorption takes each daughter's nearest opposite partner, K1 takes
+  opposite pairs at random within the cell and places its pairs at the dipole
+  centre, which also fits the second moment along the dipole (Lemma PC4). The
+  difference is therefore in the second and higher moments. It was not traced
+  further.
+- *Retention costs on both counts.* Opposite-sign worlds left in a cell raise
+  the population (to $`5.2\nu`$ at $`X = 0.5`$) and the deficit, with or without
+  absorption.
+- *Theorem N3 holds throughout.* Retention raises $`f`$ past one half
+  ($`0.568`$ at $`X = 0.5`$), yet the population still grows, to $`4.35\nu`$.
+  By N3, $`\tfrac12 - f = R_{\rm sink}/2\Gamma_{\rm tot}`$, so the K1 step is
+  then a net *source*: the pairs it adds outnumber the worlds it removes.
+  Absorption replaces work K1 would have done (mode C at $`X = 0`$ holds
+  $`N/\nu = 2.88`$ against $`2.94`$) but does not hold the population better.
+
+So the absorptive realisation is optional in the numerics, as PC5 found off
+a mesh: K1s10 alone remains the population control.
+
 ## 6. What the specification takes from this
 
 Item 5 of step 25's outline (§8.2, *population control*) becomes:
@@ -471,7 +569,11 @@ are fixed in the code. The mesh reference is `three_worlds_M2.json` from
   $`2\times10^5`$ synthetic signed worlds at cells $`0.35`$ and $`0.7`$, where
   the contact sink changes a cell's $`M_1`$ by up to $`214`$. Every pair's
   separation is at most the cell. Lemma PC4 returns a lone pair's centre to
-  $`5.8\times10^{-15}`$ (200 random pairs). Absorption keeps the net weight
+  $`5.8\times10^{-15}`$ (200 random pairs). With retention $`0.25`$ and $`0.5`$,
+  K1 still keeps $`M_0`$ exactly and $`M_1`$ to $`6.3\times10^{-13}`$. Mode C
+  followed by K1 matches emission followed by K1 in every cell's $`M_0`$
+  exactly and $`M_1`$ to $`1.4\times10^{-13}`$ (Proposition PC7(a)); mode W
+  differs by up to $`6.9`$. Absorption keeps the net weight
   exactly, and its first-moment error per step stays within
   (absorbed halves) $`\times\,\delta`$.
 - **Part P.** The one-application table of §5.
@@ -482,7 +584,12 @@ are fixed in the code. The mesh reference is `three_worlds_M2.json` from
   `wpmw-popctl-nu1e6` (`R --config K1s10:0.7 contact:0.35 --nu 1000000 --seeds
   2`), `wpmw-popctl-cells` (`R --config K1s10:0.5 K1s10:1.0 K1s5:0.7 K1s20:0.7
   --nu 100000 --seeds 2`) and `wpmw-popctl-cells-nu1e6` (`R --config K1s10:0.5
-  K1s10:1.0 --nu 1000000 --seeds 2 --cap 8`).
+  K1s10:1.0 --nu 1000000 --seeds 2 --cap 8`). The runs of §5.1 ran in the
+  container (October 2026, commit `4ef04cd` with the retention and credit code
+  as a working tree): `R --config K1s10r0.25:0.7 K1s10r0.5:0.7
+  K1s10:0.7:0.7:C K1s10r0.25:0.7:0.7:C K1s10r0.5:0.7:0.7:C
+  K1s10r0.25:0.7:0.7:W --nu 100000 --seeds 2`. For modes C and W the third
+  field only switches absorption on; partners come from the K1 cell.
 - **Part C.** The cross-seed and self estimators from snapshots at
   $`t = 1, 2, 3`$, for every rule.
 - **Part F.** The figure.

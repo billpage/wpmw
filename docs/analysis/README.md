@@ -49,7 +49,12 @@ bottom up. Each note states in its §0 what it inherits and what it retracts.
   worlds per `nu`; the one-body purity is held to -0.012 against -0.082. The
   deficit is -0.022 at `nu = 1e5`, so it is the rule's limit at that cell, and
   it shrinks with the cell to -0.014 at cell 0.5. With too few worlds per cell
-  K1 makes the ensemble too pure (PC-SP1).
+  K1 makes the ensemble too pure (PC-SP1). **Proposition PC7**, recorded for
+  completeness: retaining part of each cell's opposite-sign pairs for
+  absorption, and absorbing within the K1 cell with the first-moment error
+  credited to K1, raises the absorbed share past one half but never improves
+  on K1s10 (-0.054 to -0.064 against -0.022); without the credit it is a
+  contact sink.
 - **25.** **[`world_clocks.md`](world_clocks.md)** \
   Is the reader — its lever, chords and bank of integrators — a property of a
   particle, or a relation between worlds that a particle inherits? With two

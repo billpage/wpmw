@@ -1272,10 +1272,16 @@ see that directory's README for the ladder itself.
   centre; `K1b`, with each pair at its dipole centre and the grid shifted every
   step; `K1f`, dipole centre on a fixed grid; `K1sN`, dipole centre with the
   grid shifted every `N` steps (`K1s10` is the rule of Proposition PC6); `K1uN`,
-  the same with the centre not clipped; `none`. Absorption is added with a
-  tolerance: `--config sink:cell:delta:mode`, mode `P` (paired), `S` (single)
-  or `D` (paired, dipole-matched). Part T tests that K1 keeps `M0` and `M1` of
-  every cell, Lemma PC4 and the absorption bookkeeping; Part P applies each
+  the same with the centre not clipped; `K1sNrX`, as `K1sN` with a fraction
+  `X` of each cell's opposite-sign pairs retained (Proposition PC7); `none`.
+  Absorption is added with a tolerance: `--config sink:cell:delta:mode`, mode
+  `P` (paired), `S` (single: the mixed realisation Theorem S6 excludes, a
+  comparator only) or `D` (paired, dipole-matched); with a `K1sN` sink, mode
+  `C` or `W` absorbs both daughters from their own K1 cells, with the
+  first-moment error credited to K1 (`C`) or not (`W`) (Proposition PC7).
+  Part T tests that K1 keeps `M0` and `M1` of every cell, with and without
+  retention, Lemma PC4, that mode C plus K1 matches emission plus K1 in `M0`
+  and `M1`, and the absorption bookkeeping; Part P applies each
   sink once to worlds sampled from the mesh; Part R runs the worlds (`--config
   --nu --seeds --T --cap`), saving snapshots at `t = 1, 2, 3`; Part C computes
   the cross-seed and self estimators of `P_a` and `P1` from them (Lemma PC1);
