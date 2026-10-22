@@ -21,9 +21,14 @@ Parts:
       box of PC5 (Chebyshev radius delta), and against dt.
   D   Proposition CX5 (vertex kin): worlds that shared a configuration vertex with
       the parent (its parent and sibling at its birth, its own daughters) as
-      partners, and the special case that undoes an earlier event of the same
-      parent, bond and channel (re-absorption).  Emission only, no sink.
+      partners, selected by record (the exact vertex offset) and, for comparison,
+      by current momentum; and the case that undoes an earlier event of the same
+      parent, bond and channel.  Emission only, no sink.
   F   the figure.
+  G   Proposition CX6: how kin part and meet again: free motion (they never do,
+      unless later events close a loop), a harmonic trap (the flow refocuses them
+      exactly at the parent after half a period of the relative motion), problem
+      G (only roughly); measured on 2000 kin triads, and a second figure.
 
 Outputs go through wpmwlib.wpmw_utils.output_path (and docs_path for the figure).
 """
@@ -228,33 +233,44 @@ def part_C(nu=50000, T=1.0, m=20000, seed=3, delta=0.1, bs=(0.1, 0.02, 0.005), d
 # Part D -- vertex kin: partners by descent, and re-absorption
 # ----------------------------------------------------------------------------
 class FamilyWorlds(pc.ControlledWorlds):
-    """ControlledWorlds with world identities and a record, per parent, of the events it
-    emitted.  When a parent fires bond b, channel q with sign tau, and an earlier event of
-    the same parent, bond and channel had sign -tau and both its daughters are still
-    present, the new event can be realised by removing those two daughters (Proposition
-    CX5): the + target wants +tau at p + K, the earlier + daughter is -tau there; the -
-    target wants -tau at p - K, the earlier - daughter is +tau there.  The only error is
-    the delay since the earlier event (Lemma CX2).  Here the opportunities are only
+    """ControlledWorlds with world identities and records.  A world C born on side s
+    (s = +1 for the daughter at p + K, -1 for the one at p - K) of an event of G on bond b,
+    channel q (K = K(b, q)) records its parent G, its sibling S, b, q, s and the step; at
+    the vertex z_G - z_C = (0, -s K) and z_S - z_C = (0, -2 s K).  Each world also lists the
+    daughters it emitted, D with z_D - z_C = (0, s' K').  An event of A on (b, q) with sign
+    tau needs, for its + daughter, a world of sign -tau at vertex offset +K(b, q) and, for
+    its - daughter, one of sign +tau at -K(b, q).  'By record': a kin whose recorded vertex
+    offset is exactly that vector (same bond, same channel multiple, right side) with the
+    right sign; absorbing it realises the event as if it had happened at the vertex, so the
+    only error is the delay (Lemma CX2).  'By momentum': a kin whose current momentum is
+    within kin_dp of the target.  The undo case: an earlier event of A on the same (b, q)
+    with sign -tau whose two daughters are still present.  Opportunities are only
     recorded; every event is realised by emission."""
 
     def __init__(self, mult, cell, nu, seed, sink="none"):
         assert sink == "none", "world identities are not carried through a sink here"
         super().__init__(mult, cell, nu, seed, sink=sink)
         self.wid = np.arange(nu)
-        self.alive = np.ones(nu, bool)
-        self.book = {}                 # (parent id, bond, channel, sign) -> [(id +, id -, step), ...]
+        self.next_id = nu
         self.step = 0
-        self.n_avail = 0               # events with an earlier opposite event whose daughters are alive
-        self.ages = []                 # age in steps of each available opportunity (the most recent)
-        self.kin = {}                  # world id -> ids that shared a configuration vertex with it
-        self.kin_dp = 0.05             # momentum tolerance for a vertex-kin partner (force drift since birth)
-        self.n_kin_half = 0            # events with a vertex-kin partner for at least one daughter
-        self.n_kin_both = 0            # ... for both daughters
+        self.birth = {}                # id -> (parent, sibling, bond, channel multiple, side, step)
+        self.kids = {}                 # id -> [(daughter, bond, channel multiple, side, step), ...]
+        self.book = {}                 # (parent, bond, channel multiple, sign) -> [(id +, id -, step), ...]
+        self.kin_dp = 0.05
+        self.c = dict(halves=0, rec=0, mom=0, rec_and_mom=0, both_rec=0, undo=0,
+                      rec_type=dict(parent=0, sibling=0, daughter=0))
+        self.rec_age, self.rec_dp, self.undo_age = [], [], []
 
-    def _new_ids(self, k):
-        ids = np.arange(self.alive.size, self.alive.size + k)
-        self.alive = np.concatenate([self.alive, np.ones(k, bool)])
-        return ids
+    def _kin(self, A):
+        """(id, type, (bond, signed channel multiple) of the vertex offset z_kin - z_A, step)."""
+        out = []
+        if A in self.birth:
+            g, sib, bb, qm, s_, stp = self.birth[A]
+            out.append((g, "parent", (bb, -s_ * qm), stp))
+            out.append((sib, "sibling", (bb, -2 * s_ * qm), stp))
+        for (dd, bb, qm, s_, stp) in self.kids.get(A, ()):
+            out.append((dd, "daughter", (bb, s_ * qm), stp))
+        return out
 
     def fire(self, dt):
         self.step += 1
@@ -292,38 +308,51 @@ class FamilyWorlds(pc.ControlledWorlds):
         zt[m + rows, tw.NP + bj] += d
         st = np.concatenate([tau, -tau])
         pid = self.wid[w]
+        qm = q + 1                                             # channel as a multiple of dp
         rzt = pc.rel(zt)
         for e in range(m):
-            # vertex kin: worlds that shared a configuration point with the parent (its parent and
-            # sibling at its birth, its own daughters); is one of them at a target with the right sign?
-            kin = [k_ for k_ in self.kin.get(pid[e], ()) if self.alive[k_]]
+            A = int(pid[e])
+            self.c["halves"] += 2
+            kin = self._kin(A)
+            got = [False, False]
             if kin:
-                ix = np.searchsorted(self.wid, kin)
-                ok = (ix < self.wid.size)
-                ix = ix[ok][self.wid[ix[ok]] == np.array(kin)[ok]]
-                if ix.size:
-                    rk = pc.rel(np.concatenate([self.x[ix], self.p[ix]], 1))
-                    hits = []
-                    for h in (e, e + m):
-                        good = (self.eps[ix] == -st[h]) & (np.abs(rk[:, 2:] - rzt[h, 2:]).max(1) <= self.kin_dp)
-                        hits.append(bool(good.any()))
-                    self.n_kin_half += hits[0] or hits[1]
-                    self.n_kin_both += hits[0] and hits[1]
-            stack = self.book.get((pid[e], b[e], q[e], -tau[e]))
-            while stack and not (self.alive[stack[-1][0]] and self.alive[stack[-1][1]]):
-                stack.pop()                                    # drop records whose daughters are gone
+                ids = np.array([k_[0] for k_ in kin])
+                ix = np.searchsorted(self.wid, ids)        # identities stay sorted: none are removed here
+                rk = pc.rel(np.concatenate([self.x[ix], self.p[ix]], 1))
+                for hh, (h, side) in enumerate(((e, 1), (e + m, -1))):
+                    need = (int(b[e]), side * int(qm[e]))
+                    rec = mom = None
+                    for n_, (kid, typ, key, stp) in enumerate(kin):
+                        if self.eps[ix[n_]] != -st[h]:
+                            continue
+                        mis = float(np.abs(rk[n_, 2:] - rzt[h, 2:]).max())
+                        if mom is None and mis <= self.kin_dp:
+                            mom = typ
+                        if rec is None and key == need:
+                            rec = (typ, self.step - stp, mis)
+                    if mom:
+                        self.c["mom"] += 1
+                    if rec:
+                        got[hh] = True
+                        self.c["rec"] += 1
+                        self.c["rec_type"][rec[0]] += 1
+                        self.rec_age.append(rec[1])
+                        self.rec_dp.append(rec[2])
+                        self.c["rec_and_mom"] += mom is not None
+            self.c["both_rec"] += got[0] and got[1]
+            stack = self.book.get((A, int(b[e]), int(qm[e]), -tau[e]))
             if stack:
-                age = self.step - stack[-1][2]
-                self.n_avail += 1
-                self.ages.append(age)
-        new_ids = self._new_ids(2 * m)
-        # record the emitted events: the + daughter (index e) and the - daughter (index e + m)
+                self.c["undo"] += 1
+                self.undo_age.append(self.step - stack[-1][2])
+        new_ids = np.arange(self.next_id, self.next_id + 2 * m)
+        self.next_id += 2 * m
         for e in range(m):
             ip, im = int(new_ids[e]), int(new_ids[e + m])
-            self.book.setdefault((pid[e], b[e], q[e], tau[e]), []).append((ip, im, self.step))
-            self.kin[ip] = [int(pid[e]), im]
-            self.kin[im] = [int(pid[e]), ip]
-            self.kin.setdefault(int(pid[e]), []).extend([ip, im])
+            A, bb, qq = int(pid[e]), int(b[e]), int(qm[e])
+            self.birth[ip] = (A, im, bb, qq, +1, self.step)
+            self.birth[im] = (A, ip, bb, qq, -1, self.step)
+            self.kids.setdefault(A, []).extend([(ip, bb, qq, +1, self.step), (im, bb, qq, -1, self.step)])
+            self.book.setdefault((A, bb, qq, tau[e]), []).append((ip, im, self.step))
         self.x = np.concatenate([self.x, zt[:, :tw.NP]])
         self.p = np.concatenate([self.p, zt[:, tw.NP:]])
         self.eps = np.concatenate([self.eps, st])
@@ -347,8 +376,8 @@ def run_family(nu, seed, T, tag):
                                     r=pc.rel(np.concatenate([w.x, w.p], 1)).astype(np.float32),
                                     e=w.eps.astype(np.int8))
             o = tw.observe(w.x, w.p, w.eps, nu, tw.v_gauss)
-            o.update(t=t, events=w.events_n, avail=w.n_avail, kin_half=w.n_kin_half,
-                     kin_both=w.n_kin_both)
+            cnt = {k_: (dict(v) if isinstance(v, dict) else v) for k_, v in w.c.items()}
+            o.update(t=t, events=w.events_n, **cnt)
             rows.append(o)
         if i == n:
             break
@@ -359,27 +388,204 @@ def run_family(nu, seed, T, tag):
         w.fire(tw.DT)
         w.sink()
         f = tw.force(w.x, tw.dv_gauss)
-    ages = np.array(w.ages)
-    return dict(nu=nu, seed=seed, T=T, tag=tag, rows=rows,
-                age_hist=np.bincount(np.minimum(ages, 50), minlength=51).tolist() if ages.size else [],
-                wall=time.perf_counter() - t0)
+    return dict(nu=nu, seed=seed, T=T, tag=tag, rows=rows, rec_age=(np.array(w.rec_age) * tw.DT).tolist(),
+                rec_dp=w.rec_dp, undo_age=(np.array(w.undo_age) * tw.DT).tolist(), wall=time.perf_counter() - t0)
 
 
 def part_D(nu=20000, T=0.5):
-    tw.rule(f"Part D. Proposition CX5: how often an event can undo an earlier event of its parent "
+    tw.rule(f"Part D. Proposition CX5: kin partners by record and by current momentum "
             f"(emission only, no sink, nu = {nu}, t <= {T})")
     r = run_family(nu, 0, T, "D")
     for row in r["rows"]:
         if row["events"]:
-            print(f"  t = {row['t']:4.2f}: events {row['events']:8d}; an undoable earlier event "
-                  f"{row['avail'] / row['events']:.4f}; a vertex-kin partner (momentum within 0.05) for one "
-                  f"daughter {row['kin_half'] / row['events']:.4f}, for both {row['kin_both'] / row['events']:.4f}; "
-                  f"worlds per nu {row['N'] / nu:.2f}")
-    h = np.array(r["age_hist"])
-    c = np.cumsum(h) / h.sum()
-    print(f"  age of the earlier event, in steps of {tw.DT}: median {np.searchsorted(c, 0.5)}, "
-          f"P(age <= 1) {c[1]:.3f}, P(age <= 10) {c[10]:.3f}, P(age >= 50) {1 - c[49]:.3f}")
+            hv = row["halves"]
+            print(f"  t = {row['t']:4.2f}: events {row['events']}, daughters {hv}")
+            print(f"     a kin partner by record {row['rec'] / hv:.4f} of daughters "
+                  f"({', '.join(f'{k_} {v}' for k_, v in row['rec_type'].items())}); "
+                  f"by current momentum (within 0.05) {row['mom'] / hv:.4f}; "
+                  f"record partners that pass the momentum test {row['rec_and_mom'] / max(1, row['rec']):.3f}")
+            print(f"     both daughters by record {row['both_rec'] / row['events']:.4f} of events; "
+                  f"an earlier opposite event of the same parent, bond and channel to undo "
+                  f"{row['undo'] / row['events']:.4f}")
+    a, dp = np.array(r["rec_age"]), np.array(r["rec_dp"])
+    print(f"  record partners: age median {np.median(a):.3f}, 90th percentile {np.percentile(a, 90):.3f}")
+    for lo, hi in ((0, 0.05), (0.05, 0.15), (0.15, 0.3), (0.3, 0.6)):
+        sel = (a > lo) & (a <= hi)
+        if sel.any():
+            print(f"     age in ({lo}, {hi}]: {sel.sum():6d} partners; momentum mismatch median "
+                  f"{np.median(dp[sel]):.4f}; fail the 0.05 momentum test {np.mean(dp[sel] > 0.05):.3f}")
+    u = np.array(r["undo_age"])
+    print(f"  undo: age median {np.median(u):.3f}; P(age <= 0.01) {np.mean(u <= 0.0101):.3f}, "
+          f"P(age <= 0.1) {np.mean(u <= 0.1001):.3f}")
     return r
+
+
+# ----------------------------------------------------------------------------
+# Part G -- how kin part and meet again: free motion, lane changes, a trap
+# ----------------------------------------------------------------------------
+def kin_triads(dv, m=2000, T=6.0, h=0.002, seed=3):
+    """Parent, red (p + K) and blue (p - K) born at one configuration point, carried by the
+    flow with pair force dv: separation of red and blue in the relative configuration space
+    against time, and, at their first return, how close they come, where the parent is and
+    what their momentum difference is."""
+    J = tw.OJ[:2]
+    rng = np.random.default_rng(seed)
+    x = rng.normal(0, np.sqrt(0.5), (m, 3))
+    p = rng.normal(0, np.sqrt(0.5), (m, 3))
+    b = rng.integers(0, 3, m)
+    i = np.array([ij[0] for ij in tw.BONDS])[b]
+    j = np.array([ij[1] for ij in tw.BONDS])[b]
+    xi = 0.25 * rng.integers(1, 8, m)
+    K = np.zeros((m, 3))
+    K[np.arange(m), i] = xi
+    K[np.arange(m), j] = -xi
+    nK = np.linalg.norm(K @ J.T, axis=1)
+    X, P = np.stack([x, x.copy(), x.copy()]), np.stack([p, p + K, p - K])
+
+    def F(X):
+        return np.stack([tw.force(X[k], dv) for k in range(3)])
+    f = F(X)
+    n = int(round(T / h))
+    sep, mid, dpk = np.zeros((n, m)), np.zeros((n, m)), np.zeros((n, m))
+    for s_ in range(n):
+        P = P + 0.5 * h * f
+        X = X + h * P
+        f = F(X)
+        P = P + 0.5 * h * f
+        sep[s_] = np.linalg.norm((X[1] - X[2]) @ J.T, axis=1)
+        mid[s_] = np.linalg.norm(((X[1] + X[2]) / 2 - X[0]) @ J.T, axis=1)
+        dpk[s_] = np.linalg.norm(((P[1] - P[2]) / 2) @ J.T, axis=1) / nK
+    t = h * (np.arange(n) + 1)
+    rows = []
+    for e in range(m):
+        d = np.diff(sep[:, e])
+        up = np.flatnonzero((d[:-1] > 0) & (d[1:] <= 0))
+        if not up.size:
+            continue
+        k0 = up[0] + 1
+        dn = np.flatnonzero((d[k0:-1] < 0) & (d[k0 + 1:] >= 0))
+        if not dn.size:
+            continue
+        k = k0 + dn[0] + 1
+        rows.append((t[k], sep[k, e] / sep[k0, e], mid[k, e], dpk[k, e]))
+    return t, sep / nK[None, :], np.array(rows)
+
+
+def part_G():
+    tw.rule("Part G. Kin part at their vertex and meet again only if the flow (or later events) brings them back")
+    out = {}
+    for name, dv in (("trap", lambda r: 0 * r), ("moshinsky", tw.dv_harm), ("G", tw.dv_gauss)):
+        t, sep, r = kin_triads(dv)
+        print(f"  {name:9s}: {len(r)} of 2000 kin pairs return within t = 6; first return t = "
+              f"{np.median(r[:, 0]):.2f} (10-90%: {np.percentile(r[:, 0], 10):.2f}-{np.percentile(r[:, 0], 90):.2f}); "
+              f"closest approach / largest "
+              f"separation {np.median(r[:, 1]):.3f} (90%: {np.percentile(r[:, 1], 90):.3f}); "
+              f"parent from their midpoint {np.median(r[:, 2]):.3f}; "
+              f"|p_red - p_blue| / 2|K| {np.median(r[:, 3]):.3f}")
+        q = np.percentile(sep, [10, 50, 90], axis=1)
+        out[name] = dict(t=t[::25].tolist(), q10=q[0][::25].tolist(), q50=q[1][::25].tolist(),
+                         q90=q[2][::25].tolist(), samples=sep[::25, :4].T.tolist(),
+                         t_return=float(np.median(r[:, 0])), close=float(np.median(r[:, 1])),
+                         mid=float(np.median(r[:, 2])), dp=float(np.median(r[:, 3])), n=int(len(r)))
+    return out
+
+
+def part_G_figure(Gd):
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    ink, muted, grid = "#2b2b2a", "#8a8a85", "#e6e6e3"
+    red, blue, violet, aqua = "#e34948", "#2a78d6", "#6250d6", "#1baf7a"
+    plt.rcParams.update({"axes.edgecolor": muted, "axes.labelcolor": ink, "xtick.color": muted,
+                         "ytick.color": muted, "axes.spines.top": False, "axes.spines.right": False,
+                         "font.size": 10})
+    fig, ax = plt.subplots(2, 2, figsize=(14, 11))
+    xi = 0.5
+
+    def pair_before(a, t0, x0, v):
+        tt = np.linspace(t0, 0, 20)
+        a.plot(x0 + v * tt, tt, color=muted, lw=7, alpha=0.35, solid_capstyle="butt")
+
+    # (a) free motion: lanes, the emission vertex, the kin part for ever
+    a = ax[0, 0]
+    v0 = 0.3
+    tt = np.linspace(0, 1.6, 30)
+    pair_before(a, -0.6, 0, v0)
+    a.plot(v0 * np.linspace(-0.6, 1.6, 30), np.linspace(-0.6, 1.6, 30), color=ink, lw=2.2, label="parent (lane p)")
+    a.plot((v0 + xi) * tt, tt, color=red, lw=2.2, label="red daughter (lane p + ξ)")
+    a.plot((v0 - xi) * tt, tt, color=blue, lw=2.2, label="blue daughter (lane p − ξ)")
+    a.scatter([0], [0], s=70, color=ink, zorder=5)
+    a.annotate("E: emission vertex", (0, 0), xytext=(0.12, -0.12), fontsize=9, color=ink)
+    ta = 1.2
+    a.plot([(v0 - xi) * ta, (v0 + xi) * ta], [ta, ta], ls=":", color=ink, lw=1.2)
+    a.annotate("absorbing them here 'undoes' E late:\nerror = their separation 2ξa/m (Lemma CX2)",
+               ((v0 + xi) * ta, ta), xytext=(0.45, 0.85), fontsize=8.5, color=ink,
+               arrowprops=dict(arrowstyle="-", color=muted, lw=0.8))
+    a.text(-0.95, -0.45, "aligned pair\n(in lane p,\nwith the parent)", fontsize=8.5, color=muted)
+    a.set(xlim=(-1.0, 1.5), ylim=(-0.6, 1.6), xlabel="x", ylabel="t",
+          title="(a) free motion (the expressway): kin meet only at E")
+    a.legend(fontsize=8, frameon=False, loc="lower right")
+    # (b) free motion with two later lane changes: the kin meet again at A (a closed loop)
+    a = ax[0, 1]
+    T1 = 0.8
+    pair_before(a, -0.5, 0, v0)
+    a.plot(v0 * np.linspace(-0.5, 2.1, 30), np.linspace(-0.5, 2.1, 30), color=ink, lw=2.2)
+    t1, t2 = np.linspace(0, T1, 20), np.linspace(T1, 2 * T1, 20)
+    a.plot((v0 + xi) * t1, t1, color=red, lw=2.2)
+    a.plot((v0 + xi) * T1 + (v0 - xi) * (t2 - T1), t2, color=red, lw=2.2)
+    a.plot((v0 - xi) * t1, t1, color=blue, lw=2.2)
+    a.plot((v0 - xi) * T1 + (v0 + xi) * (t2 - T1), t2, color=blue, lw=2.2)
+    t3 = np.linspace(2 * T1, 2.1, 10)
+    a.plot(v0 * t3 + 0.012, t3, color=muted, lw=7, alpha=0.35, solid_capstyle="butt")
+    for (xx, yy, lab) in ((0, 0, "E"), ((v0 + xi) * T1, T1, "M₁"), ((v0 - xi) * T1, T1, "M₂"),
+                          (v0 * 2 * T1, 2 * T1, "A")):
+        a.scatter([xx], [yy], s=70, color=ink, zorder=5)
+        a.annotate(lab, (xx, yy), xytext=(8, -4), textcoords="offset points", fontsize=10, color=ink)
+    a.text(0.62, 0.25, "M₁, M₂: events of the kin; each line\ncontinues as that world's daughter\n"
+           "at ∓2ξ (a world never changes\nlane by itself: Theorem S6)", fontsize=8.5, color=ink)
+    a.text(0.62, 1.55, "A: the kin arrive together at the\nparent's position in lanes p ∓ ξ:\n"
+           "with the right signs, an exact\nabsorption vertex; they leave\nas an aligned pair", fontsize=8.5, color=ink)
+    a.set(xlim=(-1.0, 1.5), ylim=(-0.5, 2.1), xlabel="x", ylabel="t",
+          title="(b) free motion, two later events: a closed loop of descent E–M–A")
+    # (c) a harmonic trap: the flow brings them back (isochronous), at t = pi/omega
+    a = ax[1, 0]
+    tt = np.linspace(0, 2 * np.pi, 300)
+    x0, p0 = 0.6, 0.2
+    xa = x0 * np.cos(tt) + p0 * np.sin(tt)
+    a.plot(xa, tt, color=ink, lw=2.2)
+    a.plot(xa + xi * np.sin(tt), tt, color=red, lw=2.2)
+    a.plot(xa - xi * np.sin(tt), tt, color=blue, lw=2.2)
+    for k, lab in ((0, "E"), (1, "A (t = π/ω)"), (2, "A′ (t = 2π/ω)")):
+        tk = k * np.pi
+        xk = x0 * np.cos(tk) + p0 * np.sin(tk)
+        a.scatter([xk], [tk], s=70, color=ink, zorder=5)
+        a.annotate(lab, (xk, tk), xytext=(10, -4), textcoords="offset points", fontsize=9, color=ink)
+    a.text(0.62, 3.5, "every orbit has the same\nperiod, so the flow\nrefocuses: the kin meet\n"
+           "again at the parent,\nmomenta now p ∓ ξ\n(sides swapped)", fontsize=8.5, color=ink)
+    a.set(xlim=(-1.6, 1.6), ylim=(-0.2, 2 * np.pi + 0.2), xlabel="x", ylabel="t",
+          title="(c) a harmonic trap (the racetrack): the flow brings them back")
+    # (d) measured: kin separation against time, three particles
+    a = ax[1, 1]
+    for name, col, lab in (("trap", violet, "trap only, ω = 1"), ("moshinsky", aqua, "Moshinsky, k = 2"),
+                           ("G", red, "problem G (Gaussian pair)")):
+        d = Gd[name]
+        t = np.array(d["t"])
+        a.plot(t, d["q50"], color=col, lw=2.2, label=f"{lab}: median")
+        a.fill_between(t, d["q10"], d["q90"], color=col, alpha=0.12, lw=0)
+    a.axvline(np.pi, color=violet, lw=0.8, ls=":")
+    a.axvline(np.pi / np.sqrt(7), color=aqua, lw=0.8, ls=":")
+    a.text(np.pi + 0.05, 0.15, "π/ω", color=violet, fontsize=9)
+    a.text(np.pi / np.sqrt(7) + 0.05, 0.15, "π/√7", color=aqua, fontsize=9)
+    a.set(xlabel="time since the vertex", ylabel="kin separation / |K|  (relative configuration)",
+          title="(d) measured: three particles, 2000 kin pairs (band: 10–90%)", xlim=(0, 6), ylim=(0, 5.6))
+    a.grid(True, color=grid, lw=0.6)
+    a.legend(fontsize=8, frameon=False, loc="upper left")
+    fig.tight_layout()
+    fig.savefig(output_path("world_crossings_kin.png"), dpi=130)
+    dp = docs_path("world_crossings_kin.png")
+    if dp:
+        fig.savefig(dp, dpi=130)
+    print("  wrote world_crossings_kin.png")
 
 
 # ----------------------------------------------------------------------------
@@ -456,7 +662,7 @@ def part_F(C):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("parts", nargs="*", default=["A", "B", "C", "D", "F"])
+    ap.add_argument("parts", nargs="*", default=["A", "B", "C", "D", "F", "G"])
     args = ap.parse_args()
     tw.set_particles(3)
     parts = [p.upper() for p in args.parts]
@@ -472,6 +678,10 @@ def main():
 
     if "F" in parts:
         part_F(json.load(open(output_path("world_crossings_C.json"))))
+    if "G" in parts:
+        Gd = part_G()
+        tw.dump(Gd, "world_crossings_G.json")
+        part_G_figure(Gd)
     print(f"\nwall time {time.perf_counter() - t0:.1f} s")
 
 

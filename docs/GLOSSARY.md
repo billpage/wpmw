@@ -338,10 +338,12 @@ Two senses.
   them (Proposition Q10). For $`N`$ particles an absorption is a vertex in
   configuration space-time where the parent's world-line meets two partners
   approaching along the bond; a chance crossing has probability zero unless
-  the relative configuration space is one-dimensional, but worlds that shared
-  an event's vertex meet by construction
+  the relative configuration space is one-dimensional. Worlds that share a
+  vertex in their past (*vertex kin*) do not meet again, except where a
+  harmonic flow refocuses them, but carry an exact record of the vertex; the
+  only kin absorption Theorem S6 admits is the undo of an earlier event
   ([`supplement/world_crossings.md`](supplement/world_crossings.md),
-  Definition CX1, Lemma CX3, Proposition CX5).
+  Definition CX1, Lemma CX3, Propositions CX5 and CX6).
 - **Barrier crossing:** a tagged world passing a barrier, as in the
   transmission of step 20 (Theorem Y6).
 

@@ -292,7 +292,10 @@ an existing world of sign $`-s`$ within Chebyshev distance $`\delta`$ of
 $`\zeta_t`$, if there is one, and otherwise by creating it. In the *paired*
 form, both daughters of an event must find partners or both are created (the
 ledger's absorptive branch, $`N \to N - 2`$). In the *single* form, each
-half is realised alone. In the *dipole-matched* form, the pair of partners
+half is realised alone; when one half is absorbed and the other emitted this
+is the mixed realisation that Theorem S6 of step 16 excludes (it moves an
+unpaired world by $`2\xi_q`$), so the single form is a numerical comparator
+only, not an admissible rule. In the *dipole-matched* form, the pair of partners
 is chosen to make their displacements from the two targets agree.
 
 **Proposition PC5.** *(a) If the partners lie at $`\zeta_+ + \mathbf a`$
@@ -306,8 +309,8 @@ $`0.175`$ and $`0.44`$ at $`0.25`$. It stays below one half, so by Theorem N3
 grows unless another sink removes the difference. It passes $`12\nu`$ before
 $`t = 1`$ at $`\delta = 0.1`$ and before $`t = 2.75`$ at $`\delta = 0.175`$.
 (c) (Measured.) The bias is at least that of a contact sink of cell
-$`2\delta`$: the single form at $`\delta = 0.175`$ gives a $`P_a`$ deficit of
-$`-0.152`$ at $`t = 3`$, against $`-0.150`$ for the contact sink at
+$`2\delta`$: the single form (inadmissible, see the rule) at
+$`\delta = 0.175`$ gives a $`P_a`$ deficit of $`-0.152`$ at $`t = 3`$, against $`-0.150`$ for the contact sink at
 $`c = 0.35`$, with $`3.3`$ times the worlds; the paired form at
 $`\delta = 0.25`$ gives $`-0.239`$, against $`-0.187`$ for the contact sink at
 $`c = 0.5`$ (step 25, self estimator). Matching the dipole barely changes it
@@ -366,7 +369,7 @@ and $`N/\nu`$:
 | contact, grid shifted every step | 0.7 | $`10^5`$ | −0.280 | −0.189 | 1.06 |
 | absorption only, paired, $`\delta = 0.25`$ | — | $`10^5`$ | −0.239 | −0.147 | 4.90 |
 | absorption only, dipole-matched, $`\delta = 0.25`$ | — | $`10^5`$ | −0.235 | −0.138 | 4.93 |
-| absorption only, single, $`\delta = 0.175`$ | — | $`10^5`$ | −0.152 | −0.079 | 7.48 |
+| absorption only, single (excluded by S6; comparator), $`\delta = 0.175`$ | — | $`10^5`$ | −0.152 | −0.079 | 7.48 |
 | K1 at cell centre | 0.7 | $`10^5`$ | −0.046 | +0.005 | 5.01 |
 | K1, dipole centre, shift every step | 0.7 | $`10^5`$ | −0.064 | −0.028 | 2.51 |
 | K1, dipole centre, fixed grid | 0.7 | $`10^5`$ | −0.041 | −0.011 | 3.10 |
@@ -508,9 +511,11 @@ rerunning a part with the arguments above reproduces it.
   finds too few partners. Can events be kept on a momentum lattice, so that
   daughters and partners coincide as on the mesh? *See
   [`../supplement/world_crossings.md`](../supplement/world_crossings.md):*
-  worlds do not cross by chance for three or more particles (Lemma CX3),
-  but worlds that shared an event's vertex do meet, by construction
-  (Proposition CX5).
+  worlds do not cross by chance for three or more particles (Lemma CX3);
+  worlds that share a vertex in their past carry an exact record of it, but
+  the only absorption of kin that Theorem S6 admits is the undo of an
+  earlier event, under one per cent of events (Proposition CX5). Crossings
+  do not replace the sink; K1 resampling (PC6) remains the control.
 
 ## 10. Sources
 

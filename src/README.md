@@ -1296,15 +1296,24 @@ see that directory's README for the ladder itself.
   problem G; Part B the codimension of a chance crossing (Lemma CX3) by Monte
   Carlo in `n = 1, 2, 3`; Part C counts partners per absorption target in
   PC5's box and in the crossing tube, on an absorption-only and a K1s10
-  ensemble (Proposition CX4); Part D records vertex kin and re-absorption
-  opportunities in an emission-only run (Proposition CX5); Part F draws the
-  figure. About two minutes in all.
+  ensemble (Proposition CX4); Part D records vertex kin in an emission-only
+  run and selects partners by record and by current momentum, with the
+  identity of paired kin and undo (Proposition CX5); Part F draws the first
+  figure; Part G follows 2000 kin triads under a trap, Moshinsky's harmonic
+  pair force and problem G (Proposition CX6) and draws the second. About two
+  and a half minutes in all.
 
   ![Crossings of worlds](https://raw.githubusercontent.com/billpage/wpmw/output/figures/world_crossings.png)
 
   (a) An absorption vertex in configuration space-time; (b) the crossing tube
   for three particles on a line; (c) partners in the tube as a share of those
   in PC5's box, against the step, for three impact parameters.
+
+  ![Kin: emission, parting and return](https://raw.githubusercontent.com/billpage/wpmw/output/figures/world_crossings_kin.png)
+
+  Kin as lanes of an expressway: (a) free motion, they part for ever;
+  (b) a closed loop of descent; (c) a harmonic trap refocuses them;
+  (d) measured kin separation against age for three particles.
 
 - `demo_jordan_lifting.py` — companion to
   `docs/supplement/jordan_lifting_and_pair_chemistry.md`, Parts A–F. A:

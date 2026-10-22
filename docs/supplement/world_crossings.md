@@ -1,8 +1,9 @@
 # Crossings of worlds in configuration space-time
 
 **What it means for worlds to cross when there are three or more particles, why
-chance crossings almost never happen, how worlds descended from one event meet
-anyway, and what that offers the absorptive realisation of an event.**
+chance crossings almost never happen, what the worlds that share an event's
+vertex offer instead, and why neither replaces a sink: the population control
+for problem G is K1 resampling (Proposition PC6).**
 
 ---
 
@@ -13,7 +14,7 @@ prompted by Bill Page's question: can crossings of worlds within a cell and a
 time step, rather than proximity in phase space, decide when an event is
 realised by absorption, and how is a crossing defined when there are three or
 more particles? Companion demo: `src/demo_world_crossings.py`, which produces
-every number below and the figure.
+every number below and both figures.
 
 It inherits the one-dimensional picture of step 23
 ([`../analysis/force_blind_sea.md`](../analysis/force_blind_sea.md) §9):
@@ -24,16 +25,26 @@ Proposition Q10 shows that crossings can *realise* events but cannot
 would not close. Nothing here changes Q10: the parent's reading triggers the
 event, and the question is only how the event is realised. It also uses
 Proposition WC6 (a world's history: momenta kink only at events, positions
-are continuous), Proposition WC9 (events act on one bond at a time) and, from
-step 26, Proposition PC5 (absorption with a tolerance in phase space) and open
-item PC-SP4 (exact absorption off a mesh).
+are continuous), Proposition WC9 (events act on one bond at a time),
+Theorem S6 of step 16 (an event is wholly emissive or wholly absorptive) and,
+from step 26, Proposition PC5 (absorption with a tolerance in phase space),
+Proposition PC6 (K1 resampling) and open item PC-SP4 (exact absorption off a
+mesh).
 
 New here: a definition of a crossing for $`N`$ particles (CX1), the
 equivalence of a delayed realisation with a translated one (CX2), the
 codimension of a chance crossing (CX3), the measured yield of crossings
-against PC5's box (CX4), and the observation that worlds descended from one
-event meet exactly, by construction (CX5). Labels CX1 to CX5 and open items
-CX-SP1 to CX-SP4 belong to this supplement.
+against PC5's box (CX4), partners selected by their record of a shared vertex
+and the exact identity of a paired kin absorption with an undo (CX5), and
+when the flow brings kin back together (CX6). Labels CX1 to CX6 and open items
+CX-SP1 to CX-SP4 belong to this supplement; CX-SP2 is withdrawn (§11).
+
+**The upshot.** Neither chance nor descent supplies absorption partners often
+enough to stand in for a sink. Theorem S6 confines kin absorption to the
+paired case, which is exactly an undo of an earlier event, and that happens
+for under one event in a hundred. The population control for problem G stays
+K1 resampling (PC6); crossings belong to the ontology's picture of an
+absorption, not to the numerics.
 
 ## 1. Setting
 
@@ -240,58 +251,169 @@ Three things follow.
   parent's configuration (to $`10^{-9}`$), which only a world born at the
   parent's own vertex can do. The excess is descent, not chance (§6).
 
-## 6. Proposition CX5: worlds that share a vertex meet by construction
+## 6. Proposition CX5: worlds that share a vertex, selected by record
 
 Every event is a vertex in configuration space-time: parent and daughters
 share a configuration point there, and their momenta differ by exactly
 $`\pm\mathbf K`$, a lattice vector along a bond. Call two worlds **vertex kin** if
-they shared a configuration point at some event: a world, its parent and its
-sibling at its birth, and its own daughters. Kin escape Lemma CX3. They do
-not meet by chance, they *began* at the same point, and their momentum
-differences are lattice vectors when they part. By Lemma CX2, a kin partner
-that left the common vertex an age $`a`$ ago, with the right momentum
-difference, is an exact crossing delayed by $`a`$: the error is a
-translation by $`a\lvert\mathbf K\rvert/m`$ along the bond.
+they share a vertex in their past: a world, its parent and its sibling at its
+birth, and its own daughters. Kin escape Lemma CX3, but not because they meet
+again. They do not: they leave the vertex along the bond at relative velocity
+$`\pm\mathbf K/m`$ and part (CX6 says when the flow brings them back). What
+kinship supplies is a **record**: the exact phase-space offset between the two
+worlds at the vertex.
 
-The cleanest case is **re-absorption**. A parent fires bond $`b`$, channel
-$`q`$ with sign $`\tau`$, and earlier fired the same bond and channel with
-sign $`-\tau`$, whose daughters, $`-\tau`$ at $`\mathbf p + \mathbf K`$ and
-$`+\tau`$ at $`\mathbf p - \mathbf K`$, are still present. They are exactly the two
-partners the new event needs: absorbing them undoes the earlier event, and
-the only error is its age.
+**The record.** A world $`C`$ born at $`t_v`$ on side $`s = \pm1`$ of an event of
+$`G`$ on bond $`b`$, channel $`q`$ ($`C`$ at $`\mathbf p_G + s\mathbf K`$) has, at the
+vertex,
 
-**Proposition CX5 (measured).** *Problem G, emission only and no sink,
-$`\nu = 2\times10^4`$, every world's kin recorded (Part D):*
+```math
+z_G - z_C = (0, -s\mathbf K), \qquad z_S - z_C = (0, -2s\mathbf K),
+```
+
+for its parent $`G`$ and sibling $`S`$, and $`z_D - z_C = (0, s'\mathbf K')`$ for each
+daughter $`D`$ it emits later on side $`s'`$ of an event with transfer
+$`\mathbf K'`$. Each offset is a bond and a signed multiple of $`\Delta p`$, and
+the demo stores exactly that.
+
+**Selection by record.** An event of $`A`$ on $`(b, q)`$ with sign $`\tau`$ needs a
+partner of sign $`-\tau`$ at $`z_A + (0, \mathbf K)`$ and one of sign $`+\tau`$
+at $`z_A - (0, \mathbf K)`$. A kin $`B`$ of $`A`$ is a partner *by record* for the
+$`+`$ daughter if its recorded offset from $`A`$ is exactly $`(0, +\mathbf K)`$
+(same bond, same channel) and its sign is $`-\tau`$, and likewise for the
+$`-`$ daughter. What absorbing it does follows from Lemma CX2. In the
+emission-only ensemble $`A`$'s own momentum does not kink (WC6), so with
+$`a = t - t_v`$ the age of the vertex,
+
+```math
+z_B(t) = \Phi_a\bigl(z_A(t_v) + (0, \mathbf K)\bigr)
+       = z_A(t) + \bigl(a\mathbf K/m + O(a^3),\ \mathbf K + O(a^2)\bigr).
+```
+
+Absorbing $`B`$ changes $`W`$ exactly as the event would have done had it
+fired at $`t_v`$ and its daughter flowed since. The only error is the delay:
+a translation by $`a\lvert\mathbf K\rvert/m`$ along the bond, and a momentum
+drift of order $`a^2`$. The alternative, selecting by *current* momentum
+(within $`0.05`$ of the target), tests the drifted momentum and so loses old
+kin, and of the $`88158`$ partners it finds below only two are not kin by
+record.
+
+**Proposition CX5.** *(a) A kin absorption of both daughters is exactly an
+undo: in an ensemble from which no world has been removed, both daughters of
+an event of $`A`$ on $`(b, q)`$ with sign $`\tau`$ have partners by record if
+and only if $`A`$ fired $`(b, q)`$ earlier with sign $`-\tau`$. (b) (Measured,
+below.) A partner by record for one daughter is common; for both, it is under
+one event in a hundred.*
+
+*Proof of (a).* If $`A`$ fired $`(b, q)`$ with sign $`-\tau`$, its daughters have
+sign $`-\tau`$ at offset $`+\mathbf K`$ and $`+\tau`$ at $`-\mathbf K`$: both
+partners. Conversely, suppose both partners exist. Offsets on different bonds
+point in different directions, so every partner's record is on bond $`b`$. If
+$`A`$ was born on side $`s`$, its parent lies at $`-s\mathbf K'`$ and its sibling at
+$`-2s\mathbf K'`$, both on side $`-s`$, so together they can serve at most the
+half on that side. The other half, at least, is served by a daughter of $`A`$
+at offset $`\pm\mathbf K`$: it was born on that side of an event of $`A`$ on
+$`(b, q)`$, and has the needed sign $`\mp\tau`$ only if that event had sign
+$`-\tau`$. That event's other daughter, still present because nothing has
+been removed, is a partner for the remaining half. $`\square`$
+
+*Measured* (Part D: problem G, emission only, no sink, $`\nu = 2\times10^4`$,
+every world's record kept, per daughter unless stated):
 
 | | to $`t = 0.25`$ | to $`t = 0.5`$ |
 |---|---|---|
 | events | 59448 | 481019 |
-| a kin partner for one daughter (momentum within 0.05) | 0.134 | 0.176 |
-| kin partners for both daughters | 0.0029 | 0.0069 |
-| an earlier opposite event to undo (re-absorption) | 0.0032 | 0.0093 |
+| a partner by record | 0.0687 | 0.0959 |
+| &nbsp;&nbsp;of which parent / sibling / daughter of $`A`$ | 7310 / 480 / 374 | 78529 / 4933 / 8821 |
+| a partner by current momentum (within 0.05) | 0.0684 | 0.0916 |
+| record partners that pass the momentum test | 0.996 | 0.955 |
+| both daughters by record (per event) | 0.0032 | 0.0093 |
+| an earlier opposite event to undo (per event) | 0.0032 | 0.0093 |
 
-*The undoable events are a median of 14 steps old ($`a = 0.14`$); 34 per cent
-are at most 10 steps old and 0.9 per cent at most one.*
+The last two rows agree to the event ($`188`$ and $`4453`$), as (a) says. The
+record partners are a median $`a = 0.080`$ old ($`90`$th percentile $`0.24`$),
+and their momentum mismatch with the target (Chebyshev, relative
+coordinates) grows with age as CX2 predicts, roughly as $`a^2`$:
 
-So descent supplies, for about one event in six, a partner for *one* of its
-daughters that coincides with the target up to the delay since a shared
-vertex. Partners for *both* daughters, which the ledger's absorptive branch
-needs, are as rare as re-absorption: under one event in a hundred, and
-typically ten steps late.
+| age $`a`$ | partners | median momentum mismatch with the target | fail the 0.05 test |
+|---|---|---|---|
+| $`(0, 0.05]`$ | 32602 | 0.0003 | 0.000 |
+| $`(0.05, 0.15]`$ | 36563 | 0.0035 | 0.004 |
+| $`(0.15, 0.3]`$ | 19097 | 0.0176 | 0.098 |
+| $`(0.3, 0.6]`$ | 4021 | 0.0519 | 0.529 |
 
-## 7. How crossings can be used
+The undoable events are a median of 14 steps old ($`a = 0.14`$); 34 per cent
+are at most 10 steps old and 0.9 per cent at most one.
+
+**What S6 leaves of this.** A partner for *one* daughter, found for 18 per
+cent of events by $`t = 0.5`$ ($`2 \times 0.0959 - 0.0093`$), is of no use. Absorbing one daughter and
+emitting the other is the mixed realisation that Theorem S6 excludes: it
+moves an unpaired world from $`\mathbf p - \mathbf K`$ to $`\mathbf p + \mathbf K`$, a
+hop of $`2\xi_q`$ that nothing supplies (step 16; tutorial,
+[`emission_and_absorption.md`](emission_and_absorption.md) §10; the
+specification excludes Right-Hop and Left-Hop). What is admissible is the
+paired case, which by (a) is re-absorption: an event that undoes an earlier
+one of the same parent, bond and channel, $`0.3`$ to $`0.9`$ per cent of
+events, typically ten steps late.
+
+## 7. Proposition CX6: when the flow brings kin back
+
+Kin part at their vertex. Whether they meet again is a property of the flow.
+
+**Proposition CX6.** *Let red and blue be the daughters of an event of $`A`$
+with transfer $`\mathbf K`$, at $`z_A \pm (0, \mathbf K)`$ at the vertex. (a) Under
+free motion their configurations separate as $`2a\mathbf K/m`$ and never meet
+again unless later events close a loop of descent. (b) If the flow is linear
+(a quadratic Hamiltonian), the parent stays exactly at the midpoint of red and
+blue for all time. (c) If moreover $`\mathbf K`$ excites only relative modes of
+one frequency $`\omega`$, red and blue meet again exactly at the parent at
+$`a = \pi/\omega`$, with momenta $`\mathbf p_A \mp \mathbf K`$: sides swapped, an
+exact absorption vertex for an event of $`A`$ on the same bond and channel
+with the sign of the first.*
+
+*Proof.* (a) is CX2 with $`\mathbf F = 0`$. (b) A linear flow acts on offsets by
+a matrix, $`\Phi_a(z + \delta) = \Phi_a(z) + M(a)\delta`$, so the offsets of red
+and blue from the parent are $`\pm M(a)(0, \mathbf K)`$. (c) On an eigenspace of
+frequency $`\omega`$, $`M(a)(0, \mathbf K) = (\mathbf K\sin\omega a/(m\omega),\ \mathbf K\cos\omega a)`$,
+which is $`(0, -\mathbf K)`$ at $`a = \pi/\omega`$. Red has the event's sign
+$`\tau`$ and is now at $`-\mathbf K`$; blue has $`-\tau`$ and is at $`+\mathbf K`$:
+exactly the partners of an event of sign $`\tau`$. $`\square`$
+
+Three particles of unit mass in a trap of frequency $`1`$: with no pair force
+every relative mode has $`\omega = 1`$; with Moshinsky's harmonic pair force of
+strength $`k = 2`$ every relative mode has $`\omega^2 = 1 + 3k = 7`$, and the
+transfer $`\mathbf K`$, having no centre-of-mass component, excites only those.
+Problem G's Gaussian pair force is anharmonic.
+
+*Measured* (Part G: $`2000`$ kin triads from random parents, bonds and channels
+$`\xi = 0.25`$ to $`1.75`$, flow integrated with step $`0.002`$ to $`t = 6`$):
+
+| flow | returning by $`t = 6`$ | first return, median | closest / largest separation | parent from the midpoint | $`\lvert\mathbf p_{\rm red} - \mathbf p_{\rm blue}\rvert / 2\lvert\mathbf K\rvert`$ |
+|---|---|---|---|---|---|
+| trap only | 2000 | 3.142 ($`\pi`$) | $`4\times10^{-4}`$ | $`2\times10^{-15}`$ | 1.000 |
+| Moshinsky, $`k = 2`$ | 2000 | 1.188 ($`\pi/\sqrt7 = 1.187`$) | $`1.6\times10^{-3}`$ | $`1\times10^{-15}`$ | 1.000 |
+| problem G | 1970 | 3.44 (10–90 %: 2.27–4.23) | 0.215 (90 %: 0.61) | 1.11 | 0.985 |
+
+(The closest approach in the harmonic cases is the sampling of the time grid,
+not a miss.) In problem G the kin come back to about a fifth of their largest
+separation, near half a trap period, and the parent is about $`1.1`$ from
+their midpoint, ten times PC5's half-side. The refocusing is a property of
+harmonic flows, not of problem G.
+
+## 8. How crossings can be used
 
 **In the ontology.** For $`N`$ particles an absorption is a vertex in
 configuration space-time where three world-lines meet: the parent's and two
 partners' converging along the bond from opposite sides, leaving as the
-parent and an aligned pair (panel a). Q10 still holds: the vertex realises an
-event the parent's reading has already triggered. What is new is where such
-vertices come from when $`n \ge 2`$. They do not occur by chance (CX3); they
-occur by descent, among worlds that already shared a vertex (CX5). In that
-reading an absorption is a family relation: the worlds an event takes back
-are, at best, the worlds an earlier event of the same family gave out.
+parent and an aligned pair (first figure, panel a). Q10 still holds: the
+vertex realises an event the parent's reading has already triggered. What is
+new is where such vertices come from when $`n \ge 2`$. They do not occur by
+chance (CX3). Among kin the record says exactly where the vertex was (CX5),
+and the paired case S6 admits is the undo of an earlier event of the same
+family. In a harmonic flow kin are also brought back to an exact vertex by
+the flow itself (CX6).
 
-**As a realisation rule.** Three uses, in order of reach:
+**As a realisation rule.** Two uses remain.
 
 1. *Inside the step, a crossing is free.* Because event times are uncertain by
    $`\Delta t`$ already, any partner that crosses within the step realises the
@@ -299,21 +421,22 @@ are, at best, the worlds an earlier event of the same family gave out.
    (PC-SP4) and $`n = 1`$, chance crossings in the step are exact absorptions
    with positive probability (CX3(b)); that is the two-particle problem of
    step 25 §6 (CX-SP1).
-2. *Kin first.* Among the partners a rule accepts (PC5's box, or mode C's
-   cell with a K1 credit), prefer kin, ranked by age: their error is the
-   delay alone, a translation along the bond, and the K1 credit carries its
-   first moment.
-3. *One daughter at a time.* Kin partners for one daughter are common (CX5).
-   Realising one daughter by absorption and the other by emission changes
-   $`W`$ correctly and leaves $`N`$ unchanged, but it is neither of the
-   ledger's two branches, which move $`N`$ by $`\pm2`$ (CX-SP2).
+2. *Re-absorption by record.* An event that undoes an earlier one of the same
+   parent, bond and channel can be realised by absorbing that event's two
+   daughters, with the delay as the only error (CX5). It is exact in the
+   ledger's sense (the absorptive branch, $`N \to N - 2`$) and admissible under
+   S6.
 
 **What crossings cannot do.** They cannot replace a sink. Chance crossings
-are too rare for $`n \ge 2`$ (CX4), and kin partners for both daughters are
-too rare (CX5), to bring the absorbed share near the one half that Theorem N3
-asks of a ledger without another sink.
+are too rare for $`n \ge 2`$ (CX4), paired kin are too rare (CX5), and the
+flow refocuses kin exactly only when it is harmonic (CX6). Together they bring
+the absorbed share nowhere near the one half that Theorem N3 asks of a ledger
+without another sink. The population control for problem G remains K1
+resampling with the grid shifted every ten steps (Proposition PC6): it holds
+$`P_{0.25}`$ to $`-0.020`$ of the mesh at $`\nu = 10^6`$, against $`-0.143`$ for
+the contact sink at cell $`0.35`$, at similar population.
 
-## 8. Figure
+## 9. Figures
 
 ![Crossings of worlds in configuration space-time](https://raw.githubusercontent.com/billpage/wpmw/output/figures/world_crossings.png)
 
@@ -328,40 +451,56 @@ those in PC5's box (half-side 0.1), against the step, for three impact
 parameters, on the absorption-only ensemble (filled) and the K1s10 ensemble
 (open), with the uniform-density prediction (grey).*
 
-## 9. Numerical verification
+![Kin: emission, parting and return](https://raw.githubusercontent.com/billpage/wpmw/output/figures/world_crossings_kin.png)
 
-`PYTHONPATH=src python3 src/demo_world_crossings.py` runs Parts A to D and
-the figure in about two minutes (container, October 2026, at commit
-`4ef04cd` with this demo added). It imports the world algorithm and kernel of
-`src/demo_three_worlds.py` and the ensembles of
+*Kin on a line, drawn as lanes of an expressway: momentum is the lane, and
+the axes are $`x`$ and $`t`$. (a) Free motion: at the vertex E the parent emits
+red, in lane $`p + \xi`$, and blue, in lane $`p - \xi`$; they part for ever. Absorbing them at a later
+time undoes E late, with error their separation (CX2). (b) A closed loop of
+descent: at M₁ and M₂ each kin fires an event, and the line continues as its
+daughter at $`\mp 2\xi`$; the two daughters reach the parent together at A in
+lanes $`p \mp \xi`$. No world changes lane by itself (S6). (c) A harmonic trap:
+every orbit has the same period, so the flow refocuses red and blue at the
+parent after half a period, sides swapped (CX6). (d) Measured, three
+particles: kin separation in the relative configuration over $`\lvert\mathbf K\rvert`$
+against age, median and 10–90 per cent band of $`2000`$ triads, for the trap
+alone, Moshinsky's harmonic pair force and problem G.*
+
+## 10. Numerical verification
+
+`PYTHONPATH=src python3 src/demo_world_crossings.py` runs Parts A to D, F and
+G and both figures in about two and a half minutes (container, October 2026, at commit
+`658de83` with this revision added). It imports the world algorithm and
+kernel of `src/demo_three_worlds.py` and the ensembles of
 `src/demo_population_control.py`. Seeds are fixed in the code.
 
 - **Part A.** Lemma CX2, table of §3.
 - **Part B.** Lemma CX3, the tube probabilities and slopes of §4.
 - **Part C.** Proposition CX4, the partner counts of §5, including the
   partners at exactly the parent's configuration.
-- **Part D.** Proposition CX5, the kin and re-absorption counts and the age
-  distribution of §6.
-- **Part F.** The figure.
+- **Part D.** Proposition CX5, partners by record and by momentum, the kin
+  types, the identity of paired kin with undo, and the age tables of §6.
+- **Part F.** The first figure.
+- **Part G.** Proposition CX6, the return table of §7, and the second figure.
 
-## 10. Open items
+## 11. Open items
 
 - **CX-SP1.** Two particles on a line, with the relative momentum on a
   lattice: realise absorptions at exact crossings inside the step, and
   compare with emission plus K1 against the mesh of step 25 §6.
-- **CX-SP2.** A mixed realisation (one daughter absorbed from kin, one
-  emitted, $`N`$ unchanged): is it admissible in the ledger, which knows only
-  the emissive and absorptive branches, and what does it do to the
-  population and the bias?
+- **CX-SP2.** *Withdrawn.* It proposed a mixed realisation (one daughter
+  absorbed from kin, one emitted). Theorem S6 of step 16 already excludes it:
+  it is a hop of $`2\xi_q`$ for an unpaired world (§6).
 - **CX-SP3.** Kin through a sink: K1 replaces removed worlds by new pairs with
-  no family, so kin must be carried through the sink, or the pairs assigned a
-  parentage, before CX5 can be measured alongside K1.
+  no family, so records must be carried through the sink, or the pairs
+  assigned a parentage, before CX5 can be measured alongside K1. Low priority:
+  by CX5 the admissible yield is under one per cent of events.
 - **CX-SP4.** In $`d = 3`$ the transfer $`\mathbf k`$ is a vector on the
   channel lattice of the bond, and the tube lies along $`\hat{\mathbf k}`$ in the
   bond's three-dimensional subspace. Check CX3 and CX5 for three particles in
   space ($`n = 6`$).
 
-## 11. Sources
+## 12. Sources
 
 - Step 23, Propositions Q9 and Q10:
   [`../analysis/force_blind_sea.md`](../analysis/force_blind_sea.md) §9.
@@ -369,5 +508,13 @@ the figure in about two minutes (container, October 2026, at commit
   [`../analysis/world_clocks.md`](../analysis/world_clocks.md) §1.1 and §8.2.
 - Step 26, Proposition PC5 and open item PC-SP4:
   [`../analysis/population_control.md`](../analysis/population_control.md).
+- Step 16, Theorem S6:
+  [`../analysis/sea_population_equilibrium.md`](../analysis/sea_population_equilibrium.md) §6;
+  tutorial, [`emission_and_absorption.md`](emission_and_absorption.md) §10.
+- Step 26, Proposition PC6:
+  [`../analysis/population_control.md`](../analysis/population_control.md) §5.
+- Moshinsky, M. — "How good is the Hartree-Fock approximation." *Am. J.
+  Phys.* **36**, 52 (1968). The harmonic three-body model of Part G.
+  https://doi.org/10.1119/1.1974410
 - Step 18, Theorem N3:
   [`../analysis/stochastic_ledger.md`](../analysis/stochastic_ledger.md) §4.

@@ -310,10 +310,16 @@ are defined in the [glossary](../GLOSSARY.md).
   Proposition CX4 (measured, three particles): a crossing tube holds a few per
   cent of the partners in PC5's box at small impact parameter, with a
   five-fold excess over a uniform density from worlds born at the parent's own
-  vertex. Proposition CX5: such vertex kin meet by construction; one event in
-  six has a kin partner for one daughter, under one in a hundred for both.
-  Crossings realise events (Q10 stands) but cannot replace a sink. Numbers and
-  figure from `src/demo_world_crossings.py`.
+  vertex. Proposition CX5: worlds that share a vertex in their past carry an
+  exact record of it, and a partner selected by record differs from the
+  target by the delay alone; 18 per cent of events have a kin partner for
+  one daughter, but absorbing one and emitting the other is the mixed realisation
+  Theorem S6 excludes, and a paired kin absorption is exactly the undo of an
+  earlier event, under one event in a hundred. Proposition CX6: a harmonic
+  flow refocuses kin exactly at the parent after half a period; problem G
+  does so only roughly. Crossings realise events (Q10 stands) but cannot
+  replace a sink; the population control stays K1 resampling (PC6). Numbers
+  and both figures from `src/demo_world_crossings.py`.
 - **[`jordan_lifting_and_pair_chemistry.md`](jordan_lifting_and_pair_chemistry.md)** — A five-line
   route from a signed transition kernel to a positive two-species Markov
   process, prompted by the Cyganski calls of 13 and 20 October 2026. Theorem

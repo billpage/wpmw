@@ -189,8 +189,9 @@ A bilinear rate needs two worlds in one cell, so every sink inherits the
 coincidence problem of Lemma CX3: in $`2dN`$ phase-space dimensions two
 independent worlds share a cell with probability falling exponentially in
 $`dN`$. HJ2.1 is why that problem cannot be designed away by a cleverer linear
-rule; only worlds that are *born* together (CX5, the pair at an event) escape
-it.
+rule; only worlds that share a vertex (CX5: an event's daughters and their
+kin) escape it, and Theorem S6 leaves them a single use, the paired undo of an
+earlier event, under one event in a hundred.
 
 ---
 
