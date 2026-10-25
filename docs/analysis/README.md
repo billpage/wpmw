@@ -42,7 +42,7 @@ bottom up. Each note states in its §0 what it inherits and what it retracts.
   event's dipole does not help, because the error left is the event's dipole
   moved by up to `delta`, on the scale of the fringes the events write. The
   ledger's absorptive branch is exact only where a mesh puts partners on the
-  targets. **Proposition PC6**, measured on problem G of step 25 at reach `2
+  targets. **Proposition PC6**, measured on [problem G](world_clocks.md#test-problems-the-moshinsky-harmonic-model-q-and-the-smoothed-contact-interaction-g) of step 25 at reach `2
   pi` against the 4D mesh: K1 at cell 0.7, with the grid shifted every ten
   steps, leaves a global-purity deficit of -0.020 at `t = 3` and `nu = 1e6`,
   against -0.143 for the contact sink at cell 0.35, at 1.37 against 1.22

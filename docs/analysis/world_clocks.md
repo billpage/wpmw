@@ -1032,6 +1032,22 @@ entanglement; and how the result compares with three-particle problems whose
 answers are known. Companion demo: `src/demo_three_worlds.py` (Parts S, K, E,
 Q, M, W, X, F).
 
+#### Test problems: the Moshinsky harmonic model (Q) and the smoothed contact interaction (G)
+
+*The two test problems of this section, and of step 26 and the crossings
+supplement after it. Later notes cite them as "problem Q" and "problem G";
+these are names of problems, not theorem labels (the G1–G5 of step 17 and the
+Q1–Q12 of step 23 are unrelated).*
+
+- **Problem Q:** $`N`$ particles in a trap coupled by a harmonic pair
+  potential, the Moshinsky model. Exactly solvable.
+- **Problem G:** the same particles coupled by a Gaussian-smoothed contact
+  potential, a few-boson problem with no closed form. The interaction is a
+  two-body force acting between each pair, not a three-body force; the
+  "three" is the number of particles.
+
+The setting and the two potentials follow.
+
 **Setting.** $`N`$ particles of unit mass on a line, $`\hbar = 1`$, in a
 harmonic trap of unit frequency, every pair coupled by the same potential
 $`v`$:
@@ -1174,7 +1190,7 @@ classical streaming alone, so entanglement is not by itself a sign of the
 quantum events: the worlds carry it as a correlation between their
 coordinates.
 
-*2. The generator is right (problem G, Part M).* The bond-sum generator of
+*2. The generator is right ([problem G](#test-problems-the-moshinsky-harmonic-model-q-and-the-smoothed-contact-interaction-g), Part M).* The bond-sum generator of
 WC9 was run without sampling on a mesh of the four-dimensional Jacobi
 relative phase space: $`40^2`$ points on $`[-5, 5)^2`$ in $`\pmb\rho`$, with the
 $`\pmb\pi`$ grid chosen so that the bond chords fit it. It converges to the
@@ -1385,7 +1401,7 @@ against the mesh: the contact sink's bias, smaller at $`\nu = 10^6`$.*
 
 ![Three and four particles in many worlds](https://raw.githubusercontent.com/billpage/wpmw/output/figures/three_worlds.png)
 
-*Second addendum (§8.2), problem G unless stated. (a) One-body purity
+*Second addendum (§8.2), [problem G](#test-problems-the-moshinsky-harmonic-model-q-and-the-smoothed-contact-interaction-g) unless stated. (a) One-body purity
 $`P_1`$ of particle 1: exact (grid TDSE), classical streaming, the bond-sum
 generator on the Jacobi mesh at reach $`2\pi`$, $`4\pi`$, $`8\pi`$, and the
 worlds at the two smaller reaches (cell $`0.35`$). (b) The pair energy,

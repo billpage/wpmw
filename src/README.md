@@ -1241,7 +1241,7 @@ see that directory's README for the ladder itself.
 - `demo_three_worlds.py` — companion to `docs/analysis/world_clocks.md` §8.2
   (step 25, second addendum): three and four particles in many worlds. Unit
   masses on a line in a harmonic trap, quenched by a pair interaction: problem
-  Q (Moshinsky, `k = 2`, exact) and problem G (Gaussian, `g = 2`, `s = 0.7`).
+  Q (Moshinsky, `k = 2`, exact) and [problem G](../docs/analysis/world_clocks.md#test-problems-the-moshinsky-harmonic-model-q-and-the-smoothed-contact-interaction-g) (Gaussian, `g = 2`, `s = 0.7`).
   Part S checks that the residual is a sum over bonds (Proposition WC9); Part K
   gives the bond kernel and its rate against the reach and the width; Part E
   is the exact reference, a grid TDSE in particle coordinates (`64^3`, `96^3`;
@@ -1297,7 +1297,7 @@ see that directory's README for the ladder itself.
 
 - `demo_world_crossings.py` — companion to
   `docs/supplement/world_crossings.md`: crossings of worlds in configuration
-  space-time, for three particles (problem G of step 25). Part A checks
+  space-time, for three particles ([problem G](../docs/analysis/world_clocks.md#test-problems-the-moshinsky-harmonic-model-q-and-the-smoothed-contact-interaction-g) of step 25). Part A checks
   Lemma CX2 (a delayed realisation is a translated one) on the flow of
   problem G; Part B the codimension of a chance crossing (Lemma CX3) by Monte
   Carlo in `n = 1, 2, 3`; Part C counts partners per absorption target in

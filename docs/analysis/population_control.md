@@ -21,7 +21,7 @@
 > Matching the event's dipole does not help, because the error left is the
 > event's dipole moved by up to `delta`, on the scale of the fringes the events
 > write. The ledger's absorptive branch is exact only where a mesh puts partners
-> on the targets. **Proposition PC6**, measured on problem G of step 25 at reach
+> on the targets. **Proposition PC6**, measured on [problem G](world_clocks.md#test-problems-the-moshinsky-harmonic-model-q-and-the-smoothed-contact-interaction-g) of step 25 at reach
 > `2 pi` against the 4D mesh: K1 at cell 0.7, with the grid shifted every ten
 > steps, leaves a global-purity deficit of -0.020 at `t = 3` and `nu = 1e6`,
 > against -0.143 for the contact sink at cell 0.35, at 1.37 against 1.22 worlds
@@ -59,7 +59,7 @@ three candidates: annihilating only near-coincident pairs, moment-preserving
 resampling within a cell, and the absorptive ledger. This note tests the last
 two against the mesh.
 
-**Inherits.** Problem G of step 25 (three unit-mass particles on a line, a
+**Inherits.** [Problem G](world_clocks.md#test-problems-the-moshinsky-harmonic-model-q-and-the-smoothed-contact-interaction-g) of step 25 (three unit-mass particles on a line, a
 harmonic trap of unit frequency, the Gaussian pair interaction $`g = 2`$,
 $`s = 0.7`$, quenched from the product of trap ground states), the world
 algorithm of `demo_three_worlds.py` (one bank of integrate-and-fire
@@ -346,7 +346,7 @@ event rate.
 
 ## 5. Results
 
-All runs: problem G, reach $`2\pi`$, $`\Delta t = 0.01`$, $`t \le 3`$, two
+All runs: [problem G](world_clocks.md#test-problems-the-moshinsky-harmonic-model-q-and-the-smoothed-contact-interaction-g), reach $`2\pi`$, $`\Delta t = 0.01`$, $`t \le 3`$, two
 seeds per rule, sink applied every step. The mesh's own values are
 $`P_a = 0.6653`$, $`0.5793`$, $`0.5597`$ and $`P_1 = 0.8441`$, $`0.7454`$, $`0.7618`$
 at $`t = 1`$, $`2`$, $`3`$.

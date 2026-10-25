@@ -316,7 +316,7 @@ are defined in the [glossary](../GLOSSARY.md).
   one daughter, but absorbing one and emitting the other is the mixed realisation
   Theorem S6 excludes, and a paired kin absorption is exactly the undo of an
   earlier event, under one event in a hundred. Proposition CX6: a harmonic
-  flow refocuses kin exactly at the parent after half a period; problem G
+  flow refocuses kin exactly at the parent after half a period; [problem G](../analysis/world_clocks.md#test-problems-the-moshinsky-harmonic-model-q-and-the-smoothed-contact-interaction-g)
   does so only roughly. Crossings realise events (Q10 stands) but cannot
   replace a sink; the population control stays K1 resampling (PC6). Numbers
   and both figures from `src/demo_world_crossings.py`.

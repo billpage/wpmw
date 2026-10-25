@@ -3,7 +3,7 @@
 **What it means for worlds to cross when there are three or more particles, why
 chance crossings almost never happen, what the worlds that share an event's
 vertex offer instead, and why neither replaces a sink: the population control
-for problem G is K1 resampling (Proposition PC6).**
+for [problem G](../analysis/world_clocks.md#test-problems-the-moshinsky-harmonic-model-q-and-the-smoothed-contact-interaction-g) is K1 resampling (Proposition PC6).**
 
 ---
 
@@ -42,7 +42,7 @@ CX-SP1 to CX-SP4 belong to this supplement; CX-SP2 is withdrawn (§11).
 **The upshot.** Neither chance nor descent supplies absorption partners often
 enough to stand in for a sink. Theorem S6 confines kin absorption to the
 paired case, which is exactly an undo of an earlier event, and that happens
-for under one event in a hundred. The population control for problem G stays
+for under one event in a hundred. The population control for [problem G](../analysis/world_clocks.md#test-problems-the-moshinsky-harmonic-model-q-and-the-smoothed-contact-interaction-g) stays
 K1 resampling (PC6); crossings belong to the ontology's picture of an
 absorption, not to the numerics.
 
@@ -138,7 +138,7 @@ Momenta: the difference is $`\mathbf K + \int_0^\tau [\mathbf F(\mathbf x_d) - \
 \mathbf K + \tfrac12\tau^2 D\mathbf F\,\mathbf K/m + O(\tau^3)`$. $`\mathbf K`$ has no
 centre-of-mass component. $`\square`$
 
-*Verification* (Part A, problem G of step 25, 4000 random parents and
+*Verification* (Part A, [problem G](../analysis/world_clocks.md#test-problems-the-moshinsky-harmonic-model-q-and-the-smoothed-contact-interaction-g) of step 25, 4000 random parents and
 channels, flow integrated with 400 Verlet steps per interval):
 
 | $`\tau`$ | max position residual $`/\tau^2`$ | max momentum residual $`/\tau^2`$ | centre-of-mass shift |
@@ -212,7 +212,7 @@ $`\beta`$ is spent in $`n - 1`$ directions transverse to the bond.
 
 ## 5. Proposition CX4: chance crossings against PC5's box
 
-Part C counts, on two three-particle ensembles of problem G at $`t = 1`$
+Part C counts, on two three-particle ensembles of [problem G](../analysis/world_clocks.md#test-problems-the-moshinsky-harmonic-model-q-and-the-smoothed-contact-interaction-g) at $`t = 1`$
 ($`\nu = 5\times10^4`$), how many worlds of the partner's sign lie in PC5's
 box (Chebyshev half-side $`0.1`$ in the four relative coordinates) around a
 target, and how many lie in the crossing tube with the same momentum
@@ -317,7 +317,7 @@ $`(b, q)`$, and has the needed sign $`\mp\tau`$ only if that event had sign
 $`-\tau`$. That event's other daughter, still present because nothing has
 been removed, is a partner for the remaining half. $`\square`$
 
-*Measured* (Part D: problem G, emission only, no sink, $`\nu = 2\times10^4`$,
+*Measured* (Part D: [problem G](../analysis/world_clocks.md#test-problems-the-moshinsky-harmonic-model-q-and-the-smoothed-contact-interaction-g), emission only, no sink, $`\nu = 2\times10^4`$,
 every world's record kept, per daughter unless stated):
 
 | | to $`t = 0.25`$ | to $`t = 0.5`$ |
@@ -383,7 +383,7 @@ Three particles of unit mass in a trap of frequency $`1`$: with no pair force
 every relative mode has $`\omega = 1`$; with Moshinsky's harmonic pair force of
 strength $`k = 2`$ every relative mode has $`\omega^2 = 1 + 3k = 7`$, and the
 transfer $`\mathbf K`$, having no centre-of-mass component, excites only those.
-Problem G's Gaussian pair force is anharmonic.
+[Problem G](../analysis/world_clocks.md#test-problems-the-moshinsky-harmonic-model-q-and-the-smoothed-contact-interaction-g)'s Gaussian pair force is anharmonic.
 
 *Measured* (Part G: $`2000`$ kin triads from random parents, bonds and channels
 $`\xi = 0.25`$ to $`1.75`$, flow integrated with step $`0.002`$ to $`t = 6`$):
@@ -431,7 +431,7 @@ the flow itself (CX6).
 are too rare for $`n \ge 2`$ (CX4), paired kin are too rare (CX5), and the
 flow refocuses kin exactly only when it is harmonic (CX6). Together they bring
 the absorbed share nowhere near the one half that Theorem N3 asks of a ledger
-without another sink. The population control for problem G remains K1
+without another sink. The population control for [problem G](../analysis/world_clocks.md#test-problems-the-moshinsky-harmonic-model-q-and-the-smoothed-contact-interaction-g) remains K1
 resampling with the grid shifted every ten steps (Proposition PC6): it holds
 $`P_{0.25}`$ to $`-0.020`$ of the mesh at $`\nu = 10^6`$, against $`-0.143`$ for
 the contact sink at cell $`0.35`$, at similar population.

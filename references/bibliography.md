@@ -707,7 +707,7 @@ resolution limit as the contact sink.
 - Zöllner, S.; Meyer, H.-D.; Schmelcher, P. — "Few-boson dynamics in double
   wells: from single-atom to correlated pair tunneling." *Phys. Rev. Lett.*
   **100**, 040401 (2008). The contact interaction mollified to a Gaussian of
-  width 0.05; problem G is the same form at width 0.7.
+  width 0.05; [problem G](../docs/analysis/world_clocks.md#test-problems-the-moshinsky-harmonic-model-q-and-the-smoothed-contact-interaction-g) is the same form at width 0.7.
   https://arxiv.org/abs/0709.3163
 - Beck, M. H.; Jäckle, A.; Worth, G. A.; Meyer, H.-D. — "The
   multiconfiguration time-dependent Hartree (MCTDH) method." *Phys. Rep.*
