@@ -29,7 +29,7 @@ Catches the rendering pitfalls we have actually hit on GitHub:
    No error message — just garbled output.
    Two more structural rules came out of the 2026-10-04 incident (ten
    fenced blocks and two inline spans rendered as raw code):
-   :func:`fence_after_inline_math_in_list_item` (a ``\`\`\`math`` fence in a
+   :func:`fence_after_inline_math_in_list_item` (a ``\\`\\`\\`math`` fence in a
    list that already has inline math; the probes in ``src/README.md``
    show that nesting alone, or a missing blank line, is harmless) and
    :func:`math_span_split_by_block_marker` (a wrapped ``$`...`$`` span whose
@@ -1216,7 +1216,7 @@ def _split_bq(line: str) -> tuple[int, str]:
 
 
 def fence_after_inline_math_in_list_item(text: str) -> list[tuple[int, str, str]]:
-    """Find ``\`\`\`math`` fences nested in a list that already has inline math.
+    """Find ``\\`\\`\\`math`` fences nested in a list that already has inline math.
 
     Returns ``(line_no, message, snippet)``. On 2026-10-04 GitHub showed a
     fence as raw code exactly when it sat inside a *list* with inline math
