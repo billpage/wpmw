@@ -238,6 +238,11 @@ scripts, fonts or data — that repeats the computation behind one of the
 note's figures and lets the reader vary its parameters. The first is
 [the sea lock](https://billpage.github.io/wpmw/interactive/sea_lock.html), for ladder step 22
 (source: [`docs/interactive/sea_lock.html`](docs/interactive/sea_lock.html)).
+Slide decks for calls with collaborators are kept in the same folder, one
+self-contained HTML file each, with the speaker notes behind the N key:
+[worlds, particles and world-particles](https://billpage.github.io/wpmw/interactive/worlds_and_particles.html)
+(27 October 2026; source:
+[`docs/interactive/worlds_and_particles.html`](docs/interactive/worlds_and_particles.html)).
 
 GitHub shows an `.html` file on `main` as source, not as a page, so pages
 are served by **GitHub Pages** from the `docs/` folder of `main`

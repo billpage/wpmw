@@ -206,10 +206,36 @@ in $`y`$. A chord is a relation
 between two sea pairs, not an object: it exists whenever two aligned pairs share
 a row, and an unpaired world at the chord's midpoint can read it.
 
-- **Defined:** [`supplement/chord_reading.md` §3](supplement/chord_reading.md#3-the-chord).
-- **Not to confuse with:** a chord of a circle or a graph; the *separation*
-  $`2y`$ of a ket–bra pair, a path difference between two branches
-  (see [separation](#separation)).
+The half-length $`y`$ is the same coordinate as the ket–bra
+[separation](#separation) of the density matrix, $`\rho(x+y, x-y)`$: the state
+has nothing at those two ends, the sea has a chord there, and the chord's
+winding is the phase rate the potential gives that element of $`\rho`$. The sea
+reads the operator; the unpaired worlds carry the state. The difference of the
+two ends' actions is the [chord action](#chord-action).
+
+- **Defined:** [`supplement/chord_reading.md` §3](supplement/chord_reading.md#3-the-chord);
+  the correspondence with $`\rho`$ in
+  [§5](supplement/chord_reading.md#5-what-the-sum-over-chords-estimates).
+- **Not to confuse with:** a chord of a circle or a graph; a [bond](#bond),
+  two particles of one world, which has the same coordinate formulas but lies
+  inside one world.
+
+### chord action
+
+The difference of the actions of the two worlds at the ends of a chord,
+$`\Delta S = \hbar(\theta - \theta')`$, at $`\mathbf X \pm \mathbf Y`$. Its
+Lagrangian splits into a part linear in $`\mathbf Y`$, whose Euler–Lagrange
+equation is Newton's law (classical within a world), and the compensated
+residual $`R(\mathbf X, \mathbf Y)`$ (quantum between worlds), whose transform
+over $`\mathbf Y`$ is the whole event kernel. It is the one generating relation
+of the world ontology; [bonds](#bond), kernel tables and banks of
+[integrators](#integrate-and-fire) follow from it.
+
+- **Defined:** [`supplement/chord_action.md` §2](supplement/chord_action.md#2-definition-ca1-and-proposition-ca2-the-chord-action-and-its-split),
+  Definition CA1 and Proposition CA2; the ontology restated as Definition CA6.
+- **Not to confuse with:** one world's own action, which is its
+  [clock](#clock); the double path integral of Feynman and Vernon, whose
+  exponent it is, but over classical histories only.
 
 ### clock
 
@@ -1163,11 +1189,19 @@ See [leg, arm](#leg-arm).
 
 ### separation
 
-The ket–bra half-separation $`y`$ (or $`2y`$). A path difference between two
-branches. Nothing is at both ends at once.
+The ket–bra half-separation $`y`$ (or $`2y`$): the off-diagonal coordinate of
+$`\rho(x+y, x-y)`$, conjugate to $`p`$ in the Wigner transform. As a property
+of the state it is a path difference between two branches: nothing of the
+state is at both ends at once. Its counterpart in the sea is a
+[chord](#chord) of the same half-length, two aligned pairs that *are* at
+$`x \pm y`$, whose clocks drift apart at the potential difference that the
+potential applies to this element of $`\rho`$.
 
-- **Defined:** [`ORIENTATION.md` §3](../ORIENTATION.md#3-the-one-central-idea-the-compensated-split).
-- **Not to confuse with:** the distance between two objects.
+- **Defined:** [`ORIENTATION.md` §3](../ORIENTATION.md#3-the-one-central-idea-the-compensated-split);
+  the correspondence with chords in
+  [`supplement/chord_reading.md` §5](supplement/chord_reading.md#5-what-the-sum-over-chords-estimates).
+- **Not to confuse with:** the distance between two objects. A chord's ends
+  are objects, but they carry the operator, not the state.
 
 ### separatrix
 

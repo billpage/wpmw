@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Worlds, Particles, World-Particles</title>
+<!--
+  Slides for the WPMW call of 27 October 2026: worlds, particles and
+  world-particles, with the chord action (slides 8 and 9).  Built from the
+  Slides artifact of that name; the speaker notes are included (press N).
+  Companion to docs/supplement/chord_action.md, docs/analysis/world_clocks.md,
+  docs/analysis/population_control.md and docs/supplement/world_crossings.md.
+  Every number on the slides is quoted from those documents and their demos.
+  Self-contained apart from web fonts (with system fallbacks).
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400..700;1,400&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,600;1,400&amp;display=swap">
+<style>
+html, body { margin: 0; height: 100%; background: #1d232c; overflow: hidden;
+  font-family: 'IBM Plex Sans', Arial, sans-serif; }
+#stage { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px;
+  transform-origin: 0 0; }
+.slide { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px;
+  box-sizing: border-box; overflow: hidden; }
+@media screen { .slide:not(.current) { display: none !important; } }
+.slide * { margin: 0; box-sizing: border-box; }
+.slide h1 { font-size: 96px; font-weight: 600; line-height: 1.1; }
+.slide h2 { font-size: 64px; font-weight: 600; line-height: 1.15; }
+.slide h3 { font-size: 44px; font-weight: 600; line-height: 1.2; }
+.slide p { font-size: 32px; line-height: 1.4; }
+.slide ul { padding-left: 1.2em; }
+.slide li { margin: 0.15em 0; }
+.slide table { border-collapse: collapse; width: 100%; }
+.slide th, .slide td { padding: 0.35em 0.6em; border-bottom: 1px solid #d6d0c2;
+  text-align: left; vertical-align: top; }
+.slide th { font-weight: 600; border-bottom: 2px solid #b9b2a2; }
+#bar { position: fixed; left: 0; right: 0; bottom: 0; display: flex; gap: 12px;
+  align-items: center; justify-content: center; padding: 6px; font-size: 14px;
+  color: #c9d1db; background: rgba(20,25,32,0.85); }
+#bar button { font: inherit; color: inherit; background: #2c3542; border: 1px solid #45505f;
+  border-radius: 6px; padding: 4px 12px; cursor: pointer; }
+#notes { position: fixed; left: 0; right: 0; bottom: 34px; max-height: 42vh; overflow: auto;
+  background: #fbfaf6; color: #1d232c; padding: 16px 24px; font-size: 16px; line-height: 1.5;
+  white-space: pre-wrap; border-top: 3px solid #2F5D8A; display: none; }
+#notes.show { display: block; }
+@media print {
+  html, body { overflow: visible; height: auto; background: none; }
+  #bar, #notes { display: none !important; }
+  #stage { position: static; transform: none !important; width: auto; height: auto; }
+  .slide { position: relative; page-break-after: always; zoom: 0.5; }
+  @page { size: 960px 540px; margin: 0; }
+}
+</style>
+</head>
+<body>
+<div id="stage">
+<section class="slide" data-n="1" id="cover" data-transition="fade" style="background:#16202E;color:#F2EEE4;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;justify-content:center;gap:40px">
+<p style="font-size:28px;font-weight:600;letter-spacing:2px;color:#8FB4DC;text-transform:uppercase">WPMW · call with David Cyganski · 27 October 2026</p>
+<h1 style="font-family:'Source Serif 4', Georgia, serif;font-size:112px;font-weight:600;line-height:1.05;color:#F2EEE4">Worlds, particles<br>and world-particles</h1>
+<p style="font-size:40px;line-height:1.35;color:#D3D9E0;width:1400px">How worlds interact in the compensated Liouville picture, and why the one-particle case hides the difference</p>
+<div style="display:flex;gap:64px;align-items:center">
+<div style="display:flex;gap:16px;align-items:center"><div style="width:28px;height:28px;background:#8FB4DC;border-radius:50%"></div><p style="font-size:28px;color:#D3D9E0">worlds; between worlds</p></div>
+<div style="display:flex;gap:16px;align-items:center"><div style="width:28px;height:28px;background:#E9A56F;border-radius:50%"></div><p style="font-size:28px;color:#D3D9E0">particles; within a world</p></div>
+</div>
+<p style="font-size:26px;color:#AEB7C2">Bill Page · tutorial from steps 25–26 and the world-crossings supplement · prepared with Claude</p>
+
+</section>
+<section class="slide" data-n="2" id="question" data-transition="fade" style="background:#F7F5EF;color:#16202E;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:48px">
+<h2 style="font-family:'Source Serif 4', Georgia, serif;font-size:64px;font-weight:600;line-height:1.1">Is the one-particle case enough?</h2>
+<div style="display:flex;gap:40px">
+<div style="flex:1;display:flex;flex-direction:column;gap:16px;background:#ECE8DE;padding:48px;border-radius:16px">
+<p style="font-size:24px;font-weight:600;letter-spacing:2px;color:#2F5D8A;text-transform:uppercase">David</p>
+<p style="font-size:36px;line-height:1.35">There is a formal analogy between many particles and many worlds, so working with one particle loses nothing.</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:16px;background:#ECE8DE;padding:48px;border-radius:16px">
+<p style="font-size:24px;font-weight:600;letter-spacing:2px;color:#A64E1B;text-transform:uppercase">Bill</p>
+<p style="font-size:36px;line-height:1.35">With one particle a world and a particle are the same object, and that hides what the multi-particle model is.</p>
+</div>
+</div>
+<div style="flex:1"></div>
+<div style="display:flex;flex-direction:column;gap:12px;border-left:6px solid #2F5D8A;padding:8px 0 8px 40px">
+<p style="font-size:24px;font-weight:600;letter-spacing:2px;color:#2F5D8A;text-transform:uppercase">Where the deck ends up</p>
+<p style="font-size:36px;line-height:1.35">There are two analogies. <b>N particles in d dimensions = one particle in dN dimensions</b> is exact. <b>Particles in a world ↔ worlds in an ensemble</b> misleads.</p>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;width:1664px;font-size:24px;color:#5E6773">WPMW · worlds and particles · 2 / 20</p>
+
+</section>
+<section class="slide" data-n="3" id="mu-gamma" data-transition="fade" style="background:#F7F5EF;color:#16202E;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:40px">
+<h2 style="font-family:'Source Serif 4', Georgia, serif;font-size:64px;font-weight:600;line-height:1.1">A classical precedent: μ-space and Γ-space</h2>
+<div style="display:flex;gap:40px">
+<div style="flex:1;display:flex;flex-direction:column;gap:20px;background:#FFFDF8;border:1px solid #DDD7C9;padding:40px;border-radius:16px">
+<h3 style="font-size:36px;font-weight:600;color:#A64E1B">Boltzmann: one world, N particles</h3>
+<svg aria-label="Three particles of one world as three points in the one-particle phase space, joined by bonds" width="720" height="240" viewBox="0 0 720 240">
+<rect x="2" y="2" width="716" height="236" rx="12" fill="#F7F1E7" stroke="#DDD7C9" stroke-width="2"/>
+<line x1="230" y1="168" x2="420" y2="72" stroke="#A64E1B" stroke-width="5"/>
+<line x1="420" y1="72" x2="520" y2="176" stroke="#A64E1B" stroke-width="5"/>
+<line x1="230" y1="168" x2="520" y2="176" stroke="#A64E1B" stroke-width="5"/>
+<circle cx="230" cy="168" r="22" fill="#A64E1B"/>
+<circle cx="420" cy="72" r="22" fill="#A64E1B"/>
+<circle cx="520" cy="176" r="22" fill="#A64E1B"/>
+</svg>
+<p style="font-size:26px;line-height:1.4;color:#3E4A5A">N points in the 6-dimensional space of <b>one particle</b>. The lines are bonds: the particles interact through V. The whole picture is one world.</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:20px;background:#FFFDF8;border:1px solid #DDD7C9;padding:40px;border-radius:16px">
+<h3 style="font-size:36px;font-weight:600;color:#2F5D8A">Gibbs: many worlds, one point each</h3>
+<svg aria-label="Many signed worlds as points in the configuration phase space; filled points are positons, rings are negatons" width="720" height="240" viewBox="0 0 720 240">
+<rect x="2" y="2" width="716" height="236" rx="12" fill="#EEF2F6" stroke="#CFD8E2" stroke-width="2"/>
+<g fill="#2F5D8A">
+<circle cx="120" cy="120" r="11"/><circle cx="180" cy="76" r="11"/><circle cx="210" cy="152" r="11"/><circle cx="265" cy="112" r="11"/><circle cx="300" cy="184" r="11"/><circle cx="330" cy="64" r="11"/><circle cx="360" cy="132" r="11"/><circle cx="400" cy="92" r="11"/><circle cx="430" cy="164" r="11"/><circle cx="470" cy="120" r="11"/><circle cx="505" cy="68" r="11"/><circle cx="540" cy="152" r="11"/><circle cx="590" cy="104" r="11"/><circle cx="625" cy="172" r="11"/><circle cx="160" cy="188" r="11"/><circle cx="560" cy="200" r="11"/><circle cx="250" cy="48" r="11"/><circle cx="440" cy="204" r="11"/>
+</g>
+<g fill="none" stroke="#2F5D8A" stroke-width="4">
+<circle cx="150" cy="112" r="10"/><circle cx="235" cy="92" r="10"/><circle cx="320" cy="148" r="10"/><circle cx="380" cy="180" r="10"/><circle cx="455" cy="80" r="10"/><circle cx="520" cy="112" r="10"/><circle cx="600" cy="64" r="10"/><circle cx="660" cy="128" r="10"/><circle cx="280" cy="208" r="10"/><circle cx="90" cy="168" r="10"/>
+</g>
+</svg>
+<p style="font-size:26px;line-height:1.4;color:#3E4A5A">Each point is a <b>whole configuration</b> in 6N dimensions. Gibbs’s copies never interact; WPMW’s worlds are signed and do.</p>
+</div>
+</div>
+<p style="font-size:32px;line-height:1.35">For <b>N = 1</b> the two spaces coincide, and a gas of worlds looks exactly like a gas of particles.</p>
+<p style="position:absolute;left:128px;bottom:64px;width:1664px;font-size:24px;color:#5E6773">WPMW · worlds and particles · 3 / 20</p>
+
+</section>
+<section class="slide" data-n="4" id="vocab" data-transition="fade" style="background:#F7F5EF;color:#16202E;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:40px">
+<h2 style="font-family:'Source Serif 4', Georgia, serif;font-size:64px;font-weight:600;line-height:1.1">The vocabulary: rows, cells and columns (WC0)</h2>
+<table style="font-family:'IBM Plex Sans', Arial, sans-serif;font-size:30px;color:#16202E">
+<tr><th style="width:16%;text-align:left">world</th><th style="width:12%;text-align:center;color:#2F5D8A">sign ε</th><th style="width:12%;text-align:center;color:#2F5D8A">clock θ</th><th style="width:20%;text-align:center;color:#A64E1B">particle 1</th><th style="width:20%;text-align:center;color:#A64E1B">particle 2</th><th style="width:20%;text-align:center;color:#A64E1B">particle 3</th></tr>
+<tr style="background:#E3EAF2"><td style="color:#2F5D8A">w₁ (positon)</td><td style="text-align:center">+1</td><td style="text-align:center">θ₁</td><td style="text-align:center">(x₁, p₁)</td><td style="text-align:center">(x₂, p₂)</td><td style="text-align:center">(x₃, p₃)</td></tr>
+<tr><td style="color:#2F5D8A">w₂ (negaton)</td><td style="text-align:center">−1</td><td style="text-align:center">θ₂</td><td style="text-align:center">(x₁, p₁)</td><td style="text-align:center">(x₂, p₂)</td><td style="text-align:center">(x₃, p₃)</td></tr>
+<tr><td style="color:#2F5D8A">w₃ (positon)</td><td style="text-align:center">+1</td><td style="text-align:center">θ₃</td><td style="text-align:center">(x₁, p₁)</td><td style="text-align:center">(x₂, p₂)</td><td style="text-align:center">(x₃, p₃)</td></tr>
+<tr><td style="color:#2F5D8A">…</td><td style="text-align:center">…</td><td style="text-align:center">…</td><td style="text-align:center">…</td><td style="text-align:center">…</td><td style="text-align:center">…</td></tr>
+</table>
+<div style="display:flex;gap:32px">
+<div style="flex:1;display:flex;flex-direction:column;gap:10px;background:#E3EAF2;padding:32px;border-radius:16px">
+<h3 style="font-size:32px;font-weight:600;color:#2F5D8A">World = a row</h3>
+<p style="font-size:26px;line-height:1.4">A point of ℝ⁶ᴺ with one sign and one clock. Its banks are derived.</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:10px;background:#ECE8DE;padding:32px;border-radius:16px">
+<h3 style="font-size:32px;font-weight:600">World-particle = a cell</h3>
+<p style="font-size:26px;line-height:1.4">Particle i in world w. No sign, clock or bank of its own.</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:10px;background:#F3E6DB;padding:32px;border-radius:16px">
+<h3 style="font-size:32px;font-weight:600;color:#A64E1B">Particle = a column</h3>
+<p style="font-size:26px;line-height:1.4">An identity in every world. Its state is the column’s signed marginal Wᵢ.</p>
+</div>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;width:1664px;font-size:24px;color:#5E6773">WPMW · worlds and particles · 4 / 20</p>
+
+</section>
+<section class="slide" data-n="5" id="two-pairs" data-transition="fade" style="background:#F7F5EF;color:#16202E;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:40px">
+<h2 style="font-family:'Source Serif 4', Georgia, serif;font-size:64px;font-weight:600;line-height:1.1">Two kinds of pair, with the same formulas</h2>
+<div style="display:flex;gap:40px">
+<div style="flex:1;display:flex;flex-direction:column;gap:16px;background:#F3E6DB;padding:40px;border-radius:16px">
+<h3 style="font-size:36px;font-weight:600;color:#A64E1B">Bond: two particles, one world</h3>
+<p style="font-size:30px;line-height:1.45">r = x₁ − x₂,  p_r = ½(p₁ − p₂)<br>X = ½(x₁ + x₂),  P = p₁ + p₂</p>
+<p style="font-size:28px;line-height:1.4;color:#3E4A5A">The potential v(r) acts here. It gives the classical force inside the world, and it decides which directions a chord can read.</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:16px;background:#E3EAF2;padding:40px;border-radius:16px">
+<h3 style="font-size:36px;font-weight:600;color:#2F5D8A">Chord: two worlds, every particle</h3>
+<p style="font-size:30px;line-height:1.45">worlds at X + Y and X − Y<br>μ = θ − θ′ + P·(x′ − x)/ħ</p>
+<p style="font-size:28px;line-height:1.4;color:#3E4A5A">The misalignment of two clocks, read at the midpoint. This is where the potential acts beyond the classical force.</p>
+</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:12px;border-left:6px solid #2F5D8A;padding:8px 0 8px 40px">
+<p style="font-size:30px;line-height:1.4">With one particle there are no bonds, so every “pair” we have drawn was a pair of worlds. The von Neumann equation for one particle is a Schrödinger equation for two configurations with H(x) − H(x′): the second “particle” has mass −m and potential −V. <b>It is the bra world.</b></p>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;width:1664px;font-size:24px;color:#5E6773">WPMW · worlds and particles · 5 / 20</p>
+
+</section>
+<section class="slide" data-n="6" id="relations" data-transition="fade" style="background:#F7F5EF;color:#16202E;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:40px">
+<h2 style="font-family:'Source Serif 4', Georgia, serif;font-size:64px;font-weight:600;line-height:1.1">Classical within a world, quantum between worlds</h2>
+<table style="font-family:'IBM Plex Sans', Arial, sans-serif;font-size:26px;color:#16202E">
+<tr><th style="width:20%;text-align:left">relation</th><th style="width:10%;text-align:center">worlds</th><th style="width:70%;text-align:left">what it is</th></tr>
+<tr style="background:#F3E6DB"><td style="color:#A64E1B">streaming</td><td style="text-align:center">1</td><td>Newtonian if unpaired, inertial if dark; the clock winds at L/ħ</td></tr>
+<tr><td style="color:#2F5D8A">chord</td><td style="text-align:center">2</td><td>misalignment of two clocks, carried to a common point by a lever P</td></tr>
+<tr><td style="color:#2F5D8A">reading</td><td style="text-align:center">many</td><td>interference sum of the chords about a world; its banks integrate it</td></tr>
+<tr><td style="color:#2F5D8A">emission</td><td style="text-align:center">3</td><td>a parent fires; the aligned pair at its point splits along a bond</td></tr>
+<tr><td style="color:#2F5D8A">absorption</td><td style="text-align:center">3</td><td>a parent fires; two unpaired worlds at p ± ξ join as an aligned pair</td></tr>
+<tr><td style="color:#2F5D8A">pair collision</td><td style="text-align:center">4</td><td>two aligned pairs exchange momentum (Focus, Defocus; step 24)</td></tr>
+<tr><td style="color:#2F5D8A">dark catalysis</td><td style="text-align:center">4</td><td>a pair and a partner pair exchange phase; nothing observable moves</td></tr>
+<tr><td style="color:#2F5D8A">admissibility</td><td style="text-align:center">all</td><td>the ensemble must be the Wigner function of a positive operator</td></tr>
+</table>
+<p style="font-size:28px;line-height:1.4;color:#3E4A5A">Definition WC7. The only carriers are worlds; everything about one world is a function of its point.</p>
+<p style="position:absolute;left:128px;bottom:64px;width:1664px;font-size:24px;color:#5E6773">WPMW · worlds and particles · 6 / 20</p>
+
+</section>
+<section class="slide" data-n="7" id="history" data-transition="fade" style="background:#f7f5ef">
+  <p id="e1-knle5b" style="position:absolute; bottom:64px; left:128px; width:1664px; font-family:'IBM Plex Sans', Arial, sans-serif; font-size:24px; color:#5e6773">WPMW · worlds and particles · 7 / 20</p>
+  <h2 id="pa0897831cb5cr0-bbd2c13d" style="position:absolute; top:128px; left:72.26px; width:1664px; font-family:'Source Serif 4', Georgia, serif; font-size:64px; font-weight:600; line-height:1.1; color:#16202e">A world’s history: piecewise classical (WC6)</h2>
+  <div id="pa0897831cb5cr1-bbd2c13d" style="position:absolute; top:230px; left:128px; width:1664px; height:640px; display:flex; flex-direction:row; gap:48px">
+    <div style="position:relative; width:960px; height:640px; display:flex; flex-direction:column; align-self:stretch; background:#fffdf8; border:1px solid #ddd7c9; border-radius:16px">
+      <svg xmlns="http://www.w3.org/2000/svg" aria-label="World-lines in configuration space-time: a parent world, an aligned pair splitting into a positon and a negaton at an emission vertex, and two unpaired worlds joining into an aligned pair at an absorption vertex" viewBox="0 0 960 640" style="position:absolute; top:0; left:0; width:960px; height:640px">
+<path d="M 200 566 Q 260 310 330 40" fill="none" stroke="#2F5D8A" stroke-width="6"/>
+<path d="M 820 566 Q 870 320 840 40" fill="none" stroke="#2F5D8A" stroke-width="6"/>
+<line x1="480" y1="566" x2="256" y2="340" stroke="#8A96A6" stroke-width="8" stroke-dasharray="14 10"/>
+<path d="M 256 340 Q 400 210 600 100" fill="none" stroke="#2F5D8A" stroke-width="4"/>
+<path d="M 256 340 Q 150 230 92 70" fill="none" stroke="#7FA3C9" stroke-width="4"/>
+<line x1="700" y1="566" x2="851" y2="262" stroke="#2F5D8A" stroke-width="4"/>
+<line x1="930" y1="540" x2="851" y2="262" stroke="#7FA3C9" stroke-width="4"/>
+<line x1="851" y1="262" x2="920" y2="40" stroke="#8A96A6" stroke-width="8" stroke-dasharray="14 10"/>
+<circle cx="256" cy="340" r="12" fill="#16202E"/>
+<circle cx="851" cy="262" r="12" fill="#16202E"/>
+</svg>
+      <p style="position:absolute; top:24px; left:350px; width:260px; font-family:'IBM Plex Sans', Arial, sans-serif; font-size:24px; color:#2f5d8a">parent, never kinks</p>
+      <p style="position:absolute; top:84px; left:612px; width:140px; font-family:'IBM Plex Sans', Arial, sans-serif; font-size:24px; color:#2f5d8a">positon</p>
+      <p style="position:absolute; top:26px; left:112px; width:140px; font-family:'IBM Plex Sans', Arial, sans-serif; font-size:24px; color:#5b7ea6">negaton</p>
+      <p style="position:absolute; top:330px; left:110px; width:120px; font-family:'IBM Plex Sans', Arial, sans-serif; font-size:24px; color:#16202e">emission</p>
+      <p style="position:absolute; top:556px; left:500px; width:180px; font-family:'IBM Plex Sans', Arial, sans-serif; font-size:24px; color:#5e6773">dark pair</p>
+      <p style="position:absolute; top:244px; left:660px; width:150px; font-family:'IBM Plex Sans', Arial, sans-serif; font-size:24px; color:#16202e">absorption</p>
+      <p style="position:absolute; top:596px; left:24px; width:420px; font-family:'IBM Plex Sans', Arial, sans-serif; font-size:24px; color:#5e6773">time ↑ · configuration ℝ³ᴺ →</p>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:20px; flex:1">
+      <p style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:27px; line-height:1.38; color:#16202e"><b>(a)</b> Worlds and their signs are conserved: ΔN + 2ΔS = 0.</p>
+      <p style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:27px; line-height:1.38; color:#16202e"><b>(b)</b> Between events ẋᵢ = pᵢ/mᵢ; ṗᵢ = −∇ᵢV if unpaired, 0 if dark; θ̇ = L/ħ.</p>
+      <p style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:27px; line-height:1.38; color:#16202e"><b>(c)</b> An event on bond (i, j) moves pᵢ by ±ξ and pⱼ by ∓ξ. Positions stay continuous.</p>
+      <p style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:27px; line-height:1.38; color:#16202e"><b>(d)</b> The parent, the reader, never kinks at its own events.</p>
+      <p style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:27px; line-height:1.38; color:#16202e"><b>(e)</b> One Newtonian time for all worlds. A clock measures action, not time.</p>
+    </div>
+  </div>
+
+</section>
+<section class="slide" data-n="8" id="chord-action" data-transition="fade" style="background:#F7F5EF;color:#16202E;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:28px">
+<h2 style="font-family:'Source Serif 4', Georgia, serif;font-size:64px;font-weight:600;line-height:1.1">One relation between worlds: the chord action</h2>
+<div style="display:flex;flex-direction:column;gap:6px;align-items:center;background:#FFFDF8;border:1px solid #DDD7C9;padding:24px 40px;border-radius:16px">
+<p style="font-size:38px;line-height:1.3">ΔL = L(X + Y) − L(X − Y) = <span style="color:#A64E1B">2mẊ·Ẏ − 2Y·∇V(X)</span> − <span style="color:#2F5D8A">R(X, Y)</span></p>
+<p style="font-size:26px;color:#3E4A5A">two worlds at X ± Y; each clock winds at L/ħ, so ΔS = ħ(θ − θ′)   (CA1, CA2)</p>
+</div>
+<div style="display:flex;gap:40px">
+<div style="flex:1;display:flex;flex-direction:column;gap:12px">
+<svg aria-hidden="true" viewBox="0 0 32 40" style="width:32px;height:40px;align-self:center;flex:none"><polygon points="9.92,0 22.08,0 22.08,24.0 32.0,24.0 16.0,40.0 0,24.0 9.92,24.0" fill="#A64E1B"/></svg>
+<div style="display:flex;flex-direction:column;gap:12px;background:#F3E6DB;padding:32px;border-radius:16px">
+<h3 style="font-size:34px;font-weight:600;color:#A64E1B">Linear in Y: classical within a world</h3>
+<p style="font-size:28px;line-height:1.4">Euler–Lagrange in Y gives m Ẍ = −∇V(X): Newton’s law for the world at the midpoint, the Liouville term exactly.</p>
+</div>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:12px">
+<svg aria-hidden="true" viewBox="0 0 32 40" style="width:32px;height:40px;align-self:center;flex:none"><polygon points="9.92,0 22.08,0 22.08,24.0 32.0,24.0 16.0,40.0 0,24.0 9.92,24.0" fill="#2F5D8A"/></svg>
+<div style="display:flex;flex-direction:column;gap:12px;background:#E3EAF2;padding:32px;border-radius:16px">
+<h3 style="font-size:34px;font-weight:600;color:#2F5D8A">Residual R: quantum between worlds</h3>
+<p style="font-size:28px;line-height:1.4">Odd in Y, O(Y³), zero for quadratic V. Its Fourier transform over Y is the whole event kernel Θ.</p>
+</div>
+</div>
+</div>
+<div style="display:flex;gap:24px;align-items:center">
+<p style="font-size:26px;font-weight:600;letter-spacing:2px;color:#5E6773;text-transform:uppercase;width:220px">Derived</p>
+<p style="flex:1;font-size:26px;line-height:1.35;background:#ECE8DE;padding:16px 24px;border-radius:12px">bonds: the terms of R (CA5)</p>
+<p style="flex:1;font-size:26px;line-height:1.35;background:#ECE8DE;padding:16px 24px;border-radius:12px">banks: one way to time Θ (CA7)</p>
+<p style="flex:1;font-size:26px;line-height:1.35;background:#ECE8DE;padding:16px 24px;border-radius:12px">one row: ħμ̇ = −[V(X+Y) − V(X−Y)] (CA4)</p>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;width:1664px;font-size:24px;color:#5E6773">WPMW · worlds and particles · 8 / 20</p>
+
+</section>
+<section class="slide" data-n="9" id="domain-target" data-transition="fade" style="background:#F7F5EF;color:#16202E;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:40px">
+<h2 style="font-family:'Source Serif 4', Georgia, serif;font-size:64px;font-weight:600;line-height:1.1">Labels or coordinates: where worlds are coupled</h2>
+<div style="display:flex;gap:32px">
+<div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFDF8;border:1px solid #DDD7C9;padding:32px;border-radius:16px">
+<p style="font-size:24px;font-weight:600;letter-spacing:2px;color:#5E6773;text-transform:uppercase">On the domain</p>
+<h3 style="font-size:32px;font-weight:600">Schiff–Poirier</h3>
+<svg aria-label="A smooth one-parameter family of world-lines labelled by C" width="460" height="180" viewBox="0 0 460 180">
+<rect x="2" y="2" width="456" height="176" rx="10" fill="#EEF2F6" stroke="#CFD8E2" stroke-width="2"/>
+<g fill="none" stroke="#2F5D8A" stroke-width="3">
+<path d="M 50 170 Q 100 90 70 10"/><path d="M 100 170 Q 150 90 120 10"/><path d="M 150 170 Q 200 90 170 10"/><path d="M 200 170 Q 250 90 220 10"/><path d="M 250 170 Q 300 90 270 10"/><path d="M 300 170 Q 350 90 320 10"/><path d="M 350 170 Q 400 90 370 10"/>
+</g>
+</svg>
+<p style="font-size:26px;line-height:1.4">A smooth label C, ρ = 1/x′. The coupling is (ħ²/8m) x″²/x′⁴, the Fisher information: four derivatives in C. Pure states only.</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFDF8;border:1px solid #DDD7C9;padding:32px;border-radius:16px">
+<p style="font-size:24px;font-weight:600;letter-spacing:2px;color:#5E6773;text-transform:uppercase">On label neighbours</p>
+<h3 style="font-size:32px;font-weight:600">Hall–Deckert–Wiseman</h3>
+<svg aria-label="A discrete set of world-lines coupled only to their neighbours" width="460" height="180" viewBox="0 0 460 180">
+<rect x="2" y="2" width="456" height="176" rx="10" fill="#EEF2F6" stroke="#CFD8E2" stroke-width="2"/>
+<g fill="none" stroke="#2F5D8A" stroke-width="3">
+<path d="M 70 170 Q 110 90 85 10"/><path d="M 130 170 Q 170 90 145 10"/><path d="M 190 170 Q 230 90 205 10"/><path d="M 250 170 Q 290 90 265 10"/><path d="M 310 170 Q 350 90 325 10"/><path d="M 370 170 Q 410 90 385 10"/>
+</g>
+<g stroke="#8A96A6" stroke-width="3">
+<line x1="92" y1="130" x2="140" y2="130"/><line x1="152" y1="130" x2="200" y2="130"/><line x1="212" y1="130" x2="260" y2="130"/><line x1="272" y1="130" x2="320" y2="130"/><line x1="332" y1="130" x2="380" y2="130"/>
+<line x1="100" y1="90" x2="148" y2="90"/><line x1="160" y1="90" x2="208" y2="90"/><line x1="220" y1="90" x2="268" y2="90"/><line x1="280" y1="90" x2="328" y2="90"/><line x1="340" y1="90" x2="388" y2="90"/>
+<line x1="99" y1="50" x2="147" y2="50"/><line x1="159" y1="50" x2="207" y2="50"/><line x1="219" y1="50" x2="267" y2="50"/><line x1="279" y1="50" x2="327" y2="50"/><line x1="339" y1="50" x2="387" y2="50"/>
+</g>
+</svg>
+<p style="font-size:26px;line-height:1.4">The same coupling as differences between neighbours: U_N/N → 1/8 for a Gaussian. Sorting finds the neighbours only in 1D.</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#E3EAF2;padding:32px;border-radius:16px">
+<p style="font-size:24px;font-weight:600;letter-spacing:2px;color:#2F5D8A;text-transform:uppercase">On the target</p>
+<h3 style="font-size:32px;font-weight:600;color:#2F5D8A">WPMW</h3>
+<svg aria-label="Signed worlds as points of configuration space, two of them joined by a chord with its reader at the midpoint" width="460" height="180" viewBox="0 0 460 180">
+<rect x="2" y="2" width="456" height="176" rx="10" fill="#F7F5EF" stroke="#CFD8E2" stroke-width="2"/>
+<g fill="#7FA3C9"><circle cx="60" cy="40" r="8"/><circle cx="170" cy="150" r="8"/><circle cx="300" cy="140" r="8"/><circle cx="400" cy="40" r="8"/><circle cx="250" cy="30" r="8"/></g>
+<g fill="none" stroke="#7FA3C9" stroke-width="3"><circle cx="70" cy="120" r="8"/><circle cx="380" cy="120" r="8"/><circle cx="190" cy="40" r="8"/></g>
+<line x1="110" y1="130" x2="350" y2="60" stroke="#2F5D8A" stroke-width="5"/>
+<circle cx="110" cy="130" r="12" fill="#2F5D8A"/>
+<circle cx="350" cy="60" r="12" fill="none" stroke="#2F5D8A" stroke-width="5"/>
+<line x1="220" y1="85" x2="240" y2="105" stroke="#16202E" stroke-width="5"/>
+<line x1="240" y1="85" x2="220" y2="105" stroke="#16202E" stroke-width="5"/>
+</svg>
+<p style="font-size:26px;line-height:1.4">Chords X ± Y are differences of target points. R(X, Y) is linear in W and needs only midpoints and differences. Any state.</p>
+</div>
+</div>
+<p style="font-size:28px;line-height:1.4;color:#3E4A5A">A label is constant along each world and never observed; a coordinate is what the action varies (CA0). Relabelling C is a gauge symmetry.</p>
+<p style="position:absolute;left:128px;bottom:64px;width:1664px;font-size:24px;color:#5E6773">WPMW · worlds and particles · 9 / 20</p>
+
+</section>
+<section class="slide" data-n="10" id="bonds-chords" data-transition="fade" style="background:#F7F5EF;color:#16202E;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:32px">
+<h2 style="font-family:'Source Serif 4', Georgia, serif;font-size:64px;font-weight:600;line-height:1.1">Where the levels meet: chords are read along bonds</h2>
+<div style="display:flex;gap:48px">
+<div style="position:relative;width:840px;height:640px;background:#FFFDF8;border:1px solid #DDD7C9;border-radius:16px">
+<svg aria-label="Configuration plane of two particles: a chord between two worlds decomposed into a dark centre-of-mass component and a read component along the bond direction" style="position:absolute;left:0;top:0" width="840" height="640" viewBox="0 0 840 640">
+<line x1="60" y1="330" x2="800" y2="330" stroke="#C9C2B3" stroke-width="2"/>
+<line x1="420" y1="610" x2="420" y2="40" stroke="#C9C2B3" stroke-width="2"/>
+<line x1="130" y1="620" x2="720" y2="30" stroke="#C9C2B3" stroke-width="3" stroke-dasharray="6 8"/>
+<line x1="220" y1="440" x2="640" y2="300" stroke="#2F5D8A" stroke-width="5"/>
+<line x1="220" y1="440" x2="500" y2="160" stroke="#8A96A6" stroke-width="4" stroke-dasharray="12 9"/>
+<line x1="500" y1="160" x2="640" y2="300" stroke="#A64E1B" stroke-width="6"/>
+<circle cx="220" cy="440" r="14" fill="#2F5D8A"/>
+<circle cx="640" cy="300" r="14" fill="none" stroke="#2F5D8A" stroke-width="5"/>
+<line x1="418" y1="358" x2="442" y2="382" stroke="#16202E" stroke-width="5"/>
+<line x1="442" y1="358" x2="418" y2="382" stroke="#16202E" stroke-width="5"/>
+</svg>
+<p style="position:absolute;left:60px;top:420px;width:140px;font-size:24px;color:#2F5D8A">world w</p>
+<p style="position:absolute;left:664px;top:284px;width:150px;font-size:24px;color:#2F5D8A">world w′</p>
+<p style="position:absolute;left:420px;top:400px;width:260px;font-size:24px;color:#16202E">reader at midpoint</p>
+<p style="position:absolute;left:120px;top:186px;width:260px;font-size:24px;color:#5E6773">centre of mass: dark</p>
+<p style="position:absolute;left:620px;top:196px;width:200px;font-size:24px;color:#A64E1B">bond: read</p>
+<p style="position:absolute;left:700px;top:340px;width:120px;font-size:24px;color:#5E6773">x₁ →</p>
+<p style="position:absolute;left:436px;top:40px;width:100px;font-size:24px;color:#5E6773">x₂ ↑</p>
+<p style="position:absolute;left:170px;top:596px;width:220px;font-size:24px;color:#5E6773">contact x₁ = x₂</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:24px">
+<p style="font-size:28px;line-height:1.4">A pair potential reads only the chord’s extent along each bond:<br>R(x, y) = Σ_bonds ρ_v(r_b, η_b),  η_b = yᵢ − yⱼ  <b>(WC9)</b></p>
+<p style="font-size:28px;line-height:1.4">Bonds are terms of R, so <b>one bank per bond</b>, N(N − 1)/2 of them, sharing one kernel table, follows <b>(WC4, CA5)</b>.</p>
+<p style="font-size:28px;line-height:1.4">A chord that moves only particle 1 reads only the terms of V that involve particle 1 <b>(WC8.1)</b>. Locality comes from chord geometry, not from particle phases.</p>
+</div>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;width:1664px;font-size:24px;color:#5E6773">WPMW · worlds and particles · 10 / 20</p>
+
+</section>
+<section class="slide" data-n="11" id="test-clock" data-transition="fade" style="background:#ECE8DE;color:#16202E;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:40px">
+<p style="font-size:24px;font-weight:600;letter-spacing:2px;color:#A64E1B;text-transform:uppercase">Test 1 of the particles-as-worlds analogy</p>
+<h2 style="font-family:'Source Serif 4', Georgia, serif;font-size:64px;font-weight:600;line-height:1.1">Give each particle its own clock and reader</h2>
+<table style="font-family:'IBM Plex Sans', Arial, sans-serif;font-size:28px;color:#16202E">
+<tr><th style="width:12%;text-align:left">reading</th><th style="width:30%;text-align:left">who holds the clock</th><th style="width:58%;text-align:left">what it gives (two particles, pair potential)</th></tr>
+<tr style="background:#E3EAF2"><td style="color:#2F5D8A"><b>W</b></td><td>the world, joint chord</td><td>QM: a product state stays separable to 7×10⁻¹⁵</td></tr>
+<tr><td style="color:#A64E1B"><b>B1</b></td><td>each world-particle, whole v</td><td>relative motion is the QLE at <b>ħ/2</b>, plus a coupling 3∂²_P∂_pr</td></tr>
+<tr><td style="color:#A64E1B"><b>B2</b></td><td>each world-particle, v halved</td><td>reads half the force</td></tr>
+</table>
+<div style="display:flex;gap:32px">
+<div style="flex:1;display:flex;flex-direction:column;gap:8px;background:#F7F5EF;padding:32px;border-radius:16px">
+<p style="font-size:64px;font-weight:600;line-height:1;color:#2F5D8A">0.549</p>
+<p style="font-size:26px;line-height:1.35;color:#3E4A5A">W’s Eckart transmission; exact QM 0.5441</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:8px;background:#F7F5EF;padding:32px;border-radius:16px">
+<p style="font-size:64px;font-weight:600;line-height:1;color:#A64E1B">0.517</p>
+<p style="font-size:26px;line-height:1.35;color:#3E4A5A">B1’s; exact at ħ/2 is 0.5120</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:8px;background:#F7F5EF;padding:32px;border-radius:16px">
+<p style="font-size:64px;font-weight:600;line-height:1;color:#A64E1B">36×</p>
+<p style="font-size:26px;line-height:1.35;color:#3E4A5A">unsigned ⟨P²⟩ with particle banks, at 2.8× the worlds</p>
+</div>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;width:1664px;font-size:24px;color:#5E6773">WPMW · worlds and particles · 11 / 20</p>
+
+</section>
+<section class="slide" data-n="12" id="test-entangle" data-transition="fade" style="background:#ECE8DE;color:#16202E;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:40px">
+<p style="font-size:24px;font-weight:600;letter-spacing:2px;color:#A64E1B;text-transform:uppercase">Test 2 of the particles-as-worlds analogy</p>
+<h2 style="font-family:'Source Serif 4', Georgia, serif;font-size:64px;font-weight:600;line-height:1.1">Entanglement lives inside worlds</h2>
+<div style="display:flex;gap:40px">
+<div style="flex:1;display:flex;flex-direction:column;gap:16px;background:#F7F5EF;padding:40px;border-radius:16px">
+<h3 style="font-size:32px;font-weight:600">Problem Q: Moshinsky, quadratic bonds</h3>
+<p style="font-size:80px;font-weight:600;line-height:1;color:#A64E1B">0 events</p>
+<p style="font-size:28px;line-height:1.4;color:#3E4A5A">One-body purity falls to 0.683 (3 particles) and 0.655 (4). Positive worlds streamed classically reproduce it within 1.5×10⁻³ and 2.5×10⁻³.</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:16px;background:#F7F5EF;padding:40px;border-radius:16px">
+<h3 style="font-size:32px;font-weight:600">Problem G: Gaussian bonds, 3 bosons</h3>
+<p style="font-size:80px;font-weight:600;line-height:1;color:#2F5D8A">0.606 · 0.800</p>
+<p style="font-size:28px;line-height:1.4;color:#3E4A5A">Classical streaming over-entangles (purity down to 0.606; exact dips to 0.800). The events between worlds remove the excess: within 0.01 at reach 8π on the mesh.</p>
+</div>
+</div>
+<p style="font-size:32px;line-height:1.4"><b>Entanglement is a correlation among the cells of a row; the quantum events correct it between rows.</b> With one particle neither exists.</p>
+<p style="position:absolute;left:128px;bottom:64px;width:1664px;font-size:24px;color:#5E6773">WPMW · worlds and particles · 12 / 20</p>
+
+</section>
+<section class="slide" data-n="13" id="test-dimension" data-transition="fade" style="background:#ECE8DE;color:#16202E;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:40px">
+<p style="font-size:24px;font-weight:600;letter-spacing:2px;color:#A64E1B;text-transform:uppercase">Test 3 of the particles-as-worlds analogy</p>
+<h2 style="font-family:'Source Serif 4', Georgia, serif;font-size:64px;font-weight:600;line-height:1.1">What grows is dimension, not particle count</h2>
+<div style="display:flex;gap:56px">
+<table style="width:900px;font-family:'IBM Plex Sans', Arial, sans-serif;font-size:28px;color:#16202E">
+<tr><th style="width:38%;text-align:left">particles</th><th style="width:22%;text-align:center">phase-space dim</th><th style="width:40%;text-align:right">worlds per chance partner</th></tr>
+<tr><td>1 on a line</td><td style="text-align:center">2</td><td style="text-align:right">50</td></tr>
+<tr><td>2 on a line</td><td style="text-align:center">4</td><td style="text-align:right">2.5×10³</td></tr>
+<tr style="background:#F3E6DB"><td>3 on a line, or 1 in 3D</td><td style="text-align:center">6</td><td style="text-align:right">1.3×10⁵</td></tr>
+<tr><td>2 in 3D</td><td style="text-align:center">12</td><td style="text-align:right">1.6×10¹⁰</td></tr>
+<tr><td>3 in 3D</td><td style="text-align:center">18</td><td style="text-align:right">2.0×10¹⁵</td></tr>
+</table>
+<div style="flex:1;display:flex;flex-direction:column;gap:24px">
+<p style="font-size:28px;line-height:1.4">The contact sink keeps each cell’s net count and erases fringes finer than a cell: it <b>decoheres</b> (WC10).</p>
+<p style="font-size:28px;line-height:1.4">Four particles on a line keep only <b>15 %</b> of the quantum correction at t = 1.</p>
+</div>
+</div>
+<p style="font-size:28px;line-height:1.4;color:#3E4A5A">Chance that two independent worlds share a cell of side σ/2: 0.141 per phase-space axis, so (0.141)²ᵈᴺ.</p>
+<p style="position:absolute;left:128px;bottom:64px;width:1664px;font-size:24px;color:#5E6773">WPMW · worlds and particles · 13 / 20</p>
+
+</section>
+<section class="slide" data-n="14" id="popcontrol" data-transition="fade" style="background:#F7F5EF;color:#16202E;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:40px">
+<h2 style="font-family:'Source Serif 4', Georgia, serif;font-size:64px;font-weight:600;line-height:1.1">Population control is numerics, not ontology</h2>
+<div style="display:flex;gap:32px">
+<div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFDF8;border:1px solid #DDD7C9;padding:36px;border-radius:16px">
+<h3 style="font-size:32px;font-weight:600">Contact sink</h3>
+<p style="font-size:72px;font-weight:600;line-height:1;color:#A64E1B">−0.143</p>
+<p style="font-size:26px;line-height:1.4;color:#3E4A5A">global purity deficit at t = 3, cell 0.35, ν = 10⁶. Keeps only each cell’s count M₀, so its error is first order in the cell (PC2).</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFDF8;border:1px solid #DDD7C9;padding:36px;border-radius:16px">
+<h3 style="font-size:32px;font-weight:600">K1 resampling</h3>
+<p style="font-size:72px;font-weight:600;line-height:1;color:#2F5D8A">−0.020</p>
+<p style="font-size:26px;line-height:1.4;color:#3E4A5A">cell 0.7, grid shifted every ten steps, 1.37 worlds per ν. Keeps M₀ and M₁, each ± pair at the dipole centre (PC3–PC6).</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFDF8;border:1px solid #DDD7C9;padding:36px;border-radius:16px">
+<h3 style="font-size:32px;font-weight:600">Absorption, crossings</h3>
+<p style="font-size:72px;font-weight:600;line-height:1;color:#5E6773">&lt; ½</p>
+<p style="font-size:26px;line-height:1.4;color:#3E4A5A">absorbed share 0.31–0.44 with a tolerance (PC5). Chance crossings are too rare; kin re-absorption is an undo, under 1 % of events (CX3–CX6).</p>
+</div>
+</div>
+<p style="font-size:30px;line-height:1.4">An absorption is a vertex where three world-lines meet: the ontology’s picture. K1 is what holds the population in practice.</p>
+<p style="position:absolute;left:128px;bottom:64px;width:1664px;font-size:24px;color:#5E6773">WPMW · worlds and particles · 14 / 20</p>
+
+</section>
+<section class="slide" data-n="15" id="verdict" data-transition="fade" style="background:#16202E;color:#F2EEE4;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;justify-content:center;gap:72px">
+<div style="display:flex;flex-direction:column;gap:20px;border-left:8px solid #8FB4DC;padding:8px 0 8px 48px">
+<p style="font-size:28px;font-weight:600;letter-spacing:2px;color:#8FB4DC;text-transform:uppercase">The analogy that holds</p>
+<p style="font-family:'Source Serif 4', Georgia, serif;font-size:60px;line-height:1.2">N particles in d dimensions are one particle in dN dimensions. That one particle is a world.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:20px;border-left:8px solid #E9A56F;padding:8px 0 8px 48px">
+<p style="font-size:28px;font-weight:600;letter-spacing:2px;color:#E9A56F;text-transform:uppercase">The analogy that misleads</p>
+<p style="font-family:'Source Serif 4', Georgia, serif;font-size:60px;line-height:1.2">The particles inside a world, treated as if they were the worlds of an ensemble.</p>
+</div>
+
+</section>
+<section class="slide" data-n="16" id="carryover" data-transition="fade" style="background:#F7F5EF;color:#16202E;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:40px">
+<h2 style="font-family:'Source Serif 4', Georgia, serif;font-size:64px;font-weight:600;line-height:1.1">What the one-particle ladder gives, and what it can’t</h2>
+<div style="display:flex;gap:32px">
+<div style="flex:1;display:flex;flex-direction:column;gap:16px;background:#E3EAF2;padding:36px;border-radius:16px">
+<h3 style="font-size:32px;font-weight:600;color:#2F5D8A">Carries over, read as one world</h3>
+<ul style="font-size:26px;line-height:1.45">
+<li>the compensated split and the soft horizon</li>
+<li>the reach as a regulator (G5)</li>
+<li>the ledger: Γ(1 − 2f) = R_sink, f = ½</li>
+<li>(S′) and pair collisions in the sea</li>
+<li>integrate-and-fire banks, now per bond</li>
+</ul>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:16px;background:#F3E6DB;padding:36px;border-radius:16px">
+<h3 style="font-size:32px;font-weight:600;color:#A64E1B">Needs two or more particles</h3>
+<ul style="font-size:26px;line-height:1.45">
+<li>who owns clocks and banks (WC1, WC2, WC4)</li>
+<li>bonds, a dark centre of mass, conserved P</li>
+<li>locality from chords (WC8.1)</li>
+<li>entanglement and particle marginals</li>
+<li>identical particles, spin (WC-SP7, SP8)</li>
+</ul>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:16px;background:#ECE8DE;padding:36px;border-radius:16px">
+<h3 style="font-size:32px;font-weight:600">Needs high dimension</h3>
+<ul style="font-size:26px;line-height:1.45">
+<li>coincidence and sink costs (WC10, M10)</li>
+<li>chance crossings (CX3)</li>
+<li>K1’s cost in six or twelve relative dimensions (PC-SP2)</li>
+<li>live sea readings along a bond (WC-SP2)</li>
+</ul>
+</div>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;width:1664px;font-size:24px;color:#5E6773">WPMW · worlds and particles · 16 / 20</p>
+
+</section>
+<section class="slide" data-n="17" id="phrasebook" data-transition="fade" style="background:#F7F5EF;color:#16202E;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:40px">
+<h2 style="font-family:'Source Serif 4', Georgia, serif;font-size:64px;font-weight:600;line-height:1.1">A phrasebook for multi-particle models</h2>
+<table style="font-family:'IBM Plex Sans', Arial, sans-serif;font-size:28px;color:#16202E">
+<tr><th style="width:44%;text-align:left;color:#A64E1B">instead of</th><th style="width:56%;text-align:left;color:#2F5D8A">say</th></tr>
+<tr><td>a particle has a clock, a sign</td><td>a world has a clock and a sign</td></tr>
+<tr><td>positons and negatons are particles</td><td>positon worlds and negaton worlds</td></tr>
+<tr><td>a particle is emitted from the sea</td><td>an aligned pair of worlds ionises at the parent’s point</td></tr>
+<tr><td>the particle reads the potential</td><td>the world reads its chords along each bond</td></tr>
+<tr><td>the pair’s separation</td><td>a chord (two worlds) or a bond (two particles)</td></tr>
+<tr><td>body</td><td>unpaired world (ledger) or particle</td></tr>
+<tr><td>the sea as a gas of particles</td><td>dark aligned pairs of worlds, in Γ-space</td></tr>
+</table>
+<p style="font-size:28px;line-height:1.4;color:#3E4A5A">Test for any sentence: is its subject a row, a cell or a column of the table on slide 4?</p>
+<p style="position:absolute;left:128px;bottom:64px;width:1664px;font-size:24px;color:#5E6773">WPMW · worlds and particles · 17 / 20</p>
+
+</section>
+<section class="slide" data-n="18" id="questions" data-transition="fade" style="background:#ECE8DE;color:#16202E;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:40px">
+<h2 style="font-family:'Source Serif 4', Georgia, serif;font-size:64px;font-weight:600;line-height:1.1">Questions for David</h2>
+<div style="display:flex;flex-direction:column;gap:28px">
+<div style="display:flex;gap:32px;align-items:baseline"><p style="width:64px;font-size:44px;font-weight:600;color:#2F5D8A">1</p><p style="flex:1;font-size:32px;line-height:1.4">Which analogy did you mean: one particle in dN dimensions, or particles behaving like worlds?</p></div>
+<div style="display:flex;gap:32px;align-items:baseline"><p style="width:64px;font-size:44px;font-weight:600;color:#2F5D8A">2</p><p style="flex:1;font-size:32px;line-height:1.4">In your two-particle many-worlds calculation of about 2019–20, what carried the sign, and what was the pair?</p></div>
+<div style="display:flex;gap:32px;align-items:baseline"><p style="width:64px;font-size:44px;font-weight:600;color:#2F5D8A">3</p><p style="flex:1;font-size:32px;line-height:1.4">In the Volterra sea and the bound-pair chemistry, is a P–N separation a chord or a bond, and do up and down act per bond?</p></div>
+<div style="display:flex;gap:32px;align-items:baseline"><p style="width:64px;font-size:44px;font-weight:600;color:#2F5D8A">4</p><p style="flex:1;font-size:32px;line-height:1.4">Could the paper adopt “classical within a world, quantum between worlds”, and keep “particle” for the columns?</p></div>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;width:1664px;font-size:24px;color:#5E6773">WPMW · worlds and particles · 18 / 20</p>
+
+</section>
+<section class="slide" data-n="19" id="open" data-transition="fade" style="background:#F7F5EF;color:#16202E;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:40px">
+<h2 style="font-family:'Source Serif 4', Georgia, serif;font-size:64px;font-weight:600;line-height:1.1">Open items that the two levels raise</h2>
+<table style="font-family:'IBM Plex Sans', Arial, sans-serif;font-size:28px;color:#16202E">
+<tr><th style="width:18%;text-align:left">item</th><th style="width:82%;text-align:left">question</th></tr>
+<tr><td style="color:#2F5D8A">WC-SP5</td><td>Is a world-particle reading (B1) the Wigner image of mean-field, and does that explain ħ/2?</td></tr>
+<tr><td style="color:#2F5D8A">WC-SP7</td><td>Which relation between a world and its permutations gives Bose and Fermi statistics?</td></tr>
+<tr><td style="color:#2F5D8A">WC-SP8</td><td>Spin as labels on world-particles, with phases carried by chords between worlds</td></tr>
+<tr><td style="color:#2F5D8A">WC-SP10</td><td>Population control with cells on bond coordinates, not the joint relative phase space</td></tr>
+<tr><td style="color:#2F5D8A">PC-SP2</td><td>K1’s cost with six relative dimensions (four on a line) or twelve (three in space)</td></tr>
+<tr><td style="color:#2F5D8A">CX-SP1</td><td>Two particles on a lattice: absorption at exact crossings, against emission plus K1</td></tr>
+</table>
+<p style="font-size:28px;line-height:1.4;color:#3E4A5A">Then: an N-particle algorithm specification built on WC7, WC9 and PC6.</p>
+<p style="position:absolute;left:128px;bottom:64px;width:1664px;font-size:24px;color:#5E6773">WPMW · worlds and particles · 19 / 20</p>
+
+</section>
+<section class="slide" data-n="20" id="sources" data-transition="fade" style="background:#F7F5EF;color:#16202E;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:32px">
+<h2 style="font-family:'Source Serif 4', Georgia, serif;font-size:64px;font-weight:600;line-height:1.1">Sources</h2>
+<div style="display:flex;gap:56px">
+<div style="flex:1;display:flex;flex-direction:column;gap:14px">
+<h3 style="font-size:30px;font-weight:600;color:#2F5D8A">WPMW repository</h3>
+<p style="font-size:24px;line-height:1.4">Step 25, docs/analysis/world_clocks.md: WC0–WC10, problems Q and G</p>
+<p style="font-size:24px;line-height:1.4">Step 26, docs/analysis/population_control.md: PC1–PC7</p>
+<p style="font-size:24px;line-height:1.4">Supplement, docs/supplement/world_crossings.md: CX1–CX6</p>
+<p style="font-size:24px;line-height:1.4">Steps 21, 23, 24: M1, M10; Q11; (S′) and Focus/Defocus</p>
+<p style="font-size:24px;line-height:1.4">Call summary of 13 and 20 October 2026</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:14px">
+<h3 style="font-size:30px;font-weight:600;color:#A64E1B">Literature</h3>
+<p style="font-size:24px;line-height:1.4">Ehrenfest and Ehrenfest 1912; Gibbs 1902 (μ- and Γ-space)</p>
+<p style="font-size:24px;line-height:1.4">Hall, Deckert and Wiseman, Phys. Rev. X 4, 041013 (2014)</p>
+<p style="font-size:24px;line-height:1.4">Takahashi and Umezawa 1975 (thermo-field doubling)</p>
+<p style="font-size:24px;line-height:1.4">Moshinsky 1968; Bouvrie et al. 2012; Zöllner, Meyer, Schmelcher 2006, 2008</p>
+<p style="font-size:24px;line-height:1.4">Booth, Thom and Alavi 2009; Xiong and Shao 2019; Sellier and Dimov 2014</p>
+<p style="font-size:24px;line-height:1.4">Thompson, Moran and Swenson 2017 (VLBI)</p>
+</div>
+</div>
+
+</section>
+</div>
+<div id="notes" aria-live="polite"></div>
+<div id="bar">
+<button id="prev" aria-label="Previous slide">&larr;</button>
+<span id="count"></span>
+<button id="next" aria-label="Next slide">&rarr;</button>
+<button id="nbtn" aria-pressed="false">Notes (N)</button>
+</div>
+<script>
+const NOTES = ["Purpose of the deck. David has said that working mostly with one particle is not a handicap, because there is a formal analogy between many particles and many worlds. My suspicion is that the one-particle case lets us blur three different things — worlds, particles and world-particles — and that the blur blocks a full understanding of the multi-particle models we are now building (step 25 world_clocks.md, step 26 population_control.md, and the supplement world_crossings.md).\n\nThe deck tries to settle that disagreement fairly. The short answer, which slide 15 states and slides 11 to 14 earn: there are two analogies, and they are different. One is exact: N particles in d dimensions are formally one particle in dN dimensions, and that one point in configuration space is a world. The other is misleading: treating the particles inside one world as if they were the worlds of an ensemble. David is right about the first; my worry is about the second.\n\nColour key used on every slide: blue means worlds and everything that happens between worlds (chords, readings, events, signs, clocks). Orange means particles and everything that happens inside one world (bonds, the potential V, the classical force).\n\nAll numbers in the deck are quoted from the repository documents, which state where each was computed. Four identities were re-checked symbolically for this deck: the one-particle von Neumann equation as a two-configuration Schrödinger equation, Theorem WC2(b) (the world-particle reading is the QLE at ħ/2), WC2(d) (the cubic Moyal operators), and the bond-sum decomposition of WC9 with the locality statement WC8.1. All four residuals are exactly zero.", "Both positions are partly right, and it helps to say so at the start so the call does not turn into a debate about who was right.\n\nDavid's position, in its strongest form: the compensated Liouville generator for N particles is the same QLE as for one particle, written on a bigger phase space. Nothing in the generator knows how the coordinates are grouped into particles. That is true, and slide 15 makes it the \"exact analogy\".\n\nMy position, in its strongest form: the ontology questions we have spent October on — who owns the clock, who owns the bank of integrators, what a reader is, what a sea pair is, what entanglement is in a world picture — cannot even be asked with one particle, because a world has exactly one world-particle. Step 25 found that the one-particle vocabulary had quietly defined a \"world-particle\" as a world (the glossary and ORIENTATION §2.3 said so), which is right only for N = 1.\n\nA correction to my own framing, which the deck makes on slide 13: much of what feels like \"the many-particle problem\" is really a many-dimension problem. The coincidence and sink costs depend on the phase-space dimension 2dN, so one particle in 3D already costs as much as three particles on a line. What the one-particle ladder hid was mostly one-dimensionality and external potentials (no bonds), not the single particle as such.\n\nSo the proposal for the call: agree on which analogy each of us means, adopt the step 25 vocabulary, and look at the three tests (slides 11–13) where the misleading analogy makes a measurable error.", "This is the analogy I want to use as the anchor for the whole call, because classical statistical mechanics already met exactly our confusion and settled it with two words.\n\nThe Ehrenfests (1912) named the two spaces. μ-space is the phase space of one molecule: for a gas of N molecules, the state of the gas is N points in μ-space, and the Boltzmann equation evolves their one-particle density f(x, p). The molecules interact through a potential — collisions, mean fields. All of that happens inside one physical system, one world.\n\nΓ-space is the phase space of the whole system, 6N-dimensional. One point in Γ-space is the complete microstate of the gas. Gibbs's ensemble (1902) is a cloud of such points: imagined copies of the system, which never interact; the Liouville equation moves the cloud.\n\nWPMW is a Gibbs ensemble with two changes: the copies carry a sign, and the copies do interact, through the relations on slide 6 (chords, readings, emission, absorption). Inside each copy the particles still interact classically, exactly as the molecules do in Boltzmann's gas.\n\nThe key sentence is the last line. For one particle, μ-space and Γ-space are the same space. So the world ensemble of a one-particle problem is a cloud in the one-particle phase space, and it looks like a gas of particles. Every analogy we have used for the sea — Volterra lattices, chemistry of P–N pairs, four-wave mixing, Cooper pairs, Boltzmann and Landau collisions — is a Boltzmann-gas analogy applied to a Gibbs ensemble. With one particle that is harmless. With two or more it puts the interaction between worlds into the wrong space.\n\nA question to put to David here: when we talk about pair–pair collisions in the sea, or about P–N \"bound pairs\", do we mean points colliding in μ-space or in Γ-space? For N ≥ 2 only the second makes sense, because a positon and a negaton are worlds.\n\nReferences: P. and T. Ehrenfest, Begriffliche Grundlagen der statistischen Auffassung in der Mechanik (Encyklopädie der mathematischen Wissenschaften IV.32, 1912); J. W. Gibbs, Elementary Principles in Statistical Mechanics (1902).", "This is Definition WC0 of step 25, as amended in October so that it holds for N particles in three dimensions. The table is the picture I find most useful: the signed ensemble is a matrix whose rows are worlds and whose columns are particles.\n\nA world (a row) is one complete configuration with its momenta: a point (x₁…x_N, p₁…p_N) of ℝ⁶ᴺ, with a sign ε = ±1 and a phase θ that winds at the Lagrangian rate, dθ/dt = L/ħ with L = Σ pᵢ²/2mᵢ − V(x). Its banks of integrators (WC4: one per bond) are derived rather than postulated: slide 8 and the chord-action note (Remark CA7) make them one way of timing the events. A positon is a world with ε = +1, a negaton a world with ε = −1. \"Positon\" is short for positon world. Neither is a particle, neither is a hole, neither has a charge.\n\nA world-particle (a cell) is particle i as it appears in world w: the point (xᵢʷ, pᵢʷ) of ℝ⁶. It shares its row's sign and clock and has none of its own.\n\nA particle (a column) is the identity that recurs in every world: its mass and its couplings. It has no state of its own. What can be said about it is the marginal of the signed ensemble on its column, the reduced Wigner function Wᵢ(x, p) = Σ_w εʷ δ(x − xᵢʷ) δ(p − pᵢʷ), read at the resolution of a cell.\n\nAn aligned pair is a positon and a negaton whose clocks agree; it is dark. An unpaired world is one that is not half of an aligned pair. We retired the word \"body\", which had meant both an unpaired world (ledger) and a particle (steps 21 and 24).\n\nWhy one particle hid this: with N = 1 the table has one column, so every row has exactly one cell. Row, cell and column are then the same thing, and any word works. The old glossary's \"world-particle = a world\" is exactly that collapse. With N ≥ 2, the table forces a choice: a sign or a clock is a property of a row, the reduced state is a property of a column, and a cell is only a coordinate of its row.\n\nEntanglement in this picture is a property of how the rows populate the columns jointly — a correlation between the cells of the same row — which no single column can show. Slide 12 comes back to this.", "This slide is the heart of the confusion, and it is a confusion of notation more than of physics.\n\nFor two particles in one world, the natural coordinates are the centre of mass X = ½(x₁ + x₂) with total momentum P, and the relative coordinate r = x₁ − x₂ with p_r = ½(p₁ − p₂) (step 21's coordinates, used again in step 25 §5.1). This is a bond. It is classical: the potential v(r) produces the Newtonian force on both world-particles, and the bond is the direction along which events move momentum (WC6(c), WC9(b)).\n\nFor two worlds of one particle, the natural coordinates of a chord are the midpoint X and the half-separation Y: the worlds sit at X + Y and X − Y. This is the coordinate pair of the Wigner transform, ρ(X + Y, X − Y). The misalignment of their clocks transported to a common point by the lever P is μ = θ − θ′ + P·(x′ − x)/ħ (step 5; P2; step 25 §3.1). That is a relation between worlds.\n\nThe two pairs have exactly the same coordinate formulas. So when David's Volterra-sea pair has a \"centre of mass and relative coordinate\", or when his bound-pair chemistry gives a P–N pair a Morse potential in its separation, the formulas fit either reading. With one particle there is no way to tell, because there are no bonds at all. With two particles there is: the bond lives inside a row of the table on slide 4; the chord lives between two rows.\n\nThe identity at the bottom was checked symbolically for this deck: write the von Neumann equation in position representation, iħ ∂ρ(x, x′)/∂t = [H(x) − H(x′)] ρ. That is a two-coordinate Schrödinger equation whose Hamiltonian is H₂ = −(ħ²/2m)∂²/∂x² − (ħ²/2(−m))∂²/∂x′² + V(x) − V(x′). The second coordinate behaves like a particle of mass −m in the potential −V. It is not a particle. It is the bra arm of the density matrix: a second world. This is the doubled-space trick of thermo-field dynamics (Takahashi and Umezawa 1975), where the \"tilde\" copy of the system carries −H; and of Liouville-space methods generally.\n\nYou noticed this in September: \"the ket arm sits at x+y, the bra arm at x−y\" is a separation of worlds, not of particles. With N particles the doubled space is ℝ³ᴺ × ℝ³ᴺ, and the chord Y is a vector with one component per particle (WC8.1 uses that).\n\nA related caution from the 13/20 October call summary: if a P–N pair separation is to play the chord's role, it has to range up to about the reach, since the kernel needs coherence over a wavelength of the potential. A spring confined inside one cell cannot be the chord.", "This is the table of Definition WC7 (step 25 §8.1, \"worlds suffice\"), with one row added at the top for what happens inside a world, so that both levels appear in one place.\n\nRead it by the second column, the number of worlds a relation involves. Only the first row involves one world, and it is completely classical: under (S′) as amended in step 24, an unpaired world streams under the full force −∇V; a world that is half of an aligned pair is force-blind and moves inertially; and every world's clock winds at L/ħ by P1. Nothing quantum happens inside a world. All of the particle–particle interaction — the bonds, the potential, the force — is in that one orange row.\n\nEvery other row is a relation between worlds, and all of the quantum dynamics is in those rows:\n\n- a chord (2 worlds) is a phase relation;\n- a reading is the interference sum of the chords about a reader (L1, Q5) which a bank integrates (Q11, WC4);\n- emission and absorption (3 worlds: a parent and two others) are the events, realised with persistent identity (WC6);\n- pair collisions and dark catalysis (4 worlds: two pairs) are the sea's own dynamics;\n- admissibility is a constraint on the whole ensemble.\n\nThis is the same commitment Hall, Deckert and Wiseman (2014) make, that the interaction between worlds is fundamental. Their interaction is a force between neighbouring worlds. Ours is a phase relation across chords that sets the rates of contact processes, and the classical force stays inside each world.\n\nThe two-word slogan is \"classical within, quantum between\". It is the most compact answer I have to David's analogy question: in a Boltzmann gas, the interesting relations are between particles inside one world. In WPMW, the interesting relations are between worlds, and the inside of a world is a classical N-body system.\n\nWhere particle language creeps back. Three items are not yet worked out and each looks at first like a per-particle attribute: identical particles (WC-SP7; a permutation maps world w to world πw, so statistics would be a relation between a world and its permutations), spin (WC-SP8; a spin label per world-particle is a coordinate, and the phase between spin components would be a chord between worlds whose labels differ), and the density of worlds (a reading needs chords, so how many worlds there are is ontology, not a numerical parameter).", "Proposition WC6 is what a single world experiences, under (S′) with persistent identity: no world is created or destroyed. An emission ionises an aligned pair; an absorption joins two unpaired worlds into an aligned pair. Each is a kink in worlds that already exist. The picture is configuration space-time: time runs up, and the horizontal stands for the whole configuration space ℝ³ᴺ, so each line is the history of a whole world, not of a particle. Left half: a parent world (heavy blue) streams on a Newtonian arc. At the emission vertex an aligned pair (grey dashed: dark, force-blind, moving inertially) is at the parent's point and momentum row. The pair splits: its positon kinks to p + ξ and its negaton to p − ξ, and they leave the vertex along the bond direction, from then on as unpaired worlds feeling the full force. The parent does not kink (WC6(d)): it is the reader, and its own momentum is never moved by the events it parents. A world that only ever parents keeps one unbroken Newtonian trajectory. Right half: the time reverse, an absorption. Two unpaired worlds of opposite sign, at the parent's momentum ± ξ, converge along the bond and meet the parent at the absorption vertex. They kink back to the parent's row and continue together as a dark aligned pair. The world-crossings supplement (CX1) defines this vertex for N particles: three world-lines meet, the parent's and two partners' converging along the bond from opposite sides. Points for the discussion: - (c) is where the two levels meet. An event is a relation between worlds, but the jump it makes lies along a bond, a direction inside a world: Δpᵢ = ±ξ, Δpⱼ = ∓ξ, and the total momentum is unchanged. With one particle in an external potential there is no bond and no conserved total momentum, so this structure is invisible. - (e) matters for how we talk about clocks: all worlds share one Newtonian time t. The phase clock θ accumulates ħ⁻¹ × action along the world's own history; its absolute value is a gauge, and only misalignments across chords are physical. - (a) ΔN + 2ΔS = 0 is the ledger's conservation law (N unpaired worlds, S aligned pairs), consistent with Theorem S7. In the one-particle ladder all of this was true but looked like \"particles emitted from a sea\". With N particles it is clear that what kinks is a whole world, and that a world-particle kinks only because its world does.", "This slide summarises the new supplement docs/supplement/chord_action.md (labels CA0–CA7, demo src/demo_chord_action.py). It restates Definition WC7 with one generating relation, and turns bonds and banks from postulates into consequences.\n\nThe relation. Take two worlds at configurations X + Y and X − Y, so X is the chord's midpoint and Y its half-length. By P1 each world's clock winds at its Lagrangian, so the difference of their clocks is the difference of their actions: ΔS = ħ(θ − θ′). The Lagrangian difference is exactly ΔL = 2mẊ·Ẏ − [V(X + Y) − V(X − Y)] (with Σᵢ mᵢ for N particles).\n\nThe split (Proposition CA2), checked symbolically for three particles with a general potential:\n- The orange part, 2mẊ·Ẏ − 2Y·∇V(X), is linear in Y. Its Euler–Lagrange equation in Y is mẌ = −∇V(X): Newton's law for the world at the midpoint. This is \"classical within a world\".\n- The blue part is the compensated residual R(X, Y) = V(X + Y) − V(X − Y) − 2Y·∇V(X) of step 14 and WC9. It is odd in Y, starts at Y³, and vanishes identically only for a quadratic V. This is \"quantum between worlds\".\n\nThe generator (Proposition CA3). Wigner-transforming over Y turns the linear part into the Liouville term ∇V·∂_P W exactly, and the residual into a real, odd kernel Θ(X, Q) = −(1/ħ)(πħ)⁻ⁿ ∫ dY R sin(2Q·Y/ħ). That is the same J of chord_reading §5, sampled on channels to give the specification's K_q. Checked: for V = x⁴ the kernel equals the one-term Moyal residual to 7.9×10⁻¹¹. For −6 sech² x with short chords the Moyal series converges (errors 7.4×10⁻², 5.3×10⁻³, 3.1×10⁻⁴ at orders ħ², ħ⁴, ħ⁶); with long chords it fails (errors above 1). The kernel is the generator; the Moyal series is only its short-chord expansion.\n\nWhat is derived (bottom row):\n- Bonds (CA5): for pair potentials R is a sum over bonds of one function of r_b and η_b, so the event directions are the bond directions, the centre of mass is dark and P is conserved. WC4, WC8.1 and WC9 become corollaries. A bond is a term of V, not an object.\n- Banks (Remark CA7): a bank integrates |Θ| along its world and fires at integers. A Poisson process at the same rate has the same mean (demo: 6.956 for both, variances 0.042 and 6.96), so a bank is a choice of timing, not a relation between worlds.\n- Clocks (CA4): on one momentum row the kinetic parts cancel, so ħμ̇ = −[V(X + Y) − V(X − Y)], which is Q2 and WC8(a). Under (S′) dark pairs are force-blind, so this holds exactly; under (S) it would fail at V″. A reader whose momentum follows the force sees −R: the compensated split is the reader's view of the chord action.\n\nSo the ontology is now: worlds (point, sign, clock), one generating relation (the chord action), its realisation as emission and absorption with persistent identity, the dark-sector rules that move nothing in W, and admissibility. Its exponent is the Feynman–Vernon double path integral in Keldysh coordinates; Polkovnikov's truncated Wigner approximation keeps only the orange part.", "Definition CA0 of the chord-action note, and the comparison that prompted it.\n\nA label and a coordinate. A model of many worlds is a map χ from (set of worlds) × (time) into configuration space: x = χ(c, t). The coordinates of the domain, the label c and the time t, are what the action integrates over; the coordinates of the target, x, are what it varies. A label is constant along each world and never observed, only through the density it pushes forward. The distinction is one of role, not of kind: inverting to the Eulerian description c(x, t) swaps them, and parametrised mechanics makes t a dependent variable (Lanczos 1949). It is the material–spatial distinction of continuum mechanics, with ∂x/∂c the deformation gradient (Marsden and Hughes 1983). Within one formulation it is fixed.\n\nSchiff and Poirier (2012), left. Their worlds are a smooth one-parameter family x(C, t), with C chosen so the density is uniform in C: ρ = 1/x′ in 1D and ρ_C/det J in nD. Velocity is ẋ, one value per position, so pure states only. Their action is ∬ dC dt [½mẋ² − V − (ħ²/8m) x″²/x′⁴] up to a total C-derivative (checked), and the last term is the Fisher information of ρ (checked). Its Euler–Lagrange equation is their Eq. (10), fourth order in C (checked). Worlds interact through derivatives in the label. Relabelling C is a gauge symmetry whose Noether charge is circulation (Salmon 1988), which keeps a gradient velocity field a gradient.\n\nHall, Deckert and Wiseman (2014), centre. Their U_N replaces the label derivatives by differences between neighbouring worlds. For worlds at the quantiles of a unit Gaussian, U_N/N = 0.1090, 0.1225, 0.1247, 0.12496 at N = 10², 10³, 10⁴, 10⁵, against the Fisher value 1/8. A countable version needs the neighbour graph of the label lattice. In 1D that graph can be read off the order of positions; in more dimensions positions do not determine label neighbours. That is why sorting is a one-dimensional accident.\n\nWPMW, right. The domain is time and a discrete world index with persistent identity; there is no label manifold. The relation is a function of two target points, the chord's ends X ± Y, and of V there. It needs only the affine structure of configuration space. It is linear in W, so it handles mixed and signed states, and nodes cost nothing.\n\nThe answer to your earlier question, \"is our machinery more complicated?\": the relation itself is not. It is one functional, like Schiff and Poirier's, and asks less of the set of worlds. The complication is in realising a signed linear process with finitely many worlds — cancellation, K1 — which is the analogue of Hall, Deckert and Wiseman's neighbour structure.\n\nThe one open choice (CA-SP1): must a chord's ends be occupied by actual worlds? The generator needs only V at those configurations. Schiff and Poirier have no such choice, since their label neighbours are always occupied.", "This is the slide that only exists for N ≥ 2, and it is where I think the formal analogy hides the most.\n\nThe picture is the configuration plane of two particles on a line: horizontal x₁, vertical x₂. A whole world is one point in this plane. The dashed diagonal is contact, x₁ = x₂. Two worlds, w (filled: a positon) and w′ (ring: a negaton), are joined by a chord (blue). Its reader sits at the midpoint.\n\nThe chord has a component along the centre-of-mass direction (1, 1) and a component along the bond direction (1, −1), the direction of the relative coordinate r = x₁ − x₂. For a pair potential V = v(x₁ − x₂), the potential difference across the chord depends only on the bond component, so the centre-of-mass component is dark: nothing there is read (step 21's M1; step 25 §4 figure). The reader is a world reading the relative direction of its own configuration space — not either world-particle, and not the centre of mass.\n\nFor N particles this generalises exactly (WC9; re-checked symbolically for three particles for this deck). The compensated residual R(x, y) = V(x + y) − V(x − y) − 2y·∇V(x) is a sum over the N(N − 1)/2 bonds of a single two-variable function ρ_v(r_b, η_b), with r_b = xᵢ − xⱼ and η_b = yᵢ − yⱼ; a trap or any quadratic term drops out. Consequences:\n\n- the channels of a bond move (pᵢ, pⱼ) by (±ξ, ∓ξ), conserving total momentum (WC9(b));\n- a world carries one bank per bond (WC4), and identical particles share one kernel table;\n- if v is quadratic, every kernel vanishes and nothing fires (WC9(c));\n- a chord that moves only the particles of a set A reads exactly the terms of V that involve A (WC8.1): for three particles with one-, two- and three-body terms, a chord on particle 1 reads V₁, v₁₂, v₁₃ and w₁₂₃ and nothing else.\n\nThe VLBI analogy works at two levels here (step 25 §4, §5.4). Between worlds, a chord is a baseline and the reader is the correlator: it belongs to neither station and exists only for the pair. Within one world, the banks are counted like the baselines of an array: N particles have N(N − 1)/2 bonds as N stations have N(N − 1)/2 baselines. At both levels the information is carried by a pair, never by one member.\n\nWhat I would put to David: the usual reason for wanting a phase per particle is locality — what is done to one particle should not change what another reads. WC8.1 gets locality without any per-particle phase. Does that match his picture of how a two-particle system should be modelled?", "The first of three tests. If particles inside a world were formally like worlds, it should be harmless to give each world-particle its own clock and its own reader. Step 25 did exactly that and measured the result.\n\nSetting: two particles on a line with a pair potential v(x₁ − x₂). Three readings of the compensated residual:\n- W: the world reads its joint chord. This is what the ontology says.\n- B1: each world-particle reads its own chord (moves only its own coordinate), with its clock carrying the whole interaction, as if the other particle were an external field (shares α₁ = α₂ = 1 in WC1).\n- B2: the same, but the interaction split between the two clocks (α₁ = α₂ = ½), which is the bookkeeping that makes the world-particle clocks add up to the world's.\n\nTheorem WC2, re-checked symbolically for this deck:\n(a) W and B1 agree at linear order — which the compensated split removes anyway — and differ from third order on.\n(b) Exactly, to all orders, B1's relative motion is the quantum Liouville equation with ħ replaced by ħ/2 in the residual. The identity S_B1(s_P = 0, s_r) = m_{ħ/2}(s_r) has residual zero.\n(c) B1 leaves the centre-of-mass marginal alone, but\n(d) adds a cubic term 3∂²_P∂_{p_r} that couples the centre of mass to the relative motion, which QM does not have. The world's cubic operator is (∂_{p₁} − ∂_{p₂})³ = ∂³_{p_r}; B1's is ∂³_{p₁} − ∂³_{p₂} = 3∂²_P∂_{p_r} + ¼∂³_{p_r}.\nB2 halves everything, and then reads only half the classical force (WC1(d): no choice of shares gives both the action and Newton's force).\n\nWhy ħ/2: a B1 event delivers its momentum ξ to one particle, which moves the relative momentum by only ξ/2, while the rate pattern is the one-particle kernel at the full chord. A world-particle's reader is not wrong about the chord; it is wrong about who takes the kick.\n\nMeasured (Corollary WC3, Proposition WC5, Eckart run):\n- From a product state that exact QM keeps stationary and separable, W stays separable to 7×10⁻¹⁵ on the mesh; B1's separability defect is 0.2 by t = 0.5.\n- In the Eckart pair collision at reach 8π, W transmits 0.549 and B1 0.517. The exact values are 0.5441 at ħ and 0.5120 at ħ/2. B1 is a good solver of the wrong problem.\n- In the world ensemble with integrate-and-fire banks at ν = 10⁵, banks on world-particles carry 2.8 times the worlds and 36 times the unsigned ⟨P²⟩ of the world bank by t = 1. They kick every daughter off its parent's centre-of-mass momentum and heat the ensemble's centre of mass, while the signed marginal stays right in the mean.\n\nThe lesson for the ontology: the clock belongs to the world, the banks belong to the world's bonds, and nothing belongs to a world-particle. That lesson cannot be learned with one particle, because then the world-particle's clock and the world's clock are the same clock.", "The second test. These are the step 25 second-addendum results (§8.2, demo_three_worlds.py). N particles of unit mass on a line, in a unit harmonic trap, every pair coupled by the same potential, quenched from the product of trap ground states. Entanglement is measured by the purity P₁ = Tr ρ₁² of one particle's reduced state, with P₁ = 1 exactly when particle 1 is not entangled with the rest.\n\nProblem Q is the Moshinsky model, v(r) = ½ k r² with k = 2, exactly solvable (Moshinsky 1968; three-particle entanglement in closed form by Bouvrie et al. 2012). A quadratic interaction has a zero compensated residual, so no world ever fires (largest rate 1.1×10⁻¹³). Yet the purity falls to 0.683 for three particles and 0.655 for four, and revives with period π/√(1 + Nk). Positive worlds streamed by Verlet reproduce it within 1.5×10⁻³ and 2.5×10⁻³. So entanglement is not by itself a sign of quantum events: the worlds carry it as a correlation between their own coordinates. In the slide-4 picture, it is a property of how the cells of each row are correlated, which no single column shows.\n\nProblem G is a Gaussian-smoothed contact interaction (g = 2, s = 0.7), the form used for few bosons in traps (Zöllner, Meyer and Schmelcher 2006, 2008). No closed form; the reference is a grid TDSE converged to 10⁻⁹ in purity. Here classical streaming over-entangles: the purity falls to 0.606 (and is still at 0.663 at t = 3), while the exact purity dips only to 0.800 at t = 2 and recovers to 0.879 by t = 3. The events have to undo the excess. The bond-sum generator on a 4D Jacobi mesh does so, converging as 1/y_max²: purity error at t = 3 of −0.117, −0.039 and −0.009 at reach 2π, 4π and 8π.\n\nThis gives the cleanest statement I know of the two levels:\n- the classical dynamics inside each world creates correlations between particles (here, too much of them);\n- the quantum relations between worlds correct those correlations.\n\nWith one particle there is nothing to entangle, so this division of labour cannot even be seen. A one-particle \"formal analogy\" cannot tell us whether a model of the sea entangles correctly; only a two- or three-particle run can.\n\nThis connects to your step 24 interest in entanglement from two-body interactions as a test of the dynamics: problem G is that test, and the generator passes it on the mesh. What does not yet pass is the realisation with finitely many worlds — slides 13 and 14.", "The third test, and the one where I have to correct my own framing. The cost of doing anything that needs two worlds to coincide — recombination, annihilation, a contact sink, an absorption partner found by search — grows exponentially in the phase-space dimension 2dN.\n\nThe table (recomputed for this deck; it first appeared in the 13/20 October call summary): for a Gaussian product state and cells of side σ/2 on every phase-space axis, the probability that two independent worlds land in the same cell is about 0.141 per axis, so 0.141^(2dN). Two particles in 3D need about 10¹⁰ worlds per expected partner; three need 10¹⁵. This is the annihilation problem of FCIQMC (Booth, Thom and Alavi 2009), whose sign structure appears only above a critical population (Spencer, Blunt and Foulkes 2012), and of the signed-particle Wigner methods: Xiong and Shao's four-dimensional helium-like test used 10⁸ bins and more than 10⁹ particles.\n\nThe highlighted row is the honest correction: one particle in 3D has the same 6-dimensional phase space as three particles on a line, and costs the same. So the cost is a dimension effect, and David's own remark of 13 October — that in high dimension a small separation \"adds up\" for every coordinate — is the same point. What the one-particle ladder hid was mostly its one-dimensionality.\n\nWhat the sink does to entanglement (Proposition WC10): the contact sink removes, in every cell of side c, as many positons and negatons as it can, in equal numbers at random. It keeps each cell's net weight but replaces the shape of W inside the cell with the majority sign's. So it erases interference finer than a cell, which is a which-cell record — decoherence. On problem G at reach 2π the global purity P_0.25 falls 0.14 below the mesh at c = 0.35 and 0.21 at c = 0.7; the deficit does not depend on the time step or on how often the sink acts, and at fixed c it does not vanish as the population grows. For four particles (a six-dimensional relative phase space) the worlds keep q(1) = 0.15 of the quantum correction at t = 1.\n\nWhy this belongs in a talk about worlds and particles: the sink is a relation between worlds (it pairs and removes them), and its cost and its error are set by the dimension of the space the worlds live in, Γ-space, never by the space of one particle. Any analogy that pictures the worlds as a gas in μ-space will badly underestimate it. David's argument that the Wigner function of a Gaussian is nowhere zero, so every cell is eventually occupied, is right for a density; for any finite population the table is what matters.", "Step 26 (population_control.md) and the world-crossings supplement asked what can replace the decohering contact sink. All numbers are problem G at reach 2π against the 4D mesh, global purity P_0.25 at t = 3.\n\nProposition PC2 explains the sink's error: a sink that keeps a cell's signed moments up to order K changes a smooth observable by O(c^(K+1)). The contact sink keeps only the net count M₀, so its error is first order in the cell, as WC10 measured.\n\nK1 resampling (Definition PC3, Lemma PC4): in each cell keep the majority sign's net worlds and add ± pairs that carry the first moment of the removed worlds. Each pair sits at the dipole centre, the one point at which it also matches the removed worlds' second moment along the dipole, so a lone pair is returned unchanged and a dipole moves with the flow rather than being pinned to its cell. With the grid shifted every ten steps, K1 at cell 0.7 leaves −0.020 at ν = 10⁶, against −0.143 for the contact sink at cell 0.35, at 1.37 against 1.22 worlds per ν. The deficit is −0.022 at ν = 10⁵, so it is the rule's limit at that cell, and it shrinks to −0.014 at cell 0.5.\n\nAbsorption (PC5, PC7): realising an event by removing a world of the other sign within a tolerance δ keeps the absorbed share at 0.31 to 0.44, below the one half that Theorem N3 needs to hold the population alone, and its bias is at least that of a contact sink of cell 2δ. Leaving part of each cell's population to absorption, with K1 correcting the first moment, does not help either (PC7).\n\nCrossings (supplement CX1–CX6). Your question was whether crossings of worlds in configuration space-time, rather than nearness in phase space, could decide when an event is realised by absorption. For N particles an absorption vertex is where three world-lines meet: the parent's and two partners' converging along the bond from opposite sides. But: chance crossings have too high a codimension for two or more relative dimensions (CX3, CX4); worlds that share a past vertex (\"kin by record\") supply a partner for one daughter in 18 per cent of events by t = 0.5, but Theorem S6 forbids the mixed realisation, and the admissible paired case is exactly an undo of an earlier event of the same parent, bond and channel — 0.3 to 0.9 % of events (CX5); and the flow brings kin back to an exact vertex only when it is harmonic (CX6: exactly at π/ω for trap-only and Moshinsky flows, not for problem G).\n\nThis is consistent with your step 26 position, which I would restate for David as: absorptive realisation at a vertex is part of the ontology's picture of what happens between worlds; moment-preserving resampling is a numerical technique for the first-moment correction, not ontology; and the K1 rule should leave a tunable unaligned signed population for absorption to use. On 20 October David said that his bound-pair recombination worked only after \"shrinking the arena\" inside each cell. That is the same problem met from the other side, and K1 is the numerical equivalent.", "This is the slide I would like us to agree on.\n\nThe analogy that holds is the configuration-space view of quantum mechanics itself. N particles in d dimensions have a dN-dimensional configuration space and a 2dN-dimensional phase space, and the N-particle Wigner function evolves by the same compensated quantum Liouville equation as one particle would in dN dimensions with that potential. Nothing in the generator knows how the coordinates are grouped into particles. If that is what David means by a formal analogy, he is right, and everything the one-particle ladder proved about the generator — the compensated split, the soft horizon, the reach as regulator, the ledger's sum rule — carries over as a statement about one point in a bigger space. The point is the world. A one-particle model, properly read, was always a model of worlds.\n\nThe analogy that misleads takes the particles inside one world and treats them like the worlds of the ensemble, or treats the worlds like a gas of particles in the one-particle phase space (μ-space rather than Γ-space, slide 3). It is the analogy behind three mistakes the ladder has measured or caught:\n- giving each particle its own clock and reader (slide 11: ħ/2, a spurious centre-of-mass coupling, heating);\n- reading entanglement as something the events do, when classical streaming inside the worlds already entangles (slide 12);\n- estimating coincidence and sink costs from a picture of worlds as a gas in a low-dimensional space (slide 13).\nIt also sits behind vocabulary we have had to retire: \"world-particle = world\", \"body\", and calling a positon or negaton a particle.\n\nSo, to answer the question of slide 2 directly: the one-particle case is not harmful as mathematics. It is harmful as a source of intuition and vocabulary, because with N = 1 the world and the particle are the same object and every picture works. For the multi-particle models the picture has to be the world-particle table of slide 4 and the two levels of slide 6.\n\nA test that discriminates: ask of any proposed mechanism — a Volterra sea, a bound-pair chemistry, a pair–pair collision rule — whether its objects are rows (worlds) or columns (particles), and in which space they meet. If the answer is \"it doesn't matter\", the mechanism has only been checked for N = 1.", "A practical summary for planning: which parts of steps 1–24 can be taken over as they stand, and which questions the one-particle ladder could not have asked.\n\nLeft column (carries over). Everything about the generator, read as a statement about one point in a 2dN-dimensional phase space. The compensated split and the need for a soft horizon; the reach as a regulator that sets momentum resolution and costs event budget (G5); the ledger's sum rule Γ_tot(1 − 2f) = R_sink of Theorem N3, with f = ½ in the sinkless case; the sea postulate (S′) with the step 24 amendment (aligned pairs force-blind, changing momentum only in pair–pair Focus/Defocus collisions, with Proposition V10's H-theorem); and Q11's integrate-and-fire banks, which become one bank per bond (WC4, WC9: Q11's \"every unpaired world carries a bank\" is the one-particle case).\n\nMiddle column (needs N ≥ 2). These are questions, not just harder calculations: who owns a clock, a sign and a bank (WC1, WC2, WC4); what bonds do — they make the centre of mass dark for a pair potential, make every event conserve total momentum, and decide which chord directions are read (M1, WC9); locality without particle phases (WC8.1); entanglement and the particle marginals, including the fact that classical streaming entangles (problem Q) and over-entangles (problem G); and identical particles and spin, which in a worlds-only ontology must be relations between worlds (WC-SP7: a world and its permutations; WC-SP8: worlds whose spin labels differ).\n\nRight column (needs high dimension). Costs that one particle in 1D cannot show, but one particle in 3D partly would: coincidence and sink resolution (WC10, Corollary M10, cost growing like c^(−2(N−1)) on a line); chance crossings (CX3); K1's cost with six relative dimensions (four particles on a line) or twelve (three in space) (PC-SP2, WC-SP10); and whether the live sea reading of Q12 works along a bond's relative direction (WC-SP2).\n\nA suggestion for both of us: when a new idea about the sea is first tried on one particle, record which column it belongs to, so that we know in advance which multi-particle check it still owes.", "A proposal for a shared way of talking, for the repository and for David's paper. Most of it is already the repository's usage since the step 25 amendment and the commit that retired \"body\"; the slide just collects it.\n\nRow by row:\n\n1. Clocks and signs belong to worlds (WC0, WC1). A world-particle shares its world's; a particle has none.\n\n2. \"Positon\" is short for positon world, \"negaton\" for negaton world. Neither is a particle, a hole or an antiparticle, and neither carries a charge. This is also the point that distinguishes WPMW from Colin and Struyve's Dirac-sea pilot-wave model (2007), which the sea language superficially resembles.\n\n3. Nothing is emitted in the sense of being created. Under persistent identity an emission ionises an aligned pair of worlds already co-located with the parent, and each member kinks by ±ξ along a bond (WC6). The repository's convention is that sea pairs are created by recombination and destroyed by ionisation, not emitted or absorbed.\n\n4. The reader is a world, reading the misalignments of the chords whose midpoint it occupies, along the directions in which its potential has terms (step 25 §8). A world-particle is a coordinate of a reader; a particle reads nothing at all.\n\n5. \"Separation\" is the most dangerous word, because the formulas are the same for both meanings (slide 5). If the two things separated are in the same row of the table, it is a bond; if they are in different rows, it is a chord. For one particle it is always a chord.\n\n6. \"Body\" had two meanings and is retired: unpaired world in the ledger sense, particle in the multi-particle sense (WC-SP1, answered).\n\n7. The sea is not a gas in the one-particle phase space; it is a population of dark aligned pairs of worlds in the full phase space ℝ⁶ᴺ (slide 3). Its \"collisions\" are relations between pairs of worlds.\n\nThe test line at the bottom is the one I find quickest in practice. If the subject of a sentence is a row, it can have a sign, a clock, banks, events. If it is a column, it can only have a marginal. If it is a cell, it is a coordinate.", "Four questions to open the discussion. Each is meant to locate where we actually differ rather than to win a point.\n\n1. The fork of slide 15. If David means that N-particle quantum mechanics is one-particle quantum mechanics in a bigger configuration space, we agree, and the remaining question is only vocabulary. If he means that the interactions between particles inside one world are formally like the interactions between worlds — the many-particles ↔ many-worlds reading — then slides 11 to 13 are the evidence that it fails beyond N = 1, and it would be good to hear which of them he finds unconvincing.\n\n2. David mentioned on 20 October his own two-particle many-worlds calculation (Maple, about six or seven years ago), and an October 2024 reference on time evolution of Wigner functions for open systems with a two-particle example. Both are on the list of things to ask for. The question here is diagnostic: in that calculation, was the signed object a configuration of both particles (a world, a row) or each particle separately (a column)? And when two of them were paired, were they two particles or two configurations?\n\n3. The Volterra sea and the bound-pair chemistry were developed for one particle, where every pair is a pair of worlds. With two particles, there are two candidate readings of a P–N pair with a Morse well: a bond (two particles in one world, which would be ordinary chemistry and classical) or a chord (two worlds, which is what a positon and a negaton are). WPMW needs the second. If it is a chord, its separation has to range up to about the reach to carry the kernel (13/20 October summary, §4.2), not stay inside one cell. And the elementary up and down actions, which move a world by ±Q/2 in one momentum, would for two particles have to be exchanges along a bond, (p₁, p₂) → (p₁ ± ξ, p₂ ∓ ξ), to keep the centre of mass dark (M1, WC9). Does his construction do that?\n\n4. A request for the year-end paper: since its scope is Wigner → linear FAM → linear up/down → nonlinear Volterra sea, all one-particle, a short paragraph that says what the objects are for N particles would protect it from the misreading. \"Classical within a world, quantum between worlds\", with \"particle\" reserved for the identity that recurs in every world, is the shortest version I know. I would also offer, as before, the Takabayasi 1954 §3(a) reference as the origin of the odd-moment picture, and the (W, S) moment table as the \"why two species\" argument; in a multi-particle reading both species are kinds of world.", "Six open items from the three documents, chosen because each one is a question about the relation between the two levels. All are quoted from the documents' open-item lists.\n\nWC-SP5 (step 25). B1, where each particle sees the other as an external field, is the mean-field instinct. Is B1, or its ħ/2 relative motion, the Wigner image of a recognised approximation, and does that explain the factor? This is worth raising with David, since it is the most precise form of \"particles treated as if they were separate worlds\". My guess, not checked: it is close to a time-dependent Hartree reading, which is known to lose entanglement, consistent with B1's spurious correlations. That would be a good small exercise.\n\nWC-SP7 and WC-SP8 (step 25). Identical particles and spin are where per-particle attributes might seem to return. In a worlds-only ontology both have to be relations between worlds: statistics as a sign or phase between a world w and its permutations πw (the compensated symbol is invariant under permuting the (xᵢ, σᵢ) together, checked for all six permutations of three particles), and spin as a discrete label per world-particle, with the phase between spin components carried by chords between worlds whose labels differ.\n\nWC-SP10 and PC-SP2. The contact sink and K1 both work on cells of the joint relative phase space, whose cost grows with every relative dimension (M10). Cells on bond coordinates, or a partition that factorises over Jacobi pairs, would use the bond structure of slide 10 in the numerics too. Four particles on a line need six relative dimensions; three in space need twelve.\n\nCX-SP1 (supplement). With two particles on a line there is one relative dimension, where chance crossings do happen with positive probability. Realise absorptions at exact crossings inside the step, with the relative momentum on a lattice, and compare with emission plus K1 against the mesh. This is the one case where crossings could matter numerically.\n\nThe last line is the purpose of the October work: step 25 §8.2 and step 26 §6 list what an N-particle specification needs — state (a world, its sign, one bank per term), tables (one kernel per distinct term), streaming under (S′), integrate-and-fire events, population control (K1 with shifts, PC6), observables (marginals, one-body purity, P_a), and validation (problem Q with no events, the mesh at the same reach, then the worlds). Each piece has now been tested at least once.\n\nA possible next scale test, which is my suggestion rather than an item in the documents: two particles in three dimensions (a 12-dimensional phase space, six relative), where CX-SP4 and PC-SP2 meet.", "Repository documents (github.com/billpage/wpmw, main branch at commit f7345d5 when this deck was prepared):\n- docs/analysis/world_clocks.md — step 25: Definition WC0, Propositions WC1, WC4–WC6, Theorem WC2, Corollary WC3, the VLBI analogy (§4), Definition WC7 and Proposition WC8 with Corollary WC8.1 (§8.1), Propositions WC9 and WC10 with problems Q and G (§8.2), open items WC-SP1 to WC-SP12.\n- docs/analysis/population_control.md — step 26: Lemma PC1, Proposition PC2, Definition PC3, Lemma PC4, Propositions PC5–PC7, open items PC-SP1 to PC-SP4.\n- docs/supplement/world_crossings.md — Definition CX1, Lemmas CX2 and CX3, Propositions CX4–CX6, open items CX-SP1 to CX-SP4.\n- Earlier steps cited: step 21 (Proposition M1: the pair kernel moves relative momentum only; Proposition M9 and Corollary M10 on matching in cells), step 23 (Proposition Q11, integrate-and-fire banks), step 24 (the (S′) amendment: pair–pair Focus/Defocus collisions; V9, V10), step 18 (Theorem N3).\n- Project doc claude/meetings/2026-10-13_20_cyganski_call_summary.md for the coincidence table, the FCIQMC comparison and the remarks attributed to David.\n\nLiterature:\n- P. Ehrenfest and T. Ehrenfest, Begriffliche Grundlagen der statistischen Auffassung in der Mechanik, Encyklopädie der mathematischen Wissenschaften IV.32 (1912); English translation The Conceptual Foundations of the Statistical Approach in Mechanics (Cornell, 1959). J. W. Gibbs, Elementary Principles in Statistical Mechanics (1902).\n- M. J. W. Hall, D.-A. Deckert and H. M. Wiseman, Quantum phenomena modeled by interactions between many classical worlds, Phys. Rev. X 4, 041013 (2014). B. Poirier, Chem. Phys. 370, 4 (2010); J. Schiff and B. Poirier, J. Chem. Phys. 136, 031102 (2012).\n- Y. Takahashi and H. Umezawa, Thermo field dynamics, Collective Phenomena 2, 55 (1975).\n- M. Moshinsky, Am. J. Phys. 36, 52 (1968); P. A. Bouvrie et al. (2012), three-particle Moshinsky entanglement; S. Zöllner, H.-D. Meyer and P. Schmelcher (2006, 2008), few bosons in traps by MCTDH.\n- G. H. Booth, A. J. W. Thom and A. Alavi, J. Chem. Phys. 131, 054106 (2009); J. S. Spencer, N. S. Blunt and W. M. C. Foulkes, J. Chem. Phys. 136, 054110 (2012); J. M. Sellier and I. Dimov (2014), many-body Wigner Monte Carlo; S. Shao and Y. Xiong (2019) and Y. Xiong and S. Shao (2019), branching random walk and annihilation.\n- A. R. Thompson, J. M. Moran and G. W. Swenson, Interferometry and Synthesis in Radio Astronomy, 3rd ed. (Springer, 2017).\n\nNumbers in this deck are quoted from the repository documents. The symbolic identities on slides 5, 10 and 11 were re-checked for this deck with a short SymPy script (all residuals zero); the coincidence table on slide 13 was recomputed from the same formula as the call summary. Slides 8 and 9 come from docs/supplement/chord_action.md and its demo src/demo_chord_action.py (Parts S, A–E).\n\nAdded for slides 8 and 9: R. P. Feynman and F. L. Vernon, Ann. Phys. 24, 118 (1963); M. S. Marinov, Phys. Lett. A 153, 5 (1991); A. Polkovnikov, Ann. Phys. 325, 1790 (2010), arXiv:0905.3384; P. Holland, Ann. Phys. 315, 505 (2005); R. Salmon, Annu. Rev. Fluid Mech. 20, 225 (1988)."];
+const slides = Array.from(document.querySelectorAll('.slide'));
+const stage = document.getElementById('stage');
+const notesEl = document.getElementById('notes');
+const nbtn = document.getElementById('nbtn');
+let i = 0;
+function fit() {
+  const bar = 34;
+  const s = Math.min(window.innerWidth / 1920, (window.innerHeight - bar) / 1080);
+  const x = (window.innerWidth - 1920 * s) / 2, y = (window.innerHeight - bar - 1080 * s) / 2;
+  stage.style.transform = `translate(${x}px, ${y}px) scale(${s})`;
+}
+function show(k) {
+  i = Math.max(0, Math.min(slides.length - 1, k));
+  slides.forEach((el, j) => el.classList.toggle('current', j === i));
+  document.getElementById('count').textContent = `${i + 1} / ${slides.length}`;
+  notesEl.textContent = NOTES[i] || '(no notes)';
+  notesEl.scrollTop = 0;
+  if (location.hash !== '#' + (i + 1)) history.replaceState(null, '', '#' + (i + 1));
+}
+function toggleNotes() {
+  const on = notesEl.classList.toggle('show');
+  nbtn.setAttribute('aria-pressed', String(on));
+}
+document.getElementById('prev').onclick = () => show(i - 1);
+document.getElementById('next').onclick = () => show(i + 1);
+nbtn.onclick = toggleNotes;
+stage.addEventListener('click', e => show(e.clientX < window.innerWidth / 3 ? i - 1 : i + 1));
+document.addEventListener('keydown', e => {
+  if (['ArrowRight', 'PageDown', ' '].includes(e.key)) { e.preventDefault(); show(i + 1); }
+  else if (['ArrowLeft', 'PageUp'].includes(e.key)) { e.preventDefault(); show(i - 1); }
+  else if (e.key === 'Home') show(0);
+  else if (e.key === 'End') show(slides.length - 1);
+  else if (e.key === 'n' || e.key === 'N') toggleNotes();
+});
+window.addEventListener('resize', fit);
+window.addEventListener('hashchange', () => show(parseInt(location.hash.slice(1), 10) - 1 || 0));
+fit();
+show((parseInt(location.hash.slice(1), 10) || 1) - 1);
+</script>
+</body>
+</html>

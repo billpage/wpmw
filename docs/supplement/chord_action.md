@@ -14,7 +14,12 @@ Wiseman's countable version, shows where each model puts the relation.**
 
 Supplement to step 25 ([`../analysis/world_clocks.md`](../analysis/world_clocks.md)
 §8.1, "worlds suffice"). Companion demo: `src/demo_chord_action.py`, which
-produces every number below. No figures.
+produces every number below. No figures. Slides:
+[`../interactive/worlds_and_particles.html`](../interactive/worlds_and_particles.html)
+([live page](https://billpage.github.io/wpmw/interactive/worlds_and_particles.html)),
+the deck for the WPMW call of 27 October 2026 on worlds, particles and
+world-particles; its slides 8 and 9 summarise this note, and the speaker
+notes (key N) give the details.
 
 Prompted by Bill Page's question of October 2026. In Schiff and Poirier's
 continuum of worlds the interaction is defined by one term of one action, and
@@ -176,9 +181,10 @@ The potential's part of the von Neumann equation is a phase rate on each
 element of the density matrix, $`\partial_t\rho(\mathbf x, \mathbf x') = -(i/\hbar)[V(\mathbf x) - V(\mathbf x')]\rho`$:
 the potential part of $`-\Delta\mathcal L/\hbar`$ (supplement
 [`chord_reading.md`](chord_reading.md) §5). In the density matrix
-$`\mathbf Y`$ is the off-diagonal coordinate; in the ontology it is the
-half-length of a chord between two dark worlds (step 22; chord_reading §5,
-whose table sets the two side by side). The Wigner transform
+$`\mathbf Y`$ is the off-diagonal coordinate, and nothing of the state is
+at its ends; in the sea it is the half-length of a chord, whose ends are two
+aligned pairs (step 22; chord_reading §5, whose table sets the two side by
+side; glossary, *chord* and *separation*). The Wigner transform
 
 ```math
 W(\mathbf X, \mathbf P) = (\pi\hbar)^{-n}\int d\mathbf Y\,\rho(\mathbf X + \mathbf Y, \mathbf X - \mathbf Y)\,e^{-2i\mathbf P\cdot\mathbf Y/\hbar}
@@ -250,7 +256,7 @@ force-blind, so two dark pairs on one row keep their separation exactly and
 (a) holds without approximation. Under (S) the force would fan each row out
 and (a) would fail at $`V''`$ (chord_reading §2). (b) is the compensated split
 seen by a reader. So the force-blind sea is what makes the chord action of two
-dark worlds a pure potential difference, and the reader is what makes the
+aligned pairs a pure potential difference, and the reader is what makes the
 split.
 
 ## 5. Proposition CA5: bonds are derived
@@ -347,7 +353,7 @@ per term of $`R`$.
 CA3 needs only $`R`$, a function of $`V`$ at the two configurations
 $`\mathbf X \pm \mathbf Y`$: the generator is blind to whether worlds occupy
 them (chord_reading §5, "the sea reads the operator"). In the ontology of
-steps 22 and 23 the ends are dark worlds, and the sea's density enters only as
+steps 22 and 23 the ends are aligned pairs, and the sea's density enters only as
 the measure of chords, $`d\mathbf Y/(\pi\hbar)^n`$. Whether the ends must be
 occupied is the one choice CA6 leaves open (CA-SP1). Schiff and Poirier have
 no such choice, because their neighbours in $`C`$ are always occupied. The

@@ -362,7 +362,8 @@ are defined in the [glossary](../GLOSSARY.md).
   and banks derived; Remark CA7 makes the banks a realisation of the rate
   (same mean as Poisson, different variance). §8 places the construction in
   the Feynman–Vernon and Keldysh double path integral. Numbers from
-  `src/demo_chord_action.py`; no figures.
+  `src/demo_chord_action.py`; no figures. Summarised on slides 8 and 9 of
+  [`../interactive/worlds_and_particles.html`](../interactive/worlds_and_particles.html).
 - **[`figures/`](figures/)** — Figures cited by
   [`phase_space_crystal_lattice_supplement.md`](phase_space_crystal_lattice_supplement.md), reproduced from Cyganski's
   *Wigner Collisions Diagram* Sozi presentation. Figures *generated* by
