@@ -789,3 +789,34 @@ and Spencer–Blunt–Foulkes are listed above.
   *J. Chem. Phys.* **46**, 73–78 (1967). The rate follows the iodine-atom
   concentration: H₂ + I₂ ⇌ 2HI, the call's example of pair exchange, is not
   an elementary four-centre reaction.
+
+## The chord action: double path integrals and labelled continua
+
+Cited by `docs/supplement/chord_action.md`. The first three place the chord
+action (the difference of two worlds' actions across a chord, split into a part
+linear in the chord and the compensated residual) in the double path integral;
+the last four separate a label from a coordinate (Definition CA0).
+
+- Feynman, R. P.; Vernon, F. L. — "The theory of a general quantum system
+  interacting with a linear dissipative system." *Ann. Phys.* **24**, 118–173
+  (1963). https://doi.org/10.1016/0003-4916(63)90068-X. The density matrix as a
+  double path integral weighted by the difference of the two paths' actions.
+- Marinov, M. S. — "A new type of phase-space path integral." *Phys. Lett. A*
+  **153**, 5–11 (1991). The Wigner propagator as a phase-space path integral
+  whose exponent is the difference of the Hamiltonian at shifted arguments.
+- Polkovnikov, A. — "Phase space representation of quantum dynamics." *Ann.
+  Phys.* **325**, 1790–1852 (2010). https://arxiv.org/abs/0905.3384. The
+  truncated Wigner approximation keeps the part of the action linear in the
+  quantum field; §III.1.3 writes the corrections as stochastic quantum jumps
+  with signed weights.
+- Kamenev, A. — *Field Theory of Non-Equilibrium Systems.* Cambridge
+  University Press (2011). Classical and quantum (Keldysh) coordinates.
+- Marsden, J. E.; Hughes, T. J. R. — *Mathematical Foundations of
+  Elasticity.* Prentice-Hall (1983). Material (label) and spatial coordinates;
+  the deformation gradient.
+- Salmon, R. — "Hamiltonian fluid mechanics." *Annu. Rev. Fluid Mech.* **20**,
+  225–256 (1988). Particle-relabelling symmetry and circulation.
+- Padhye, N.; Morrison, P. J. — "Fluid element relabeling symmetry." *Phys.
+  Lett. A* **219**, 287–292 (1996).
+- Lanczos, C. — *The Variational Principles of Mechanics.* University of
+  Toronto Press (1949). Time as a dependent variable in parametrised mechanics.

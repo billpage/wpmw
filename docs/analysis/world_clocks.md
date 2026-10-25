@@ -946,6 +946,12 @@ different interaction: theirs is a force between neighbouring worlds,
 ours is a phase relation across chords that sets the rates of contact
 processes between worlds, and the classical force stays inside each world.
 
+*Restated in [`../supplement/chord_action.md`](../supplement/chord_action.md)
+(Definition CA6): the chord relation is the difference of two worlds' actions,
+whose linear part is the classical force and whose residual is the whole
+kernel, so that bonds, kernel tables and banks are derived rather than
+postulated.*
+
 **Proposition WC8 (worlds suffice).** *For $`N`$ particles in three
 dimensions and any potential $`V(\mathbf x)`$:*
 

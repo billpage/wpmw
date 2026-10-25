@@ -1343,6 +1343,18 @@ see that directory's README for the ladder itself.
   centre: its world count against the HJ2 rate; right: equilibrium inflation
   against `eps/kT`.
 
+- `demo_chord_action.py` — companion to `docs/supplement/chord_action.md`,
+  Parts S, A–E. S: SymPy checks of Schiff and Poirier's action (the Fisher
+  form, their Eq. (10)) and Hall, Deckert and Wiseman's `U_N/N` against the
+  Fisher value. A: the split of the chord action for three particles with a
+  general potential, and Newton's law from its linear part (Proposition CA2).
+  B: the residual kernel against the Moyal series for `x^4` and `-6 sech^2 x`
+  (Proposition CA3). C: the misalignment of two worlds on one row
+  (Corollary CA4). D: the dark centre of mass and the locality of chords for
+  three particles (Proposition CA5). E: integrate-and-fire against Poisson
+  counts on one rate (Remark CA7). Writes `chord_action_results.json`; no
+  figures. About twenty seconds.
+
 - `demo_signed_local_kernel.py` — exact (SymPy) and spectral companion to
   `docs/supplement/poisson_kicks_and_pair_branching.md`, Parts A–E.  A: the
   Kramers–Moyal targets `M_{2s+1} = (-1)^{s+1} (hbar/2)^{2s} V^{(2s+1)}`,
