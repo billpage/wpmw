@@ -1,0 +1,74 @@
+name: pages
+
+# Builds and deploys GitHub Pages from two places:
+#   - docs/ on main, through the same Jekyll build that "Deploy from a branch"
+#     used, so every existing URL (https://billpage.github.io/wpmw/...) is kept;
+#   - narrated/ on the output branch: the narrated slide pages, each one
+#     self-contained HTML with its audio embedded, rendered locally with
+#     src/narration/voiceover.py and pushed there by
+#     src/narration/publish_narrated.sh.  They are served at
+#     https://billpage.github.io/wpmw/narrated/<name>_narrated.html
+#
+# One-time setting: Settings -> Pages -> Build and deployment -> Source:
+# "GitHub Actions" (instead of "Deploy from a branch").
+#
+# A push to main redeploys.  A push to the output branch cannot start this
+# workflow (output has no workflows), so publish_narrated.sh starts it with
+# `gh workflow run pages.yml`, or you press "Run workflow" on the Actions tab.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check out the narrated pages from the output branch
+        uses: actions/checkout@v4
+        with:
+          ref: output
+          path: _output
+          sparse-checkout: narrated
+
+      - uses: actions/configure-pages@v5
+
+      - name: Build docs/ with Jekyll, as branch deployment did
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./docs
+          destination: ./_site
+
+      - name: Add the narrated pages
+        run: |
+          if compgen -G "_output/narrated/*.html" > /dev/null; then
+            sudo mkdir -p _site/narrated
+            sudo cp _output/narrated/*.html _site/narrated/
+            ls -l _site/narrated
+          else
+            echo "no narrated pages on the output branch yet"
+          fi
+
+      - uses: actions/upload-pages-artifact@v3
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

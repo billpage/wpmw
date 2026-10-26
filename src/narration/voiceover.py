@@ -1,0 +1,732 @@
+#!/usr/bin/env python3
+"""
+voiceover.py - narrate a slide deck from its speaker notes
+==========================================================
+
+By default it writes ONE self-contained web page: the slides, an audio player
+per slide (play/pause, scrub bar, back/forward 10 s, speed), the transcript
+(the speaker notes as written) beside the slide behind a draggable divider,
+optional continuous play, and a Save button.  The MP3s are embedded, so the
+page plays online and also works when downloaded and opened offline.
+Optionally it also writes a PowerPoint with click-to-play audio on each slide.
+
+Source (the deck to narrate), either:
+  - a slides page built for the WPMW decks (HTML with <div id="stage">, one
+    <section class="slide"> per slide and a `const NOTES = [...]` array), or
+  - a .pptx: notes from its speaker notes, slide pictures rendered with
+    LibreOffice (needs `soffice` and `pdftoppm`).
+
+Output (in --outdir, default ./<name>_narration/):
+  <name>_narrated.html   the narrated page
+  audio/slide_NN.mp3     one clip per slide (NN = position, 01 = first)
+  <name>_spoken.txt      the exact text sent to the voice, per slide
+  <name>_narrated.pptx   only with --pptx
+
+Voices (--tts):
+  edge    Microsoft Edge neural voices (`pip install edge-tts`), needs internet. Default.
+  flite   CMU Flite + ffmpeg, offline, robotic.
+  silent  silent clips of the right length, for testing layout and plumbing.
+
+Examples:
+  python3 voiceover.py deck.html --pronunciations terms.json
+  python3 voiceover.py deck.html --pronunciations terms.json --preview      # text only, no audio
+  python3 voiceover.py deck.html --reuse-audio --reencode 32               # rebuild page, smaller file
+  python3 voiceover.py deck.html --pptx exported.pptx                       # page + PowerPoint
+  python3 voiceover.py talk.pptx --pptx                                     # pptx source, both outputs
+
+Page keys: Left/Right change slide, Space or K play/pause, J/L back/forward
+10 s, T show/hide transcript, C continuous play.  Drag the divider between
+slide and transcript to resize it (double-click resets it).
+
+Requirements: Python 3.9+.  edge-tts for --tts edge; ffmpeg for flite, silent
+and --reencode; python-pptx and lxml for any .pptx input or output;
+LibreOffice and poppler (pdftoppm) for a .pptx source.
+"""
+
+import argparse
+import asyncio
+import base64
+import html
+import json
+import os
+import re
+import shutil
+import subprocess
+import sys
+import tempfile
+import unicodedata
+import zipfile
+from pathlib import Path
+from xml.sax.saxutils import escape
+
+# ==========================================================================
+# 1. Text clean-up for speech
+# ==========================================================================
+BUILTIN_REPLACEMENTS = [
+    ("√", " square root of "), ("∞", " infinity "), ("∇²", " del squared "),
+    ("∇", " del "), ("∂", " partial "), ("→", " goes to "), ("⇒", " implies "),
+    ("≈", " approximately "), ("≠", " is not equal to "),
+    ("≤", " is less than or equal to "), ("≥", " is greater than or equal to "),
+    ("±", " plus or minus "), ("×", " times "), ("·", " dot "), ("²", " squared"),
+    ("³", " cubed"), ("—", ", "), ("–", ", "), ("‘", "'"), ("’", "'"), ("“", '"'),
+    ("”", '"'), ("…", "..."), ("&", " and "), ("~", " approximately "),
+]
+SUBSCRIPTS = {"₀": "0", "₁": "1", "₂": "2", "₃": "3", "₄": "4", "₅": "5", "₆": "6",
+              "₇": "7", "₈": "8", "₉": "9", "ₓ": "x"}
+
+
+def greek_to_words(text):
+    out = []
+    for ch in text:
+        if "Ͱ" <= ch <= "Ͽ" and ch.isalpha():
+            name = unicodedata.name(ch, "")
+            m = re.match(r"GREEK (?:SMALL|CAPITAL) LETTER ([A-Z]+)", name)
+            if m:
+                word = m.group(1).lower()
+                out.append(f" {'capital ' if 'CAPITAL' in name else ''}{word} ")
+                continue
+        out.append(ch)
+    return "".join(out)
+
+
+def load_pronunciations(path):
+    """JSON object {"written": "spoken"}, applied longest key first.
+
+    Keys are literal text, matched anywhere (also inside words), so give a
+    word that is pronounced by context (wind, live, read) enough surrounding
+    words to be unambiguous: {"clock winds at": "clock wynds at"}.
+    """
+    if not path:
+        return []
+    with open(path, encoding="utf-8") as fh:
+        data = json.load(fh)
+    return sorted(data.items(), key=lambda kv: len(kv[0]), reverse=True)
+
+
+def clean_for_tts(text, pronunciations=(), ascii_only=False):
+    for written, spoken in pronunciations:
+        text = text.replace(written, spoken)
+    for old, new in BUILTIN_REPLACEMENTS:
+        text = text.replace(old, new)
+    text = greek_to_words(text)
+    for old, new in SUBSCRIPTS.items():
+        text = text.replace(old, " " + new)
+    text = unicodedata.normalize("NFKD", text)
+    text = "".join(c for c in text if not unicodedata.combining(c))
+    if ascii_only:
+        text = re.sub(r"[^\x20-\x7E\n]", " ", text)
+    return re.sub(r"[ \t]+", " ", text).strip()
+
+
+# ==========================================================================
+# 2. Sources
+# ==========================================================================
+class Deck:
+    """name, notes[], head (HTML up to </head>), stage (the #stage div), size."""
+
+    def __init__(self, name, notes, head, stage, size):
+        self.name, self.notes, self.head, self.stage, self.size = name, notes, head, stage, size
+
+
+def deck_from_html(path):
+    src = Path(path).read_text(encoding="utf-8")
+    m = re.search(r"const NOTES = (\[.*?\]);\n", src, re.S)
+    if not m or '<div id="stage">' not in src or 'class="slide"' not in src:
+        sys.exit(f"error: {path} is not a slides page of the expected kind "
+                 "(needs <div id=\"stage\">, class=\"slide\" sections and a NOTES array)")
+    if 'id="nv-audio"' in src:
+        sys.exit(f"error: {path} is already a narrated page; give the plain slides page")
+    notes = json.loads(m.group(1))
+    start = src.index('<div id="stage">')
+    end = src.index('<div id="notes"', start) if '<div id="notes"' in src[start:] else None
+    if end is None:
+        sys.exit("error: could not find the end of the #stage block (<div id=\"notes\"> missing)")
+    stage = src[start:end].rstrip()
+    n = stage.count('class="slide"')
+    if n != len(notes):
+        sys.exit(f"error: {n} slides but {len(notes)} notes in {path}")
+    head = src[:src.index("</head>")]
+    m = re.search(r"#stage\s*\{[^}]*?width:\s*(\d+)px;\s*height:\s*(\d+)px", src)
+    size = (int(m.group(1)), int(m.group(2))) if m else (1920, 1080)
+    return Deck(Path(path).stem, notes, head, stage, size)
+
+
+def read_pptx_notes(pptx_path):
+    from pptx import Presentation
+    prs = Presentation(str(pptx_path))
+    notes = []
+    for slide in prs.slides:
+        text = ""
+        if slide.has_notes_slide and slide.notes_slide.notes_text_frame is not None:
+            text = slide.notes_slide.notes_text_frame.text.strip()
+        notes.append(text)
+    return notes, (int(prs.slide_width), int(prs.slide_height))
+
+
+def deck_from_pptx(path, workdir):
+    for tool in ("soffice", "pdftoppm"):
+        if shutil.which(tool) is None:
+            sys.exit(f"error: {tool} not found; a .pptx source needs LibreOffice and poppler-utils")
+    notes, (w_emu, h_emu) = read_pptx_notes(path)
+    width = 1920
+    height = round(width * h_emu / w_emu)
+    pdf_dir = Path(workdir) / "pdf"
+    pdf_dir.mkdir()
+    subprocess.run(["soffice", "--headless", "--convert-to", "pdf", "--outdir", str(pdf_dir),
+                    str(path)], check=True, capture_output=True, timeout=600)
+    pdf = next(pdf_dir.glob("*.pdf"))
+    subprocess.run(["pdftoppm", "-png", "-scale-to-x", str(width), "-scale-to-y", str(height),
+                    str(pdf), str(pdf_dir / "s")], check=True, capture_output=True, timeout=600)
+    pngs = sorted(pdf_dir.glob("s-*.png"), key=lambda p: int(p.stem.split("-")[-1]))
+    if len(pngs) != len(notes):
+        sys.exit(f"error: LibreOffice rendered {len(pngs)} pages for {len(notes)} slides")
+    sections = []
+    for k, png in enumerate(pngs, 1):
+        b64 = base64.b64encode(png.read_bytes()).decode("ascii")
+        sections.append(f'<section class="slide" data-n="{k}"><img alt="Slide {k}" '
+                        f'src="data:image/png;base64,{b64}"></section>')
+    title = html.escape(Path(path).stem.replace("_", " "))
+    head = f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{title}</title>
+<style>
+html, body {{ margin: 0; height: 100%; background: #1d232c; overflow: hidden; }}
+#stage {{ position: absolute; left: 0; top: 0; width: {width}px; height: {height}px; transform-origin: 0 0; }}
+.slide {{ position: absolute; left: 0; top: 0; width: {width}px; height: {height}px; display: block; }}
+.slide img {{ width: 100%; height: 100%; display: block; }}
+@media screen {{ .slide:not(.current) {{ display: none !important; }} }}
+</style>
+"""
+    stage = '<div id="stage">\n' + "\n".join(sections) + "\n</div>"
+    return Deck(Path(path).stem, notes, head, stage, (width, height))
+
+
+# ==========================================================================
+# 3. Speech synthesis
+# ==========================================================================
+async def _edge_save(text, out_mp3, voice, rate):
+    import edge_tts
+    await edge_tts.Communicate(text, voice=voice, rate=rate).save(out_mp3)
+
+
+def synth_edge(text, out_mp3, voice, rate, **_):
+    try:
+        asyncio.run(_edge_save(text, out_mp3, voice, rate))
+    except Exception as exc:  # network, bad voice name, certificates ...
+        print(f"\n      edge-tts error: {exc}")
+        return False
+    return os.path.exists(out_mp3) and os.path.getsize(out_mp3) > 0
+
+
+def synth_flite(text, out_mp3, voice, **_):
+    wav = out_mp3[:-4] + ".wav"
+    r = subprocess.run(["flite", "-voice", voice, "-o", wav, "-t", text],
+                       capture_output=True, timeout=600)
+    if r.returncode != 0:
+        print("\n      flite error:", r.stderr.decode(errors="replace")[:200])
+        return False
+    r = subprocess.run(["ffmpeg", "-y", "-i", wav, "-ar", "22050", "-ac", "1", "-b:a", "64k",
+                        out_mp3], capture_output=True, timeout=600)
+    if os.path.exists(wav):
+        os.remove(wav)
+    return r.returncode == 0 and os.path.exists(out_mp3)
+
+
+def synth_silent(text, out_mp3, **_):
+    seconds = max(1.0, len(text.split()) / 2.5)  # about 150 words per minute
+    r = subprocess.run(["ffmpeg", "-y", "-f", "lavfi", "-i", "anullsrc=r=22050:cl=mono",
+                        "-t", f"{seconds:.2f}", "-b:a", "32k", out_mp3],
+                       capture_output=True, timeout=120)
+    return r.returncode == 0 and os.path.exists(out_mp3)
+
+
+BACKENDS = {"edge": synth_edge, "flite": synth_flite, "silent": synth_silent}
+DEFAULT_VOICE = {"edge": "en-US-AndrewNeural", "flite": "rms", "silent": ""}
+
+
+def reencode_mp3(src, kbps, workdir):
+    out = Path(workdir) / ("re_" + Path(src).name)
+    r = subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-i", str(src), "-ac", "1",
+                        "-b:a", f"{kbps}k", str(out)], capture_output=True, text=True)
+    if r.returncode != 0:
+        sys.exit(f"error: ffmpeg could not re-encode {src}: {r.stderr.strip()}")
+    return out
+
+
+# ==========================================================================
+# 4. The narrated page
+# ==========================================================================
+VIEWER_CSS = r"""
+<style id="narration-css">
+html, body { overflow: hidden; }
+#nv-side { position: fixed; top: 0; right: 0; bottom: 0; width: 34vw;
+  background: #fbfaf6; color: #1d232c; display: flex; flex-direction: column;
+  border-left: 3px solid #2F5D8A; font-family: 'IBM Plex Sans', Arial, sans-serif; box-sizing: border-box; }
+#nv-side.hidden, #nv-split.hidden { display: none; }
+#nv-side h2 { margin: 0; padding: 14px 20px 6px; font: 600 15px/1.3 'IBM Plex Sans', Arial, sans-serif;
+  color: #2F5D8A; text-transform: uppercase; letter-spacing: 1px; }
+#nv-text { flex: 1; overflow: auto; padding: 4px 20px 24px; font-size: 16px; line-height: 1.55;
+  white-space: pre-wrap; }
+#nv-split { position: fixed; z-index: 5; background: transparent; touch-action: none; }
+#nv-split::after { content: ""; position: absolute; background: #8FB4DC; opacity: 0; transition: opacity .15s; }
+#nv-split:hover::after, #nv-split:focus::after, body.nv-dragging #nv-split::after { opacity: .9; }
+#nv-split.v { cursor: col-resize; } #nv-split.v::after { left: 3px; right: 3px; top: 0; bottom: 0; }
+#nv-split.h { cursor: row-resize; } #nv-split.h::after { top: 3px; bottom: 3px; left: 0; right: 0; }
+#nv-split:focus { outline: none; }
+body.nv-dragging, body.nv-dragging * { user-select: none !important; }
+#nv-bar { position: fixed; left: 0; bottom: 0; display: flex; flex-wrap: wrap; gap: 8px;
+  align-items: center; justify-content: center; padding: 6px 10px; box-sizing: border-box;
+  font: 14px 'IBM Plex Sans', Arial, sans-serif; color: #c9d1db; background: rgba(20,25,32,0.92); }
+#nv-bar button, #nv-bar select, #nv-bar a { font: inherit; color: inherit; background: #2c3542;
+  border: 1px solid #45505f; border-radius: 6px; padding: 4px 10px; cursor: pointer; text-decoration: none; }
+#nv-bar button[aria-pressed="true"] { background: #2F5D8A; border-color: #8FB4DC; }
+#nv-audio { height: 34px; width: min(420px, 38vw); }
+#nv-count { min-width: 56px; text-align: center; }
+@media print { #nv-side, #nv-bar, #nv-split { display: none !important; } }
+</style>
+"""
+
+VIEWER_UI = r"""
+<aside id="nv-side" aria-label="Transcript">
+  <h2 id="nv-title">Transcript</h2>
+  <div id="nv-text" tabindex="0"></div>
+</aside>
+<div id="nv-split" role="separator" tabindex="0" aria-label="Resize the transcript (drag, or arrow keys; double-click resets)"></div>
+<div id="nv-bar">
+  <button id="nv-prev" aria-label="Previous slide">&larr;</button>
+  <span id="nv-count"></span>
+  <button id="nv-next" aria-label="Next slide">&rarr;</button>
+  <button id="nv-back" aria-label="Back 10 seconds">&minus;10 s</button>
+  <audio id="nv-audio" controls preload="metadata"></audio>
+  <button id="nv-fwd" aria-label="Forward 10 seconds">+10 s</button>
+  <select id="nv-rate" aria-label="Playback speed">
+    <option value="0.8">0.8&times;</option><option value="0.9">0.9&times;</option>
+    <option value="1" selected>1&times;</option><option value="1.1">1.1&times;</option>
+    <option value="1.25">1.25&times;</option><option value="1.5">1.5&times;</option>
+  </select>
+  <button id="nv-cont" aria-pressed="false" title="At the end of a clip, go on to the next slide (C)">Continuous</button>
+  <button id="nv-tr" aria-pressed="true" title="Show or hide the transcript (T)">Transcript</button>
+  <a id="nv-save" title="Save this page as one file that plays offline">Save</a>
+</div>
+"""
+
+VIEWER_JS = r"""
+<script>
+const NOTES = __NOTES__;
+const AUDIO = __AUDIO__;
+const SW = __SW__, SH = __SH__, EMBEDDED = __EMBEDDED__, FILENAME = __FILENAME__;
+const slides = Array.from(document.querySelectorAll('.slide'));
+const stage = document.getElementById('stage');
+const side = document.getElementById('nv-side');
+const split = document.getElementById('nv-split');
+const bar = document.getElementById('nv-bar');
+const audio = document.getElementById('nv-audio');
+const text = document.getElementById('nv-text');
+const contBtn = document.getElementById('nv-cont');
+const trBtn = document.getElementById('nv-tr');
+const rateSel = document.getElementById('nv-rate');
+const save = document.getElementById('nv-save');
+const store = { get(k, d) { try { const v = localStorage.getItem(k); return v === null ? d : v; } catch (e) { return d; } },
+                set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} } };
+let i = -1;
+let continuous = store.get('nv-cont', '0') === '1';
+let showTr = store.get('nv-tr', '1') === '1';
+let frac = parseFloat(store.get('nv-split', '0.34')) || 0.34;
+rateSel.value = store.get('nv-rate', '1');
+if (EMBEDDED) { save.href = location.href.split('#')[0]; save.setAttribute('download', FILENAME); }
+else save.style.display = 'none';
+
+const narrow = () => window.innerWidth <= 900;
+const clampFrac = f => Math.max(0.15, Math.min(0.75, f));
+
+function layout() {
+  const nw = narrow();
+  side.classList.toggle('hidden', !showTr);
+  split.classList.toggle('hidden', !showTr);
+  split.className = split.className.replace(/\b[vh]\b/g, '').trim();
+  split.classList.add(nw ? 'h' : 'v');
+  split.setAttribute('aria-orientation', nw ? 'horizontal' : 'vertical');
+  split.setAttribute('aria-valuenow', String(Math.round(frac * 100)));
+  if (nw) { side.style.width = ''; side.style.left = '0'; side.style.top = 'auto';
+            side.style.height = (frac * 100) + 'vh'; side.style.borderLeft = 'none'; side.style.borderTop = '3px solid #2F5D8A'; }
+  else    { side.style.height = ''; side.style.left = ''; side.style.top = '0';
+            side.style.width = (frac * 100) + 'vw'; side.style.borderTop = 'none'; side.style.borderLeft = '3px solid #2F5D8A'; }
+  const sideW = showTr && !nw ? side.getBoundingClientRect().width : 0;
+  const sideH = showTr && nw ? side.getBoundingClientRect().height : 0;
+  bar.style.right = sideW + 'px';
+  bar.style.bottom = sideH + 'px';
+  if (nw) Object.assign(split.style, { left: '0', right: '0', width: '', top: (window.innerHeight - sideH - 5) + 'px', bottom: '', height: '10px' });
+  else Object.assign(split.style, { top: '0', bottom: '0', height: '', left: (window.innerWidth - sideW - 5) + 'px', right: '', width: '10px' });
+  const barH = bar.getBoundingClientRect().height;
+  const W = window.innerWidth - sideW, H = window.innerHeight - barH - sideH;
+  const s = Math.max(0.05, Math.min(W / SW, H / SH));
+  stage.style.transform = `translate(${(W - SW * s) / 2}px, ${(H - SH * s) / 2}px) scale(${s})`;
+  trBtn.setAttribute('aria-pressed', String(showTr));
+  contBtn.setAttribute('aria-pressed', String(continuous));
+}
+function show(k, play) {
+  const n = Math.max(0, Math.min(slides.length - 1, k));
+  const changed = n !== i;
+  i = n;
+  slides.forEach((el, j) => el.classList.toggle('current', j === i));
+  document.getElementById('nv-count').textContent = `${i + 1} / ${slides.length}`;
+  document.getElementById('nv-title').textContent = `Transcript, slide ${i + 1}`;
+  if (changed) {
+    text.textContent = NOTES[i] || '(no notes)';
+    text.scrollTop = 0;
+    audio.pause();
+    if (AUDIO[i]) { audio.src = AUDIO[i]; audio.style.visibility = 'visible'; }
+    else { audio.removeAttribute('src'); audio.load(); audio.style.visibility = 'hidden'; }
+    audio.playbackRate = parseFloat(rateSel.value);
+  }
+  if (play && AUDIO[i]) audio.play().catch(() => {});
+  if (location.hash !== '#' + (i + 1)) history.replaceState(null, '', '#' + (i + 1));
+}
+function toggle() { if (!AUDIO[i]) return; audio.paused ? audio.play().catch(() => {}) : audio.pause(); }
+function skip(d) { if (AUDIO[i]) audio.currentTime = Math.max(0, Math.min(audio.duration || 0, audio.currentTime + d)); }
+
+// the draggable divider between slide and transcript
+let dragging = false;
+split.addEventListener('pointerdown', e => { dragging = true; split.setPointerCapture(e.pointerId); document.body.classList.add('nv-dragging'); e.preventDefault(); });
+split.addEventListener('pointermove', e => {
+  if (!dragging) return;
+  frac = clampFrac(narrow() ? (window.innerHeight - e.clientY) / window.innerHeight
+                            : (window.innerWidth - e.clientX) / window.innerWidth);
+  layout();
+});
+const endDrag = () => { if (!dragging) return; dragging = false; document.body.classList.remove('nv-dragging'); store.set('nv-split', String(frac)); };
+split.addEventListener('pointerup', endDrag);
+split.addEventListener('pointercancel', endDrag);
+split.addEventListener('dblclick', () => { frac = 0.34; store.set('nv-split', String(frac)); layout(); });
+split.addEventListener('keydown', e => {
+  const grow = narrow() ? 'ArrowUp' : 'ArrowLeft', shrink = narrow() ? 'ArrowDown' : 'ArrowRight';
+  if (e.key === grow || e.key === shrink) {
+    e.preventDefault(); e.stopPropagation();
+    frac = clampFrac(frac + (e.key === grow ? 0.02 : -0.02)); store.set('nv-split', String(frac)); layout();
+  }
+});
+
+audio.addEventListener('ended', () => { if (continuous && i < slides.length - 1) show(i + 1, true); });
+audio.addEventListener('loadedmetadata', () => { audio.playbackRate = parseFloat(rateSel.value); });
+rateSel.addEventListener('change', () => { audio.playbackRate = parseFloat(rateSel.value); store.set('nv-rate', rateSel.value); });
+document.getElementById('nv-prev').onclick = () => show(i - 1, !audio.paused);
+document.getElementById('nv-next').onclick = () => show(i + 1, !audio.paused);
+document.getElementById('nv-back').onclick = () => skip(-10);
+document.getElementById('nv-fwd').onclick = () => skip(10);
+contBtn.onclick = () => { continuous = !continuous; store.set('nv-cont', continuous ? '1' : '0'); layout(); };
+trBtn.onclick = () => { showTr = !showTr; store.set('nv-tr', showTr ? '1' : '0'); layout(); };
+document.addEventListener('keydown', e => {
+  if (e.target === split || (e.target.closest && e.target.closest('select'))) return;
+  const k = e.key;
+  if (['ArrowRight', 'PageDown'].includes(k)) { e.preventDefault(); show(i + 1, !audio.paused); }
+  else if (['ArrowLeft', 'PageUp'].includes(k)) { e.preventDefault(); show(i - 1, !audio.paused); }
+  else if (k === ' ' || k === 'k' || k === 'K') { e.preventDefault(); toggle(); }
+  else if (k === 'j' || k === 'J') skip(-10);
+  else if (k === 'l' || k === 'L') skip(10);
+  else if (k === 't' || k === 'T') trBtn.click();
+  else if (k === 'c' || k === 'C') contBtn.click();
+  else if (k === 'Home') show(0, false);
+  else if (k === 'End') show(slides.length - 1, false);
+});
+window.addEventListener('resize', layout);
+window.addEventListener('hashchange', () => show((parseInt(location.hash.slice(1), 10) || 1) - 1, false));
+layout();
+show((parseInt(location.hash.slice(1), 10) || 1) - 1, false);
+layout();
+</script>
+"""
+
+
+def build_page(deck, audio_refs, out_path, embedded):
+    title = re.search(r"<title>(.*?)</title>", deck.head, re.S)
+    head = deck.head
+    if title:
+        head = head.replace(title.group(0), f"<title>{title.group(1)} (narrated)</title>", 1)
+    js = (VIEWER_JS
+          .replace("__NOTES__", json.dumps(deck.notes, ensure_ascii=False).replace("</", "<\\/"))
+          .replace("__AUDIO__", json.dumps(audio_refs))
+          .replace("__SW__", str(deck.size[0])).replace("__SH__", str(deck.size[1]))
+          .replace("__EMBEDDED__", "true" if embedded else "false")
+          .replace("__FILENAME__", json.dumps(Path(out_path).name)))
+    page = head + VIEWER_CSS + "</head>\n<body>\n" + deck.stage + "\n" + VIEWER_UI + js + "</body>\n</html>\n"
+    Path(out_path).write_text(page, encoding="utf-8")
+
+
+# ==========================================================================
+# 5. PowerPoint output: click-to-play audio on each slide
+# ==========================================================================
+NS = {"a": "http://schemas.openxmlformats.org/drawingml/2006/main",
+      "r": "http://schemas.openxmlformats.org/officeDocument/2006/relationships",
+      "p": "http://schemas.openxmlformats.org/presentationml/2006/main",
+      "p14": "http://schemas.microsoft.com/office/powerpoint/2010/main"}
+REL_NS = "http://schemas.openxmlformats.org/package/2006/relationships"
+CT_NS = "http://schemas.openxmlformats.org/package/2006/content-types"
+AUDIO_REL = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/audio"
+MEDIA_REL = "http://schemas.microsoft.com/office/2007/relationships/media"
+EMU_PER_INCH = 914400
+
+
+def inches(x):
+    return int(x * EMU_PER_INCH)
+
+
+def slide_files_in_order(pptx_path):
+    """Slide XML files in presentation order (slideN.xml is NOT the Nth slide after reordering)."""
+    from lxml import etree
+    with zipfile.ZipFile(pptx_path) as z:
+        pres = etree.fromstring(z.read("ppt/presentation.xml"))
+        rels = etree.fromstring(z.read("ppt/_rels/presentation.xml.rels"))
+    target = {r.get("Id"): r.get("Target") for r in rels}
+    files = []
+    for sld in pres.iterfind(f".//{{{NS['p']}}}sldId"):
+        t = target[sld.get(f"{{{NS['r']}}}id")]
+        files.append(t.lstrip("/") if t.startswith("/") else "ppt/" + t)
+    return files
+
+
+def _pic_xml(shape_id, name, audio_rid, media_rid, x, y, size):
+    # action="ppaction://media" makes the shape a play/pause toggle in Slide Show
+    return f"""<p:pic xmlns:p="{NS['p']}" xmlns:a="{NS['a']}" xmlns:r="{NS['r']}">
+  <p:nvPicPr>
+    <p:cNvPr id="{shape_id}" name="{name}"><a:hlinkClick r:id="" action="ppaction://media"/></p:cNvPr>
+    <p:cNvPicPr><a:picLocks noChangeAspect="1"/></p:cNvPicPr>
+    <p:nvPr>
+      <a:audioFile r:link="{audio_rid}"/>
+      <p:extLst><p:ext uri="{{DAA4B4D4-6D71-4841-9C94-3DE7FCFB9230}}">
+        <p14:media xmlns:p14="{NS['p14']}" r:embed="{media_rid}"/></p:ext></p:extLst>
+    </p:nvPr>
+  </p:nvPicPr>
+  <p:blipFill><a:blip/><a:stretch><a:fillRect/></a:stretch></p:blipFill>
+  <p:spPr>
+    <a:xfrm><a:off x="{x}" y="{y}"/><a:ext cx="{size}" cy="{size}"/></a:xfrm>
+    <a:prstGeom prst="ellipse"><a:avLst/></a:prstGeom>
+    <a:solidFill><a:srgbClr val="06B6D4"><a:alpha val="85000"/></a:srgbClr></a:solidFill>
+    <a:ln w="12700"><a:solidFill><a:srgbClr val="FFFFFF"><a:alpha val="60000"/></a:srgbClr></a:solidFill></a:ln>
+  </p:spPr>
+</p:pic>"""
+
+
+def _label_xml(shape_id, name, text, x, y, w, h, color):
+    return f"""<p:sp xmlns:p="{NS['p']}" xmlns:a="{NS['a']}" xmlns:r="{NS['r']}">
+  <p:nvSpPr>
+    <p:cNvPr id="{shape_id}" name="{name}"><a:hlinkClick r:id="" action="ppaction://media"/></p:cNvPr>
+    <p:cNvSpPr txBox="1"/><p:nvPr/>
+  </p:nvSpPr>
+  <p:spPr><a:xfrm><a:off x="{x}" y="{y}"/><a:ext cx="{w}" cy="{h}"/></a:xfrm>
+    <a:prstGeom prst="rect"><a:avLst/></a:prstGeom><a:noFill/></p:spPr>
+  <p:txBody>
+    <a:bodyPr wrap="none" lIns="0" tIns="0" rIns="0" bIns="0" anchor="ctr"/><a:lstStyle/>
+    <a:p><a:pPr algn="r"/><a:r><a:rPr lang="en-US" sz="1000" dirty="0">
+      <a:solidFill><a:srgbClr val="{color}"/></a:solidFill></a:rPr><a:t>{escape(text)}</a:t></a:r></a:p>
+  </p:txBody>
+</p:sp>"""
+
+
+def embed_audio(pptx_path, audio_files, output_path, label="▶ Narration", label_color="94A3B8"):
+    from lxml import etree
+    _, (slide_w, slide_h) = read_pptx_notes(pptx_path)
+    slide_parts = slide_files_in_order(pptx_path)
+    icon, margin = inches(0.4), inches(0.25)
+    ix, iy = slide_w - margin - icon, slide_h - margin - icon
+    work = Path(tempfile.mkdtemp(prefix="voiceover_pptx_"))
+    try:
+        with zipfile.ZipFile(pptx_path) as zin:
+            zin.extractall(work)
+        (work / "ppt" / "media").mkdir(parents=True, exist_ok=True)
+        ct_path = work / "[Content_Types].xml"
+        ct_tree = etree.parse(str(ct_path))
+        ct_root = ct_tree.getroot()
+        if not any(e.get("Extension", "").lower() == "mp3" for e in ct_root.findall(f"{{{CT_NS}}}Default")):
+            d = etree.SubElement(ct_root, f"{{{CT_NS}}}Default")
+            d.set("Extension", "mp3")
+            d.set("ContentType", "audio/mpeg")
+            ct_root.insert(0, d)
+        ct_tree.write(str(ct_path), xml_declaration=True, encoding="UTF-8", standalone=True)
+        for idx, audio in enumerate(audio_files):
+            if not audio or idx >= len(slide_parts):
+                continue
+            num = idx + 1
+            slide_xml = work / slide_parts[idx]
+            rels_file = slide_xml.parent / "_rels" / (slide_xml.name + ".rels")
+            rels_file.parent.mkdir(exist_ok=True)
+            media_name = f"voiceover_{num:02d}.mp3"
+            shutil.copyfile(audio, work / "ppt" / "media" / media_name)
+            if rels_file.exists():
+                rels_tree = etree.parse(str(rels_file))
+                rels_root = rels_tree.getroot()
+            else:
+                rels_root = etree.Element(f"{{{REL_NS}}}Relationships", nsmap={None: REL_NS})
+                rels_tree = etree.ElementTree(rels_root)
+            used = [int(m.group(1)) for el in rels_root if (m := re.fullmatch(r"rId(\d+)", el.get("Id", "")))]
+            nxt = max(used, default=0) + 1
+            audio_rid, media_rid = f"rId{nxt}", f"rId{nxt + 1}"
+            for rid, rtype in ((audio_rid, AUDIO_REL), (media_rid, MEDIA_REL)):
+                rel = etree.SubElement(rels_root, f"{{{REL_NS}}}Relationship")
+                rel.set("Id", rid)
+                rel.set("Type", rtype)
+                rel.set("Target", f"../media/{media_name}")
+            rels_tree.write(str(rels_file), xml_declaration=True, encoding="UTF-8", standalone=True)
+            tree = etree.parse(str(slide_xml))
+            sp_tree = tree.getroot().find(f".//{{{NS['p']}}}spTree")
+            if sp_tree is None:
+                print(f"  slide {num}: no shape tree, skipped")
+                continue
+            ids = [int(e.get("id")) for e in tree.getroot().iter(f"{{{NS['p']}}}cNvPr") if (e.get("id") or "").isdigit()]
+            sid = max(ids, default=1) + 1
+            sp_tree.append(etree.fromstring(_pic_xml(sid, f"Voice-over {num}", audio_rid, media_rid, ix, iy, icon)))
+            if label:
+                lw, lh = inches(1.3), inches(0.3)
+                sp_tree.append(etree.fromstring(_label_xml(sid + 1, f"Voice-over label {num}", label,
+                                                           ix - lw - inches(0.05), iy + (icon - lh) // 2,
+                                                           lw, lh, label_color)))
+            tree.write(str(slide_xml), xml_declaration=True, encoding="UTF-8", standalone=True)
+        files = [p for p in work.rglob("*") if p.is_file()]
+        files.sort(key=lambda p: (p.relative_to(work).as_posix() != "[Content_Types].xml", p.relative_to(work).as_posix()))
+        with zipfile.ZipFile(output_path, "w", zipfile.ZIP_DEFLATED) as zout:
+            for p in files:
+                zout.write(p, p.relative_to(work).as_posix())
+    finally:
+        shutil.rmtree(work, ignore_errors=True)
+
+
+# ==========================================================================
+# 6. Main
+# ==========================================================================
+def main():
+    ap = argparse.ArgumentParser(description="Narrate a slide deck: a web page by default, PowerPoint optionally.",
+                                 formatter_class=argparse.RawDescriptionHelpFormatter, epilog=__doc__.split("Examples:")[1])
+    ap.add_argument("source", help="slides page (.html) or deck (.pptx) whose speaker notes are narrated")
+    ap.add_argument("-d", "--outdir", help="output folder (default: ./<name>_narration)")
+    ap.add_argument("--name", help="base name of the outputs (default: the source's file name)")
+    ap.add_argument("--pptx", nargs="?", const="", metavar="DECK.pptx",
+                    help="also write a narrated PowerPoint; give the exported deck for an .html source")
+    ap.add_argument("--no-html", action="store_true", help="do not write the web page")
+    ap.add_argument("--tts", choices=sorted(BACKENDS), default="edge")
+    ap.add_argument("--voice", help="voice (edge default en-US-AndrewNeural; flite default rms)")
+    ap.add_argument("--rate", default="+0%", help="edge speaking rate, e.g. '+8%%' or '-5%%'")
+    ap.add_argument("--pronunciations", help="JSON {written: spoken} applied before synthesis")
+    ap.add_argument("--preview", action="store_true", help="write <name>_spoken.txt and stop (no audio)")
+    ap.add_argument("--reuse-audio", action="store_true", help="use the MP3s already in <outdir>/audio")
+    ap.add_argument("--reencode", type=int, metavar="KBPS", help="re-encode clips to KBPS kbit/s mono for the page (ffmpeg)")
+    ap.add_argument("--link", action="store_true", help="link audio/slide_NN.mp3 instead of embedding it in the page")
+    ap.add_argument("--label", default="▶ Narration", help="PowerPoint: text beside the play icon ('' for none)")
+    ap.add_argument("--label-color", default="94A3B8", help="PowerPoint: label colour RRGGBB")
+    args = ap.parse_args()
+
+    src = Path(args.source).expanduser()
+    if not src.is_file():
+        sys.exit(f"error: {src} not found")
+    is_pptx = src.suffix.lower() == ".pptx"
+    pptx_in = None
+    if args.pptx is not None:
+        pptx_in = src if (args.pptx == "" and is_pptx) else (Path(args.pptx).expanduser() if args.pptx else None)
+        if pptx_in is None:
+            sys.exit("error: --pptx needs the exported .pptx when the source is a web page")
+        if not pptx_in.is_file():
+            sys.exit(f"error: {pptx_in} not found")
+
+    work = tempfile.mkdtemp(prefix="voiceover_")
+    try:
+        need_page = not args.no_html
+        if is_pptx:
+            deck = deck_from_pptx(src, work) if need_page else Deck(src.stem, read_pptx_notes(src)[0], "", "", (0, 0))
+        else:
+            deck = deck_from_html(src)
+        name = args.name or deck.name
+        outdir = Path(args.outdir).expanduser() if args.outdir else Path.cwd() / f"{name}_narration"
+        audio_dir = outdir / "audio"
+        audio_dir.mkdir(parents=True, exist_ok=True)
+        if pptx_in is not None:
+            pnotes, _ = read_pptx_notes(pptx_in)
+            if len(pnotes) != len(deck.notes):
+                sys.exit(f"error: {pptx_in} has {len(pnotes)} slides, the source has {len(deck.notes)}")
+
+        # text that will be spoken
+        pron = load_pronunciations(args.pronunciations)
+        spoken = [clean_for_tts(n, pron, ascii_only=(args.tts == "flite")) if n else "" for n in deck.notes]
+        words = [len(s.split()) for s in spoken]
+        with open(outdir / f"{name}_spoken.txt", "w", encoding="utf-8") as fh:
+            for k, s in enumerate(spoken, 1):
+                left = sorted(set(re.findall(r"[^\x00-\x7f]", s)))
+                fh.write(f"--- slide {k:02d}: {words[k-1]} words, about {words[k-1]/150:.1f} min"
+                         + (f"; NOT SPOKEN WELL: {' '.join(left)}" if left else "") + " ---\n" + s + "\n\n")
+        print(f"source : {src}  ({len(deck.notes)} slides, {sum(bool(n) for n in deck.notes)} with notes)")
+        print(f"outdir : {outdir}")
+        print(f"text   : {outdir / (name + '_spoken.txt')}  ({sum(words)} words, about {sum(words)/150:.0f} min)")
+        unspoken = sorted({c for s in spoken for c in re.findall(r"[^\x00-\x7f]", s)})
+        if unspoken:
+            print(f"warning: characters the voice may not read well: {' '.join(unspoken)} "
+                  "(see NOT SPOKEN WELL in the text file; add them to the pronunciations)")
+        if args.preview:
+            return
+
+        # audio
+        voice = args.voice or DEFAULT_VOICE[args.tts]
+        if not args.reuse_audio:
+            if args.tts == "edge":
+                try:
+                    import edge_tts  # noqa: F401
+                except ImportError:
+                    sys.exit("error: edge-tts is not installed  ->  pip install edge-tts")
+            missing = [t for t in {"flite": ["flite", "ffmpeg"], "silent": ["ffmpeg"]}.get(args.tts, [])
+                       if shutil.which(t) is None]
+            if missing:
+                sys.exit(f"error: missing tool(s): {', '.join(missing)}")
+        if args.reencode and shutil.which("ffmpeg") is None:
+            sys.exit("error: --reencode needs ffmpeg")
+        print(f"audio  : {audio_dir}  ({'reusing' if args.reuse_audio else args.tts + ' ' + voice})", flush=True)
+        clips = []
+        for k, text in enumerate(spoken, 1):
+            mp3 = audio_dir / f"slide_{k:02d}.mp3"
+            if args.reuse_audio:
+                ok = mp3.exists() and mp3.stat().st_size > 0
+                print(f"    slide {k:2d}: {'found' if ok else 'no mp3'}", flush=True)
+            elif not text:
+                print(f"    slide {k:2d}: no notes", flush=True)
+                ok = False
+                if mp3.exists():
+                    mp3.unlink()
+            else:
+                print(f"    slide {k:2d}: synthesising ... ", end="", flush=True)
+                ok = BACKENDS[args.tts](text, str(mp3), voice=voice, rate=args.rate)
+                print(f"ok ({mp3.stat().st_size // 1024} KB)" if ok else "FAILED", flush=True)
+            clips.append(mp3 if ok else None)
+        if not any(clips):
+            sys.exit("nothing to narrate (no notes, or every clip failed)")
+
+        # page
+        if need_page:
+            refs = []
+            for c in clips:
+                if c is None:
+                    refs.append(None)
+                    continue
+                f = reencode_mp3(c, args.reencode, work) if args.reencode else c
+                if args.link:
+                    sub = "audio_web" if args.reencode else "audio"
+                    if args.reencode:  # keep the originals in audio/ untouched
+                        (outdir / sub).mkdir(exist_ok=True)
+                        shutil.copyfile(f, outdir / sub / c.name)
+                    refs.append(f"{sub}/{c.name}")
+                else:
+                    refs.append("data:audio/mpeg;base64," + base64.b64encode(Path(f).read_bytes()).decode("ascii"))
+            page = outdir / f"{name}_narrated.html"
+            build_page(deck, refs, page, embedded=not args.link)
+            print(f"page   : {page}  ({page.stat().st_size / 1e6:.1f} MB, audio "
+                  f"{'linked' if args.link else 'embedded'})")
+
+        # PowerPoint
+        if pptx_in is not None:
+            out_pptx = outdir / f"{Path(pptx_in).stem}_narrated.pptx"
+            embed_audio(str(pptx_in), [str(c) if c else None for c in clips], str(out_pptx),
+                        label=args.label, label_color=args.label_color)
+            print(f"pptx   : {out_pptx}  (click the play icon in Slide Show)")
+    finally:
+        shutil.rmtree(work, ignore_errors=True)
+
+
+if __name__ == "__main__":
+    main()

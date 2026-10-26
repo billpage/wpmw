@@ -243,17 +243,28 @@ self-contained HTML file each, with the speaker notes behind the N key:
 [worlds, particles and world-particles](https://billpage.github.io/wpmw/interactive/worlds_and_particles.html)
 (27 October 2026; source:
 [`docs/interactive/worlds_and_particles.html`](docs/interactive/worlds_and_particles.html)).
+A deck can also be narrated: its speaker notes are read by a text-to-speech
+voice into a page with an audio player and the transcript beside each slide
+([worlds, particles and world-particles, narrated](https://billpage.github.io/wpmw/narrated/worlds_and_particles_narrated.html)).
+Narrated pages are rendered locally with
+[`src/narration/`](src/narration/README.md) and kept on the `output` branch
+in `narrated/`; `main` keeps only the slides page and the tools.
 
 GitHub shows an `.html` file on `main` as source, not as a page, so pages
-are served by **GitHub Pages** from the `docs/` folder of `main`
-(Settings → Pages → *Deploy from a branch*, branch `main`, folder `/docs`),
-at
+are served by **GitHub Pages**, built by the
+[`pages`](.github/workflows/pages.yml) workflow from the `docs/` folder of
+`main` (with the same Jekyll build that branch deployment used) plus
+`narrated/` from the `output` branch (Settings → Pages → *Source*: *GitHub
+Actions*), at
 
 ```
 https://billpage.github.io/wpmw/interactive/<page>.html
+https://billpage.github.io/wpmw/narrated/<name>_narrated.html
 ```
 
-Pages redeploys on every push to `main`, usually within a minute or two.
+Pages redeploys on every push to `main`, usually within a minute or two. A
+push to `output` does not start the workflow; `src/narration/publish_narrated.sh`
+starts it after publishing a narrated page.
 Unlike figures and notebooks there is no second copy on the `output`
 branch: the page has no outputs of its own, and the file on `main` is both
 source and artefact.

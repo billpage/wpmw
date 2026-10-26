@@ -56,3 +56,6 @@ output/
 # --- Node (markdown math linter only) ---
 node_modules/
 package-lock.json
+
+# --- Narrated pages rendered locally (src/narration/voiceover.py) ---
+*_narration/

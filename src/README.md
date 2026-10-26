@@ -1508,6 +1508,13 @@ see that directory's README for the ladder itself.
 
 ### Documentation tools
 
+- `narration/` — narrated slide pages: `voiceover.py` turns a slides page in
+  `docs/interactive/` (or a `.pptx`) into one HTML file with an audio player
+  and the speaker notes as transcript beside each slide, using a
+  text-to-speech voice; `narrate.sh` runs it with the project's pronunciation
+  file `wpmw_terms.json`; `publish_narrated.sh` puts a checked page on the
+  `output` branch and starts the Pages deployment. See
+  [`narration/README.md`](narration/README.md).
 - `md_to_pdf.py` — renders a WPMW markdown doc (e.g. anything under `docs/`)
   to PDF with its embedded LaTeX math typeset correctly. Rewrites this
   project's GitHub math conventions (`` $`...`$ `` inline, including spans
