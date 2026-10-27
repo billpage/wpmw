@@ -17,6 +17,9 @@ REPO_SLUG="billpage/wpmw"
 [ -f "$PAGE" ] || { echo "error: $PAGE not found" >&2; exit 1; }
 case "$PAGE" in *_narrated.html) ;; *) echo "error: expected a *_narrated.html page from voiceover.py" >&2; exit 1;; esac
 grep -q 'id="nv-audio"' "$PAGE" || { echo "error: $PAGE is not a narrated page" >&2; exit 1; }
+if ! grep -q 'const MISSING = \[\];' "$PAGE"; then
+  echo "error: some slides in $PAGE have no audio; run narrate.sh again to fill them in" >&2; exit 1
+fi
 if grep -q 'const EMBEDDED = false' "$PAGE"; then
   echo "error: this page links its audio (--link); publish the embedded version" >&2; exit 1
 fi

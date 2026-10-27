@@ -44,12 +44,23 @@ without synthesising again.
    Open `~/wpmw-narration/worlds_and_particles/worlds_and_particles_narrated.html`
    in a browser and listen.
 
+   Microsoft's voice service sometimes stalls or refuses a request it accepts
+   a minute later. The script asks for at most about 1200 characters at a time,
+   abandons a request after 90 s (`--timeout`), and retries a failed one three
+   times, 5, 20 and 60 s apart. If a slide still fails, the run ends with
+   `MISSING AUDIO for slide(s) ...` and exit status 3, and the publish script
+   refuses the page. Run the same command again: a slide whose spoken text,
+   voice and rate are unchanged keeps its clip (`audio/slide_NN.txt` records
+   what it was made from), so only the missing slides are synthesised.
+   `--resynth` makes every clip again.
+
 3. **Fix what sounds wrong** in `wpmw_terms.json` and render again. A word
    whose pronunciation depends on context (*winds*, *live*, *read*) needs the
    surrounding words in the key, because keys are matched as plain text,
    even inside other words: `"clock winds at": "clock wynds at"`, never
-   `"wind": ...`. After a change to the slides page only, rebuild without
-   synthesising: add `--reuse-audio`.
+   `"wind": ...`. Only the slides whose spoken text changed are synthesised
+   again; `--reuse-audio` rebuilds the page without contacting the voice
+   service at all.
 
 4. **Publish**:
 

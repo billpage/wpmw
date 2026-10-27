@@ -34,6 +34,14 @@ Examples:
   python3 voiceover.py deck.html --pptx exported.pptx                       # page + PowerPoint
   python3 voiceover.py talk.pptx --pptx                                     # pptx source, both outputs
 
+Re-running is cheap: a slide whose spoken text, voice and rate are unchanged
+keeps its clip (audio/slide_NN.txt records what it was made from), so after a
+failure, or after fixing a pronunciation, only the affected slides are
+synthesised again.  The Edge voice is asked for at most about 1200 characters
+at a time; a request that stalls is abandoned after --timeout seconds, and a
+failed one is retried three times, 5, 20 and 60 s apart.  Exit status 3 means
+some slides have no audio.
+
 Page keys: Left/Right change slide, Space or K play/pause, J/L back/forward
 10 s, T show/hide transcript, C continuous play.  Drag the divider between
 slide and transcript to resize it (double-click resets it).
@@ -54,6 +62,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import time
 import unicodedata
 import zipfile
 from pathlib import Path
@@ -207,18 +216,94 @@ html, body {{ margin: 0; height: 100%; background: #1d232c; overflow: hidden; }}
 # ==========================================================================
 # 3. Speech synthesis
 # ==========================================================================
-async def _edge_save(text, out_mp3, voice, rate):
+EDGE_PIECE_CHARS = 1200        # characters per request to the voice service
+EDGE_RETRY_WAITS = (5, 20, 60)  # seconds to wait before each retry of a piece
+EDGE_TIMEOUT = 90              # seconds a single request may take (--timeout)
+
+
+def split_for_speech(text, limit=EDGE_PIECE_CHARS):
+    """Split at paragraph, then sentence, then word boundaries into pieces <= limit."""
+    pieces = []
+    for para in re.split(r"\n\s*\n", text):
+        para = para.strip()
+        if not para:
+            continue
+        if len(para) <= limit:
+            pieces.append(para)
+            continue
+        cur = ""
+        for sent in re.split(r"(?<=[.!?;:])\s+", para):
+            while len(sent) > limit:                      # a very long sentence: cut at a space
+                cut = sent.rfind(" ", 0, limit)
+                cut = cut if cut > 0 else limit
+                if cur:
+                    pieces.append(cur)
+                    cur = ""
+                pieces.append(sent[:cut])
+                sent = sent[cut:].lstrip()
+            if cur and len(cur) + 1 + len(sent) > limit:
+                pieces.append(cur)
+                cur = sent
+            else:
+                cur = f"{cur} {sent}".strip()
+        if cur:
+            pieces.append(cur)
+    # join short neighbours so the voice does not pause oddly between tiny requests
+    merged = []
+    for p in pieces:
+        if merged and len(merged[-1]) + 2 + len(p) <= limit:
+            merged[-1] += "\n\n" + p
+        else:
+            merged.append(p)
+    return merged
+
+
+async def _edge_bytes(text, voice, rate, timeout):
     import edge_tts
-    await edge_tts.Communicate(text, voice=voice, rate=rate).save(out_mp3)
+
+    async def collect():
+        buf = bytearray()
+        async for msg in edge_tts.Communicate(text, voice=voice, rate=rate).stream():
+            if msg.get("type") == "audio":
+                buf.extend(msg["data"])
+        return bytes(buf)
+    return await asyncio.wait_for(collect(), timeout)
 
 
-def synth_edge(text, out_mp3, voice, rate, **_):
-    try:
-        asyncio.run(_edge_save(text, out_mp3, voice, rate))
-    except Exception as exc:  # network, bad voice name, certificates ...
-        print(f"\n      edge-tts error: {exc}")
-        return False
-    return os.path.exists(out_mp3) and os.path.getsize(out_mp3) > 0
+def synth_edge(text, out_mp3, voice, rate, timeout=EDGE_TIMEOUT, **_):
+    """Synthesise in pieces, each with a timeout and retries; write the MP3 only if all succeed.
+
+    The Edge service sometimes stalls (no reply, no error) or answers "No audio
+    was received" for a request it accepts at another moment.  Small requests,
+    a timeout and a few spaced retries turn both into a short delay.
+    """
+    pieces = split_for_speech(text)
+    audio = bytearray()
+    for n, piece in enumerate(pieces, 1):
+        tag = f"piece {n}/{len(pieces)}"
+        for attempt in range(len(EDGE_RETRY_WAITS) + 1):
+            try:
+                data = asyncio.run(_edge_bytes(piece, voice, rate, timeout))
+                if not data:
+                    raise RuntimeError("no audio received")
+                audio.extend(data)
+                break
+            except KeyboardInterrupt:
+                raise
+            except Exception as exc:  # timeout, network, service refusal ...
+                why = "timed out" if isinstance(exc, asyncio.TimeoutError) else str(exc).split("\n")[0][:120]
+                if attempt == len(EDGE_RETRY_WAITS):
+                    print(f"\n      {tag}: {why}; giving up after {attempt + 1} tries", end="")
+                    return False
+                wait = EDGE_RETRY_WAITS[attempt]
+                print(f"\n      {tag}: {why}; retry in {wait} s", end="", flush=True)
+                time.sleep(wait)
+        time.sleep(1)   # be gentle with the service between requests
+    tmp = out_mp3 + ".part"
+    with open(tmp, "wb") as fh:
+        fh.write(audio)
+    os.replace(tmp, out_mp3)
+    return os.path.getsize(out_mp3) > 0
 
 
 def synth_flite(text, out_mp3, voice, **_):
@@ -318,6 +403,7 @@ VIEWER_JS = r"""
 const NOTES = __NOTES__;
 const AUDIO = __AUDIO__;
 const SW = __SW__, SH = __SH__, EMBEDDED = __EMBEDDED__, FILENAME = __FILENAME__;
+const MISSING = __MISSING__;   // slides with notes whose audio could not be made
 const slides = Array.from(document.querySelectorAll('.slide'));
 const stage = document.getElementById('stage');
 const side = document.getElementById('nv-side');
@@ -373,7 +459,8 @@ function show(k, play) {
   i = n;
   slides.forEach((el, j) => el.classList.toggle('current', j === i));
   document.getElementById('nv-count').textContent = `${i + 1} / ${slides.length}`;
-  document.getElementById('nv-title').textContent = `Transcript, slide ${i + 1}`;
+  document.getElementById('nv-title').textContent = `Transcript, slide ${i + 1}`
+    + (MISSING.includes(i + 1) ? ' (no audio yet)' : '');
   if (changed) {
     text.textContent = NOTES[i] || '(no notes)';
     text.scrollTop = 0;
@@ -440,7 +527,7 @@ layout();
 """
 
 
-def build_page(deck, audio_refs, out_path, embedded):
+def build_page(deck, audio_refs, out_path, embedded, missing=()):
     title = re.search(r"<title>(.*?)</title>", deck.head, re.S)
     head = deck.head
     if title:
@@ -450,6 +537,7 @@ def build_page(deck, audio_refs, out_path, embedded):
           .replace("__AUDIO__", json.dumps(audio_refs))
           .replace("__SW__", str(deck.size[0])).replace("__SH__", str(deck.size[1]))
           .replace("__EMBEDDED__", "true" if embedded else "false")
+          .replace("__MISSING__", json.dumps(sorted(missing)))
           .replace("__FILENAME__", json.dumps(Path(out_path).name)))
     page = head + VIEWER_CSS + "</head>\n<body>\n" + deck.stage + "\n" + VIEWER_UI + js + "</body>\n</html>\n"
     Path(out_path).write_text(page, encoding="utf-8")
@@ -609,7 +697,12 @@ def main():
     ap.add_argument("--rate", default="+0%", help="edge speaking rate, e.g. '+8%%' or '-5%%'")
     ap.add_argument("--pronunciations", help="JSON {written: spoken} applied before synthesis")
     ap.add_argument("--preview", action="store_true", help="write <name>_spoken.txt and stop (no audio)")
-    ap.add_argument("--reuse-audio", action="store_true", help="use the MP3s already in <outdir>/audio")
+    ap.add_argument("--reuse-audio", action="store_true",
+                    help="no synthesis at all: build from the MP3s already in <outdir>/audio")
+    ap.add_argument("--resynth", action="store_true",
+                    help="synthesise every slide again, even those whose text and voice are unchanged")
+    ap.add_argument("--timeout", type=int, default=EDGE_TIMEOUT,
+                    help=f"edge: seconds one request may take before it is retried (default {EDGE_TIMEOUT})")
     ap.add_argument("--reencode", type=int, metavar="KBPS", help="re-encode clips to KBPS kbit/s mono for the page (ffmpeg)")
     ap.add_argument("--link", action="store_true", help="link audio/slide_NN.mp3 instead of embedding it in the page")
     ap.add_argument("--label", default="▶ Narration", help="PowerPoint: text beside the play icon ('' for none)")
@@ -678,24 +771,40 @@ def main():
         if args.reencode and shutil.which("ffmpeg") is None:
             sys.exit("error: --reencode needs ffmpeg")
         print(f"audio  : {audio_dir}  ({'reusing' if args.reuse_audio else args.tts + ' ' + voice})", flush=True)
-        clips = []
+        clips, failed, kept = [], [], 0
         for k, text in enumerate(spoken, 1):
             mp3 = audio_dir / f"slide_{k:02d}.mp3"
+            stamp = audio_dir / f"slide_{k:02d}.txt"        # what the clip was made from
+            key = f"{args.tts}|{voice}|{args.rate}\n{text}"
             if args.reuse_audio:
                 ok = mp3.exists() and mp3.stat().st_size > 0
                 print(f"    slide {k:2d}: {'found' if ok else 'no mp3'}", flush=True)
             elif not text:
                 print(f"    slide {k:2d}: no notes", flush=True)
                 ok = False
-                if mp3.exists():
-                    mp3.unlink()
+                for f in (mp3, stamp):
+                    if f.exists():
+                        f.unlink()
+            elif (not args.resynth and mp3.exists() and mp3.stat().st_size > 0 and stamp.exists()
+                  and stamp.read_text(encoding="utf-8") == key):
+                print(f"    slide {k:2d}: unchanged, kept ({mp3.stat().st_size // 1024} KB)", flush=True)
+                ok = True
+                kept += 1
             else:
                 print(f"    slide {k:2d}: synthesising ... ", end="", flush=True)
-                ok = BACKENDS[args.tts](text, str(mp3), voice=voice, rate=args.rate)
-                print(f"ok ({mp3.stat().st_size // 1024} KB)" if ok else "FAILED", flush=True)
+                ok = BACKENDS[args.tts](text, str(mp3), voice=voice, rate=args.rate, timeout=args.timeout)
+                if ok:
+                    stamp.write_text(key, encoding="utf-8")
+                elif stamp.exists():
+                    stamp.unlink()                       # an old clip no longer matches the text
+                print(f" ok ({mp3.stat().st_size // 1024} KB)" if ok else " FAILED", flush=True)
+            if not ok and text:
+                failed.append(k)
             clips.append(mp3 if ok else None)
         if not any(clips):
             sys.exit("nothing to narrate (no notes, or every clip failed)")
+        if kept:
+            print(f"         {kept} clip(s) kept from an earlier run (--resynth makes them again)")
 
         # page
         if need_page:
@@ -714,7 +823,7 @@ def main():
                 else:
                     refs.append("data:audio/mpeg;base64," + base64.b64encode(Path(f).read_bytes()).decode("ascii"))
             page = outdir / f"{name}_narrated.html"
-            build_page(deck, refs, page, embedded=not args.link)
+            build_page(deck, refs, page, embedded=not args.link, missing=failed)
             print(f"page   : {page}  ({page.stat().st_size / 1e6:.1f} MB, audio "
                   f"{'linked' if args.link else 'embedded'})")
 
@@ -724,6 +833,11 @@ def main():
             embed_audio(str(pptx_in), [str(c) if c else None for c in clips], str(out_pptx),
                         label=args.label, label_color=args.label_color)
             print(f"pptx   : {out_pptx}  (click the play icon in Slide Show)")
+        if failed:
+            print(f"\nMISSING AUDIO for slide(s) {', '.join(map(str, failed))}. The page was written, but do not"
+                  f" publish it yet: run the same command again; slides already made are kept, and only"
+                  f" the missing ones are synthesised.")
+            sys.exit(3)
     finally:
         shutil.rmtree(work, ignore_errors=True)
 
