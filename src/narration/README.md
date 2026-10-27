@@ -54,6 +54,16 @@ without synthesising again.
    what it was made from), so only the missing slides are synthesised.
    `--resynth` makes every clip again.
 
+   If even the first slide fails, Edge is refusing this machine for the time
+   being (it does this after heavy use), and the run stops after two slides
+   rather than retrying for hours. Check with
+   `src/narration/.venv/bin/edge-tts --text test --write-media /tmp/t.mp3`;
+   update with `src/narration/.venv/bin/pip install -U edge-tts`; or wait an
+   hour or two. `--tts piper` uses an offline neural voice instead (Piper,
+   installed and downloaded on first use, about 60 MB): steadier, a little less
+   natural, and a different voice, so use it for a whole deck rather than for
+   a few missing slides.
+
 3. **Fix what sounds wrong** in `wpmw_terms.json` and render again. A word
    whose pronunciation depends on context (*winds*, *live*, *read*) needs the
    surrounding words in the key, because keys are matched as plain text,

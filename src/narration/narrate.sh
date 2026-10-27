@@ -9,6 +9,7 @@
 #   --preview                 write the spoken text only
 #   --reuse-audio             rebuild the page from the clips already made
 #   --voice en-GB-RyanNeural  --rate "+8%"
+#   --tts piper               offline voice (installed on first use), if Edge refuses
 #   --pptx deck.pptx          also a narrated PowerPoint
 # The first run creates a Python environment in src/narration/.venv.
 set -euo pipefail
@@ -23,6 +24,10 @@ if [ ! -x "$HERE/.venv/bin/python" ]; then
   python3 -m venv "$HERE/.venv"
   "$HERE/.venv/bin/pip" install -q edge-tts python-pptx lxml
 fi
+case " $* " in
+  *" --tts piper "*|*" --tts=piper "*)
+    "$HERE/.venv/bin/python" -c "import piper" 2> /dev/null || "$HERE/.venv/bin/pip" install -q piper-tts ;;
+esac
 command -v ffmpeg > /dev/null || { echo "error: ffmpeg is needed for --reencode (sudo apt install ffmpeg)" >&2; exit 1; }
 
 "$HERE/.venv/bin/python" -u "$HERE/voiceover.py" "$SRC" -d "$OUTDIR" \

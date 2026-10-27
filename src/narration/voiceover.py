@@ -24,6 +24,8 @@ Output (in --outdir, default ./<name>_narration/):
 
 Voices (--tts):
   edge    Microsoft Edge neural voices (`pip install edge-tts`), needs internet. Default.
+  piper   Piper neural voices (`pip install piper-tts`), run on this machine, offline
+          after the voice is downloaded once (about 60 MB).  Steadier, less natural.
   flite   CMU Flite + ffmpeg, offline, robotic.
   silent  silent clips of the right length, for testing layout and plumbing.
 
@@ -218,7 +220,7 @@ html, body {{ margin: 0; height: 100%; background: #1d232c; overflow: hidden; }}
 # ==========================================================================
 EDGE_PIECE_CHARS = 1200        # characters per request to the voice service
 EDGE_RETRY_WAITS = (5, 20, 60)  # seconds to wait before each retry of a piece
-EDGE_TIMEOUT = 90              # seconds a single request may take (--timeout)
+EDGE_TIMEOUT = 60              # seconds a single request may take (--timeout)
 
 
 def split_for_speech(text, limit=EDGE_PIECE_CHARS):
@@ -296,7 +298,8 @@ def synth_edge(text, out_mp3, voice, rate, timeout=EDGE_TIMEOUT, **_):
                     print(f"\n      {tag}: {why}; giving up after {attempt + 1} tries", end="")
                     return False
                 wait = EDGE_RETRY_WAITS[attempt]
-                print(f"\n      {tag}: {why}; retry in {wait} s", end="", flush=True)
+                print(f"\n      {tag}: {why}; retry {attempt + 1} of {len(EDGE_RETRY_WAITS)} in {wait} s"
+                      f" (then up to {timeout} s for a reply)", end="", flush=True)
                 time.sleep(wait)
         time.sleep(1)   # be gentle with the service between requests
     tmp = out_mp3 + ".part"
@@ -328,8 +331,55 @@ def synth_silent(text, out_mp3, **_):
     return r.returncode == 0 and os.path.exists(out_mp3)
 
 
-BACKENDS = {"edge": synth_edge, "flite": synth_flite, "silent": synth_silent}
-DEFAULT_VOICE = {"edge": "en-US-AndrewNeural", "flite": "rms", "silent": ""}
+PIPER_VOICES_URL = "https://huggingface.co/rhasspy/piper-voices/resolve/main"
+
+
+def piper_model(voice):
+    """Path to a Piper voice: a .onnx file, or a name such as en_US-lessac-medium,
+    downloaded once into ~/.cache/piper-voices/."""
+    if voice.endswith(".onnx"):
+        return Path(voice).expanduser()
+    m = re.fullmatch(r"(([a-z]{2})_[A-Z]{2})-([A-Za-z0-9_]+)-(x_low|low|medium|high)", voice)
+    if not m:
+        sys.exit(f"error: piper voice {voice!r} is neither a .onnx file nor a name like en_US-lessac-medium")
+    cache = Path.home() / ".cache" / "piper-voices"
+    cache.mkdir(parents=True, exist_ok=True)
+    model = cache / f"{voice}.onnx"
+    for suffix in (".onnx", ".onnx.json"):
+        target = cache / f"{voice}{suffix}"
+        if not target.exists():
+            url = f"{PIPER_VOICES_URL}/{m.group(2)}/{m.group(1)}/{m.group(3)}/{m.group(4)}/{voice}{suffix}"
+            print(f"\n      downloading Piper voice {target.name} ...", end="", flush=True)
+            import urllib.request
+            tmp = target.with_suffix(target.suffix + ".part")
+            urllib.request.urlretrieve(url, tmp)
+            tmp.replace(target)
+    return model
+
+
+def synth_piper(text, out_mp3, voice, rate="+0%", **_):
+    """Piper: a neural voice that runs on this machine, offline after the first download."""
+    try:
+        import piper  # noqa: F401
+    except ImportError:
+        sys.exit("error: Piper is not installed  ->  pip install piper-tts")
+    m = re.fullmatch(r"([+-]\d+)%", rate or "+0%")
+    length_scale = 1 / (1 + int(m.group(1)) / 100) if m else 1.0
+    wav = out_mp3[:-4] + ".wav"
+    r = subprocess.run([sys.executable, "-m", "piper", "-m", str(piper_model(voice)), "-f", wav,
+                        "--length-scale", f"{length_scale:.3f}", "--sentence-silence", "0.25"],
+                       input=text, text=True, capture_output=True, timeout=1800)
+    if r.returncode != 0 or not os.path.exists(wav):
+        print("\n      piper error:", (r.stderr or "")[-300:])
+        return False
+    r = subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", wav, "-ac", "1", "-b:a", "48k", out_mp3],
+                       capture_output=True, timeout=600)
+    os.remove(wav)
+    return r.returncode == 0 and os.path.exists(out_mp3)
+
+
+BACKENDS = {"edge": synth_edge, "piper": synth_piper, "flite": synth_flite, "silent": synth_silent}
+DEFAULT_VOICE = {"edge": "en-US-AndrewNeural", "piper": "en_US-lessac-medium", "flite": "rms", "silent": ""}
 
 
 def reencode_mp3(src, kbps, workdir):
@@ -764,7 +814,13 @@ def main():
                     import edge_tts  # noqa: F401
                 except ImportError:
                     sys.exit("error: edge-tts is not installed  ->  pip install edge-tts")
-            missing = [t for t in {"flite": ["flite", "ffmpeg"], "silent": ["ffmpeg"]}.get(args.tts, [])
+            if args.tts == "piper":
+                try:
+                    import piper  # noqa: F401
+                except ImportError:
+                    sys.exit("error: Piper is not installed  ->  pip install piper-tts")
+            missing = [t for t in {"flite": ["flite", "ffmpeg"], "silent": ["ffmpeg"],
+                                   "piper": ["ffmpeg"]}.get(args.tts, [])
                        if shutil.which(t) is None]
             if missing:
                 sys.exit(f"error: missing tool(s): {', '.join(missing)}")
@@ -772,6 +828,7 @@ def main():
             sys.exit("error: --reencode needs ffmpeg")
         print(f"audio  : {audio_dir}  ({'reusing' if args.reuse_audio else args.tts + ' ' + voice})", flush=True)
         clips, failed, kept = [], [], 0
+        run_of_failures, gave_up = 0, False
         for k, text in enumerate(spoken, 1):
             mp3 = audio_dir / f"slide_{k:02d}.mp3"
             stamp = audio_dir / f"slide_{k:02d}.txt"        # what the clip was made from
@@ -790,6 +847,9 @@ def main():
                 print(f"    slide {k:2d}: unchanged, kept ({mp3.stat().st_size // 1024} KB)", flush=True)
                 ok = True
                 kept += 1
+            elif gave_up:
+                print(f"    slide {k:2d}: not attempted", flush=True)
+                ok = False
             else:
                 print(f"    slide {k:2d}: synthesising ... ", end="", flush=True)
                 ok = BACKENDS[args.tts](text, str(mp3), voice=voice, rate=args.rate, timeout=args.timeout)
@@ -800,9 +860,20 @@ def main():
                 print(f" ok ({mp3.stat().st_size // 1024} KB)" if ok else " FAILED", flush=True)
             if not ok and text:
                 failed.append(k)
+            if text and not args.reuse_audio and not gave_up:
+                run_of_failures = 0 if ok else run_of_failures + 1
+                if run_of_failures >= 2:
+                    gave_up = True
+                    print(f"\n    Two slides in a row failed after every retry: the {args.tts} service is"
+                          " refusing this machine for now (Edge does this after heavy use). Stopping;"
+                          " clips made so far are kept.", flush=True)
             clips.append(mp3 if ok else None)
         if not any(clips):
-            sys.exit("nothing to narrate (no notes, or every clip failed)")
+            if failed and args.tts == "edge":
+                print("\nNo audio could be made. Check the service with  edge-tts --text 'test' --write-media"
+                      " /tmp/t.mp3 , update with  pip install -U edge-tts , wait an hour or two and run again,"
+                      " or use the offline voice:  --tts piper")
+            sys.exit(3 if failed else "nothing to narrate (no notes)")
         if kept:
             print(f"         {kept} clip(s) kept from an earlier run (--resynth makes them again)")
 
@@ -835,8 +906,12 @@ def main():
             print(f"pptx   : {out_pptx}  (click the play icon in Slide Show)")
         if failed:
             print(f"\nMISSING AUDIO for slide(s) {', '.join(map(str, failed))}. The page was written, but do not"
-                  f" publish it yet: run the same command again; slides already made are kept, and only"
+                  f" publish it yet: run the same command again later; slides already made are kept, and only"
                   f" the missing ones are synthesised.")
+            if args.tts == "edge":
+                print("If Edge keeps refusing: test it with  edge-tts --text 'test' --write-media /tmp/t.mp3 ,"
+                      " update it with  pip install -U edge-tts , wait an hour or two, or use the offline"
+                      " voice for the missing slides with  --tts piper  (a different voice from the rest).")
             sys.exit(3)
     finally:
         shutil.rmtree(work, ignore_errors=True)
