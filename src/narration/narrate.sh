@@ -10,6 +10,7 @@
 #   --reuse-audio             rebuild the page from the clips already made
 #   --voice en-GB-RyanNeural  --rate "+8%"
 #   --tts piper               offline voice (installed on first use), if Edge refuses
+#   --pause 5                 wait 5 s between Edge requests (default 1 s), if many are refused
 #   --pptx deck.pptx          also a narrated PowerPoint
 # The first run creates a Python environment in src/narration/.venv.
 set -euo pipefail

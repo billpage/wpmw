@@ -41,7 +41,9 @@ keeps its clip (audio/slide_NN.txt records what it was made from), so after a
 failure, or after fixing a pronunciation, only the affected slides are
 synthesised again.  The Edge voice is asked for at most about 1200 characters
 at a time; a request that stalls is abandoned after --timeout seconds, and a
-failed one is retried three times, 5, 20 and 60 s apart.  Exit status 3 means
+failed one is retried three times, 5, 20 and 60 s apart.  --pause sets the
+wait between requests (default 1 s); if many first tries are refused, a
+longer pause (say 5 s) may avoid them at the cost of a slower run.  Exit status 3 means
 some slides have no audio.
 
 Page keys: Left/Right change slide, Space or K play/pause, J/L back/forward
@@ -221,6 +223,7 @@ html, body {{ margin: 0; height: 100%; background: #1d232c; overflow: hidden; }}
 EDGE_PIECE_CHARS = 1200        # characters per request to the voice service
 EDGE_RETRY_WAITS = (5, 20, 60)  # seconds to wait before each retry of a piece
 EDGE_TIMEOUT = 60              # seconds a single request may take (--timeout)
+EDGE_PAUSE = 1.0               # seconds between requests (--pause)
 
 
 def split_for_speech(text, limit=EDGE_PIECE_CHARS):
@@ -272,7 +275,7 @@ async def _edge_bytes(text, voice, rate, timeout):
     return await asyncio.wait_for(collect(), timeout)
 
 
-def synth_edge(text, out_mp3, voice, rate, timeout=EDGE_TIMEOUT, **_):
+def synth_edge(text, out_mp3, voice, rate, timeout=EDGE_TIMEOUT, pause=EDGE_PAUSE, **_):
     """Synthesise in pieces, each with a timeout and retries; write the MP3 only if all succeed.
 
     The Edge service sometimes stalls (no reply, no error) or answers "No audio
@@ -301,7 +304,7 @@ def synth_edge(text, out_mp3, voice, rate, timeout=EDGE_TIMEOUT, **_):
                 print(f"\n      {tag}: {why}; retry {attempt + 1} of {len(EDGE_RETRY_WAITS)} in {wait} s"
                       f" (then up to {timeout} s for a reply)", end="", flush=True)
                 time.sleep(wait)
-        time.sleep(1)   # be gentle with the service between requests
+        time.sleep(pause)   # be gentle with the service between requests (--pause)
     tmp = out_mp3 + ".part"
     with open(tmp, "wb") as fh:
         fh.write(audio)
@@ -751,6 +754,9 @@ def main():
                     help="no synthesis at all: build from the MP3s already in <outdir>/audio")
     ap.add_argument("--resynth", action="store_true",
                     help="synthesise every slide again, even those whose text and voice are unchanged")
+    ap.add_argument("--pause", type=float, default=EDGE_PAUSE, metavar="SECONDS",
+                    help=f"edge: seconds to wait between requests (default {EDGE_PAUSE:g}); "
+                         "a longer pause, e.g. 5, can avoid the refusals that need a retry")
     ap.add_argument("--timeout", type=int, default=EDGE_TIMEOUT,
                     help=f"edge: seconds one request may take before it is retried (default {EDGE_TIMEOUT})")
     ap.add_argument("--reencode", type=int, metavar="KBPS", help="re-encode clips to KBPS kbit/s mono for the page (ffmpeg)")
@@ -852,7 +858,8 @@ def main():
                 ok = False
             else:
                 print(f"    slide {k:2d}: synthesising ... ", end="", flush=True)
-                ok = BACKENDS[args.tts](text, str(mp3), voice=voice, rate=args.rate, timeout=args.timeout)
+                ok = BACKENDS[args.tts](text, str(mp3), voice=voice, rate=args.rate,
+                                        timeout=args.timeout, pause=args.pause)
                 if ok:
                     stamp.write_text(key, encoding="utf-8")
                 elif stamp.exists():

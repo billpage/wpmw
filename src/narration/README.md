@@ -46,13 +46,18 @@ without synthesising again.
 
    Microsoft's voice service sometimes stalls or refuses a request it accepts
    a minute later. The script asks for at most about 1200 characters at a time,
-   abandons a request after 90 s (`--timeout`), and retries a failed one three
+   abandons a request after 60 s (`--timeout`), and retries a failed one three
    times, 5, 20 and 60 s apart. If a slide still fails, the run ends with
    `MISSING AUDIO for slide(s) ...` and exit status 3, and the publish script
    refuses the page. Run the same command again: a slide whose spoken text,
    voice and rate are unchanged keeps its clip (`audio/slide_NN.txt` records
    what it was made from), so only the missing slides are synthesised.
    `--resynth` makes every clip again.
+
+   If many first tries are refused and then go through on the retry (the
+   service limits how often requests arrive), add `--pause 5`: the script then
+   waits 5 s instead of 1 s between requests. With about 63 requests for an
+   hour of speech that adds about four minutes and may save the retries.
 
    If even the first slide fails, Edge is refusing this machine for the time
    being (it does this after heavy use), and the run stops after two slides
