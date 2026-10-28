@@ -11,7 +11,10 @@ in one HTML file that plays online and also works when downloaded.
 - [`wpmw_terms.json`](wpmw_terms.json) — how to say this project's notation
   and words: `{"written": "spoken"}`, applied before synthesis.
 - [`narrate.sh`](narrate.sh) — runs `voiceover.py` with the project's
-  defaults (Edge voice, the terms above, 32 kbit/s audio).
+  defaults: the Canadian Edge voice `en-CA-LiamNeural`, a 30 s pause between
+  requests to the voice service, the terms above, and 32 kbit/s audio. Any
+  option you add overrides them (`--voice en-US-AndrewNeural`, `--pause 1`);
+  so do the environment variables `WPMW_VOICE` and `WPMW_PAUSE`.
 - [`publish_narrated.sh`](publish_narrated.sh) — puts a page you have checked
   on the `output` branch and starts the Pages deployment.
 
@@ -35,7 +38,8 @@ without synthesising again.
    Read `~/wpmw-narration/worlds_and_particles/worlds_and_particles_spoken.txt`.
    Any slide marked `NOT SPOKEN WELL` has characters the voice will stumble on.
 
-2. **Render** (Edge voice, needs internet; about a minute per ten minutes of speech):
+2. **Render** (Edge voice, needs internet; with the 30 s pause, about half an
+   hour for an hour of speech, almost all of it waiting):
 
    ```bash
    bash src/narration/narrate.sh docs/interactive/worlds_and_particles.html
@@ -54,10 +58,13 @@ without synthesising again.
    what it was made from), so only the missing slides are synthesised.
    `--resynth` makes every clip again.
 
-   If many first tries are refused and then go through on the retry (the
-   service limits how often requests arrive), add `--pause 5`: the script then
-   waits 5 s instead of 1 s between requests. With about 63 requests for an
-   hour of speech that adds about four minutes and may save the retries.
+   The service limits how often requests arrive, and refuses many first tries
+   when they come quickly, so `narrate.sh` waits 30 s after each request
+   (`--pause 30`; `voiceover.py` on its own waits 1 s). The pause is time
+   between requests, not silence in the audio. An hour of speech is about 63
+   requests, so the pause adds about half an hour; for a few changed slides it
+   adds little, and `--pause 1` gives a quick run when the service is not
+   throttling you.
 
    If even the first slide fails, Edge is refusing this machine for the time
    being (it does this after heavy use), and the run stops after two slides
