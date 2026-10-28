@@ -23,6 +23,17 @@ math in WPMW markdown" in this directory's README) are rewritten:
   on every line; the prefix is captured, required on the closing fence, and
   reapplied to every line of the restored block, so the math stays nested.
 
+``--latex-fences`` also reads ```` ```latex ```` fences as display math.
+Exporters such as Claude Docs write a document's display formulas that way;
+GitHub shows them as code, so the option is off by default.
+
+Escaped brackets.  A ``\[...\]`` is display math only when its ``\[``
+opens a line.  Anywhere else outside code and math, ``\[`` / ``\]`` is a
+CommonMark bracket escape -- an exporter writes ``d[X, a]`` as
+``d\[X, a\]`` and a citation ``[6]`` as ``\[6\]`` -- and stays a bracket;
+Pandoc's extension would otherwise tear it out of the sentence as a display
+equation.
+
 Doubled-backslash escapes (``\\;``, ``\\{``, ``\\}``, ...) are GitHub's
 workaround for its CommonMark preprocessor stripping a lone backslash before
 punctuation inside ``$...$``/``$$...$$``.  Real LaTeX reads ``\\`` as a line
@@ -45,9 +56,9 @@ Other GitHub-versus-Pandoc differences
 - Strikethrough.  Pandoc's template loads ``soul`` and emits ``\st{...}``,
   which corrupts or crashes on content containing math.  ``ulem``'s
   ``\sout`` does not, so it is loaded and ``\st`` aliased to it.
-- Glyphs.  ✓ ✔ ✗ ✘ are missing from DejaVu Serif and would be silently
-  dropped; they are mapped to math symbols with ``newunicodechar`` when that
-  package is installed.
+- Glyphs.  ✓ ✔ ✗ ✘ ≅ ⋆ ∎ 𝓗 are missing from DejaVu Serif and would be
+  silently dropped; they are mapped to math symbols with ``newunicodechar``
+  when that package is installed.
 
 Pre-flight and post-flight
 --------------------------
@@ -75,6 +86,7 @@ Usage
     python3 md_to_pdf.py doc.md -o /tmp/out.pdf
     python3 md_to_pdf.py doc.md -o out.pdf \
         --image-map https://raw.githubusercontent.com/billpage/wpmw/output/figures/=./figs
+    python3 md_to_pdf.py exported_from_claude_docs.md --latex-fences
 
 With no ``-o``, inside the wpmw repository the PDF is written via
 ``output_path()`` (see "Output path convention" in this directory's README)
@@ -119,6 +131,10 @@ _HEADER_INCLUDES = r"""
   \newunicodechar{✔}{\ensuremath{\checkmark}}%
   \newunicodechar{✗}{\ensuremath{\times}}%
   \newunicodechar{✘}{\ensuremath{\times}}%
+  \newunicodechar{≅}{\ensuremath{\cong}}%
+  \newunicodechar{⋆}{\ensuremath{\star}}%
+  \newunicodechar{∎}{\ensuremath{\blacksquare}}%
+  \newunicodechar{𝓗}{\ensuremath{\mathcal{H}}}%
 }{}
 """
 
@@ -128,6 +144,10 @@ _HEADER_INCLUDES = r"""
 # doesn't let an unrelated later ``` anywhere in the document act as its
 # closing marker (see module docstring).
 _FENCED_MATH = re.compile(r"^([ \t>]*)```math\n(.*?)\n\1```", re.DOTALL | re.MULTILINE)
+# With --latex-fences, ```latex fences are display math too (see module
+# docstring); GitHub itself shows them as code, so this is opt-in.
+_FENCED_MATH_OR_LATEX = re.compile(r"^([ \t>]*)```(?:math|latex)\n(.*?)\n\1```",
+                                   re.DOTALL | re.MULTILINE)
 _BACKTICK_DOLLAR = re.compile(r"\$`([^`]+?)`\$", re.DOTALL)
 _BLOCK_MATH = re.compile(r"\$\$(.+?)\$\$", re.DOTALL)
 _INLINE_MATH = re.compile(
@@ -147,6 +167,41 @@ _LIST_START = re.compile(r"^\s*(?:[-*+]|1[.)])\s+\S")
 _LIST_ITEM = re.compile(r"^\s*(?:[-*+]|\d+[.)])\s+\S")
 _CONTROL = re.compile(r"[\x00-\x08\x0b\x0c\x0e-\x1f]")
 _EATEN_TAB = re.compile(r"\t(?:hinspace|heta|imes|ilde|ext|extbf|frac|au)\b")
+
+
+# Regions where a "\[" is not a CommonMark bracket escape: code (fenced or
+# inline), math ($$...$$, $...$), and a \[...\] display block opening a line.
+_BRACKET_PROTECTED = re.compile(
+    r"^[ \t>]*(`{3,})[^\n]*\n.*?^[ \t>]*\1[^\n]*$"   # fenced code / math
+    r"|(`+).+?(?<!`)\2(?!`)"                        # inline code span
+    r"|\$\$.+?\$\$"                                 # display math
+    r"|(?<![\\$])\$(?![ \t\n$])[^\n$]+?(?<![ \t\\])\$"  # inline math
+    r"|^[ \t>]*\\\[.*?\\\]",                        # \[...\] opening a line
+    re.DOTALL | re.MULTILINE)
+_ESCAPED_BRACKET = re.compile(r"(?<!\\)\\([\[\]])")
+
+
+def escape_literal_brackets(text: str) -> str:
+    r"""Keep ``\[`` / ``\]`` that are CommonMark bracket escapes as brackets.
+
+    With ``tex_math_single_backslash`` enabled, Pandoc reads every ``\[...\]``
+    as display math.  GitHub documents no ``\[...\]`` math delimiter, and a
+    markdown exporter writes a literal bracket in prose as ``\[`` (e.g.
+    ``d\[X, α\]`` for a Frölicher--Nijenhuis bracket, or a citation ``\[6\]``),
+    which Pandoc then tore out of the sentence as a display equation.  A
+    ``\[...\]`` whose ``\[`` opens a line is still display math; every other
+    unescaped ``\[`` / ``\]`` outside code and math becomes an HTML entity,
+    which Pandoc prints as the bracket itself.
+    """
+    out, pos = [], 0
+    for m in _BRACKET_PROTECTED.finditer(text):
+        out.append(_ESCAPED_BRACKET.sub(
+            lambda b: "&#91;" if b.group(1) == "[" else "&#93;", text[pos:m.start()]))
+        out.append(m.group(0))
+        pos = m.end()
+    out.append(_ESCAPED_BRACKET.sub(
+        lambda b: "&#91;" if b.group(1) == "[" else "&#93;", text[pos:]))
+    return "".join(out)
 
 
 def _reduce_doubled_escapes(expr: str) -> str:
@@ -256,7 +311,7 @@ def render_mermaid(text: str, workdir: str) -> str:
     return _MERMAID.sub(sub, text)
 
 
-def convert_math_delimiters(text: str) -> str:
+def convert_math_delimiters(text: str, latex_fences: bool = False) -> str:
     """Rewrite the two GitHub math forms Pandoc doesn't parse natively, and
     reduce doubled-backslash escapes within genuine $...$/$$...$$ spans.
 
@@ -301,7 +356,8 @@ def convert_math_delimiters(text: str) -> str:
         fenced_store.append((prefix, content))
         return f"{prefix}\x00FENCED{len(fenced_store) - 1}\x00"
 
-    text = _FENCED_MATH.sub(_stash_fenced, text)
+    fence = _FENCED_MATH_OR_LATEX if latex_fences else _FENCED_MATH
+    text = fence.sub(_stash_fenced, text)
 
     backtick_store: list[str] = []
 
@@ -334,17 +390,44 @@ def convert_math_delimiters(text: str) -> str:
 _POST_PAT = re.compile(r"\$`|```math|\\(?:frac|hbar|thinspace|mathrm|sqrt|partial|begin|left|right)\b")
 
 
-def _literal_code(src_text: str) -> str:
+def _literal_code(src_text: str, latex_fences: bool = False) -> str:
     """The source's code -- fenced blocks other than math/mermaid, and inline
     code spans other than $`...`$ math -- where the post-flight's patterns
     may legitimately appear as text (e.g. a style guide quoting the syntax)."""
-    blocks = re.findall(r"^[ \t>]*(`{3,})(?!math|mermaid)[^\n]*\n(.*?)^[ \t>]*\1",
-                        src_text, flags=re.DOTALL | re.MULTILINE)
+    not_code = {"math", "mermaid", "latex"} if latex_fences else {"math", "mermaid"}
+    blocks = _fenced_blocks(src_text)
     spans = re.findall(r"(?<![$`])(`+)(.+?)(?<!`)\1(?![`$])", src_text)
-    return "\n".join(b for _, b in blocks) + "\n" + "\n".join(c for _, c in spans)
+    return ("\n".join(b for lang, b in blocks if lang not in not_code)
+            + "\n" + "\n".join(c for _, c in spans))
 
 
-def post_check(pdf: str, src_text: str = "") -> list[str]:
+_FENCE_LINE = re.compile(r"^[ \t>]*(`{3,})([^`\n]*)$")
+
+
+def _fenced_blocks(text: str) -> list[tuple[str, str]]:
+    """(info word, body) of each fenced code block, paired as CommonMark
+    pairs them: a block opened by n backticks closes only on a line of at
+    least n backticks with nothing after them.  Regex pairing that let
+    "```" close on the first three backticks of a "````" line, or that
+    skipped a math fence's opening line without consuming its block, paired
+    the rest of the document's fences wrongly."""
+    out: list[tuple[str, str]] = []
+    open_n, info, body = 0, "", []
+    for line in text.split("\n"):
+        m = _FENCE_LINE.match(line)
+        if open_n:
+            if m and len(m.group(1)) >= open_n and not m.group(2).strip():
+                out.append((info, "\n".join(body)))
+                open_n = 0
+            else:
+                body.append(line)
+        elif m:
+            open_n, body = len(m.group(1)), []
+            info = (m.group(2).split() or [""])[0]
+    return out
+
+
+def post_check(pdf: str, src_text: str = "", latex_fences: bool = False) -> list[str]:
     """Lines of the PDF's text that look like untypeset math.  A pattern is
     reported only if it occurs more often in the PDF than in the source's own
     code, so documents that quote the syntax are not flagged."""
@@ -352,7 +435,7 @@ def post_check(pdf: str, src_text: str = "") -> list[str]:
         return []
     txt = subprocess.run(["pdftotext", pdf, "-"], capture_output=True, text=True).stdout
     allowed: dict[str, int] = {}
-    for m in _POST_PAT.finditer(_literal_code(src_text)):
+    for m in _POST_PAT.finditer(_literal_code(src_text, latex_fences)):
         allowed[m.group(0)] = allowed.get(m.group(0), 0) + 1
     found: dict[str, list[str]] = {}
     for line in txt.split("\n"):
@@ -365,18 +448,20 @@ def post_check(pdf: str, src_text: str = "") -> list[str]:
     return out[:10]
 
 
-def prepare(text: str, workdir: str, image_map=(), mermaid: bool = True) -> str:
+def prepare(text: str, workdir: str, image_map=(), mermaid: bool = True,
+            latex_fences: bool = False) -> str:
     """All source-to-Pandoc rewriting, in order."""
     if mermaid:
         text = render_mermaid(text, workdir)
     text = map_images(text, list(image_map))
     text = separate_lists(text)
-    return convert_math_delimiters(text)
+    text = convert_math_delimiters(text, latex_fences)
+    return escape_literal_brackets(text)
 
 
 def render_pdf(src_path: str, dst_path: str, timeout: int = 180, image_map=(),
                toc: bool = True, mermaid: bool = True,
-               allow_control_chars: bool = False) -> None:
+               allow_control_chars: bool = False, latex_fences: bool = False) -> None:
     """Convert ``src_path`` (GitHub-flavoured math markdown) to a PDF at
     ``dst_path``.  Exits 2 if the pre-flight finds control characters."""
     with open(src_path, encoding="utf-8") as f:
@@ -391,7 +476,7 @@ def render_pdf(src_path: str, dst_path: str, timeout: int = 180, image_map=(),
             sys.exit(2)
 
     with tempfile.TemporaryDirectory() as td:
-        prepped = prepare(text, td, image_map, mermaid)
+        prepped = prepare(text, td, image_map, mermaid, latex_fences)
         md_path = os.path.join(td, "prepped.md")
         header_path = os.path.join(td, "header.tex")
         with open(md_path, "w", encoding="utf-8") as f:
@@ -422,7 +507,7 @@ def render_pdf(src_path: str, dst_path: str, timeout: int = 180, image_map=(),
                       file=sys.stderr)
             raise subprocess.CalledProcessError(r.returncode, cmd, r.stdout, r.stderr)
 
-    left = post_check(dst_path, text)
+    left = post_check(dst_path, text, latex_fences)
     if left:
         print("WARNING: possible untypeset math in the PDF text:", file=sys.stderr)
         for l in left:
@@ -443,6 +528,9 @@ def main() -> None:
                         help="leave ```mermaid blocks as code")
     parser.add_argument("--allow-control-chars", action="store_true",
                         help="render despite the control-character pre-flight")
+    parser.add_argument("--latex-fences", action="store_true",
+                        help="typeset ```latex fenced blocks as display math, as written by "
+                             "exporters such as Claude Docs (GitHub shows them as code)")
     args = parser.parse_args()
 
     maps = [tuple(m.split("=", 1)) for m in args.image_map]
@@ -456,7 +544,8 @@ def main() -> None:
 
     render_pdf(args.input, dst, image_map=maps, toc=not args.no_toc,
                mermaid=not args.no_mermaid,
-               allow_control_chars=args.allow_control_chars)
+               allow_control_chars=args.allow_control_chars,
+               latex_fences=args.latex_fences)
     print(f"Wrote {dst}")
 
 

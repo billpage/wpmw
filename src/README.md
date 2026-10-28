@@ -1522,25 +1522,29 @@ see that directory's README for the ladder itself.
   nested in list items and blockquotes — see the style guide below) into
   Pandoc-native `$...$` / `$$...$$` in a temporary copy, then renders with
   Pandoc + xelatex (with the `tex_math_single_backslash` extension enabled, so
-  GitHub's other two math forms, `\(...\)` and `\[...\]`, would also render
-  correctly). It also repairs the GitHub-versus-Pandoc differences that have
-  broken real renders: a list directly under a paragraph line gets the blank
-  line Pandoc needs; ` ```mermaid ` blocks are drawn with mermaid-cli when it
-  is available (otherwise left as code; `--no-mermaid` skips the attempt);
-  `--image-map PREFIX=DIR` points image URLs at local files (figures not yet
-  pushed to the `output` branch); relative image paths resolve against the
-  document's own folder; strikethrough uses `ulem`; and ✓ ✗ are mapped to
-  math symbols when `newunicodechar` is installed. Before rendering it refuses
-  a source containing control characters — the signature of a `\a`, `\b`,
-  `\f`, `\v` or `\t` eaten by a non-raw Python string, as in `\approx` →
-  BEL + `pprox` — and lists the lines (`--allow-control-chars` overrides).
-  After rendering it scans the PDF text for math that was not typeset,
-  ignoring syntax the document itself quotes in code. Equivalent in content to
-  GitHub's preview, though not pixel-identical. Requires `pandoc`, `xelatex`,
-  `lmodern` and `ulem`
-  (`apt-get install pandoc texlive-xetex lmodern texlive-plain-generic`, plus
-  `texlive-latex-extra` for the optional glyph mapping). The same script is
-  the github-md-to-pdf skill's script.
+  `\(...\)` and a `\[...\]` that opens a line also render; any other `\[` or
+  `\]` outside code and math is a CommonMark bracket escape, such as an
+  exporter's `d\[X, α\]` or citation `\[6\]`, and stays a bracket).
+  `--latex-fences` also typesets ` ```latex ` fenced blocks as display math,
+  for markdown exported by tools such as Claude Docs; it is off by default
+  because GitHub shows those blocks as code. It also repairs the
+  GitHub-versus-Pandoc differences that have broken real renders: a list
+  directly under a paragraph line gets the blank line Pandoc needs; `
+  ```mermaid ` blocks are drawn with mermaid-cli when it is available
+  (otherwise left as code; `--no-mermaid` skips the attempt); `--image-map
+  PREFIX=DIR` points image URLs at local files (figures not yet pushed to the
+  `output` branch); relative image paths resolve against the document's own
+  folder; strikethrough uses `ulem`; and ✓ ✗ ≅ ⋆ ∎ 𝓗, which DejaVu Serif
+  lacks, are mapped to math symbols when `newunicodechar` is installed. Before
+  rendering it refuses a source containing control characters — the signature
+  of a `\a`, `\b`, `\f`, `\v` or `\t` eaten by a non-raw Python string, as in
+  `\approx` → BEL + `pprox` — and lists the lines (`--allow-control-chars`
+  overrides). After rendering it scans the PDF text for math that was not
+  typeset, ignoring syntax the document itself quotes in code. Equivalent in
+  content to GitHub's preview, though not pixel-identical. Requires `pandoc`,
+  `xelatex`, `lmodern` and `ulem` (`apt-get install pandoc texlive-xetex
+  lmodern texlive-plain-generic`, plus `texlive-latex-extra` for the optional
+  glyph mapping). The same script is the github-md-to-pdf skill's script.
 
   ```bash
   python3 src/md_to_pdf.py docs/supplement/emission_and_absorption.md
