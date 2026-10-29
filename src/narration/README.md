@@ -87,6 +87,12 @@ without synthesising again.
    of each join and encodes the clip once. If they fall elsewhere, try
    `--reuse-audio --declick`: it runs ffmpeg's `adeclick` filter on the page's
    copy of each clip, takes seconds, and needs no voice service.
+   Some voices (en-CA-LiamNeural more than en-US-AndrewNeural) put a soft
+   low thump before an occasional word, like a "p" too close to a
+   microphone. `--reuse-audio --highpass 80` removes what lies below 80 Hz
+   from the page's copy of each clip; on a test signal it cut such thumps to
+   about a tenth and lowered voiced speech by about 12 %. Use 60 if the voice
+   sounds thin, 100 if thumps remain.
 
 3. **Fix what sounds wrong** in `wpmw_terms.json` and render again. A word
    whose pronunciation depends on context (*winds*, *live*, *read*) needs the

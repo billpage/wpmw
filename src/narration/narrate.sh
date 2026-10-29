@@ -15,6 +15,7 @@
 #   --resynth 14              make slide 14 again (or 5,14; no number: every slide)
 #   --max-chars 0             one Edge request per slide; --join fade  fade the joins
 #   --declick                 remove clicks from the page's copy of each clip (ffmpeg adeclick)
+#   --highpass 80             remove what lies below 80 Hz from it (low thumps before words)
 #   --tts piper               offline voice (installed on first use), if Edge refuses
 #   --pptx deck.pptx          also a narrated PowerPoint
 # The first run creates a Python environment in src/narration/.venv.

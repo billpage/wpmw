@@ -50,7 +50,8 @@ Clicks: each clip's joins between requests are listed in audio/slide_NN_joins.tx
 (and in the log), so a click can be checked against them.  --max-chars 0 sends a
 slide as one request (edge-tts itself still splits above about 4096 bytes);
 --join fade joins the pieces with short fades; --declick runs ffmpeg's adeclick
-on the page's copy of each clip.  --resynth 14 (or 5,14) remakes only those slides.
+on the page's copy of each clip, and --highpass 80 removes what lies below 80 Hz
+from it (low thumps before words).  --resynth 14 (or 5,14) remakes only those slides.
 
 Page keys: Left/Right change slide, Space or K play/pause, J/L back/forward
 10 s, T show/hide transcript, C continuous play.  Drag the divider between
@@ -462,11 +463,17 @@ BACKENDS = {"edge": synth_edge, "piper": synth_piper, "flite": synth_flite, "sil
 DEFAULT_VOICE = {"edge": "en-US-AndrewNeural", "piper": "en_US-lessac-medium", "flite": "rms", "silent": ""}
 
 
-def reencode_mp3(src, kbps, workdir, declick=False):
-    """Re-encode a clip for the page; declick runs ffmpeg's adeclick filter first."""
+def reencode_mp3(src, kbps, workdir, declick=False, highpass=0):
+    """Re-encode a clip for the page, optionally filtered first.
+
+    highpass > 0 removes what lies below that many Hz (ffmpeg highpass, two
+    poles, 12 dB per octave): the low thump some voices put before a word.
+    declick runs ffmpeg's adeclick, for sharp single-sample clicks.
+    """
     out = Path(workdir) / ("re_" + Path(src).name)
+    filters = ([f"highpass=f={highpass:g}"] if highpass else []) + (["adeclick"] if declick else [])
     r = subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-i", str(src), "-ac", "1"]
-                       + (["-af", "adeclick"] if declick else [])
+                       + (["-af", ",".join(filters)] if filters else [])
                        + ["-b:a", f"{kbps}k", str(out)], capture_output=True, text=True)
     if r.returncode != 0:
         sys.exit(f"error: ffmpeg could not re-encode {src}: {r.stderr.strip()}")
@@ -843,6 +850,9 @@ def main():
     ap.add_argument("--declick", action="store_true",
                     help="run ffmpeg's adeclick filter on each clip for the page (the clips in "
                          "audio/ are untouched, so this works with --reuse-audio)")
+    ap.add_argument("--highpass", type=float, default=0, metavar="HZ",
+                    help="remove what lies below HZ from the page's copy of each clip, e.g. 80, "
+                         "to soften low thumps before words (works with --reuse-audio)")
     ap.add_argument("--pause", type=float, default=EDGE_PAUSE, metavar="SECONDS",
                     help=f"edge: seconds to wait between requests (default {EDGE_PAUSE:g}); "
                          "a longer pause, e.g. 5, can avoid the refusals that need a retry")
@@ -926,8 +936,8 @@ def main():
                        if shutil.which(t) is None]
             if missing:
                 sys.exit(f"error: missing tool(s): {', '.join(missing)}")
-        if (args.reencode or args.declick) and shutil.which("ffmpeg") is None:
-            sys.exit("error: --reencode and --declick need ffmpeg")
+        if (args.reencode or args.declick or args.highpass) and shutil.which("ffmpeg") is None:
+            sys.exit("error: --reencode, --declick and --highpass need ffmpeg")
         print(f"audio  : {audio_dir}  ({'reusing' if args.reuse_audio else args.tts + ' ' + voice})", flush=True)
         clips, failed, kept = [], [], 0
         run_of_failures, gave_up = 0, False
@@ -988,8 +998,9 @@ def main():
                 if c is None:
                     refs.append(None)
                     continue
-                redo = bool(args.reencode or args.declick)
-                f = reencode_mp3(c, args.reencode or EDGE_KBPS, work, args.declick) if redo else c
+                redo = bool(args.reencode or args.declick or args.highpass)
+                f = (reencode_mp3(c, args.reencode or EDGE_KBPS, work, args.declick, args.highpass)
+                     if redo else c)
                 if args.link:
                     sub = "audio_web" if redo else "audio"
                     if redo:  # keep the originals in audio/ untouched
