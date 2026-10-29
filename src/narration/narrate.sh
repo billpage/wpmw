@@ -12,6 +12,9 @@
 #   --reuse-audio             rebuild the page from the clips already made
 #   --voice en-US-AndrewNeural  --rate "+8%"
 #   --pause 1                 a short pause between Edge requests, for a quick run
+#   --resynth 14              make slide 14 again (or 5,14; no number: every slide)
+#   --max-chars 0             one Edge request per slide; --join fade  fade the joins
+#   --declick                 remove clicks from the page's copy of each clip (ffmpeg adeclick)
 #   --tts piper               offline voice (installed on first use), if Edge refuses
 #   --pptx deck.pptx          also a narrated PowerPoint
 # The first run creates a Python environment in src/narration/.venv.

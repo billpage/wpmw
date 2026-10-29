@@ -46,6 +46,12 @@ wait between requests (default 1 s); if many first tries are refused, a
 longer pause (say 5 s) may avoid them at the cost of a slower run.  Exit status 3 means
 some slides have no audio.
 
+Clicks: each clip's joins between requests are listed in audio/slide_NN_joins.txt
+(and in the log), so a click can be checked against them.  --max-chars 0 sends a
+slide as one request (edge-tts itself still splits above about 4096 bytes);
+--join fade joins the pieces with short fades; --declick runs ffmpeg's adeclick
+on the page's copy of each clip.  --resynth 14 (or 5,14) remakes only those slides.
+
 Page keys: Left/Right change slide, Space or K play/pause, J/L back/forward
 10 s, T show/hide transcript, C continuous play.  Drag the divider between
 slide and transcript to resize it (double-click resets it).
@@ -224,6 +230,9 @@ EDGE_PIECE_CHARS = 1200        # characters per request to the voice service
 EDGE_RETRY_WAITS = (5, 20, 60)  # seconds to wait before each retry of a piece
 EDGE_TIMEOUT = 60              # seconds a single request may take (--timeout)
 EDGE_PAUSE = 1.0               # seconds between requests (--pause)
+EDGE_KBPS = 48                 # Edge sends 24 kHz mono MP3 at 48 kbit/s CBR
+EDGE_RATE_HZ = 24000
+JOIN_FADE_MS = 10              # fade at each join of two pieces (--join fade)
 
 
 def split_for_speech(text, limit=EDGE_PIECE_CHARS):
@@ -275,15 +284,78 @@ async def _edge_bytes(text, voice, rate, timeout):
     return await asyncio.wait_for(collect(), timeout)
 
 
-def synth_edge(text, out_mp3, voice, rate, timeout=EDGE_TIMEOUT, pause=EDGE_PAUSE, **_):
+def _decode_pcm(mp3_bytes, workdir, n):
+    """Decode one piece to 16-bit mono PCM at the Edge rate (ffmpeg)."""
+    src = Path(workdir) / f"piece_{n:02d}.mp3"
+    src.write_bytes(mp3_bytes)
+    r = subprocess.run(["ffmpeg", "-loglevel", "error", "-i", str(src), "-f", "s16le", "-ac", "1",
+                        "-ar", str(EDGE_RATE_HZ), "-"], capture_output=True)
+    if r.returncode != 0:
+        raise RuntimeError(r.stderr.decode(errors="replace").strip()[:200])
+    return r.stdout
+
+
+def join_pieces(datas, out_mp3, how="bytes"):
+    """Write the pieces as one MP3.  Returns (join times in seconds, how they were joined).
+
+    "bytes" appends the MP3 streams as they came (the old behaviour).  Each
+    stream starts a fresh encoder, so the decoder can step at a join.  "fade"
+    decodes each piece, fades JOIN_FADE_MS in and out at every join so the wave
+    meets the join at zero, and encodes the whole clip once.  It needs ffmpeg;
+    without it, or if decoding fails, the pieces are appended as bytes.
+    """
+    joins, t = [], 0.0
+    for d in datas[:-1]:
+        t += len(d) * 8 / (EDGE_KBPS * 1000)          # CBR: duration from size
+        joins.append(t)
+    tmp = out_mp3 + ".part"
+    if how == "fade" and len(datas) > 1 and shutil.which("ffmpeg"):
+        import array
+        try:
+            with tempfile.TemporaryDirectory() as work:
+                pcm = [array.array("h", _decode_pcm(d, work, n)) for n, d in enumerate(datas, 1)]
+                fade = EDGE_RATE_HZ * JOIN_FADE_MS // 1000
+                joins, t = [], 0.0
+                for n, a in enumerate(pcm):
+                    m = min(fade, len(a) // 2)
+                    if n > 0:                                  # fade in after a join
+                        for i in range(m):
+                            a[i] = int(a[i] * i / m)
+                    if n < len(pcm) - 1:                       # fade out before a join
+                        for i in range(m):
+                            a[len(a) - 1 - i] = int(a[len(a) - 1 - i] * i / m)
+                        t += len(a) / EDGE_RATE_HZ
+                        joins.append(t)
+                raw = b"".join(a.tobytes() for a in pcm)
+                r = subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-f", "s16le", "-ar",
+                                    str(EDGE_RATE_HZ), "-ac", "1", "-i", "-", "-b:a", "64k",
+                                    "-f", "mp3", tmp], input=raw, capture_output=True)
+                if r.returncode != 0:
+                    raise RuntimeError(r.stderr.decode(errors="replace").strip()[:200])
+            os.replace(tmp, out_mp3)
+            return joins, "fade"
+        except Exception as exc:
+            print(f"\n      could not join with fades ({exc}); appending the pieces as bytes", end="")
+    with open(tmp, "wb") as fh:
+        for d in datas:
+            fh.write(d)
+    os.replace(tmp, out_mp3)
+    return joins, "bytes"
+
+
+def synth_edge(text, out_mp3, voice, rate, timeout=EDGE_TIMEOUT, pause=EDGE_PAUSE,
+               max_chars=EDGE_PIECE_CHARS, join="bytes", **_):
     """Synthesise in pieces, each with a timeout and retries; write the MP3 only if all succeed.
 
     The Edge service sometimes stalls (no reply, no error) or answers "No audio
     was received" for a request it accepts at another moment.  Small requests,
     a timeout and a few spaced retries turn both into a short delay.
+    max_chars = 0 sends the slide as one request (edge-tts itself still splits
+    text longer than about 4096 bytes).  The join times are written beside the
+    clip as slide_NN_joins.txt and printed, so a click can be checked against them.
     """
-    pieces = split_for_speech(text)
-    audio = bytearray()
+    pieces = split_for_speech(text, max_chars) if max_chars else [text]
+    datas = []
     for n, piece in enumerate(pieces, 1):
         tag = f"piece {n}/{len(pieces)}"
         for attempt in range(len(EDGE_RETRY_WAITS) + 1):
@@ -291,7 +363,7 @@ def synth_edge(text, out_mp3, voice, rate, timeout=EDGE_TIMEOUT, pause=EDGE_PAUS
                 data = asyncio.run(_edge_bytes(piece, voice, rate, timeout))
                 if not data:
                     raise RuntimeError("no audio received")
-                audio.extend(data)
+                datas.append(data)
                 break
             except KeyboardInterrupt:
                 raise
@@ -305,10 +377,15 @@ def synth_edge(text, out_mp3, voice, rate, timeout=EDGE_TIMEOUT, pause=EDGE_PAUS
                       f" (then up to {timeout} s for a reply)", end="", flush=True)
                 time.sleep(wait)
         time.sleep(pause)   # be gentle with the service between requests (--pause)
-    tmp = out_mp3 + ".part"
-    with open(tmp, "wb") as fh:
-        fh.write(audio)
-    os.replace(tmp, out_mp3)
+    joins, how = join_pieces(datas, out_mp3, join)
+    note = Path(out_mp3).with_name(Path(out_mp3).stem + "_joins.txt")
+    if joins:
+        stamps = ", ".join(f"{int(j // 60)}:{j % 60:04.1f}" for j in joins)
+        note.write_text(f"{len(pieces)} pieces, joined by {how}"
+                        f" at {stamps}\n", encoding="utf-8")
+        print(f"[{len(pieces)} pieces, {how} joins at {stamps}]", end="")
+    elif note.exists():
+        note.unlink()
     return os.path.getsize(out_mp3) > 0
 
 
@@ -385,10 +462,12 @@ BACKENDS = {"edge": synth_edge, "piper": synth_piper, "flite": synth_flite, "sil
 DEFAULT_VOICE = {"edge": "en-US-AndrewNeural", "piper": "en_US-lessac-medium", "flite": "rms", "silent": ""}
 
 
-def reencode_mp3(src, kbps, workdir):
+def reencode_mp3(src, kbps, workdir, declick=False):
+    """Re-encode a clip for the page; declick runs ffmpeg's adeclick filter first."""
     out = Path(workdir) / ("re_" + Path(src).name)
-    r = subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-i", str(src), "-ac", "1",
-                        "-b:a", f"{kbps}k", str(out)], capture_output=True, text=True)
+    r = subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-i", str(src), "-ac", "1"]
+                       + (["-af", "adeclick"] if declick else [])
+                       + ["-b:a", f"{kbps}k", str(out)], capture_output=True, text=True)
     if r.returncode != 0:
         sys.exit(f"error: ffmpeg could not re-encode {src}: {r.stderr.strip()}")
     return out
@@ -752,8 +831,18 @@ def main():
     ap.add_argument("--preview", action="store_true", help="write <name>_spoken.txt and stop (no audio)")
     ap.add_argument("--reuse-audio", action="store_true",
                     help="no synthesis at all: build from the MP3s already in <outdir>/audio")
-    ap.add_argument("--resynth", action="store_true",
-                    help="synthesise every slide again, even those whose text and voice are unchanged")
+    ap.add_argument("--resynth", nargs="?", const="all", metavar="SLIDES",
+                    help="synthesise again even if unchanged: every slide, or only the listed ones, "
+                         "e.g. --resynth 14 or --resynth 5,14")
+    ap.add_argument("--max-chars", type=int, default=EDGE_PIECE_CHARS, metavar="N",
+                    help=f"edge: characters per request (default {EDGE_PIECE_CHARS}); "
+                         "0 sends each slide as one request")
+    ap.add_argument("--join", choices=("bytes", "fade"), default="bytes",
+                    help="edge: how pieces are joined: appended as they came (default), or decoded, "
+                         f"faded over {JOIN_FADE_MS} ms at each join and encoded once (needs ffmpeg)")
+    ap.add_argument("--declick", action="store_true",
+                    help="run ffmpeg's adeclick filter on each clip for the page (the clips in "
+                         "audio/ are untouched, so this works with --reuse-audio)")
     ap.add_argument("--pause", type=float, default=EDGE_PAUSE, metavar="SECONDS",
                     help=f"edge: seconds to wait between requests (default {EDGE_PAUSE:g}); "
                          "a longer pause, e.g. 5, can avoid the refusals that need a retry")
@@ -764,6 +853,13 @@ def main():
     ap.add_argument("--label", default="▶ Narration", help="PowerPoint: text beside the play icon ('' for none)")
     ap.add_argument("--label-color", default="94A3B8", help="PowerPoint: label colour RRGGBB")
     args = ap.parse_args()
+    if args.resynth in (None, "all"):
+        resynth = set() if args.resynth is None else None      # None = every slide
+    else:
+        try:
+            resynth = {int(x) for x in args.resynth.replace(" ", "").split(",") if x}
+        except ValueError:
+            sys.exit(f"error: --resynth takes slide numbers such as 5,14 (got {args.resynth!r})")
 
     src = Path(args.source).expanduser()
     if not src.is_file():
@@ -830,8 +926,8 @@ def main():
                        if shutil.which(t) is None]
             if missing:
                 sys.exit(f"error: missing tool(s): {', '.join(missing)}")
-        if args.reencode and shutil.which("ffmpeg") is None:
-            sys.exit("error: --reencode needs ffmpeg")
+        if (args.reencode or args.declick) and shutil.which("ffmpeg") is None:
+            sys.exit("error: --reencode and --declick need ffmpeg")
         print(f"audio  : {audio_dir}  ({'reusing' if args.reuse_audio else args.tts + ' ' + voice})", flush=True)
         clips, failed, kept = [], [], 0
         run_of_failures, gave_up = 0, False
@@ -848,7 +944,7 @@ def main():
                 for f in (mp3, stamp):
                     if f.exists():
                         f.unlink()
-            elif (not args.resynth and mp3.exists() and mp3.stat().st_size > 0 and stamp.exists()
+            elif (resynth is not None and k not in resynth and mp3.exists() and mp3.stat().st_size > 0 and stamp.exists()
                   and stamp.read_text(encoding="utf-8") == key):
                 print(f"    slide {k:2d}: unchanged, kept ({mp3.stat().st_size // 1024} KB)", flush=True)
                 ok = True
@@ -859,7 +955,8 @@ def main():
             else:
                 print(f"    slide {k:2d}: synthesising ... ", end="", flush=True)
                 ok = BACKENDS[args.tts](text, str(mp3), voice=voice, rate=args.rate,
-                                        timeout=args.timeout, pause=args.pause)
+                                        timeout=args.timeout, pause=args.pause,
+                                        max_chars=args.max_chars, join=args.join)
                 if ok:
                     stamp.write_text(key, encoding="utf-8")
                 elif stamp.exists():
@@ -891,10 +988,11 @@ def main():
                 if c is None:
                     refs.append(None)
                     continue
-                f = reencode_mp3(c, args.reencode, work) if args.reencode else c
+                redo = bool(args.reencode or args.declick)
+                f = reencode_mp3(c, args.reencode or EDGE_KBPS, work, args.declick) if redo else c
                 if args.link:
-                    sub = "audio_web" if args.reencode else "audio"
-                    if args.reencode:  # keep the originals in audio/ untouched
+                    sub = "audio_web" if redo else "audio"
+                    if redo:  # keep the originals in audio/ untouched
                         (outdir / sub).mkdir(exist_ok=True)
                         shutil.copyfile(f, outdir / sub / c.name)
                     refs.append(f"{sub}/{c.name}")

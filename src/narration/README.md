@@ -56,7 +56,8 @@ without synthesising again.
    refuses the page. Run the same command again: a slide whose spoken text,
    voice and rate are unchanged keeps its clip (`audio/slide_NN.txt` records
    what it was made from), so only the missing slides are synthesised.
-   `--resynth` makes every clip again.
+   `--resynth` makes every clip again; `--resynth 14` or `--resynth 5,14`
+   makes only those.
 
    The service limits how often requests arrive, and refuses many first tries
    when they come quickly, so `narrate.sh` waits 30 s after each request
@@ -75,6 +76,17 @@ without synthesising again.
    installed and downloaded on first use, about 60 MB): steadier, a little less
    natural, and a different voice, so use it for a whole deck rather than for
    a few missing slides.
+
+   **Clicks.** The voice service is asked for at most 1200 characters at a
+   time, and the answers are appended to make each slide's clip. The log shows
+   where they meet (`[4 pieces, bytes joins at 0:08.2, 0:28.0, 0:42.8]`), and
+   so does `audio/slide_NN_joins.txt`, so a click can be checked against the
+   joins. If clicks fall on the joins, `--resynth 14 --max-chars 0` sends
+   slide 14 as one request (edge-tts still splits text over about 4096 bytes
+   on its own), and `--join fade` decodes the pieces, fades 10 ms either side
+   of each join and encodes the clip once. If they fall elsewhere, try
+   `--reuse-audio --declick`: it runs ffmpeg's `adeclick` filter on the page's
+   copy of each clip, takes seconds, and needs no voice service.
 
 3. **Fix what sounds wrong** in `wpmw_terms.json` and render again. A word
    whose pronunciation depends on context (*winds*, *live*, *read*) needs the
