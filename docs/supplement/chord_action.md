@@ -179,8 +179,10 @@ together.
 
 The potential's part of the von Neumann equation is a phase rate on each
 element of the density matrix, $`\partial_t\rho(\mathbf x, \mathbf x') = -(i/\hbar)[V(\mathbf x) - V(\mathbf x')]\rho`$:
-the potential part of $`-\Delta\mathcal L/\hbar`$ (supplement
-[`chord_reading.md`](chord_reading.md) §5). In the density matrix
+the phase of $`\rho(\mathbf x, \mathbf x')`$ advances at the potential part
+of $`\Delta\mathcal L/\hbar`$, as $`\theta^w - \theta^{w'}`$ does by CA1
+(supplement [`chord_reading.md`](chord_reading.md) §5, which orients the
+chord the other way). In the density matrix
 $`\mathbf Y`$ is the off-diagonal coordinate, and nothing of the state is
 at its ends; in the sea it is the half-length of a chord, whose ends are two
 aligned pairs (step 22; chord_reading §5, whose table sets the two side by
@@ -367,7 +369,16 @@ The chord action is the exponent of Feynman and Vernon's double path integral
 in the classical and quantum coordinates $`\mathbf X`$, $`\mathbf Y`$ of the
 Keldysh technique (Kamenev 2011). Integrating $`\mathbf Y`$ against the linear
 part enforces the classical equation of motion on $`\mathbf X`$; the terms of
-higher order in $`\mathbf Y`$ are the quantum vertices. Marinov (1991) wrote
+higher order in $`\mathbf Y`$ are the quantum vertices. The bra branch
+$`\mathbf x'`$ evolves under $`-H`$: it is the time-reversed copy of the
+system, the backward branch of the closed time path, and with $`\mathbf x`$
+it forms a chord, not a second particle or a world of its own. Thermo-field
+dynamics (Takahashi and Umezawa 1975) doubles the system with the same
+generator, $`\hat H = H - \tilde H`$, but its state vector is
+$`\rho^{1/2}`$, a purification, so its expectations are quadratic in the
+state. WPMW, like Liouville-space methods and the Keldysh technique, is linear
+in $`\rho`$; Nakamura and Yamanaka (2012) map the Liouville-space form onto
+non-equilibrium thermo-field dynamics. Marinov (1991) wrote
 the Wigner propagator as a phase-space path integral with the difference of the
 Hamiltonian at shifted arguments. Polkovnikov (2010) dropped the residual to
 obtain the truncated Wigner approximation and represented the corrections as
@@ -463,6 +474,12 @@ and the jumps are realised with persistent identity, the parent unkinked
   Phys.* **325**, 1790–1852 (2010), §III.1.3.
   https://arxiv.org/abs/0905.3384
 - Kamenev, A. — *Field Theory of Non-Equilibrium Systems.* Cambridge (2011).
+- Takahashi, Y.; Umezawa, H. — "Thermo field dynamics." *Collective
+  Phenomena* **2**, 55–80 (1975); reprinted *Int. J. Mod. Phys. B* **10**,
+  1755–1805 (1996).
+- Nakamura, Y.; Yamanaka, Y. — "From superoperator formalism to
+  nonequilibrium Thermo Field Dynamics." (2012).
+  https://arxiv.org/abs/1211.4306
 - Marsden, J. E.; Hughes, T. J. R. — *Mathematical Foundations of
   Elasticity.* Prentice-Hall (1983).
 - Salmon, R. — "Hamiltonian fluid mechanics." *Annu. Rev. Fluid Mech.*

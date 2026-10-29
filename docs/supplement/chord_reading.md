@@ -98,7 +98,12 @@ identical, so
 ```
 
 and a reader whose own momentum follows the force sees
-$`U_{\rm res} = U - 2yV'_{\rm eff}(x)`$ instead. Under (S) the force would
+$`U_{\rm res} = U - 2yV'_{\rm eff}(x)`$ instead. Here $`\mu`$ runs from the
+pair at $`x - y`$ to the pair at $`x + y`$ ($`\mu_{ij} = \theta_i - \theta_j`$
+plus the lever, §3). Supplement [`chord_action.md`](chord_action.md) (CA4)
+and step 25 (WC8) orient the chord the other way, to match
+$`\rho(X + Y, X - Y)`$: there $`\mu = \theta - \theta'`$ with $`\theta`$ at
+$`X + Y`$, so $`\hbar\dot\mu = -U`$. The physics is the same. Under (S) the force would
 fan each row out over its neighbours (Q2(c)), and this exact statement would
 start to fail at $`V''`$.
 
