@@ -609,7 +609,11 @@ function show(k, play) {
     audio.playbackRate = parseFloat(rateSel.value);
   }
   if (play && AUDIO[i]) audio.play().catch(() => {});
-  if (location.hash !== '#' + (i + 1)) history.replaceState(null, '', '#' + (i + 1));
+  // Keep the slide number in the address. A page shown in a sandboxed srcdoc frame
+  // (e.g. a chat preview) may not change its URL; navigation must still work there.
+  if (location.hash !== '#' + (i + 1)) {
+    try { history.replaceState(null, '', '#' + (i + 1)); } catch (e) { /* URL not writable here */ }
+  }
 }
 function toggle() { if (!AUDIO[i]) return; audio.paused ? audio.play().catch(() => {}) : audio.pause(); }
 function skip(d) { if (AUDIO[i]) audio.currentTime = Math.max(0, Math.min(audio.duration || 0, audio.currentTime + d)); }
