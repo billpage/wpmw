@@ -820,3 +820,26 @@ the last four separate a label from a coordinate (Definition CA0).
   Lett. A* **219**, 287–292 (1996).
 - Lanczos, C. — *The Variational Principles of Mechanics.* University of
   Toronto Press (1949). Time as a dependent variable in parametrised mechanics.
+
+## A superposition with an empty gap: diffraction in time, spreading, nodes
+
+Cited by `docs/supplement/zero_gap_superposition.md`.
+
+- Moshinsky, M. — "Diffraction in time." *Phys. Rev.* **88**, 625–631 (1952).
+  https://doi.org/10.1103/PhysRev.88.625. The free evolution of a plane wave
+  cut off by a shutter, in terms of the complementary error function; the
+  exact solution of the supplement is a sum of twelve of these.
+- Hegerfeldt, G. C. — "Instantaneous spreading and Einstein causality in
+  quantum theory." *Ann. Phys. (Leipzig)* **7**, 716–725 (1998).
+  https://arxiv.org/abs/quant-ph/9809030. A state localised in a bounded
+  region at one time is not localised at any later time.
+- Nye, J. F.; Berry, M. V. — "Dislocations in wave trains." *Proc. R. Soc.
+  Lond. A* **336**, 165–190 (1974). https://doi.org/10.1098/rspa.1974.0012.
+  Zeros of a complex wave as isolated phase singularities with integer
+  winding number.
+- Smolin, L. — "A real ensemble interpretation of quantum mechanics."
+  *Found. Phys.* **42**, 1239–1261 (2012). https://arxiv.org/abs/1104.2822.
+  A positive ensemble of similar systems in one universe, each with a value
+  of a chosen observable and a phase, evolving by a copy rule; §VI names the
+  "nodes issue" (an unoccupied value can never be copied), which the empty
+  gap realises on an interval (Remark ZG8).

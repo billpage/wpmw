@@ -1355,6 +1355,26 @@ see that directory's README for the ladder itself.
   counts on one rate (Remark CA7). Writes `chord_action_results.json`; no
   figures. About twenty seconds.
 
+- `demo_zero_gap_superposition.py` — companion to
+  `docs/supplement/zero_gap_superposition.md`, Parts A–G. A: the closed-form
+  Wigner function of two raised-cosine pulses with an empty gap, against
+  quadrature (Proposition ZG1). B: the exact free solution as twelve Moshinsky
+  functions, against 40-digit arithmetic and an FFT propagation
+  (Proposition ZG2). C: the edge-wave law, the boundary layer and the leaked
+  probability (Proposition ZG3). D: fringe spacings and the zeros of `psi` in
+  the `(x, t)` plane, by phase winding (Proposition ZG4). E: the sheared
+  Wigner function and the split of the density into lobes and band
+  (Proposition ZG5). F: two million signed worlds, streaming, against the
+  exact density, and the ensemble needed to see the gap fill
+  (Proposition ZG6). G: the same worlds in a harmonic trap (Remark ZG7).
+  Writes `zero_gap_density.png`, `zero_gap_wigner.png`,
+  `zero_gap_spacetime.png`, `zero_gap_worlds.png`, `zero_gap_evolution.gif`
+  (also `.mp4`, to the scratch output only) and
+  `zero_gap_superposition_results.json`. About five minutes; `--no-animation`
+  saves one.
+
+  ![The sheared Wigner function, the density and a signed-world histogram](https://raw.githubusercontent.com/billpage/wpmw/output/figures/zero_gap_evolution.gif)
+
 - `demo_signed_local_kernel.py` — exact (SymPy) and spectral companion to
   `docs/supplement/poisson_kicks_and_pair_branching.md`, Parts A–E.  A: the
   Kramers–Moyal targets `M_{2s+1} = (-1)^{s+1} (hbar/2)^{2s} V^{(2s+1)}`,
