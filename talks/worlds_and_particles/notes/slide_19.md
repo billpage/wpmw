@@ -1,0 +1,13 @@
+These are six open items from the three notes, chosen because each one is a question about how the two levels relate.
+
+The first is open item 5 of step 25. B1, where each particle sees the other as an external field, is the instinct behind mean-field theory. Is B1, or its relative motion at ħ/2, the Wigner image of a known approximation, and does that explain the factor of 2? It's the most precise form of treating particles as if they were separate worlds. My guess, which I haven't checked, is that it's close to a time-dependent Hartree reading, which is known to lose entanglement. That would fit B1's spurious correlations, and it would be a good small exercise.
+
+Items 7 and 8 of step 25 go together. Identical particles and spin are where attributes of individual particles might seem to come back. In an ontology of worlds alone, both have to be relations between worlds. Statistics would be a sign or a phase between a world and its permutations; we checked that the compensated symbol is unchanged under all six permutations of three particles. And spin would be a discrete label for each world-particle, with the phase between spin components carried by chords between worlds whose labels differ.
+
+Item 10 of step 25, and item 2 of step 26, are about cost. The contact sink and K1 both work on cells of the joint relative phase space, and the cost grows with every relative dimension. Cells on bond coordinates, or a partition that factors over pairs of Jacobi coordinates, would use the bond structure of slide 10 in the numerics as well. Four particles on a line need six relative dimensions; three in space need twelve.
+
+And the first open item of the crossings supplement. With two particles on a line there's one relative dimension, and there chance crossings do happen. We could realise absorptions at exact crossings within a time step, with the relative momentum on a lattice, and compare that with emission plus K1, against the mesh. That's the one case where crossings could matter numerically.
+
+The line at the bottom is the purpose of all the October work. Steps 25 and 26 list what a specification for N particles needs: the state of a world, with its sign and one bank per term; one kernel table per distinct term; streaming under (S′); integrate-and-fire events; population control with K1 and shifted grids; the observables; and a validation sequence, from problem Q with no events, to the mesh at the same reach, to the worlds. Each piece has now been tested at least once.
+
+And one suggestion of my own, which isn't an item in the notes: the next scale test could be two particles in three dimensions, a 12-dimensional phase space with six relative dimensions, where the questions about crossings and about cost meet.

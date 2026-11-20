@@ -239,16 +239,22 @@ note's figures and lets the reader vary its parameters. The first is
 [the sea lock](https://billpage.github.io/wpmw/interactive/sea_lock.html), for ladder step 22
 (source: [`docs/interactive/sea_lock.html`](docs/interactive/sea_lock.html)).
 Slide decks for calls with collaborators are kept in the same folder, one
-self-contained HTML file each, with the speaker notes behind the N key:
+self-contained HTML file each, with the speaker notes beside the slide (N
+hides and shows them):
 [worlds, particles and world-particles](https://billpage.github.io/wpmw/interactive/worlds_and_particles.html)
-(27 October 2026; source:
-[`docs/interactive/worlds_and_particles.html`](docs/interactive/worlds_and_particles.html)).
+(27 October 2026; page:
+[`docs/interactive/worlds_and_particles.html`](docs/interactive/worlds_and_particles.html),
+built from [`talks/worlds_and_particles/`](talks/worlds_and_particles), its
+slides and one notes file per slide).
 A deck can also be narrated: its speaker notes are read by a text-to-speech
 voice into a page with an audio player and the transcript beside each slide
 ([worlds, particles and world-particles, narrated](https://billpage.github.io/wpmw/narrated/worlds_and_particles_narrated.html)).
-Narrated pages are rendered locally with
-[`src/narration/`](src/narration/README.md) and kept on the `output` branch
-in `narrated/`; `main` keeps only the slides page and the tools.
+Narrated pages are rendered locally with the
+[`narrate`](https://github.com/billpage/narrate) package (see
+[`src/narration/`](src/narration/README.md); settings in
+[`narration.toml`](narration.toml)) and kept on the `output` branch in
+`narrated/`; `main` keeps only the deck's source, its slides page and the
+project's pronunciations.
 
 GitHub shows an `.html` file on `main` as source, not as a page, so pages
 are served by **GitHub Pages**, built by the
@@ -263,8 +269,8 @@ https://billpage.github.io/wpmw/narrated/<name>_narrated.html
 ```
 
 Pages redeploys on every push to `main`, usually within a minute or two. A
-push to `output` does not start the workflow; `src/narration/publish_narrated.sh`
-starts it after publishing a narrated page.
+push to `output` does not start the workflow; `narrate publish` starts it
+after publishing a narrated page.
 Unlike figures and notebooks there is no second copy on the `output`
 branch: the page has no outputs of its own, and the file on `main` is both
 source and artefact.
