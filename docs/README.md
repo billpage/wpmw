@@ -45,8 +45,9 @@ reading.
   Pages (see the top-level README's "Interactive pages" section). Like the
   notebooks they add no claims: each page names the note and the demo whose
   computation it repeats. Slide decks prepared for calls with collaborators
-  live here too, as one HTML file each with their speaker notes; they quote
-  the notes and demos they summarise and add nothing to them. The first is
+  live here too, as one HTML file each with their speaker notes, built from
+  a source in `talks/` at the repository root; they quote the notes and
+  demos they summarise and add nothing to them. The first is
   [`worlds_and_particles.html`](interactive/worlds_and_particles.html), for
   the call of 27 October 2026.
 

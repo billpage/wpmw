@@ -1,0 +1,9 @@
+David, since we couldn't meet this week, here is the talk I had prepared for our call, spoken over the slides. You can pause it at any point, and the transcript is beside each slide if you'd rather read.
+
+The subject is worlds, particles and world-particles. You've said that working mostly with one particle isn't a handicap, because there is a formal analogy between many particles and many worlds. My suspicion is that the one-particle case lets us blur three different things, worlds, particles and world-particles, and that the blur gets in the way of understanding the multi-particle models we're now building: step 25 on world clocks, step 26 on population control, and the supplement on world crossings.
+
+I'll try to settle this fairly. The short answer, which I state on slide 15 and try to earn on slides 11 to 14, is that there are two analogies, and they're different. One is exact: N particles in d dimensions are formally one particle in d N dimensions, and that one point in configuration space is a world. The other is misleading: treating the particles inside one world as if they were the worlds of an ensemble. I think you're right about the first. My worry is about the second.
+
+A word on colour. On every slide, blue means worlds and everything that happens between worlds: chords, readings, events, signs and clocks. Orange means particles and everything that happens inside one world: bonds, the potential, and the classical force.
+
+All the numbers in this talk come from the repository notes, which say where each one was computed. We also re-checked four identities symbolically for this talk: the one-particle von Neumann equation written as a Schrödinger equation in two configurations; Theorem WC2 (b), that a world-particle's reading gives the quantum Liouville equation at ħ/2; WC2 (d), the cubic Moyal operators; and the bond-sum decomposition of WC9, with the locality statement WC8.1. In all four the difference came out exactly zero.

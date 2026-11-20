@@ -57,5 +57,5 @@ output/
 node_modules/
 package-lock.json
 
-# --- Narrated pages rendered locally (src/narration/voiceover.py) ---
+# --- Narrated pages rendered locally (narrate render) ---
 *_narration/

@@ -5,15 +5,15 @@ name: pages
 #     used, so every existing URL (https://billpage.github.io/wpmw/...) is kept;
 #   - narrated/ on the output branch: the narrated slide pages, each one
 #     self-contained HTML with its audio embedded, rendered locally with
-#     src/narration/voiceover.py and pushed there by
-#     src/narration/publish_narrated.sh.  They are served at
+#     `narrate render` and pushed there by `narrate publish` (the narrate
+#     package; see src/narration/README.md).  They are served at
 #     https://billpage.github.io/wpmw/narrated/<name>_narrated.html
 #
 # One-time setting: Settings -> Pages -> Build and deployment -> Source:
 # "GitHub Actions" (instead of "Deploy from a branch").
 #
 # A push to main redeploys.  A push to the output branch cannot start this
-# workflow (output has no workflows), so publish_narrated.sh starts it with
+# workflow (output has no workflows), so `narrate publish` starts it with
 # `gh workflow run pages.yml`, or you press "Run workflow" on the Actions tab.
 
 on:

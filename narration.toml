@@ -1,0 +1,15 @@
+# Settings for `narrate` (https://github.com/billpage/narrate); see
+# src/narration/README.md.  For example:
+#   narrate build-deck talks/worlds_and_particles --foot "WPMW · worlds and particles" \
+#       --out docs/interactive/worlds_and_particles.html
+#   narrate render docs/interactive/worlds_and_particles.html
+#   narrate publish ~/wpmw-narration/worlds_and_particles/worlds_and_particles_narrated.html
+repo = "billpage/wpmw"
+narration_dir = "~/wpmw-narration"
+output_worktree = "~/wpmw-output"
+terms = ["src/narration/wpmw_terms.json"]
+
+[voice]
+voice = "en-CA-LiamNeural"
+pause = 30
+reencode = 32

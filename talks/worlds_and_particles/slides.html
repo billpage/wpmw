@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Worlds, Particles, World-Particles</title>
+<!--
+  Slides for the WPMW call of 27 October 2026: worlds, particles and
+  world-particles, with the chord action (slides 8 and 9).  Built from the
+  Slides artifact of that name.  Source of
+  docs/interactive/worlds_and_particles.html, built with `narrate build-deck`
+  (see src/narration/README.md); the speaker notes are notes/slide_NN.md.
+  Companion to docs/supplement/chord_action.md, docs/analysis/world_clocks.md,
+  docs/analysis/population_control.md and docs/supplement/world_crossings.md.
+  Every number on the slides is quoted from those documents and their demos.
+  Self-contained apart from web fonts (with system fallbacks).
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400..700;1,400&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,600;1,400&amp;display=swap">
+<style>
+body { font-family: 'IBM Plex Sans', Arial, sans-serif; }
+.slide * { margin: 0; box-sizing: border-box; }
+.slide h1 { font-size: 96px; font-weight: 600; line-height: 1.1; }
+.slide h2 { font-size: 64px; font-weight: 600; line-height: 1.15; }
+.slide h3 { font-size: 44px; font-weight: 600; line-height: 1.2; }
+.slide p { font-size: 32px; line-height: 1.4; }
+.slide ul { padding-left: 1.2em; }
+.slide li { margin: 0.15em 0; }
+.slide table { border-collapse: collapse; width: 100%; }
+.slide th, .slide td { padding: 0.35em 0.6em; border-bottom: 1px solid #d6d0c2;
+  text-align: left; vertical-align: top; }
+.slide th { font-weight: 600; border-bottom: 2px solid #b9b2a2; }
+.slide .foot { position: absolute; left: 128px; bottom: 64px; width: 1664px;
+  font-family: 'IBM Plex Sans', Arial, sans-serif; font-size: 24px; color: #5E6773; }
+</style>
+</head>
+<body>
+<div id="stage">
+<section class="slide" data-n="1" data-nofoot id="cover" data-transition="fade" style="background:#16202E;color:#F2EEE4;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;justify-content:center;gap:40px">
+<p style="font-size:28px;font-weight:600;letter-spacing:2px;color:#8FB4DC;text-transform:uppercase">WPMW · call with David Cyganski · 27 October 2026</p>
+<h1 style="font-family:'Source Serif 4', Georgia, serif;font-size:112px;font-weight:600;line-height:1.05;color:#F2EEE4">Worlds, particles<br>and world-particles</h1>
+<p style="font-size:40px;line-height:1.35;color:#D3D9E0;width:1400px">How worlds interact in the compensated Liouville picture, and why the one-particle case hides the difference</p>
+<div style="display:flex;gap:64px;align-items:center">
+<div style="display:flex;gap:16px;align-items:center"><div style="width:28px;height:28px;background:#8FB4DC;border-radius:50%"></div><p style="font-size:28px;color:#D3D9E0">worlds; between worlds</p></div>
+<div style="display:flex;gap:16px;align-items:center"><div style="width:28px;height:28px;background:#E9A56F;border-radius:50%"></div><p style="font-size:28px;color:#D3D9E0">particles; within a world</p></div>
+</div>
+<p style="font-size:26px;color:#AEB7C2">Bill Page · tutorial from steps 25–26 and the world-crossings supplement · prepared with Claude</p>
+
+</section>
+<section class="slide" data-n="2" id="question" data-transition="fade" style="background:#F7F5EF;color:#16202E;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:48px">
+<h2 style="font-family:'Source Serif 4', Georgia, serif;font-size:64px;font-weight:600;line-height:1.1">Is the one-particle case enough?</h2>
+<div style="display:flex;gap:40px">
+<div style="flex:1;display:flex;flex-direction:column;gap:16px;background:#ECE8DE;padding:48px;border-radius:16px">
+<p style="font-size:24px;font-weight:600;letter-spacing:2px;color:#2F5D8A;text-transform:uppercase">David</p>
+<p style="font-size:36px;line-height:1.35">There is a formal analogy between many particles and many worlds, so working with one particle loses nothing.</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:16px;background:#ECE8DE;padding:48px;border-radius:16px">
+<p style="font-size:24px;font-weight:600;letter-spacing:2px;color:#A64E1B;text-transform:uppercase">Bill</p>
+<p style="font-size:36px;line-height:1.35">With one particle a world and a particle are the same object, and that hides what the multi-particle model is.</p>
+</div>
+</div>
+<div style="flex:1"></div>
+<div style="display:flex;flex-direction:column;gap:12px;border-left:6px solid #2F5D8A;padding:8px 0 8px 40px">
+<p style="font-size:24px;font-weight:600;letter-spacing:2px;color:#2F5D8A;text-transform:uppercase">Where the deck ends up</p>
+<p style="font-size:36px;line-height:1.35">There are two analogies. <b>N particles in d dimensions = one particle in dN dimensions</b> is exact. <b>Particles in a world ↔ worlds in an ensemble</b> misleads.</p>
+</div>
+
+</section>
+<section class="slide" data-n="3" id="mu-gamma" data-transition="fade" style="background:#F7F5EF;color:#16202E;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:40px">
+<h2 style="font-family:'Source Serif 4', Georgia, serif;font-size:64px;font-weight:600;line-height:1.1">A classical precedent: μ-space and Γ-space</h2>
+<div style="display:flex;gap:40px">
+<div style="flex:1;display:flex;flex-direction:column;gap:20px;background:#FFFDF8;border:1px solid #DDD7C9;padding:40px;border-radius:16px">
+<h3 style="font-size:36px;font-weight:600;color:#A64E1B">Boltzmann: one world, N particles</h3>
+<svg aria-label="Three particles of one world as three points in the one-particle phase space, joined by bonds" width="720" height="240" viewBox="0 0 720 240">
+<rect x="2" y="2" width="716" height="236" rx="12" fill="#F7F1E7" stroke="#DDD7C9" stroke-width="2"/>
+<line x1="230" y1="168" x2="420" y2="72" stroke="#A64E1B" stroke-width="5"/>
+<line x1="420" y1="72" x2="520" y2="176" stroke="#A64E1B" stroke-width="5"/>
+<line x1="230" y1="168" x2="520" y2="176" stroke="#A64E1B" stroke-width="5"/>
+<circle cx="230" cy="168" r="22" fill="#A64E1B"/>
+<circle cx="420" cy="72" r="22" fill="#A64E1B"/>
+<circle cx="520" cy="176" r="22" fill="#A64E1B"/>
+</svg>
+<p style="font-size:26px;line-height:1.4;color:#3E4A5A">N points in the 6-dimensional space of <b>one particle</b>. The lines are bonds: the particles interact through V. The whole picture is one world.</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:20px;background:#FFFDF8;border:1px solid #DDD7C9;padding:40px;border-radius:16px">
+<h3 style="font-size:36px;font-weight:600;color:#2F5D8A">Gibbs: many worlds, one point each</h3>
+<svg aria-label="Many signed worlds as points in the configuration phase space; filled points are positons, rings are negatons" width="720" height="240" viewBox="0 0 720 240">
+<rect x="2" y="2" width="716" height="236" rx="12" fill="#EEF2F6" stroke="#CFD8E2" stroke-width="2"/>
+<g fill="#2F5D8A">
+<circle cx="120" cy="120" r="11"/><circle cx="180" cy="76" r="11"/><circle cx="210" cy="152" r="11"/><circle cx="265" cy="112" r="11"/><circle cx="300" cy="184" r="11"/><circle cx="330" cy="64" r="11"/><circle cx="360" cy="132" r="11"/><circle cx="400" cy="92" r="11"/><circle cx="430" cy="164" r="11"/><circle cx="470" cy="120" r="11"/><circle cx="505" cy="68" r="11"/><circle cx="540" cy="152" r="11"/><circle cx="590" cy="104" r="11"/><circle cx="625" cy="172" r="11"/><circle cx="160" cy="188" r="11"/><circle cx="560" cy="200" r="11"/><circle cx="250" cy="48" r="11"/><circle cx="440" cy="204" r="11"/>
+</g>
+<g fill="none" stroke="#2F5D8A" stroke-width="4">
+<circle cx="150" cy="112" r="10"/><circle cx="235" cy="92" r="10"/><circle cx="320" cy="148" r="10"/><circle cx="380" cy="180" r="10"/><circle cx="455" cy="80" r="10"/><circle cx="520" cy="112" r="10"/><circle cx="600" cy="64" r="10"/><circle cx="660" cy="128" r="10"/><circle cx="280" cy="208" r="10"/><circle cx="90" cy="168" r="10"/>
+</g>
+</svg>
+<p style="font-size:26px;line-height:1.4;color:#3E4A5A">Each point is a <b>whole configuration</b> in 6N dimensions. Gibbs’s copies never interact; WPMW’s worlds are signed and do.</p>
+</div>
+</div>
+<p style="font-size:32px;line-height:1.35">For <b>N = 1</b> the two spaces coincide, and a gas of worlds looks exactly like a gas of particles.</p>
+
+</section>
+<section class="slide" data-n="4" id="vocab" data-transition="fade" style="background:#F7F5EF;color:#16202E;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:40px">
+<h2 style="font-family:'Source Serif 4', Georgia, serif;font-size:64px;font-weight:600;line-height:1.1">The vocabulary: rows, cells and columns (WC0)</h2>
+<table style="font-family:'IBM Plex Sans', Arial, sans-serif;font-size:30px;color:#16202E">
+<tr><th style="width:16%;text-align:left">world</th><th style="width:12%;text-align:center;color:#2F5D8A">sign ε</th><th style="width:12%;text-align:center;color:#2F5D8A">clock θ</th><th style="width:20%;text-align:center;color:#A64E1B">particle 1</th><th style="width:20%;text-align:center;color:#A64E1B">particle 2</th><th style="width:20%;text-align:center;color:#A64E1B">particle 3</th></tr>
+<tr style="background:#E3EAF2"><td style="color:#2F5D8A">w₁ (positon)</td><td style="text-align:center">+1</td><td style="text-align:center">θ₁</td><td style="text-align:center">(x₁, p₁)</td><td style="text-align:center">(x₂, p₂)</td><td style="text-align:center">(x₃, p₃)</td></tr>
+<tr><td style="color:#2F5D8A">w₂ (negaton)</td><td style="text-align:center">−1</td><td style="text-align:center">θ₂</td><td style="text-align:center">(x₁, p₁)</td><td style="text-align:center">(x₂, p₂)</td><td style="text-align:center">(x₃, p₃)</td></tr>
+<tr><td style="color:#2F5D8A">w₃ (positon)</td><td style="text-align:center">+1</td><td style="text-align:center">θ₃</td><td style="text-align:center">(x₁, p₁)</td><td style="text-align:center">(x₂, p₂)</td><td style="text-align:center">(x₃, p₃)</td></tr>
+<tr><td style="color:#2F5D8A">…</td><td style="text-align:center">…</td><td style="text-align:center">…</td><td style="text-align:center">…</td><td style="text-align:center">…</td><td style="text-align:center">…</td></tr>
+</table>
+<div style="display:flex;gap:32px">
+<div style="flex:1;display:flex;flex-direction:column;gap:10px;background:#E3EAF2;padding:32px;border-radius:16px">
+<h3 style="font-size:32px;font-weight:600;color:#2F5D8A">World = a row</h3>
+<p style="font-size:26px;line-height:1.4">A point of ℝ⁶ᴺ with one sign and one clock. Its banks are derived.</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:10px;background:#ECE8DE;padding:32px;border-radius:16px">
+<h3 style="font-size:32px;font-weight:600">World-particle = a cell</h3>
+<p style="font-size:26px;line-height:1.4">Particle i in world w. No sign, clock or bank of its own.</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:10px;background:#F3E6DB;padding:32px;border-radius:16px">
+<h3 style="font-size:32px;font-weight:600;color:#A64E1B">Particle = a column</h3>
+<p style="font-size:26px;line-height:1.4">An identity in every world. Its state is the column’s signed marginal Wᵢ.</p>
+</div>
+</div>
+
+</section>
+<section class="slide" data-n="5" id="two-pairs" data-transition="fade" style="background:#F7F5EF;color:#16202E;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:40px">
+<h2 style="font-family:'Source Serif 4', Georgia, serif;font-size:64px;font-weight:600;line-height:1.1">Two kinds of pair, with the same formulas</h2>
+<div style="display:flex;gap:40px">
+<div style="flex:1;display:flex;flex-direction:column;gap:16px;background:#F3E6DB;padding:40px;border-radius:16px">
+<h3 style="font-size:36px;font-weight:600;color:#A64E1B">Bond: two particles, one world</h3>
+<p style="font-size:30px;line-height:1.45">r = x₁ − x₂,  p_r = ½(p₁ − p₂)<br>X = ½(x₁ + x₂),  P = p₁ + p₂</p>
+<p style="font-size:28px;line-height:1.4;color:#3E4A5A">The potential v(r) acts here. It gives the classical force inside the world, and it decides which directions a chord can read.</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:16px;background:#E3EAF2;padding:40px;border-radius:16px">
+<h3 style="font-size:36px;font-weight:600;color:#2F5D8A">Chord: two worlds, every particle</h3>
+<p style="font-size:30px;line-height:1.45">worlds at X + Y and X − Y<br>μ = θ − θ′ + P·(x′ − x)/ħ</p>
+<p style="font-size:28px;line-height:1.4;color:#3E4A5A">The misalignment of two clocks, read at the midpoint. This is where the potential acts beyond the classical force.</p>
+</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:12px;border-left:6px solid #2F5D8A;padding:8px 0 8px 40px">
+<p style="font-size:30px;line-height:1.4">With one particle there are no bonds, so every “pair” we have drawn was a pair of worlds. The von Neumann equation for one particle is a Schrödinger equation for two configurations with H(x) − H(x′): the second “particle” has mass −m and potential −V: the same system run backward. <b>The pair (x, x′) is a chord between two worlds.</b></p>
+</div>
+
+</section>
+<section class="slide" data-n="6" id="relations" data-transition="fade" style="background:#F7F5EF;color:#16202E;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:40px">
+<h2 style="font-family:'Source Serif 4', Georgia, serif;font-size:64px;font-weight:600;line-height:1.1">Classical within a world, quantum between worlds</h2>
+<table style="font-family:'IBM Plex Sans', Arial, sans-serif;font-size:26px;color:#16202E">
+<tr><th style="width:20%;text-align:left">relation</th><th style="width:10%;text-align:center">worlds</th><th style="width:70%;text-align:left">what it is</th></tr>
+<tr style="background:#F3E6DB"><td style="color:#A64E1B">streaming</td><td style="text-align:center">1</td><td>Newtonian if unpaired, inertial if dark; the clock winds at L/ħ</td></tr>
+<tr><td style="color:#2F5D8A">chord</td><td style="text-align:center">2</td><td>misalignment of two clocks, carried to a common point by a lever P</td></tr>
+<tr><td style="color:#2F5D8A">reading</td><td style="text-align:center">many</td><td>interference sum of the chords about a world; its banks integrate it</td></tr>
+<tr><td style="color:#2F5D8A">emission</td><td style="text-align:center">3</td><td>a parent fires; the aligned pair at its point splits along a bond</td></tr>
+<tr><td style="color:#2F5D8A">absorption</td><td style="text-align:center">3</td><td>a parent fires; two unpaired worlds at p ± ξ join as an aligned pair</td></tr>
+<tr><td style="color:#2F5D8A">pair collision</td><td style="text-align:center">4</td><td>two aligned pairs exchange momentum (Focus, Defocus; step 24)</td></tr>
+<tr><td style="color:#2F5D8A">dark catalysis</td><td style="text-align:center">4</td><td>a pair and a partner pair exchange phase; nothing observable moves</td></tr>
+<tr><td style="color:#2F5D8A">admissibility</td><td style="text-align:center">all</td><td>the ensemble must be the Wigner function of a positive operator</td></tr>
+</table>
+<p style="font-size:28px;line-height:1.4;color:#3E4A5A">Definition WC7. The only carriers are worlds; everything about one world is a function of its point.</p>
+
+</section>
+<section class="slide" data-n="7" id="history" data-transition="fade" style="background:#f7f5ef">
+    <h2 id="pa0897831cb5cr0-bbd2c13d" style="position:absolute; top:128px; left:72.26px; width:1664px; font-family:'Source Serif 4', Georgia, serif; font-size:64px; font-weight:600; line-height:1.1; color:#16202e">A world’s history: piecewise classical (WC6)</h2>
+  <div id="pa0897831cb5cr1-bbd2c13d" style="position:absolute; top:230px; left:128px; width:1664px; height:640px; display:flex; flex-direction:row; gap:48px">
+    <div style="position:relative; width:960px; height:640px; display:flex; flex-direction:column; align-self:stretch; background:#fffdf8; border:1px solid #ddd7c9; border-radius:16px">
+      <svg xmlns="http://www.w3.org/2000/svg" aria-label="World-lines in configuration space-time: a parent world, an aligned pair splitting into a positon and a negaton at an emission vertex, and two unpaired worlds joining into an aligned pair at an absorption vertex" viewBox="0 0 960 640" style="position:absolute; top:0; left:0; width:960px; height:640px">
+<path d="M 200 566 Q 260 310 330 40" fill="none" stroke="#2F5D8A" stroke-width="6"/>
+<path d="M 820 566 Q 870 320 840 40" fill="none" stroke="#2F5D8A" stroke-width="6"/>
+<line x1="480" y1="566" x2="256" y2="340" stroke="#8A96A6" stroke-width="8" stroke-dasharray="14 10"/>
+<path d="M 256 340 Q 400 210 600 100" fill="none" stroke="#2F5D8A" stroke-width="4"/>
+<path d="M 256 340 Q 150 230 92 70" fill="none" stroke="#7FA3C9" stroke-width="4"/>
+<line x1="700" y1="566" x2="851" y2="262" stroke="#2F5D8A" stroke-width="4"/>
+<line x1="930" y1="540" x2="851" y2="262" stroke="#7FA3C9" stroke-width="4"/>
+<line x1="851" y1="262" x2="920" y2="40" stroke="#8A96A6" stroke-width="8" stroke-dasharray="14 10"/>
+<circle cx="256" cy="340" r="12" fill="#16202E"/>
+<circle cx="851" cy="262" r="12" fill="#16202E"/>
+</svg>
+      <p style="position:absolute; top:24px; left:350px; width:260px; font-family:'IBM Plex Sans', Arial, sans-serif; font-size:24px; color:#2f5d8a">parent, never kinks</p>
+      <p style="position:absolute; top:84px; left:612px; width:140px; font-family:'IBM Plex Sans', Arial, sans-serif; font-size:24px; color:#2f5d8a">positon</p>
+      <p style="position:absolute; top:26px; left:112px; width:140px; font-family:'IBM Plex Sans', Arial, sans-serif; font-size:24px; color:#5b7ea6">negaton</p>
+      <p style="position:absolute; top:330px; left:110px; width:120px; font-family:'IBM Plex Sans', Arial, sans-serif; font-size:24px; color:#16202e">emission</p>
+      <p style="position:absolute; top:556px; left:500px; width:180px; font-family:'IBM Plex Sans', Arial, sans-serif; font-size:24px; color:#5e6773">dark pair</p>
+      <p style="position:absolute; top:244px; left:660px; width:150px; font-family:'IBM Plex Sans', Arial, sans-serif; font-size:24px; color:#16202e">absorption</p>
+      <p style="position:absolute; top:596px; left:24px; width:420px; font-family:'IBM Plex Sans', Arial, sans-serif; font-size:24px; color:#5e6773">time ↑ · configuration ℝ³ᴺ →</p>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:20px; flex:1">
+      <p style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:27px; line-height:1.38; color:#16202e"><b>(a)</b> Worlds and their signs are conserved: ΔN + 2ΔS = 0.</p>
+      <p style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:27px; line-height:1.38; color:#16202e"><b>(b)</b> Between events ẋᵢ = pᵢ/mᵢ; ṗᵢ = −∇ᵢV if unpaired, 0 if dark; θ̇ = L/ħ.</p>
+      <p style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:27px; line-height:1.38; color:#16202e"><b>(c)</b> An event on bond (i, j) moves pᵢ by ±ξ and pⱼ by ∓ξ. Positions stay continuous.</p>
+      <p style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:27px; line-height:1.38; color:#16202e"><b>(d)</b> The parent, the reader, never kinks at its own events.</p>
+      <p style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:27px; line-height:1.38; color:#16202e"><b>(e)</b> One Newtonian time for all worlds. A clock measures action, not time.</p>
+    </div>
+  </div>
+
+</section>
+<section class="slide" data-n="8" id="chord-action" data-transition="fade" style="background:#F7F5EF;color:#16202E;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:28px">
+<h2 style="font-family:'Source Serif 4', Georgia, serif;font-size:64px;font-weight:600;line-height:1.1">One relation between worlds: the chord action</h2>
+<div style="display:flex;flex-direction:column;gap:6px;align-items:center;background:#FFFDF8;border:1px solid #DDD7C9;padding:24px 40px;border-radius:16px">
+<p style="font-size:38px;line-height:1.3">ΔL = L(X + Y) − L(X − Y) = <span style="color:#A64E1B">2mẊ·Ẏ − 2Y·∇V(X)</span> − <span style="color:#2F5D8A">R(X, Y)</span></p>
+<p style="font-size:26px;color:#3E4A5A">two worlds at X ± Y; each clock winds at L/ħ, so ΔS = ħ(θ − θ′)   (CA1, CA2)</p>
+</div>
+<div style="display:flex;gap:40px">
+<div style="flex:1;display:flex;flex-direction:column;gap:12px">
+<svg aria-hidden="true" viewBox="0 0 32 40" style="width:32px;height:40px;align-self:center;flex:none"><polygon points="9.92,0 22.08,0 22.08,24.0 32.0,24.0 16.0,40.0 0,24.0 9.92,24.0" fill="#A64E1B"/></svg>
+<div style="display:flex;flex-direction:column;gap:12px;background:#F3E6DB;padding:32px;border-radius:16px">
+<h3 style="font-size:34px;font-weight:600;color:#A64E1B">Linear in Y: classical within a world</h3>
+<p style="font-size:28px;line-height:1.4">Euler–Lagrange in Y gives m Ẍ = −∇V(X): Newton’s law for the world at the midpoint, the Liouville term exactly.</p>
+</div>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:12px">
+<svg aria-hidden="true" viewBox="0 0 32 40" style="width:32px;height:40px;align-self:center;flex:none"><polygon points="9.92,0 22.08,0 22.08,24.0 32.0,24.0 16.0,40.0 0,24.0 9.92,24.0" fill="#2F5D8A"/></svg>
+<div style="display:flex;flex-direction:column;gap:12px;background:#E3EAF2;padding:32px;border-radius:16px">
+<h3 style="font-size:34px;font-weight:600;color:#2F5D8A">Residual R: quantum between worlds</h3>
+<p style="font-size:28px;line-height:1.4">Odd in Y, O(Y³), zero for quadratic V. Its Fourier transform over Y is the whole event kernel Θ.</p>
+</div>
+</div>
+</div>
+<div style="display:flex;gap:24px;align-items:center">
+<p style="font-size:26px;font-weight:600;letter-spacing:2px;color:#5E6773;text-transform:uppercase;width:220px">Derived</p>
+<p style="flex:1;font-size:26px;line-height:1.35;background:#ECE8DE;padding:16px 24px;border-radius:12px">bonds: the terms of R (CA5)</p>
+<p style="flex:1;font-size:26px;line-height:1.35;background:#ECE8DE;padding:16px 24px;border-radius:12px">banks: one way to time Θ (CA7)</p>
+<p style="flex:1;font-size:26px;line-height:1.35;background:#ECE8DE;padding:16px 24px;border-radius:12px">one row: ħμ̇ = −[V(X+Y) − V(X−Y)] (CA4)</p>
+</div>
+
+</section>
+<section class="slide" data-n="9" id="domain-target" data-transition="fade" style="background:#F7F5EF;color:#16202E;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:40px">
+<h2 style="font-family:'Source Serif 4', Georgia, serif;font-size:64px;font-weight:600;line-height:1.1">Labels or coordinates: where worlds are coupled</h2>
+<div style="display:flex;gap:32px">
+<div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFDF8;border:1px solid #DDD7C9;padding:32px;border-radius:16px">
+<p style="font-size:24px;font-weight:600;letter-spacing:2px;color:#5E6773;text-transform:uppercase">On the domain</p>
+<h3 style="font-size:32px;font-weight:600">Schiff–Poirier</h3>
+<svg aria-label="A smooth one-parameter family of world-lines labelled by C" width="460" height="180" viewBox="0 0 460 180">
+<rect x="2" y="2" width="456" height="176" rx="10" fill="#EEF2F6" stroke="#CFD8E2" stroke-width="2"/>
+<g fill="none" stroke="#2F5D8A" stroke-width="3">
+<path d="M 50 170 Q 100 90 70 10"/><path d="M 100 170 Q 150 90 120 10"/><path d="M 150 170 Q 200 90 170 10"/><path d="M 200 170 Q 250 90 220 10"/><path d="M 250 170 Q 300 90 270 10"/><path d="M 300 170 Q 350 90 320 10"/><path d="M 350 170 Q 400 90 370 10"/>
+</g>
+</svg>
+<p style="font-size:26px;line-height:1.4">A smooth label C, ρ = 1/x′. The coupling is (ħ²/8m) x″²/x′⁴, the Fisher information: four derivatives in C. Pure states only.</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFDF8;border:1px solid #DDD7C9;padding:32px;border-radius:16px">
+<p style="font-size:24px;font-weight:600;letter-spacing:2px;color:#5E6773;text-transform:uppercase">On label neighbours</p>
+<h3 style="font-size:32px;font-weight:600">Hall–Deckert–Wiseman</h3>
+<svg aria-label="A discrete set of world-lines coupled only to their neighbours" width="460" height="180" viewBox="0 0 460 180">
+<rect x="2" y="2" width="456" height="176" rx="10" fill="#EEF2F6" stroke="#CFD8E2" stroke-width="2"/>
+<g fill="none" stroke="#2F5D8A" stroke-width="3">
+<path d="M 70 170 Q 110 90 85 10"/><path d="M 130 170 Q 170 90 145 10"/><path d="M 190 170 Q 230 90 205 10"/><path d="M 250 170 Q 290 90 265 10"/><path d="M 310 170 Q 350 90 325 10"/><path d="M 370 170 Q 410 90 385 10"/>
+</g>
+<g stroke="#8A96A6" stroke-width="3">
+<line x1="92" y1="130" x2="140" y2="130"/><line x1="152" y1="130" x2="200" y2="130"/><line x1="212" y1="130" x2="260" y2="130"/><line x1="272" y1="130" x2="320" y2="130"/><line x1="332" y1="130" x2="380" y2="130"/>
+<line x1="100" y1="90" x2="148" y2="90"/><line x1="160" y1="90" x2="208" y2="90"/><line x1="220" y1="90" x2="268" y2="90"/><line x1="280" y1="90" x2="328" y2="90"/><line x1="340" y1="90" x2="388" y2="90"/>
+<line x1="99" y1="50" x2="147" y2="50"/><line x1="159" y1="50" x2="207" y2="50"/><line x1="219" y1="50" x2="267" y2="50"/><line x1="279" y1="50" x2="327" y2="50"/><line x1="339" y1="50" x2="387" y2="50"/>
+</g>
+</svg>
+<p style="font-size:26px;line-height:1.4">The same coupling as differences between neighbours: U_N/N → 1/8 for a Gaussian. Sorting finds the neighbours only in 1D.</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#E3EAF2;padding:32px;border-radius:16px">
+<p style="font-size:24px;font-weight:600;letter-spacing:2px;color:#2F5D8A;text-transform:uppercase">On the target</p>
+<h3 style="font-size:32px;font-weight:600;color:#2F5D8A">WPMW</h3>
+<svg aria-label="Signed worlds as points of configuration space, two of them joined by a chord with its reader at the midpoint" width="460" height="180" viewBox="0 0 460 180">
+<rect x="2" y="2" width="456" height="176" rx="10" fill="#F7F5EF" stroke="#CFD8E2" stroke-width="2"/>
+<g fill="#7FA3C9"><circle cx="60" cy="40" r="8"/><circle cx="170" cy="150" r="8"/><circle cx="300" cy="140" r="8"/><circle cx="400" cy="40" r="8"/><circle cx="250" cy="30" r="8"/></g>
+<g fill="none" stroke="#7FA3C9" stroke-width="3"><circle cx="70" cy="120" r="8"/><circle cx="380" cy="120" r="8"/><circle cx="190" cy="40" r="8"/></g>
+<line x1="110" y1="130" x2="350" y2="60" stroke="#2F5D8A" stroke-width="5"/>
+<circle cx="110" cy="130" r="12" fill="#2F5D8A"/>
+<circle cx="350" cy="60" r="12" fill="none" stroke="#2F5D8A" stroke-width="5"/>
+<line x1="220" y1="85" x2="240" y2="105" stroke="#16202E" stroke-width="5"/>
+<line x1="240" y1="85" x2="220" y2="105" stroke="#16202E" stroke-width="5"/>
+</svg>
+<p style="font-size:26px;line-height:1.4">Chords X ± Y are differences of target points. R(X, Y) is linear in W and needs only midpoints and differences. Any state.</p>
+</div>
+</div>
+<p style="font-size:28px;line-height:1.4;color:#3E4A5A">A label is constant along each world and never observed; a coordinate is what the action varies (CA0). Relabelling C is a gauge symmetry.</p>
+
+</section>
+<section class="slide" data-n="10" id="bonds-chords" data-transition="fade" style="background:#F7F5EF;color:#16202E;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:32px">
+<h2 style="font-family:'Source Serif 4', Georgia, serif;font-size:64px;font-weight:600;line-height:1.1">Where the levels meet: chords are read along bonds</h2>
+<div style="display:flex;gap:48px">
+<div style="position:relative;width:840px;height:640px;background:#FFFDF8;border:1px solid #DDD7C9;border-radius:16px">
+<svg aria-label="Configuration plane of two particles: a chord between two worlds decomposed into a dark centre-of-mass component and a read component along the bond direction" style="position:absolute;left:0;top:0" width="840" height="640" viewBox="0 0 840 640">
+<line x1="60" y1="330" x2="800" y2="330" stroke="#C9C2B3" stroke-width="2"/>
+<line x1="420" y1="610" x2="420" y2="40" stroke="#C9C2B3" stroke-width="2"/>
+<line x1="130" y1="620" x2="720" y2="30" stroke="#C9C2B3" stroke-width="3" stroke-dasharray="6 8"/>
+<line x1="220" y1="440" x2="640" y2="300" stroke="#2F5D8A" stroke-width="5"/>
+<line x1="220" y1="440" x2="500" y2="160" stroke="#8A96A6" stroke-width="4" stroke-dasharray="12 9"/>
+<line x1="500" y1="160" x2="640" y2="300" stroke="#A64E1B" stroke-width="6"/>
+<circle cx="220" cy="440" r="14" fill="#2F5D8A"/>
+<circle cx="640" cy="300" r="14" fill="none" stroke="#2F5D8A" stroke-width="5"/>
+<line x1="418" y1="358" x2="442" y2="382" stroke="#16202E" stroke-width="5"/>
+<line x1="442" y1="358" x2="418" y2="382" stroke="#16202E" stroke-width="5"/>
+</svg>
+<p style="position:absolute;left:60px;top:420px;width:140px;font-size:24px;color:#2F5D8A">world w</p>
+<p style="position:absolute;left:664px;top:284px;width:150px;font-size:24px;color:#2F5D8A">world w′</p>
+<p style="position:absolute;left:420px;top:400px;width:260px;font-size:24px;color:#16202E">reader at midpoint</p>
+<p style="position:absolute;left:120px;top:186px;width:260px;font-size:24px;color:#5E6773">centre of mass: dark</p>
+<p style="position:absolute;left:620px;top:196px;width:200px;font-size:24px;color:#A64E1B">bond: read</p>
+<p style="position:absolute;left:700px;top:340px;width:120px;font-size:24px;color:#5E6773">x₁ →</p>
+<p style="position:absolute;left:436px;top:40px;width:100px;font-size:24px;color:#5E6773">x₂ ↑</p>
+<p style="position:absolute;left:170px;top:596px;width:220px;font-size:24px;color:#5E6773">contact x₁ = x₂</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:24px">
+<p style="font-size:28px;line-height:1.4">A pair potential reads only the chord’s extent along each bond:<br>R(x, y) = Σ_bonds ρ_v(r_b, η_b),  η_b = yᵢ − yⱼ  <b>(WC9)</b></p>
+<p style="font-size:28px;line-height:1.4">Bonds are terms of R, so <b>one bank per bond</b>, N(N − 1)/2 of them, sharing one kernel table, follows <b>(WC4, CA5)</b>.</p>
+<p style="font-size:28px;line-height:1.4">A chord that moves only particle 1 reads only the terms of V that involve particle 1 <b>(WC8.1)</b>. Locality comes from chord geometry, not from particle phases.</p>
+</div>
+</div>
+
+</section>
+<section class="slide" data-n="11" id="test-clock" data-transition="fade" style="background:#ECE8DE;color:#16202E;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:40px">
+<p style="font-size:24px;font-weight:600;letter-spacing:2px;color:#A64E1B;text-transform:uppercase">Test 1 of the particles-as-worlds analogy</p>
+<h2 style="font-family:'Source Serif 4', Georgia, serif;font-size:64px;font-weight:600;line-height:1.1">Give each particle its own clock and reader</h2>
+<table style="font-family:'IBM Plex Sans', Arial, sans-serif;font-size:28px;color:#16202E">
+<tr><th style="width:12%;text-align:left">reading</th><th style="width:30%;text-align:left">who holds the clock</th><th style="width:58%;text-align:left">what it gives (two particles, pair potential)</th></tr>
+<tr style="background:#E3EAF2"><td style="color:#2F5D8A"><b>W</b></td><td>the world, joint chord</td><td>QM: a product state stays separable to 7×10⁻¹⁵</td></tr>
+<tr><td style="color:#A64E1B"><b>B1</b></td><td>each world-particle, whole v</td><td>relative motion is the QLE at <b>ħ/2</b>, plus a coupling 3∂²_P∂_pr</td></tr>
+<tr><td style="color:#A64E1B"><b>B2</b></td><td>each world-particle, v halved</td><td>reads half the force</td></tr>
+</table>
+<div style="display:flex;gap:32px">
+<div style="flex:1;display:flex;flex-direction:column;gap:8px;background:#F7F5EF;padding:32px;border-radius:16px">
+<p style="font-size:64px;font-weight:600;line-height:1;color:#2F5D8A">0.549</p>
+<p style="font-size:26px;line-height:1.35;color:#3E4A5A">W’s Eckart transmission; exact QM 0.5441</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:8px;background:#F7F5EF;padding:32px;border-radius:16px">
+<p style="font-size:64px;font-weight:600;line-height:1;color:#A64E1B">0.517</p>
+<p style="font-size:26px;line-height:1.35;color:#3E4A5A">B1’s; exact at ħ/2 is 0.5120</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:8px;background:#F7F5EF;padding:32px;border-radius:16px">
+<p style="font-size:64px;font-weight:600;line-height:1;color:#A64E1B">36×</p>
+<p style="font-size:26px;line-height:1.35;color:#3E4A5A">unsigned ⟨P²⟩ with particle banks, at 2.8× the worlds</p>
+</div>
+</div>
+
+</section>
+<section class="slide" data-n="12" id="test-entangle" data-transition="fade" style="background:#ECE8DE;color:#16202E;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:40px">
+<p style="font-size:24px;font-weight:600;letter-spacing:2px;color:#A64E1B;text-transform:uppercase">Test 2 of the particles-as-worlds analogy</p>
+<h2 style="font-family:'Source Serif 4', Georgia, serif;font-size:64px;font-weight:600;line-height:1.1">Entanglement lives inside worlds</h2>
+<div style="display:flex;gap:40px">
+<div style="flex:1;display:flex;flex-direction:column;gap:16px;background:#F7F5EF;padding:40px;border-radius:16px">
+<h3 style="font-size:32px;font-weight:600">Problem Q: Moshinsky, quadratic bonds</h3>
+<p style="font-size:80px;font-weight:600;line-height:1;color:#A64E1B">0 events</p>
+<p style="font-size:28px;line-height:1.4;color:#3E4A5A">One-body purity falls to 0.683 (3 particles) and 0.655 (4). Positive worlds streamed classically reproduce it within 1.5×10⁻³ and 2.5×10⁻³.</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:16px;background:#F7F5EF;padding:40px;border-radius:16px">
+<h3 style="font-size:32px;font-weight:600">Problem G: Gaussian bonds, 3 bosons</h3>
+<p style="font-size:80px;font-weight:600;line-height:1;color:#2F5D8A">0.606 · 0.800</p>
+<p style="font-size:28px;line-height:1.4;color:#3E4A5A">Classical streaming over-entangles (purity down to 0.606; exact dips to 0.800). The events between worlds remove the excess: within 0.01 at reach 8π on the mesh.</p>
+</div>
+</div>
+<p style="font-size:32px;line-height:1.4"><b>Entanglement is a correlation among the cells of a row; the quantum events correct it between rows.</b> With one particle neither exists.</p>
+
+</section>
+<section class="slide" data-n="13" id="test-dimension" data-transition="fade" style="background:#ECE8DE;color:#16202E;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:40px">
+<p style="font-size:24px;font-weight:600;letter-spacing:2px;color:#A64E1B;text-transform:uppercase">Test 3 of the particles-as-worlds analogy</p>
+<h2 style="font-family:'Source Serif 4', Georgia, serif;font-size:64px;font-weight:600;line-height:1.1">What grows is dimension, not particle count</h2>
+<div style="display:flex;gap:56px">
+<table style="width:900px;font-family:'IBM Plex Sans', Arial, sans-serif;font-size:28px;color:#16202E">
+<tr><th style="width:38%;text-align:left">particles</th><th style="width:22%;text-align:center">phase-space dim</th><th style="width:40%;text-align:right">worlds per chance partner</th></tr>
+<tr><td>1 on a line</td><td style="text-align:center">2</td><td style="text-align:right">50</td></tr>
+<tr><td>2 on a line</td><td style="text-align:center">4</td><td style="text-align:right">2.5×10³</td></tr>
+<tr style="background:#F3E6DB"><td>3 on a line, or 1 in 3D</td><td style="text-align:center">6</td><td style="text-align:right">1.3×10⁵</td></tr>
+<tr><td>2 in 3D</td><td style="text-align:center">12</td><td style="text-align:right">1.6×10¹⁰</td></tr>
+<tr><td>3 in 3D</td><td style="text-align:center">18</td><td style="text-align:right">2.0×10¹⁵</td></tr>
+</table>
+<div style="flex:1;display:flex;flex-direction:column;gap:24px">
+<p style="font-size:28px;line-height:1.4">The contact sink keeps each cell’s net count and erases fringes finer than a cell: it <b>decoheres</b> (WC10).</p>
+<p style="font-size:28px;line-height:1.4">Four particles on a line keep only <b>15 %</b> of the quantum correction at t = 1.</p>
+</div>
+</div>
+<p style="font-size:28px;line-height:1.4;color:#3E4A5A">Chance that two independent worlds share a cell of side σ/2: 0.141 per phase-space axis, so (0.141)²ᵈᴺ.</p>
+
+</section>
+<section class="slide" data-n="14" id="popcontrol" data-transition="fade" style="background:#F7F5EF;color:#16202E;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:40px">
+<h2 style="font-family:'Source Serif 4', Georgia, serif;font-size:64px;font-weight:600;line-height:1.1">Population control is numerics, not ontology</h2>
+<div style="display:flex;gap:32px">
+<div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFDF8;border:1px solid #DDD7C9;padding:36px;border-radius:16px">
+<h3 style="font-size:32px;font-weight:600">Contact sink</h3>
+<p style="font-size:72px;font-weight:600;line-height:1;color:#A64E1B">−0.143</p>
+<p style="font-size:26px;line-height:1.4;color:#3E4A5A">global purity deficit at t = 3, cell 0.35, ν = 10⁶. Keeps only each cell’s count M₀, so its error is first order in the cell (PC2).</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFDF8;border:1px solid #DDD7C9;padding:36px;border-radius:16px">
+<h3 style="font-size:32px;font-weight:600">K1 resampling</h3>
+<p style="font-size:72px;font-weight:600;line-height:1;color:#2F5D8A">−0.020</p>
+<p style="font-size:26px;line-height:1.4;color:#3E4A5A">cell 0.7, grid shifted every ten steps, 1.37 worlds per ν. Keeps M₀ and M₁, each ± pair at the dipole centre (PC3–PC6).</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FFFDF8;border:1px solid #DDD7C9;padding:36px;border-radius:16px">
+<h3 style="font-size:32px;font-weight:600">Absorption, crossings</h3>
+<p style="font-size:72px;font-weight:600;line-height:1;color:#5E6773">&lt; ½</p>
+<p style="font-size:26px;line-height:1.4;color:#3E4A5A">absorbed share 0.31–0.44 with a tolerance (PC5). Chance crossings are too rare; kin re-absorption is an undo, under 1 % of events (CX3–CX6).</p>
+</div>
+</div>
+<p style="font-size:30px;line-height:1.4">An absorption is a vertex where three world-lines meet: the ontology’s picture. K1 is what holds the population in practice.</p>
+
+</section>
+<section class="slide" data-n="15" data-nofoot id="verdict" data-transition="fade" style="background:#16202E;color:#F2EEE4;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;justify-content:center;gap:72px">
+<div style="display:flex;flex-direction:column;gap:20px;border-left:8px solid #8FB4DC;padding:8px 0 8px 48px">
+<p style="font-size:28px;font-weight:600;letter-spacing:2px;color:#8FB4DC;text-transform:uppercase">The analogy that holds</p>
+<p style="font-family:'Source Serif 4', Georgia, serif;font-size:60px;line-height:1.2">N particles in d dimensions are one particle in dN dimensions. That one particle is a world.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:20px;border-left:8px solid #E9A56F;padding:8px 0 8px 48px">
+<p style="font-size:28px;font-weight:600;letter-spacing:2px;color:#E9A56F;text-transform:uppercase">The analogy that misleads</p>
+<p style="font-family:'Source Serif 4', Georgia, serif;font-size:60px;line-height:1.2">The particles inside a world, treated as if they were the worlds of an ensemble.</p>
+</div>
+
+</section>
+<section class="slide" data-n="16" id="carryover" data-transition="fade" style="background:#F7F5EF;color:#16202E;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:40px">
+<h2 style="font-family:'Source Serif 4', Georgia, serif;font-size:64px;font-weight:600;line-height:1.1">What the one-particle ladder gives, and what it can’t</h2>
+<div style="display:flex;gap:32px">
+<div style="flex:1;display:flex;flex-direction:column;gap:16px;background:#E3EAF2;padding:36px;border-radius:16px">
+<h3 style="font-size:32px;font-weight:600;color:#2F5D8A">Carries over, read as one world</h3>
+<ul style="font-size:26px;line-height:1.45">
+<li>the compensated split and the soft horizon</li>
+<li>the reach as a regulator (G5)</li>
+<li>the ledger: Γ(1 − 2f) = R_sink, f = ½</li>
+<li>(S′) and pair collisions in the sea</li>
+<li>integrate-and-fire banks, now per bond</li>
+</ul>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:16px;background:#F3E6DB;padding:36px;border-radius:16px">
+<h3 style="font-size:32px;font-weight:600;color:#A64E1B">Needs two or more particles</h3>
+<ul style="font-size:26px;line-height:1.45">
+<li>who owns clocks and banks (WC1, WC2, WC4)</li>
+<li>bonds, a dark centre of mass, conserved P</li>
+<li>locality from chords (WC8.1)</li>
+<li>entanglement and particle marginals</li>
+<li>identical particles, spin (WC-SP7, SP8)</li>
+</ul>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:16px;background:#ECE8DE;padding:36px;border-radius:16px">
+<h3 style="font-size:32px;font-weight:600">Needs high dimension</h3>
+<ul style="font-size:26px;line-height:1.45">
+<li>coincidence and sink costs (WC10, M10)</li>
+<li>chance crossings (CX3)</li>
+<li>K1’s cost in six or twelve relative dimensions (PC-SP2)</li>
+<li>live sea readings along a bond (WC-SP2)</li>
+</ul>
+</div>
+</div>
+
+</section>
+<section class="slide" data-n="17" id="phrasebook" data-transition="fade" style="background:#F7F5EF;color:#16202E;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:40px">
+<h2 style="font-family:'Source Serif 4', Georgia, serif;font-size:64px;font-weight:600;line-height:1.1">A phrasebook for multi-particle models</h2>
+<table style="font-family:'IBM Plex Sans', Arial, sans-serif;font-size:28px;color:#16202E">
+<tr><th style="width:44%;text-align:left;color:#A64E1B">instead of</th><th style="width:56%;text-align:left;color:#2F5D8A">say</th></tr>
+<tr><td>a particle has a clock, a sign</td><td>a world has a clock and a sign</td></tr>
+<tr><td>positons and negatons are particles</td><td>positon worlds and negaton worlds</td></tr>
+<tr><td>a particle is emitted from the sea</td><td>an aligned pair of worlds ionises at the parent’s point</td></tr>
+<tr><td>the particle reads the potential</td><td>the world reads its chords along each bond</td></tr>
+<tr><td>the pair’s separation</td><td>a chord (two worlds) or a bond (two particles)</td></tr>
+<tr><td>body</td><td>unpaired world (ledger) or particle</td></tr>
+<tr><td>the sea as a gas of particles</td><td>dark aligned pairs of worlds, in Γ-space</td></tr>
+</table>
+<p style="font-size:28px;line-height:1.4;color:#3E4A5A">Test for any sentence: is its subject a row, a cell or a column of the table on slide 4?</p>
+
+</section>
+<section class="slide" data-n="18" id="questions" data-transition="fade" style="background:#ECE8DE;color:#16202E;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:40px">
+<h2 style="font-family:'Source Serif 4', Georgia, serif;font-size:64px;font-weight:600;line-height:1.1">Questions for David</h2>
+<div style="display:flex;flex-direction:column;gap:28px">
+<div style="display:flex;gap:32px;align-items:baseline"><p style="width:64px;font-size:44px;font-weight:600;color:#2F5D8A">1</p><p style="flex:1;font-size:32px;line-height:1.4">Which analogy did you mean: one particle in dN dimensions, or particles behaving like worlds?</p></div>
+<div style="display:flex;gap:32px;align-items:baseline"><p style="width:64px;font-size:44px;font-weight:600;color:#2F5D8A">2</p><p style="flex:1;font-size:32px;line-height:1.4">In your two-particle many-worlds calculation of about 2019–20, what carried the sign, and what was the pair?</p></div>
+<div style="display:flex;gap:32px;align-items:baseline"><p style="width:64px;font-size:44px;font-weight:600;color:#2F5D8A">3</p><p style="flex:1;font-size:32px;line-height:1.4">In the Volterra sea and the bound-pair chemistry, is a P–N separation a chord or a bond, and do up and down act per bond?</p></div>
+<div style="display:flex;gap:32px;align-items:baseline"><p style="width:64px;font-size:44px;font-weight:600;color:#2F5D8A">4</p><p style="flex:1;font-size:32px;line-height:1.4">Could the paper adopt “classical within a world, quantum between worlds”, and keep “particle” for the columns?</p></div>
+</div>
+
+</section>
+<section class="slide" data-n="19" id="open" data-transition="fade" style="background:#F7F5EF;color:#16202E;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:40px">
+<h2 style="font-family:'Source Serif 4', Georgia, serif;font-size:64px;font-weight:600;line-height:1.1">Open items that the two levels raise</h2>
+<table style="font-family:'IBM Plex Sans', Arial, sans-serif;font-size:28px;color:#16202E">
+<tr><th style="width:18%;text-align:left">item</th><th style="width:82%;text-align:left">question</th></tr>
+<tr><td style="color:#2F5D8A">WC-SP5</td><td>Is a world-particle reading (B1) the Wigner image of mean-field, and does that explain ħ/2?</td></tr>
+<tr><td style="color:#2F5D8A">WC-SP7</td><td>Which relation between a world and its permutations gives Bose and Fermi statistics?</td></tr>
+<tr><td style="color:#2F5D8A">WC-SP8</td><td>Spin as labels on world-particles, with phases carried by chords between worlds</td></tr>
+<tr><td style="color:#2F5D8A">WC-SP10</td><td>Population control with cells on bond coordinates, not the joint relative phase space</td></tr>
+<tr><td style="color:#2F5D8A">PC-SP2</td><td>K1’s cost with six relative dimensions (four on a line) or twelve (three in space)</td></tr>
+<tr><td style="color:#2F5D8A">CX-SP1</td><td>Two particles on a lattice: absorption at exact crossings, against emission plus K1</td></tr>
+</table>
+<p style="font-size:28px;line-height:1.4;color:#3E4A5A">Then: an N-particle algorithm specification built on WC7, WC9 and PC6.</p>
+
+</section>
+<section class="slide" data-n="20" data-nofoot id="sources" data-transition="fade" style="background:#F7F5EF;color:#16202E;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:32px">
+<h2 style="font-family:'Source Serif 4', Georgia, serif;font-size:64px;font-weight:600;line-height:1.1">Sources</h2>
+<div style="display:flex;gap:56px">
+<div style="flex:1;display:flex;flex-direction:column;gap:14px">
+<h3 style="font-size:30px;font-weight:600;color:#2F5D8A">WPMW repository</h3>
+<p style="font-size:24px;line-height:1.4">Step 25, docs/analysis/world_clocks.md: WC0–WC10, problems Q and G</p>
+<p style="font-size:24px;line-height:1.4">Step 26, docs/analysis/population_control.md: PC1–PC7</p>
+<p style="font-size:24px;line-height:1.4">Supplement, docs/supplement/world_crossings.md: CX1–CX6</p>
+<p style="font-size:24px;line-height:1.4">Steps 21, 23, 24: M1, M10; Q11; (S′) and Focus/Defocus</p>
+<p style="font-size:24px;line-height:1.4">Call summary of 13 and 20 October 2026</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:14px">
+<h3 style="font-size:30px;font-weight:600;color:#A64E1B">Literature</h3>
+<p style="font-size:24px;line-height:1.4">Ehrenfest and Ehrenfest 1912; Gibbs 1902 (μ- and Γ-space)</p>
+<p style="font-size:24px;line-height:1.4">Hall, Deckert and Wiseman, Phys. Rev. X 4, 041013 (2014)</p>
+<p style="font-size:24px;line-height:1.4">Schwinger 1961; Keldysh 1965 (closed time path)</p>
+<p style="font-size:24px;line-height:1.4">Takahashi and Umezawa 1975 (thermo-field dynamics)</p>
+<p style="font-size:24px;line-height:1.4">Moshinsky 1968; Bouvrie et al. 2012; Zöllner, Meyer, Schmelcher 2006, 2008</p>
+<p style="font-size:24px;line-height:1.4">Booth, Thom and Alavi 2009; Xiong and Shao 2019; Sellier and Dimov 2014</p>
+<p style="font-size:24px;line-height:1.4">Thompson, Moran and Swenson 2017 (VLBI)</p>
+</div>
+</div>
+
+</section>
+</div>
+</body>
+</html>
